@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brand tokens (light) — values inspired by docs/design-tokens.json */
+:root {
+    --fg: #0b0b0f;
+    --bg: #ffffff;
+    --brand: #0e3fa9; /* Royal Blue */
+    --accent: #b4371e; /* Auburn */
+    --success: #16794e; /* Royal Green */
+    --warning: #d97706; /* Royal Orange */
+    --info: #6d28d9; /* Purple */
+    --ring: #d4af37; /* Gold */
+
+    --radius-lg: 12px;
+    --radius-md: 10px;
+    --radius-sm: 8px;
+
+    /* Typography scale */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+    --text-xs: 0.75rem; /* 12px */
+    --text-sm: 0.875rem; /* 14px */
+    --text-base: 1rem; /* 16px */
+    --text-lg: 1.125rem; /* 18px */
+    --text-xl: 1.25rem; /* 20px */
+    --text-2xl: 1.5rem; /* 24px */
+    --leading-tight: 1.25;
+    --leading-normal: 1.5;
+
+    /* Spacing scale */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+
+    /* Elevation */
+    --elev-0: 0 0 #0000;
+    --elev-1: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+    --elev-2: 0 2px 8px 0 rgb(0 0 0 / 0.08);
+}
+
+/* Dark theme */
+.dark {
+    --fg: #f4f4f5;
+    --bg: #0b0b0f;
+    --brand: #3f7cff; /* Royal Blue (brightened) */
+    --accent: #ff6a4a; /* Auburn (brightened) */
+    --success: #22c55e; /* Green */
+    --warning: #f59e0b; /* Orange */
+    --info: #8b5cf6; /* Purple */
+    --ring: #ffd166; /* Gold */
+}
+
+/* Base typography and focus styles for a11y */
+html {
+    color-scheme: light dark;
+}
+
+body {
+    @apply bg-bg text-fg antialiased;
+    font-family: var(--font-sans);
+}
+
+:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+/* Map CSS variables to utility-like classes so we can use semantic tokens
+   with Tailwind utility names without custom config. */
+.bg-bg {
+    background-color: var(--bg);
+}
+
+.text-fg {
+    color: var(--fg);
+}
+
+.bg-brand {
+    background-color: var(--brand);
+}
+
+.text-brand {
+    color: var(--brand);
+}
+
+.ring-brand {
+    --tw-ring-color: var(--ring);
+}
+
+.border-brand {
+    border-color: var(--brand);
+}
+
+/* Typography utilities */
+.text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
+}
+
+.text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+}
+
+.text-base {
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+}
+
+.text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--leading-normal);
+}
+
+.text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--leading-tight);
+}
+
+.text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-tight);
+}
+
+/* Elevation utilities */
+.shadow-elev-0 {
+    box-shadow: var(--elev-0);
+}
+
+.shadow-elev-1 {
+    box-shadow: var(--elev-1);
+}
+
+.shadow-elev-2 {
+    box-shadow: var(--elev-2);
+}
+
+/* Basic prose spacing for marketing pages */
+.prose-lite p {
+    margin: 0.75rem 0;
+}
+
+.prose-lite h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 1rem 0;
+}
+
+.prose-lite h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.prose-lite ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

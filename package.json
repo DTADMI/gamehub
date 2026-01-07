@@ -1,0 +1,59 @@
+{
+  "name": "gamehub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GameHub - Next.js frontend + NestJS backend monorepo",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:app": "turbo run dev --filter=@gamehub/app",
+    "dev:api": "turbo run dev --filter=@gamehub/api",
+    "build": "turbo run build",
+    "build:app": "turbo run build --filter=@gamehub/app",
+    "build:api": "turbo run build --filter=@gamehub/api",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\"",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e --filter=@gamehub/app",
+    "test:watch": "turbo run test:watch",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "clean:turbo": "rm -rf .turbo",
+    "prepare": "husky || true",
+    "prisma:generate": "turbo run prisma:generate --filter=@gamehub/api",
+    "prisma:migrate": "pnpm --filter @gamehub/api prisma:migrate",
+    "prisma:studio": "pnpm --filter @gamehub/api prisma:studio",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.6",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.10",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}
