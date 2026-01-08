@@ -6,7 +6,7 @@ export async function getSession() {
     data: { session },
     error,
   } = await supabase.auth.getSession();
-  if (error) throw error;
+  if (error) {throw error;}
   return session;
 }
 

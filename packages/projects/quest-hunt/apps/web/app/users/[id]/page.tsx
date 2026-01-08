@@ -1,5 +1,6 @@
-import { createClient } from '@/lib/supabase/server';
 import { Avatar, AvatarFallback, AvatarImage } from '@games/shared/components/ui/avatar';
+
+import { createClient } from '@/lib/supabase/server';
 
 export default async function PublicUserPage({ params }: { params: { id: string } }) {
   const supabase = createClient();

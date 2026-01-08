@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
+
 import { requireAuth } from '@/lib/server/auth';
 import { evaluateBadges } from '@/lib/server/badges';
 
 export async function POST() {
   try {
     const { user } = await requireAuth();
-    if (!user) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    if (!user) {return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });}
     const res = await evaluateBadges(user.id);
     return NextResponse.json(res);
   } catch (e) {

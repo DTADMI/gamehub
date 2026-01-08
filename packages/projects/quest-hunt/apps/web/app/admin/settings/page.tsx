@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useAuth } from '@/hooks/use-auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@games/shared';
 import { Switch } from '@games/shared';
 import { Label } from '@games/shared';
 import { useToast } from '@games/shared';
 import { Skeleton } from '@games/shared';
+import { useEffect, useState } from 'react';
+
+import { useAuth } from '@/hooks/use-auth';
+import { createClient } from '@/lib/supabase/client';
 
 type FeatureFlag = {
   id: string;

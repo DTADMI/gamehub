@@ -1,5 +1,6 @@
 // apps/web/app/api/search/popular/route.ts
 import { NextResponse } from 'next/server';
+
 import { prisma } from '@/lib/db';
 
 export async function GET() {

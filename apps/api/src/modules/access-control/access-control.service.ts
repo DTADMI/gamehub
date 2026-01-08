@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
 import { AccessTier, UserProjectAccess } from "@prisma/client";
+
+import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class AccessControlService {

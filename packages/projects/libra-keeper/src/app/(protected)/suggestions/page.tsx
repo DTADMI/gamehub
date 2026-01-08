@@ -1,17 +1,16 @@
 // src/app/(protected)/suggestions/page.tsx
 "use client";
 
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-
 import { Badge } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { Input } from "@games/shared";
 import { Label } from "@games/shared";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
 import { Textarea } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type ItemRequestType = "BORROWED_ITEM" | "SUGGESTION";
 type ItemRequestStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "REJECTED";

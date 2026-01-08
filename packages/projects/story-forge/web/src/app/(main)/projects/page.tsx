@@ -1,7 +1,8 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+
 import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 type Project = {
   id: string;
@@ -12,7 +13,7 @@ type Project = {
 
 async function getProjects(): Promise<Project[]> {
   const res = await apiFetch("/projects", { cache: "no-store" as any });
-  if (!res.ok) return [] as Project[];
+  if (!res.ok) {return [] as Project[];}
   return res.json();
 }
 
@@ -21,7 +22,7 @@ async function createProject(_userId: string, formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const description = String(formData.get("description") || "").trim() || undefined;
   const defaultScope = String(formData.get("defaultScope") || "private") as Project["defaultScope"];
-  if (!title) return;
+  if (!title) {return;}
   await apiFetch("/projects", {
     method: "POST",
     body: JSON.stringify({ title, description, defaultScope }),

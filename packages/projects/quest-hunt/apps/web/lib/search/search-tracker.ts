@@ -2,7 +2,7 @@
 import { prisma } from '@/lib/db';
 
 export async function trackSearch(query: string, userId?: string) {
-  if (!query.trim()) return;
+  if (!query.trim()) {return;}
 
   try {
     await prisma.$transaction(async (tx) => {

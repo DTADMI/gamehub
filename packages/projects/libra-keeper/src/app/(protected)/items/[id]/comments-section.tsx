@@ -1,13 +1,12 @@
 // src/app/(protected)/items/[id]/comments-section.tsx
 "use client";
 
-import { formatDistanceToNow } from "date-fns";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@games/shared/components/ui/avatar";
 import { Button } from "@games/shared/components/ui/button";
 import { Textarea } from "@games/shared/components/ui/textarea";
+import { formatDistanceToNow } from "date-fns";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface Comment {
   id: string;

@@ -1,4 +1,3 @@
-import { flags } from "@/lib/flags";
 import {
   Card,
   CardContent,
@@ -8,7 +7,9 @@ import {
   CardTitle,
 } from "@games/shared";
 import { Button } from "@games/shared";
+
 import { SubscribeButton } from "@/components/billing/SubscribeButton";
+import { flags } from "@/lib/flags";
 
 export default function PricingPage() {
   const paymentsEnabled = flags.payments;

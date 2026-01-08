@@ -1,9 +1,9 @@
 // frontend/components/games/GameFooter.tsx
 "use client";
 
+import { Button } from "@games/shared/components/ui/button";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@games/shared/components/ui/button";
 import { useGame } from "../../contexts/GameContext";
 
 export function GameFooter() {

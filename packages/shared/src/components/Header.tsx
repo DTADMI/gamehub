@@ -1,12 +1,12 @@
 "use client";
 
+import { Button } from "@games/shared/components/ui/button";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 
+import { useFeature } from "../lib/flags";
 import { LanguageToggle } from "./LanguageToggle";
 import { ModeToggle } from "./ModeToggle";
-import { Button } from "@games/shared/components/ui/button";
-import { useFeature } from "../lib/flags";
 
 export function Header() {
   const showAdmin = useFeature("ADMIN", false);

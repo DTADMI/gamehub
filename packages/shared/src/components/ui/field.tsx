@@ -1,10 +1,10 @@
 "use client";
 
+import { Label } from "@games/shared/components/ui/label";
+import { Separator } from "@games/shared/components/ui/separator";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
 
-import { Label } from "@games/shared/components/ui/label";
-import { Separator } from "@games/shared/components/ui/separator";
 import { cn } from "../../lib/utils";
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {

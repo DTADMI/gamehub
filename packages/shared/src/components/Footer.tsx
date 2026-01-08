@@ -1,13 +1,13 @@
 // frontend/components/Footer.tsx
 "use client";
 
+import { Button } from "@games/shared/components/ui/button";
 import { Gamepad2, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { ModeToggle } from "./ModeToggle";
-import { Button } from "@games/shared/components/ui/button";
 import { CONTACT_EMAIL, GITHUB_URL, LINKEDIN_URL, mailto } from "../lib/env";
+import { ModeToggle } from "./ModeToggle";
 
 const footerLinks = [
   {

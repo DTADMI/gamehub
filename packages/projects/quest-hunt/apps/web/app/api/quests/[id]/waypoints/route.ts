@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
+
 import { requireAuth } from '@/lib/server/auth';
-import { createWaypoint, listWaypoints } from '@/lib/server/waypoints';
 import { waypointCreateSchema } from '@/lib/server/schemas';
+import { createWaypoint, listWaypoints } from '@/lib/server/waypoints';
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {

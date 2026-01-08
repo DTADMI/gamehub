@@ -7,7 +7,7 @@ export async function listWaypoints(questId: string) {
     .select('*')
     .eq('quest_id', questId)
     .order('order_index', { ascending: true });
-  if (error) throw error;
+  if (error) {throw error;}
   return data ?? [];
 }
 
@@ -19,7 +19,7 @@ export async function createWaypoint(questId: string, values: any, userId: strin
     .select('created_by')
     .eq('id', questId)
     .single();
-  if (qErr) throw qErr;
+  if (qErr) {throw qErr;}
   if (!quest || quest.created_by !== userId) {
     throw Object.assign(new Error('Not authorized'), { status: 403 });
   }
@@ -28,7 +28,7 @@ export async function createWaypoint(questId: string, values: any, userId: strin
     .insert([{ ...values, quest_id: questId }])
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -45,7 +45,7 @@ export async function updateWaypoint(
     .select('quest_id, quests!inner(created_by)')
     .eq('id', waypointId)
     .single();
-  if (jErr) throw jErr;
+  if (jErr) {throw jErr;}
   // @ts-ignore created_by from join
   if (!join || (join as any).quests.created_by !== userId || (join as any).quest_id !== questId) {
     throw Object.assign(new Error('Not authorized'), { status: 403 });
@@ -57,7 +57,7 @@ export async function updateWaypoint(
     .eq('quest_id', questId)
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -69,7 +69,7 @@ export async function deleteWaypoint(questId: string, waypointId: string, userId
     .select('quest_id, quests!inner(created_by)')
     .eq('id', waypointId)
     .single();
-  if (jErr) throw jErr;
+  if (jErr) {throw jErr;}
   // @ts-ignore
   if (!join || (join as any).quests.created_by !== userId || (join as any).quest_id !== questId) {
     throw Object.assign(new Error('Not authorized'), { status: 403 });
@@ -79,6 +79,6 @@ export async function deleteWaypoint(questId: string, waypointId: string, userId
     .delete()
     .eq('id', waypointId)
     .eq('quest_id', questId);
-  if (error) throw error;
+  if (error) {throw error;}
   return true;
 }

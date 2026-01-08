@@ -1,20 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@games/shared';
-import { BadgeRarity, BadgeStats, BadgeWithProgress } from '@/types/badges';
-import { badgeService } from '@/lib/badge-service';
-import { BadgeCard } from '@/components/badges/BadgeCard';
 import { Skeleton } from '@games/shared';
 import { Button } from '@games/shared';
-import { Award, Check, Filter, Sparkles, Trophy, Zap } from 'lucide-react';
 import { cn } from '@games/shared';
 import { Badge } from '@games/shared';
-import { useAuth } from '@/hooks/use-auth';
+import { Input } from '@games/shared';
 // Dropdown components
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { Input } from '@games/shared';
+import { Award, Check, Filter, Sparkles, Trophy, Zap } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import { BadgeCard } from '@/components/badges/BadgeCard';
+import { useAuth } from '@/hooks/use-auth';
+import { badgeService } from '@/lib/badge-service';
+import { BadgeRarity, BadgeStats, BadgeWithProgress } from '@/types/badges';
 
 const rarityOrder: Record<BadgeRarity, number> = {
   common: 0,
@@ -46,7 +47,7 @@ export default function BadgesPage() {
 
   // Fetch badges and stats
   useEffect(() => {
-    if (!user?.id) return;
+    if (!user?.id) {return;}
 
     const loadData = async () => {
       try {

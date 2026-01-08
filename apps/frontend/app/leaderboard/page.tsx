@@ -1,9 +1,5 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
-
 import { useSubscription } from "@games/shared/contexts/SubscriptionContext";
 import {
   fetchLeaderboardPaged,
@@ -12,6 +8,9 @@ import {
   type LeaderboardScope,
   type TimeWindow,
 } from "@games/shared/lib/graphql/queries";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect, useMemo, useState } from "react";
 
 const GAME_TYPES: GameType[] = [
   "SNAKE",

@@ -7,7 +7,7 @@ type Row = {
 
 async function getFollowers(): Promise<Row[]> {
   const res = await apiFetch("/social/followers", { cache: "no-store" as any });
-  if (!res.ok) return [];
+  if (!res.ok) {return [];}
   return res.json();
 }
 

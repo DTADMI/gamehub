@@ -11,7 +11,7 @@ export async function startQuest(questId: string, userId: string) {
     )
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -24,7 +24,7 @@ export async function completeQuest(questId: string, userId: string) {
     .eq('user_id', userId)
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -35,6 +35,6 @@ export async function visitWaypoint(waypointId: string, userId: string, proof?: 
     .insert([{ waypoint_id: waypointId, user_id: userId, proof: proof ?? null }])
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }

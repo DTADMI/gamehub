@@ -1,7 +1,8 @@
-import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+
 import { requireAuth } from '@/lib/server/auth';
+import { createClient } from '@/lib/supabase/server';
 
 const questSchema = z.object({
   title: z.string().min(3).max(100),
@@ -57,7 +58,7 @@ export async function GET(request: Request) {
     query = query.order('created_at', { ascending: sort === 'oldest' }).range(from, to);
 
     const { data, error, count } = await query;
-    if (error) throw error;
+    if (error) {throw error;}
 
     return NextResponse.json({
       items: data ?? [],
@@ -101,7 +102,7 @@ export async function POST(request: Request) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {throw error;}
 
     return NextResponse.json(quest, { status: 201 });
   } catch (error) {

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { requireAuth } from '@/lib/server/auth';
 import { completeQuest } from '@/lib/server/progress';
 

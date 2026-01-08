@@ -1,10 +1,10 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 export default function HeaderUser() {
   const { data, status } = useSession();
-  if (status === "loading") return <span />;
+  if (status === "loading") {return <span />;}
   const user = data?.user;
   if (!user) {
     return (

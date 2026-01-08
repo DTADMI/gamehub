@@ -7,7 +7,7 @@ export type Flags = Record<FlagKeys, boolean>;
 
 function readBool(name: string, fallback = false): boolean {
   const v = process.env[name];
-  if (v == null) return fallback;
+  if (v == null) {return fallback;}
   const s = String(v).trim().toLowerCase();
   return s === "1" || s === "true" || s === "yes" || s === "on";
 }

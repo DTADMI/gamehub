@@ -17,7 +17,7 @@ const WebEnvSchema = z.object({
 let _env: z.infer<typeof WebEnvSchema> | null = null;
 
 export function getWebEnv() {
-  if (_env) return _env;
+  if (_env) {return _env;}
   _env = WebEnvSchema.parse(process.env);
   return _env;
 }

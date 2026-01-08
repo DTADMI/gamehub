@@ -2,6 +2,7 @@
 "use client";
 
 import { Progress } from "@games/shared/components/ui/progress";
+
 import { GameStats } from "../../lib/gameProgress";
 
 interface GameProgressProps {

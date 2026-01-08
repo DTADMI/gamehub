@@ -1,6 +1,7 @@
-import { Controller, Get, Param, UseGuards, Request, Query } from "@nestjs/common";
-import { ProjectsService } from "./projects.service";
+import { Controller, Get, Param, Query,Request, UseGuards } from "@nestjs/common";
+
 import { OptionalJwtAuthGuard } from "../auth/guards/optional-jwt-auth.guard";
+import { ProjectsService } from "./projects.service";
 
 @Controller("projects")
 export class ProjectsController {

@@ -1,10 +1,10 @@
 "use client";
 
-import { cva, type VariantProps } from "class-variance-authority";
-
 import { Button } from "@games/shared/components/ui/button";
 import { Input } from "@games/shared/components/ui/input";
 import { Textarea } from "@games/shared/components/ui/textarea";
+import { cva, type VariantProps } from "class-variance-authority";
+
 import { cn } from "../../lib/utils";
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {

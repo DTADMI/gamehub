@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { apiFetch } from "@/lib/api";
 
 export async function POST(req: Request) {
@@ -18,6 +19,6 @@ export async function POST(req: Request) {
   }
   const data = await res.json();
   const url = data?.url as string | undefined;
-  if (!url) return new NextResponse("No checkout URL", { status: 500 });
+  if (!url) {return new NextResponse("No checkout URL", { status: 500 });}
   return NextResponse.redirect(url, { status: 303 });
 }

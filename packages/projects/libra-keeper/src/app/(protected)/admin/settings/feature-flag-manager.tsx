@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-
-import { Button } from "@games/shared/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@games/shared";
 import { Input } from "@games/shared";
 import { Label } from "@games/shared";
 import { Switch } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface FeatureFlag {
   id?: string;

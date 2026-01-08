@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import Link from '@tiptap/extension-link';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Link from '@tiptap/extension-link';
+import React, { useEffect } from 'react';
 
 type TipTapEditorProps = {
   value: string;
@@ -36,7 +36,7 @@ export function TipTapEditor({ value, onChange, placeholder, className }: TipTap
     }
   }, [value]);
 
-  if (!editor) return null;
+  if (!editor) {return null;}
 
   return (
     <div className="border rounded-md">

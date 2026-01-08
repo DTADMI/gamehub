@@ -1,25 +1,26 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { apiFetch } from "@/lib/api";
-import { redirect } from "next/navigation";
 import { Card } from "@games/shared";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 async function getCharacters() {
   const res = await apiFetch("/world/characters", { cache: "no-store" });
-  if (!res.ok) return [];
+  if (!res.ok) {return [];}
   return res.json();
 }
 
 async function getLocations() {
   const res = await apiFetch("/world/locations", { cache: "no-store" });
-  if (!res.ok) return [];
+  if (!res.ok) {return [];}
   return res.json();
 }
 
 export default async function WorldPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/signin");
+  if (!session) {redirect("/signin");}
 
   const [characters, locations] = await Promise.all([getCharacters(), getLocations()]);
 

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { flags } from "@/lib/flags";
 
 export function GET() {

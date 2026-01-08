@@ -1,10 +1,9 @@
 "use client";
 
+import { Button } from "@games/shared/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-
-import { Button } from "@games/shared/components/ui/button";
 
 export function ModeToggle() {
   const { setTheme, resolvedTheme } = useTheme();

@@ -1,10 +1,10 @@
 // src/app/layout.tsx
 import "./globals.css";
 
+import { Toaster } from "@games/shared";
 import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@games/shared";
 
 const inter = Inter({ subsets: ["latin"] });
 

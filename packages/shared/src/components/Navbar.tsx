@@ -1,12 +1,12 @@
 // frontend/components/Navbar.tsx
 "use client";
 
+import { Button, cn, ModeToggle } from "@games/shared";
 import { Gamepad2, Github, Linkedin, LogIn, Menu, UserPlus, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Button, cn, ModeToggle } from "@games/shared";
 import { GITHUB_URL, LINKEDIN_URL } from "../lib/env";
 
 const navItems = [

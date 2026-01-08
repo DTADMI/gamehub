@@ -1,10 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { profileUpdateSchema } from '@/lib/server/schemas';
 import { Button } from '@games/shared';
 import { Input } from '@games/shared';
 import { Textarea } from '@games/shared';
@@ -13,9 +8,15 @@ import { Skeleton } from '@games/shared';
 import { Card, CardContent, CardHeader, CardTitle } from '@games/shared';
 import { Avatar, AvatarFallback, AvatarImage } from '@games/shared';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@games/shared';
-import { BadgeCard } from '@/components/badges/BadgeCard';
-import { ActivityFeed } from '@/components/activity/ActivityFeed';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { MapPin, Star, Trophy } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { ActivityFeed } from '@/components/activity/ActivityFeed';
+import { BadgeCard } from '@/components/badges/BadgeCard';
+import { profileUpdateSchema } from '@/lib/server/schemas';
 
 type ProfileForm = {
   username?: string;
@@ -85,9 +86,9 @@ export default function ProfilePage() {
         }
       } catch (e) {
         console.error(e);
-        if (!abort) setError('Failed to load profile');
+        if (!abort) {setError('Failed to load profile');}
       } finally {
-        if (!abort) setLoading(false);
+        if (!abort) {setLoading(false);}
       }
     })();
     return () => {
@@ -103,7 +104,7 @@ export default function ProfilePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
       });
-      if (!res.ok) throw new Error('Failed to update profile');
+      if (!res.ok) {throw new Error('Failed to update profile');}
       router.refresh();
     } catch (e) {
       console.error(e);

@@ -1,11 +1,11 @@
 // src/app/dashboard/page.tsx
+import { Badge } from "@games/shared";
+import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 
 import { ActivityFeed } from "@/components/activity/activity-feed";
-import { Badge } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 

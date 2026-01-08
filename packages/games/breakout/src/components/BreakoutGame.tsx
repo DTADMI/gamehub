@@ -1,9 +1,8 @@
 "use client";
 
 import { GameContainer, ParticlePool, soundManager, useGameSettings } from "@games/shared";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-
 import { submitScore } from "@games/shared/lib/graphql/queries";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
 

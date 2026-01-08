@@ -37,11 +37,5 @@
     "./packages/**/*.ts",
     "./packages/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "**/node_modules",
-    "**/dist",
-    "**/*.md",
-    "**/*.mdx"
-  ]
+  "exclude": ["node_modules", "**/node_modules", "**/dist", "**/*.md", "**/*.mdx"]
 }

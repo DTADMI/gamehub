@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+
 import { requireAuth } from '@/lib/server/auth';
+import { createClient } from '@/lib/supabase/server';
 
 // Leaderboard based on quests completed (count of quest_progress rows with status='completed')
 
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
       .from('quest_progress')
       .select('user_id, status')
       .eq('status', 'completed');
-    if (rowsErr) throw rowsErr;
+    if (rowsErr) {throw rowsErr;}
 
     const counts = new Map<string, number>();
     for (const r of rows ?? []) {

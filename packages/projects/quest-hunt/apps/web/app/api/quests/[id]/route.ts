@@ -1,7 +1,8 @@
-import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+
 import { requireAuth } from '@/lib/server/auth';
+import { createClient } from '@/lib/supabase/server';
 
 const questSchema = z
   .object({

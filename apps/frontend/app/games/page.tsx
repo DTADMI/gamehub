@@ -2,10 +2,9 @@
 "use client";
 
 import { listGames } from "@games/shared";
-import React from "react";
-
 import GamesList from "@games/shared/components/games/GamesList";
 import { useFlags } from "@games/shared/contexts/FlagsContext";
+import React from "react";
 
 export default function GamesPage() {
   const { flags } = useFlags();

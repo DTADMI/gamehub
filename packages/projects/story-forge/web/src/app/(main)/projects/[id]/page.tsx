@@ -1,12 +1,13 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { apiFetch } from "@/lib/api";
-import { ProjectEditor } from "@/components/editor/project-editor";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { ProjectEditor } from "@/components/editor/project-editor";
+import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 async function getProject(id: string) {
   const res = await apiFetch(`/projects/${id}`, { cache: "no-store" });
-  if (!res.ok) return null;
+  if (!res.ok) {return null;}
   return res.json();
 }
 
@@ -24,7 +25,7 @@ async function updateSettings(id: string, formData: FormData) {
 
 async function getUserPreferences(userId: string) {
   const res = await apiFetch(`/users/${userId}`, { cache: "no-store" });
-  if (!res.ok) return null;
+  if (!res.ok) {return null;}
   const user = await res.json();
   return user?.settings?.preferences;
 }
@@ -32,7 +33,7 @@ async function getUserPreferences(userId: string) {
 export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
   const userId = (session?.user as any)?.id as string | undefined;
-  if (!session || !userId) redirect("/signin");
+  if (!session || !userId) {redirect("/signin");}
 
   const [project, userPreferences] = await Promise.all([
     getProject(params.id),

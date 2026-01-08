@@ -1,6 +1,7 @@
 // apps/web/hooks/use-search.ts
-import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 import { SearchResult } from '@/types/search';
 
 export function useSearch() {
@@ -50,8 +51,8 @@ export function useSearch() {
 
   const handleSearch = (searchQuery: string, searchType: string = type) => {
     const params = new URLSearchParams();
-    if (searchQuery) params.set('q', searchQuery);
-    if (searchType !== 'all') params.set('type', searchType);
+    if (searchQuery) {params.set('q', searchQuery);}
+    if (searchType !== 'all') {params.set('type', searchType);}
 
     router.push(`/search?${params.toString()}`);
     search(searchQuery, searchType);

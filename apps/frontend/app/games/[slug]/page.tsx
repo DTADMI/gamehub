@@ -1,11 +1,10 @@
 "use client";
 
 import { GameShell, getGame } from "@games/shared";
+import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import React from "react";
-
-import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
 
 type PageProps = { params: Promise<{ slug: string }> };
 

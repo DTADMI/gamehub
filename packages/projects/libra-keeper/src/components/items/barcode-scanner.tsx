@@ -1,11 +1,10 @@
 "use client";
 
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { ScanLine } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-import { Button } from "@games/shared/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@games/shared";
 
 interface BarcodeScannerProps {
   onScan: (decodedText: string) => void;

@@ -11,7 +11,7 @@ type DialogProps = {
 };
 
 export function Dialog({ open, onOpenChange, title, description, children, footer }: DialogProps) {
-  if (!open) return null;
+  if (!open) {return null;}
   return (
     <div
       role="dialog"

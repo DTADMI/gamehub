@@ -1,6 +1,9 @@
 // src/app/auth/signin/page.tsx
 "use client";
 
+import { Input } from "@games/shared";
+import { Label } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -8,9 +11,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { Icons } from "@/components/icons";
-import { Button } from "@games/shared/components/ui/button";
-import { Input } from "@games/shared";
-import { Label } from "@games/shared";
 
 export default function SignInPage() {
   const router = useRouter();

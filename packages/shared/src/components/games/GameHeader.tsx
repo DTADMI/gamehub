@@ -2,13 +2,12 @@
 "use client";
 
 import { useSound } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
 import { Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 
-import { LanguageToggle } from "../LanguageToggle";
-import { Button } from "@games/shared/components/ui/button";
 import { useGame } from "../../contexts/GameContext";
-
+import { LanguageToggle } from "../LanguageToggle";
 import { GameProgress } from "./GameProgress";
 
 export function GameHeader() {

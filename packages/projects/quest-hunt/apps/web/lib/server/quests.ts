@@ -6,7 +6,7 @@ export async function listQuests() {
     .from('quests')
     .select('*, created_by:profiles(username)')
     .order('created_at', { ascending: false });
-  if (error) throw error;
+  if (error) {throw error;}
   return data ?? [];
 }
 
@@ -17,7 +17,7 @@ export async function getQuest(id: string) {
     .select('*, created_by:profiles(username)')
     .eq('id', id)
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -28,7 +28,7 @@ export async function createQuest(values: any, userId: string) {
     .insert([{ ...values, created_by: userId }])
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -40,7 +40,7 @@ export async function updateQuest(id: string, values: any, userId: string) {
     .select('created_by')
     .eq('id', id)
     .single();
-  if (fetchErr) throw fetchErr;
+  if (fetchErr) {throw fetchErr;}
   if (!existing || existing.created_by !== userId) {
     throw Object.assign(new Error('Not authorized'), { status: 403 });
   }
@@ -50,7 +50,7 @@ export async function updateQuest(id: string, values: any, userId: string) {
     .eq('id', id)
     .select()
     .single();
-  if (error) throw error;
+  if (error) {throw error;}
   return data;
 }
 
@@ -61,11 +61,11 @@ export async function deleteQuest(id: string, userId: string) {
     .select('created_by')
     .eq('id', id)
     .single();
-  if (fetchErr) throw fetchErr;
+  if (fetchErr) {throw fetchErr;}
   if (!existing || existing.created_by !== userId) {
     throw Object.assign(new Error('Not authorized'), { status: 403 });
   }
   const { error } = await supabase.from('quests').delete().eq('id', id);
-  if (error) throw error;
+  if (error) {throw error;}
   return true;
 }

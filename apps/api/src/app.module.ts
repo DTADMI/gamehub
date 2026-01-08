@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
+
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { PrismaModule } from "./modules/prisma/prisma.module";
-import { AuthModule } from "./modules/auth/auth.module";
 import { AccessControlModule } from "./modules/access-control/access-control.module";
+import { AuthModule } from "./modules/auth/auth.module";
+import { PrismaModule } from "./modules/prisma/prisma.module";
 import { ProjectsModule } from "./modules/projects/projects.module";
 
 @Module({

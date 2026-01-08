@@ -1,12 +1,11 @@
 "use client";
 
 import { GameShell } from "@games/shared";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-
 import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
 import { useAuth } from "@games/shared/contexts/AuthContext";
 import { submitScore } from "@games/shared/lib/graphql/queries";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const TetrisGame = dynamic(() => import("@games/tetris").then((m) => m.TetrisGame), {
   ssr: false,

@@ -1,8 +1,9 @@
 // B:\git\quest-hunt\apps\web\app\quests\page.tsx
-import { createClient } from '@/lib/supabase/server';
-import { QuestList } from '@/components/quests/quest-list';
 import { Button } from '@games/shared';
 import Link from 'next/link';
+
+import { QuestList } from '@/components/quests/quest-list';
+import { createClient } from '@/lib/supabase/server';
 
 export default async function QuestsPage() {
   const supabase = createClient();

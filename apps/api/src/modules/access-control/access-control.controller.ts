@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Delete, Patch, Param, Body, UseGuards, Req } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req,UseGuards } from "@nestjs/common";
 import { Request } from "express";
-import { AccessControlService } from "./access-control.service";
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+
 import { AdminGuard } from "../auth/guards/admin.guard";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { AccessControlService } from "./access-control.service";
 import { CheckAccessDto, GrantAccessDto, UpdateAccessTierDto } from "./dto";
 
 @Controller("access")

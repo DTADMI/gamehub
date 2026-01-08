@@ -1,16 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { Activity, ActivityType } from '@/types/activity';
-import { webSocketService } from '@/lib/websocket';
-import { groupActivitiesByDate } from '@/lib/date-utils';
-import { ActivityItem } from './ActivityItem';
 import { Tabs, TabsList, TabsTrigger } from '@games/shared';
 import { Skeleton } from '@games/shared';
 import { Button } from '@games/shared';
-import { Bell, BellOff, RefreshCw } from 'lucide-react';
 import { ScrollArea } from '@games/shared';
 import { useToast } from '@games/shared';
+import { Bell, BellOff, RefreshCw } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { groupActivitiesByDate } from '@/lib/date-utils';
+import { webSocketService } from '@/lib/websocket';
+import { Activity, ActivityType } from '@/types/activity';
+
+import { ActivityItem } from './ActivityItem';
 
 interface ActivityFeedProps {
   initialActivities?: Activity[];
@@ -43,7 +45,7 @@ export function ActivityFeed({
 
   // Fetch more activities
   const fetchMoreActivities = useCallback(async () => {
-    if (isLoading || !hasMore) return;
+    if (isLoading || !hasMore) {return;}
 
     try {
       setIsLoading(true);
@@ -104,7 +106,7 @@ export function ActivityFeed({
       .filter((activity) => !activity.isRead)
       .map((activity) => activity.id);
 
-    if (unreadIds.length === 0) return;
+    if (unreadIds.length === 0) {return;}
 
     setActivities((prev) =>
       prev.map((activity) => (!activity.isRead ? { ...activity, isRead: true } : activity))

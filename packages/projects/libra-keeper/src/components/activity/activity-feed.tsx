@@ -1,11 +1,11 @@
 // src/components/activity/activity-feed.tsx
 "use client";
 
+import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { formatDistanceToNow } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { Icons } from "@/components/icons";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 
 type Activity = {
   id: string;

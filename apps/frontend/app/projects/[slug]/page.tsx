@@ -1,13 +1,13 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getProjectBySlug, getAllProjects } from "@games/shared";
+import { getAllProjects,getProjectBySlug } from "@games/shared";
 import { Badge } from "@games/shared";
 import { Button } from "@games/shared";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@games/shared";
 import { Separator } from "@games/shared";
-import { Lock, PlayCircle, CheckCircle2, ExternalLink } from "lucide-react";
+import { CheckCircle2, ExternalLink,Lock, PlayCircle } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface ProjectPageProps {
   params: {

@@ -1,8 +1,9 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
 
 // Centralized NextAuth v5 config for the App Router
 // Usage:
@@ -21,11 +22,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       authorize: async (credentials) => {
         const email = credentials?.email?.toString().toLowerCase().trim();
         const password = credentials?.password?.toString() ?? "";
-        if (!email || !password) return null;
+        if (!email || !password) {return null;}
         const user = await prisma.user.findFirst({ where: { email } });
-        if (!user?.passwordHash) return null;
+        if (!user?.passwordHash) {return null;}
         const ok = await bcrypt.compare(password, user.passwordHash);
-        if (!ok) return null;
+        if (!ok) {return null;}
         return {
           id: user.id,
           name: user.name ?? undefined,
@@ -39,12 +40,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user?.id) (token as any).uid = (user as any).id;
+      if (user?.id) {(token as any).uid = (user as any).id;}
       return token;
     },
     async session({ session, token }) {
       if (session.user && (token as any)?.uid)
-        (session.user as any).id = (token as any).uid as string;
+        {(session.user as any).id = (token as any).uid as string;}
       return session;
     },
   },

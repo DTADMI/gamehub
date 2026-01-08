@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+
 import { requireAuth } from '@/lib/server/auth';
+import { createClient } from '@/lib/supabase/server';
 
 // Minimal Friends API (MVP)
 // Tables expected (Supabase):
@@ -9,7 +10,7 @@ import { requireAuth } from '@/lib/server/auth';
 export async function GET(request: Request) {
   try {
     const { user } = await requireAuth();
-    if (!user) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    if (!user) {return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });}
     const supabase = createClient();
 
     // Get accepted friends and pending requests involving the user
@@ -19,7 +20,7 @@ export async function GET(request: Request) {
       .or(`user_id.eq.${user.id},friend_id.eq.${user.id}`)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {throw error;}
     return NextResponse.json({ items: data ?? [] });
   } catch (e: any) {
     // If table missing or RLS prevents read, return empty list for MVP resilience
@@ -34,7 +35,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const { user } = await requireAuth();
-    if (!user) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    if (!user) {return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });}
     const body = await request.json().catch(() => ({}));
     const friend_id = body?.friend_id as string | undefined;
     if (!friend_id || typeof friend_id !== 'string') {
@@ -55,7 +56,7 @@ export async function POST(request: Request) {
       )
       .limit(1)
       .maybeSingle();
-    if (checkErr) throw checkErr;
+    if (checkErr) {throw checkErr;}
     if (existing) {
       return NextResponse.json(
         { error: 'Friend request already exists', status: existing.status },
@@ -68,7 +69,7 @@ export async function POST(request: Request) {
       .insert({ user_id: user.id, friend_id, status: 'pending' })
       .select('id, user_id, friend_id, status, created_at')
       .single();
-    if (error) throw error;
+    if (error) {throw error;}
     return NextResponse.json(data, { status: 201 });
   } catch (e: any) {
     if (e?.message?.includes('relation')) {

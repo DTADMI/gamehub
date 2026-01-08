@@ -1,12 +1,11 @@
 "use client";
 
-import { format, isSameDay } from "date-fns";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-
 import { Badge } from "@games/shared";
 import { Calendar } from "@games/shared";
 import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
+import { format, isSameDay } from "date-fns";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface Loan {
   id: string;

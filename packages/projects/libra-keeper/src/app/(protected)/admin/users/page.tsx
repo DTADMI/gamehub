@@ -1,12 +1,11 @@
 // src/app/(protected)/admin/users/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@games/shared";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type UserRole = "ADMIN" | "USER";
 type User = {

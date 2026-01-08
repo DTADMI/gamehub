@@ -1,5 +1,6 @@
-import { flags } from "@/lib/flags";
 import { Button } from "@games/shared";
+
+import { flags } from "@/lib/flags";
 
 export default function PricingPage() {
   return (

@@ -5,10 +5,9 @@
 // hooks read SubscriptionContext during build.
 export const dynamic = "force-dynamic";
 
+import { useSubscription } from "@games/shared/contexts/SubscriptionContext";
 import Link from "next/link";
 import React, { useEffect } from "react";
-
-import { useSubscription } from "@games/shared/contexts/SubscriptionContext";
 
 export default function SubscribeSuccessPage() {
   const { refresh } = useSubscription();

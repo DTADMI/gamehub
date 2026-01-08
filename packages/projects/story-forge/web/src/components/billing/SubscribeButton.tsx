@@ -1,6 +1,6 @@
 "use client";
-import * as React from "react";
 import { Button } from "@games/shared";
+import * as React from "react";
 
 type Plan = "monthly" | "yearly" | "lifetime";
 
@@ -12,7 +12,7 @@ export function SubscribeButton({ plan, disabled }: { plan: Plan; disabled?: boo
       disabled={disabled || loading}
       aria-disabled={disabled || loading}
       onClick={async () => {
-        if (disabled) return;
+        if (disabled) {return;}
         try {
           setLoading(true);
           const res = await fetch("/api/billing/checkout", {

@@ -1,7 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { Avatar, AvatarFallback, AvatarImage } from '@games/shared/components/ui/avatar';
+import { Badge } from '@games/shared/components/ui/badge';
+import { Button } from '@games/shared/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@games/shared/components/ui/card';
+import { Progress } from '@games/shared/components/ui/progress';
+import { Skeleton } from '@games/shared/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@games/shared/components/ui/tabs';
 import {
   AlertCircle,
   CheckCircle,
@@ -16,19 +27,9 @@ import {
   Share2,
   Star,
 } from 'lucide-react';
-import { Button } from '@games/shared/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@games/shared/components/ui/tabs';
-import { Badge } from '@games/shared/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@games/shared/components/ui/avatar';
-import { Progress } from '@games/shared/components/ui/progress';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@games/shared/components/ui/card';
-import { Skeleton } from '@games/shared/components/ui/skeleton';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 import { MapContainer } from '@/components/map/MapContainer';
 
 // Types
@@ -162,12 +163,12 @@ export default function QuestDetailPage() {
         setIsLoading(true);
         // Fetch quest
         const resQuest = await fetch(`/api/quests/${id}`, { signal: controller.signal });
-        if (!resQuest.ok) throw new Error('Failed to load quest');
+        if (!resQuest.ok) {throw new Error('Failed to load quest');}
         const questRow = await resQuest.json();
 
         // Fetch waypoints
         const resWp = await fetch(`/api/quests/${id}/waypoints`, { signal: controller.signal });
-        if (!resWp.ok) throw new Error('Failed to load waypoints');
+        if (!resWp.ok) {throw new Error('Failed to load waypoints');}
         const waypointRows = await resWp.json();
 
         const waypoints: Waypoint[] = (waypointRows || []).map((wp: any, idx: number) => ({
@@ -213,9 +214,9 @@ export default function QuestDetailPage() {
         setQuest(hydrated);
         setIsBookmarked(hydrated.isBookmarked);
 
-        if (waypoints.length > 0) setActiveWaypointIndex(0);
+        if (waypoints.length > 0) {setActiveWaypointIndex(0);}
       } catch (err) {
-        if ((err as any).name === 'AbortError') return;
+        if ((err as any).name === 'AbortError') {return;}
         console.error('Error loading quest:', err);
         setError('Failed to load quest. Please try again later.');
       } finally {
@@ -231,7 +232,7 @@ export default function QuestDetailPage() {
 
   // Handle waypoint completion
   const handleCompleteWaypoint = (waypointId: string) => {
-    if (!quest) return;
+    if (!quest) {return;}
 
     const updatedWaypoints = quest.waypoints.map((wp) => {
       if (wp.id === waypointId) {

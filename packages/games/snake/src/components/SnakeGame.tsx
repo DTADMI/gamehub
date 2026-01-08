@@ -2,9 +2,8 @@
 
 // games/snake/src/components/SnakeGame.tsx
 import { GameContainer, soundManager } from "@games/shared";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-
 import { submitScore } from "@games/shared/lib/graphql/queries";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   CELL_SIZE,

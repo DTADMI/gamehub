@@ -70,7 +70,7 @@ export async function searchUsers(
 }
 
 export async function suggestUsers(query: string, limit: number = 5): Promise<SearchResultItem[]> {
-  if (!query.trim()) return [];
+  if (!query.trim()) {return [];}
 
   try {
     const results = await prisma.user.findMany({

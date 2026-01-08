@@ -7,6 +7,7 @@ import {
   versionedLoad,
   versionedSave,
 } from "@games/shared";
+import { t } from "@games/shared/lib/i18n";
 import {
   detectLang,
   effects,
@@ -47,8 +48,6 @@ import {
   type WiresState,
 } from "@games/shared/pointclick/puzzles/wires";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-
-import { t } from "@games/shared/lib/i18n";
 
 import { E1CabinetCanvas } from "./E1CabinetCanvas";
 

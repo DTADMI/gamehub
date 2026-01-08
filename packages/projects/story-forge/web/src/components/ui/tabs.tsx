@@ -27,7 +27,7 @@ export function Tabs({
   const active = value ?? internal;
 
   const setActive = (v: string) => {
-    if (!value) setInternal(v);
+    if (!value) {setInternal(v);}
     onValueChange?.(v);
   };
 
@@ -70,6 +70,6 @@ export function TabsContent({
   value: string;
   active: string;
 }) {
-  if (value !== active) return null;
+  if (value !== active) {return null;}
   return <div className={twMerge("py-3", className)} {...props} />;
 }

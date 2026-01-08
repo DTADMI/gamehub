@@ -1,10 +1,5 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
-import { cva, VariantProps } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
-import * as React from "react";
-
 import { Button } from "@games/shared/components/ui/button";
 import { Input } from "@games/shared/components/ui/input";
 import { Separator } from "@games/shared/components/ui/separator";
@@ -23,6 +18,11 @@ import {
   TooltipTrigger,
 } from "@games/shared/components/ui/tooltip";
 import { useIsMobile } from "@games/shared/hooks/use-mobile";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, VariantProps } from "class-variance-authority";
+import { PanelLeftIcon } from "lucide-react";
+import * as React from "react";
+
 import { cn } from "../../lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";

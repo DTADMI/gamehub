@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import HeaderUser from "@/components/header/User";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {

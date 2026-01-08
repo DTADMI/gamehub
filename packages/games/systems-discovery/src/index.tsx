@@ -1,5 +1,7 @@
 "use client";
 import { Scene, SceneController } from "@games/shared";
+import HomeostasisMeter from "@games/shared/components/sysdisc/HomeostasisMeter";
+import { t } from "@games/shared/lib/i18n";
 import {
   createPipesState,
   evaluatePipes,
@@ -8,9 +10,6 @@ import {
   toggleValve,
 } from "@games/shared/pointclick/puzzles/pipes";
 import React, { useState } from "react";
-
-import HomeostasisMeter from "@games/shared/components/sysdisc/HomeostasisMeter";
-import { t } from "@games/shared/lib/i18n";
 
 const BreathPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) => {
   const [state, setState] = useState<PipesState>(() =>

@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+
 import { requireAuth } from '@/lib/server/auth';
+import { createClient } from '@/lib/supabase/server';
 import { Activity, ActivityType } from '@/types/activity';
 
 export async function GET(request: Request) {
   try {
     const { user } = await requireAuth();
-    if (!user) return new NextResponse('Unauthorized', { status: 401 });
+    if (!user) {return new NextResponse('Unauthorized', { status: 401 });}
 
     const supabase = createClient();
     const { searchParams } = new URL(request.url);
@@ -34,7 +35,7 @@ export async function GET(request: Request) {
     const offset = (page - 1) * limit;
     const { data: dbActivities, error, count } = await query.range(offset, offset + limit - 1);
 
-    if (error) throw error;
+    if (error) {throw error;}
 
     // Transform DB data to Activity type
     const activities: Activity[] = (dbActivities || []).map((act: any) => {

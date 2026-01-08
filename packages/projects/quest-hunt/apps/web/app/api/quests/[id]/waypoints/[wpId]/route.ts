@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
+
 import { requireAuth } from '@/lib/server/auth';
-import { deleteWaypoint, updateWaypoint } from '@/lib/server/waypoints';
 import { waypointUpdateSchema } from '@/lib/server/schemas';
+import { deleteWaypoint, updateWaypoint } from '@/lib/server/waypoints';
 
 export async function PUT(
   request: Request,

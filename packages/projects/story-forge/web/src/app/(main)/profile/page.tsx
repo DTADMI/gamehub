@@ -1,13 +1,14 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { apiFetch } from "@/lib/api";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 async function getUser(id: string) {
   const res = await apiFetch(`/users/${encodeURIComponent(id)}`, {
     cache: "no-store" as any,
   });
-  if (!res.ok) return null;
+  if (!res.ok) {return null;}
   return res.json();
 }
 
@@ -15,14 +16,14 @@ async function getWallet(userId: string) {
   const res = await apiFetch("/gamification/wallet", {
     cache: "no-store" as any,
   });
-  if (!res.ok) return null;
+  if (!res.ok) {return null;}
   return res.json();
 }
 
 async function setGoal(userId: string, formData: FormData) {
   "use server";
   const target = Number(String(formData.get("dailyGoal") || "0"));
-  if (!Number.isFinite(target) || target <= 0) return;
+  if (!Number.isFinite(target) || target <= 0) {return;}
   await apiFetch("/gamification/goals", {
     method: "POST",
     body: JSON.stringify({ target }),
@@ -33,7 +34,7 @@ async function getStreak(userId: string) {
   const res = await apiFetch("/gamification/streak", {
     cache: "no-store" as any,
   });
-  if (!res.ok) return { streak: 0 };
+  if (!res.ok) {return { streak: 0 };}
   return res.json();
 }
 
@@ -55,7 +56,7 @@ async function updateUser(userId: string, formData: FormData) {
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
   const userId = (session?.user as any)?.id as string | undefined;
-  if (!userId) redirect("/signin");
+  if (!userId) {redirect("/signin");}
   const [user, pot, streak] = await Promise.all([
     getUser(userId),
     getWallet(userId),

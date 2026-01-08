@@ -38,7 +38,7 @@ export function Editor({ content, onChange, onSave }: EditorProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [editor, onSave]);
 
-  if (!editor) return null;
+  if (!editor) {return null;}
 
   return (
     <div className="space-y-4">

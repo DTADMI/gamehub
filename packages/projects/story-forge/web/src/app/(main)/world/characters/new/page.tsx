@@ -1,8 +1,9 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { apiFetch } from "@/lib/api";
-import { redirect } from "next/navigation";
 import { Card } from "@games/shared";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 async function createCharacter(formData: FormData) {
   "use server";
@@ -10,7 +11,7 @@ async function createCharacter(formData: FormData) {
   const traits = String(formData.get("traits") || "").trim();
   const bio = String(formData.get("bio") || "").trim();
 
-  if (!name) return;
+  if (!name) {return;}
 
   await apiFetch("/world/characters", {
     method: "POST",
@@ -21,7 +22,7 @@ async function createCharacter(formData: FormData) {
 
 export default async function NewCharacterPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/signin");
+  if (!session) {redirect("/signin");}
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10">

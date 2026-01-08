@@ -1,6 +1,7 @@
 "use client";
 
 import { DialogueBox, GameContainer, InventoryBar } from "@games/shared";
+import { t } from "@games/shared/lib/i18n";
 import {
   loadWithMigrations,
   SAVE_KEYS,
@@ -22,8 +23,6 @@ import {
 } from "@games/shared/pointclick/puzzles/keypad";
 import { createWiresState, setWiresConnection } from "@games/shared/pointclick/puzzles/wires";
 import React, { useEffect, useMemo, useState } from "react";
-
-import { t } from "@games/shared/lib/i18n";
 
 const SAVE_KEY = SAVE_KEYS.rod;
 

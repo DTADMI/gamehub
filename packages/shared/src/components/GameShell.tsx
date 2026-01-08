@@ -1,7 +1,8 @@
 "use client";
 
-import { enableGameKeyCapture, GameHUD, soundManager } from "../";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { enableGameKeyCapture, GameHUD, soundManager } from "../";
 
 type PreloadSound = {
   key: string;

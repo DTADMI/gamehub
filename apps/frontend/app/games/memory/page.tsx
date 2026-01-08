@@ -1,13 +1,12 @@
 "use client";
 
 import { GameShell } from "@games/shared";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-
 import LocalLeaderboard, { submitLocalScore } from "@games/shared/components/games/LocalLeaderboard";
 import StatsPanel from "@games/shared/components/games/StatsPanel";
 import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
 import { useProfile } from "@games/shared/contexts/ProfileContext";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const MemoryGame = dynamic(() => import("@games/memory").then((m) => m.MemoryGame), {
   ssr: false,

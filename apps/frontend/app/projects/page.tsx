@@ -1,6 +1,6 @@
-import { Metadata } from "next";
 import { getAllProjects, getEnabledProjects, getFeaturedProjects } from "@games/shared";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@games/shared";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Projects | GameHub",
@@ -41,7 +41,7 @@ export default function ProjectsPage() {
         <TabsContent value="all">
           {categories.map((category) => {
             const categoryProjects = allProjects.filter((p) => p.category === category);
-            if (categoryProjects.length === 0) return null;
+            if (categoryProjects.length === 0) {return null;}
 
             return (
               <div key={category} className="mb-12">

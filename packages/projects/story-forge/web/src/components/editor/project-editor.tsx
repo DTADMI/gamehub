@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Editor } from "@/components/editor/editor";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { Editor } from "@/components/editor/editor";
 
 interface ProjectEditorProps {
   project: {
@@ -24,7 +25,7 @@ export function ProjectEditor({ project, userPreferences }: ProjectEditorProps) 
   const router = useRouter();
 
   useEffect(() => {
-    if (!userPreferences?.breakReminders) return;
+    if (!userPreferences?.breakReminders) {return;}
 
     const interval = setInterval(() => {
       const now = Date.now();

@@ -1,7 +1,7 @@
-import { getServerSession } from "next-auth";
-
 import { Badge } from "@games/shared";
 import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
+import { getServerSession } from "next-auth";
+
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 

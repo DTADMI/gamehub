@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { Button } from '@games/shared';
+import Link from 'next/link';
 
 export default function Home() {
   return (

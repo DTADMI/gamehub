@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function DescriptionHTML({ html, className }: Props) {
-  if (!html) return null;
+  if (!html) {return null;}
   const safe = DOMPurify.sanitize(html);
   return <div className={className} dangerouslySetInnerHTML={{ __html: safe }} />;
 }

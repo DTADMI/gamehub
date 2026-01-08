@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { requireAuth } from '@/lib/server/auth';
 import { visitWaypoint } from '@/lib/server/progress';
 import { visitWaypointSchema } from '@/lib/server/schemas';

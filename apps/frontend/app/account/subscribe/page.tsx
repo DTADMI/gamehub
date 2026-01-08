@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
-
 import PlanPicker from "@games/shared/components/billing/PlanPicker";
 import { useAuth } from "@games/shared/contexts/AuthContext";
+import Link from "next/link";
+import React from "react";
 
 export default function SubscribePage() {
   const { user } = useAuth();

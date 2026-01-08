@@ -1,15 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-
 import { Icons } from "@games/shared";
 import { Button } from "@games/shared/components/ui/button";
 import { Input } from "@games/shared/components/ui/input";
 import { Label } from "@games/shared/components/ui/label";
 import { useToast } from "@games/shared/components/ui/use-toast";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default function LoginForm() {
   const { toast } = useToast();

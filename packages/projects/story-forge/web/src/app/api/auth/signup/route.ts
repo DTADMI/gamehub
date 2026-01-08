@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { NextResponse } from "next/server";
 import { z } from "zod";
+
+import { prisma } from "@/lib/prisma";
 
 const SignUpSchema = z.object({
   email: z.string().email().max(320),

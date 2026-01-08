@@ -1,11 +1,12 @@
-import { Activity } from '@/types/activity';
-import { formatRelativeTime } from '@/lib/date-utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@games/shared';
 import { Badge } from '@games/shared';
 import { Button } from '@games/shared';
 import { Card, CardContent } from '@games/shared';
 import { CheckCircle, MapPin, Trophy, Users, Zap } from 'lucide-react';
 import Link from 'next/link';
+
+import { formatRelativeTime } from '@/lib/date-utils';
+import { Activity } from '@/types/activity';
 
 interface ActivityItemProps {
   activity: Activity;

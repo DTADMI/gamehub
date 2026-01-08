@@ -1,23 +1,24 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { apiFetch } from "@/lib/api";
-import { notFound, redirect } from "next/navigation";
-import { FollowButton } from "@/components/social/follow-button";
-import { CheerButton } from "@/components/social/cheer-button";
 import { Card } from "@games/shared/components/ui/card";
 import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { CheerButton } from "@/components/social/cheer-button";
+import { FollowButton } from "@/components/social/follow-button";
+import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 async function getUser(id: string) {
   const res = await apiFetch(`/users/${encodeURIComponent(id)}`, {
     cache: "no-store" as any,
   });
-  if (!res.ok) return null;
+  if (!res.ok) {return null;}
   return res.json();
 }
 
 async function isFollowing(targetId: string) {
   const res = await apiFetch("/social/following", { cache: "no-store" as any });
-  if (!res.ok) return false;
+  if (!res.ok) {return false;}
   const following = await res.json();
   return following.some((f: any) => f.user.id === targetId);
 }
@@ -26,20 +27,20 @@ async function getUserProjects(userId: string) {
   const res = await apiFetch(`/projects?userId=${encodeURIComponent(userId)}`, {
     cache: "no-store" as any,
   });
-  if (!res.ok) return [];
+  if (!res.ok) {return [];}
   return res.json();
 }
 
 export default async function UserProfilePage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
   const currentUserId = (session?.user as any)?.id as string | undefined;
-  if (!currentUserId) redirect("/signin");
+  if (!currentUserId) {redirect("/signin");}
 
   // If viewing own profile, redirect to /profile
-  if (currentUserId === params.id) redirect("/profile");
+  if (currentUserId === params.id) {redirect("/profile");}
 
   const [user, projects] = await Promise.all([getUser(params.id), getUserProjects(params.id)]);
-  if (!user) notFound();
+  if (!user) {notFound();}
 
   const initialFollowing = await isFollowing(params.id);
 

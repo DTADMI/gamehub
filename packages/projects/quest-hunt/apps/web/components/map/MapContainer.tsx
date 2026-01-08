@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { MapPin } from 'lucide-react';
+
 import { Button } from '@games/shared';
+import { MapPin } from 'lucide-react';
+import maplibregl from 'maplibre-gl';
+import { useEffect, useRef, useState } from 'react';
 
 interface MapContainerProps {
   initialViewState?: {
@@ -50,7 +51,7 @@ export function MapContainer({
 
   // Initialize map
   useEffect(() => {
-    if (!mapContainer.current) return;
+    if (!mapContainer.current) {return;}
 
     try {
       // Set default view if no initial view is provided
@@ -128,7 +129,7 @@ export function MapContainer({
 
   // Add markers to the map
   useEffect(() => {
-    if (!map.current || !markers.length) return;
+    if (!map.current || !markers.length) {return;}
 
     const markersList: maplibregl.Marker[] = [];
 
@@ -176,7 +177,7 @@ export function MapContainer({
 
   // Add current location marker
   useEffect(() => {
-    if (!map.current || !currentLocation) return;
+    if (!map.current || !currentLocation) {return;}
 
     const el = document.createElement('div');
     el.className = 'current-location-marker';

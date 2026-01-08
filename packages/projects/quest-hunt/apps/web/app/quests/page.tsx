@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useDebounce } from 'use-debounce';
-import { Search } from 'lucide-react';
 import { Button } from '@games/shared';
 import { Input } from '@games/shared';
 import { Skeleton } from '@games/shared';
+import { Search } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
+
 import { QuestList } from '@/components/quests/quest-list';
 
 // Types
@@ -85,15 +86,15 @@ export default function QuestsPage() {
       try {
         setIsLoading(true);
         const params = new URLSearchParams();
-        if (debouncedSearch) params.set('q', debouncedSearch);
-        if (difficultyFilter !== 'all') params.set('difficulty', difficultyFilter);
-        if (sortBy) params.set('sort', sortBy === 'newest' ? 'newest' : 'oldest');
+        if (debouncedSearch) {params.set('q', debouncedSearch);}
+        if (difficultyFilter !== 'all') {params.set('difficulty', difficultyFilter);}
+        if (sortBy) {params.set('sort', sortBy === 'newest' ? 'newest' : 'oldest');}
         const res = await fetch(`/api/quests?${params.toString()}`, {
           signal: controller.signal,
           headers: { Accept: 'application/json' },
           cache: 'no-store',
         });
-        if (!res.ok) throw new Error('Failed to load quests');
+        if (!res.ok) {throw new Error('Failed to load quests');}
         const json = await res.json();
         setQuests(json.items ?? []);
         setTotal(json.total ?? 0);
@@ -117,11 +118,11 @@ export default function QuestsPage() {
   // Update URL with filters
   useEffect(() => {
     const params = new URLSearchParams();
-    if (debouncedSearch) params.set('q', debouncedSearch);
-    if (difficultyFilter !== 'all') params.set('difficulty', difficultyFilter);
-    if (sortBy !== 'newest') params.set('sort', sortBy);
-    if (page !== 1) params.set('page', String(page));
-    if (limit !== 12) params.set('limit', String(limit));
+    if (debouncedSearch) {params.set('q', debouncedSearch);}
+    if (difficultyFilter !== 'all') {params.set('difficulty', difficultyFilter);}
+    if (sortBy !== 'newest') {params.set('sort', sortBy);}
+    if (page !== 1) {params.set('page', String(page));}
+    if (limit !== 12) {params.set('limit', String(limit));}
 
     router.replace(`/quests?${params.toString()}`, { scroll: false });
   }, [debouncedSearch, difficultyFilter, sortBy, page, limit, router]);
@@ -134,11 +135,11 @@ export default function QuestsPage() {
     const pageParam = searchParams.get('page');
     const limitParam = searchParams.get('limit');
 
-    if (search) setSearchTerm(search);
-    if (difficulty) setDifficultyFilter(difficulty);
-    if (sort) setSortBy(sort);
-    if (pageParam) setPage(Math.max(1, parseInt(pageParam, 10) || 1));
-    if (limitParam) setLimit(Math.min(50, Math.max(1, parseInt(limitParam, 10) || 12)));
+    if (search) {setSearchTerm(search);}
+    if (difficulty) {setDifficultyFilter(difficulty);}
+    if (sort) {setSortBy(sort);}
+    if (pageParam) {setPage(Math.max(1, parseInt(pageParam, 10) || 1));}
+    if (limitParam) {setLimit(Math.min(50, Math.max(1, parseInt(limitParam, 10) || 12)));}
   }, [searchParams]);
 
   const handleResetFilters = () => {

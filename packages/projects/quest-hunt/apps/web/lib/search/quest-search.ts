@@ -79,7 +79,7 @@ export async function searchQuests(
 }
 
 export async function suggestQuests(query: string, limit: number = 5): Promise<SearchResultItem[]> {
-  if (!query.trim()) return [];
+  if (!query.trim()) {return [];}
 
   try {
     const results = await prisma.quest.findMany({

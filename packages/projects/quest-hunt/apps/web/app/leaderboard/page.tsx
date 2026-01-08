@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Card, CardContent } from '@games/shared';
 import { Avatar, AvatarFallback, AvatarImage } from '@games/shared';
-import { Loader2, Medal, Trophy } from 'lucide-react';
 import { toast } from '@games/shared';
+import { Loader2, Medal, Trophy } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface LeaderboardEntry {
   user_id: string;

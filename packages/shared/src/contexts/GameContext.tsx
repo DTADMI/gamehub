@@ -7,7 +7,6 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 
 import { GameStats, getGameProgress, saveGameProgress } from "../lib/gameProgress";
 import { Game, getGame as getGameById } from "../metadata/games";
-
 import { useAuth } from "./AuthContext";
 
 interface GameContextType {

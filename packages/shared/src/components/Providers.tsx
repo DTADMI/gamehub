@@ -1,8 +1,8 @@
 "use client";
 
+import { ThemeProvider } from "@games/shared";
 import { SessionProvider } from "next-auth/react";
 
-import { ThemeProvider } from "@games/shared";
 import { AuthProvider } from "../contexts/AuthContext";
 import { FlagsProvider } from "../contexts/FlagsContext";
 import { ProfileProvider } from "../contexts/ProfileContext";

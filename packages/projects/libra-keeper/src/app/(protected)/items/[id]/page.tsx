@@ -1,10 +1,10 @@
+import { Badge } from "@games/shared/components/ui/badge";
+import { Button } from "@games/shared/components/ui/button";
+import { Separator } from "@games/shared/components/ui/separator";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { Badge } from "@games/shared/components/ui/badge";
-import { Button } from "@games/shared/components/ui/button";
-import { Separator } from "@games/shared/components/ui/separator";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 

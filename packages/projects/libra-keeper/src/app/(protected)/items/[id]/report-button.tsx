@@ -1,10 +1,6 @@
 // src/app/(protected)/items/[id]/report-button.tsx
 "use client";
 
-import { useState } from "react";
-import { toast } from "sonner";
-
-import { Icons } from "@/components/icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,6 +14,10 @@ import {
 } from "@games/shared/components/ui/alert-dialog";
 import { Button } from "@games/shared/components/ui/button";
 import { Textarea } from "@games/shared/components/ui/textarea";
+import { useState } from "react";
+import { toast } from "sonner";
+
+import { Icons } from "@/components/icons";
 
 interface ReportButtonProps {
   itemId: string;

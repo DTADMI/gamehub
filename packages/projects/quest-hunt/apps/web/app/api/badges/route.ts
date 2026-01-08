@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { listBadges } from '@/lib/server/badges';
 
 export async function GET() {

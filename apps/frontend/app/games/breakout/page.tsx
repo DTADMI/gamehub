@@ -1,15 +1,14 @@
 "use client";
 
 import { GameShell } from "@games/shared";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-
 import LocalLeaderboard, { submitLocalScore } from "@games/shared/components/games/LocalLeaderboard";
 import StatsPanel from "@games/shared/components/games/StatsPanel";
 import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
 import { useAuth } from "@games/shared/contexts/AuthContext";
 import { useProfile } from "@games/shared/contexts/ProfileContext";
 import { submitScore } from "@games/shared/lib/graphql/queries";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const BreakoutGame = dynamic(() => import("@games/breakout").then((m) => m.BreakoutGame), {
   ssr: false,

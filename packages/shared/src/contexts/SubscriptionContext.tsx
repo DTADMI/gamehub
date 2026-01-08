@@ -2,8 +2,8 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-import { useAuth } from "./AuthContext";
 import { fetchViewer, type Plan } from "../lib/graphql/queries";
+import { useAuth } from "./AuthContext";
 
 type Subscription = {
   id: string;

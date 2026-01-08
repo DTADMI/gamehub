@@ -1,12 +1,11 @@
 "use client";
 
-import { listGames, listProjects, Carousel, GameCard } from "@games/shared";
+import { Carousel, GameCard,listGames, listProjects } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
+import { useFeature } from "@games/shared/lib/flags";
 import * as Tabs from "@radix-ui/react-tabs";
 import { FolderKanban, Gamepad2 } from "lucide-react";
 import Link from "next/link";
-
-import { Button } from "@games/shared/components/ui/button";
-import { useFeature } from "@games/shared/lib/flags";
 
 type Game = {
   id: string;

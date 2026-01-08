@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@games/shared';
+import { useState } from 'react';
 
 type Props = {
   questId: string;
@@ -15,7 +15,7 @@ export function StartQuestButton({ questId }: Props) {
     try {
       setLoading(true);
       const res = await fetch(`/api/quests/${questId}/start`, { method: 'POST' });
-      if (!res.ok) throw new Error('Failed to start quest');
+      if (!res.ok) {throw new Error('Failed to start quest');}
       setStarted(true);
     } catch (e) {
       console.error(e);

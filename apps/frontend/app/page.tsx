@@ -1,8 +1,7 @@
-import { listGames, listProjects, Carousel, GameCard } from "@games/shared";
+import { Carousel, GameCard,listGames, listProjects } from "@games/shared";
+import { Button } from "@games/shared/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-
-import { Button } from "@games/shared/components/ui/button";
 
 type HomeGame = {
   id: string;

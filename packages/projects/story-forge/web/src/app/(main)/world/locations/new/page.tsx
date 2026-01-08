@@ -1,15 +1,16 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { apiFetch } from "@/lib/api";
-import { redirect } from "next/navigation";
 import { Card } from "@games/shared";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { apiFetch } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 
 async function createLocation(formData: FormData) {
   "use server";
   const name = String(formData.get("name") || "").trim();
   const description = String(formData.get("description") || "").trim();
 
-  if (!name) return;
+  if (!name) {return;}
 
   await apiFetch("/world/locations", {
     method: "POST",
@@ -20,7 +21,7 @@ async function createLocation(formData: FormData) {
 
 export default async function NewLocationPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/signin");
+  if (!session) {redirect("/signin");}
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10">

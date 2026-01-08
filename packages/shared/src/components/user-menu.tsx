@@ -1,8 +1,7 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
-
 import { Button } from "@games/shared/components/ui/button";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export function UserMenu() {
   const { data: session, status } = useSession();

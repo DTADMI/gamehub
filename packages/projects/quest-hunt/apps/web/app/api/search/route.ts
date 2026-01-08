@@ -1,5 +1,6 @@
 // apps/web/app/api/search/route.ts
 import { NextResponse } from 'next/server';
+
 import { searchQuests, suggestQuests } from '@/lib/search/quest-search';
 import { searchUsers, suggestUsers } from '@/lib/search/user-search';
 
