@@ -5,55 +5,49 @@
 1. Express.js
 
    Pros:
-
-    - Mature & Stable: Battle-tested with a massive ecosystem
-    - Minimalist: Unopinionated, gives you full control
-    - Performance: Lightweight with minimal overhead
-    - Flexibility: Can structure the code however you like
-    - Ecosystem: Largest NPM package ecosystem
-    - Learning Curve: Easy to onboard new developers
+   - Mature & Stable: Battle-tested with a massive ecosystem
+   - Minimalist: Unopinionated, gives you full control
+   - Performance: Lightweight with minimal overhead
+   - Flexibility: Can structure the code however you like
+   - Ecosystem: Largest NPM package ecosystem
+   - Learning Curve: Easy to onboard new developers
 
    Cons:
-
-    - Boilerplate: Need to set up many things manually
-    - Architecture: No enforced structure (can be a pro or con)
-    - TypeScript Support: Additional setup required
-    - Scalability: Requires manual implementation of patterns
+   - Boilerplate: Need to set up many things manually
+   - Architecture: No enforced structure (can be a pro or con)
+   - TypeScript Support: Additional setup required
+   - Scalability: Requires manual implementation of patterns
 
 2. NestJS
 
    Pros:
-
-    - Structured: Opinionated architecture with clear patterns
-    - TypeScript First: Excellent TypeScript support out of the box
-    - Modular: Perfect for microservices and monorepos
-    - Built-in Features: Authentication, validation, WebSockets, etc.
-    - Dependency Injection: Makes testing and maintenance easier
-    - Documentation: Excellent and comprehensive
+   - Structured: Opinionated architecture with clear patterns
+   - TypeScript First: Excellent TypeScript support out of the box
+   - Modular: Perfect for microservices and monorepos
+   - Built-in Features: Authentication, validation, WebSockets, etc.
+   - Dependency Injection: Makes testing and maintenance easier
+   - Documentation: Excellent and comprehensive
 
    Cons:
-
-    - Learning Curve: Steeper than Express
-    - Boilerplate: Can feel heavy for simple services
-    - Performance: Slightly more overhead than Express
-    - Less Flexibility: More opinionated structure
+   - Learning Curve: Steeper than Express
+   - Boilerplate: Can feel heavy for simple services
+   - Performance: Slightly more overhead than Express
+   - Less Flexibility: More opinionated structure
 
 3. Deno
 
    Pros:
-
-    - Modern Runtime: Built with TypeScript in mind
-    - Security: Secure by default (explicit permissions)
-    - Built-in Tools: Testing, formatting, and linting included
-    - ES Modules: Native support for ES modules
-    - Fresh Framework: Modern alternative to Express in Deno
+   - Modern Runtime: Built with TypeScript in mind
+   - Security: Secure by default (explicit permissions)
+   - Built-in Tools: Testing, formatting, and linting included
+   - ES Modules: Native support for ES modules
+   - Fresh Framework: Modern alternative to Express in Deno
 
    Cons:
-
-    - Ecosystem: Smaller community and fewer packages
-    - Maturity: Newer runtime, fewer production use cases
-    - Compatibility: May need polyfills for some Node.js packages
-    - Learning Curve: Different from Node.js ecosystem
+   - Ecosystem: Smaller community and fewer packages
+   - Maturity: Newer runtime, fewer production use cases
+   - Compatibility: May need polyfills for some Node.js packages
+   - Learning Curve: Different from Node.js ecosystem
 
 ### Recommendation: NestJS
 
@@ -97,13 +91,13 @@ If you're concerned about NestJS's learning curve:
 ### When to Consider Alternatives
 
 - Choose Express if:
-    - You need maximum performance
-    - You prefer minimal abstraction
-    - Your team is already proficient with Express
+  - You need maximum performance
+  - You prefer minimal abstraction
+  - Your team is already proficient with Express
 - Choose Deno if:
-    - You're starting a greenfield project
-    - You want modern JavaScript/TypeScript features
-    - You value security and built-in tooling
+  - You're starting a greenfield project
+  - You want modern JavaScript/TypeScript features
+  - You value security and built-in tooling
 
 ### Final Note
 
@@ -202,10 +196,10 @@ the long-term benefits of a well-structured, type-safe backend.
 ### Caching
 
 - Redis for:
-    - Session storage
-    - Rate limiting
-    - Leaderboard caching
-    - Feature flags
+  - Session storage
+  - Rate limiting
+  - Leaderboard caching
+  - Feature flags
 
 ## DevOps & Infrastructure
 
@@ -473,7 +467,7 @@ name: Deploy to Cloud Run
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:

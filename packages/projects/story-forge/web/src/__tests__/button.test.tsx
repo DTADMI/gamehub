@@ -1,11 +1,9 @@
-import {render, screen} from '@testing-library/react';
-import {Button} from "@games/shared";
+import { render, screen } from "@testing-library/react";
+import { Button } from "@games/shared";
 
-describe('Button', () => {
-    it('renders with default variant and size', () => {
-        render(<Button>Click me</Button>);
-        expect(
-            screen.getByRole('button', {name: /click me/i})
-        ).toBeInTheDocument();
-    });
+describe("Button", () => {
+  it("renders with default variant and size", () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole("button", { name: /click me/i })).toBeInTheDocument();
+  });
 });

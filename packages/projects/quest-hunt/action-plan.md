@@ -18,7 +18,7 @@ _Last Updated: December 26, 2025_
 - [x] Quest endpoints implemented (`/api/quests`, `/api/quests/[id]`)
 - [x] Waypoints endpoints implemented (`/api/quests/[id]/waypoints`, `/api/quests/[id]/waypoints/[wpId]`)
 - [x] Progress endpoints implemented (`/api/quests/[id]/start`, `/api/quests/[id]/complete`,
-  `/api/waypoints/[wpId]/visit`)
+      `/api/waypoints/[wpId]/visit`)
 - [x] Badges endpoints implemented (`/api/badges`, `/api/badges/stats`, `/api/badges/evaluate`)
 - [x] Shared Zod schemas and service modules under `apps/web/lib/server/*` for forward-compatibility
 - [x] Supabase migrations for progress, visits, badges, profiles, friends, and activities with RLS
@@ -44,53 +44,53 @@ _Last Updated: December 26, 2025_
 
 - [x] Set up quest API endpoints (Next.js Route Handlers under `apps/web/app/api/quests`)
 - [x] Implement quest creation flow
-    - [x] Add form fields for quest details (title, description, difficulty, duration)
-    - [x] Implement rich text editor for quest descriptions (TipTap) — sanitize on render
-    - [x] Implement waypoint management with map integration
-    - [x] Add waypoint edit/delete and reorder within the form UI
-    - [x] Add form validation (Zod + RHF) and server-side validation
+  - [x] Add form fields for quest details (title, description, difficulty, duration)
+  - [x] Implement rich text editor for quest descriptions (TipTap) — sanitize on render
+  - [x] Implement waypoint management with map integration
+  - [x] Add waypoint edit/delete and reorder within the form UI
+  - [x] Add form validation (Zod + RHF) and server-side validation
 - [x] Create quest listing page (refined UI and filters)
-    - [x] Design and implement quest cards
-    - [x] Add server-side filtering by difficulty (URL params → DB query)
-    - [x] Implement sorting options (newest/oldest) server-side
-    - [x] Add server-side search (ILIKE on title/description)
-    - [x] Implement pagination (page/limit with URL sync and controls)
+  - [x] Design and implement quest cards
+  - [x] Add server-side filtering by difficulty (URL params → DB query)
+  - [x] Implement sorting options (newest/oldest) server-side
+  - [x] Add server-side search (ILIKE on title/description)
+  - [x] Implement pagination (page/limit with URL sync and controls)
 
 #### Quest Detail Page
 
 - [x] Implement `/quests/[id]` page
-    - [x] Fetch quest + waypoints (via API)
-    - [x] Render map with markers
-    - [x] Start quest action using `POST /api/quests/:id/start`
-    - [x] Render rich description (stored HTML; sanitizer component available)
+  - [x] Fetch quest + waypoints (via API)
+  - [x] Render map with markers
+  - [x] Start quest action using `POST /api/quests/:id/start`
+  - [x] Render rich description (stored HTML; sanitizer component available)
 
 ### User Profiles
 
 - [x] API endpoints
-    - [x] `GET /api/users/me` — current profile
-    - [x] `PUT /api/users/me` — update current profile
-    - [x] `GET /api/users/[id]` — public profile
-    - [x] `GET /api/users/me/stats` — user quest statistics
-    - [x] `GET /api/users/me/badges` — user unlocked badges
+  - [x] `GET /api/users/me` — current profile
+  - [x] `PUT /api/users/me` — update current profile
+  - [x] `GET /api/users/[id]` — public profile
+  - [x] `GET /api/users/me/stats` — user quest statistics
+  - [x] `GET /api/users/me/badges` — user unlocked badges
 - [x] Profile pages
-    - [x] `/profile` — enriched profile with stats, badges, and activity feed
-    - [x] `/users/[id]` — public profile view
+  - [x] `/profile` — enriched profile with stats, badges, and activity feed
+  - [x] `/users/[id]` — public profile view
 
 ### Social Features
 
 - [x] Friend system
-    - [x] API: list, send, respond, remove
-    - [x] UI: `/friends` page for management
-    - [x] DB: Supabase migrations + RLS (friends table)
+  - [x] API: list, send, respond, remove
+  - [x] UI: `/friends` page for management
+  - [x] DB: Supabase migrations + RLS (friends table)
 - [x] Activity feed
-    - [x] DB-backed activities table and queries
-    - [x] Feed UI on profile
+  - [x] DB-backed activities table and queries
+  - [x] Feed UI on profile
 
 ### Gamification
 
 - [x] Leaderboards
-    - [x] API: top users by quests completed
-    - [x] UI: `/leaderboard` page
+  - [x] API: top users by quests completed
+  - [x] UI: `/leaderboard` page
 
 ## 🟡 In Progress
 
@@ -101,15 +101,15 @@ _Last Updated: December 26, 2025_
 ### Social Features
 
 - [ ] Messaging system
-    - [ ] Schema (threads/messages)
-    - [ ] Endpoints
-    - [ ] Basic UI
+  - [ ] Schema (threads/messages)
+  - [ ] Endpoints
+  - [ ] Basic UI
 
 ### Gamification
 
 - [ ] Achievements
-    - [x] Badges UI component
-    - [ ] Additional badge definitions and evaluation hooks
+  - [x] Badges UI component
+  - [ ] Additional badge definitions and evaluation hooks
 
 ## 🔴 Planned
 

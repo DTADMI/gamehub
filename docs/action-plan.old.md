@@ -55,40 +55,35 @@ Legend: ✅ Completed • 🟡 In Progress • 🔜 Next • 🗂️ Backlog
 - 🔜 Scene services: timers, cutscene runner, per‑scene blackboard
 - 🔜 Versioned save migrations: `rod:save:v1`, `tme:save:v1`, `sysdisc:save:v1`
 
-2) New puzzle primitives & wrappers
+2. New puzzle primitives & wrappers
 
 - 🟡 Gears ratio mesh (logic + UI wrapper, ≥44px targets)
 - 🔜 Pipes/Flow (network satisfaction)
 - 🔜 Sorter (tap/drag categories; reduced‑motion path)
 
-3) Game delivery
+3. Game delivery
 
 - TME (Episode 1)
-    - ✅ Keypad gate integrated; inventory award, medal flag
-    - 🟡 Implement Gears mini and integrate into scene flow
-    - 🔜 Implement Sorter mini; add EN/FR copy polish; captions a11y sweep
-    - 🔜 Save migration and unit tests for guards/effects
+  - ✅ Keypad gate integrated; inventory award, medal flag
+  - 🟡 Implement Gears mini and integrate into scene flow
+  - 🔜 Implement Sorter mini; add EN/FR copy polish; captions a11y sweep
+  - 🔜 Save migration and unit tests for guards/effects
 - ROD
-    - 🟡 Keypad + Wires gates; guarded choices, inventory (0–3)
-    - 🔜 EN/FR copy; captions; accessibility sweep
-    - 🔜 Local save + migration; progression tests
+  - 🟡 Keypad + Wires gates; guarded choices, inventory (0–3)
+  - 🔜 EN/FR copy; captions; accessibility sweep
+  - 🔜 Local save + migration; progression tests
 - SD (Core + Body Systems: Breath, Fuel, Move, Signal, Grow)
-    - 🟡 Core + Breath playable with smokes (existing BOD Breath smoke retained)
-    - 🔜 Fuel/Move/Signal/Grow simple educational puzzles using primitives
-    - 🔜 Local saves, badges per pack
-
-    6) Monorepo Transition (Architecture Upgrade)
-
-    - ✅ Initialize `pnpm-workspace.yaml` and formalize workspaces
-    - ✅ Migrate `libs/shared` to `packages/shared`
+  - 🟡 Core + Breath playable with smokes (existing BOD Breath smoke retained)
+  - 🔜 Fuel/Move/Signal/Grow simple educational puzzles using primitives
+  - 🔜 Local saves, badges per pack
+  6. Monorepo Transition (Architecture Upgrade)
+  - ✅ Initialize `pnpm-workspace.yaml` and formalize workspaces
+  - ✅ Migrate `libs/shared` to `packages/shared`
   - ✅ Scaffold `apps/api` (NestJS/TypeScript Node.js server)
     - 🔜 Setup Turborepo for optimized builds/tasks
   - 🔜 Implement Core Backend Features (Health, Meta, Auth Scaffolding)
     - 🗂️ Integrate Prisma/Drizzle ORM with PostgreSQL
-  - 🗂️ Game Metadata API and Score Service
-
-    7) New Games Pipeline (from Roadmap)
-
+  - 🗂️ Game Metadata API and Score Service 7. New Games Pipeline (from Roadmap)
     - ✅ ChronoShift Labyrinth: Scaffolded (upcoming)
     - ✅ Elemental Conflux: Scaffolded (upcoming)
     - ✅ Quantum Architect: Scaffolded (upcoming)
@@ -96,13 +91,13 @@ Legend: ✅ Completed • 🟡 In Progress • 🔜 Next • 🗂️ Backlog
     - 🔜 Engine: Implement `MultiCharacterPlugin` for Elemental Conflux
     - 🔜 Engine: Implement `ObserverPlugin` for Quantum Architect
 
-4) Tests & CI
+4. Tests & CI
 
 - ✅ Unit: keypad/sequence/wires
 - 🟡 Add unit: gears; scene progression tests for TME/ROD/SD
 - 🟡 Playwright E2E smokes per title (desktop + mobile Pixel 5/iPhone 12)
 
-5) Docs & Assets
+5. Docs & Assets
 
 - ✅ README: engine architecture + keypad/sequence/wires usage examples
 - 🟡 Add `/docs/narrative/scene-puzzles.md` (designer handoff briefs) and update per title
@@ -124,44 +119,44 @@ Legend: ✅ Completed • 🟡 In Progress • 🔜 Next • 🗂️ Backlog
 - ✅ TME: integrated keypad gate in E1; local save `tme:save:v1`.
 
 - ✅ Engine improvements to implement now (mobile‑first, complex puzzles):
-    - ✅ InputSequenceDetector integration with `InputManager` for gesture macros (tap patterns, hold‑then‑drag). ✓
-    - ✅ Scene Services (API + unit tests): timers (pausable), cutscene runner, and a tiny per‑scene blackboard with
-      typed hooks. ✓
-    - ✅ Additional puzzle primitives (pure logic + light UI wrappers): ✓
-        - ✅ sequence/simon (logic, hint playback, strict mode) ✓
-        - ✅ wires/connectors (no crossings, target mapping, helpers) ✓
-        - ✅ gears ratio mesh (ratio evaluator, target match, tolerances) ✓
-        - ✅ pipes/flow (grid pathing, leaks, goal constraints) ✓
-    - ✅ Persistence helpers: versioned save helpers + migration stubs for `rod:save:v1`, `tme:save:v1`,
-      `sysdisc:save:v1`. ✓
+  - ✅ InputSequenceDetector integration with `InputManager` for gesture macros (tap patterns, hold‑then‑drag). ✓
+  - ✅ Scene Services (API + unit tests): timers (pausable), cutscene runner, and a tiny per‑scene blackboard with
+    typed hooks. ✓
+  - ✅ Additional puzzle primitives (pure logic + light UI wrappers): ✓
+    - ✅ sequence/simon (logic, hint playback, strict mode) ✓
+    - ✅ wires/connectors (no crossings, target mapping, helpers) ✓
+    - ✅ gears ratio mesh (ratio evaluator, target match, tolerances) ✓
+    - ✅ pipes/flow (grid pathing, leaks, goal constraints) ✓
+  - ✅ Persistence helpers: versioned save helpers + migration stubs for `rod:save:v1`, `tme:save:v1`,
+    `sysdisc:save:v1`. ✓
 
 - ✅ Game implementation (parallel TME → ROD → SD):
-    - TME (Episode 1)
-        - ✅ Gears mesh mini + medals; inventory use on hotspot ✓
-        - ✅ Sorter mini (tap/drag) with reduced‑motion path ✓
-        - ✅ EN/FR final copy pass; captions and a11y review ✓
-    - ROD
-        - ✅ Keypad door + wires/connectors puzzle; guarded choices with flags ✓
-        - ✅ EN/FR strings, inventory 0–3, captions region, reduced‑motion ✓
-    - SD (Core + Body Systems: Breath, Fuel, Move, Signal, Grow)
-        - ✅ Implement simple educational variants using primitives (e.g. Pipes for Breath); EN/FR copy ✓
-        - ✅ Local saves, badges per pack ✓
+  - TME (Episode 1)
+    - ✅ Gears mesh mini + medals; inventory use on hotspot ✓
+    - ✅ Sorter mini (tap/drag) with reduced‑motion path ✓
+    - ✅ EN/FR final copy pass; captions and a11y review ✓
+  - ROD
+    - ✅ Keypad door + wires/connectors puzzle; guarded choices with flags ✓
+    - ✅ EN/FR strings, inventory 0–3, captions region, reduced‑motion ✓
+  - SD (Core + Body Systems: Breath, Fuel, Move, Signal, Grow)
+    - ✅ Implement simple educational variants using primitives (e.g. Pipes for Breath); EN/FR copy ✓
+    - ✅ Local saves, badges per pack ✓
 
 - ✅ Tests & CI
-    - ✅ Unit tests for each puzzle primitive (keypad, sequence, wires, gears, pipes). ✓
-    - ✅ Scene graph/progression unit tests (guards/effects) and Scene Services tests (timers/cutscene/blackboard). ✓
-    - ✅ Playwright E2E smokes per title path (one golden path each: ROD, TME, SD). ✓
+  - ✅ Unit tests for each puzzle primitive (keypad, sequence, wires, gears, pipes). ✓
+  - ✅ Scene graph/progression unit tests (guards/effects) and Scene Services tests (timers/cutscene/blackboard). ✓
+  - ✅ Playwright E2E smokes per title path (one golden path each: ROD, TME, SD). ✓
 
 - ✅ Docs & Assets
-    - ✅ README — engine overview and examples (expand with Scene Services + primitives usage). ✓
-    - ✅ docs/ — per‑game scene & puzzle briefs with steps/hints/assets (TME E1 updated with filenames). ✓
-    - ✅ Narrative puzzle cleverness pass (observation, environmental clues) — focus TME E1 first ✓ plan approved ✓
-    - ✅ Add designer briefs for TME E1 (scenes, objects, props, audio, VFX) with asset lists + filenames (EN/FR). ✓
-    - [ ] public/credits.md — add placeholder asset credits as needed
+  - ✅ README — engine overview and examples (expand with Scene Services + primitives usage). ✓
+  - ✅ docs/ — per‑game scene & puzzle briefs with steps/hints/assets (TME E1 updated with filenames). ✓
+  - ✅ Narrative puzzle cleverness pass (observation, environmental clues) — focus TME E1 first ✓ plan approved ✓
+  - ✅ Add designer briefs for TME E1 (scenes, objects, props, audio, VFX) with asset lists + filenames (EN/FR). ✓
+  - [ ] public/credits.md — add placeholder asset credits as needed
 
 - ✅ Localization & Settings
-    - ✅ EN/FR flat JSON per title; tiny i18n helper with persistence in localStorage. ✓
-    - ✅ Language switch in header with persistence; in-game header toggle; E2E smoke added. ✓
+  - ✅ EN/FR flat JSON per title; tiny i18n helper with persistence in localStorage. ✓
+  - ✅ Language switch in header with persistence; in-game header toggle; E2E smoke added. ✓
 
 Notes: Frontend‑only MVPs; EN/FR localization; accessibility guardrails; mobile‑first ≥44px targets; local saves.
 
@@ -197,9 +192,9 @@ wires, pipes, and gesture macros. Maintain a11y parity and reduced-motion.
 - [x] Register input macro `holdThenDrag` to reveal hidden latch hotspot; update blackboard flags. ✓
 - [x] Persist discovered clues/solves in `tme:save:v1`. ✓
 - [x] Unit tests: sequence, wires, gears, pipes; scene progression for TME E1 (logic units added for pipes; others
-  present). ✓
+      present). ✓
 - [x] Playwright smoke (desktop + Pixel 5) golden path solving at least one optional hint (added ROD and SD smokes too).
-  ✓
+      ✓
 - [x] Docs: README section "Designing clever puzzles" and `docs/narrative/scene-puzzles.md` with TME E1 briefs. ✓
 
 ### Designer brief — assets & scene description (summary)
@@ -265,23 +260,23 @@ Deliverables tracked under Docs & Assets and committed in `docs/narrative/scene-
 7. Narrative Games (ROD, TME, SD) — per your approval to proceed now
 
 - [ ] Shared point‑and‑click engine: scene graph, hotspot system, dialogue UI, inventory/flags, timers; exportable
-  hooks. 🟡
-    - [x] Keep `core/*` runtime as primary; add `EngineCtx`, `guards`, `effects`, and migrations in helpers. ✓
-    - [x] Add React `DialogueBox` and `InventoryBar` for a11y/mobile. ✓
-    - [x] Puzzle primitives: `keypad` + unit tests. ✓
-    - [ ] Puzzle primitives: `sequence/simon`, `wires/connectors`, `gears` ratio mesh, `pipes/flow`. 🟡
+      hooks. 🟡
+  - [x] Keep `core/*` runtime as primary; add `EngineCtx`, `guards`, `effects`, and migrations in helpers. ✓
+  - [x] Add React `DialogueBox` and `InventoryBar` for a11y/mobile. ✓
+  - [x] Puzzle primitives: `keypad` + unit tests. ✓
+  - [ ] Puzzle primitives: `sequence/simon`, `wires/connectors`, `gears` ratio mesh, `pipes/flow`. 🟡
   - [x] Add `visible: boolean` attribute to game manifest for selective catalog display. ✓
   - [x] NestJS Backend Scaffolded (`apps/api`). ✓
 - [x] i18n foundation: EN/FR namespaces per title, language switch in header with persistence. ✓
 - [ ] Saves: localStorage with versioned keys `rod:save:v1`, `tme:save:v1`, `sysdisc:save:v1` + migration stubs. 🟡
 - [ ] TME MVP: implement Intro → E1 routes, gears mini, sorter puzzle, medals, wrap; a11y & mobile pass. 🟡
-    - [x] Intro → E1 keypad gate (2413) integrated; inventory gains `gear-key`. ✓
-    - [ ] Gears mesh mini (ratio engagement) with medal award. 🟡
-    - [ ] Sorter mini (tap/drag categories) with hints and reduced‑motion affordance.
+  - [x] Intro → E1 keypad gate (2413) integrated; inventory gains `gear-key`. ✓
+  - [ ] Gears mesh mini (ratio engagement) with medal award. 🟡
+  - [ ] Sorter mini (tap/drag categories) with hints and reduced‑motion affordance.
 - [ ] ROD MVP: implement scenes, hotspots, dialogue per design docs; core puzzles; a11y & mobile pass. 🔜
-    - [ ] Keypad door + wires/connectors puzzle; guarded choices via `guards`.
+  - [ ] Keypad door + wires/connectors puzzle; guarded choices via `guards`.
 - [ ] SD MVP: Core + BOD packs (Breath, Fuel, Move, Signal, Grow) basic paths; badges; a11y & mobile pass. 🔜
-    - [ ] Add Fuel/Move/Signal/Grow simple educational puzzles; EN/FR strings.
+  - [ ] Add Fuel/Move/Signal/Grow simple educational puzzles; EN/FR strings.
 - [ ] Tests: E2E smokes per title + unit tests for scene graph and progression guards. 🟡
 - [ ] Default placeholder assets wired (images/SFX/music) and `public/credits.md` updated. 🟡
 
@@ -299,14 +294,14 @@ Scope: Frontend‑only playable MVPs using the shared point‑and‑click engine
 focus order, captions, ARIA), mobile UX (≥44px targets, overlays, reduced motion), local saves (`rod:save:v1`,
 `tme:save:v1`, `sysdisc:save:v1`). Backend auth/cloud‑saves/remote leaderboards are planned later.
 
-1) Shared Engine & i18n foundation
+1. Shared Engine & i18n foundation
 
 - [ ] Audit shared scene/room engine and hotspot/dialog components; add missing hooks for puzzle state, timers,
-  inventory, and flags. 🟡
+      inventory, and flags. 🟡
 - [ ] Introduce per‑game i18n namespaces with EN/FR JSON; language switcher in header with persistence. 🟡
 - [ ] Save/load versioning and migration stubs for `rod:save:v1`, `tme:save:v1`, `sysdisc:save:v1`. 🟡
 
-2) Toymaker Escape (TME) — MVP
+2. Toymaker Escape (TME) — MVP
 
 - [ ] Scenes & graph: Intro → E1 routes; implement gears mini and sorter puzzle; medals logic and wrap. 🟡
 - [ ] Dialogue/choices and hints; keyboard and touch interactions (≥44px targets). 🟡
@@ -315,14 +310,14 @@ focus order, captions, ARIA), mobile UX (≥44px targets, overlays, reduced moti
 - [ ] Accessibility pass: focus order, roles/labels, reduced‑motion. 🟡
 - [ ] Tests: E2E smoke path to medal; unit tests for gears, sorter, and scene progression. 🟡
 
-3) Rite of Discovery (ROD) — MVP
+3. Rite of Discovery (ROD) — MVP
 
 - [ ] Implement scenes, hotspots, dialogue per design doc; core puzzles and feedback loops. 🔜
 - [ ] EN/FR localization; autosave/restore; Restart. 🔜
 - [ ] Accessibility & mobile pass. 🔜
 - [ ] Tests: E2E smoke across critical path; unit tests for guards and choice outcomes. 🔜
 
-4) Systems Discovery (SD) — Core + Body Systems Packs
+4. Systems Discovery (SD) — Core + Body Systems Packs
 
 - [ ] Core pack: ordered loop, route planner (two solutions), waste sorter with hints. 🔜
 - [ ] Body Systems: Breath, Fuel, Move, Signal, Grow — Intro → BB1 → BB2 → BB3 → Wrap with badges. 🔜
@@ -330,11 +325,11 @@ focus order, captions, ARIA), mobile UX (≥44px targets, overlays, reduced moti
 - [ ] Accessibility & mobile pass. 🔜
 - [ ] Tests: E2E smokes for Core and each BOD sub‑pack; unit tests for planner/loop guards. 🔜
 
-5) Assets & Credits
+5. Assets & Credits
 
 - [ ] Wire placeholder visuals and SFX/music (license‑safe); update `public/credits.md`. 🟡
 
-6) Documentation & CI
+6. Documentation & CI
 
 - [ ] README: routes, controls/UX, i18n usage, saves for ROD/TME/SD. 🟡
 - [ ] CI: add Playwright smokes for ROD/TME/SD (desktop + mobile). 🟡
@@ -369,15 +364,15 @@ Acceptance criteria
 - [x] Added Memory game
 - [x] All 7 MVP games playable and featured (Breakout, Memory, Snake, Knitzy, Bubble Pop, Checkers, Chess)
 - [x] Background re‑looking — galaxy (dark) and star‑glow (light) backgrounds implemented with fallbacks for browsers
-  without OKLCH/color-mix support
+      without OKLCH/color-mix support
 - [x] Section separators softened for seamless layout; backgrounds made clearly visible again (header/footer
-  translucent);
-  game cards normalized to consistent heights while remaining responsive
+      translucent);
+      game cards normalized to consistent heights while remaining responsive
 - [x] Featured alignment — Playable == Featured (single source: games/manifest.ts); Home shows Featured Games and
-  Featured Projects only; Games page lists all games with green Featured and yellow Upcoming badges; images overlaid
-  from lib/games.ts when present
+      Featured Projects only; Games page lists all games with green Featured and yellow Upcoming badges; images overlaid
+      from lib/games.ts when present
 - [x] Knitzy rename — current MVP renamed to “Pattern Matching” (playable); new “Knitzy” entry added as Upcoming;
-  redirect /games/knitzy → /games/pattern-matching; E2E updated
+      redirect /games/knitzy → /games/pattern-matching; E2E updated
 
 ## In Progress
 
@@ -386,97 +381,97 @@ Acceptance criteria
 Legend: ✅ Completed • 🟡 In Progress • 🔜 Next • 🗂️ Backlog
 
 - ✅ Common Systems (shared engine)
-    - ✅ Scene/Room controller (registry + onEnter/next) — implemented in `games/_engine`
-    - ✅ Hotspot component (ARIA, keyboard, focus, data-testid) — `HotspotButton`
-    - ✅ Dialogue/Prompt UI with 2–3 choices — `ChoiceList`
-    - ✅ Save/Load service (localStorage v1; per‑game keys: `rod:save:v1`, `sysdisc:save:v1`, `tme:save:v1`)
+  - ✅ Scene/Room controller (registry + onEnter/next) — implemented in `games/_engine`
+  - ✅ Hotspot component (ARIA, keyboard, focus, data-testid) — `HotspotButton`
+  - ✅ Dialogue/Prompt UI with 2–3 choices — `ChoiceList`
+  - ✅ Save/Load service (localStorage v1; per‑game keys: `rod:save:v1`, `sysdisc:save:v1`, `tme:save:v1`)
 
 ---
 
 ✅ Rite of Discovery — Finish Beta NOW (priority 1)
 
 - Content & Puzzles
-    - [x] Implement S1 tag reassembly mini (3 pieces; keyboard + pointer)
-    - [x] Implement S2 note letter‑match (3 differences; clear/high‑contrast targets)
-    - [x] Implement S3 proof moment branch (receipt vs. overhear) with flags saved
-    - [x] Epilogue screen; Helper Badge unlock; NG+ gate visible
+  - [x] Implement S1 tag reassembly mini (3 pieces; keyboard + pointer)
+  - [x] Implement S2 note letter‑match (3 differences; clear/high‑contrast targets)
+  - [x] Implement S3 proof moment branch (receipt vs. overhear) with flags saved
+  - [x] Epilogue screen; Helper Badge unlock; NG+ gate visible
 - Systems & UX
-    - [x] Gentle Mode copy toggles applied to all dialogue prompts
-    - [x] Inventory placeholder (0–3 items) with labels and focus order
-    - [x] Save migration guard (v1 → v1, no‑op; add future‑proof version field)
+  - [x] Gentle Mode copy toggles applied to all dialogue prompts
+  - [x] Inventory placeholder (0–3 items) with labels and focus order
+  - [x] Save migration guard (v1 → v1, no‑op; add future‑proof version field)
 - Accessibility
-    - [x] 44px targets; visible focus; reduced‑motion stills for animations
-    - [x] Captions container present; basic contrast check completed
+  - [x] 44px targets; visible focus; reduced‑motion stills for animations
+  - [x] Captions container present; basic contrast check completed
 - Content Ops
-    - [x] Strings extracted to en.json namespace `rod.*` (i18n‑ready)
-    - [x] Minimal final art placeholders wired (BG, 2 props, badge SVG)
+  - [x] Strings extracted to en.json namespace `rod.*` (i18n‑ready)
+  - [x] Minimal final art placeholders wired (BG, 2 props, badge SVG)
 - QA & Tests
-    - [x] Playwright: complete S1→EP on both branches of S3
-    - [x] RTL: save/load, flags, gentle‑mode toggle logic
+  - [x] Playwright: complete S1→EP on both branches of S3
+  - [x] RTL: save/load, flags, gentle‑mode toggle logic
 - Acceptance (Beta)
-    - [x] Beta complete and shippable: accessibility pass, E2E/RTL green, minimal final assets in place
+  - [x] Beta complete and shippable: accessibility pass, E2E/RTL green, minimal final assets in place
 
 ---
 
 ✅ Toymaker Escape — Beta Ship Checklist (priority 2; finished)
 
 - Content & Puzzles (E1)
-    - [x] Implement Workshop mini: Gear alignment (gears route) — keyboardable dials
-    - [x] Implement Playroom sorter to reveal Key Fragment 1
-    - [x] Episode complete screen + Codex seed (stub retained)
+  - [x] Implement Workshop mini: Gear alignment (gears route) — keyboardable dials
+  - [x] Implement Playroom sorter to reveal Key Fragment 1
+  - [x] Episode complete screen + Codex seed (stub retained)
 - Systems & UX
-    - [x] Inventory (0–6 items) basic; item adds for plate and key fragment
-    - [x] Medal tally (bronze/silver/gold) — route + hints criteria for E1
+  - [x] Inventory (0–6 items) basic; item adds for plate and key fragment
+  - [x] Medal tally (bronze/silver/gold) — route + hints criteria for E1
 - Accessibility
-    - [x] Keyboard traversal for controls; 44px targets; visible focus
-    - [x] SFX captions region present; volume control exposed (global)
+  - [x] Keyboard traversal for controls; 44px targets; visible focus
+  - [x] SFX captions region present; volume control exposed (global)
 - Content Ops
-    - [x] Strings extracted to en.json namespace `tme.*`
-    - [x] Minimal final art placeholders (Workshop BG, Playroom BG, Key fragment SVG)
+  - [x] Strings extracted to en.json namespace `tme.*`
+  - [x] Minimal final art placeholders (Workshop BG, Playroom BG, Key fragment SVG)
 - QA & Tests
-    - [x] Playwright: flows authored for both gear and music routes
-    - [x] RTL: unit tests planned (medals, inventory) — covered by shared reducer tests
+  - [x] Playwright: flows authored for both gear and music routes
+  - [x] RTL: unit tests planned (medals, inventory) — covered by shared reducer tests
 - Acceptance (Beta)
-    - [x] E1 fully playable with accessibility pass; tests in repo; minimal art in place
+  - [x] E1 fully playable with accessibility pass; tests in repo; minimal art in place
 
 ---
 
 ✅ Systems Discovery — Beta Ship Checklist (priority 3; finished)
 
 - Content & Puzzles (Core)
-    - [x] Implement B1 loop puzzle (Kitchen→Compost→Soil→Herbs)
-    - [x] Implement B2 route planner (Bus/Bike sequence)
-    - [x] Implement B3 waste sorting with hints toggle
-    - [x] Wrap screen + Systems Scout badge
+  - [x] Implement B1 loop puzzle (Kitchen→Compost→Soil→Herbs)
+  - [x] Implement B2 route planner (Bus/Bike sequence)
+  - [x] Implement B3 waste sorting with hints toggle
+  - [x] Wrap screen + Systems Scout badge
 - Systems & UX
-    - [x] Simple UI via accessible buttons; save fields validated; badge on WRAP
+  - [x] Simple UI via accessible buttons; save fields validated; badge on WRAP
 - Accessibility
-    - [x] 44px targets; visible focus; reduced‑motion stills via copy hints
+  - [x] 44px targets; visible focus; reduced‑motion stills via copy hints
 - Content Ops
-    - [x] Strings extracted to en.json namespace `sysdisc.*` (strings file present)
-    - [x] Minimal final art placeholders (1 BG, 3 icons, badge SVG)
+  - [x] Strings extracted to en.json namespace `sysdisc.*` (strings file present)
+  - [x] Minimal final art placeholders (1 BG, 3 icons, badge SVG)
 - QA & Tests
-    - [x] Playwright: B1→WRAP authored with bus-first plan; second plan covered similarly
-    - [x] RTL: unit tests planned for hints/flags — covered by shared state
+  - [x] Playwright: B1→WRAP authored with bus-first plan; second plan covered similarly
+  - [x] RTL: unit tests planned for hints/flags — covered by shared state
 - Acceptance (Beta)
-    - [x] Core pack fully playable with accessibility pass; tests in repo; minimal art in place
+  - [x] Core pack fully playable with accessibility pass; tests in repo; minimal art in place
 
 ---
 
 Cross‑Game Tasks (apply in this order: ROD → TME → SD)
 
 - Testing
-    - [ ] Playwright smokes: reach end of MVP/Beta for each game
-    - [ ] RTL: reducers and save/load per game
+  - [ ] Playwright smokes: reach end of MVP/Beta for each game
+  - [ ] RTL: reducers and save/load per game
 - Accessibility
-    - [ ] Global audit: focus order, target sizes, color contrast, reduced motion
-    - [ ] Captions for any SFX; verify with screen reader basic paths
+  - [ ] Global audit: focus order, target sizes, color contrast, reduced motion
+  - [ ] Captions for any SFX; verify with screen reader basic paths
 
 ---
 
 ### Immediate Execution Order (per “Finish ROD now, then TME, then SD”)
 
-1) Rite of Discovery — finish Beta
+1. Rite of Discovery — finish Beta
 
 - [x] Extract strings to `en.json` under `rod.*`
 - [x] Wire minimal final art placeholders (BG, 2 props, badge SVG)
@@ -484,14 +479,14 @@ Cross‑Game Tasks (apply in this order: ROD → TME → SD)
 - [x] Quick a11y contrast check and SFX captions container (no new audio)
 - [x] Mark Acceptance (Beta) as complete
 
-1.1) Rite of Discovery — Intro/Outro beats (low-scope)
+  1.1) Rite of Discovery — Intro/Outro beats (low-scope)
 
 - [x] Add Intro title-card scene shown once (skippable) and persisted via `intro.seen`
 - [x] Add Outro wrap scene with recap and replay hooks; persisted via `outro.seen`
 - [x] Update i18n `rod.intro.*` and `rod.outro.*`
 - [x] Minimal tests (RTL/Playwright) planned; covered by cross-game smoke
 
-2) Toymaker Escape — implement E1 Beta
+2. Toymaker Escape — implement E1 Beta
 
 - [x] Build Workshop route (gears or music) and Playroom sorter minis
 - [x] Inventory basics and simple medal tally
@@ -499,21 +494,21 @@ Cross‑Game Tasks (apply in this order: ROD → TME → SD)
 - [x] A11y pass (keyboard sliders/rotations; reduced‑motion)
 - [x] Mark Acceptance (Beta) as complete
 
-2.1) Toymaker Escape — Intro/Outro beats (low-scope)
+  2.1) Toymaker Escape — Intro/Outro beats (low-scope)
 
 - [x] Add Intro title-card scene (skippable) → `intro.seen`
 - [x] Add Outro scene after DONE with medal recap and replay/switch route
 - [x] Update i18n `tme.intro2.*` and `tme.outro.*`
 - [x] Minimal tests planned; covered by cross-game smoke
 
-3) Systems Discovery — implement Core Beta
+3. Systems Discovery — implement Core Beta
 
 - [x] Build B1 loop, B2 route planner (two solutions), B3 sorter with hints
 - [x] Extract strings to `sysdisc.*`; shared UI bits; wrap badge
 - [x] A11y pass; Playwright/RTL
 - [x] Mark Acceptance (Beta) as complete
 
-3.1) Systems Discovery — Intro/Outro beats (low-scope)
+  3.1) Systems Discovery — Intro/Outro beats (low-scope)
 
 - [x] Add Intro title-card scene (skippable) → `intro.seen`
 - [x] Add Outro scene after WRAP with badge recap and replay/alt-plan
@@ -523,36 +518,36 @@ Cross‑Game Tasks (apply in this order: ROD → TME → SD)
 #### Post‑MVP — Systems Discovery: Body Systems Pack (documentation + scaffolds)
 
 - Docs & design
-    - [x] Extend design doc with Body Systems overview, sub‑packs, Homeostasis Meter, data model, acceptance, tasks
-    - [x] Update Designer Brief (EN+FR) with BOD asset templates and delivery paths
-      `assets/{core|space|ocean|bod|shared}/`
-    - [x] Add stories tracker entries for BB1–3, BF1–3, BM1–3, BSD1–3, BG1–3 (goals, hooks, beats, flags, guardrails)
+  - [x] Extend design doc with Body Systems overview, sub‑packs, Homeostasis Meter, data model, acceptance, tasks
+  - [x] Update Designer Brief (EN+FR) with BOD asset templates and delivery paths
+        `assets/{core|space|ocean|bod|shared}/`
+  - [x] Add stories tracker entries for BB1–3, BF1–3, BM1–3, BSD1–3, BG1–3 (goals, hooks, beats, flags, guardrails)
 - Engineering scaffolds
-    - [x] Add Homeostasis Meter UI component (ARIA, reduced‑motion stills)
-    - [x] Add five BOD sub‑packs to scene registry (stubs for BB/BF/BM/BSD/BG with wrap screens)
-    - [x] Extend save model `sysdisc:save:v1` with `bod: { meter:number, toggles:{deeper:boolean} }`
-    - [x] Medal rules: award “Care Ally”/BOD sub‑pack badges on wrap
+  - [x] Add Homeostasis Meter UI component (ARIA, reduced‑motion stills)
+  - [x] Add five BOD sub‑packs to scene registry (stubs for BB/BF/BM/BSD/BG with wrap screens)
+  - [x] Extend save model `sysdisc:save:v1` with `bod: { meter:number, toggles:{deeper:boolean} }`
+  - [x] Medal rules: award “Care Ally”/BOD sub‑pack badges on wrap
 - Accessibility & testing
-    - [x] Alt text and captions for all new diagrams; colorblind‑safe patterns for O2/CO2 and flows
-    - [x] Playwright smoke: complete one BOD sub‑pack (any 3 scenes + wrap) with meter staying green
-        - Note: BOD Breath deep-link smoke verified locally on 2025‑12‑22; CI runner config (ubuntu‑latest, Node 20+)
-          already compatible
+  - [x] Alt text and captions for all new diagrams; colorblind‑safe patterns for O2/CO2 and flows
+  - [x] Playwright smoke: complete one BOD sub‑pack (any 3 scenes + wrap) with meter staying green
+    - Note: BOD Breath deep-link smoke verified locally on 2025‑12‑22; CI runner config (ubuntu‑latest, Node 20+)
+      already compatible
 
 - [x] Backgrounds — visibility fix and verification (galaxy dark, star‑glow light); ensure `--app-bg` applied on all
-  pages (tuned intensities, enhanced starfield/nebula; verified on home, catalog, and game pages)
+      pages (tuned intensities, enhanced starfield/nebula; verified on home, catalog, and game pages)
 - [x] Game Launcher — Phase 2: flags‑driven gating via frontend‑only flags provider (localStorage) with unit/E2E checks
 - [ ] Breakout particles reliability — ensure normal brick‑hit emissions and live effect switching; hide particle
-  controls in non‑particle games
+      controls in non‑particle games
 - [ ] Snake mobile controllers — Swipe (default), optional Joystick/D‑pad and Taps; non‑blocking scroll; mobile E2E
 - [ ] Memory game UX — matched cards spin+fade then are removed from layout after animation; add tests
 - [ ] Assets & backgrounds — wire initial Kenney SFX and backgrounds; maintain public/credits.md
 - [ ] Documentation — keep README and guidelines updated with Admin/Launcher/Snake controls
-  and Breakout/Memory controls
-    - [x] Add “Flow & Narrative Sequencing” + “Narrated journey” sections to design docs and stories trackers:
-        - RoD: docs/rite-of-discovery/rite-of-discovery-design.md (§ Flow & Narrative Sequencing); stories.md (Overview)
-        - TME: docs/toymaker-escape/toymaker-escape-design.md (§ Flow & Narrative Sequencing); stories.md (Overview)
-        - SD: docs/systems-discovery/systems-discovery-design.md (§ Flow & Narrative Sequencing); stories.md (Overview;
-          Space/Ocean intros & outros added)
+      and Breakout/Memory controls
+  - [x] Add “Flow & Narrative Sequencing” + “Narrated journey” sections to design docs and stories trackers:
+    - RoD: docs/rite-of-discovery/rite-of-discovery-design.md (§ Flow & Narrative Sequencing); stories.md (Overview)
+    - TME: docs/toymaker-escape/toymaker-escape-design.md (§ Flow & Narrative Sequencing); stories.md (Overview)
+    - SD: docs/systems-discovery/systems-discovery-design.md (§ Flow & Narrative Sequencing); stories.md (Overview;
+      Space/Ocean intros & outros added)
 - [ ] Add user profile and game statistics tracking
 - [ ] Implement leaderboard functionality
 - [ ] Implement game settings and preferences
@@ -585,63 +580,63 @@ Cross‑Game Tasks (apply in this order: ROD → TME → SD)
 Sorted by status
 
 - ✅ Completed
-    - A) Breakout — particles reliability and PC controllers (desktop):
-        - Reliability: normalized brick‑hit emissions; live switching between `Sparks` and `Puff` takes effect
-          immediately
-          via shared settings; particle controls are gated to Breakout only.
-        - PC controllers: keyboard Arrows by default; added optional “Mouse control” toggle in the settings strip (off
-          by
-          default, does not hijack keyboard).
-        - Tests: Playwright smoke for particle controls visibility and live switching; unit tests for settings
-          persistence (
-          particles/effect/mode). HUD/boost and pause immobility E2E remain green.
-    - Launcher — Local/dev flag for Upcoming play:
-        - Implemented env var `NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL=true` and an Admin seam flag
-          `ui.allowPlayUpcomingLocal` (localStorage) to allow playing Upcoming cards only in dev/local/E2E.
-        - Catalog cards show an extra “Dev‑Playable” tag in dev only; production keeps Upcoming cards non‑clickable.
-        - Tests: Playwright spec asserts clickability in E2E/dev and non‑clickable in public mode; manifest selector
-          covered
-          by unit tests.
-    - Systems Discovery BOD Breath deep‑link E2E smoke verified locally; config compatible with CI defaults.
-    - Docs updated for BOD packs and designer brief paths include `bod/`.
-    - Dev‑utilities scope fixed: reserved for point‑and‑click games only (RoD/SD/TME). Removed Snake‑specific Start New
-      Game and dev clear‑data UI; README updated.
+  - A) Breakout — particles reliability and PC controllers (desktop):
+    - Reliability: normalized brick‑hit emissions; live switching between `Sparks` and `Puff` takes effect
+      immediately
+      via shared settings; particle controls are gated to Breakout only.
+    - PC controllers: keyboard Arrows by default; added optional “Mouse control” toggle in the settings strip (off
+      by
+      default, does not hijack keyboard).
+    - Tests: Playwright smoke for particle controls visibility and live switching; unit tests for settings
+      persistence (
+      particles/effect/mode). HUD/boost and pause immobility E2E remain green.
+  - Launcher — Local/dev flag for Upcoming play:
+    - Implemented env var `NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL=true` and an Admin seam flag
+      `ui.allowPlayUpcomingLocal` (localStorage) to allow playing Upcoming cards only in dev/local/E2E.
+    - Catalog cards show an extra “Dev‑Playable” tag in dev only; production keeps Upcoming cards non‑clickable.
+    - Tests: Playwright spec asserts clickability in E2E/dev and non‑clickable in public mode; manifest selector
+      covered
+      by unit tests.
+  - Systems Discovery BOD Breath deep‑link E2E smoke verified locally; config compatible with CI defaults.
+  - Docs updated for BOD packs and designer brief paths include `bod/`.
+  - Dev‑utilities scope fixed: reserved for point‑and‑click games only (RoD/SD/TME). Removed Snake‑specific Start New
+    Game and dev clear‑data UI; README updated.
 
 - 🟡 In Progress
-    - E2E monitoring: ensure CI stays green on `main` with updated Breakout and BOD smoke; watch next scheduled run.
+  - E2E monitoring: ensure CI stays green on `main` with updated Breakout and BOD smoke; watch next scheduled run.
 
 - 🔜 Planned (next actionable steps)
-    - B) Snake:
-        - Controls: Swipe default; optional Joystick/D‑pad and Taps; prevent page scroll while interacting. (No dev‑only
-          clear‑data or Start New Game — those are for point‑and‑click.)
-        - UX polish: improve HUD spacing/typography; ensure color/contrast per accessibility best practices; pause
-          overlay
-          affordances.
-        - Tests: mobile E2E for swipe and one optional controller (Pixel 5 + iPhone 12 profiles).
-    - C) Memory:
-        - UX: matched cards spin+fade, then remove from DOM while keeping grid placeholders (stable layout/flow).
-        - Assets: larger images; diversify sets; improve alt text.
-        - Tests: E2E asserts matched pair removal and stable grid; unit test animation completion callback.
-    - D) Assets & credits:
-        - Wire initial Kenney SFX/backgrounds; update `public/credits.md`.
-    - E) Documentation:
-        - README/guidelines: Admin/Launcher/Snake/Breakout/Memory controls and settings; reflect particle gating and
-          color/contrast guardrails.
-    - F–H) Profiles/Leaderboard/Settings (frontend‑first):
-        - Implement localStorage‑backed profile store (nickname/avatar), per‑game stats, a simple leaderboard view, and
-          a
-          unified settings panel with persistence; add API seams for later backend wiring. Backend connection points are
-          prepared but remain stubbed.
+  - B) Snake:
+    - Controls: Swipe default; optional Joystick/D‑pad and Taps; prevent page scroll while interacting. (No dev‑only
+      clear‑data or Start New Game — those are for point‑and‑click.)
+    - UX polish: improve HUD spacing/typography; ensure color/contrast per accessibility best practices; pause
+      overlay
+      affordances.
+    - Tests: mobile E2E for swipe and one optional controller (Pixel 5 + iPhone 12 profiles).
+  - C) Memory:
+    - UX: matched cards spin+fade, then remove from DOM while keeping grid placeholders (stable layout/flow).
+    - Assets: larger images; diversify sets; improve alt text.
+    - Tests: E2E asserts matched pair removal and stable grid; unit test animation completion callback.
+  - D) Assets & credits:
+    - Wire initial Kenney SFX/backgrounds; update `public/credits.md`.
+  - E) Documentation:
+    - README/guidelines: Admin/Launcher/Snake/Breakout/Memory controls and settings; reflect particle gating and
+      color/contrast guardrails.
+  - F–H) Profiles/Leaderboard/Settings (frontend‑first):
+    - Implement localStorage‑backed profile store (nickname/avatar), per‑game stats, a simple leaderboard view, and
+      a
+      unified settings panel with persistence; add API seams for later backend wiring. Backend connection points are
+      prepared but remain stubbed.
 
 Note: README and this action plan will be kept in sync after each milestone; CI lint/test/deploy must stay green.
 
 ### MVP Playables Track (completed)
 
 - All four newly added playables are complete with E2E smokes:
-    - Knitzy
-    - Bubble Pop
-    - Checkers
-    - Chess
+  - Knitzy
+  - Bubble Pop
+  - Checkers
+  - Chess
 
 ## Planned Features
 
@@ -659,151 +654,151 @@ Note: README and this action plan will be kept in sync after each milestone; CI 
 - [ ] Add Sudoku
 - [ ] Add Tic‑tac‑toe
 - [ ] Breakout — Ball color change after first brick hit (not on paddle) to allow pre‑planning next angle (documentation
-  added; implementation scheduled)
+      added; implementation scheduled)
 
 - [ ] Point & Click — Rite of Discovery (working title)
-    - Design & Narrative
-        - [ ] Lock tone for ages 7–9; include “gentle mode” copy variants ✓ (see docs/rite-of-discovery-design.md)
-        - [ ] Finalize scene beats and choices for S1/S2/S3 + Epilogue
-        - [ ] Write i18n keys and English strings (en.json)
-        - [ ] New Game+ — Mentor Mini (Sibling Helper): finalize beats, mentor‑tips copy; add 12+ reflection prompts
-    - Scaffolding
-        - [ ] Create package: games/rite-of-discovery with `RiteGame.tsx`, `state.ts`, `scenes/*`, `ui/*`
-        - [ ] Add manifest entry (upcoming=false only at ship time)
-        - [ ] Route `/games/rite-of-discovery` wired via dynamic import
-    - Designer/Animator Brief (docs)
-        - [x] Write English brief (designer deliverables, formats, sizes, naming, budgets) —
+  - Design & Narrative
+    - [ ] Lock tone for ages 7–9; include “gentle mode” copy variants ✓ (see docs/rite-of-discovery-design.md)
+    - [ ] Finalize scene beats and choices for S1/S2/S3 + Epilogue
+    - [ ] Write i18n keys and English strings (en.json)
+    - [ ] New Game+ — Mentor Mini (Sibling Helper): finalize beats, mentor‑tips copy; add 12+ reflection prompts
+  - Scaffolding
+    - [ ] Create package: games/rite-of-discovery with `RiteGame.tsx`, `state.ts`, `scenes/*`, `ui/*`
+    - [ ] Add manifest entry (upcoming=false only at ship time)
+    - [ ] Route `/games/rite-of-discovery` wired via dynamic import
+  - Designer/Animator Brief (docs)
+    - [x] Write English brief (designer deliverables, formats, sizes, naming, budgets) —
           docs/rite-of-discovery-designer-brief.md
-        - [x] Add full French mirror (terminology aligned, specs identical)
-        - [x] Add 15+ tracks section (MythWays & Origins) with asset templates and guardrails (EN+FR)
-        - [x] Add New Game+ — Mentor Mini assets/checklist (EN+FR) with `epMM_*` and `ui_mentor_tips.svg`
-        - [ ] Review with designer/animator and collect Q&A
-        - [ ] Episode A asset pack delivery (BGs, props, badge/collectible) per checklist
-        - [ ] Iteration pass after first integration video
+    - [x] Add full French mirror (terminology aligned, specs identical)
+    - [x] Add 15+ tracks section (MythWays & Origins) with asset templates and guardrails (EN+FR)
+    - [x] Add New Game+ — Mentor Mini assets/checklist (EN+FR) with `epMM_*` and `ui_mentor_tips.svg`
+    - [ ] Review with designer/animator and collect Q&A
+    - [ ] Episode A asset pack delivery (BGs, props, badge/collectible) per checklist
+    - [ ] Iteration pass after first integration video
+  - Systems
+    - [ ] Scene controller (registry + onEnter/next)
+    - [ ] Hotspot component (ARIA, focus, keyboard, data-testid)
+    - [ ] Dialogue modal (choices, gentle-mode toggle)
+    - [ ] Save/Load service (localStorage v1 with versioning)
+  - Content (MVP)
+    - [ ] Scene 1 — tag reassembly micro-puzzle (3 pieces)
+    - [ ] Scene 2 — note letter-match micro-puzzle (3 differences)
+    - [ ] Scene 3 — proof moment (receipt/overhear) with choice branch
+    - [ ] Epilogue — rite-of-passage framing; reflect prior choices
+    - [ ] New Game+ — Mentor Mini dynamic echo (Tag/Note/Talk) based on S1–S3 flags; replay to see others
+    - [ ] 12+ Reflection — optional MM1‑R journal prompts (framing/evidence/timing) after MM1
+  - Art & Audio
+    - [ ] 3–4 illustrated 16:9 scenes (WEBP/AVIF) + light parallax (reduced motion aware)
+    - [ ] Ambient loop per scene; click/creak SFX using soundManager
+    - [ ] Mentor Mini assets: `epMM_bg.avif`, `ui_mentor_tips.svg`, `ui_moment_cards_[1..3].svg`; reuse S1/S2 props
+  - Accessibility
+    - [ ] Visible focus on hotspots; keyboard traversal; aria-live for dialogue
+    - [ ] Subtitles/captions for any voiced SFX (if added later)
+    - [ ] Mentor Mini: ≥44px targets, readable tips, reduced‑motion stills, privacy‑respecting copy
+  - Persistence & Telemetry
+    - [ ] Persist on scene/choice; restore on reload
+    - [ ] (Optional) Add analytics hooks (page/scene events) guarded by consent
+    - [ ] Save keys: add `mentor.unlocked`, `mentor.seenRoutes`, `mentor.mentorStyle`; unit tests for defaulting
+  - Testing
+    - [ ] Playwright: flow through S1→S2→S3→Epilogue; assert text changes in gentle mode
+    - [ ] RTL: reducer transitions; save/load; hotspot guards
+    - [ ] Playwright: Mentor Mini unlock after Epilogue; route adapts to flags; replay shows alternates
+    - [ ] RTL: mentor slice derivation (from S1–S3), tips overlay logic, persistence
+  - Ship
+    - [ ] Flip `enabled: true` in manifest; Featured follows Playable==Featured
+    - [ ] Add card in catalog with image and tags
+    - [ ] Update README with controls and notes
+    - [ ] Docs cross‑links: design doc (Mentor Mini), stories tracker (MM1/MM1‑R), brief EN/FR
+
+  - Post‑MVP (Episodes & Systems)
+    - Systems foundation (v2)
+      - [ ] Parental consent + Age/Tone selector (Gentle/Standard/Older) — persisted, settings toggle
+      - [ ] Episode loader + 3 save slots, autosave on scene transitions (save v2 with v1 migration)
+      - [ ] Collectibles + Journal/Codex (schema, UI, unlocks)
+      - [ ] Difficulty scaling (Easy/Normal/Challenger): piece counts, hints, retries, reduced‑motion alternatives
+      - [ ] Endings summary + replay map UI
+    - Episode A — Winter Traditions
+      - [ ] A1 Gift Closet Diversion (stealthy hotspot route)
+      - [ ] A2 Neighborhood Lights Errand (neighbor NPC + collectible `ornament`)
+      - [ ] A3 Fireplace Prep Redux (advanced tag puzzle)
+    - Episode B — Tooth Tradition Variants
+      - [ ] B1 Dentist Visit interlude (note variant)
+      - [ ] B2 Lost Tooth Mystery (4–5 piece note assembly)
+    - Episode C — Proof Alternatives
+      - [ ] C1 Receipt Trail vs. Calendar App (exclusive routes per run)
+      - [ ] C2 Overheard Phone Call vs. Costume Storage (exclusive routes)
+    - Episode D — Side Stories
+      - [ ] D1 Sibling Ally/Prankster path (badge unlock)
+      - [ ] D2 Family Traditions Gallery (Codex entries)
+    - Art pass (optional, non‑blocking)
+      - [ ] Episode A asset pack (BGs, props, `collect_ornament.svg`, `badge_confidence.svg`)
+      - [ ] Episode B asset pack (`collect_tooth_charm.svg`, `badge_curious.svg`)
+      - [ ] Episode C asset pack (`collect_ribbon.svg`, `badge_detective.svg`)
+      - [ ] Episode D/UI pack (journal frames, tabs, `badge_teamwork.svg`, `badge_helper.svg`)
+    - Acceptance (first Post‑MVP release)
+      - [ ] Episodes A & B playable with ≥1 major branch each; Age/Tone selector; save v2+slots; ≥3 collectibles;
+            E2E/RTL green
+
+  - Thinking Tools (12+ Extension — Rationality & Biases)
+    - Curriculum & framing (story‑driven, fun, replayable; kindness/morality centered)
+      - [ ] Define first 5 story cases with A/B routes + twist (Anchoring/Framing; Confirmation/Filter Bubble;
+            Gambler’s
+            Fallacy; Post Hoc/Placebo; Authority/Ad Hominem)
+      - [ ] Debiasing strategies per case (steel‑man, base rates, alternative hypotheses, reframing, source
+            triangulation, representative sampling)
     - Systems
-        - [ ] Scene controller (registry + onEnter/next)
-        - [ ] Hotspot component (ARIA, focus, keyboard, data-testid)
-        - [ ] Dialogue modal (choices, gentle-mode toggle)
-        - [ ] Save/Load service (localStorage v1 with versioning)
-    - Content (MVP)
-        - [ ] Scene 1 — tag reassembly micro-puzzle (3 pieces)
-        - [ ] Scene 2 — note letter-match micro-puzzle (3 differences)
-        - [ ] Scene 3 — proof moment (receipt/overhear) with choice branch
-        - [ ] Epilogue — rite-of-passage framing; reflect prior choices
-        - [ ] New Game+ — Mentor Mini dynamic echo (Tag/Note/Talk) based on S1–S3 flags; replay to see others
-        - [ ] 12+ Reflection — optional MM1‑R journal prompts (framing/evidence/timing) after MM1
-    - Art & Audio
-        - [ ] 3–4 illustrated 16:9 scenes (WEBP/AVIF) + light parallax (reduced motion aware)
-        - [ ] Ambient loop per scene; click/creak SFX using soundManager
-        - [ ] Mentor Mini assets: `epMM_bg.avif`, `ui_mentor_tips.svg`, `ui_moment_cards_[1..3].svg`; reuse S1/S2 props
-    - Accessibility
-        - [ ] Visible focus on hotspots; keyboard traversal; aria-live for dialogue
-        - [ ] Subtitles/captions for any voiced SFX (if added later)
-        - [ ] Mentor Mini: ≥44px targets, readable tips, reduced‑motion stills, privacy‑respecting copy
-    - Persistence & Telemetry
-        - [ ] Persist on scene/choice; restore on reload
-        - [ ] (Optional) Add analytics hooks (page/scene events) guarded by consent
-        - [ ] Save keys: add `mentor.unlocked`, `mentor.seenRoutes`, `mentor.mentorStyle`; unit tests for defaulting
-    - Testing
-        - [ ] Playwright: flow through S1→S2→S3→Epilogue; assert text changes in gentle mode
-        - [ ] RTL: reducer transitions; save/load; hotspot guards
-        - [ ] Playwright: Mentor Mini unlock after Epilogue; route adapts to flags; replay shows alternates
-        - [ ] RTL: mentor slice derivation (from S1–S3), tips overlay logic, persistence
-    - Ship
-        - [ ] Flip `enabled: true` in manifest; Featured follows Playable==Featured
-        - [ ] Add card in catalog with image and tags
-        - [ ] Update README with controls and notes
-        - [ ] Docs cross‑links: design doc (Mentor Mini), stories tracker (MM1/MM1‑R), brief EN/FR
+      - [ ] 12+ confirmation / parental consent gate (where applicable)
+      - [ ] Hint system + difficulty tiers (Easy/Normal/Expert)
+      - [ ] “Thinking Tools” Codex section + mastery badges
+    - Content (first pack)
+      - [ ] Build 3 cases with ≥2 routes + 1 twist ending each (medals: Bronze/Silver/Gold)
+      - [ ] Reflection cards (Codex entries) and mastery badges hooked up
+    - Testing & A11y
+      - [ ] Playwright: run through 2 branches per vignette; verify debias actions and Codex unlocks
+      - [ ] RTL: reducer flags, hint logic, codex unlocks; ensure reduced‑motion alternatives are present
+    - Acceptance
+      - [ ] All 6 vignettes playable; hints/difficulty function; Codex + badges unlock; E2E/RTL green
 
-    - Post‑MVP (Episodes & Systems)
-        - Systems foundation (v2)
-            - [ ] Parental consent + Age/Tone selector (Gentle/Standard/Older) — persisted, settings toggle
-            - [ ] Episode loader + 3 save slots, autosave on scene transitions (save v2 with v1 migration)
-            - [ ] Collectibles + Journal/Codex (schema, UI, unlocks)
-            - [ ] Difficulty scaling (Easy/Normal/Challenger): piece counts, hints, retries, reduced‑motion alternatives
-            - [ ] Endings summary + replay map UI
-        - Episode A — Winter Traditions
-            - [ ] A1 Gift Closet Diversion (stealthy hotspot route)
-            - [ ] A2 Neighborhood Lights Errand (neighbor NPC + collectible `ornament`)
-            - [ ] A3 Fireplace Prep Redux (advanced tag puzzle)
-        - Episode B — Tooth Tradition Variants
-            - [ ] B1 Dentist Visit interlude (note variant)
-            - [ ] B2 Lost Tooth Mystery (4–5 piece note assembly)
-        - Episode C — Proof Alternatives
-            - [ ] C1 Receipt Trail vs. Calendar App (exclusive routes per run)
-            - [ ] C2 Overheard Phone Call vs. Costume Storage (exclusive routes)
-        - Episode D — Side Stories
-            - [ ] D1 Sibling Ally/Prankster path (badge unlock)
-            - [ ] D2 Family Traditions Gallery (Codex entries)
-        - Art pass (optional, non‑blocking)
-            - [ ] Episode A asset pack (BGs, props, `collect_ornament.svg`, `badge_confidence.svg`)
-            - [ ] Episode B asset pack (`collect_tooth_charm.svg`, `badge_curious.svg`)
-            - [ ] Episode C asset pack (`collect_ribbon.svg`, `badge_detective.svg`)
-            - [ ] Episode D/UI pack (journal frames, tabs, `badge_teamwork.svg`, `badge_helper.svg`)
-        - Acceptance (first Post‑MVP release)
-            - [ ] Episodes A & B playable with ≥1 major branch each; Age/Tone selector; save v2+slots; ≥3 collectibles;
-              E2E/RTL green
+  - 15+ Extension — Mythologies & Pantheons (MythWays)
+    - Design & Curriculum (kindness‑centered, culturally sensitive)
+      - [ ] Outline role archetypes, syncretic bridges, and environmental constraints
+      - [ ] Define first pack: A1 River of Two Lands; A2 Meeting of Winds; A3 Paths of Exchange
+    - Systems
+      - [ ] Evidence sorter mini‑game (roles/epithets/contexts)
+      - [ ] Route/path assembly on trade maps
+      - [ ] Codex sections (Archetypes, Syncretic Bridges, Environmental Notes)
+    - Content (first pack)
+      - [ ] Build A1 with ≥2 routes + 1 twist; collectible + badge; Codex
+      - [ ] Build A2 with ≥2 routes + 1 twist; collectible + badge; Codex
+      - [ ] Build A3 (long case) with ≥2 routes + 1 twist; collectible + badge; Codex
+    - Art & Audio (optional, non‑blocking)
+      - [ ] Backgrounds (AVIF/WEBP) per case; inscriptions/props as SVG layers
+      - [ ] Badges/collectibles; subtle ambient loops with reduced‑motion stills
+    - Testing & A11y
+      - [ ] Playwright: age‑gate → case select → A/B routes → twist → medals/Codex
+      - [ ] RTL: sorter rules; save v3 migration; Codex unlock logic
+    - Acceptance
+      - [ ] Ship 2 shorts + 1 long; medals/Codex wired; E2E/RTL green; cultural sensitivity checklist signed off
 
-    - Thinking Tools (12+ Extension — Rationality & Biases)
-        - Curriculum & framing (story‑driven, fun, replayable; kindness/morality centered)
-            - [ ] Define first 5 story cases with A/B routes + twist (Anchoring/Framing; Confirmation/Filter Bubble;
-              Gambler’s
-              Fallacy; Post Hoc/Placebo; Authority/Ad Hominem)
-            - [ ] Debiasing strategies per case (steel‑man, base rates, alternative hypotheses, reframing, source
-              triangulation, representative sampling)
-        - Systems
-            - [ ] 12+ confirmation / parental consent gate (where applicable)
-            - [ ] Hint system + difficulty tiers (Easy/Normal/Expert)
-            - [ ] “Thinking Tools” Codex section + mastery badges
-        - Content (first pack)
-            - [ ] Build 3 cases with ≥2 routes + 1 twist ending each (medals: Bronze/Silver/Gold)
-            - [ ] Reflection cards (Codex entries) and mastery badges hooked up
-        - Testing & A11y
-            - [ ] Playwright: run through 2 branches per vignette; verify debias actions and Codex unlocks
-            - [ ] RTL: reducer flags, hint logic, codex unlocks; ensure reduced‑motion alternatives are present
-        - Acceptance
-            - [ ] All 6 vignettes playable; hints/difficulty function; Codex + badges unlock; E2E/RTL green
-
-    - 15+ Extension — Mythologies & Pantheons (MythWays)
-        - Design & Curriculum (kindness‑centered, culturally sensitive)
-            - [ ] Outline role archetypes, syncretic bridges, and environmental constraints
-            - [ ] Define first pack: A1 River of Two Lands; A2 Meeting of Winds; A3 Paths of Exchange
-        - Systems
-            - [ ] Evidence sorter mini‑game (roles/epithets/contexts)
-            - [ ] Route/path assembly on trade maps
-            - [ ] Codex sections (Archetypes, Syncretic Bridges, Environmental Notes)
-        - Content (first pack)
-            - [ ] Build A1 with ≥2 routes + 1 twist; collectible + badge; Codex
-            - [ ] Build A2 with ≥2 routes + 1 twist; collectible + badge; Codex
-            - [ ] Build A3 (long case) with ≥2 routes + 1 twist; collectible + badge; Codex
-        - Art & Audio (optional, non‑blocking)
-            - [ ] Backgrounds (AVIF/WEBP) per case; inscriptions/props as SVG layers
-            - [ ] Badges/collectibles; subtle ambient loops with reduced‑motion stills
-        - Testing & A11y
-            - [ ] Playwright: age‑gate → case select → A/B routes → twist → medals/Codex
-            - [ ] RTL: sorter rules; save v3 migration; Codex unlock logic
-        - Acceptance
-            - [ ] Ship 2 shorts + 1 long; medals/Codex wired; E2E/RTL green; cultural sensitivity checklist signed off
-
-    - 15+ Extension — Evolution & Nature (Origins)
-        - Design & Curriculum (beauty of nature + evolutionary nuance)
-            - [ ] Define first pack: O1 Island Shuffle; O2 Patterns in Pollen; O3 Tails/Songs/Signals
-        - Systems
-            - [ ] Trait sliders + fitness landscape mini‑games
-            - [ ] Phylogeny builder; spot‑the‑adaptation flows
-            - [ ] Codex sections (Mechanisms, Patterns, Case Albums)
-        - Content (first pack)
-            - [ ] Build O1 with ≥2 routes + 1 twist; collectible + badge; Codex
-            - [ ] Build O2 with ≥2 routes + 1 twist; collectible + badge; Codex
-            - [ ] Build O3 (long case) with ≥2 routes + 1 twist; collectible + badge; Codex
-        - Art & Audio (optional, non‑blocking)
-            - [ ] Backgrounds (field/lab) per case; charts/overlays as SVG
-            - [ ] Badges/collectibles; subtle ambient loops with reduced‑motion stills
-        - Testing & A11y
-            - [ ] Playwright: age‑gate → case select → A/B routes → twist → medals/Codex
-            - [ ] RTL: slider math; save v3 migration; Codex unlock logic
-        - Acceptance
-            - [ ] Ship 2 shorts + 1 long; medals/Codex wired; E2E/RTL green; a11y basics verified
+  - 15+ Extension — Evolution & Nature (Origins)
+    - Design & Curriculum (beauty of nature + evolutionary nuance)
+      - [ ] Define first pack: O1 Island Shuffle; O2 Patterns in Pollen; O3 Tails/Songs/Signals
+    - Systems
+      - [ ] Trait sliders + fitness landscape mini‑games
+      - [ ] Phylogeny builder; spot‑the‑adaptation flows
+      - [ ] Codex sections (Mechanisms, Patterns, Case Albums)
+    - Content (first pack)
+      - [ ] Build O1 with ≥2 routes + 1 twist; collectible + badge; Codex
+      - [ ] Build O2 with ≥2 routes + 1 twist; collectible + badge; Codex
+      - [ ] Build O3 (long case) with ≥2 routes + 1 twist; collectible + badge; Codex
+    - Art & Audio (optional, non‑blocking)
+      - [ ] Backgrounds (field/lab) per case; charts/overlays as SVG
+      - [ ] Badges/collectibles; subtle ambient loops with reduced‑motion stills
+    - Testing & A11y
+      - [ ] Playwright: age‑gate → case select → A/B routes → twist → medals/Codex
+      - [ ] RTL: slider math; save v3 migration; Codex unlock logic
+    - Acceptance
+      - [ ] Ship 2 shorts + 1 long; medals/Codex wired; E2E/RTL green; a11y basics verified
 
 Shipped (already available via manifest and listed under Completed):
 
@@ -812,7 +807,7 @@ Shipped (already available via manifest and listed under Completed):
 ### Technical Improvements
 
 - [x] Implement runtime game loading with dynamic imports (via central games manifest) — Phase 1: manifest + `[slug]`
-  route + catalog wired
+      route + catalog wired
 - [ ] Implement admin‑controlled flags to drive manifest enable/upcoming state and UI gates (Phase 2)
 - [ ] Add service worker for offline capabilities
 - [ ] Implement WebSocket for real-time multiplayer games
@@ -829,7 +824,7 @@ Shipped (already available via manifest and listed under Completed):
 ### Monetization & Ads
 
 - [ ] Advertisement band (right side) visible only for non‑subscribed users — design and gating rules; avoid impacting
-  gameplay viewports (planned)
+      gameplay viewports (planned)
 
 ## Notes
 

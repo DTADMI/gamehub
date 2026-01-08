@@ -11,10 +11,7 @@ export type WireConnection = {
   color: WireColor;
 };
 
-export type WiresGoal = Record<
-    WireColor,
-    { from: TerminalId; to: TerminalId }[]
->;
+export type WiresGoal = Record<WireColor, { from: TerminalId; to: TerminalId }[]>;
 
 export type WiresState = {
   terminalsLeft: TerminalId[];
@@ -25,9 +22,9 @@ export type WiresState = {
 };
 
 export function createWiresState(
-    terminalsLeft: TerminalId[],
-    terminalsRight: TerminalId[],
-    goal: WiresGoal,
+  terminalsLeft: TerminalId[],
+  terminalsRight: TerminalId[],
+  goal: WiresGoal,
 ): WiresState {
   return {
     terminalsLeft: [...terminalsLeft],
@@ -39,36 +36,29 @@ export function createWiresState(
 }
 
 export function setWiresConnection(
-    state: WiresState,
-    from: TerminalId,
-    to: TerminalId,
-    color: WireColor,
+  state: WiresState,
+  from: TerminalId,
+  to: TerminalId,
+  color: WireColor,
 ): WiresState {
   // Remove any previous connection that uses either endpoint
-  const filtered = state.connections.filter(
-      (c) => c.from !== from && c.to !== to,
-  );
+  const filtered = state.connections.filter((c) => c.from !== from && c.to !== to);
   const next: WiresState = {
     ...state,
-    connections: [...filtered, {from, to, color}],
+    connections: [...filtered, { from, to, color }],
   };
   return evaluateSolved(next);
 }
 
-export function removeConnection(
-    state: WiresState,
-    endpoint: TerminalId,
-): WiresState {
+export function removeConnection(state: WiresState, endpoint: TerminalId): WiresState {
   return evaluateSolved({
     ...state,
-    connections: state.connections.filter(
-        (c) => c.from !== endpoint && c.to !== endpoint,
-    ),
+    connections: state.connections.filter((c) => c.from !== endpoint && c.to !== endpoint),
   });
 }
 
 export function clearWiresConnections(state: WiresState): WiresState {
-  return {...state, connections: [], solved: false};
+  return { ...state, connections: [], solved: false };
 }
 
 export function evaluateSolved(state: WiresState): WiresState {
@@ -76,14 +66,14 @@ export function evaluateSolved(state: WiresState): WiresState {
   for (const [color, pairs] of Object.entries(state.goal)) {
     for (const pair of pairs) {
       const ok = state.connections.some(
-          (c) => c.color === color && c.from === pair.from && c.to === pair.to,
+        (c) => c.color === color && c.from === pair.from && c.to === pair.to,
       );
       if (!ok) {
-        return {...state, solved: false};
+        return { ...state, solved: false };
       }
     }
   }
-  return {...state, solved: true};
+  return { ...state, solved: true };
 }
 
 export function hasWiresCrossing(state: WiresState): boolean {
@@ -95,11 +85,11 @@ export function hasWiresCrossing(state: WiresState): boolean {
   state.terminalsRight.forEach((t, i) => rightIndex.set(t, i));
 
   const pairs = state.connections
-      .map((c) => ({
-        li: leftIndex.get(c.from) ?? 0,
-        ri: rightIndex.get(c.to) ?? 0,
-      }))
-      .sort((a, b) => a.li - b.li);
+    .map((c) => ({
+      li: leftIndex.get(c.from) ?? 0,
+      ri: rightIndex.get(c.to) ?? 0,
+    }))
+    .sort((a, b) => a.li - b.li);
 
   // If right indices are not non-decreasing, there is a crossing
   for (let i = 1; i < pairs.length; i++) {

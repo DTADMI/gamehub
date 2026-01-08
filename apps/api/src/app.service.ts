@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AppService {
@@ -6,8 +6,7 @@ export class AppService {
     return {
       name: "GameHub Monolith API",
       version: "1.0.0",
-      description:
-          "Unified monolith backend for GameHub platform (Games & Projects)",
+      description: "Unified monolith backend for GameHub platform (Games & Projects)",
     };
   }
 }

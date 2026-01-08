@@ -1,38 +1,71 @@
 // Shared utilities and components exports
-export { Button } from "./components/ui/button";
-export { Input } from "./components/ui/input";
-export { Label } from "./components/ui/label";
-export { useToast } from "./components/ui/use-toast";
 
-export type {GameContainerProps} from "./components/GameContainer";
-export {default as GameContainer} from "./components/GameContainer";
-export {GameHUD} from "./components/GameHUD";
-export {GameShell} from "./components/GameShell";
+// Core contexts
 export * from "./contexts/GameSettingsContext";
 export * from "./contexts/SoundContext";
+export * from "./contexts/AuthContext";
+export * from "./contexts/FlagsContext";
+export * from "./contexts/GameContext";
+export * from "./contexts/ProfileContext";
+export * from "./contexts/SubscriptionContext";
+
+// Hooks
+export * from "./hooks/use-mobile";
+export * from "./hooks/use-toast";
+
+// Components - App-level
+export { default as Header } from "./components/Header";
+export { default as Navbar } from "./components/Navbar";
+export { default as Footer } from "./components/Footer";
+export { ThemeProvider } from "./components/ThemeProvider";
+export { ModeToggle } from "./components/ModeToggle";
+export { default as LanguageToggle } from "./components/LanguageToggle";
+export { default as I18nInitializer } from "./components/I18nInitializer";
+export { default as Providers } from "./components/Providers";
+export { default as LogoutButton } from "./components/LogoutButton";
+export { default as ProtectedRoute } from "./components/ProtectedRoute";
+export { default as SettingsPanel } from "./components/SettingsPanel";
+export { default as SoundControls } from "./components/SoundControls";
+export { default as SoundRootProvider } from "./components/SoundRootProvider";
+export { default as GameCard } from "./components/GameCard";
+export { Carousel } from "./components/Carousel";
+export { PresenceBadge } from "./components/PresenceBadge";
+export { Icons } from "./components/icons";
+
+// Lib utilities
+export * from "./lib/utils";
 export * from "./lib/input";
 export * from "./lib/particles";
 export * from "./lib/sound";
+export * from "./lib/i18n";
+export * from "./lib/auth";
+export * from "./lib/env";
+export * from "./lib/flags";
+export * from "./lib/firebase";
+export * from "./lib/gameProgress";
+export * from "./lib/graphql/queries";
+
+export type { GameContainerProps } from "./components/GameContainer";
+export { default as GameContainer } from "./components/GameContainer";
+export { GameHUD } from "./components/GameHUD";
+export { GameShell } from "./components/GameShell";
 export * from "./pointclick/core/Persistence";
 export * from "./pointclick/core/SceneServices";
 export * from "./pointclick/engine";
-export {GameEngine} from "./pointclick/core/Engine";
-export {SceneManager} from "./pointclick/core/SceneManager";
-export {SceneController} from "./pointclick/react/SceneController";
+export { GameEngine } from "./pointclick/core/Engine";
+export { SceneManager } from "./pointclick/core/SceneManager";
+export { SceneController } from "./pointclick/react/SceneController";
 export * from "./pointclick/puzzles/gears";
 export * from "./pointclick/puzzles/keypad";
 export * from "./pointclick/puzzles/pipes";
 export * from "./pointclick/puzzles/sequence";
 export * from "./pointclick/puzzles/wires";
-export {DialogueBox} from "./pointclick/react/DialogueBox";
-export {InventoryBar} from "./pointclick/react/InventoryBar";
+export { DialogueBox } from "./pointclick/react/DialogueBox";
+export { InventoryBar } from "./pointclick/react/InventoryBar";
 export * from "./pointclick/ui/InputSequenceDetector";
 export * from "./metadata/games";
 export * from "./metadata/projects";
 export * from "./projects";
-export * from "./lib/utils";
-export {ThemeProvider} from "./components/theme-provider";
-export {ModeToggle} from "./components/mode-toggle";
 export * from "./components/ui/button";
 export * from "./components/ui/card";
 export * from "./components/ui/input";
@@ -73,7 +106,7 @@ export * from "./components/ui/pagination";
 export * from "./components/ui/popover";
 export * from "./components/ui/progress";
 export * from "./components/ui/radio-group";
-export * from "./components/ui/resizable";
+// export * from "./components/ui/resizable"; // Commented out - react-resizable-panels issue
 export * from "./components/ui/scroll-area";
 export * from "./components/ui/separator";
 export * from "./components/ui/sheet";

@@ -45,3 +45,25 @@ prisma/migrations
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+# Minified/generated files
+**/public/**/*.js
+**/workbox-*.js
+**/.next/**
+**/dist/**
+
+# Compiled JavaScript from TypeScript (except configs)
+**/*.js
+!*.config.js
+!*.config.cjs
+!*.config.mjs
+!jest.config.js
+!next.config.js
+!tailwind.config.js
+!postcss.config.js
+!prettier.config.js
+!eslint.config.js
+!vite.config.js
+!vitest.config.js
+!/scripts/**/*.js
+!/cypress/**/*.js

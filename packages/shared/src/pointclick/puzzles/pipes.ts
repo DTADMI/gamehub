@@ -10,13 +10,13 @@ export type Dir = "up" | "right" | "down" | "left";
 export const DIRS: Dir[] = ["up", "right", "down", "left"];
 
 export type TileType =
-    | "empty"
-    | "straight" // connects two opposite sides
-    | "elbow" // connects two adjacent sides
-    | "tee" // connects three sides
-    | "cross" // connects all four sides
-    | "endcap" // connects one side (dead-end)
-    | "valve"; // straight with open/closed gate
+  | "empty"
+  | "straight" // connects two opposite sides
+  | "elbow" // connects two adjacent sides
+  | "tee" // connects three sides
+  | "cross" // connects all four sides
+  | "endcap" // connects one side (dead-end)
+  | "valve"; // straight with open/closed gate
 
 export interface Tile {
   type: TileType;
@@ -42,48 +42,39 @@ export function inBounds(x: number, y: number, w: number, h: number) {
   return x >= 0 && y >= 0 && x < w && y < h;
 }
 
-export function createPipesState(
-    width: number,
-    height: number,
-    grid: Tile[],
-): PipesState {
+export function createPipesState(width: number, height: number, grid: Tile[]): PipesState {
   if (grid.length !== width * height) {
     throw new Error("grid size mismatch");
   }
   return evaluatePipes({
     width,
     height,
-    grid: grid.map((t) => ({...t})),
+    grid: grid.map((t) => ({ ...t })),
     solved: false,
   });
 }
 
 export function setTileRotation(
-    state: PipesState,
-    x: number,
-    y: number,
-    rotation: 0 | 90 | 180 | 270,
+  state: PipesState,
+  x: number,
+  y: number,
+  rotation: 0 | 90 | 180 | 270,
 ): PipesState {
   const idx = indexOf(x, y, state.width);
   const grid = state.grid.slice();
-  grid[idx] = {...grid[idx], rotation};
-  return evaluatePipes({...state, grid});
+  grid[idx] = { ...grid[idx], rotation };
+  return evaluatePipes({ ...state, grid });
 }
 
-export function toggleValve(
-    state: PipesState,
-    x: number,
-    y: number,
-    open: boolean,
-): PipesState {
+export function toggleValve(state: PipesState, x: number, y: number, open: boolean): PipesState {
   const idx = indexOf(x, y, state.width);
   const t = state.grid[idx];
   if (t.type !== "valve") {
     return state;
   }
   const grid = state.grid.slice();
-  grid[idx] = {...t, open};
-  return evaluatePipes({...state, grid});
+  grid[idx] = { ...t, open };
+  return evaluatePipes({ ...state, grid });
 }
 
 // Connectivity tables per tile type at rotation => sides that are open
@@ -172,7 +163,7 @@ function opposite(d: Dir): Dir {
 }
 
 export function evaluatePipes(state: PipesState): PipesState {
-  const {width: w, height: h, grid} = state;
+  const { width: w, height: h, grid } = state;
   const errors: number[] = [];
 
   // Collect sources and sinks
@@ -187,7 +178,7 @@ export function evaluatePipes(state: PipesState): PipesState {
     }
   }
   if (sinks.length === 0 || sources.length === 0) {
-    return {...state, solved: false};
+    return { ...state, solved: false };
   }
 
   // BFS from all sources across valid pipe connections
@@ -224,7 +215,7 @@ export function evaluatePipes(state: PipesState): PipesState {
   // all sinks must be connected to a source
   for (const sk of sinks) {
     if (!visited.has(sk)) {
-      return {...state, solved: false};
+      return { ...state, solved: false };
     }
   }
 
@@ -255,8 +246,8 @@ export function evaluatePipes(state: PipesState): PipesState {
   }
 
   if (errors.length > 0) {
-    return {...state, solved: false, errors};
+    return { ...state, solved: false, errors };
   }
 
-  return {...state, solved: true, errors: []};
+  return { ...state, solved: true, errors: [] };
 }

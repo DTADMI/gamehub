@@ -96,6 +96,7 @@ Documentation:            ███████░░░ 70%
 **Status**: Core infrastructure complete, package standardization in progress
 
 **Remaining**:
+
 - Standardize project dependencies
 - Remove code duplication
 - Consolidate database schemas
@@ -105,6 +106,7 @@ Documentation:            ███████░░░ 70%
 **Status**: Analysis complete, implementation starting
 
 **Remaining**:
+
 - Create projects manifest
 - Build project cards and routes
 - Apply design system consistently
@@ -115,6 +117,7 @@ Documentation:            ███████░░░ 70%
 **Status**: Design phase
 
 **Required**:
+
 - Permission tier system
 - User entitlements
 - Payment integration
@@ -125,6 +128,7 @@ Documentation:            ███████░░░ 70%
 **Status**: Basic structure exists, needs organization
 
 **Remaining**:
+
 - Extract shared components to packages/ui
 - Centralize utilities
 - Consolidate assets

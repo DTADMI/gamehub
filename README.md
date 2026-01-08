@@ -146,15 +146,15 @@ pnpm dev:api
 
 ### Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start all apps in dev mode |
-| `pnpm build` | Build all packages |
-| `pnpm test` | Run all tests |
-| `pnpm lint` | Lint codebase |
-| `pnpm format` | Format code with Prettier |
-| `pnpm type-check` | Run TypeScript checks |
-| `pnpm clean` | Clean build artifacts |
+| Command           | Description                |
+| ----------------- | -------------------------- |
+| `pnpm dev`        | Start all apps in dev mode |
+| `pnpm build`      | Build all packages         |
+| `pnpm test`       | Run all tests              |
+| `pnpm lint`       | Lint codebase              |
+| `pnpm format`     | Format code with Prettier  |
+| `pnpm type-check` | Run TypeScript checks      |
+| `pnpm clean`      | Clean build artifacts      |
 
 ### Package-Specific Commands
 
@@ -168,6 +168,7 @@ pnpm --filter @games/snake <command>
 ### Hot Reload
 
 Both frontend and backend support hot module replacement:
+
 - **Frontend**: Changes reflect instantly
 - **Backend**: NestJS watches for file changes
 
@@ -218,6 +219,7 @@ docker compose down
 ```
 
 Services:
+
 - **Frontend**: http://localhost:3000
 - **API**: http://localhost:8080
 - **PostgreSQL**: localhost:5432

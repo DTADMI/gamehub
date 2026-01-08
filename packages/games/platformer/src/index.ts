@@ -1,1 +1,1 @@
-export {PlatformerGame} from "./components/PlatformerGame";
+export { PlatformerGame } from "./components/PlatformerGame";

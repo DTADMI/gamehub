@@ -57,45 +57,45 @@ A formalized monorepo using **pnpm workspaces** and **Turborepo**.
 ### 1. Frontend
 
 - **Recommendation**: **Next.js (App Router)**
-    - **Pros**: SSR for SEO, built-in routing, excellent performance.
-    - **Cons**: Can be complex for pure SPAs.
-    - **Alternative**: Vite (for pure CSR games/apps).
+  - **Pros**: SSR for SEO, built-in routing, excellent performance.
+  - **Cons**: Can be complex for pure SPAs.
+  - **Alternative**: Vite (for pure CSR games/apps).
 - **Styling**: **Tailwind CSS** (Current)
-    - **Pros**: Rapid UI development, small bundle size.
-    - **Cons**: Learning curve for utility classes.
+  - **Pros**: Rapid UI development, small bundle size.
+  - **Cons**: Learning curve for utility classes.
 - **Component Library**: **Radix UI** + **Shadcn/UI**
-    - **Pros**: Highly accessible, customizable.
+  - **Pros**: Highly accessible, customizable.
 
 ### 2. Backend
 
 - **Recommendation**: **NestJS** (Node.js + TypeScript)
-    - **Pros**:
-        - **Structure**: Highly opinionated and structured, similar to Spring Boot, which is beneficial for developers
-          coming from a Java background.
-        - **Maintainability**: Dependency Injection and modular architecture make it highly scalable for a growing
-          platform.
-        - **Type Safety**: Built-in TypeScript support ensures end-to-end type safety.
-    - **Cons**: Steeper learning curve compared to Express.
-    - **Comparison**:
-        - **Express**: Minimal and fast, but lacks built-in structure, making monorepos harder to manage as they grow.
-        - **Deno**: Modern and secure with built-in TS support, but the ecosystem is still maturing and might lack some
-          specific Node.js library support needed for gaming integrations.
+  - **Pros**:
+    - **Structure**: Highly opinionated and structured, similar to Spring Boot, which is beneficial for developers
+      coming from a Java background.
+    - **Maintainability**: Dependency Injection and modular architecture make it highly scalable for a growing
+      platform.
+    - **Type Safety**: Built-in TypeScript support ensures end-to-end type safety.
+  - **Cons**: Steeper learning curve compared to Express.
+  - **Comparison**:
+    - **Express**: Minimal and fast, but lacks built-in structure, making monorepos harder to manage as they grow.
+    - **Deno**: Modern and secure with built-in TS support, but the ecosystem is still maturing and might lack some
+      specific Node.js library support needed for gaming integrations.
 - **API Style**: **REST with Zod** for validation.
 
 ### 3. Database
 
 - **Recommendation**: **PostgreSQL** with **Prisma** or **Drizzle ORM**.
-    - **Pros**: Relational data (user profiles, game stats) is well-handled; Drizzle is lightweight and type-safe.
-    - **Cons**: Requires management (though managed services exist).
-    - **Alternative**: MongoDB (if data is highly unstructured).
+  - **Pros**: Relational data (user profiles, game stats) is well-handled; Drizzle is lightweight and type-safe.
+  - **Cons**: Requires management (though managed services exist).
+  - **Alternative**: MongoDB (if data is highly unstructured).
 - **Caching**: **Redis** (for leaderboards and session caching).
 
 ### 4. Game Development (2D/3D)
 
 - **2D Recommendation**: **Phaser 3** or **Custom Canvas/SVG Engine** (for light puzzles).
-    - **Pros**: Phaser is the industry standard for web 2D games.
+  - **Pros**: Phaser is the industry standard for web 2D games.
 - **3D Recommendation**: **Three.js** with **React Three Fiber (R3F)**.
-    - **Pros**: Declarative 3D, great ecosystem.
+  - **Pros**: Declarative 3D, great ecosystem.
 
 #### Engine Improvements for New Games
 
@@ -103,23 +103,23 @@ To accommodate the upcoming games, the internal `@games/shared` engine requires 
 plugins:
 
 1. **Time Management Plugin (`TimePlugin`)**:
-    - Required for **ChronoShift Labyrinth**.
-    - Ability to scale `deltaTime`, pause specific systems, and record state history for "time reversal" mechanics.
+   - Required for **ChronoShift Labyrinth**.
+   - Ability to scale `deltaTime`, pause specific systems, and record state history for "time reversal" mechanics.
 2. **Multi-Character Controller**:
-    - Required for **Elemental Conflux**.
-    - Logic to switch between multiple controllable entities, each with its own state and ability set, sharing a unified
-      input stream.
+   - Required for **Elemental Conflux**.
+   - Logic to switch between multiple controllable entities, each with its own state and ability set, sharing a unified
+     input stream.
 3. **Observation & State System**:
-    - Required for **Quantum Architect**.
-    - A reactive system where entity properties (quantum states) change based on being "observed" (camera viewport
-      presence or interaction).
+   - Required for **Quantum Architect**.
+   - A reactive system where entity properties (quantum states) change based on being "observed" (camera viewport
+     presence or interaction).
 
 ### 5. Feature-Flagging
 
 - **Recommendation**: **PostHog** or **GrowthBook**.
-    - **Pros**: Open-source options, includes analytics.
-    - **Cons**: Third-party dependency.
-    - **Alternative**: Custom `feature-flags.json` fetched via Edge Config (Vercel).
+  - **Pros**: Open-source options, includes analytics.
+  - **Cons**: Third-party dependency.
+  - **Alternative**: Custom `feature-flags.json` fetched via Edge Config (Vercel).
 
 ### 6. Deployment & Hosting
 

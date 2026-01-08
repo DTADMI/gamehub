@@ -1,6 +1,22 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
-  - 'packages/games/*'
-  - 'packages/projects/*'
-  - 'packages/projects/*/apps/*'
+  - apps/*
+  - packages/*
+  - packages/games/*
+  - packages/projects/*
+  - packages/projects/*/apps/*
+
+ignoredBuiltDependencies:
+  - "@parcel/watcher"
+  - "@prisma/engines"
+  - "@scarf/scarf"
+
+onlyBuiltDependencies:
+  - "@nestjs/core"
+  - "@prisma/client"
+  - "@swc/core"
+  - bcrypt
+  - esbuild
+  - prisma
+  - sharp
+  - supabase
+  - unrs-resolver

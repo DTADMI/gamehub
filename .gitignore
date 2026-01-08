@@ -99,7 +99,6 @@ next-env.d.ts
 .yarn-integrity
 
 # dotenv environment variable files
-.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -115,7 +114,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -182,11 +180,9 @@ yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-!.vscode/extensions.json
 .history/*
 
 
@@ -194,15 +190,40 @@ yarn-error.log
 /build
 
 # System files
-.DS_Store
 Thumbs.db
 
 
-# Compiled JavaScript files
+# Compiled JavaScript files from TypeScript
+# Ignore .js files only where there's a corresponding .ts/.tsx file
+# Pattern: any .js file in src/ that has a .ts or .tsx sibling
+**/*.js
+**/*.js.map
+# But allow config files and scripts
+!*.config.js
+!*.config.cjs
+!*.config.mjs
+!jest.config.js
+!next.config.js
+!tailwind.config.js
+!postcss.config.js
+!prettier.config.js
+!eslint.config.js
+!vite.config.js
+!vitest.config.js
+!playwright.config.js
+# Allow root-level scripts
+!/scripts/**/*.js
+# Allow cypress
+!/cypress/**/*.js
+# Allow node_modules (already ignored above)
+# Build outputs
 build/**/*.js
 build/**/*.js.map
 dist/**/*.js
 dist/**/*.js.map
+out/**
+.next/**
+.turbo/**
 
 # TypeScript v1 declaration files
 typings/
@@ -224,8 +245,6 @@ typings/
 /test-results/hydration-no-hydration-mismatch-errors-on-home-mobile-chrome/test-failed-1.png
 /test-results/hydration-no-hydration-mismatch-errors-on-home-mobile-safari/test-failed-1.png
 
-next-env.d.ts
-
 pnpm-lock.yaml.*
 package.json.*
 
@@ -233,3 +252,5 @@ package.json.*
 *.idea
 *.qodo
 *.turbo
+
+.working_docs

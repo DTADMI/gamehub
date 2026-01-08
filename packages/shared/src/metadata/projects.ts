@@ -1,12 +1,12 @@
 // packages/shared/src/metadata/projects.ts
 
 export type ProjectSlug =
-    | "story-forge"
-    | "quest-hunt"
-    | "libra-keeper"
-    | "velvet-galaxy"
-    | "portfolio"
-    | "data-viz";
+  | "story-forge"
+  | "quest-hunt"
+  | "libra-keeper"
+  | "velvet-galaxy"
+  | "portfolio"
+  | "data-viz";
 
 export type ProjectEntry = {
   slug: ProjectSlug;
@@ -29,8 +29,7 @@ export const projects: ProjectManifest = {
   "story-forge": {
     slug: "story-forge",
     title: "StoryForge",
-    shortDescription:
-        "A gamified writing platform for building consistent habits and worlds.",
+    shortDescription: "A gamified writing platform for building consistent habits and worlds.",
     tags: ["Writing", "Gamification", "Social"],
     image: "https://picsum.photos/seed/story-forge/1280/1280",
     repo: "https://github.com/DTADMI/story-forge",
@@ -38,14 +37,12 @@ export const projects: ProjectManifest = {
     enabled: true,
     visible: true,
     // @ts-ignore
-    getComponent: () =>
-        import("@projects/story-forge").then((m) => m.StoryForgeApp),
+    getComponent: () => import("@projects/story-forge").then((m) => m.StoryForgeApp),
   },
   "quest-hunt": {
     slug: "quest-hunt",
     title: "QuestHunt",
-    shortDescription:
-        "Mobile-first geocaching and location-based treasure hunts.",
+    shortDescription: "Mobile-first geocaching and location-based treasure hunts.",
     tags: ["Geocaching", "Social", "Mobile"],
     image: "https://picsum.photos/seed/quest-hunt/1280/1280",
     repo: "https://github.com/DTADMI/quest-hunt",
@@ -53,8 +50,7 @@ export const projects: ProjectManifest = {
     enabled: true,
     visible: true,
     // @ts-ignore
-    getComponent: () =>
-        import("@projects/quest-hunt").then((m) => m.QuestHuntApp),
+    getComponent: () => import("@projects/quest-hunt").then((m) => m.QuestHuntApp),
   },
   "libra-keeper": {
     slug: "libra-keeper",
@@ -67,14 +63,12 @@ export const projects: ProjectManifest = {
     enabled: true,
     visible: true,
     // @ts-ignore
-    getComponent: () =>
-        import("@projects/libra-keeper").then((m) => m.LibraKeeperApp),
+    getComponent: () => import("@projects/libra-keeper").then((m) => m.LibraKeeperApp),
   },
   "velvet-galaxy": {
     slug: "velvet-galaxy",
     title: "Velvet Galaxy",
-    shortDescription:
-        "A lifestyle social network application focused on creativity and community.",
+    shortDescription: "A lifestyle social network application focused on creativity and community.",
     tags: ["Social", "Community", "Next.js"],
     image: "https://picsum.photos/seed/velvet-galaxy/1280/1280",
     repo: "https://github.com/DTADMI/velvet-galaxy",
@@ -82,8 +76,7 @@ export const projects: ProjectManifest = {
     enabled: true,
     visible: true,
     // @ts-ignore
-    getComponent: () =>
-        import("@projects/velvet-galaxy").then((m) => m.VelvetGalaxyApp),
+    getComponent: () => import("@projects/velvet-galaxy").then((m) => m.VelvetGalaxyApp),
   },
   portfolio: {
     slug: "portfolio",

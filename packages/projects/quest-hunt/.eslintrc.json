@@ -8,11 +8,7 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "import",
-    "unused-imports"
-  ],
+  "plugins": ["@typescript-eslint", "import", "unused-imports"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -30,21 +26,12 @@
     }
   },
   "rules": {
-    "semi": [
-      "error",
-      "always"
-    ],
-    "curly": [
-      "error",
-      "all"
-    ],
+    "semi": ["error", "always"],
+    "curly": ["error", "all"],
     "no-console": [
       "warn",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ],
     "no-unused-vars": "off",
@@ -104,11 +91,7 @@
     "@typescript-eslint/no-empty-function": [
       "error",
       {
-        "allow": [
-          "arrowFunctions",
-          "methods",
-          "constructors"
-        ]
+        "allow": ["arrowFunctions", "methods", "constructors"]
       }
     ],
     "@typescript-eslint/ban-ts-comment": [
@@ -136,10 +119,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.test.ts",
-        "**/*.test.tsx"
-      ],
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
       "env": {
         "jest": true
       },

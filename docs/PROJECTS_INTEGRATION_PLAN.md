@@ -14,6 +14,7 @@ This document outlines the strategy for integrating standalone project applicati
 ## Current State Analysis
 
 ### LibraKeeper
+
 - **Type**: Standalone Next.js 16 application
 - **Database**: Prisma + PostgreSQL
 - **Auth**: NextAuth.js
@@ -23,6 +24,7 @@ This document outlines the strategy for integrating standalone project applicati
 - **Structure**: Standard Next.js app with src/ directory
 
 **Dependencies to Mutualize**:
+
 - Radix UI components (already in shared)
 - Tailwind CSS configuration
 - Authentication utilities
@@ -30,6 +32,7 @@ This document outlines the strategy for integrating standalone project applicati
 - i18n configuration
 
 ### QuestHunt
+
 - **Type**: Mini-monorepo (apps/web + packages)
 - **Database**: Supabase
 - **Framework**: Next.js 16
@@ -38,12 +41,14 @@ This document outlines the strategy for integrating standalone project applicati
 - **Structure**: Turborepo with apps/web
 
 **Dependencies to Mutualize**:
+
 - UI components (Radix UI, shadcn/ui)
 - Supabase utilities
 - Map components (could be shared)
 - Tailwind configuration
 
 ### StoryForge
+
 - **Type**: Mini-project with web subdirectory
 - **Database**: Prisma + PostgreSQL
 - **Framework**: Next.js (older version)
@@ -52,6 +57,7 @@ This document outlines the strategy for integrating standalone project applicati
 - **Structure**: web/ subdirectory with app
 
 **Dependencies to Mutualize**:
+
 - Prisma schema (merge into main API)
 - Rich text editor components
 - UI components
@@ -72,6 +78,7 @@ This document outlines the strategy for integrating standalone project applicati
 ### Phase 2: Database Consolidation (Current)
 
 #### Goals
+
 1. Merge all project schemas into `apps/api/prisma/schema.prisma`
 2. Create single source of truth for data
 3. Maintain data integrity during migration
@@ -80,6 +87,7 @@ This document outlines the strategy for integrating standalone project applicati
 #### Tasks
 
 **LibraKeeper Schema Migration**
+
 - [ ] Analyze libra-keeper Prisma schema
 - [ ] Identify overlapping models (User, Account, etc.)
 - [ ] Merge unique models into main schema
@@ -88,6 +96,7 @@ This document outlines the strategy for integrating standalone project applicati
 - [ ] Test data migration locally
 
 **StoryForge Schema Migration**
+
 - [ ] Analyze story-forge Prisma schema
 - [ ] Merge narrative-specific models
 - [ ] Handle version control tables
@@ -95,6 +104,7 @@ This document outlines the strategy for integrating standalone project applicati
 - [ ] Test with sample data
 
 **QuestHunt Schema Migration** (More Complex)
+
 - [ ] Evaluate Supabase → Prisma migration
 - [ ] Document breaking changes
 - [ ] Consider keeping Supabase or migrating
@@ -106,6 +116,7 @@ This document outlines the strategy for integrating standalone project applicati
 #### Shared Dependencies to Extract
 
 **UI Components**
+
 ```
 packages/ui/
 ├── components/
@@ -116,6 +127,7 @@ packages/ui/
 ```
 
 **Utilities**
+
 ```
 packages/shared/src/
 ├── projects/
@@ -133,6 +145,7 @@ packages/shared/src/
 #### Package.json Standardization
 
 **Target Structure for Each Project**:
+
 ```json
 {
   "name": "@projects/[name]",
@@ -184,6 +197,7 @@ interface ProjectCardProps {
 #### Project Routes
 
 **Structure**:
+
 ```
 apps/app/app/projects/
 ├── page.tsx                 # Projects listing page
@@ -199,6 +213,7 @@ apps/app/app/projects/
 #### Design System Application
 
 **Consistency Requirements**:
+
 - Use global CSS variables (`--app-bg`, colors)
 - Apply shared header/footer from main app
 - Use shadcn/ui components exclusively
@@ -211,6 +226,7 @@ apps/app/app/projects/
 #### Backend API Additions
 
 **New Prisma Models**:
+
 ```prisma
 model UserProjectAccess {
   id        String   @id @default(cuid())
@@ -270,6 +286,7 @@ enum PurchaseStatus {
 ```
 
 **API Endpoints** (`apps/api/src/`):
+
 ```
 modules/
 ├── access-control/
@@ -296,6 +313,7 @@ modules/
 ```
 
 **Key Endpoints**:
+
 - `GET /api/projects` - List all accessible projects
 - `GET /api/projects/:slug` - Get project details
 - `GET /api/access/:projectId/check` - Check user access
@@ -327,6 +345,7 @@ interface AccessControlContextValue {
 #### Admin Dashboard Enhancements
 
 **New Admin Sections**:
+
 ```
 apps/app/app/admin/
 ├── projects/
@@ -340,6 +359,7 @@ apps/app/app/admin/
 ```
 
 **Admin Features**:
+
 - Enable/disable projects
 - Toggle featured status
 - Change access tiers
@@ -353,6 +373,7 @@ apps/app/app/admin/
 #### Stripe Setup
 
 **Implementation**:
+
 - [ ] Create Stripe products for each project/tier
 - [ ] Set up webhooks for subscription events
 - [ ] Implement checkout flow
@@ -361,6 +382,7 @@ apps/app/app/admin/
 - [ ] Implement refund handling
 
 **Pricing Tiers** (Example):
+
 ```typescript
 const projectPricing = {
   'libra-keeper': {
@@ -431,6 +453,7 @@ const projectPricing = {
 ## Timeline
 
 ### Week 1 (Jan 6-12) - ✅ Current
+
 - [x] Create projects metadata system
 - [x] Update action plan
 - [ ] Analyze and document schemas
@@ -438,24 +461,28 @@ const projectPricing = {
 - [ ] Create database migration scripts
 
 ### Week 2 (Jan 13-19)
+
 - [ ] Execute database migrations
 - [ ] Standardize package.json files
 - [ ] Create project cards component
 - [ ] Build project routes
 
 ### Week 3 (Jan 20-26)
+
 - [ ] Implement access control backend
 - [ ] Create access control frontend
 - [ ] Integrate first project (LibraKeeper)
 - [ ] Admin project management UI
 
 ### Week 4 (Jan 27 - Feb 2)
+
 - [ ] Integrate remaining projects
 - [ ] Implement payment flow
 - [ ] Comprehensive testing
 - [ ] Documentation update
 
 ### Week 5 (Feb 3-9)
+
 - [ ] Staging deployment
 - [ ] User acceptance testing
 - [ ] Bug fixes and polish
@@ -481,28 +508,36 @@ const projectPricing = {
 ## Risks & Mitigation
 
 ### Risk 1: Data Loss During Migration
+
 **Mitigation**:
+
 - Complete backups before migration
 - Test migrations on copies first
 - Have rollback scripts ready
 - Verify data integrity at each step
 
 ### Risk 2: Breaking Changes for Existing Users
+
 **Mitigation**:
+
 - Maintain backward compatibility where possible
 - Communicate changes clearly
 - Gradual rollout with feature flags
 - Monitor and respond quickly to issues
 
 ### Risk 3: Access Control Bugs
+
 **Mitigation**:
+
 - Comprehensive testing
 - Default to deny (fail secure)
 - Audit logs for all access decisions
 - Admin override capabilities
 
 ### Risk 4: Payment Integration Issues
+
 **Mitigation**:
+
 - Use Stripe test mode extensively
 - Handle all webhook events
 - Implement retry logic

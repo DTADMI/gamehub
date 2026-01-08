@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: '20'
-  PNPM_VERSION: '9.15.4'
+  NODE_VERSION: "20"
+  PNPM_VERSION: "9.15.4"
   REGISTRY: ghcr.io
 
 jobs:

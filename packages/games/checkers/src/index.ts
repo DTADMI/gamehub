@@ -1,1 +1,1 @@
-export {CheckersGame} from "./components/CheckersGame";
+export { CheckersGame } from "./components/CheckersGame";

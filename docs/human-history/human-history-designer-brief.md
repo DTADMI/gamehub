@@ -22,13 +22,13 @@ Principles
 Delivery paths
 
 - assets/hh/{core|origins|rivers|trade|safety|modern|shared}/...
-    - Pack slugs:
-        - origins → Origins of Cooperation
-        - rivers → River Civilizations Across Continents
-        - trade → Trade & Ideas on the Move
-        - safety → Everyday Safety & Care
-        - modern → Modern Social Nets
-        - shared → common UI and stickers
+  - Pack slugs:
+    - origins → Origins of Cooperation
+    - rivers → River Civilizations Across Continents
+    - trade → Trade & Ideas on the Move
+    - safety → Everyday Safety & Care
+    - modern → Modern Social Nets
+    - shared → common UI and stickers
 
 File formats & sizes
 
@@ -57,7 +57,7 @@ Definition of Done (DoD)
 
 Pack asset templates (per pack, 3 scenes + wrap)
 
-1) Origins of Cooperation (`origins`)
+1. Origins of Cooperation (`origins`)
 
 - Scenes: O1 Savannah Signals, O2 Shore Exchange, O3 Painted Memory, Wrap
 - Backgrounds: `bg_origins_o1.avif`, `bg_origins_o2.avif`, `bg_origins_o3.avif`, `bg_origins_wrap.avif`
@@ -66,7 +66,7 @@ Pack asset templates (per pack, 3 scenes + wrap)
 - UI: `ui_origins_meter.svg` (Community Web meter), `ui_origins_hint.svg`
 - Badge: `collect_origins_badge.svg`
 
-2) River Civilizations Across Continents (`rivers`)
+2. River Civilizations Across Continents (`rivers`)
 
 - Scenes: R1 Nile Granary, R2 Indus Town Plan, R3 Yellow River Dykes, Wrap
 - Backgrounds: `bg_rivers_r1.avif`, `bg_rivers_r2.avif`, `bg_rivers_r3.avif`, `bg_rivers_wrap.avif`
@@ -74,7 +74,7 @@ Pack asset templates (per pack, 3 scenes + wrap)
 - UI: `ui_rivers_flow.svg`
 - Badge: `collect_rivers_badge.svg`
 
-3) Trade & Ideas on the Move (`trade`)
+3. Trade & Ideas on the Move (`trade`)
 
 - Scenes: T1 Indian Ocean Dhows, T2 Silk Roads Caravanserai, T3 Trans‑Saharan Caravans, Wrap
 - Backgrounds: `bg_trade_t1.avif`, `bg_trade_t2.avif`, `bg_trade_t3.avif`, `bg_trade_wrap.avif`
@@ -82,7 +82,7 @@ Pack asset templates (per pack, 3 scenes + wrap)
 - UI: `ui_trade_routes.svg`
 - Badge: `collect_trade_badge.svg`
 
-4) Everyday Safety & Care (`safety`)
+4. Everyday Safety & Care (`safety`)
 
 - Scenes: S1 Fire Codes & Watch, S2 Well & Qanat Coop, S3 Guild Mutual Aid, Wrap
 - Backgrounds: `bg_safety_s1.avif`, `bg_safety_s2.avif`, `bg_safety_s3.avif`, `bg_safety_wrap.avif`
@@ -90,7 +90,7 @@ Pack asset templates (per pack, 3 scenes + wrap)
 - UI: `ui_safety_trust.svg`
 - Badge: `collect_safety_badge.svg`
 
-5) Modern Social Nets (`modern`)
+5. Modern Social Nets (`modern`)
 
 - Scenes: M1 Public Health Drives, M2 Labor Safety Standards, M3 Disaster Mutual Aid, Wrap
 - Backgrounds: `bg_modern_m1.avif`, `bg_modern_m2.avif`, `bg_modern_m3.avif`, `bg_modern_wrap.avif`

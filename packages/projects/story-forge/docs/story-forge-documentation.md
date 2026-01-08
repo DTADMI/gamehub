@@ -118,77 +118,77 @@ We recommend **TypeScript with NestJS** for:
 ### Frontend
 
 - **Next.js 16 (App Router)**
-    - Server-side rendering, API routes, and optimized performance
-    - Alternatives: Remix, SvelteKit
-    - Key Features:
-        - App Router for better routing and data fetching
-        - Server Components for better performance
-        - Built-in API routes
-        - Image optimization
+  - Server-side rendering, API routes, and optimized performance
+  - Alternatives: Remix, SvelteKit
+  - Key Features:
+    - App Router for better routing and data fetching
+    - Server Components for better performance
+    - Built-in API routes
+    - Image optimization
 
 - **React 19.2**
-    - Mature ecosystem, great performance, and wide adoption
-    - **State Management:**
-        - TanStack Query (v5) for server state
-            - Excellent for server state management, caching, and background updates
-            - Alternatives: SWR, Apollo Client
-        - Zustand for client state
-            - Lightweight client state management
-            - Alternatives: Jotai, Recoil
+  - Mature ecosystem, great performance, and wide adoption
+  - **State Management:**
+    - TanStack Query (v5) for server state
+      - Excellent for server state management, caching, and background updates
+      - Alternatives: SWR, Apollo Client
+    - Zustand for client state
+      - Lightweight client state management
+      - Alternatives: Jotai, Recoil
 
 - **UI Components & Styling**
-    - shadcn/ui for accessible components
-        - Accessible, customizable, and built on top of Radix UI
-        - Alternatives: Chakra UI, Material-UI
-    - Tailwind CSS 4.1 for utility-first styling
-        - Utility-first CSS framework for rapid UI development
-        - Alternatives: Styled Components, Emotion
-    - Data Visualization
-        - Three.js - For 3D relationship graphs and interactive maps - Alternatives: D3.js (for 2D), react-three-fiber
-        - React Flow
-            - For interactive node-based relationship mapping
-            - Alternatives: Vis.js, Cytoscape.js
-        - D3.js for interactive charts
-            - Alternatives: Chart.js, Recharts
-    - Framer Motion for animations
-    - React Hook Form for form handling
-        - Performance-optimized forms with minimal re-renders
-        - Alternatives: Formik, Final Form
+  - shadcn/ui for accessible components
+    - Accessible, customizable, and built on top of Radix UI
+    - Alternatives: Chakra UI, Material-UI
+  - Tailwind CSS 4.1 for utility-first styling
+    - Utility-first CSS framework for rapid UI development
+    - Alternatives: Styled Components, Emotion
+  - Data Visualization
+    - Three.js - For 3D relationship graphs and interactive maps - Alternatives: D3.js (for 2D), react-three-fiber
+    - React Flow
+      - For interactive node-based relationship mapping
+      - Alternatives: Vis.js, Cytoscape.js
+    - D3.js for interactive charts
+      - Alternatives: Chart.js, Recharts
+  - Framer Motion for animations
+  - React Hook Form for form handling
+    - Performance-optimized forms with minimal re-renders
+    - Alternatives: Formik, Final Form
 
 - **Rich Text Editing**
-    - TipTap (ProseMirror-based)
-    - Custom extensions for writing-specific features
-    - Real-time collaboration support
+  - TipTap (ProseMirror-based)
+  - Custom extensions for writing-specific features
+  - Real-time collaboration support
 
 - **Data Visualization**
-    - D3.js for interactive charts
-    - React Flow for relationship mapping
-    - Three.js for 3D world visualization
+  - D3.js for interactive charts
+  - React Flow for relationship mapping
+  - Three.js for 3D world visualization
 
 ### Backend
 
 - **NestJS**
-    - TypeScript support
-    - Modular architecture
-    - Built-in dependency injection
-    - Excellent documentation
+  - TypeScript support
+  - Modular architecture
+  - Built-in dependency injection
+  - Excellent documentation
 
 - **Authentication**
-    - NextAuth.js
-    - JWT + Refresh Tokens
-    - OAuth2 providers (Google, GitHub, etc.)
-    - Rate limiting and brute force protection
+  - NextAuth.js
+  - JWT + Refresh Tokens
+  - OAuth2 providers (Google, GitHub, etc.)
+  - Rate limiting and brute force protection
 
 - **Database**
-    - PostgreSQL with Prisma ORM
-    - Redis for caching and real-time features
-    - MeiliSearch for full-text search
+  - PostgreSQL with Prisma ORM
+  - Redis for caching and real-time features
+  - MeiliSearch for full-text search
 
 - **Real-time Features**
-    - WebSockets (Socket.IO)
-    - Presence indicators
-    - Live collaboration
-    - Real-time notifications
+  - WebSockets (Socket.IO)
+  - Presence indicators
+  - Live collaboration
+  - Real-time notifications
 
 ### Optional/Adjacents (alternatives)
 
@@ -273,15 +273,15 @@ Operational guidance
 **Why?** Best for content-focused applications with SSR/SSG
 
 - **Pros:**
-    - Built-in routing and API routes
-    - Excellent SEO capabilities
-    - Automatic code splitting
-    - Image optimization
-    - Great TypeScript support
-    - App Router for better data fetching
+  - Built-in routing and API routes
+  - Excellent SEO capabilities
+  - Automatic code splitting
+  - Image optimization
+  - Great TypeScript support
+  - App Router for better data fetching
 - **Cons:**
-    - Steeper learning curve than traditional SPAs
-    - Larger bundle size than SvelteKit
+  - Steeper learning curve than traditional SPAs
+  - Larger bundle size than SvelteKit
 - **Best For:** Content-heavy applications needing SEO and performance
 
 #### 2. SvelteKit
@@ -289,13 +289,13 @@ Operational guidance
 **Alternative for simpler applications**
 
 - **Pros:**
-    - Excellent performance
-    - Smaller bundle sizes
-    - Easier learning curve
-    - Built-in animations
+  - Excellent performance
+  - Smaller bundle sizes
+  - Easier learning curve
+  - Built-in animations
 - **Cons:**
-    - Smaller ecosystem
-    - Fewer enterprise features
+  - Smaller ecosystem
+  - Fewer enterprise features
 - **Best For:** Interactive applications where bundle size is critical
 
 ### State Management
@@ -305,190 +305,190 @@ Operational guidance
 **Recommended for server state**
 
 - **Pros:**
-    - Automatic caching
-    - Background updates
-    - Pagination support
-    - Optimistic updates
+  - Automatic caching
+  - Background updates
+  - Pagination support
+  - Optimistic updates
 - **Cons:**
-    - Learning curve
-    - Overkill for simple apps
+  - Learning curve
+  - Overkill for simple apps
 
 #### 2. Zustand
 
 **Recommended for client state**
 
 - **Pros:**
-    - Simple API
-    - No provider needed
-    - Small bundle size
-    - Middleware support
+  - Simple API
+  - No provider needed
+  - Small bundle size
+  - Middleware support
 - **Cons:**
-    - Less structure than Redux
-    - Can become unwieldy in large apps
+  - Less structure than Redux
+  - Can become unwieldy in large apps
 
 ### Styling Solutions
 
 #### 1. Tailwind CSS (Recommended)
 
 - **Pros:**
-    - Utility-first approach
-    - Highly customizable
-    - Small production bundle
-    - Great developer experience
+  - Utility-first approach
+  - Highly customizable
+  - Small production bundle
+  - Great developer experience
 - **Cons:**
-    - Learning curve
-    - Can make JSX verbose
+  - Learning curve
+  - Can make JSX verbose
 
 #### 2. Styled Components
 
 - **Pros:**
-    - CSS-in-JS
-    - Scoped styles
-    - Theming support
+  - CSS-in-JS
+  - Scoped styles
+  - Theming support
 - **Cons:**
-    - Larger bundle size
-    - Runtime overhead
+  - Larger bundle size
+  - Runtime overhead
 
 ### Component Libraries
 
 #### 1. shadcn/ui (Recommended)
 
 - **Pros:**
-    - Accessible components
-    - Customizable
-    - Built on Radix UI
-    - Copy-paste components
+  - Accessible components
+  - Customizable
+  - Built on Radix UI
+  - Copy-paste components
 - **Cons:**
-    - Newer library
-    - Smaller community
+  - Newer library
+  - Smaller community
 
 #### 2. Material-UI
 
 - **Pros:**
-    - Comprehensive
-    - Theming support
-    - Large community
+  - Comprehensive
+  - Theming support
+  - Large community
 - **Cons:**
-    - Larger bundle size
-    - Customization can be complex
+  - Larger bundle size
+  - Customization can be complex
 
 ### Data Visualization
 
 #### 1. D3.js
 
 - **Pros:**
-    - Most powerful
-    - Highly customizable
-    - Large ecosystem
+  - Most powerful
+  - Highly customizable
+  - Large ecosystem
 - **Cons:**
-    - Steep learning curve
-    - Verbose API
+  - Steep learning curve
+  - Verbose API
 
 #### 2. Recharts
 
 - **Pros:**
-    - React components
-    - Simpler API
-    - Good documentation
+  - React components
+  - Simpler API
+  - Good documentation
 - **Cons:**
-    - Less flexible than D3
-    - Fewer chart types
+  - Less flexible than D3
+  - Fewer chart types
 
 ### Form Handling
 
 #### 1. React Hook Form (Recommended)
 
 - **Pros:**
-    - Performance optimized
-    - Small bundle size
-    - Great TypeScript support
+  - Performance optimized
+  - Small bundle size
+  - Great TypeScript support
 - **Cons:**
-    - Learning curve
-    - Less opinionated
+  - Learning curve
+  - Less opinionated
 
 #### 2. Formik
 
 - **Pros:**
-    - Popular
-    - Good documentation
-    - Form state management
+  - Popular
+  - Good documentation
+  - Form state management
 - **Cons:**
-    - Larger bundle size
-    - More boilerplate
+  - Larger bundle size
+  - More boilerplate
 
 ### Testing Strategy
 
 #### 1. Unit Testing
 
 - **Jest + React Testing Library**
-    - Component testing
-    - Snapshot testing
-    - Mocking
+  - Component testing
+  - Snapshot testing
+  - Mocking
 
 #### 2. E2E Testing
 
 - **Cypress**
-    - Component testing
-    - Visual regression
-    - API testing
+  - Component testing
+  - Visual regression
+  - API testing
 
 ### Performance Optimization
 
 1. **Code Splitting**
-    - Route-based
-    - Component-based
+   - Route-based
+   - Component-based
 
 2. **Lazy Loading**
-    - Images
-    - Components
-    - Libraries
+   - Images
+   - Components
+   - Libraries
 
 3. **Bundle Analysis**
-    - Webpack Bundle Analyzer
-    - Source map explorer
+   - Webpack Bundle Analyzer
+   - Source map explorer
 
 ### Accessibility (a11y)
 
 1. **Keyboard Navigation**
-    - Focus management
-    - Keyboard shortcuts
+   - Focus management
+   - Keyboard shortcuts
 
 2. **Screen Reader Support**
-    - ARIA attributes
-    - Semantic HTML
+   - ARIA attributes
+   - Semantic HTML
 
 3. **Color Contrast**
-    - WCAG compliance
-    - Dark mode support
+   - WCAG compliance
+   - Dark mode support
 
 ### Recommended Tech Stack
 
 1. **Core**
-    - Next.js 16 (App Router)
-    - TypeScript 5.9+
-    - React 19.2
+   - Next.js 16 (App Router)
+   - TypeScript 5.9+
+   - React 19.2
 
 2. **State Management**
-    - TanStack Query (server state)
-    - Zustand (client state)
+   - TanStack Query (server state)
+   - Zustand (client state)
 
 3. **Styling**
-    - Tailwind CSS
-    - shadcn/ui components
+   - Tailwind CSS
+   - shadcn/ui components
 
 4. **Testing**
-    - Jest + React Testing Library
-    - Cypress
+   - Jest + React Testing Library
+   - Cypress
 
 5. **Tooling**
-    - ESLint + Prettier
-    - Husky + lint-staged
-    - Storybook
+   - ESLint + Prettier
+   - Husky + lint-staged
+   - Storybook
 
 6. **Realtime/Graph**
-    - Socket.IO client (presence, collab, notifications)
-    - react-three-fiber + three.js for 3D character relationship maps
-    - React Flow for 2D graphs
+   - Socket.IO client (presence, collab, notifications)
+   - react-three-fiber + three.js for 3D character relationship maps
+   - React Flow for 2D graphs
 
 ## Database Design
 
@@ -515,55 +515,55 @@ erDiagram
 ### Key Tables
 
 1. **Users**
-    - id, email, username, hashed_password
-    - profile_image, bio, website
-    - settings (JSONB for preferences)
-    - subscription_status, subscription_expires_at
-    - preferences (notification settings, etc.)
+   - id, email, username, hashed_password
+   - profile_image, bio, website
+   - settings (JSONB for preferences)
+   - subscription_status, subscription_expires_at
+   - preferences (notification settings, etc.)
 
 2. **Projects**
-    - id, user_id, title, description
-    - genre, is_public, word_count
-    - last_updated, created_at
-    - settings (JSONB for custom fields)
-    - default_scope (enum: private, friends, public_auth, public_anyone)
+   - id, user_id, title, description
+   - genre, is_public, word_count
+   - last_updated, created_at
+   - settings (JSONB for custom fields)
+   - default_scope (enum: private, friends, public_auth, public_anyone)
 
 3. **Characters**
-    - id, project_id, name, bio
-    - appearance, personality (JSONB)
-    - relationships (JSONB for dynamic fields)
-    - images (array of URLs)
-    - tags (array)
+   - id, project_id, name, bio
+   - appearance, personality (JSONB)
+   - relationships (JSONB for dynamic fields)
+   - images (array of URLs)
+   - tags (array)
 
 4. **WorldBuilding**
-    - locations, maps, items, etc.
-    - Each with appropriate relationships
-    - Support for custom fields
+   - locations, maps, items, etc.
+   - Each with appropriate relationships
+   - Support for custom fields
 
 5. **Timelines / Events**
-    - id, project_id, title, description, start_at, end_at, characters_involved (array)
-    - links to dialogues and locations
+   - id, project_id, title, description, start_at, end_at, characters_involved (array)
+   - links to dialogues and locations
 
 6. **Dialogues**
-    - id, project_id, title, participants (array of character_ids)
-    - content (structured; TipTap JSON)
-    - optional timeline_event_id
+   - id, project_id, title, participants (array of character_ids)
+   - content (structured; TipTap JSON)
+   - optional timeline_event_id
 
 7. **Scopes & ACL**
-    - VISIBILITY_SCOPE (id, name, rules JSON)
-    - RESOURCE_SCOPE (resource_type, resource_id, scope_id, overrides JSON)
+   - VISIBILITY_SCOPE (id, name, rules JSON)
+   - RESOURCE_SCOPE (resource_type, resource_id, scope_id, overrides JSON)
 
 8. **Social**
-    - FOLLOW (follower_id, followee_id)
-    - FRIEND (user_id, friend_user_id, status)
-    - GROUP (id, name, owner_id, visibility)
-    - GROUP_MEMBER (group_id, user_id, role)
+   - FOLLOW (follower_id, followee_id)
+   - FRIEND (user_id, friend_user_id, status)
+   - GROUP (id, name, owner_id, visibility)
+   - GROUP_MEMBER (group_id, user_id, role)
 
 9. **Gamification**
-    - GOAL (user_id, type, target, cadence)
-    - PROGRESS_LOG (user_id, goal_id, value, timestamp)
-    - GEM_WALLET (user_id, balance)
-    - GEM_TX (user_id, amount, reason, metadata)
+   - GOAL (user_id, type, target, cadence)
+   - PROGRESS_LOG (user_id, goal_id, value, timestamp)
+   - GEM_WALLET (user_id, balance)
+   - GEM_TX (user_id, amount, reason, metadata)
 
 10. **Notifications**
 
@@ -650,8 +650,8 @@ Messaging
 
 - Profile fields editable: `name`, `username`, `bio`, `website`.
 - API endpoints:
-    - `GET /users/:id` — returns user public profile fields (MVP: self usage from web)
-    - `PATCH /users/:id` — update basic profile fields with validation
+  - `GET /users/:id` — returns user public profile fields (MVP: self usage from web)
+  - `PATCH /users/:id` — update basic profile fields with validation
 - Web route: `/profile` under authenticated `(main)` area; SSR with server actions for updates.
 
 ### Subscription Foundations
@@ -672,8 +672,8 @@ The primary goal of StoryForge gamification is not to create a complex economy, 
 
 - **Earning Ink:** Users earn Ink by meeting their daily writing goals or receiving "Cheers" from other writers.
 - **Spending Ink:**
-    - **Cosmetic Personalization:** Unlock dark mode themes, custom editor fonts, or profile badges.
-    - **Social Gifting:** Use Ink to send "Cheers" or digital "Stickers" to friends to motivate them.
+  - **Cosmetic Personalization:** Unlock dark mode themes, custom editor fonts, or profile badges.
+  - **Social Gifting:** Use Ink to send "Cheers" or digital "Stickers" to friends to motivate them.
 - **The Ink Pot:** Ink is stored in the user's "Ink Pot" (or "Well"), keeping with the writing theme.
 - **Milestone Badges:** Users earn badges for reaching word count milestones (1k, 5k, 10k words).
 
@@ -689,8 +689,8 @@ The primary goal of StoryForge gamification is not to create a complex economy, 
 1. **Streaks (Habit Building):** Visible daily streaks to encourage showing up.
 2. **Milestone Badges:** Permanent rewards for cumulative word counts.
 3. **Social Motivators:**
-    - **Cheers:** A low-friction way to notify a friend that you've noticed their progress.
-    - **Shared Goals:** Optional groups where members see each other's progress (anonymized if desired).
+   - **Cheers:** A low-friction way to notify a friend that you've noticed their progress.
+   - **Shared Goals:** Optional groups where members see each other's progress (anonymized if desired).
 
 #### Wellbeing & Mental Health
 
@@ -709,7 +709,7 @@ The primary goal of StoryForge gamification is not to create a complex economy, 
 - Role-based access control (RBAC)
 - Rate limiting on auth endpoints
 - CSRF protection
-    - For web-only forms; NextAuth session protection
+  - For web-only forms; NextAuth session protection
 
 #### NextAuth v4 Implementation (Web)
 
@@ -801,19 +801,19 @@ pricing.
 ### Production Environment
 
 - **Frontend:**
-    - Vercel (Global CDN)
-    - Image optimization
-    - Performance monitoring
+  - Vercel (Global CDN)
+  - Image optimization
+  - Performance monitoring
 - **Backend:**
-    - Container orchestration (Kubernetes)
-    - Auto-scaling
-    - Load balancing
-    - Service mesh (Istio/Linkerd)
+  - Container orchestration (Kubernetes)
+  - Auto-scaling
+  - Load balancing
+  - Service mesh (Istio/Linkerd)
 - **Database:**
-    - Primary + read replicas
-    - Regular backups
-    - Point-in-time recovery
-    - Performance monitoring
+  - Primary + read replicas
+  - Regular backups
+  - Point-in-time recovery
+  - Performance monitoring
 
 ### Monitoring & Observability
 
@@ -835,14 +835,14 @@ pricing.
 #### CI/CD Pipeline (GitHub Actions)
 
 - **Quality Gates:**
-    - Linting (ESLint 9.39)
-    - Type-checking (TS 5.9)
-    - Unit/E2E Testing (Vitest/Jest)
-    - Prisma Schema Validation (`prisma generate`)
-    - DB Migration Check (`prisma migrate deploy` - preview-gated)
+  - Linting (ESLint 9.39)
+  - Type-checking (TS 5.9)
+  - Unit/E2E Testing (Vitest/Jest)
+  - Prisma Schema Validation (`prisma generate`)
+  - DB Migration Check (`prisma migrate deploy` - preview-gated)
 - **Deployment:**
-    - Web: Vercel (Automatic preview and production deployments)
-    - API: Railway/Supabase (Triggered on main push)
+  - Web: Vercel (Automatic preview and production deployments)
+  - API: Railway/Supabase (Triggered on main push)
 
 #### Security & Compliance
 
@@ -896,26 +896,26 @@ pricing.
 ### Freemium Model
 
 - **Free Tier**
-    - 3 active projects
-    - Basic world-building tools
-    - Community features
-    - Basic export options
+  - 3 active projects
+  - Basic world-building tools
+  - Community features
+  - Basic export options
 
 - **Premium Tier ($9.99/month)**
-    - Unlimited projects
-    - Advanced world-building tools
-    - PDF/EPUB export
-    - Priority support
-    - Advanced analytics
-    - 3D maps and relationship graphs
-    - Advanced notification channels and digests
+  - Unlimited projects
+  - Advanced world-building tools
+  - PDF/EPUB export
+  - Priority support
+  - Advanced analytics
+  - 3D maps and relationship graphs
+  - Advanced notification channels and digests
 
 - **Team Tier ($24.99/month)**
-    - Everything in Premium
-    - Team collaboration
-    - Advanced permissions
-    - Shared resources
-    - Team analytics
+  - Everything in Premium
+  - Team collaboration
+  - Advanced permissions
+  - Shared resources
+  - Team analytics
 
 ## Future Considerations
 

@@ -29,34 +29,34 @@ Flow & Narrative Sequencing
 Narrative Outline — Core Pack
 
 - B1 Food Web at Home (Kitchen Garden)
-    - Goal: show flows (water, nutrients, compost) and feedback loops.
-    - Hotspots: sink, compost bin, herb pot, rain jar, poster.
-    - Mini-puzzle: assemble a loop (drag arrows to complete: kitchen → compost → soil → herbs → kitchen).
-    - Choice: prioritize “save water” vs. “grow herbs” emphasis; sets `b1.focus`.
+  - Goal: show flows (water, nutrients, compost) and feedback loops.
+  - Hotspots: sink, compost bin, herb pot, rain jar, poster.
+  - Mini-puzzle: assemble a loop (drag arrows to complete: kitchen → compost → soil → herbs → kitchen).
+  - Choice: prioritize “save water” vs. “grow herbs” emphasis; sets `b1.focus`.
 - B2 Transit Rhythm (Neighborhood Map)
-    - Goal: show schedules, bottlenecks, alternative routes.
-    - Hotspots: bus stop, bike lane, crosswalk signals, map pins.
-    - Mini-puzzle: plan a safe trip by sequencing 3 steps; or rebalance a timetable.
-    - Choice: pick route A (bus-first) or B (bike-first); sets `b2.route`.
+  - Goal: show schedules, bottlenecks, alternative routes.
+  - Hotspots: bus stop, bike lane, crosswalk signals, map pins.
+  - Mini-puzzle: plan a safe trip by sequencing 3 steps; or rebalance a timetable.
+  - Choice: pick route A (bus-first) or B (bike-first); sets `b2.route`.
 - B3 Waste Sorting (Community Corner)
-    - Goal: flows and constraints (recycling vs. contamination).
-    - Hotspots: bins, info board, two ambiguous items.
-    - Mini-puzzle: drag items to correct bins; show “why” tips.
-    - Choice: accept helper tips vs. go no-hints; sets `b3.noHints`.
+  - Goal: flows and constraints (recycling vs. contamination).
+  - Hotspots: bins, info board, two ambiguous items.
+  - Mini-puzzle: drag items to correct bins; show “why” tips.
+  - Choice: accept helper tips vs. go no-hints; sets `b3.noHints`.
 - Wrap — Little Systems, Big Picture
-    - Frame systems as connected stories; award a “Systems Scout” badge. Unlocks extensions in the Cards view.
+  - Frame systems as connected stories; award a “Systems Scout” badge. Unlocks extensions in the Cards view.
 
 Extensions (Replayable Content Packs)
 
 - Space (Solar System)
-    - S1 Orbits & Periods: arrange planets by orbital period; visualize resonances; kindness note: avoid doomsday
-      tropes.
-    - S2 Light & Shadows: phases and eclipses via 2D lamp-and-balls; accessibility: reduced-motion stills and captions.
-    - S3 Habitable Clues: compare atmospheric hints (generic cards, no brands); moral: scientific humility.
+  - S1 Orbits & Periods: arrange planets by orbital period; visualize resonances; kindness note: avoid doomsday
+    tropes.
+  - S2 Light & Shadows: phases and eclipses via 2D lamp-and-balls; accessibility: reduced-motion stills and captions.
+  - S3 Habitable Clues: compare atmospheric hints (generic cards, no brands); moral: scientific humility.
 - Ocean (Depth & Life)
-    - O1 Layers of Light: order epipelagic → hadal; show adaptations with alt text.
-    - O2 Currents & Climate: connect wind, currents, upwelling; empathy toward coastal communities.
-    - O3 Deep Signals: match “pings/songs/lights” to creatures; captions and no-jumpscare rule.
+  - O1 Layers of Light: order epipelagic → hadal; show adaptations with alt text.
+  - O2 Currents & Climate: connect wind, currents, upwelling; empathy toward coastal communities.
+  - O3 Deep Signals: match “pings/songs/lights” to creatures; captions and no-jumpscare rule.
 
   - Body Systems (Human Biology) — multi‑sub‑pack with Homeostasis Meter
     - Overview

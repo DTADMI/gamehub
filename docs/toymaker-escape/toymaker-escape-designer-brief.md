@@ -37,8 +37,7 @@ Definition of Done (DoD)
 Episode E1 — Workshop & Playroom (asset templates)
 
 - Intro/Outro (title cards)
--
-  - No new illustration assets required for `TME_INTRO`/`TME_OUTRO` (text‑first title cards). Reuse existing UI styles;
+- - No new illustration assets required for `TME_INTRO`/`TME_OUTRO` (text‑first title cards). Reuse existing UI styles;
     ensure readable headings and buttons with visible focus. Copy keys live under `tme.intro2.*` and `tme.outro.*`.
 
 - Workshop BG: `e1_workshop_bg.avif`; Playroom BG: `e1_playroom_bg.avif`.
@@ -70,9 +69,9 @@ Global UI assets
 
 Hand‑off workflow & PR checklist
 
-1) Deliver BGs (both sizes/codecs), props SVGs, overlays, optional loops + stills, annotated PNG(s), palette notes.
-2) We integrate and provide a capture; iterate ≤ 2 cycles where possible.
-3) PR checklist (paste into description):
+1. Deliver BGs (both sizes/codecs), props SVGs, overlays, optional loops + stills, annotated PNG(s), palette notes.
+2. We integrate and provide a capture; iterate ≤ 2 cycles where possible.
+3. PR checklist (paste into description):
 
 - [ ] Backgrounds (2560×1440 + 1920×1080) AVIF + WEBP
 - [ ] Props SVGs (clean paths; separate hotspot layers)
@@ -126,6 +125,6 @@ Gabarits d’assets par épisode
 
 Workflow & Checklist PR
 
-1) Livraison BGs/props/overlays/boucles + statiques/PNG annoté/notes de palette.
-2) Intégration + capture; ≤ 2 itérations.
-3) Checklist PR : identique à la section EN.
+1. Livraison BGs/props/overlays/boucles + statiques/PNG annoté/notes de palette.
+2. Intégration + capture; ≤ 2 itérations.
+3. Checklist PR : identique à la section EN.

@@ -104,11 +104,13 @@ Vercel is ideal for the Next.js frontend.
 #### Setup
 
 1. Install Vercel CLI:
+
    ```bash
    pnpm add -g vercel
    ```
 
 2. Login:
+
    ```bash
    vercel login
    ```
@@ -187,12 +189,14 @@ gcloud run deploy gamehub-app \
 #### Elastic Container Service (ECS)
 
 1. Create ECR repositories:
+
    ```bash
    aws ecr create-repository --repository-name gamehub-api
    aws ecr create-repository --repository-name gamehub-app
    ```
 
 2. Build and push:
+
    ```bash
    # Login to ECR
    aws ecr get-login-password --region us-east-1 | \
@@ -475,6 +479,7 @@ gcloud run services update-traffic gamehub-app \
 ## Support
 
 For deployment issues:
+
 - Check platform documentation
 - Review GitHub Issues
 - Contact support team

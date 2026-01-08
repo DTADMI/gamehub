@@ -28,6 +28,7 @@ This document contains all completed tasks from the main action plan for histori
 ### Point & Click Games (December 2025)
 
 #### Engine & Core Systems
+
 - ✅ Keep `libs/shared/src/pointclick/core/*` as primary runtime
 - ✅ Helpers: `EngineCtx`, `guards/effects`, save/load/migrate
 - ✅ Puzzle primitives shipped: `keypad`, `sequence`, `wires` (+ unit tests)
@@ -38,6 +39,7 @@ This document contains all completed tasks from the main action plan for histori
 - ✅ Persistence helpers implemented with migration stubs
 
 #### Toymaker Escape (TME) Episode 1
+
 - ✅ Keypad gate integrated; inventory award, medal flag
 - ✅ Gears mini implemented with tolerance and medals
 - ✅ Sorter mini (tap/drag) with reduced‑motion path
@@ -55,6 +57,7 @@ This document contains all completed tasks from the main action plan for histori
 - ✅ Acceptance (Beta) complete
 
 #### Rite of Discovery (ROD)
+
 - ✅ Implement S1 tag reassembly mini (3 pieces; keyboard + pointer)
 - ✅ Implement S2 note letter‑match (3 differences; clear/high‑contrast targets)
 - ✅ Implement S3 proof moment branch (receipt vs. overhear) with flags saved
@@ -73,6 +76,7 @@ This document contains all completed tasks from the main action plan for histori
 - ✅ Acceptance (Beta) complete
 
 #### Systems Discovery (SD)
+
 - ✅ Core pack: ordered loop, route planner (two solutions), waste sorter with hints
 - ✅ Body Systems: Breath, Fuel, Move, Signal, Grow implemented
 - ✅ Implement B1 loop puzzle (Kitchen→Compost→Soil→Herbs)
@@ -104,6 +108,7 @@ This document contains all completed tasks from the main action plan for histori
 - ✅ E2E smokes for each game
 
 #### Breakout Enhancements
+
 - ✅ Particles reliability normalized brick‑hit emissions
 - ✅ Live switching between `Sparks` and `Puff` takes effect immediately
 - ✅ PC controllers: keyboard Arrows by default
@@ -113,12 +118,14 @@ This document contains all completed tasks from the main action plan for histori
 - ✅ HUD/boost and pause immobility E2E remain green
 
 #### Snake Enhancements
+
 - ✅ Swipe default with prevent‑scroll
 - ✅ Optional Joystick/D‑pad and Taps
 - ✅ Pause/resume overlay
 - ✅ HUD spacing/typography and color/contrast improvements
 
 #### Memory Enhancements
+
 - ✅ On match, cards spin+fade, then become inert placeholders to preserve grid
 - ✅ Stable layout verified by E2E
 
@@ -234,6 +241,7 @@ This document contains all completed tasks from the main action plan for histori
 **Focus**: Point-and-click narrative games, MVP playables, engine improvements
 
 **Achievements**:
+
 - Shipped 7 playable games (Breakout, Memory, Snake, Pattern Matching, Bubble Pop, Checkers, Chess)
 - Completed TME Episode 1, ROD, and SD Core + Body Systems packs
 - Implemented comprehensive puzzle primitives
@@ -242,6 +250,7 @@ This document contains all completed tasks from the main action plan for histori
 - Delivered accessibility improvements across all games
 
 **Metrics**:
+
 - 7 playable games shipped
 - 3 narrative games completed (Beta)
 - 100+ unit tests written
@@ -253,6 +262,7 @@ This document contains all completed tasks from the main action plan for histori
 ## Historical Context
 
 These completed tasks represent the foundation of GameHub's:
+
 1. **Monorepo Architecture**: Proper workspace configuration and build orchestration
 2. **Game Engine**: Point-and-click engine with puzzle primitives
 3. **Narrative Games**: Three complete beta releases
@@ -266,6 +276,7 @@ These completed tasks represent the foundation of GameHub's:
 ## Migration Notes
 
 All tasks marked ✅ have been:
+
 - Fully implemented
 - Tested (unit and/or E2E)
 - Documented

@@ -61,11 +61,11 @@ Scenarios (high‑level)
 Sahara & Sahel Pathways (SS)
 
 - SS1 Oasis Caravan Circle — Goal: water rules, rest, and news exchange keep everyone safe.
-    - Puzzle: bucket‑chain and water ledger; fairness flags `ss1.splitPolicy`.
+  - Puzzle: bucket‑chain and water ledger; fairness flags `ss1.splitPolicy`.
 - SS2 Copper to Iron — Goal: smelting knowledge spreads via traveling smiths and apprentices.
-    - Puzzle: furnace assembly steps; temperature balance; flag `ss2.method`.
+  - Puzzle: furnace assembly steps; temperature balance; flag `ss2.method`.
 - SS3 Wayfinding Across Dunes — Goal: stars, winds, and dunes; teams plan dawn/dusk marches.
-    - Puzzle: route‑plan under heat constraints; flag `ss3.route`.
+  - Puzzle: route‑plan under heat constraints; flag `ss3.route`.
 - Wrap: award `collect_ss_badge.svg`; reflection on shared rules.
 
 Forests & Rivers — Congo/Niger (FR)

@@ -1,1 +1,1 @@
-export {KnitzyGame} from "./components/KnitzyGame";
+export { KnitzyGame } from "./components/KnitzyGame";

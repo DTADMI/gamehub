@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "moduleResolution": "bundler",
     "strict": false,
     "noImplicitAny": false,
@@ -20,31 +16,16 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@games/shared": [
-        "./src/index.ts"
-      ],
-      "@games/shared/*": [
-        "./src/*"
-      ],
-      "@games/*": [
-        "../games/*/src"
-      ],
-      "@projects/*": [
-        "../projects/*"
-      ],
-      "@shared/*": [
-        "../shared/src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@games/shared": ["./src/index.ts"],
+      "@games/shared/*": ["./src/*"],
+      "@games/*": ["../games/*/src"],
+      "@projects/*": ["../projects/*"],
+      "@shared/*": ["../shared/src/*"],
+      "@ui/*": ["../../packages/ui/src/*"],
+      "@ui": ["../../packages/ui/src"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

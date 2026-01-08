@@ -40,9 +40,9 @@ Designer tasks & workflow (at a glance)
 - Visual style: warm, cozy, slightly whimsical. Soft lighting, rounded shapes, no uncanny realism.
 - Composition: key information within the inner 90% of the frame (5% safe margin on all sides).
 - Palette cues (suggested, not mandatory):
-    - Family scenes: warm ambers and soft neutrals; bedtime hues for night interiors.
-    - “Thinking Tools” cases: add accent tints by topic (probability → cool blues; rhetoric → purples;
-      incentives/framing → gold/orange).
+  - Family scenes: warm ambers and soft neutrals; bedtime hues for night interiors.
+  - “Thinking Tools” cases: add accent tints by topic (probability → cool blues; rhetoric → purples;
+    incentives/framing → gold/orange).
 
 Mood boards (public‑domain/free references)
 
@@ -163,35 +163,35 @@ Per‑case asset template (each case)
 
 Case lineup (hooks, routes, twist) — all must center kindness and constructive resolution
 
-1) The Mystery Coupon (Anchoring + Framing)
+1. The Mystery Coupon (Anchoring + Framing)
 
 - Hooks: “90% OFF!!” flyer with caveats; parent comparing prices.
 - Routes: (A) Reframe total cost by assembling receipt shards; (B) Try a mini‑experiment with sample items.
 - Twist: Hidden price‑history collectible unlocks a playful “Price Detective” epilogue panel.
 - Niceness: Player guides family to a smart choice without belittling anyone.
 
-2) The Echo Thread (Confirmation Bias + Filter Bubbles)
+2. The Echo Thread (Confirmation Bias + Filter Bubbles)
 
 - Hooks: Group chat rumor about a toy.
 - Routes: (A) Cross‑check sources collage; (B) Respectful “debate” mini‑duel (avoid fallacy traps).
 - Twist: With 2+ “Media Lenses,” unlock an NPC journalist side scene.
 - Niceness: Emphasize listening and empathy; no dunking on friends.
 
-3) The Coin‑Flip Streak (Gambler’s Fallacy + Probability)
+3. The Coin‑Flip Streak (Gambler’s Fallacy + Probability)
 
 - Hooks: “Lucky coin” keeps winning.
 - Routes: (A) Simulate flips; histogram mini‑puzzle; (B) Create a fun zine that defangs superstition with humor.
 - Twist: Perfect analysis unlocks a couch‑co‑op minigame.
 - Niceness: Celebrate curiosity; avoid ridiculing beliefs.
 
-4) The Miracle Patch (Post Hoc + Placebo)
+4. The Miracle Patch (Post Hoc + Placebo)
 
 - Hooks: Sports patch claims to improve speed.
 - Routes: (A) AB test with swapped patches; (B) Timeline assembly showing alternate causes.
 - Twist: With “Coach’s Clipboard,” unlock a team montage ending.
 - Niceness: Frame outcomes as teamwork and good habits, not “calling out” anyone.
 
-5) The Amazing Poster (Appeal to Authority + Ad Hominem)
+5. The Amazing Poster (Appeal to Authority + Ad Hominem)
 
 - Hooks: Competing posters; one quotes a “famous expert.”
 - Routes: (A) Credential vetting stamp‑game; (B) Clean arguments by removing personal jabs.
@@ -352,9 +352,9 @@ Tâches & flux de travail (vue d’ensemble)
 - Style : chaleureux, cosy, légèrement fantaisiste. Éclairage doux, formes arrondies.
 - Composition : informations clés dans les 90% centraux (marge de sécurité 5%).
 - Indices de palette (indicatifs) :
-    - Scènes familiales : ambres chauds, neutres doux; teintes nocturnes pour l’intérieur.
-    - Cas “Outils de Pensée” : teintes d’accent par thème (probabilité → bleus; rhétorique → violets;
-      incitations/cadrage → or/orange).
+  - Scènes familiales : ambres chauds, neutres doux; teintes nocturnes pour l’intérieur.
+  - Cas “Outils de Pensée” : teintes d’accent par thème (probabilité → bleus; rhétorique → violets;
+    incitations/cadrage → or/orange).
 
 Mood boards (références libres)
 
@@ -498,27 +498,27 @@ Modèle d’assets par cas
 
 Cas (exemples résumés, tous centrés sur la bienveillance)
 
-1) Le Bon de Réduction Mystérieux (Ancrage + Cadrage)
+1. Le Bon de Réduction Mystérieux (Ancrage + Cadrage)
 
 - Parcours : (A) Recomposer un reçu; (B) Mini‑expérimentation avec échantillons.
 - Fin bonus : “Détective des Prix” via un collectible caché.
 
-2) Le Fil Écho (Biais de Confirmation + Bulles de Filtres)
+2. Le Fil Écho (Biais de Confirmation + Bulles de Filtres)
 
 - Parcours : (A) Collage de sources croisées; (B) Joute de débat respectueuse.
 - Fin bonus : scène avec un·e journaliste si 2+ “Lentilles Média”.
 
-3) La Série à Pile (Pari du Joueur + Probabilités)
+3. La Série à Pile (Pari du Joueur + Probabilités)
 
 - Parcours : (A) Simulation de lancers + histogramme; (B) Zine humoristique contre la superstition.
 - Fin bonus : mini‑jeu canapé à deux.
 
-4) Le Patch Miracle (Post Hoc + Placebo)
+4. Le Patch Miracle (Post Hoc + Placebo)
 
 - Parcours : (A) A/B test en secret; (B) Timeline multi‑causes.
 - Fin bonus : montage d’équipe avec “Presse‑livret de Coach”.
 
-5) L’Affiche Incroyable (Appel à l’Autorité + Ad Hominem)
+5. L’Affiche Incroyable (Appel à l’Autorité + Ad Hominem)
 
 - Parcours : (A) Tamponner les crédentials; (B) Nettoyer les attaques personnelles.
 - Fin bonus : “Hôtel de Ville” si les cas précédents sont sans sophismes.

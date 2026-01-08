@@ -15,11 +15,11 @@ Principles
 Delivery paths
 
 - assets/afp/{ss|fr|rh|gl|cc|shared}/...
-    - ss = Sahara & Sahel Pathways
-    - fr = Forests & Rivers — Congo/Niger
-    - rh = Rift & Horn
-    - gl = Great Lakes & Highlands
-    - cc = Coasts & Crossings — Atlantic/Indian
+  - ss = Sahara & Sahel Pathways
+  - fr = Forests & Rivers — Congo/Niger
+  - rh = Rift & Horn
+  - gl = Great Lakes & Highlands
+  - cc = Coasts & Crossings — Atlantic/Indian
 
 Formats & naming
 

@@ -16,6 +16,7 @@ The database schema consolidation has already been completed! The main Prisma sc
 ### ✅ Core GameHub Models
 
 **User Model** (Unified)
+
 - Base fields: id, email, username, name, avatar, image
 - Auth fields: password, passwordHash, emailVerified
 - Project access: `allowedProjects`, `isAdmin`
@@ -23,12 +24,14 @@ The database schema consolidation has already been completed! The main Prisma sc
 - Relations to all project models
 
 **GameHub Original**
+
 - `GameStat` - Game statistics and high scores
 - `Comment` - Game comments and ratings
 
 ### ✅ LibraKeeper Models
 
 **Core Models**:
+
 - `Item` - Library items (books, electronics, tools)
 - `Loan` - Lending tracking
 - `Tag` - Item categorization
@@ -39,23 +42,27 @@ The database schema consolidation has already been completed! The main Prisma sc
 - `WaitlistEntry` - Waitlist for items
 
 **Auth Models** (NextAuth):
+
 - `Account` - OAuth accounts
 - `Session` - User sessions
 - `VerificationToken` - Email verification
 
 **Settings**:
+
 - `AppSettings` - Application configuration
 - `FeatureFlag` - Feature toggles (with game/project slug support)
 
 ### ✅ StoryForge Models
 
 **Core Models**:
+
 - `SF_Project` - Story projects
 - `Character` - Story characters
 - `Location` - Story locations
 - `TimelineEvent` - Story timeline
 
 **Gamification**:
+
 - `InkPot` - Virtual currency system
 - `InkTx` - Transaction history
 - `Goal` - Writing goals
@@ -64,6 +71,7 @@ The database schema consolidation has already been completed! The main Prisma sc
 - `UserBadge` - User achievements
 
 **Social**:
+
 - `Follow` - User following
 - `Group` - User groups
 - `GroupMember` - Group membership
@@ -71,6 +79,7 @@ The database schema consolidation has already been completed! The main Prisma sc
 ### ✅ QuestHunt Models
 
 **Search**:
+
 - `SearchQuery` - Popular searches
 - `SearchHistory` - User search history
 
@@ -199,12 +208,14 @@ enum PurchaseStatus {
 **Decision Needed**: Keep Supabase or migrate to Prisma?
 
 **Option A: Keep Supabase** (Recommended for now)
+
 - Create adapter layer in `apps/api`
 - Bridge authentication between systems
 - Minimal disruption to existing QuestHunt
 - Can migrate later if needed
 
 **Option B: Migrate to Prisma**
+
 - Design quest/location models
 - Migrate existing data
 - More work upfront
@@ -215,6 +226,7 @@ enum PurchaseStatus {
 ### 3. Migration Scripts
 
 Create migration scripts for:
+
 - Existing LibraKeeper data (if any)
 - Existing StoryForge data (if any)
 - Seed data for development
@@ -224,21 +236,25 @@ Create migration scripts for:
 ## Benefits of Current Schema
 
 ### ✅ Single Source of Truth
+
 - One database for all data
 - Easier to maintain
 - Better for cross-project features
 
 ### ✅ Unified User Model
+
 - Single user account across all projects
 - Shared authentication
 - Centralized permissions
 
 ### ✅ Access Control Ready
+
 - `allowedProjects` field on User
 - `FeatureFlag` supports project slugs
 - Ready for access control implementation
 
 ### ✅ Compatibility Fields
+
 - Multiple password fields for migration
 - Image/avatar fields unified
 - Backward compatibility maintained
@@ -286,21 +302,25 @@ Create migration scripts for:
 ## Migration Commands
 
 ### Generate Prisma Client
+
 ```bash
 pnpm prisma:generate
 ```
 
 ### Create New Migration
+
 ```bash
 pnpm --filter @gamehub/api prisma migrate dev --name add-access-control
 ```
 
 ### Reset Database (Development)
+
 ```bash
 pnpm --filter @gamehub/api prisma migrate reset
 ```
 
 ### Run Migrations (Production)
+
 ```bash
 pnpm --filter @gamehub/api prisma migrate deploy
 ```
@@ -334,6 +354,7 @@ pnpm --filter @gamehub/api prisma migrate deploy
 ✅ **Database consolidation is already complete!**
 
 The main work remaining is:
+
 1. Adding access control models
 2. Deciding QuestHunt strategy
 3. Creating seed data

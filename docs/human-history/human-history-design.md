@@ -23,21 +23,21 @@ Core Premise & Narrative Framing
 Era Packs (examples; all replayable)
 
 - Dawn & Making (Global prehistory)
-    - H1 Stone & Sharing: collaborative tool making; resource-sharing choices.
-    - H2 Fire & Safety: fire as community tech; roles and norms that keep it safe.
-    - H3 Migration Maps: paths and cooperation for long journeys; wayfinding cards.
+  - H1 Stone & Sharing: collaborative tool making; resource-sharing choices.
+  - H2 Fire & Safety: fire as community tech; roles and norms that keep it safe.
+  - H3 Migration Maps: paths and cooperation for long journeys; wayfinding cards.
 - Rivers & Writing (Mesopotamia, Nile, Indus, Yellow River)
-    - H4 Water & Work: irrigation coordination; calendars; stewardship.
-    - H5 Marks & Memory: proto-writing; clay tokens; counting as a shared language.
-    - H6 Markets & Fairness: norms, weights/measures; community trust.
+  - H4 Water & Work: irrigation coordination; calendars; stewardship.
+  - H5 Marks & Memory: proto-writing; clay tokens; counting as a shared language.
+  - H6 Markets & Fairness: norms, weights/measures; community trust.
 - Knowledge & Care (Classical to Early Medieval across regions)
-    - H7 Houses of Learning: libraries, translation circles; many hands.
-    - H8 Care Networks: midwives, apprentices, healers; exchange of knowledge.
-    - H9 Roads & Messengers: routes enabling exchange; safety norms.
+  - H7 Houses of Learning: libraries, translation circles; many hands.
+  - H8 Care Networks: midwives, apprentices, healers; exchange of knowledge.
+  - H9 Roads & Messengers: routes enabling exchange; safety norms.
 - Making & Movements (Early modern to industrial + global South perspectives)
-    - H10 Tools & Guilds: craft standards; collective know-how.
-    - H11 Printing & Voices: pamphlets/newspapers; community discourse.
-    - H12 Mutual Aid & Strikes: organizing for safety and rights.
+  - H10 Tools & Guilds: craft standards; collective know-how.
+  - H11 Printing & Voices: pamphlets/newspapers; community discourse.
+  - H12 Mutual Aid & Strikes: organizing for safety and rights.
 
 Gameplay & UX
 

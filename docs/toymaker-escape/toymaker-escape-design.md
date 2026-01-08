@@ -9,22 +9,22 @@ Overview
 Scenarios (first three fully drafted)
 
 - E1 House, Part 1 — Workshop & Playroom
-    - Goal: learn core interactions; collect first “Key Fragments.”
-    - Rooms: Workshop, Playroom hub, Locked Hall.
-    - Mini-puzzles: gear alignment, color-coded toy sorter, music box combo.
-    - Choice flags: `e1.path = gears|music`; `e1.helper = hints|noHints` (affects medals).
+  - Goal: learn core interactions; collect first “Key Fragments.”
+  - Rooms: Workshop, Playroom hub, Locked Hall.
+  - Mini-puzzles: gear alignment, color-coded toy sorter, music box combo.
+  - Choice flags: `e1.path = gears|music`; `e1.helper = hints|noHints` (affects medals).
 - E2 House, Part 2 — Office & Secret Stair
-    - Goal: gain office access; find who hired the toymaker.
-    - Rooms: Office, Files Nook, Stairwell.
-    - Puzzles: correspondence cipher; filing order logic; light-and-shadow safe.
-    - Choice flags: `e2.trustNote = true|false` (believe unsigned note); `e2.route = cipher|shadow`.
+  - Goal: gain office access; find who hired the toymaker.
+  - Rooms: Office, Files Nook, Stairwell.
+  - Puzzles: correspondence cipher; filing order logic; light-and-shadow safe.
+  - Choice flags: `e2.trustNote = true|false` (believe unsigned note); `e2.route = cipher|shadow`.
 - E3 Apartment Mystery — The Commissioner Is… You (Twist)
-    - Goal: explore your own apartment; learn you arranged the “kidnap” with your partner because of a memory condition;
-      fun replay loop becomes diegetic.
-    - Rooms: Entry, Living Room, Study, Kitchen.
-    - Puzzles: environmental locks (plants watering schedule code), photo sequence memory wall, fridge magnet anagram.
-    - Choice flags: `e3.share = partner|journal` (who to share truth with first); `e3.keepGame = yes|no` (keep the
-      playful contract).
+  - Goal: explore your own apartment; learn you arranged the “kidnap” with your partner because of a memory condition;
+    fun replay loop becomes diegetic.
+  - Rooms: Entry, Living Room, Study, Kitchen.
+  - Puzzles: environmental locks (plants watering schedule code), photo sequence memory wall, fridge magnet anagram.
+  - Choice flags: `e3.share = partner|journal` (who to share truth with first); `e3.keepGame = yes|no` (keep the
+    playful contract).
 
 Replayability
 

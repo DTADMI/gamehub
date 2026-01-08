@@ -40,6 +40,7 @@ gamehub/
 ## 🏗️ Architecture
 
 ### Frontend (Next.js)
+
 - **Framework**: Next.js 14+ with App Router
 - **UI Components**: Radix UI (accessible primitives)
 - **Styling**: TailwindCSS with CSS Modules
@@ -49,6 +50,7 @@ gamehub/
 - **E2E Testing**: Playwright
 
 ### Backend (NestJS)
+
 - **Framework**: NestJS
 - **API**: RESTful + WebSockets for real-time features
 - **Database**: PostgreSQL with Prisma ORM
@@ -59,12 +61,14 @@ gamehub/
 ## 🛠️ Development Setup
 
 ### Prerequisites
+
 - Node.js 20+
 - PNPM 8+
 - Docker (for local database)
 - PostgreSQL 15+
 
 ### Installation
+
 ```bash
 # Install dependencies
 pnpm install
@@ -80,11 +84,13 @@ pnpm --filter api dev:watch
 ## 🚀 Deployment
 
 ### CI/CD
+
 - GitHub Actions for automated testing and deployment
 - Automated versioning with Changesets
 - Preview deployments for PRs
 
 ### Hosting
+
 - **Frontend**: Vercel
 - **Backend**: AWS ECS or Railway
 - **Database**: Supabase or AWS RDS

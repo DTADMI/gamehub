@@ -74,11 +74,13 @@ pnpm dev
 ## Verify Everything Works
 
 ### Frontend Test
+
 1. Open http://localhost:3000
 2. You should see the GameHub landing page
 3. Navigate to `/games` to see available games
 
 ### Backend Test
+
 ```bash
 # Test API health
 curl http://localhost:8080/api/health
@@ -92,12 +94,14 @@ curl http://localhost:8080/api/health
 ### "Port already in use"
 
 **Solution 1**: Change ports in `.env.local`
+
 ```env
 APP_PORT=3001
 API_PORT=8081
 ```
 
 **Solution 2**: Kill existing processes
+
 ```bash
 # Windows
 netstat -ano | findstr :3000
@@ -235,6 +239,7 @@ gamehub/
    - Modify existing games
 
 3. Run E2E tests:
+
    ```bash
    # Install Playwright browsers (first time)
    pnpm --filter @gamehub/app exec playwright install --with-deps
@@ -254,6 +259,7 @@ gamehub/
 ### VS Code Setup
 
 Install recommended extensions:
+
 - ESLint
 - Prettier
 - Prisma
@@ -283,11 +289,13 @@ git push origin feature/my-feature
 ### Debugging
 
 #### Frontend (Next.js)
+
 - Use browser DevTools
 - Add `console.log()` or `debugger`
 - Check terminal for errors
 
 #### Backend (NestJS)
+
 ```bash
 # Run in debug mode
 pnpm --filter @gamehub/api start:debug

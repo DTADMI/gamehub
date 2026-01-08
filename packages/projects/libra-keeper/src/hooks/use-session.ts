@@ -1,14 +1,14 @@
 // src/hooks/use-session.ts
-"use client"
+"use client";
 
-import {useSession as useNextAuthSession} from "next-auth/react"
+import { useSession as useNextAuthSession } from "next-auth/react";
 
 export function useSession() {
-    const {data: session, status, update} = useNextAuthSession()
+  const { data: session, status, update } = useNextAuthSession();
 
-    return {
-        user: session?.user,
-        status,
-        update,
-    };
+  return {
+    user: session?.user,
+    status,
+    update,
+  };
 }

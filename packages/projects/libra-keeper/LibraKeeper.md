@@ -29,35 +29,31 @@ lending tracking, and collection organization through a user-friendly interface.
 ### Admin (Owner) Features
 
 - **Complete Item Management**: Add, edit, and remove items from your collection
--
-    - CRUD operations for library items
-    - Categorization and tagging
-    - Search and filtering
-    - Sorting (newest, most liked, etc.)
+- - CRUD operations for library items
+  - Categorization and tagging
+  - Search and filtering
+  - Sorting (newest, most liked, etc.)
 - **Detailed Item Cataloging**: Rich metadata including title, author, description, condition, and custom fields
 - **Tagging System**: Categorize items with multiple tags for easy organization
 - **Lending Management**: Track who has borrowed what and when it's due
--
-    - Borrow/return requests
-    - Request validation workflow
-    - Due date tracking
-    - Automatic reminders
+- - Borrow/return requests
+  - Request validation workflow
+  - Due date tracking
+  - Automatic reminders
 - **Friend Management**: Add/remove friends who can access your collection
 - **Admin Management**: Designate other users as admins (multi-admin support)
 - **User Management**: Manage user accounts and permissions
--
-    - Registration/Login (Email/Password + OAuth)
-    - Profile management
-    - Role-based access control (Admin, Regular User)
-    - Notification system
+- - Registration/Login (Email/Password + OAuth)
+  - Profile management
+  - Role-based access control (Admin, Regular User)
+  - Notification system
 - **Item Requests**: Review and process item addition requests from friends
 - **Messaging**: Communicate with users about their requests and borrows
 - **Activity Log**: View complete history of all actions on your collection
--
-    - Dashboard with analytics
-    - User management
-    - Content moderation
-    - System configuration
+- - Dashboard with analytics
+  - User management
+  - Content moderation
+  - System configuration
 
 ### Friend (Borrower) Features
 
@@ -68,16 +64,16 @@ lending tracking, and collection organization through a user-friendly interface.
 - **Comments & Ratings**: Leave feedback on borrowed items
 - **Messaging**: Send direct messages to admins
 - **Item Requests**: Suggest new items to add to the collection
-    - **Borrowed Item Form**: Report items not in catalog but in your possession
-    - **Suggestion Form**: Recommend items to acquire, including purchase details
+  - **Borrowed Item Form**: Report items not in catalog but in your possession
+  - **Suggestion Form**: Recommend items to acquire, including purchase details
 - **Wishlist**: Save items for future borrowing
 - **Comments & Ratings**: Leave feedback on borrowed items
 - **Messaging**: Send direct messages to admins
 - **Item Requests**: Suggest new items to add to the collection
 - **Social Features**
-    - Like/unlike items
-    - Comments and discussions
-    - Activity feed
+  - Like/unlike items
+  - Comments and discussions
+  - Activity feed
 
 ### System Features
 
@@ -346,17 +342,17 @@ PUT    /api/profile              - Update profile
 
 - **Primary Color**: Purple (#7C3AED)
 - **Accent Colors**:
-    - Auburn (#9A2A2A)
-    - Emerald (#059669)
-    - Royal Blue (#2563EB)
-    - Gold (#D97706)
-    - Cyan (#0891B2)
-    - Pink (#DB2777)
-    - Magenta (#C026D3)
-    - Red (#DC2626)
+  - Auburn (#9A2A2A)
+  - Emerald (#059669)
+  - Royal Blue (#2563EB)
+  - Gold (#D97706)
+  - Cyan (#0891B2)
+  - Pink (#DB2777)
+  - Magenta (#C026D3)
+  - Red (#DC2626)
 - **Neutrals**:
-    - Light theme: White (#FFFFFF) to Gray-900 (#111827)
-    - Dark theme: Gray-900 (#111827) to White (#FFFFFF)
+  - Light theme: White (#FFFFFF) to Gray-900 (#111827)
+  - Dark theme: Gray-900 (#111827) to White (#FFFFFF)
 
 ### Components
 
@@ -370,38 +366,38 @@ PUT    /api/profile              - Update profile
 ### Key Pages
 
 1. **Home**
-    - Hero section with app description
-    - Newly added items carousel
-    - Most liked items carousel
-    - Call-to-action buttons
+   - Hero section with app description
+   - Newly added items carousel
+   - Most liked items carousel
+   - Call-to-action buttons
 
 2. **Dashboard (Admin)**
-    - Quick stats and recent activity
-    - Pending requests
-    - Recently added items
-    - Analytics
-    - User management
-    - Item management
-    - Content moderation
-    - System management
+   - Quick stats and recent activity
+   - Pending requests
+   - Recently added items
+   - Analytics
+   - User management
+   - Item management
+   - Content moderation
+   - System management
 
 3. **Catalog**
-    - Filterable grid of items
-    - Advanced search
-    - Tag-based filtering
+   - Filterable grid of items
+   - Advanced search
+   - Tag-based filtering
 
 4. **Item Details**
-    - Full item information
-    - Borrowing history
-    - Comments and ratings
-    - Related items
+   - Full item information
+   - Borrowing history
+   - Comments and ratings
+   - Related items
 
 5. **User Dashboard**
-    - Current loans
-    - Borrowing history
-    - Due date calendar
-    - Item request status
-    - Message history
+   - Current loans
+   - Borrowing history
+   - Due date calendar
+   - Item request status
+   - Message history
 
 ## Deployment Strategy
 
@@ -428,21 +424,21 @@ PUT    /api/profile              - Update profile
 ## CI/CD Pipeline
 
 1. **On Pull Request**:
-    - Linting and type checking
-    - Unit tests
-    - Build verification
-    - Preview deployment
+   - Linting and type checking
+   - Unit tests
+   - Build verification
+   - Preview deployment
 
 2. **On Merge to Main**:
-    - Run all PR checks
-    - E2E tests
-    - Deploy to staging
-    - Run integration tests
+   - Run all PR checks
+   - E2E tests
+   - Deploy to staging
+   - Run integration tests
 
 3. **On Tag**:
-    - Deploy to production
-    - Run smoke tests
-    - Notify team
+   - Deploy to production
+   - Run smoke tests
+   - Notify team
 
 ## Security Considerations
 
@@ -479,33 +475,33 @@ PUT    /api/profile              - Update profile
 ## Future Enhancements
 
 1. **Mobile App**
-    - React Native application
-    - Offline support
-    - Barcode/QR code scanning
+   - React Native application
+   - Offline support
+   - Barcode/QR code scanning
 
 2. **Advanced Features**
-    - ISBN/IMDb lookup
-    - Custom fields for items
-    - Collection sharing between admins
-    - Bulk item import/export
-    - Barcode scanning for item check-in/out
+   - ISBN/IMDb lookup
+   - Custom fields for items
+   - Collection sharing between admins
+   - Bulk item import/export
+   - Barcode scanning for item check-in/out
 
 3. **Automation**
-    - Email reminders
-    - Due date notifications
-    - Reports and analytics
+   - Email reminders
+   - Due date notifications
+   - Reports and analytics
 
 4. **Accessibility**
-    - Screen reader optimization
-    - Keyboard navigation
-    - High contrast mode
+   - Screen reader optimization
+   - Keyboard navigation
+   - High contrast mode
 
 5. **Integration**
-    - Google Books API
-    - Goodreads import/export
-    - Calendar integration
-    - Email notifications with action buttons
-    - Webhook support for external services
+   - Google Books API
+   - Goodreads import/export
+   - Calendar integration
+   - Email notifications with action buttons
+   - Webhook support for external services
 
 6. **Advanced Search**
 

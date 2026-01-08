@@ -1,1 +1,1 @@
-export {BubblePopGame} from "./components/BubblePopGame";
+export { BubblePopGame } from "./components/BubblePopGame";

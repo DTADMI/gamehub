@@ -10,40 +10,40 @@ infrastructure.
 ### 1. ChronoShift Labyrinth
 
 - **Name Ideas**:
-    - Timeweaver's Path
-    - Echo Chambers
-    - Temporal Labyrinth
-    - Shift & Solve
+  - Timeweaver's Path
+  - Echo Chambers
+  - Temporal Labyrinth
+  - Shift & Solve
 - **Core Mechanic**: Players manipulate time and space to navigate shifting environments
 - **Gameplay**:
-    - Rotate and rearrange maze sections
-    - Create time loops to solve environmental puzzles
-    - Use past actions to affect present state
+  - Rotate and rearrange maze sections
+  - Create time loops to solve environmental puzzles
+  - Use past actions to affect present state
 
 ### 2. Elemental Conflux
 
 - **Name Ideas**:
-    - Prism: Elemental Shift
-    - Convergence
-    - Elemental Nexus
-    - The Arcanist's Puzzle
+  - Prism: Elemental Shift
+  - Convergence
+  - Elemental Nexus
+  - The Arcanist's Puzzle
 - **Core Mechanic**: Control multiple characters with complementary elemental abilities
 - **Gameplay**:
-    - Switch between characters to combine powers
-    - Solve environmental puzzles through elemental interactions
-    - Strategic character positioning and ability timing
+  - Switch between characters to combine powers
+  - Solve environmental puzzles through elemental interactions
+  - Strategic character positioning and ability timing
 
 ### 3. Quantum Architect (Additional Game)
 
 - **Name Ideas**:
-    - Quantum Constructor
-    - Build & Bridge
-    - The Architect's Paradox
+  - Quantum Constructor
+  - Build & Bridge
+  - The Architect's Paradox
 - **Core Mechanic**: Manipulate quantum states to create/destroy matter
 - **Gameplay**:
-    - Create bridges and platforms by observing quantum particles
-    - Solve puzzles using quantum superposition
-    - Multiple solutions based on observation
+  - Create bridges and platforms by observing quantum particles
+  - Solve puzzles using quantum superposition
+  - Multiple solutions based on observation
 
 ## Platform Architecture
 
@@ -186,6 +186,7 @@ and rapid development of new game modules.
 #### Game-Specific Extensions
 
 1. **Custom Components**:
+
    ```typescript
    @Component()
    export class TimeManipulationComponent {
@@ -195,6 +196,7 @@ and rapid development of new game modules.
    ```
 
 2. **Custom Systems**:
+
    ```typescript
    @System([TimeManipulationComponent, TransformComponent])
    export class TimeManipulationSystem extends System {

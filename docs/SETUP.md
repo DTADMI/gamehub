@@ -170,6 +170,7 @@ docker compose up -d
 ```
 
 This starts:
+
 - PostgreSQL (port 5432)
 - Redis (port 6379)
 - API (port 8080)
@@ -320,6 +321,7 @@ pnpm install
 ### VS Code
 
 Recommended extensions:
+
 - ESLint
 - Prettier
 - Prisma

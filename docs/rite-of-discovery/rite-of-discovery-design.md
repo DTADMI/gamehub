@@ -41,30 +41,31 @@ truth—by overhearing a plan or finding a receipt—framing family traditions a
 celebrates this rite of discovery, offering warm words and a Helper Badge. The first time through, the Outro appears
 with simple options: replay from the start, try the other branch, or adjust Gentle Mode, keeping the experience calm,
 respectful, and replay‑friendly.
+
 - Save: localStorage key `rod:save:v1` persists `intro.seen`/`outro.seen` in addition to existing flags.
 
 ## Narrative Outline (MVP)
 
 - Scene 1 — Night Before (Living Room)
-    - Goal: introduce curiosity; teach interaction
-    - Hotspots: wrapping paper roll, tape dispenser, gift tag, cookie plate, fireplace
-    - Micro-puzzle: reassemble torn tag (drag 3 pieces); success reveals handwriting matching a parent’s note
-    - Choice: keep suspicion private vs. ask leading question; sets flag s1.askParent
-    - Gentle copy: “maybe helpers?” vs. explicit “parents write tags”
+  - Goal: introduce curiosity; teach interaction
+  - Hotspots: wrapping paper roll, tape dispenser, gift tag, cookie plate, fireplace
+  - Micro-puzzle: reassemble torn tag (drag 3 pieces); success reveals handwriting matching a parent’s note
+  - Choice: keep suspicion private vs. ask leading question; sets flag s1.askParent
+  - Gentle copy: “maybe helpers?” vs. explicit “parents write tags”
 - Scene 2 — Tooth Tradition (Kid’s Bedroom)
-    - Goal: pattern recognition via keepsake box/note
-    - Hotspots: pillow, nightstand drawer, keepsake box, squeaky floorboard (SFX), window
-    - Micro-puzzle: compare letters on two notes (spot-the-difference, click 3 matches)
-    - Choice: take the note vs. leave it; sets s2.keepNote
+  - Goal: pattern recognition via keepsake box/note
+  - Hotspots: pillow, nightstand drawer, keepsake box, squeaky floorboard (SFX), window
+  - Micro-puzzle: compare letters on two notes (spot-the-difference, click 3 matches)
+  - Choice: take the note vs. leave it; sets s2.keepNote
 - Scene 3 — Store or Attic (Proof Moment)
-    - Goal: gently confirm family tradition; overheard planning or find a receipt
-    - Hotspots: storage bin, receipt, phone on speaker (muffled), closet/attic door
-    - Dialogue: overhear “pick up the costume”/“hide the gift”; gentle mode avoids direct terms
-    - Choice: confront now vs. save it for later; sets s3.confrontNow
+  - Goal: gently confirm family tradition; overheard planning or find a receipt
+  - Hotspots: storage bin, receipt, phone on speaker (muffled), closet/attic door
+  - Dialogue: overhear “pick up the costume”/“hide the gift”; gentle mode avoids direct terms
+  - Choice: confront now vs. save it for later; sets s3.confrontNow
 - Epilogue — Rite of Discovery
-    - Parents invite conversation; frame it as a rite of passage where kids eventually outsmart the grown-ups
-    - Player choices reflect in tone: proud/celebratory vs. cozy/affirming
-    - Unlock a small ‘Helper Badge’ and optional credits page
+  - Parents invite conversation; frame it as a rite of passage where kids eventually outsmart the grown-ups
+  - Player choices reflect in tone: proud/celebratory vs. cozy/affirming
+  - Unlock a small ‘Helper Badge’ and optional credits page
   - Link: “View outro” opens `ROD_OUTRO` (wrap hooks: replay from start, try other branch, toggle Gentle Mode). NG+ gate
     placeholder surfaced here.
 
@@ -76,15 +77,15 @@ respectful, and replay‑friendly.
   kindly, echoing the earlier puzzles without spoiling the magic.
 - Duration: 3–5 minutes; 1 short interactive beat chosen dynamically from three echoes of S1–S3.
 - Routes (auto‑selected by state, but player can replay to see others):
-    - Tag Echo (S1): A gentle “find the match” moment using 2–3 gift‑tag shards. Focus = noticing patterns, not exposing
-      secrets.
-    - Note Echo (S2): Compare 2 letterforms with a “spot the similarity” overlay that celebrates observation.
-    - Talk Echo (S3): Plan a cozy conversation timing (now vs. later) by arranging 3 “good moments” cards (e.g., after
-      snack, during story time, weekend morning).
+  - Tag Echo (S1): A gentle “find the match” moment using 2–3 gift‑tag shards. Focus = noticing patterns, not exposing
+    secrets.
+  - Note Echo (S2): Compare 2 letterforms with a “spot the similarity” overlay that celebrates observation.
+  - Talk Echo (S3): Plan a cozy conversation timing (now vs. later) by arranging 3 “good moments” cards (e.g., after
+    snack, during story time, weekend morning).
 - State carry‑over mapping (affects copy, hint strength, and which route is offered first):
-    - If `s1.askParent === true`, initial mentor copy leans toward model‑by‑asking rather than telling.
-    - If `s2.keepNote === true`, the Note Echo is prioritized; hints emphasize “look closely together.”
-    - If `s3.confrontNow === false`, the Talk Echo highlights patience and picking a gentle moment.
+  - If `s1.askParent === true`, initial mentor copy leans toward model‑by‑asking rather than telling.
+  - If `s2.keepNote === true`, the Note Echo is prioritized; hints emphasize “look closely together.”
+  - If `s3.confrontNow === false`, the Talk Echo highlights patience and picking a gentle moment.
 - Kindness & privacy guardrails: Never depict trickery. The “helper” role models empathy and timing, not “busting” a
   secret. Sibling agency is respected; outcomes are positive and cozy.
 - Outcome: A small “Mentor” sticker added to the Codex; optional reflection lines. No fail states.
@@ -114,17 +115,17 @@ respectful, and replay‑friendly.
 ## Technical Choices & Alternatives (pros/cons)
 
 - Rendering
-    - DOM/CSS hotspots (chosen): Pros: light, accessible, easy to test. Cons: fewer visual effects.
-    - Pixi/Phaser (alternative): Pros: robust scene graph and effects. Cons: heavier bundle, less accessible.
+  - DOM/CSS hotspots (chosen): Pros: light, accessible, easy to test. Cons: fewer visual effects.
+  - Pixi/Phaser (alternative): Pros: robust scene graph and effects. Cons: heavier bundle, less accessible.
 - State management
-    - React Context + reducer (chosen): Pros: simple, minimal overhead. Cons: fewer explicit diagrams.
-    - XState (alternative seam): Pros: explicit statecharts. Cons: extra dependency.
+  - React Context + reducer (chosen): Pros: simple, minimal overhead. Cons: fewer explicit diagrams.
+  - XState (alternative seam): Pros: explicit statecharts. Cons: extra dependency.
 - i18n
-    - Minimal t() + JSON (chosen): Pros: minimal; easy to wire. Cons: fewer advanced features.
-    - i18next (alternative): Pros: robust. Cons: more setup.
+  - Minimal t() + JSON (chosen): Pros: minimal; easy to wire. Cons: fewer advanced features.
+  - i18next (alternative): Pros: robust. Cons: more setup.
 - Persistence
-    - localStorage v1 (chosen): Pros: offline; trivial. Cons: single-device only.
-    - Backend sync (future): Pros: cross-device. Cons: requires API and auth.
+  - localStorage v1 (chosen): Pros: offline; trivial. Cons: single-device only.
+  - Backend sync (future): Pros: cross-device. Cons: requires API and auth.
 
 ## Data Model (sketch)
 
@@ -202,21 +203,21 @@ branching paths, collectibles, and a Codex.
 First content pack (2 shorts + 1 long):
 
 - A1 River of Two Lands (Egypt — Nile cycles)
-    - Hooks: Flood markers (nilometer), grain barges, festival calendar.
-    - Routes: (A) Seasonal cycles and fertility rituals vs. (B) Civic/administrative memory (temple records).
-    - Twist: Discover an older pre‑dynastic marker; unlock “Cycles Remembered” Codex entry.
-    - Collectible: `collect_nilometer.svg`; Badge: `badge_fertility_cycles.svg`.
+  - Hooks: Flood markers (nilometer), grain barges, festival calendar.
+  - Routes: (A) Seasonal cycles and fertility rituals vs. (B) Civic/administrative memory (temple records).
+  - Twist: Discover an older pre‑dynastic marker; unlock “Cycles Remembered” Codex entry.
+  - Collectible: `collect_nilometer.svg`; Badge: `badge_fertility_cycles.svg`.
 - A2 Meeting of Winds (Norse or Inuit coastal communities)
-    - Hooks: Weather bones, sail fragments, oral history about a storm.
-    - Routes: (A) Maritime pragmatism → weather deities as navigational archetypes; (B) Oral tradition → spirits mapped
-      to hazards.
-    - Twist: Optional elder interview unlocks “Resilience” epilogue snippet.
-    - Collectible: `collect_weather_bone.svg`; Badge: `badge_resilience.svg`.
+  - Hooks: Weather bones, sail fragments, oral history about a storm.
+  - Routes: (A) Maritime pragmatism → weather deities as navigational archetypes; (B) Oral tradition → spirits mapped
+    to hazards.
+  - Twist: Optional elder interview unlocks “Resilience” epilogue snippet.
+  - Collectible: `collect_weather_bone.svg`; Badge: `badge_resilience.svg`.
 - A3 Paths of Exchange (Greco‑Roman + Persian + Egyptian syncretism)
-    - Hooks: Bilingual inscription, coinage, shared epithets (Isis/Demeter analogies; Hermes/Mercury; local protectors).
-    - Routes: (A) Syncretic bridges (shared roles) vs. (B) Imperial adoption/administration of cults.
-    - Twist: A traveling merchant’s ledger reveals pragmatic cross‑worship; unlock “Concordia” ending.
-    - Collectible: `collect_bilingual_inscription.svg`; Badge: `badge_concordia.svg`.
+  - Hooks: Bilingual inscription, coinage, shared epithets (Isis/Demeter analogies; Hermes/Mercury; local protectors).
+  - Routes: (A) Syncretic bridges (shared roles) vs. (B) Imperial adoption/administration of cults.
+  - Twist: A traveling merchant’s ledger reveals pragmatic cross‑worship; unlock “Concordia” ending.
+  - Collectible: `collect_bilingual_inscription.svg`; Badge: `badge_concordia.svg`.
 
 Core systems (MythWays):
 
@@ -238,20 +239,20 @@ Sensitivity & cultural guardrails:
 First content pack (2 shorts + 1 long):
 
 - O1 Island Shuffle (island biogeography)
-    - Hooks: Island chain map, driftwood seeds, lizards/bird photos.
-    - Routes: (A) Dispersal/drift/niche colonization vs. (B) Convergent evolution on separate islands.
-    - Twist: Unlock a rare dispersal event card; Codex “Parallel Solutions.”
-    - Collectible: `collect_fossil_feather.svg`; Badge: `badge_island_biogeography.svg`.
+  - Hooks: Island chain map, driftwood seeds, lizards/bird photos.
+  - Routes: (A) Dispersal/drift/niche colonization vs. (B) Convergent evolution on separate islands.
+  - Twist: Unlock a rare dispersal event card; Codex “Parallel Solutions.”
+  - Collectible: `collect_fossil_feather.svg`; Badge: `badge_island_biogeography.svg`.
 - O2 Patterns in Pollen (coevolution)
-    - Hooks: UV flower images, pollinator morphologies, flowering calendar.
-    - Routes: (A) Trait matching (tongue length vs. corolla depth) vs. (B) Landscape/phenology constraints.
-    - Twist: Night‑blooming variant unlocks “Invisible Colors” epilogue.
-    - Collectible: `collect_uv_filter.svg`; Badge: `badge_coevolution.svg`.
+  - Hooks: UV flower images, pollinator morphologies, flowering calendar.
+  - Routes: (A) Trait matching (tongue length vs. corolla depth) vs. (B) Landscape/phenology constraints.
+  - Twist: Night‑blooming variant unlocks “Invisible Colors” epilogue.
+  - Collectible: `collect_uv_filter.svg`; Badge: `badge_coevolution.svg`.
 - O3 Tails, Songs, and Signals (sexual vs. natural selection)
-    - Hooks: Spectrograms, tail length charts, predator density map.
-    - Routes: (A) Predation risk vs. (B) Mate choice dynamics; balance models with sliders.
-    - Twist: Balanced configuration unlocks a co‑author credit in a mock “Club Zine.”
-    - Collectible: `collect_signal_card.svg`; Badge: `badge_selection_balance.svg`.
+  - Hooks: Spectrograms, tail length charts, predator density map.
+  - Routes: (A) Predation risk vs. (B) Mate choice dynamics; balance models with sliders.
+  - Twist: Balanced configuration unlocks a co‑author credit in a mock “Club Zine.”
+  - Collectible: `collect_signal_card.svg`; Badge: `badge_selection_balance.svg`.
 
 Core systems (Origins):
 
@@ -328,22 +329,22 @@ dialogue, Codex, collectibles, medals) and expand the data model to v3 saves.
   environmental, historical, and cultural constraints shape deity roles; compare similarities/differences and syncretism
   without ranking cultures.
 - First content pack (2 shorts + 1 long):
-    1) A1 River of Two Lands (Egypt — Nile cycles)
-        - Hooks: Nilometer notches, flood calendars, grain barges.
-        - Routes: (A) Seasonal cycles → fertility archetypes; (B) Civic memory → temple records/calendrics.
-        - Twist: Pre‑dynastic marker → Codex “Cycles Remembered”.
-        - Collectible/Badge: collect_nilometer.svg, badge_fertility_cycles.svg.
-    2) A2 Meeting of Winds (Norse or Inuit coastal)
-        - Hooks: Weather bones, sailwork, oral storm tale.
-        - Routes: (A) Maritime pragmatism → weather deities as navigational archetypes; (B) Oral tradition → spirits
-          mapped to hazards.
-        - Twist: Elder interview epilogue “Resilience”.
-        - Collectible/Badge: collect_weather_bone.svg, badge_resilience.svg.
-    3) A3 Paths of Exchange (Greco‑Roman + Persian + Egyptian syncretism)
-        - Hooks: Bilingual inscription, coinage, shared epithets.
-        - Routes: (A) Syncretic bridges; (B) Administrative adoption of local cults.
-        - Twist: Merchant ledger → “Concordia” ending.
-        - Collectible/Badge: collect_bilingual_inscription.svg, badge_concordia.svg.
+  1. A1 River of Two Lands (Egypt — Nile cycles)
+     - Hooks: Nilometer notches, flood calendars, grain barges.
+     - Routes: (A) Seasonal cycles → fertility archetypes; (B) Civic memory → temple records/calendrics.
+     - Twist: Pre‑dynastic marker → Codex “Cycles Remembered”.
+     - Collectible/Badge: collect_nilometer.svg, badge_fertility_cycles.svg.
+  2. A2 Meeting of Winds (Norse or Inuit coastal)
+     - Hooks: Weather bones, sailwork, oral storm tale.
+     - Routes: (A) Maritime pragmatism → weather deities as navigational archetypes; (B) Oral tradition → spirits
+       mapped to hazards.
+     - Twist: Elder interview epilogue “Resilience”.
+     - Collectible/Badge: collect_weather_bone.svg, badge_resilience.svg.
+  3. A3 Paths of Exchange (Greco‑Roman + Persian + Egyptian syncretism)
+     - Hooks: Bilingual inscription, coinage, shared epithets.
+     - Routes: (A) Syncretic bridges; (B) Administrative adoption of local cults.
+     - Twist: Merchant ledger → “Concordia” ending.
+     - Collectible/Badge: collect_bilingual_inscription.svg, badge_concordia.svg.
 - Mini‑games: evidence sorter (role/epithet/context), inscription match‑up, route/path assembly on trade maps.
 - Sensitivity: avoid caricatures; represent intra‑cultural diversity; annotate contested scholarship; emphasize empathy.
 
@@ -352,21 +353,21 @@ dialogue, Codex, collectibles, medals) and expand the data model to v3 saves.
 - Framing: Origins Lab & Field Notes. Run light simulations and field observations to explore evolution’s nuance and
   beauty.
 - First content pack (2 shorts + 1 long):
-    1) O1 Island Shuffle (island biogeography)
-        - Hooks: island chain map, driftwood seeds, lizard/bird snapshots.
-        - Routes: (A) Dispersal/drift/niche; (B) Convergent evolution across islands.
-        - Twist: rare dispersal event → Codex “Parallel Solutions”.
-        - Collectible/Badge: collect_fossil_feather.svg, badge_island_biogeography.svg.
-    2) O2 Patterns in Pollen (coevolution)
-        - Hooks: UV flower images, pollinator morphologies, phenology calendars.
-        - Routes: (A) Trait matching (tongue vs. corolla); (B) Timing/landscape constraints.
-        - Twist: night‑blooming variant → “Invisible Colors”.
-        - Collectible/Badge: collect_uv_filter.svg, badge_coevolution.svg.
-    3) O3 Tails, Songs, and Signals (sexual vs. natural selection)
-        - Hooks: spectrograms, tail length charts, predator density map.
-        - Routes: (A) Predation risk tradeoffs; (B) Mate choice dynamics; an interactive balance mini‑game.
-        - Twist: optimal balance unlocks “Club Zine” co‑author credit.
-        - Collectible/Badge: collect_signal_card.svg, badge_selection_balance.svg.
+  1. O1 Island Shuffle (island biogeography)
+     - Hooks: island chain map, driftwood seeds, lizard/bird snapshots.
+     - Routes: (A) Dispersal/drift/niche; (B) Convergent evolution across islands.
+     - Twist: rare dispersal event → Codex “Parallel Solutions”.
+     - Collectible/Badge: collect_fossil_feather.svg, badge_island_biogeography.svg.
+  2. O2 Patterns in Pollen (coevolution)
+     - Hooks: UV flower images, pollinator morphologies, phenology calendars.
+     - Routes: (A) Trait matching (tongue vs. corolla); (B) Timing/landscape constraints.
+     - Twist: night‑blooming variant → “Invisible Colors”.
+     - Collectible/Badge: collect_uv_filter.svg, badge_coevolution.svg.
+  3. O3 Tails, Songs, and Signals (sexual vs. natural selection)
+     - Hooks: spectrograms, tail length charts, predator density map.
+     - Routes: (A) Predation risk tradeoffs; (B) Mate choice dynamics; an interactive balance mini‑game.
+     - Twist: optimal balance unlocks “Club Zine” co‑author credit.
+     - Collectible/Badge: collect_signal_card.svg, badge_selection_balance.svg.
 - Mini‑games: trait sliders + fitness curves; phylogeny builder; spot‑the‑adaptation.
 - Scientific guardrails: clarify model vs. data; emphasize humility; avoid dunking on “wrong” ideas.
 
@@ -413,18 +414,18 @@ Structure: ship 5–8 minute episodes with replayable branches and optional side
 Episodes (first wave):
 
 - Episode A — Winter Traditions
-    - A1 Gift Closet Diversion (stealthy hotspot route)
-    - A2 Neighborhood Lights Errand (neighbor NPC; optional hint path)
-    - A3 Fireplace Prep Redux (advanced tag puzzle)
+  - A1 Gift Closet Diversion (stealthy hotspot route)
+  - A2 Neighborhood Lights Errand (neighbor NPC; optional hint path)
+  - A3 Fireplace Prep Redux (advanced tag puzzle)
 - Episode B — Tooth Tradition Variants
-    - B1 Dentist Visit (light humor interlude)
-    - B2 Lost Tooth Mystery (4–5 piece note assembly)
+  - B1 Dentist Visit (light humor interlude)
+  - B2 Lost Tooth Mystery (4–5 piece note assembly)
 - Episode C — Proof Alternatives
-    - C1 Receipt Trail vs. Calendar App (paper vs. digital proof)
-    - C2 Overheard Phone Call vs. Costume Storage (mutually exclusive)
+  - C1 Receipt Trail vs. Calendar App (paper vs. digital proof)
+  - C2 Overheard Phone Call vs. Costume Storage (mutually exclusive)
 - Episode D — Side Stories
-    - D1 Sibling Ally/Prankster path (badge unlock)
-    - D2 Family Traditions Gallery (Codex; collectibles)
+  - D1 Sibling Ally/Prankster path (badge unlock)
+  - D2 Family Traditions Gallery (Codex; collectibles)
 
 Systems (foundation for Post‑MVP):
 
@@ -483,8 +484,7 @@ Technical targets:
 
 Hand‑off per episode:
 
-1) BGs at 2560×1440 (AVIF + WEBP). 2) Prop SVGs per puzzle spec. 3) Collectible + badge SVGs. 4) Optional Lottie/notes.
-   5) Hotspot mock with suggested placements. 6) Gentle vs Standard copy notes where relevant.
+1. BGs at 2560×1440 (AVIF + WEBP). 2) Prop SVGs per puzzle spec. 3) Collectible + badge SVGs. 4) Optional Lottie/notes. 5) Hotspot mock with suggested placements. 6) Gentle vs Standard copy notes where relevant.
 
 ---
 

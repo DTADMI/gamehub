@@ -1,1 +1,1 @@
-export {ToymakerEscapeGame as default, ToymakerEscapeGame} from "./components/ToymakerEscapeGame";
+export { ToymakerEscapeGame as default, ToymakerEscapeGame } from "./components/ToymakerEscapeGame";

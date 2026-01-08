@@ -69,12 +69,12 @@ Story Template
 - Rooms: Workshop, Playroom hub, Locked Hall.
 - Hooks: whimsical gears; color sorter; music box that hums a friendly motif (captioned).
 - Core beats:
-    - Explore Workshop: align gears OR tune music box to unlock a plate.
-    - Enter Playroom: sort toys by color/shape to reveal hidden latch.
-    - Obtain Key Fragment 1 and glimpse an unsigned note mentioning “a promise made.”
+  - Explore Workshop: align gears OR tune music box to unlock a plate.
+  - Enter Playroom: sort toys by color/shape to reveal hidden latch.
+  - Obtain Key Fragment 1 and glimpse an unsigned note mentioning “a promise made.”
 - Puzzles:
-    - Gear alignment (variant seeds: gear tooth counts); Music box combo (variant seeds: 3‑note permutations).
-    - Sorter (variants: shapes vs. colors).
+  - Gear alignment (variant seeds: gear tooth counts); Music box combo (variant seeds: 3‑note permutations).
+  - Sorter (variants: shapes vs. colors).
 - Choices & flags: `e1.path = gears|music`; `e1.helper = hints|noHints`.
 - Guardrails: No time pressure; large targets; clear undo; reduced‑motion stills for gear turns.
 - Assets: see brief E1.
@@ -99,9 +99,9 @@ Story Template
 - Rooms: Office, Files Nook, Stairwell.
 - Hooks: rotating cipher wheel; out‑of‑order folders; light‑and‑shadow safe.
 - Core beats:
-    - Decode a letter (correspondence cipher) OR open a shadow safe (lamp angles).
-    - File letters in order to reveal Key Fragment 2.
-    - Find a note that implies an external commissioner…
+  - Decode a letter (correspondence cipher) OR open a shadow safe (lamp angles).
+  - File letters in order to reveal Key Fragment 2.
+  - Find a note that implies an external commissioner…
 - Puzzles: cipher (variant keys), filing (rules change per seed), shadow safe (3 cards positions).
 - Choices & flags: `e2.route = cipher|shadow`; `e2.trustNote = true|false`.
 - Guardrails: Captions for audio; sliders accessible via keyboard; no jumpscares.
@@ -114,10 +114,10 @@ Story Template
 - Rooms: Entry, Living Room, Study, Kitchen.
 - Hooks: plant schedule; memory wall; fridge letters; gentle ambient loop (captioned).
 - Core beats:
-    - Entry: find spare key and a consent card dated earlier.
-    - Living: arrange photo tiles to reveal a message about cycles.
-    - Study: read journal fragments clarifying the request to the toymaker.
-    - Kitchen: solve fridge anagram; choose who to share the truth with first.
+  - Entry: find spare key and a consent card dated earlier.
+  - Living: arrange photo tiles to reveal a message about cycles.
+  - Study: read journal fragments clarifying the request to the toymaker.
+  - Kitchen: solve fridge anagram; choose who to share the truth with first.
 - Puzzles: environment locks with permutations; memory wall sequence; anagram permutations.
 - Choices & flags: `e3.share = partner|journal`; `e3.keepGame = yes|no`.
 - Guardrails: Gentle phrasing; explicit consent artifact; reduced‑motion.
