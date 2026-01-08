@@ -3,7 +3,7 @@
 import { Carousel, GameCard,listGames, listProjects } from "@games/shared";
 import { Button } from "@games/shared/components/ui/button";
 import { useFeature } from "@games/shared/lib/flags";
-import * as Tabs from "@radix-ui/react-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@games/shared/components/ui/tabs";
 import { FolderKanban, Gamepad2 } from "lucide-react";
 import Link from "next/link";
 
@@ -70,23 +70,23 @@ export default function ExplorePage() {
         <h1 className="text-3xl font-bold">Explore</h1>
       </div>
 
-      <Tabs.Root defaultValue="games" className="w-full">
-        <Tabs.List className="bg-muted text-muted-foreground inline-flex h-10 items-center justify-center rounded-md p-1">
-          <Tabs.Trigger
+      <Tabs defaultValue="games" className="w-full">
+        <TabsList className="bg-muted text-muted-foreground inline-flex h-10 items-center justify-center rounded-md p-1">
+          <TabsTrigger
             value="games"
             className="ring-offset-background focus-visible:ring-ring/50 data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center gap-2 rounded-sm px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:outline-none"
           >
             <Gamepad2 className="h-4 w-4" /> Games
-          </Tabs.Trigger>
-          <Tabs.Trigger
+          </TabsTrigger>
+          <TabsTrigger
             value="projects"
             className="ring-offset-background focus-visible:ring-ring/50 data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center gap-2 rounded-sm px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:outline-none"
           >
             <FolderKanban className="h-4 w-4" /> Projects
-          </Tabs.Trigger>
-        </Tabs.List>
+          </TabsTrigger>
+        </TabsList>
 
-        <Tabs.Content value="games" className="mt-6 space-y-6">
+        <TabsContent value="games" className="mt-6 space-y-6">
           {showGamesFeatured && (
             <>
               <h3 className="text-lg font-semibold">Featured</h3>
@@ -128,9 +128,9 @@ export default function ExplorePage() {
               <Link href="/games">Open Games page</Link>
             </Button>
           </div>
-        </Tabs.Content>
+        </TabsContent>
 
-        <Tabs.Content value="projects" className="mt-6 space-y-6">
+        <TabsContent value="projects" className="mt-6 space-y-6">
           {showProjectsFeatured && (
             <>
               <h3 className="text-lg font-semibold">Featured</h3>
@@ -250,8 +250,8 @@ export default function ExplorePage() {
               <Link href="/projects">Open Projects page</Link>
             </Button>
           </div>
-        </Tabs.Content>
-      </Tabs.Root>
+        </TabsContent>
+      </Tabs>
     </section>
   );
 }
