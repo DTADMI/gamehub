@@ -33,6 +33,13 @@
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "packages/games/*",
+    "packages/projects/*",
+    "packages/tsconfig"
+  ],
   "devDependencies": {
     "@scarf/scarf": "1.4.0",
     "@typescript-eslint/eslint-plugin": "^8.52.0",

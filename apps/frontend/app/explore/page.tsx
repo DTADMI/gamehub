@@ -1,22 +1,11 @@
 "use client";
 
-import { Carousel, GameCard,listGames, listProjects } from "@games/shared";
+import {Carousel, Game, GameCard, listGames, listProjects} from "@games/shared";
 import { Button } from "@games/shared/components/ui/button";
 import { useFeature } from "@games/shared/lib/flags";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@games/shared/components/ui/tabs";
 import { FolderKanban, Gamepad2 } from "lucide-react";
 import Link from "next/link";
-
-type Game = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  slug: string;
-  upcoming?: boolean;
-  featured?: boolean;
-};
 
 const ALL_GAMES: Game[] = listGames()
   .filter((g) => g.visible !== false)

@@ -1,5 +1,17 @@
 // packages/shared/src/metadata/games.ts
 
+export type Game = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  slug: string;
+  path?: string;
+  upcoming?: boolean;
+  featured?: boolean;
+};
+
 export type GameSlug =
   | "breakout"
   | "memory"

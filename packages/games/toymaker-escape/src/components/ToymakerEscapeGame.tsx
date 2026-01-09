@@ -211,19 +211,21 @@ export const ToymakerEscapeGame: React.FC = () => {
 
   const scene = scenes[sceneId];
 
+  const title = typeof scene?.title === 'string' ? scene.title : scene?.title?.[lang] || "Toymaker Escape";
+  const description = typeof scene?.body === 'string' ? scene.body : scene?.body?.[lang] || "";
   return (
     <GameContainer
-      title={scene?.title[lang] || "Toymaker Escape"}
-      description={scene?.body?.[lang]}
+        title={title}
+        description={description}
       lockTouch={false}
       showParticleControls={false}
     >
       <div role="application" aria-label="Toymaker Escape" className="p-4">
         <h2 className="mb-2 text-2xl font-bold" aria-live="polite">
-          {scene?.title?.[lang] ?? t("tme.e1.title")}
+          {title ?? t("tme.e1.title")}
         </h2>
         {scene?.body ? (
-          <p className="text-muted-foreground mb-4">{scene.body[lang]}</p>
+          <p className="text-muted-foreground mb-4">{description}</p>
         ) : (
           <p className="text-muted-foreground mb-4">{t("tme.e1.body")}</p>
         )}
@@ -525,7 +527,7 @@ export const ToymakerEscapeGame: React.FC = () => {
                 ))}
               </div>
               <div className="mt-2 text-sm">
-                Progress: {sorter.input.length} / {sorter.goal.length}
+                Progress: {sorter.input.length} / {sorter.target.length}
                 {ctx.flags["sorter.solved"] && <span className="ml-2 text-green-500">Solved!</span>}
               </div>
             </div>

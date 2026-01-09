@@ -16,7 +16,7 @@ export function GameCard({ game, featured }: GameCardProps) {
     <Link href={game.path || `/games/${game.slug}`}>
       <Card className="h-full transition-shadow hover:shadow-lg">
         <CardHeader>
-          <CardTitle>{game.name}</CardTitle>
+          <CardTitle>{game.title}</CardTitle>
           <CardDescription>{game.description}</CardDescription>
         </CardHeader>
         <CardContent>
