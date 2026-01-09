@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 import { GameStats, getGameProgress, saveGameProgress } from "../lib/gameProgress";
-import { Game, getGame as getGameById } from "../metadata/games";
+import { GameEntry, getGame as getGameById } from "../metadata/games";
 import { useAuth } from "./AuthContext";
 
 interface GameContextType {
-  game: Game | null;
+  game: GameEntry | null;
   stats: GameStats | null;
   updateStats: (updates: Partial<GameStats>) => void;
   saveProgress: () => Promise<void>;
@@ -21,7 +21,7 @@ interface GameContextType {
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export function GameProvider({ children, gameId }: { children: React.ReactNode; gameId: string }) {
-  const [game, setGame] = useState<Game | null>(null);
+  const [game, setGame] = useState<GameEntry | null>(null);
   const [stats, setStats] = useState<GameStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

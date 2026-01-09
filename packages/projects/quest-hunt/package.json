@@ -9,9 +9,9 @@
     ]
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
     "lint": "echo Linting delegated to turbo",
     "test": "vitest",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\""

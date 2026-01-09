@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['@games/shared'],
   reactStrictMode: true,
   images: {
     remotePatterns: [

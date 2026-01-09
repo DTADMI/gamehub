@@ -10,6 +10,8 @@ const withPWA =
     : (config: NextConfig) => config;
 
 const nextConfig: NextConfig = withPWA({
+  transpilePackages: ["@games/shared"],
+
   // Configure output file tracing
   output: "standalone",
 
