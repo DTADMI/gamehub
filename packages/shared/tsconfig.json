@@ -18,14 +18,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@games/shared": ["./src/index.ts"],
-      "@games/shared/*": ["./src/*"],
-      "@games/*": ["../games/*/src"],
-      "@projects/*": ["../projects/*"],
-      "@shared/*": ["../shared/src/*"],
-      "@ui/*": ["../../packages/ui/src/*"],
-      "@ui": ["../../packages/ui/src"]
+      "@games/shared/*": ["./src/*"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "../games/**", "../projects/**", "../../apps/**"]
 }
