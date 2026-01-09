@@ -7,13 +7,14 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 export interface GameCardProps {
+  featured?: boolean;
   game: Game;
 }
 
-export function GameCard({ game }: GameCardProps) {
+export function GameCard({ game, featured }: GameCardProps) {
   return (
     <Link href={game.path || `/games/${game.slug}`}>
-      <Card className="hover:shadow-lg transition-shadow h-full">
+      <Card className="h-full transition-shadow hover:shadow-lg">
         <CardHeader>
           <CardTitle>{game.name}</CardTitle>
           <CardDescription>{game.description}</CardDescription>

@@ -38,10 +38,14 @@ export class ProjectsService {
     // Filter based on user access
     return projects.filter((p) => {
       // Free projects are accessible to all authenticated users
-      if (p.accessTier === "free") {return true;}
+      if (p.accessTier === "free") {
+        return true;
+      }
 
       // Freemium projects are accessible to all authenticated users (basic features)
-      if (p.accessTier === "freemium") {return true;}
+      if (p.accessTier === "freemium") {
+        return true;
+      }
 
       // Premium/Enterprise require explicit access
       return accessibleProjectIds.includes(p.slug);
@@ -61,7 +65,9 @@ export class ProjectsService {
    */
   async getProject(slug: string, userId?: string): Promise<ProjectMetadata | null> {
     const project = getProjectBySlug(slug);
-    if (!project) {return null;}
+    if (!project) {
+      return null;
+    }
 
     // Check if user has access
     if (userId) {
@@ -85,13 +91,19 @@ export class ProjectsService {
    */
   async canAccessProject(slug: string, userId: string): Promise<boolean> {
     const project = getProjectBySlug(slug);
-    if (!project) {return false;}
+    if (!project) {
+      return false;
+    }
 
     // Project must be enabled
-    if (!project.enabled) {return false;}
+    if (!project.enabled) {
+      return false;
+    }
 
     // Free tier is always accessible
-    if (project.accessTier === "free") {return true;}
+    if (project.accessTier === "free") {
+      return true;
+    }
 
     // Check access control
     return this.accessControlService.checkAccess(userId, slug);

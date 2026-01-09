@@ -141,7 +141,7 @@ export default function SnakeGamePage() {
       </div>
       <div className="flex items-center justify-between px-4">
         {realtimeEnabled ? (
-          <PresenceBadge game="snake" />
+          <PresenceBadge status={connected ? "online" : "offline"} />
         ) : (
           <span className="text-xs text-amber-700">Realtime disabled — using snapshot</span>
         )}

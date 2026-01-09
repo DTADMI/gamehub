@@ -1,4 +1,5 @@
 import type { Session, User } from "next-auth";
+import type { AuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
@@ -59,26 +60,11 @@ function safeJson<T = any>(input: Response | string | null): T | null {
 }
 
 // Derive the options type from the NextAuth handler to be compatible with v4/v5 typings
-type NAOptions = Parameters<typeof NextAuth>[0];
 
-const authOptions: NAOptions = {
+
+const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "dev-secret",
   session: { strategy: "jwt" as const },
-  // Keep cookie settings explicit in dev to avoid host/port mismatches
-  cookies: {
-    sessionToken: {
-      name:
-        process.env.NODE_ENV === "production"
-          ? "__Secure-next-auth.session-token"
-          : "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
   providers: [
     Credentials({
       name: "Credentials",

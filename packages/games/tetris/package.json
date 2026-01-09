@@ -15,5 +15,9 @@
   "dependencies": {
     "@games/shared": "workspace:*",
     "axios": "^1.13.2"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3"
   }
 }

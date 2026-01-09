@@ -1,5 +1,5 @@
 import { AccessTier } from "@prisma/client";
-import { IsEnum, IsISO8601,IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsISO8601, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class GrantAccessDto {
   @IsString()

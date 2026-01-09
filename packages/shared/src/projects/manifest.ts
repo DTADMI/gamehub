@@ -299,19 +299,29 @@ export function hasProjectAccess(
   user?: { isAuthenticated: boolean; hasSubscription: boolean },
 ): boolean {
   // Project must be enabled
-  if (!project.enabled) {return false;}
+  if (!project.enabled) {
+    return false;
+  }
 
   // Check authentication requirement
-  if (project.requiresAuth && !user?.isAuthenticated) {return false;}
+  if (project.requiresAuth && !user?.isAuthenticated) {
+    return false;
+  }
 
   // Check subscription requirement
-  if (project.requiresSubscription && !user?.hasSubscription) {return false;}
+  if (project.requiresSubscription && !user?.hasSubscription) {
+    return false;
+  }
 
   // Free tier is always accessible
-  if (project.accessTier === "free") {return true;}
+  if (project.accessTier === "free") {
+    return true;
+  }
 
   // Freemium has basic access for everyone
-  if (project.accessTier === "freemium") {return true;}
+  if (project.accessTier === "freemium") {
+    return true;
+  }
 
   // Premium and enterprise require subscription
   if (project.accessTier === "premium" || project.accessTier === "enterprise") {
