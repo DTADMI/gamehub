@@ -1,5 +1,5 @@
 # Base stage with pnpm
-FROM node:20-alpine AS base
+FROM node:20.20.0-alpine AS base
 RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 WORKDIR /app
 
@@ -26,7 +26,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @gamehub/app build
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:20.20.0-alpine AS production
 RUN apk add --no-cache dumb-init
 WORKDIR /app
 ENV NODE_ENV=production

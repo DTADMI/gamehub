@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@gamehub/ui": ["./packages/ui/src"],
+      "@gamehub/ui/*": ["./packages/ui/src/*"],
       "@games/_engine": ["./packages/games/_engine"],
       "@games/*": ["./packages/games/*/src"],
       "@games/shared": ["./packages/shared/src"],
