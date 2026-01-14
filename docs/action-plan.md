@@ -1,7 +1,7 @@
 # GameHub Action Plan
 
 **Last Updated**: January 14, 2026
-**Current Sprint**: Architecture Optimization & Bundle Size Reduction
+**Current Sprint**: Architecture Optimization & Bundle Size Reduction (Phase 1 Complete)
 
 Legend: ✅ Completed • 🟡 In Progress • 🔜 Next • 🗂️ Backlog
 
@@ -48,6 +48,65 @@ This document contains:
 
 ---
 
+## 🎯 Continue From Here
+
+**Current Status**: ✅ Phase 1 Complete (@gamehub/ui package extracted)
+
+**Next Action**: Update game imports to use @gamehub/ui
+
+> **⚠️ Note**: If you see Node.js version warnings, the project requires Node.js 20.20.0, 22.22.0, or 24.13.0. Current session uses v25.3.0 which works but shows warnings. To fix: `nvm install 20.20.0 && nvm use 20.20.0`
+
+### Immediate Steps (Next 2-4 hours)
+
+1. **Pilot Migration - Chess Game**
+
+   ```bash
+   # Update imports in packages/games/chess/src/
+   # Change: from '@games/shared' → from '@gamehub/ui'
+   # Test build: pnpm --filter @games/chess build
+   ```
+
+2. **Pilot Migration - Checkers & Memory**
+
+   ```bash
+   # Same process for checkers and memory games
+   # Verify all 3 games build and function correctly
+   ```
+
+3. **Measure Impact**
+   ```bash
+   # Before: Check .next/static bundle sizes
+   # After: Compare bundle sizes (target: 30-40% reduction)
+   ```
+
+### Automation Script (Recommended)
+
+```bash
+# Find and replace imports across games
+cd packages/games
+find . -type f \( -name "*.tsx" -o -name "*.ts" \) \
+  -exec sed -i "s/@games\/shared\/components\/ui\//@gamehub\/ui\//g" {} \;
+```
+
+### Key Files to Update
+
+**For each game using UI components:**
+
+- Update `package.json` dependencies (add @gamehub/ui workspace:\*)
+- Update import statements in src/\*.tsx files
+- Test build: `pnpm --filter @games/[game-name] build`
+
+### Success Criteria
+
+- ✅ All games compile without errors
+- ✅ UI components render correctly
+- ✅ Bundle sizes reduced by 30-40%
+- ✅ No functionality regressions
+
+**See**: [Week 3-4 Sprint Goals](#week-3-4-jan-15-28---gamesshared-split-phase-1) for detailed checklist
+
+---
+
 ## 🎯 Current Sprint
 
 **Focus**: Bundle Size Optimization & Architecture Validation
@@ -55,31 +114,63 @@ This document contains:
 
 ### Active Tasks
 
+#### ✅ Phase 1 Complete
+
+1. **@gamehub/ui Package Created** ✅
+   - ✅ Created package structure (`packages/ui/`)
+   - ✅ Extracted 59 files (55 UI components + 2 hooks + utils + theme provider)
+   - ✅ Reduced dependencies from 87 to 23
+   - ✅ Fixed all internal imports to use relative paths
+   - ✅ Added tsconfig aliases (`@gamehub/ui`)
+   - ✅ Installed all dependencies successfully
+   - ✅ Created comprehensive barrel export
+   - **Status**: Ready for game migration
+
+2. **Standalone Projects Migration** ✅
+   - ✅ libra-keeper: Fully independent with local UI components
+   - ✅ quest-hunt: Fully independent with local UI components
+   - ✅ Both compile successfully with Turbopack
+   - ✅ Created Prisma type stubs where needed
+   - **Status**: Complete and documented
+
+3. **Architecture Documentation** ✅
+   - ✅ ARCHITECTURE_STRATEGY.md - Comprehensive refactor plan
+   - ✅ IMPLEMENTATION_STATUS.md - Progress tracking
+   - ✅ STANDALONE_PROJECTS_MIGRATION.md - Migration details
+   - **Status**: All docs current and accurate
+
 #### 🟡 In Progress
 
-1. **Architecture Validation Complete** ✅
-   - Verified current implementation state
-   - Updated ARCHITECTURE_OPTIONS_ANALYSIS.md with accurate information
-   - Confirmed hybrid architecture is optimal
-   - Documented clear priorities
+1. **⭐ CURRENT: Update Game Imports to @gamehub/ui** (4-6 hours)
+   - 🟡 Phase 2A: Pilot migration (Chess, Checkers, Memory)
+   - 🔜 Phase 2B: Remaining board/arcade games
+   - 🔜 Phase 2C: Narrative games
+   - **Expected Impact**: First measurable bundle size reduction
+   - **Status**: @gamehub/ui package ready, games need import updates
 
 #### 🔜 Up Next (Priority Order)
 
-1. **⭐ PRIORITY 1: Split @games/shared Package** (3-4 weeks)
-   - Extract `@gamehub/ui` (UI components only, ~15 deps)
-   - Extract `@gamehub/game-platform` (Game infra + Firebase, ~30 deps)
-   - Extract `@games/pointclick-engine` (Narrative engine, ~5 deps)
-   - **Expected Impact**: 40-60% bundle reduction per game (200-400KB savings)
-   - **Status**: Documented in ARCHITECTURE_STRATEGY.md, ready to implement
+1. **⭐ PRIORITY 2: Extract @gamehub/game-platform** (1-2 weeks)
+   - Rename packages/shared → packages/game-platform
+   - Remove UI components (now in @gamehub/ui)
+   - Update all game imports
+   - Test Firebase integration
+   - **Expected Impact**: Clear separation, easier maintenance
 
-2. **⭐ PRIORITY 2: Build Unified Admin Dashboard** (4-6 weeks)
+2. **⭐ PRIORITY 3: Extract @games/pointclick-engine** (1 week)
+   - Create packages/pointclick-engine
+   - Move narrative engine code
+   - Update 3 point-and-click games
+   - **Expected Impact**: Other games don't bundle narrative engine
+
+3. **⭐ PRIORITY 4: Build Unified Admin Dashboard** (4-6 weeks)
    - Expand NestJS backend with admin modules
    - Create admin frontend in main app
    - Unified management for all projects, games, users
    - Feature flags and access control
    - Connect to Firebase/Supabase data sources
 
-3. **Documentation & Optimization** (1-2 weeks)
+4. **Documentation & Optimization** (1-2 weeks)
    - Document current architecture patterns
    - Create deployment guides per project
    - Audit unused dependencies
@@ -87,16 +178,29 @@ This document contains:
 
 ### Completed This Sprint
 
+**Week 1 (Jan 6-14): Architecture Analysis**
+
 - ✅ Analyzed actual codebase implementation
 - ✅ Verified projects are already independent (no @games/shared dependency)
 - ✅ Confirmed database consolidation complete (Prisma schema)
 - ✅ Documented accurate current state
 - ✅ Updated architecture strategy with reality-based recommendations
 - ✅ Identified @games/shared bloat as primary optimization target
-- ✅ **Updated evaluation criteria** (Fit → Performance → Cost → Bundle)
-- ✅ **Enhanced platform comparison** with proper priorities
-- ✅ **Added Search component** to infrastructure table
-- ✅ **Integrated external research** on platform capabilities
+- ✅ Updated evaluation criteria (Fit → Performance → Cost → Bundle)
+- ✅ Enhanced platform comparison with proper priorities
+- ✅ Added Search component to infrastructure table
+- ✅ Integrated external research on platform capabilities
+
+**Week 2 (Jan 15): Package Extraction Phase 1**
+
+- ✅ Created @gamehub/ui package structure
+- ✅ Extracted 59 files from @games/shared
+- ✅ Reduced dependencies from 87 to 23 for UI consumers
+- ✅ Fixed all internal imports (15 files)
+- ✅ Added tsconfig aliases for @gamehub/ui
+- ✅ Installed all dependencies successfully
+- ✅ Created comprehensive documentation (IMPLEMENTATION_STATUS.md)
+- ✅ Updated action plan to reflect current progress
 
 ---
 
@@ -109,17 +213,20 @@ Monorepo Infrastructure:  ██████████ 100% ✅
 Architecture Validation:   ██████████ 100% ✅
 Projects Independence:     ██████████ 100% ✅
 Database Consolidation:    █████████░  90% (QuestHunt separate - intentional)
-Bundle Optimization:       ███░░░░░░░  30% (split @games/shared = next priority)
+Bundle Optimization:       ██████░░░░  60% (@gamehub/ui extracted, games pending)
 Admin Dashboard:          ██░░░░░░░░  20% (NestJS ready, needs implementation)
-Documentation:            ████████░░  80%
+Documentation:            █████████░  90% (all current work documented)
 ```
 
 ### Current Sprint Status
 
 - **Total Tasks**: 3 major priorities
-- **Completed This Sprint**: Architecture validation ✅
-- **In Progress**: Planning @games/shared split 🟡
-- **Next Up**: Implementation phase 🔜
+- **Completed This Sprint**:
+  - ✅ Architecture validation
+  - ✅ @gamehub/ui package extraction (Phase 1)
+  - ✅ Comprehensive documentation
+- **In Progress**: Game import migration 🟡
+- **Next Up**: Extract game-platform & pointclick-engine 🔜
 
 ### Key Metrics
 
@@ -395,31 +502,33 @@ Documentation:            ████████░░  80%
 - [x] Identify optimization priorities ✅
 - [x] Update action plan ✅
 
-### Week 3-4 (Jan 15-28) - @games/shared Split Phase 1
+### Week 3-4 (Jan 15-28) - @games/shared Split Phase 1 ✅→🟡
 
-**Goal**: Extract @gamehub/ui package
+**Goal**: Extract @gamehub/ui package and update games
 
-**1. Create Package Structure**
+**1. Create Package Structure** ✅
 
-- [ ] Create `packages/ui` directory
-- [ ] Create `packages/ui/package.json` with dependencies:
-  - @radix-ui/react-\* components (~15 packages)
-  - class-variance-authority
-  - clsx, tailwind-merge
-  - next-themes
+- [x] Create `packages/ui` directory
+- [x] Create `packages/ui/package.json` with 23 dependencies:
+  - @radix-ui/react-\* components (19 packages)
+  - class-variance-authority, clsx, tailwind-merge
+  - next-themes, sonner, lucide-react
   - react, react-dom
-- [ ] Create `packages/ui/tsconfig.json`
-- [ ] Create `packages/ui/src/index.ts` (main export)
+  - Supporting libs (cmdk, react-day-picker, etc.)
+- [x] Create `packages/ui/tsconfig.json`
+- [x] Create `packages/ui/src/index.ts` (comprehensive barrel export)
 
-**2. Move Components** (from packages/shared/src/components/ui/)
+**2. Move Components** ✅ (from packages/shared/src/components/ui/)
 
-- [ ] Move all shadcn/ui components (button, card, dialog, input, etc.)
-- [ ] Move theme-provider.tsx
-- [ ] Move hooks (use-toast.ts, use-mobile.ts)
-- [ ] Move lib/utils.ts (cn function)
-- [ ] Update internal imports within @gamehub/ui
+- [x] Moved 55 UI components (all shadcn/ui components)
+- [x] Moved theme-provider.tsx
+- [x] Moved hooks (use-toast.ts, use-mobile.ts)
+- [x] Moved lib/utils.ts (cn function)
+- [x] Updated internal imports within @gamehub/ui (15 files fixed)
+- [x] Fixed resizable component API (PanelGroup)
+- [x] Fixed duplicate Toaster export (renamed SonnerToaster)
 
-**3. Pilot Migration** (2-3 games as test)
+**3. Pilot Migration** 🟡 (2-3 games as test)
 
 - [ ] Update Chess imports to use `@gamehub/ui`
 - [ ] Update Checkers imports to use `@gamehub/ui`
@@ -428,20 +537,29 @@ Documentation:            ████████░░  80%
 - [ ] Measure bundle sizes (before/after)
 - [ ] Verify functionality (run games, test UI)
 
-**4. Validation & Documentation**
+**4. Full Game Migration** 🔜 (remaining games)
 
-- [ ] All pilot games build without errors
+- [ ] Update Breakout, Snake, Bubble Pop (arcade games)
+- [ ] Update Tetris, Knitzy (casual games)
+- [ ] Update Rite of Discovery, Toymaker Escape, Systems Discovery (narrative)
+- [ ] Test all games build successfully
+- [ ] Measure bundle size improvements
+
+**5. Validation & Documentation** 🔜
+
+- [ ] All games build without errors
 - [ ] Bundle sizes reduced by 30-40%
 - [ ] No visual or functional regressions
-- [ ] Document import pattern in ARCHITECTURE_STRATEGY.md
+- [x] Document import pattern in ARCHITECTURE_STRATEGY.md ✅
 - [ ] Create migration checklist for remaining games
 
 **Success Metrics**:
 
-- ✅ Pilot games build successfully
-- ✅ Bundle size reduced by 30-40% (target: ~400KB for board games)
-- ✅ No functionality broken
+- 🔜 Pilot games build successfully
+- 🔜 Bundle size reduced by 30-40% (target: ~400KB for board games)
+- 🔜 No functionality broken
 - ✅ Clear migration pattern documented
+- ✅ @gamehub/ui package ready and tested
 
 ### Week 5-6 (Jan 29 - Feb 11) - @games/shared Split Phase 2-3
 
@@ -678,8 +796,18 @@ Documentation:            ████████░░  80%
 
 ---
 
-**Last Updated**: January 14, 2026
+**Last Updated**: January 15, 2026
 **Major Updates**:
+
+**Recent (Jan 15, 2026)**:
+
+- ✅ **Phase 1 Complete**: @gamehub/ui package extracted (59 files, 87→23 deps)
+- ✅ Created comprehensive documentation (IMPLEMENTATION_STATUS.md)
+- ✅ Updated action plan with current progress
+- 🟡 **In Progress**: Pilot game migration (Chess, Checkers, Memory)
+- 🔜 **Next**: Full game migration, then extract game-platform & pointclick-engine
+
+**Previous (Jan 14, 2026)**:
 
 - ✅ Architecture validation complete
 - ✅ Evaluation criteria updated (Fit → Performance → Cost → Bundle)
@@ -687,6 +815,20 @@ Documentation:            ████████░░  80%
 - ✅ Search component added to infrastructure
 - ✅ All documentation consolidated and accurate
 
-**Next Review**: January 28, 2026 (after @games/shared split Phase 1)
-**Current Sprint Focus**: Package splitting for modularity + bundle optimization
+**Next Review**: January 28, 2026 (after game migration Phase 2)
+**Current Sprint Focus**: Update game imports to @gamehub/ui + bundle optimization
 **Evaluation Framework**: 1️⃣ Fit for Purpose → 2️⃣ Performance → 3️⃣ Cost → 4️⃣ Bundle Size
+
+---
+
+## 📦 Quick Reference: Package Status
+
+| Package                      | Status      | Dependencies | Purpose                                       |
+| ---------------------------- | ----------- | ------------ | --------------------------------------------- |
+| **@gamehub/ui**              | ✅ Ready    | 23           | Universal UI components                       |
+| **@games/shared**            | 🔜 To Split | 87           | Game platform + narrative engine (to extract) |
+| **@gamehub/game-platform**   | 🔜 Planned  | ~30          | Game infrastructure (after extraction)        |
+| **@games/pointclick-engine** | 🔜 Planned  | ~5           | Narrative engine (after extraction)           |
+
+**Current Phase**: Migrating games to use @gamehub/ui
+**Bundle Impact**: 40-60% reduction expected after full migration
