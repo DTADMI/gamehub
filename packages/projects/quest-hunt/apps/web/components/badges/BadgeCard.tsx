@@ -1,7 +1,7 @@
-import { cn } from '@games/shared';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@games/shared';
 import { Check, Lock } from 'lucide-react';
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 import { BadgeRarity, BadgeWithProgress } from '@/types/badges';
 
 const rarityColors: Record<BadgeRarity, string> = {

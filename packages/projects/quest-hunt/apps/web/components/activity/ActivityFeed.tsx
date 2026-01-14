@@ -1,13 +1,13 @@
 'use client';
 
-import { Tabs, TabsList, TabsTrigger } from '@games/shared';
-import { Skeleton } from '@games/shared';
-import { Button } from '@games/shared';
-import { ScrollArea } from '@games/shared';
-import { useToast } from '@games/shared';
 import { Bell, BellOff, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 import { groupActivitiesByDate } from '@/lib/date-utils';
 import { webSocketService } from '@/lib/websocket';
 import { Activity, ActivityType } from '@/types/activity';
@@ -45,7 +45,9 @@ export function ActivityFeed({
 
   // Fetch more activities
   const fetchMoreActivities = useCallback(async () => {
-    if (isLoading || !hasMore) {return;}
+    if (isLoading || !hasMore) {
+      return;
+    }
 
     try {
       setIsLoading(true);
@@ -106,7 +108,9 @@ export function ActivityFeed({
       .filter((activity) => !activity.isRead)
       .map((activity) => activity.id);
 
-    if (unreadIds.length === 0) {return;}
+    if (unreadIds.length === 0) {
+      return;
+    }
 
     setActivities((prev) =>
       prev.map((activity) => (!activity.isRead ? { ...activity, isRead: true } : activity))
@@ -205,7 +209,7 @@ export function ActivityFeed({
         <Tabs
           defaultValue="all"
           className="mb-4"
-          onValueChange={(value: ActivityType) => setFilter(value)}
+          onValueChange={(value) => setFilter(value as ActivityType)}
         >
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="all">All</TabsTrigger>

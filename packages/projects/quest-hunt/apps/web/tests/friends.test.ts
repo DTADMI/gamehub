@@ -94,14 +94,14 @@ describe('API /api/friends/[id]', () => {
       }),
     } as any);
     const req = new Request('http://localhost/api/friends/f1?action=accept', { method: 'PUT' });
-    const res = await putFriend(req as any, { params: { id: 'f1' } });
+    const res = await putFriend(req as any, { params: Promise.resolve({ id: 'f1' }) });
     expect((res as Response).status).toBe(200);
   });
 
   it('deletes a friendship', async () => {
     mockDelete.mockReturnValueOnce({ eq: () => ({ or: () => ({ error: null }) }) } as any);
     const req = new Request('http://localhost/api/friends/f1', { method: 'DELETE' });
-    const res = await deleteFriend(req as any, { params: { id: 'f1' } });
+    const res = await deleteFriend(req as any, { params: Promise.resolve({ id: 'f1' }) });
     expect((res as Response).status).toBe(200);
   });
 });

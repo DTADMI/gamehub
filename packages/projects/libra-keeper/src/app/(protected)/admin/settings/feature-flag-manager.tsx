@@ -1,12 +1,13 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@games/shared";
-import { Input } from "@games/shared";
-import { Label } from "@games/shared";
-import { Switch } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 interface FeatureFlag {
   id?: string;
@@ -115,7 +116,7 @@ export function FeatureFlagManager() {
         </div>
 
         <div className="space-y-4">
-          {flags.map((flag) => (
+          {flags.map((flag: any) => (
             <div key={flag.id} className="flex items-center justify-between p-2 border rounded-md">
               <div className="space-y-0.5">
                 <div className="font-medium">{flag.name}</div>

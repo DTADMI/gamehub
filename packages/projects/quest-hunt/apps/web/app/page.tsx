@@ -1,5 +1,6 @@
-import { Button } from '@games/shared';
 import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (

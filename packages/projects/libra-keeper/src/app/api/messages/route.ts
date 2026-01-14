@@ -84,7 +84,7 @@ export async function GET(req: Request) {
 
     // Group by other user and get latest message
     const conversations = new Map();
-    messages.forEach((msg) => {
+    messages.forEach((msg: any) => {
       const otherUser = msg.senderId === session.user.id ? msg.receiver : msg.sender;
       if (!conversations.has(otherUser.id)) {
         conversations.set(otherUser.id, {

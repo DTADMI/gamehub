@@ -1,11 +1,6 @@
 // B:\git\quest-hunt\apps\web\components\quests\quest-form.tsx
 'use client';
 
-import { Button } from '@games/shared';
-import { Input } from '@games/shared';
-import { Textarea } from '@games/shared';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@games/shared';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@games/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -13,6 +8,25 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
+
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 
 const questFormSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters'),
@@ -23,6 +37,8 @@ const questFormSchema = z.object({
   start_longitude: z.number().optional(),
   estimated_duration_minutes: z.number().min(1).optional(),
 });
+
+type QuestFormValues = z.infer<typeof questFormSchema>;
 
 interface QuestFormValuesExtended extends QuestFormValues {
   id?: string;

@@ -1,9 +1,10 @@
 "use client";
 
-import { Button } from "@games/shared/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
 
 interface RequestActionButtonsProps {
   loanId: string;

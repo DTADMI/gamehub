@@ -1,18 +1,5 @@
 "use client";
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@games/shared";
-import { Input } from "@games/shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
-import { Textarea } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,6 +8,25 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { BarcodeScanner } from "@/components/items/barcode-scanner";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const itemSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -251,7 +257,7 @@ export default function NewItemPage() {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="">No Collection</SelectItem>
-                      {collections.map((collection) => (
+                      {collections.map((collection: any) => (
                         <SelectItem key={collection.id} value={collection.id}>
                           {collection.name}
                         </SelectItem>

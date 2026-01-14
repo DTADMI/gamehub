@@ -1,11 +1,5 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@games/shared';
-import { Skeleton } from '@games/shared';
-import { Button } from '@games/shared';
-import { cn } from '@games/shared';
-import { Badge } from '@games/shared';
-import { Input } from '@games/shared';
 // Dropdown components
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Award, Check, Filter, Sparkles, Trophy, Zap } from 'lucide-react';
@@ -13,8 +7,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { BadgeCard } from '@/components/badges/BadgeCard';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
 import { badgeService } from '@/lib/badge-service';
+import { cn } from '@/lib/utils';
 import { BadgeRarity, BadgeStats, BadgeWithProgress } from '@/types/badges';
 
 const rarityOrder: Record<BadgeRarity, number> = {
@@ -37,7 +37,7 @@ type BadgeFilter = 'all' | 'unlocked' | 'locked' | BadgeRarity;
 
 export default function BadgesPage() {
   const router = useRouter();
-  const { user, isLoading: isAuthLoading } = useAuth();
+  const { user, loading: isAuthLoading } = useAuth();
   const [activeTab, setActiveTab] = useState('all');
   const [badges, setBadges] = useState<BadgeWithProgress[]>([]);
   const [stats, setStats] = useState<BadgeStats | null>(null);
@@ -47,7 +47,9 @@ export default function BadgesPage() {
 
   // Fetch badges and stats
   useEffect(() => {
-    if (!user?.id) {return;}
+    if (!user?.id) {
+      return;
+    }
 
     const loadData = async () => {
       try {
@@ -101,14 +103,10 @@ export default function BadgesPage() {
       return false;
     }
 
-    if (
+    return !(
       ['common', 'uncommon', 'rare', 'epic', 'legendary'].includes(filter) &&
       badge.rarity !== filter
-    ) {
-      return false;
-    }
-
-    return true;
+    );
   });
 
   // Group badges by category for the "All" tab

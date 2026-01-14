@@ -21,7 +21,7 @@ export async function GET(req: Request) {
 
     if (format === "csv") {
       const headers = ["id", "title", "author", "type", "status", "isbn", "publisher", "createdAt"];
-      const rows = items.map((item) => [
+      const rows = items.map((item: any) => [
         item.id,
         `"${item.title.replace(/"/g, '""')}"`,
         `"${(item.author || "").replace(/"/g, '""')}"`,
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
         item.createdAt.toISOString(),
       ]);
 
-      const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
+      const csvContent = [headers.join(","), ...rows.map((row: any) => row.join(","))].join("\n");
 
       return new NextResponse(csvContent, {
         headers: {

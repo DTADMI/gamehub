@@ -9,10 +9,12 @@ The following types of files are automatically generated during development and 
 ### 1. Compiled JavaScript Files
 
 **Location**: Anywhere alongside TypeScript source files
+
 - `**/*.js` - Compiled from `.ts` or `.tsx` files
 - `**/*.js.map` - Source maps
 
 **Exception**: Configuration files are committed:
+
 - `*.config.js` (next.config.js, tailwind.config.js, etc.)
 - `/scripts/**/*.js`
 - `/cypress/**/*.js`
@@ -92,17 +94,20 @@ pnpm install
 The monorepo uses TypeScript exclusively for source code. JavaScript files that appear alongside TypeScript files are compilation artifacts and should never be edited directly.
 
 ### Source Files (Committed)
+
 - `*.ts` - TypeScript files
 - `*.tsx` - TypeScript + JSX files
 - `*.d.ts` - TypeScript declaration files
 
 ### Generated Files (Not Committed)
+
 - `*.js` - Compiled JavaScript
 - `*.js.map` - Source maps
 
 ## CI/CD Pipeline
 
 The CI/CD pipeline automatically:
+
 1. Installs dependencies
 2. Compiles TypeScript
 3. Runs tests
@@ -116,6 +121,7 @@ The CI/CD pipeline automatically:
 ### "Module not found" errors
 
 If you see errors about missing `.js` files:
+
 1. Ensure TypeScript compilation is working: `pnpm tsc --noEmit`
 2. Check that source `.ts`/`.tsx` files exist
 3. Verify your tsconfig.json configuration
@@ -124,6 +130,7 @@ If you see errors about missing `.js` files:
 ### Stale JS files
 
 If you have old `.js` files causing issues:
+
 ```bash
 # Remove all compiled JS files (safe - they'll regenerate)
 find packages -name "*.js" -path "*/src/*" -not -path "*/node_modules/*" -type f -delete

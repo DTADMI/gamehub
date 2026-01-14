@@ -40,7 +40,7 @@ jest.mock("bcryptjs", () => ({
 describe("authOptions", () => {
   describe("authorize", () => {
     it("should throw error if email or password missing", async () => {
-      const provider = authOptions.providers.find((p) => p.id === "credentials") as any;
+      const provider = authOptions.providers.find((p: any) => p.id === "credentials") as any;
       const authorize = provider.authorize;
 
       await expect(
@@ -56,7 +56,7 @@ describe("authOptions", () => {
     });
 
     it("should throw error if user not found", async () => {
-      const provider = authOptions.providers.find((p) => p.id === "credentials") as any;
+      const provider = authOptions.providers.find((p: any) => p.id === "credentials") as any;
       const authorize = provider.authorize;
       (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
 
@@ -72,7 +72,7 @@ describe("authOptions", () => {
     });
 
     it("should throw error if user has no password", async () => {
-      const provider = authOptions.providers.find((p) => p.id === "credentials") as any;
+      const provider = authOptions.providers.find((p: any) => p.id === "credentials") as any;
       const authorize = provider.authorize;
       (prisma.user.findUnique as jest.Mock).mockResolvedValue({
         id: "1",
@@ -92,7 +92,7 @@ describe("authOptions", () => {
     });
 
     it("should throw error if password invalid", async () => {
-      const provider = authOptions.providers.find((p) => p.id === "credentials") as any;
+      const provider = authOptions.providers.find((p: any) => p.id === "credentials") as any;
       const authorize = provider.authorize;
       (prisma.user.findUnique as jest.Mock).mockResolvedValue({
         id: "1",
@@ -113,7 +113,7 @@ describe("authOptions", () => {
     });
 
     it("should return user object if credentials are valid", async () => {
-      const provider = authOptions.providers.find((p) => p.id === "credentials") as any;
+      const provider = authOptions.providers.find((p: any) => p.id === "credentials") as any;
       const authorize = provider.authorize;
       const mockUser = {
         id: "1",

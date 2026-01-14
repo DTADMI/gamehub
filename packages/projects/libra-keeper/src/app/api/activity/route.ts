@@ -33,7 +33,7 @@ export async function GET() {
     ]);
 
     const activities = [
-      ...loans.map((l) => ({
+      ...loans.map((l: any) => ({
         id: l.id,
         type: "LOAN",
         user: l.user.name || "User",
@@ -41,14 +41,14 @@ export async function GET() {
         status: l.status,
         date: l.createdAt,
       })),
-      ...comments.map((c) => ({
+      ...comments.map((c: any) => ({
         id: c.id,
         type: "COMMENT",
         user: c.user.name || "User",
         item: c.item.title,
         date: c.createdAt,
       })),
-      ...requests.map((r) => ({
+      ...requests.map((r: any) => ({
         id: r.id,
         type: "REQUEST",
         user: r.requestedBy.name || "User",

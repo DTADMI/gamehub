@@ -1,8 +1,8 @@
-import { Badge } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 

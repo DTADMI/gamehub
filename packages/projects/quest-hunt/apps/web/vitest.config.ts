@@ -9,6 +9,7 @@ export default defineConfig({
   },
   css: {
     // Disable loading PostCSS/Tailwind pipeline during Vitest runs
+    // @ts-ignore - postcss null is valid
     postcss: null,
   },
   test: {

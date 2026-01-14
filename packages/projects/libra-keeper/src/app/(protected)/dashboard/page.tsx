@@ -1,11 +1,11 @@
 // src/app/dashboard/page.tsx
-import { Badge } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 
 import { ActivityFeed } from "@/components/activity/activity-feed";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
@@ -57,7 +57,7 @@ export default async function DashboardPage() {
                   </CardHeader>
                   <CardContent className="p-4 pt-0">
                     <div className="flex flex-wrap gap-1">
-                      {item.tags.map((tag) => (
+                      {item.tags.map((tag: any) => (
                         <Badge key={tag.id} variant="outline" className="text-[10px]">
                           {tag.name}
                         </Badge>

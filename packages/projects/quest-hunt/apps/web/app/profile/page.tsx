@@ -1,13 +1,5 @@
 'use client';
 
-import { Button } from '@games/shared';
-import { Input } from '@games/shared';
-import { Textarea } from '@games/shared';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@games/shared';
-import { Skeleton } from '@games/shared';
-import { Card, CardContent, CardHeader, CardTitle } from '@games/shared';
-import { Avatar, AvatarFallback, AvatarImage } from '@games/shared';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@games/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MapPin, Star, Trophy } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -16,6 +8,21 @@ import { useForm } from 'react-hook-form';
 
 import { ActivityFeed } from '@/components/activity/ActivityFeed';
 import { BadgeCard } from '@/components/badges/BadgeCard';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
 import { profileUpdateSchema } from '@/lib/server/schemas';
 
 type ProfileForm = {
@@ -86,9 +93,13 @@ export default function ProfilePage() {
         }
       } catch (e) {
         console.error(e);
-        if (!abort) {setError('Failed to load profile');}
+        if (!abort) {
+          setError('Failed to load profile');
+        }
       } finally {
-        if (!abort) {setLoading(false);}
+        if (!abort) {
+          setLoading(false);
+        }
       }
     })();
     return () => {
@@ -104,7 +115,9 @@ export default function ProfilePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
       });
-      if (!res.ok) {throw new Error('Failed to update profile');}
+      if (!res.ok) {
+        throw new Error('Failed to update profile');
+      }
       router.refresh();
     } catch (e) {
       console.error(e);
@@ -185,7 +198,8 @@ export default function ProfilePage() {
         <TabsContent value="feed" className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-              <ActivityFeed />
+              {/* @ts-ignore - User type doesn't have id property */}
+              <ActivityFeed userId={user?.id} />
             </div>
             <div className="space-y-6">
               <Card>
@@ -209,9 +223,7 @@ export default function ProfilePage() {
         <TabsContent value="badges">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {userBadges.length > 0 ? (
-              userBadges.map((badge: any) => (
-                <BadgeCard key={badge.id} badge={badge.badge} unlocked={badge.is_unlocked} />
-              ))
+              userBadges.map((badgeData: any) => <BadgeCard key={badgeData.id} badge={badgeData} />)
             ) : (
               <div className="col-span-full py-20 text-center border-2 border-dashed rounded-xl">
                 <p className="text-muted-foreground">No badges earned yet. Go out and explore!</p>

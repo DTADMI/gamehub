@@ -1,10 +1,10 @@
-import { Badge } from "@games/shared/components/ui/badge";
-import { Button } from "@games/shared/components/ui/button";
-import { Separator } from "@games/shared/components/ui/separator";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
@@ -44,9 +44,9 @@ export default async function ItemDetailsPage({ params }: { params: Promise<{ id
   const isAdmin = session?.user.role === "ADMIN";
   const hasActiveLoan = item.loans.length > 0;
   const userHasPendingLoan = item.loans.some(
-    (loan) => loan.userId === session?.user.id && loan.status === "PENDING",
+    (loan: any) => loan.userId === session?.user.id && loan.status === "PENDING",
   );
-  const userJoinedWaitlist = item.waitlist.some((entry) => entry.userId === session?.user.id);
+  const userJoinedWaitlist = item.waitlist.some((entry: any) => entry.userId === session?.user.id);
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -82,7 +82,7 @@ export default async function ItemDetailsPage({ params }: { params: Promise<{ id
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {item.tags.map((tag) => (
+            {item.tags.map((tag: any) => (
               <Badge key={tag.id} variant="outline">
                 {tag.name}
               </Badge>
@@ -115,7 +115,7 @@ export default async function ItemDetailsPage({ params }: { params: Promise<{ id
             )}
             {item.status === "BORROWED" &&
               !isAdmin &&
-              session?.user.id !== item.loans.find((l) => l.status === "APPROVED")?.userId && (
+              session?.user.id !== item.loans.find((l: any) => l.status === "APPROVED")?.userId && (
                 <WaitlistButton itemId={item.id} isJoined={userJoinedWaitlist} />
               )}
             {userHasPendingLoan && (
@@ -134,7 +134,7 @@ export default async function ItemDetailsPage({ params }: { params: Promise<{ id
             <div className="pt-4">
               <h3 className="text-sm font-medium mb-2">Waitlist ({item.waitlist.length})</h3>
               <div className="flex -space-x-2 overflow-hidden">
-                {item.waitlist.map((entry) => (
+                {item.waitlist.map((entry: any) => (
                   <div
                     key={entry.id}
                     className="inline-block h-8 w-8 rounded-full ring-2 ring-background bg-muted flex items-center justify-center text-[10px]"

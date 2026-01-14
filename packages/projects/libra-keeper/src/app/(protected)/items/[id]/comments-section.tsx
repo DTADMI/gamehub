@@ -1,12 +1,13 @@
 // src/app/(protected)/items/[id]/comments-section.tsx
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@games/shared/components/ui/avatar";
-import { Button } from "@games/shared/components/ui/button";
-import { Textarea } from "@games/shared/components/ui/textarea";
 import { formatDistanceToNow } from "date-fns";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Comment {
   id: string;
@@ -83,7 +84,7 @@ export function CommentsSection({ itemId }: CommentsSectionProps) {
       </div>
 
       <div className="space-y-6">
-        {comments.map((comment) => (
+        {comments.map((comment: any) => (
           <div key={comment.id} className="flex gap-4">
             <Avatar>
               <AvatarImage src={comment.user.image} />

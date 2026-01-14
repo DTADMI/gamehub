@@ -1,16 +1,23 @@
 // src/app/(protected)/suggestions/page.tsx
 "use client";
 
-import { Badge } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
-import { Input } from "@games/shared";
-import { Label } from "@games/shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
-import { Textarea } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 type ItemRequestType = "BORROWED_ITEM" | "SUGGESTION";
 type ItemRequestStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "REJECTED";
@@ -139,7 +146,7 @@ export default function SuggestionsPage() {
           ) : requests.length === 0 ? (
             <p className="text-muted-foreground">No requests yet.</p>
           ) : (
-            requests.map((req) => (
+            requests.map((req: any) => (
               <Card key={req.id}>
                 <CardContent className="p-4 flex items-center justify-between">
                   <div>

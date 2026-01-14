@@ -1,11 +1,11 @@
 // src/components/activity/activity-feed.tsx
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { formatDistanceToNow } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { Icons } from "@/components/icons";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Activity = {
   id: string;
@@ -48,7 +48,7 @@ export function ActivityFeed() {
         <CardTitle className="text-lg">Recent Activity</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {activities.map((act) => (
+        {activities.map((act: any) => (
           <div key={`${act.type}-${act.id}`} className="flex items-start gap-3 text-sm">
             <div className="mt-0.5">
               {act.type === "LOAN" && <Icons.calendar className="h-4 w-4 text-blue-500" />}

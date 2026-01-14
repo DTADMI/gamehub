@@ -1,11 +1,25 @@
 // src/app/(protected)/admin/users/page.tsx
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@games/shared";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type UserRole = "ADMIN" | "USER";
 type User = {
@@ -55,7 +69,7 @@ export default function UsersPage() {
         throw new Error("Failed to update role");
       }
 
-      setUsers(users.map((u) => (u.id === userId ? { ...u, role: newRole } : u)));
+      setUsers(users.map((u: any) => (u.id === userId ? { ...u, role: newRole } : u)));
       toast.success("User role updated");
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -88,7 +102,7 @@ export default function UsersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.map((user) => (
+              {users.map((user: any) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.name || "N/A"}</TableCell>
                   <TableCell>{user.email}</TableCell>

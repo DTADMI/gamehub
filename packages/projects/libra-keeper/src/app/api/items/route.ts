@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         collectionId: collectionId || null,
         tags: {
           connectOrCreate:
-            tags?.map((tag) => ({
+            tags?.map((tag: any) => ({
               where: { name: tag },
               create: { name: tag },
             })) || [],

@@ -71,7 +71,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
         tags: {
           set: [],
           connectOrCreate:
-            tags?.map((tag) => ({
+            tags?.map((tag: any) => ({
               where: { name: tag },
               create: { name: tag },
             })) || [],

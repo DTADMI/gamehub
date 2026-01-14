@@ -85,7 +85,9 @@ class BadgeService {
     badgeId: string
   ): Promise<BadgeWithProgress | null> {
     const badge = this.badges.get(badgeId);
-    if (!badge) {return null;}
+    if (!badge) {
+      return null;
+    }
 
     const userBadge = this.userBadges.get(badgeId) || {
       id: `temp_${userId}_${badgeId}`,
@@ -208,7 +210,7 @@ class BadgeService {
 
           // Notify via WebSocket
           webSocketService.sendMessage({
-            type: 'badge_unlocked',
+            type: 'badge_unlocked' as any,
             data: unlockEvent,
           });
 
@@ -238,7 +240,9 @@ class BadgeService {
     updates: Partial<Omit<Badge, 'id' | 'createdAt'>>
   ): Promise<Badge | null> {
     const badge = this.badges.get(id);
-    if (!badge) {return null;}
+    if (!badge) {
+      return null;
+    }
 
     const updatedBadge: Badge = {
       ...badge,

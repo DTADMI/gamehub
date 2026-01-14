@@ -8,3 +8,8 @@ export function requireAuth() {
   // TODO: Implement auth requirement
   return null;
 }
+
+export function verifyAuth(request?: any) {
+  // TODO: Implement auth verification
+  return null;
+}

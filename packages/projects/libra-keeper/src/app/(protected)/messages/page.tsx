@@ -1,14 +1,15 @@
 // src/app/(protected)/messages/page.tsx
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
-import { Input } from "@games/shared";
-import { cn } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 type Conversation = {
   user: {
@@ -117,7 +118,7 @@ export default function MessagesPage() {
             ) : conversations.length === 0 ? (
               <p className="p-4 text-center text-muted-foreground">No conversations yet.</p>
             ) : (
-              conversations.map((conv) => (
+              conversations.map((conv: any) => (
                 <button
                   key={conv.user.id}
                   onClick={() => setSelectedUser(conv)}
@@ -157,7 +158,7 @@ export default function MessagesPage() {
                 </div>
               </CardHeader>
               <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.map((msg) => (
+                {messages.map((msg: any) => (
                   <div
                     key={msg.id}
                     className={cn(

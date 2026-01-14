@@ -1,11 +1,12 @@
 "use client";
 
-import { Badge } from "@games/shared";
-import { Calendar } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { format, isSameDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Loan {
   id: string;
@@ -46,7 +47,9 @@ export default function CalendarPage() {
     (loan) => loan.dueAt && isSameDay(new Date(loan.dueAt), selectedDate || new Date()),
   );
 
-  const dueDates = loans.filter((loan) => loan.dueAt).map((loan) => new Date(loan.dueAt!));
+  const dueDates = loans
+    .filter((loan: any) => loan.dueAt)
+    .map((loan: any) => new Date(loan.dueAt!));
 
   if (isLoading) {
     return (
@@ -88,7 +91,7 @@ export default function CalendarPage() {
             <CardContent>
               {loansOnSelectedDate.length > 0 ? (
                 <ul className="space-y-4">
-                  {loansOnSelectedDate.map((loan) => (
+                  {loansOnSelectedDate.map((loan: any) => (
                     <li key={loan.id} className="border-b pb-2 last:border-0">
                       <p className="font-semibold">{loan.item.title}</p>
                       <p className="text-sm text-muted-foreground">

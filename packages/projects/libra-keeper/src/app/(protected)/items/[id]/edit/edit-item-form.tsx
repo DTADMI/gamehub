@@ -1,7 +1,14 @@
 // src/app/(protected)/items/[id]/edit/edit-item-form.tsx
 "use client";
 
-import { Button } from "@games/shared/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,22 +16,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@games/shared/components/ui/form";
-import { Input } from "@games/shared/components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@games/shared/components/ui/select";
-import { Textarea } from "@games/shared/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import * as z from "zod";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const itemSchema = z.object({
   title: z.string().min(1, "Title is required"),

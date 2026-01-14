@@ -1,11 +1,5 @@
 'use client';
 
-import { Button } from '@games/shared';
-import { Input } from '@games/shared';
-import { Textarea } from '@games/shared';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@games/shared';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@games/shared';
-import { toast } from '@games/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -14,6 +8,25 @@ import * as z from 'zod';
 
 import { TipTapEditor } from '@/components/editor/TipTapEditor';
 import { MapContainer } from '@/components/map/MapContainer';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/hooks/use-toast';
 
 const questFormSchema = z.object({
   title: z.string().min(5, { message: 'Title must be at least 5 characters' }),
@@ -152,9 +165,13 @@ export default function CreateQuestPage() {
   const moveWaypoint = (id: string, direction: 'up' | 'down') => {
     const waypoints = [...form.getValues('waypoints')];
     const index = waypoints.findIndex((w) => w.id === id);
-    if (index === -1) {return;}
+    if (index === -1) {
+      return;
+    }
     const target = direction === 'up' ? index - 1 : index + 1;
-    if (target < 0 || target >= waypoints.length) {return;}
+    if (target < 0 || target >= waypoints.length) {
+      return;
+    }
     const tmp = waypoints[index];
     waypoints[index] = waypoints[target];
     waypoints[target] = tmp;

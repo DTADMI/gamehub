@@ -1,12 +1,13 @@
 // B:\git\quest-hunt\apps\web\components\quests\quest-list.tsx
 'use client';
 
-import { Button } from '@games/shared';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@games/shared';
-import { Badge } from '@games/shared';
 import { formatDistanceToNow } from 'date-fns';
 import { Clock, MapPin, Pencil, User } from 'lucide-react';
 import Link from 'next/link';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const difficultyColors = {
   easy: 'bg-green-100 text-green-800',

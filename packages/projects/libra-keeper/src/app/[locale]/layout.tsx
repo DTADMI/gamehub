@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 import { locales } from "@/i18n";
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return locales.map((locale: any) => ({ locale }));
 }
 
 export default async function LocaleLayout({
@@ -20,7 +20,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as string)) {
+  if (!locales.includes(locale as any)) {
     notFound();
   }
 

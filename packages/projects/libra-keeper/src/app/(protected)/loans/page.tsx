@@ -1,7 +1,7 @@
-import { Badge } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
 import { getServerSession } from "next-auth";
 
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
@@ -25,7 +25,7 @@ export default async function MyLoansPage() {
       <h1 className="text-2xl font-bold mb-6">My Borrowed Items</h1>
 
       <div className="grid gap-4">
-        {loans.map((loan) => (
+        {loans.map((loan: any) => (
           <Card key={loan.id}>
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">

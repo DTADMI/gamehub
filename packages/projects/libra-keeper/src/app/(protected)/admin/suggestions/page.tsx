@@ -1,12 +1,26 @@
 // src/app/(protected)/admin/suggestions/page.tsx
 "use client";
 
-import { Badge } from "@games/shared";
-import { Card, CardContent, CardHeader, CardTitle } from "@games/shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@games/shared";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type ItemRequestStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "REJECTED";
 type ItemRequestType = "BORROWED_ITEM" | "SUGGESTION";
@@ -55,7 +69,7 @@ export default function AdminSuggestionsPage() {
 
       if (response.ok) {
         setRequests(
-          requests.map((r) =>
+          requests.map((r: any) =>
             r.id === requestId ? { ...r, status: newStatus as ItemRequestStatus } : r,
           ),
         );
@@ -89,7 +103,7 @@ export default function AdminSuggestionsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {requests.map((req) => (
+              {requests.map((req: any) => (
                 <TableRow key={req.id}>
                   <TableCell>
                     <div>

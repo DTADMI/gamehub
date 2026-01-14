@@ -1,11 +1,12 @@
 "use client";
 
-import { Input } from "@games/shared";
-import { Label } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function RegisterPage() {
   const router = useRouter();

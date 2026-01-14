@@ -41,7 +41,7 @@
     "packages/tsconfig"
   ],
   "devDependencies": {
-    "@scarf/scarf": "1.4.0",
+    "@scarf/scarf": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^8.52.0",
     "@typescript-eslint/parser": "^8.52.0",
     "eslint": "^9.39.2",
@@ -54,7 +54,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
-    "turbo": "^2.7.3",
+    "turbo": "^2.7.4",
     "typescript": "^5.9.3"
   },
   "lint-staged": {
@@ -68,7 +68,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "19.2.7",
+      "@types/react": "19.2.8",
       "@types/react-dom": "19.2.3",
       "react": "19.2.3",
       "react-dom": "19.2.3",

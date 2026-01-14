@@ -1,10 +1,11 @@
 'use client';
 
-import { Card, CardContent } from '@games/shared';
-import { Avatar, AvatarFallback, AvatarImage } from '@games/shared';
-import { toast } from '@games/shared';
 import { Loader2, Medal, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { toast } from '@/hooks/use-toast';
 
 interface LeaderboardEntry {
   user_id: string;

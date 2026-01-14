@@ -1,12 +1,19 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@games/shared";
-import { Input } from "@games/shared";
-import { Label } from "@games/shared";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type SettingType = "STRING" | "BOOLEAN" | "NUMBER" | "JSON";
 
@@ -120,13 +127,13 @@ export function SettingsManager() {
         </div>
 
         <div className="space-y-4">
-          {settings.map((setting) => (
+          {settings.map((setting: any) => (
             <div key={setting.id} className="grid grid-cols-4 gap-4 items-end">
               <div className="font-mono text-sm">{setting.key}</div>
               <Input
                 value={setting.value}
                 onChange={(e) => {
-                  const newSettings = settings.map((s) =>
+                  const newSettings = settings.map((s: any) =>
                     s.key === setting.key ? { ...s, value: e.target.value } : s,
                   );
                   setSettings(newSettings);

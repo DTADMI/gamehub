@@ -1,5 +1,5 @@
 // src/__tests__/logger.test.ts
-import { logger } from "../lib/logger";
+import { logger } from "@/lib/logger";
 
 describe("Logger", () => {
   let infoSpy: jest.SpyInstance;
@@ -35,22 +35,33 @@ describe("Logger", () => {
 
   it("should log debug messages in non-production environment", () => {
     const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = "development";
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: "development",
+      writable: true,
+    });
 
     logger.debug("test debug");
     expect(debugSpy).toHaveBeenCalledWith(expect.stringContaining("[DEBUG] test debug"));
-
-    process.env.NODE_ENV = originalEnv;
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: originalEnv,
+      writable: true,
+    });
   });
 
   it("should not log debug messages in production environment", () => {
     const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = "production";
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: "production",
+      writable: true,
+    });
 
     logger.debug("test debug");
     expect(debugSpy).not.toHaveBeenCalled();
 
-    process.env.NODE_ENV = originalEnv;
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: originalEnv,
+      writable: true,
+    });
   });
 
   it("should pass extra arguments to console methods", () => {

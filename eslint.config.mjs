@@ -193,6 +193,7 @@ export default [
             "**/eslint.config.*",
             "**/postcss.config.*",
             "**/next-env.d.ts",
+            "**/*.md", // Exclude all Markdown files
         ],
     },
 

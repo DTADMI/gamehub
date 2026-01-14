@@ -1,8 +1,8 @@
 // B:\git\quest-hunt\apps\web\app\quests\page.tsx
-import { Button } from '@games/shared';
 import Link from 'next/link';
 
 import { QuestList } from '@/components/quests/quest-list';
+import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/server';
 
 export default async function QuestsPage() {
