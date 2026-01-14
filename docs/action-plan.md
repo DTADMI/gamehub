@@ -101,7 +101,30 @@ Documentation:            ███████░░░ 70%
 - Remove code duplication
 - Consolidate database schemas
 
-### 2. Project Integration (20% Complete)
+### 2. Game Engine Strategy (NEW - 30% Complete)
+
+**Status**: Strategy documented with accurate current state assessment
+
+**See**: [GAME_ENGINE_STRATEGY.md](./GAME_ENGINE_STRATEGY.md)
+
+**Current Reality Discovered**:
+
+- ✅ Narrative engine (`packages/shared/src/pointclick/*`) - Used by 3 games, working well
+- ⚠️ GameEngine (`Engine.ts`) - Only used by 1 mini-puzzle, NOT by arcade games
+- ⚠️ Arcade games (Snake, Breakout, Bubble Pop) - Each has custom React + Canvas implementation
+- ⚠️ Code duplication - Game loop, canvas setup, resize handling reimplemented per game
+
+**Remaining**:
+
+- Phase 0: Tag games with engine/implementation types in manifest ✅
+- Phase 0.5: Assess whether to refactor existing games or standardize for new games only
+- Phase 1: Create unified GameHost component (if refactoring existing)
+- Phase 2: Run PixiJS pilot on Bubble Pop or new game
+- Phase 3: Run Phaser 3 pilot on Platformer
+- Phase 4: Evaluate and standardize
+- Phase 5: Three.js foundation (defer until needed)
+
+### 3. Project Integration (20% Complete)
 
 **Status**: Analysis complete, implementation starting
 
@@ -112,7 +135,7 @@ Documentation:            ███████░░░ 70%
 - Apply design system consistently
 - Implement admin controls
 
-### 3. Access Control (0% Complete)
+### 4. Access Control (0% Complete)
 
 **Status**: Design phase
 
@@ -123,7 +146,7 @@ Documentation:            ███████░░░ 70%
 - Payment integration
 - Subscription management
 
-### 4. Shared Resources (40% Complete)
+### 5. Shared Resources (40% Complete)
 
 **Status**: Basic structure exists, needs organization
 
@@ -238,10 +261,21 @@ Documentation:            ███████░░░ 70%
 
 ### Week 2 (Jan 13-20)
 
-- [ ] Integrate LibraKeeper
-- [ ] Build project cards/routes
+- [x] Document game engine strategy ✅
+- [x] Verify actual engine usage in codebase ✅
+- [x] Update strategy with accurate information ✅
+- [x] Tag games with implementation types ✅
+- [ ] Decide: refactor existing vs standardize new games only 🔜
+- [ ] Integrate LibraKeeper 🔜
+- [ ] Build project cards/routes 🔜
+
+### Week 3 (Jan 20-27) - NEW
+
+- [ ] Decision: Address arcade game duplication or accept as-is
+- [ ] If refactoring: Create GameHost component for existing games
+- [ ] If standardizing: Run PixiJS pilot on NEW game or Bubble Pop rewrite
+- [ ] Run Phaser 3 pilot on Platformer (new game)
 - [ ] Implement basic access control
-- [ ] Create admin project management
 - [ ] Update all documentation
 
 ---
@@ -300,6 +334,7 @@ Documentation:            ███████░░░ 70%
 - [Project Structure](./gamehub-monorepo-structure-readme.md)
 - [Docker Setup](./docker-centralization.md)
 - [Game Development](./new-games-development-plan.md)
+- [Game Engine Strategy](./GAME_ENGINE_STRATEGY.md) ⭐ NEW
 
 ### External
 

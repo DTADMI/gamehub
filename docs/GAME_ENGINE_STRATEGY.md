@@ -1,776 +1,842 @@
-# GameHub Game Engine Strategy
-
-JavaScript 2D/3D Engine Landscape for GameHub (/packages/games/\*)
-
-1. Context: what you have today (“in-house engine”)
-   From your repo, there are effectively two in-house approaches:
-
-A) “Point-and-click / narrative” engine (React-first)
-Located under packages/shared/src/pointclick/\* and used heavily by games like:
-
-toymaker-escape
-rite-of-discovery
-Core characteristics
-
-State model: SaveState with sceneId + ctx (flags, inventory, vars).
-Scene model: Scene is mostly narrative/choices + optional React render.
-Runtime: React component controller (SceneController.tsx) handles:
-navigation
-persistence (localStorage)
-inventory & flags
-language handling
-Rendering: Mostly DOM/React UI, not canvas.
-Strengths
-
-Very fast to build narrative games.
-Great for accessibility and UI (since it’s DOM-based).
-Simple persistence and deterministic logic.
-Weaknesses
-
-Not a real-time simulation engine (physics, sprites, particle systems, etc.).
-Limited for “arcade” games unless you bolt on a canvas subview per scene.
-B) “Canvas 2D GameEngine” (classic game loop)
-Located under packages/shared/src/pointclick/core/Engine.ts (naming is a little confusing: it’s not only pointclick; it’s a general canvas loop engine).
-
-Core characteristics
-
-Render target: CanvasRenderingContext2D
-Has systems: input, assets, animation manager, scene manager, plugin manager, event system.
-Main loop: requestAnimationFrame with update(delta) + render().
-Plugin model: dialogue/inventory/achievements plugins exist.
-Strengths
-
-You control everything: minimal dependencies, stable APIs, predictable builds.
-Good fit for simple 2D canvas games (snake/breakout/tetris-ish) when you keep scope small.
-Tailored to your product (achievements/inventory hooks).
-Weaknesses
-
-Building complete parity with mature engines is expensive (physics, atlas pipeline, sound, camera, tooling, editor workflows, debugging).
-Every new game genre tends to push you into “reimplement engine features”.
-No built-in WebGL pipeline, 3D, skeletal animation, etc. 2) What games you have (high-level needs)
-From packages/games/ you have (at least):
-
-Arcade / grid / simple 2D: snake, tetris, breakout, bubble-pop, memory
-Board games / UI heavy: chess, checkers
-Narrative / puzzle: toymaker-escape, rite-of-discovery, systems-discovery
-Likely simulation-heavy / multi-system: tower-defense, platformer
-Unknown scope (names suggest heavier): chrono-shift, elemental-conflux, quantum-architect, knitzy
-This mix strongly suggests you’ll benefit from more than one rendering/gameplay approach (DOM/React for board/narrative + a dedicated 2D engine for real-time games).
-
-3. Major JS 2D engines (and adjacent libraries)
-   3.1 PixiJS (2D renderer, not a full engine)
-   What it is
-
-A high-performance 2D rendering library (Canvas/WebGL), not a complete gameplay engine.
-Pros
-
-Excellent performance and visual capability for 2D.
-Flexible: you can keep your own ECS/state systems.
-Great for UI-like 2D and effects (filters, shaders, particles via addons).
-Plays well with React via wrappers (or direct integration).
-Cons
-
-You must bring your own:
-physics (Matter.js/Planck.js)
-scene management
-collision
-animation pipelines (unless you adopt Spine, etc.)
-level tooling
-You can end up rebuilding “engine” features anyway.
-Best fit in your repo
-
-bubble-pop, breakout, snake, tetris (if you want smooth animation and scaling)
-Visual-heavy casual games where physics is simple or custom.
-3.2 Phaser (2D game framework / engine)
-What it is
-
-A full 2D engine (scenes, input, spritesheets, cameras, audio, physics options).
-Pros
-
-Batteries included: scenes, loaders, animation, camera, input, particles.
-Good docs and community; fast prototyping.
-Solid for classic 2D genres: platformers, arcade, top-down.
-Has physics integrations (Arcade Physics built-in; Matter.js support in many Phaser setups).
-Cons
-
-Opinionated patterns; you’ll adapt your architecture.
-Integrating with React/Next is doable but needs care (canvas lifecycle + routing + SSR boundaries).
-If you already have an engine, Phaser can feel like “two frameworks”.
-Best fit in your repo
-
-platformer (strong candidate)
-tower-defense (strong candidate)
-chrono-shift (if it’s action/puzzle real-time)
-Any future “real-time 2D” game where you don’t want to expand the in-house engine.
-3.3 MelonJS (2D engine, lighter than Phaser)
-Pros
-
-Smaller and more “engine-like” than some heavier frameworks.
-Good for tilemaps and classic 2D.
-Cons
-
-Smaller ecosystem than Phaser/Pixi.
-Less mindshare; fewer modern integrations.
-Fit
-
-Similar targets as Phaser, but I’d only pick it if you strongly prefer its architecture.
-3.4 Kaboom.js (2D game library, developer-friendly)
-Pros
-
-Extremely fast to prototype.
-Fun, simple API for small arcade games.
-Cons
-
-Less suited for large-scale, long-lived, content-heavy games.
-You may outgrow it for complex projects.
-Fit
-
-snake, breakout, small jam-style titles. 4) Major JS 3D engines / frameworks
-4.1 Three.js (3D rendering framework)
-What it is
-
-A 3D rendering library; you build the engine on top.
-Pros
-
-The standard for WebGL 3D.
-Huge ecosystem, endless examples.
-Integrates well with React via react-three/fiber.
-Cons
-
-Not a full game engine:
-no built-in physics/gameplay pipeline
-you provide scene/game loop architecture
-For “actual games”, you’ll want additional libraries and conventions.
-Fit
-
-If any of your “unknown scope” games become 3D or require 3D scenes:
-quantum-architect or elemental-conflux could plausibly benefit
-Best if you want custom 3D visuals inside a primarily React app.
-4.2 Babylon.js (3D engine, more “game engine” than Three)
-Pros
-
-More engine-like out of the box than Three.js:
-physics plugins
-robust materials, loaders, cameras
-strong tooling story (inspector)
-Great for interactive 3D web apps and games.
-Cons
-
-Larger footprint and engine conventions to adopt.
-Still not “Unity” level, but closer.
-Fit
-
-If GameHub will host true 3D games (or heavy 3D scenes), Babylon is often the pragmatic pick.
-4.3 PlayCanvas (engine + editor + hosting workflow)
-Pros
-
-Very strong tooling: web-based editor, nice pipeline.
-Productive for teams that want an editor-first flow.
-Cons
-
-Workflow may conflict with monorepo/Next.js integration expectations.
-Asset pipeline/editor decisions are a commitment.
-Fit
-
-If you want a content-authoring workflow for 3D and accept editor-centric development. 5) How these compare to your in-house engine(s)
-In-house narrative engine vs external engines
-External engines (Phaser/Pixi/Three/Babylon) do not replace your narrative React scene engine well.
-Your narrative engine is already optimized for:
-choices
-inventory
-flags
-localization
-save/load
-Conclusion: keep it.
-
-In-house canvas 2D engine vs Phaser/Pixi
-If you keep building arcade + platformer + tower-defense:
-you’ll steadily recreate features Phaser already has.
-Pixi is great if you want to keep your own engine architecture but upgrade rendering.
-Phaser is great if you want “finished game features” quickly.
-Conclusion: for real-time 2D genres beyond simple arcade, Phaser will likely reduce maintenance cost.
-
-6. Appropriateness per game in /packages/games
-   Below is a practical mapping assuming typical genre expectations:
-
-Board / UI-heavy games
-chess, checkers
-Best: React/DOM (what you likely already do)
-Why: accessibility, responsive layout, simple animations, no need for a canvas engine.
-Engines: Phaser/Pixi are usually overkill.
-Simple arcade / grid games
-snake, tetris, memory, breakout, bubble-pop
-Good options:
-Keep in-house canvas engine if these are intentionally simple.
-PixiJS if you want:
-better scaling
-smoother animation/effects
-future-proof rendering
-Phaser becomes worth it if you want:
-polished effects/audio/particles quickly
-consistent input/camera/scene tooling
-Recommendation for these: PixiJS or keep in-house (depending on how much juice/particles/polish you want).
-Narrative / puzzle adventure
-toymaker-escape, rite-of-discovery, systems-discovery
-Best: keep the existing pointclick/narrative engine, and use:
-DOM/React for inventory/dialogue/choices
-optional embedded canvas mini-games for puzzles (which you already do)
-Phaser/Pixi: only for specific mini-games, not as a full replacement.
-Likely complex real-time games
-platformer
-Best: Phaser (unless you want to invest heavily in your in-house engine)
-Why: physics-ish needs, collisions, camera follow, input feel, sprite animation pipeline.
-tower-defense
-Best: Phaser or Pixi + your own simulation layer
-Why: pathfinding, waves, lots of entities, effects. Phaser speeds up “game shell”; your simulation can remain pure TS.
-Potentially 3D / “systems” games
-quantum-architect, elemental-conflux, chrono-shift, knitzy
-Hard to be definitive without designs.
-If any of these become 3D:
-Three.js (with React integration) for custom visuals
-Babylon.js if you want a more complete 3D engine baseline 7) Recommendation (overall)
-Recommendation summary
-Keep your narrative/pointclick React engine as-is (it’s already a product advantage).
-For real-time 2D games, adopt one primary external 2D stack:
-Phaser if you want fastest “full game” iteration (platformer/tower-defense especially).
-PixiJS if you want to keep your in-house architecture but upgrade rendering.
-For 3D, do not adopt until you have a concrete 3D game requirement:
-Start with Three.js + @react-three/fiber (best React fit),
-or Babylon.js if you want more engine features out of the box.
-My “default” pick for your mix (especially because you already have a React web app) is:
-
-2D renderer: PixiJS for arcade/casual polish
-2D engine (when needed): Phaser for platformer/tower-defense
-Narrative: keep in-house
-3D: Three.js (defer until needed)
-This avoids forcing everything into one engine and respects that your repo already spans UI games and real-time games.
-
-8. Step-by-step instructions (practical integration plan)
-   Phase 0 — Decide the “engine policy” per category
-   Tag each game as one of:
-   dom-ui (chess/checkers)
-   narrative (toymaker/rite-of-discovery)
-   arcade-2d (snake/tetris/etc.)
-   sim-2d (tower-defense/platformer)
-   3d
-   Decide target stack per category:
-   dom-ui => React
-   narrative => existing pointclick engine
-   arcade-2d => in-house canvas or Pixi
-   sim-2d => Phaser
-   3d => Three/Babylon (defer)
-   Phase 1 — Create a shared “game host” boundary (important)
-   Goal: every engine runs inside the same app shell predictably.
-
-Create a single React component pattern for games:
-GameHost component mounts a container div and owns lifecycle:
-start engine on mount
-stop/destroy on unmount
-pause on tab blur (optional)
-Standardize:
-sizing (responsive, DPR)
-input focus handling
-audio mute policy
-save/load hooks
-achievement hooks (bridge to your existing systems)
-This step matters more than which engine you pick.
-
-Phase 2 — Adopt PixiJS for one arcade game (pilot)
-Pick a low-risk game like bubble-pop or breakout.
-
-Add Pixi dependency to that game package.
-Implement PixiGame class:
-constructor takes a DOM element
-creates Pixi Application
-handles resize
-exposes destroy()
-Keep gameplay logic pure TS:
-update loop independent of Pixi
-Pixi only draws the state
-Success criteria
-
-Stable mount/unmount without leaks
-Consistent FPS
-Works in Next.js client component ("use client")
-Phase 3 — Adopt Phaser for platformer (or tower-defense) pilot
-Add Phaser dependency to that game package.
-Build a Phaser bootstrap scene:
-preload assets
-create main scene
-Integrate with GameHub:
-Use a React wrapper that instantiates Phaser Game into a div.
-Ensure cleanup on unmount: game.destroy(true).
-Success criteria
-
-Smooth input and camera
-Clean dev workflow for assets
-Minimal friction with your monorepo build
-Phase 4 — Decide migration/standardization
-After 2 pilots:
-
-If Pixi pilot is smooth and you like keeping your own architecture:
-use Pixi for all arcade-2d.
-If Phaser pilot is smooth:
-use Phaser for all sim-2d / physics-ish games.
-Keep narrative engine untouched except for optional mini-games. 9) “If you force me to pick only one engine”
-If you strongly want “one engine to rule them all” for 2D:
-
-Pick Phaser.
-It can do arcade games fine, and it handles platformer/tower-defense much better than Pixi-alone without rebuilding engine subsystems. The downside is you’ll use Phaser even where React/DOM would be simpler (chess/checkers), so I still recommend mixed approaches.
-
-## Game Catalog
-
-### Point & Click Adventure Games (2D/3D)
-
-- **Toymaker's Escape (TME)** - Narrative puzzle adventure
-- **Rite of Discovery (ROD)** - Mystery puzzle adventure
-- **Systems Discovery (SD)** - Sci-fi exploration game
-
-### 3D Puzzle Games (Planned)
-
-- **Quantum Architect (QA)** - Quantum mechanics puzzles
-- **Elemental Shift (ES)** - Element-based spatial puzzles
-- **Chrono-Shift (CS)** - Time manipulation puzzles
-
-### Classic Games with 3D Modes
-
-- Tetris
-- Snake
-- Chess
-- Checkers
-- Bubble Pop
-
-### Simple 2D Games
-
-- Breakout
-- Memory (Card matching)
-
-## Engine Selection Criteria (in order of priority)
-
-1. Maximum performance/visual polish
-2. Minimal dependencies
-3. Developer experience
-4. 2D/3D flexibility
-5. Cross-platform support
-
-## Game Engine Analysis
-
-### 1. In-House Canvas Engine
-
-**Current Usage:** Snake, Breakout, Memory
-
-**Pros:**
-
-- Zero external dependencies
-- Full control over rendering
-- Small bundle size
-- Already integrated
-
-**Cons:**
-
-- Limited advanced features
-- Manual implementation of game systems
-- No 3D support
-
-**Best For:** Simple 2D games where bundle size is critical
-
-### 2. Phaser 3
-
-**Type:** 2D Game Framework
-
-**Pros:**
-
-- Excellent 2D performance
-- Built-in physics (Arcade, Matter.js)
-- Strong community & plugins
-- Good documentation
-- WebGL/Canvas fallback
-
-**Cons:**
-
-- 2D only
-- Larger bundle size (~1MB)
-- No built-in 3D support
-
-**Best For:** Complex 2D games, especially those needing physics
-
-### 3. Three.js
-
-**Type:** 3D Graphics Library
-
-**Pros:**
+# Game Engine Strategy
+
+**Last Updated**: January 14, 2026
+**Status**: Recommended Architecture Approved
+
+---
+
+## Table of Contents
+
+1. [Executive Summary](#executive-summary)
+2. [Current Architecture](#current-architecture)
+3. [Game Inventory](#game-inventory)
+4. [Engine Evaluation](#engine-evaluation)
+5. [Recommended Strategy](#recommended-strategy)
+6. [Hybrid 2D/3D Architecture](#hybrid-2d3d-architecture)
+7. [Centralization Strategy](#centralization-strategy)
+8. [Implementation Plan](#implementation-plan)
+9. [Game-Specific Recommendations](#game-specific-recommendations)
+
+---
+
+## Executive Summary
+
+### Quick Recommendation
+
+**Keep multiple engines based on game type:**
+
+- **Narrative/Point-and-Click (2D/3D assets)** → Keep in-house React narrative engine
+- **Simple 2D Arcade** → Adopt PixiJS (replaces custom canvas implementations)
+- **Arcade with Optional 3D** → PixiJS (2D) + Three.js (3D mode toggle)
+- **Complex 2D/Physics** → Phaser 3 (platformer, tower defense)
+- **3D Puzzle Games** → Three.js with @react-three/fiber (QA, ES, CS)
+- **Board Games with 3D Mode** → React/DOM (2D) + Three.js layer (3D view)
+
+### Key Principles
+
+1. **No forced unification** — different game types need different tools
+2. **Maximize existing assets** — narrative engine is already excellent
+3. **Minimize maintenance** — use mature libraries for complex features
+4. **Progressive adoption** — pilot before committing
+5. **Separate logic from rendering** — enables hybrid 2D/3D implementations
+
+### Centralization Strategy
+
+**PixiJS FIRST** (recommended) — PixiJS provides centralization inherently. Avoid double work of extracting custom canvas patterns then replacing with PixiJS. Pilot with Bubble Pop, extract shared utilities, then migrate others.
+
+---
+
+## Current Architecture
+
+### 1. Narrative/Point-and-Click Engine
+
+**Location**: `packages/shared/src/pointclick/*`
+
+**Used By**: Toymaker Escape (TME), Rite of Discovery (ROD), Systems Discovery (SD)
+
+**Core Features**:
+
+- State model: `SaveState` with sceneId + context (flags, inventory, variables)
+- Scene model: Narrative/choices with optional React render
+- Runtime: React component controller (`SceneController.tsx`)
+  - Navigation
+  - Persistence (localStorage)
+  - Inventory & flags
+  - Multi-language support
+- Rendering: **DOM/React UI for narrative + optional visual assets (2D or 3D)**
+
+**Visual Asset Flexibility**:
+
+- ✅ Can use 2D images/sprites for scenes (current approach)
+- ✅ Can integrate canvas-based mini-games (e.g., TME cabinet puzzle)
+- ✅ **Can integrate 3D scenes** using Three.js for richer visual environments
+- ✅ Designer-driven: visual complexity depends on available resources
+
+**Strengths**:
+
+- ✅ Fast development for narrative games
+- ✅ Excellent accessibility and UI
+- ✅ Simple persistence and deterministic logic
+- ✅ Already production-ready
+- ✅ **Flexible rendering: supports 2D, 3D, or hybrid visuals**
+
+**Limitations**:
+
+- ❌ No real-time simulation (physics, particles) - but can embed mini-games
+
+**Verdict**: **Keep and maintain** — already optimal for its purpose. Can be enhanced with Three.js for 3D scene backgrounds/environments without changing core narrative mechanics.
+
+---
+
+### 2. Canvas 2D Game Engine (GameEngine)
+
+**Location**: `packages/shared/src/pointclick/core/Engine.ts`
+
+**Actually Used By**: Only Toymaker Escape (E1CabinetCanvas mini-puzzle)
+
+**Core Features**:
+
+- Render target: `CanvasRenderingContext2D`
+- Systems: input (with macro support), assets, animation, scene, plugin, event
+- Main loop: `requestAnimationFrame` with `update(delta)` + `render()`
+- Plugin model: dialogue, inventory, achievements
+
+**Current Reality**:
+
+- ⚠️ **Snake**: Custom **React + Canvas** implementation (own game loop)
+- ⚠️ **Breakout**: Custom **React + Canvas** implementation (own game loop)
+- ⚠️ **Bubble Pop**: Custom **React + Canvas** implementation (own game loop)
+- ⚠️ **Memory**: Pure **React/DOM** (no canvas)
+- ⚠️ **Chess, Checkers**: Pure **React/DOM** (no canvas)
+- ✅ **GameEngine**: Only used for one mini-puzzle in Toymaker Escape
+
+**What Arcade Games Actually Use**:
+
+- `GameContainer` wrapper component from `@games/shared`
+- `soundManager` for audio from `@games/shared`
+- `ParticlePool` utility for effects (Breakout)
+- **Each game has its own canvas rendering loop in React components**
+- **No shared canvas engine infrastructure**
+
+**Problem Statement**:
+
+- Code duplication: each arcade game reimplements canvas setup, game loop, resize handling
+- No standardization: different patterns for similar functionality
+- Maintenance burden: fixes/improvements must be applied to each game individually
+
+**Verdict**: **GameEngine exists but is NOT used by arcade games. Arcade games use standalone React + Canvas patterns. Adopting a shared solution (PixiJS or Phaser) would eliminate duplication and standardize architecture.**
+
+---
+
+## Game Inventory
+
+### Production Games
+
+| Game                  | Type          | Current Implementation     | Status      |
+| --------------------- | ------------- | -------------------------- | ----------- |
+| **Breakout**          | Arcade 2D     | React + Custom Canvas Loop | ✅ Complete |
+| **Snake**             | Arcade 2D     | React + Custom Canvas Loop | ✅ Complete |
+| **Bubble Pop**        | Arcade 2D     | React + Custom Canvas Loop | ✅ Complete |
+| **Memory**            | Casual Puzzle | React/DOM only             | ✅ Complete |
+| **Chess**             | Board Game    | React/DOM only             | ✅ Complete |
+| **Checkers**          | Board Game    | React/DOM only             | ✅ Complete |
+| **Pattern Matching**  | Puzzle        | React/DOM only             | ✅ Complete |
+| **Toymaker Escape**   | Narrative     | Narrative Engine + React   | ✅ Complete |
+| **Rite of Discovery** | Narrative     | Narrative Engine + React   | ✅ Complete |
+| **Systems Discovery** | Narrative     | Narrative Engine + React   | ✅ Complete |
+
+### Planned Games
+
+| Game                  | Type           | Recommended Engine       | Priority |
+| --------------------- | -------------- | ------------------------ | -------- |
+| **Platformer**        | Physics 2D     | Phaser 3                 | High     |
+| **Tower Defense**     | Strategy 2D    | Phaser 3                 | High     |
+| **Tetris**            | Puzzle Arcade  | React + Canvas or PixiJS | Medium   |
+| **Quantum Architect** | 3D Puzzle      | Three.js                 | Medium   |
+| **Elemental Conflux** | 3D Puzzle      | Three.js                 | Medium   |
+| **Chrono-Shift**      | 3D/Time Puzzle | Three.js                 | Low      |
+| **Space Invasion**    | Arcade Shooter | Phaser 3 or PixiJS       | Low      |
+| **Block Blast**       | Puzzle         | React/DOM                | Low      |
+
+---
+
+## Engine Evaluation
+
+### Option 1: PixiJS (2D Renderer)
+
+**Type**: High-performance 2D rendering library (not full engine)
+
+**Pros**:
+
+- ✅ Excellent WebGL-based 2D performance
+- ✅ Flexible — works with custom architecture
+- ✅ Great for effects, particles, shaders
+- ✅ Good React integration options
+- ✅ Smaller than full engines
+
+**Cons**:
+
+- ❌ Must bring your own: physics, scene management, collision, animation pipelines
+- ❌ Can require rebuilding engine features
+
+**Best For**: Arcade games needing smooth animation and visual polish (Bubble Pop, enhanced Breakout)
+
+**Bundle Size**: ~400KB gzipped
+
+---
+
+### Option 2: Phaser 3 (2D Game Engine)
+
+**Type**: Full-featured 2D game framework
+
+**Pros**:
+
+- ✅ Batteries included: scenes, loaders, animation, camera, input, particles
+- ✅ Excellent documentation and community
+- ✅ Built-in physics (Arcade Physics, Matter.js support)
+- ✅ Fast prototyping for classic 2D genres
+- ✅ WebGL/Canvas fallback
+
+**Cons**:
+
+- ❌ Opinionated patterns and architecture
+- ❌ React/Next.js integration requires care (canvas lifecycle, SSR)
+- ❌ Can feel like "two frameworks"
+
+**Best For**: Platformer, Tower Defense, complex arcade games
+
+**Bundle Size**: ~1MB gzipped
+
+---
+
+### Option 3: Three.js (3D Graphics Library)
+
+**Type**: Industry-standard WebGL 3D rendering library
+
+**Pros**:
+
+- ✅ De facto standard for WebGL
+- ✅ Massive ecosystem and examples
+- ✅ Excellent 3D rendering capabilities
+- ✅ Good React integration via `@react-three/fiber`
+- ✅ Active maintenance
+
+**Cons**:
+
+- ❌ Not a game engine — must build game systems
+- ❌ No built-in physics (requires add-ons)
+- ❌ Steeper learning curve
+- ❌ You provide scene/game loop architecture
+
+**Best For**: All 3D games (Quantum Architect, Elemental Conflux, Chrono-Shift)
+
+**Bundle Size**: ~600KB gzipped
+
+---
+
+### Option 4: Babylon.js (3D Game Engine)
+
+**Type**: Full-featured 3D game engine
+
+**Pros**:
+
+- ✅ More complete engine than Three.js
+- ✅ Built-in physics plugins
+- ✅ Advanced rendering (PBR, lighting)
+- ✅ Strong tooling (inspector)
+
+**Cons**:
+
+- ❌ Larger bundle (~1.5MB gzipped)
+- ❌ Steeper learning curve
+- ❌ More complex API
+
+**Best For**: High-end 3D games requiring full engine features
+
+**Bundle Size**: ~1.5MB gzipped
+
+---
+
+### Other Options (Not Recommended)
+
+- **MelonJS**: Smaller ecosystem than Phaser, no compelling advantage
+- **Kaboom.js**: Too simplistic, games may outgrow it
+- **PlayCanvas**: Editor-centric workflow conflicts with monorepo structure
+
+---
+
+## Recommended Strategy
+
+### Architecture by Game Category
+
+#### Category 1: Board/UI Games
+
+**Games**: Chess, Checkers, Memory
+**Engine**: React/DOM
+**Rationale**: Accessibility, responsive layout, simple animations — canvas is overkill
+
+#### Category 2: Simple Arcade/Grid Games
+
+**Games**: Snake, Tetris, Breakout, Bubble Pop
+**Current**: Each game has custom React + Canvas implementation
+**Options**:
+
+- Keep current custom implementations (working but duplicative)
+- Standardize with **PixiJS** for better rendering and shared patterns
+
+**Rationale**: Current approach works but creates code duplication. PixiJS would add polish, standardization, and reduce maintenance burden
+
+#### Category 3: Narrative/Adventure Games
+
+**Games**: Toymaker Escape, Rite of Discovery, Systems Discovery
+**Engine**: Keep existing narrative engine
+**Enhancement**: Add optional embedded mini-games using Canvas or PixiJS
+
+**Rationale**: Narrative engine already excellent — don't fix what isn't broken
+
+#### Category 4: Complex 2D Real-Time Games
+
+**Games**: Platformer, Tower Defense
+**Engine**: **Phaser 3**
+**Rationale**:
+
+- Physics, collisions, camera controls built-in
+- Pathfinding, waves, entity management
+- Faster development than building from scratch
+
+#### Category 5: 3D Games
+
+**Games**: Quantum Architect, Elemental Conflux, Chrono-Shift
+**Engine**: **Three.js** (with `@react-three/fiber`)
+**Rationale**:
 
 - Industry standard for WebGL
-- Excellent 3D rendering
-- Large ecosystem
-- Active maintenance
-- Good documentation
+- Best React integration
+- Flexible for custom mechanics
+- Defer until concrete 3D requirement exists
 
-**Cons:**
+---
 
-- Steeper learning curve
-- No built-in physics
-- Larger bundle size (~600KB)
+### Summary Decision Matrix
 
-**Best For:** 3D games and visualizations
+| Game Type     | Recommended Engine       | Current Reality     | Alternative             |
+| ------------- | ------------------------ | ------------------- | ----------------------- |
+| Board/UI      | React/DOM                | ✅ React/DOM        | -                       |
+| Narrative     | Narrative Engine         | ✅ Narrative Engine | -                       |
+| Simple Arcade | React + Canvas or PixiJS | ⚠️ Custom per-game  | Standardize with PixiJS |
+| Complex 2D    | Phaser 3                 | ❌ Not implemented  | PixiJS + custom         |
+| 3D            | Three.js                 | ❌ Not implemented  | Babylon.js              |
 
-### 4. Babylon.js
+---
 
-**Type:** 3D Game Engine
+## Hybrid 2D/3D Architecture
 
-**Pros:**
+### Games with Optional 3D Modes
 
-- Full 3D game engine
-- Built-in physics
-- Advanced rendering (PBR, etc.)
-- Good tooling
+Several arcade and board games will support **optional 3D modes** alongside their primary 2D implementations:
 
-**Cons:**
+| Game           | Primary Mode       | Optional 3D Mode    | Strategy                               |
+| -------------- | ------------------ | ------------------- | -------------------------------------- |
+| **Tetris**     | 2D (PixiJS/Canvas) | 3D visualization    | Game logic shared, renderer toggleable |
+| **Snake**      | 2D (PixiJS/Canvas) | 3D world with depth | Game logic shared, renderer toggleable |
+| **Chess**      | 2D (React/DOM)     | 3D board and pieces | Game logic shared, 3D view layer       |
+| **Checkers**   | 2D (React/DOM)     | 3D board and pieces | Game logic shared, 3D view layer       |
+| **Bubble Pop** | 2D (PixiJS/Canvas) | 3D particle effects | Game logic shared, enhanced visuals    |
 
-- Larger bundle size (~1.5MB)
-- Steeper learning curve
-- More complex API
+### Architecture Pattern for Hybrid Games
 
-**Best For:** High-end 3D games
-
-### 5. PlayCanvas
-
-**Type:** WebGL Game Engine
-
-**Pros:**
-
-- Web-first design
-- Visual editor
-- Good performance
-- Built-in physics
-
-**Cons:**
-
-- Cloud-based workflow
-- Less flexible for custom code
-- Subscription for teams
-
-**Best For:** Teams wanting visual development
-
-## Recommended Architecture
-
-### 1. In-House Canvas Engine for Simple 2D Games
-
-**For:** Snake, Breakout, Memory, Chess, Checkers, Bubble Pop (2D modes)
-
-**Rationale:**
-
-- Proven working implementation
-- Minimal bundle size impact
-- Full control over rendering
-
-**Enhancements:**
-
-- Add WebGL 2.0 backend
-- Implement particle system
-- Add sprite batching
-- Add 3D mode using Three.js (for games supporting 3D)
-
-### 2. Three.js for 3D Games
-
-**For:** Quantum Architect, Elemental Shift, Chrono-Shift, 3D modes of classic games
-
-**Why Three.js:**
-
-- Industry standard for WebGL
-- Excellent 3D performance
-- Large ecosystem of plugins
-- Active community
-- Can handle both simple and complex 3D
-
-**Implementation:**
+**Core Principle**: **Separate game logic from rendering**
 
 ```typescript
-import * as THREE from 'three';
+// Example structure for hybrid 2D/3D game
+interface GameState {
+  // Pure game state (no rendering logic)
+  board: Board;
+  score: number;
+  level: number;
+}
 
-class Game {
-    private scene: THREE.Scene;
-    private camera: THREE.PerspectiveCamera;
-    private renderer: THREE.WebGLRenderer;
+interface Renderer {
+  // Renderer-agnostic interface
+  render(state: GameState): void;
+  cleanup(): void;
+}
 
-    constructor() {
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.renderer = new THREE.WebGLRenderer();
+class PixiRenderer implements Renderer {
+  // 2D rendering with PixiJS
+}
 
-        // Setup scene, camera, lights, etc.
-        this.setup();
-        this.animate();
-    }
+class ThreeRenderer implements Renderer {
+  // 3D rendering with Three.js
+}
 
-    private setup() {
-        // Game initialization
-    }
+class HybridGame {
+  private state: GameState;
+  private renderer: Renderer;
 
-    private animate() {
-        requestAnimationFrame(() => this.animate());
-        // Game loop
-        this.renderer.render(this.scene, this.camera);
-    }
+  toggleRenderer(mode: '2d' | '3d') {
+    this.renderer.cleanup();
+    this.renderer = mode === '2d'
+      ? new PixiRenderer()
+      : new ThreeRenderer();
+  }
 }
 ```
 
-**Why Phaser 3:**
+### Implementation Strategy
 
-- Mature, battle-tested 2D engine
-- Excellent performance with WebGL/Canvas fallback
-- Built-in physics (Arcade, Matter.js)
-- Good documentation and community
+#### Option A: Shared Game Logic Layer
 
-**Implementation:**
+- ✅ **Recommended for arcade games** (Tetris, Snake, Bubble Pop)
+- Game state and rules in pure TypeScript
+- 2D renderer: PixiJS
+- 3D renderer: Three.js
+- Toggle between renderers without affecting gameplay
+
+#### Option B: View Layer Addition
+
+- ✅ **Recommended for board games** (Chess, Checkers)
+- Keep existing 2D React/DOM implementation
+- Add Three.js 3D view as alternative
+- Share move validation and game state
+- Simpler than full rewrite
+
+### Three.js Integration Points
+
+**For Narrative Games (TME, ROD, SD)**:
+
+- Use Three.js for **background scenes** and **environment atmosphere**
+- Narrative engine remains DOM-based
+- 3D scenes are visual enhancement, not interactive gameplay
+- Example: 3D-rendered room as background for point-and-click
+
+**For Arcade Games with 3D Mode**:
+
+- Use Three.js for **alternative visualization**
+- Core game loop stays the same
+- 3D mode is optional player preference
+- Example: Tetris pieces falling in 3D space
+
+**For 3D Puzzle Games (QA, ES, CS)**:
+
+- Use Three.js as **primary engine**
+- Full 3D interaction required for gameplay
+- Example: Quantum Architect manipulating 3D quantum structures
+
+---
+
+## Centralization Strategy
+
+### The Central Question
+
+**Should we centralize arcade game canvas/loop management BEFORE adopting PixiJS?**
+
+### Analysis
+
+#### Current State
+
+- ✅ **Breakout**: ~500 lines of custom canvas + game loop
+- ✅ **Snake**: ~400 lines of custom canvas + game loop
+- ✅ **Bubble Pop**: ~350 lines of custom canvas + game loop
+- **Duplication**: Canvas setup, resize handlers, game loop, DPR scaling
+
+#### Option 1: Centralize First, Then PixiJS
+
+**Approach**: Extract common canvas patterns into shared utilities
+
+**Pros**:
+
+- ✅ Immediate value: reduce duplication in existing games
+- ✅ Clearer understanding of what needs to be standardized
+- ✅ Easier to identify shared patterns
+- ✅ Lower risk: no engine change, just refactoring
+
+**Cons**:
+
+- ❌ Double work: centralize custom code, then replace with PixiJS
+- ❌ Delays PixiJS benefits (WebGL, performance, effects)
+- ❌ May design abstraction that doesn't fit PixiJS well
+
+**Timeline**: 2-3 weeks refactoring + 2-3 weeks PixiJS migration = **4-6 weeks total**
+
+---
+
+#### Option 2: PixiJS First, Centralization Comes Free
+
+**Approach**: Migrate one game to PixiJS as pilot, then apply pattern to others
+
+**Pros**:
+
+- ✅ PixiJS provides the centralization (Application, Container, Renderer)
+- ✅ Single step: custom code → PixiJS unified approach
+- ✅ Immediate performance benefits from WebGL
+- ✅ Standard patterns from established library
+- ✅ Centralization is inherent in PixiJS architecture
+
+**Cons**:
+
+- ❌ Higher initial learning curve
+- ❌ Risk if PixiJS doesn't fit well
+- ❌ Must learn PixiJS concepts before refactoring all games
+
+**Timeline**: 2-3 weeks PixiJS pilot + 2-3 weeks migrate others = **4-6 weeks total**
+
+---
+
+### Recommendation: **PixiJS First** (Option 2)
+
+**Rationale**:
+
+1. **PixiJS IS the centralization**
+   - `PIXI.Application` handles canvas, renderer, ticker (game loop)
+   - `PIXI.Container` handles scene graph
+   - Resizing, DPR, and lifecycle management built-in
+
+2. **Avoid double work**
+   - Centralizing custom code creates temporary abstractions
+   - PixiJS provides better, tested abstractions
+   - Less throwaway code
+
+3. **Standard patterns**
+   - Well-documented PixiJS patterns
+   - Community best practices
+   - React integration examples exist
+
+4. **Performance gains sooner**
+   - WebGL-accelerated rendering
+   - Better particle effects
+   - Smoother animations
+
+### Hybrid Approach: Pilot + Extract Pattern
+
+**Step 1: PixiJS Pilot (2-3 weeks)**
+
+- Choose one game (recommend **Bubble Pop** - simplest, benefits most from particles)
+- Build PixiJS wrapper with React lifecycle
+- Extract common patterns into shared utilities
+- Document approach
+
+**Step 2: Create Shared PixiJS Utilities (1 week)**
 
 ```typescript
-// Example game bootstrap
-import Phaser from 'phaser';
+// packages/shared/src/pixi/PixiGameHost.tsx
+export class PixiGameHost {
+  private app: PIXI.Application;
 
-class GameScene extends Phaser.Scene {
-    preload() { /* ... */ }
-    create() { /* ... */ }
-    update() { /* ... */ }
+  constructor(canvas: HTMLCanvasElement, options: PixiGameOptions) {
+    // Handles app creation, resize, cleanup
+  }
+
+  destroy() {
+    // Proper cleanup
+  }
 }
-
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    scene: GameScene,
-    physics: {
-        default: 'arcade',
-        arcade: { debug: false }
-    }
-};
-
-new Phaser.Game(config);
 ```
 
-### 3. Phaser 3 for Complex 2D Games
+**Step 3: Migrate Remaining Games (2-3 weeks)**
 
-**For:** Future 2D games requiring advanced features
+- Snake: 2D → PixiJS + add optional 3D mode with Three.js
+- Breakout: 2D → PixiJS (enhanced particles)
+- Tetris (new): PixiJS + optional 3D mode
 
-**Why Phaser 3:**
+### PixiJS Relationship to Custom Canvas
 
-- Mature 2D engine
-- Built-in physics
-- Good performance
-- Strong community
+**PixiJS will REPLACE custom canvas implementations**, not complement them:
 
-**Implementation:**
+| Aspect              | Custom Canvas                       | PixiJS                         |
+| ------------------- | ----------------------------------- | ------------------------------ |
+| **Canvas creation** | Manual                              | `PIXI.Application`             |
+| **Game loop**       | `requestAnimationFrame`             | `PIXI.Ticker`                  |
+| **Drawing**         | `ctx.fillRect()`, `ctx.drawImage()` | `PIXI.Sprite`, `PIXI.Graphics` |
+| **Resize handling** | Manual event listeners              | Built-in resize support        |
+| **DPR scaling**     | Manual calculation                  | Automatic                      |
+| **Particles**       | Custom implementation               | `@pixi/particle-emitter`       |
+| **Performance**     | Canvas 2D                           | WebGL (10-20x faster)          |
 
-```typescript
-import Phaser from 'phaser';
+**Migration Path Per Game**:
 
-class GameScene extends Phaser.Scene {
-    preload() { /* Load assets */ }
-    create() { /* Setup game */ }
-    update() { /* Game loop */ }
-}
+1. Keep game logic (state, rules, collision detection)
+2. Replace canvas rendering code with PixiJS equivalents
+3. Use `PIXI.Application` instead of custom game loop
+4. Use `PIXI.Sprite` / `PIXI.Graphics` instead of `ctx` drawing
+5. Leverage PixiJS plugins for effects
 
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    scene: GameScene,
-    physics: {
-        default: 'arcade',
-        arcade: { debug: false }
-    }
-};
+### Decision Point
 
-new Phaser.Game(config);
-```
+**Before starting PixiJS adoption, decide**:
 
-## Game-Specific Recommendations
+- [ ] Migrate existing games to PixiJS? (Recommended: Yes, but one at a time)
+- [ ] Keep existing games as-is, use PixiJS for new games only? (Safe but misses cleanup opportunity)
+- [ ] Hybrid: Pilot one existing game, then decide? (Most pragmatic ✅)
 
-### Snake
+**Recommended**: **Hybrid approach with Bubble Pop as pilot**
 
-- **Current:** In-house canvas
-- **Recommendation:** Keep as is
-- **Optimizations:**
-  - Add WebGL renderer
-  - Implement sprite batching
-
-### Breakout
-
-- **Current:** In-house canvas
-- **Recommendation:** Keep as is
-- **Optimizations:**
-  - Add particle effects
-  - Implement WebGL shaders for ball trails
-
-### Memory
-
-- **Current:** DOM-based
-- **Recommendation:** Keep as is
-- **Optimizations:**
-  - Add WebGL-based card flip animations
-  - Implement particle effects for matches
-
-### Toymaker's Escape & Rite of Discovery
-
-- **Current:** Custom narrative engine
-- **Recommendation:** Keep custom engine
-- **Enhancements:**
-  - Add WebGL renderer for visual effects
-  - Implement shader-based transitions
-  - Add particle system for environmental effects
-
-### Platformer
-
-- **Status:** Planned
-- **Recommendation:** Phaser 3
-- **Why:**
-  - Built-in physics
-  - Camera controls
-  - Tilemap support
-  - Good performance
-
-### Tower Defense
-
-- **Status:** Planned
-- **Recommendation:** Phaser 3
-- **Why:**
-  - Pathfinding
-  - Particle effects
-  - Performance with many units
-
-## Game-Specific Recommendations
-
-### Point & Click Games (TME, ROD, SD)
-
-**Current:** Custom narrative engine
-**Recommendation:** Keep custom engine with Three.js integration
-**Why:**
-
-- Custom engine handles narrative flow well
-- Three.js adds 3D capabilities when needed
-- Maintains full control over UI/UX
-
-### 3D Puzzle Games (QA, ES, CS)
-
-**Recommendation:** Three.js with custom engine
-**Why:**
-
-- Full 3D capabilities
-- Custom puzzle mechanics
-- Good performance for complex scenes
-
-### Classic Games with 3D Modes
-
-**Recommendation:** Hybrid approach
-
-- 2D: In-house engine
-- 3D: Three.js implementation
-  **Why:**
-- Keep 2D mode lightweight
-- 3D mode for enhanced experience
-- Share game logic between modes
+---
 
 ## Implementation Plan
 
-### Phase 1: Core Engine Updates (3-4 weeks)
+### Phase 0: Establish Engine Policy (1 week)
 
-1. **Enhance In-House Engine**
-   - Add WebGL 2.0 backend
-   - Implement particle system
-   - Add sprite batching
-   - Create 3D mode base using Three.js
+#### 1. Tag Games by Category
 
-2. **Three.js Integration**
-   - Set up Three.js in monorepo
-   - Create template for 3D games
-   - Implement common 3D interactions
-   - Set up asset pipeline for 3D models
+Update `packages/shared/src/metadata/games.ts` with engine tags:
 
-### Phase 2: Game-Specific Implementations (4-6 weeks)
+```typescript
+tags: ["Board", "DOM"]           // Chess, Checkers
+tags: ["Narrative", "React"]     // Toymaker, Rite of Discovery
+tags: ["Arcade", "Canvas"]       // Snake, Breakout
+tags: ["Simulation", "Phaser"]   // Platformer, Tower Defense
+tags: ["3D", "Three.js"]         // Quantum Architect
+```
 
-1. **Point & Click Games**
-   - Add Three.js renderer to narrative engine
-   - Implement 3D scene transitions
-   - Add 3D object interactions
+#### 2. Document Target Stack per Category
 
-2. **3D Puzzle Games**
-   - Set up base project structure
-   - Implement core puzzle mechanics
-   - Add physics integration
+| Category    | Stack            | Games                                              |
+| ----------- | ---------------- | -------------------------------------------------- |
+| `dom-ui`    | React/DOM        | Chess, Checkers, Memory                            |
+| `narrative` | Narrative Engine | Toymaker, Rite of Discovery, Systems Discovery     |
+| `arcade-2d` | Canvas / PixiJS  | Snake, Tetris, Breakout, Bubble Pop                |
+| `sim-2d`    | Phaser 3         | Platformer, Tower Defense                          |
+| `3d`        | Three.js         | Quantum Architect, Elemental Conflux, Chrono-Shift |
 
-3. **Classic Games 3D Modes**
-   - Create 3D versions using Three.js
-   - Share game logic between 2D/3D
-   - Implement camera controls
+---
 
-### Phase 3: Tooling & Optimization (2-3 weeks)
+### Phase 1: Create Unified Game Host (2 weeks)
 
-1. **Asset Pipeline**
-   - Set up model optimization
-   - Implement texture atlases
-   - Create build process for assets
+**Goal**: Every engine runs inside the same app shell predictably.
 
-2. **Performance**
-   - Implement LOD systems
-   - Add performance monitoring
-   - Optimize rendering
+#### Create GameHost Component
 
-3. **Documentation**
-   - Create game templates
-   - Document architecture
-   - Write tutorials for common tasks
+```typescript
+// packages/shared/src/game-host/GameHost.tsx
+interface GameHostProps {
+  gameSlug: string;
+  engine: 'dom' | 'canvas' | 'phaser' | 'threejs';
+  onMount?: () => void;
+  onUnmount?: () => void;
+}
+
+export function GameHost({ gameSlug, engine }: GameHostProps) {
+  // Handle lifecycle: mount, unmount, pause on blur
+  // Standardize: sizing, DPR, input focus, audio policy
+  // Bridge: save/load, achievements
+}
+```
+
+**Features**:
+
+- Mount engine on component mount
+- Destroy engine on unmount
+- Pause on tab blur (optional)
+- Handle responsive sizing and DPR
+- Centralize input focus and audio mute
+- Bridge save/load and achievements
+
+---
+
+### Phase 2: PixiJS Pilot (1-2 weeks)
+
+**Target Game**: Bubble Pop or Breakout
+
+**Tasks**:
+
+1. Add PixiJS dependency to game package
+2. Create `PixiGame` class:
+   - Constructor takes DOM element
+   - Creates `PIXI.Application`
+   - Handles resize and cleanup
+3. Keep gameplay logic pure TypeScript
+4. PixiJS only handles rendering
+
+**Success Criteria**:
+
+- ✅ Stable mount/unmount without leaks
+- ✅ Consistent 60 FPS
+- ✅ Works in Next.js (`"use client"`)
+- ✅ Clean hot-reload behavior
+
+---
+
+### Phase 3: Phaser 3 Pilot (2-3 weeks)
+
+**Target Game**: Platformer or Tower Defense
+
+**Tasks**:
+
+1. Add Phaser dependency to game package
+2. Create Phaser bootstrap scene:
+   - Preload assets
+   - Create main scene with physics
+   - Implement game mechanics
+3. Build React wrapper:
+   - Instantiates `Phaser.Game` into div
+   - Ensures cleanup: `game.destroy(true)` on unmount
+4. Integrate with GameHub systems (save/load, achievements)
+
+**Success Criteria**:
+
+- ✅ Smooth input and camera controls
+- ✅ Clean asset workflow
+- ✅ Minimal friction with monorepo build
+- ✅ No memory leaks on route changes
+
+---
+
+### Phase 4: Evaluate and Standardize (1 week)
+
+**After both pilots complete:**
+
+**If PixiJS pilot succeeds:**
+
+- Use PixiJS for all arcade-2d games wanting polish
+- Document PixiJS patterns and best practices
+
+**If Phaser pilot succeeds:**
+
+- Use Phaser 3 for all sim-2d games
+- Create Phaser game template in monorepo
+
+**If both succeed:**
+
+- Maintain both: PixiJS for rendering, Phaser for full games
+- Update documentation with decision matrix
+
+---
+
+### Phase 5: Three.js Foundation (Defer until needed)
+
+**Trigger**: When first 3D game (Quantum Architect) enters active development
+
+**Tasks**:
+
+1. Add Three.js and `@react-three/fiber` to monorepo
+2. Create 3D game template
+3. Implement common 3D interactions (camera, controls, raycasting)
+4. Set up asset pipeline (GLTF models, textures)
+5. Document 3D development workflow
+
+---
+
+## Game-Specific Recommendations
+
+### Breakout
+
+- **Current**: React + Custom Canvas Loop
+- **Recommendation**: Keep as-is or upgrade to PixiJS for better particle effects and rendering
+- **Effort**: Low-Medium (PixiJS pilot candidate)
+
+### Chess & Checkers
+
+- **Current**: DOM/React
+- **Recommendation**: Keep as-is
+- **Potential**: Add optional 3D mode with Three.js (future)
+- **Effort**: None
+
+### Toymaker Escape / Rite of Discovery / Systems Discovery
+
+- **Current**: Narrative Engine
+- **Recommendation**: Keep narrative engine
+- **Enhancements**: Add WebGL shader effects for scene transitions (optional)
+- **Effort**: None required
+
+### Platformer
+
+- **Current**: Not implemented
+- **Recommendation**: **Phaser 3** (strong candidate)
+- **Rationale**: Physics, tilemap support, camera controls
+- **Effort**: Medium (Phaser pilot)
+
+### Tower Defense
+
+- **Current**: Not implemented
+- **Recommendation**: **Phaser 3**
+- **Rationale**: Entity management, pathfinding, performance with many units
+- **Effort**: Medium-High
+
+### Tetris
+
+- **Current**: Not implemented
+- **Recommendation**: Canvas Engine (simple) or PixiJS (polished)
+- **Effort**: Low
+
+### Quantum Architect / Elemental Conflux / Chrono-Shift
+
+- **Current**: Not implemented
+- **Recommendation**: **Three.js with @react-three/fiber**
+- **Rationale**: Full 3D capabilities, React integration
+- **Effort**: High (defer until active development)
+
+---
 
 ## Performance Considerations
 
-### Rendering
+### Rendering Optimization
 
-- Use texture atlases
-- Implement object pooling
-- Use WebGL where possible
-- Implement level-of-detail (LOD) for complex scenes
+- Use texture atlases to reduce draw calls
+- Implement sprite batching for multiple objects
+- Use WebGL where possible (PixiJS, Phaser, Three.js)
+- Implement level-of-detail (LOD) for complex 3D scenes
 
-### Memory
+### Memory Management
 
-- Implement proper cleanup
-- Use object pooling
-- Monitor memory usage
+- Proper cleanup on unmount (critical for SPA routing)
+- Use object pooling for frequently created/destroyed objects
+- Monitor memory usage in dev tools
+- Test hot-reload behavior
 
-### Loading
+### Asset Loading
 
-- Implement asset preloading
-- Add loading states
-- Optimize asset sizes
+- Implement asset preloading with progress indicators
+- Optimize asset sizes (compress textures, audio)
+- Use CDN for large assets
+- Lazy-load game code with dynamic imports
 
-## Dependencies
+---
 
-### Core
+## Dependencies Summary
 
-- **In-house Canvas Engine**: 0 dependencies
-- **Phaser 3**: ~1MB gzipped
-- **Three.js**: ~600KB gzipped
+### Core Dependencies
 
-### Optional
+| Engine          | Size (gzipped) | Use Case                |
+| --------------- | -------------- | ----------------------- |
+| In-house Canvas | 0 KB           | Simple 2D games         |
+| PixiJS          | ~400 KB        | Polished 2D rendering   |
+| Phaser 3        | ~1 MB          | Full-featured 2D games  |
+| Three.js        | ~600 KB        | 3D games                |
+| Babylon.js      | ~1.5 MB        | Advanced 3D (if needed) |
 
-- **Howler.js**: For audio (if needed)
-- **Matter.js**: Advanced physics (if needed)
+### Optional Add-ons
 
-## Future Considerations
+- **Howler.js**: Enhanced audio management (if needed beyond native Web Audio)
+- **Matter.js**: Advanced physics for PixiJS games (if not using Phaser)
+- **@react-three/fiber**: React bindings for Three.js
+- **@react-three/drei**: Helper components for Three.js
 
-### WebAssembly
-
-- For computationally intensive games
-- Can be integrated with any of the above
-
-### WebGPU
-
-- Next-gen graphics
-- Consider for future 3D games
+---
 
 ## Conclusion
 
-1. **Keep and enhance** the in-house engine for simple 2D games
-2. **Adopt Phaser 3** for complex 2D games
-3. **Use Three.js** for any future 3D needs
-4. **Optimize** for performance first, then bundle size
+### Final Architecture
 
-This approach gives you the best balance of performance, maintainability, and developer experience while keeping dependencies to a minimum.
+1. **Keep and maintain** the narrative engine at `packages/shared/src/pointclick/*` (optimal for its purpose)
+2. **Acknowledge reality**: GameEngine at `packages/shared/src/pointclick/core/Engine.ts` is NOT used by arcade games
+3. **Arcade games currently**: Each uses custom React + Canvas implementation (working but duplicative)
+4. **Recommend**: Adopt PixiJS to standardize arcade game rendering and reduce code duplication
+5. **Adopt Phaser 3** for complex 2D games requiring physics (platformer, tower defense)
+6. **Adopt Three.js** for 3D games when needed (defer until active development)
+
+### Key Benefits
+
+- ✅ **Right tool for each job** — no forced unification
+- ✅ **Preserve existing work** — narrative and canvas engines stay
+- ✅ **Reduce maintenance** — leverage mature libraries for complex features
+- ✅ **Progressive adoption** — pilot before committing
+- ✅ **Performance optimized** — WebGL where it matters, DOM where it's simpler
+
+### Next Steps
+
+1. Tag games in manifest with engine categories ✅
+2. Create GameHost component for unified lifecycle management
+3. Run PixiJS pilot on Bubble Pop
+4. Run Phaser pilot on Platformer
+5. Document patterns and update developer guide
