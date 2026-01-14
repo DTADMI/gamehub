@@ -1,9 +1,161 @@
-# GameHub Action Plan - Current Sprint
+# GameHub Architecture Migration Plan
 
-**Last Updated**: January 6, 2026
-**Sprint Focus**: Monorepo Restructuring & Project Integration
+**Last Updated**: January 14, 2026  
+**Current Phase**: Planning & Foundation  
+**Next Milestone**: Convex Setup & Core Services
 
-Legend: ✅ Completed • 🟡 In Progress • 🔜 Next • 🗂️ Backlog
+**Legend**:  
+✅ Completed • 🟢 On Track • 🟡 In Progress • 🔄 In Review • ⚠️ Blocked • 🔜 Up Next • 🗂️ Backlog
+
+## 🎯 Migration Goals
+
+1. **Unified Backend**: Consolidate on Convex for most projects
+2. **Optimized Performance**: Reduce bundle sizes and improve load times
+3. **Simplified Architecture**: Reduce complexity and maintenance overhead
+4. **Cost Efficiency**: Optimize hosting and infrastructure costs
+5. **Unified Admin**: Centralized control panel for all projects
+
+## 📊 Current Status
+
+### Phase 1: Foundation (0%)
+
+- [ ] **Convex Project Setup**
+  - [ ] Initialize Convex project
+  - [ ] Configure TypeScript paths
+  - [ ] Set up development environment
+  - [ ] Configure build and deployment pipelines
+
+- [ ] **Core Authentication**
+  - [ ] Implement NextAuth with Convex adapter
+  - [ ] Set up OAuth providers (Google, GitHub, etc.)
+  - [ ] Configure session management
+  - [ ] Implement role-based access control
+
+- [ ] **Database Schemas**
+  - [ ] Design core schemas (users, profiles, projects, games)
+  - [ ] Set up database indexes
+  - [ ] Create migration scripts
+  - [ ] Implement data validation
+
+- [ ] **CI/CD Pipeline**
+  - [ ] Set up GitHub Actions for CI
+  - [ ] Configure automated testing
+  - [ ] Set up staging and production environments
+  - [ ] Implement deployment workflows
+
+### Phase 2: Core Services (0%)
+
+- [ ] **Shared Utilities Migration**
+  - [ ] Move common utilities to `packages/shared`
+  - [ ] Update import paths
+  - [ ] Document usage patterns
+  - [ ] Create migration guide
+
+- [ ] **File Storage Setup**
+  - [ ] Configure Convex file storage
+  - [ ] Implement file upload/download APIs
+  - [ ] Set up image optimization
+  - [ ] Configure access controls
+
+- [ ] **Real-time Features**
+  - [ ] Implement presence system
+  - [ ] Set up real-time subscriptions
+  - [ ] Configure WebSocket connections
+  - [ ] Implement optimistic UI updates
+
+- [ ] **Monitoring & Analytics**
+  - [ ] Set up error tracking
+  - [ ] Configure performance monitoring
+  - [ ] Implement usage analytics
+  - [ ] Set up alerts and notifications
+
+### Phase 3: Project Migration (0%)
+
+- [ ] **Story Forge (Newest Project)**
+  - [ ] Migrate data model to Convex
+  - [ ] Implement real-time collaboration
+  - [ ] Update UI components
+  - [ ] Test and optimize performance
+
+- [ ] **Velvet Galaxy**
+  - [ ] Migrate social features
+  - [ ] Implement real-time updates
+  - [ ] Update authentication flow
+  - [ ] Test social interactions
+
+- [ ] **Libra Keeper**
+  - [ ] Migrate financial data models
+  - [ ] Implement transaction handling
+  - [ ] Update reporting features
+  - [ ] Test data integrity
+
+- [ ] **Quest Hunt**
+  - [ ] Migrate geospatial features
+  - [ ] Optimize location queries
+  - [ ] Update UI components
+  - [ ] Test performance with large datasets
+
+### Phase 4: Games Migration (0%)
+
+- [ ] **Group 1: Simple Games (Memory, Tetris, etc.)**
+  - [ ] Migrate game state management
+  - [ ] Implement real-time multiplayer (if applicable)
+  - [ ] Optimize asset loading
+  - [ ] Add analytics events
+
+- [ ] **Group 2: Board Games (Chess, Checkers, etc.)**
+  - [ ] Implement game room system
+  - [ ] Add real-time move validation
+  - [ ] Implement game history
+  - [ ] Add spectator mode
+
+- [ ] **Group 3: Arcade Games (Breakout, Snake, etc.)**
+  - [ ] Migrate to PixiJS
+  - [ ] Implement game loop
+  - [ ] Add score tracking
+  - [ ] Optimize for mobile
+
+- [ ] **Group 4: Narrative Games (ROD, SD, TME)**
+  - [ ] Integrate with Convex for save states
+  - [ ] Implement cloud saves
+  - [ ] Add cross-device sync
+  - [ ] Optimize asset loading
+
+- [ ] **Group 5: 3D Games (QA, EC, CS)**
+  - [ ] Set up Three.js with Convex
+  - [ ] Implement 3D asset loading
+  - [ ] Optimize WebGL performance
+  - [ ] Add quality settings
+
+## 📅 Timeline & Milestones
+
+### Q1 2026: Foundation & Core Services
+
+- [ ] Week 1-2: Convex setup & authentication
+- [ ] Week 3-4: Database & file storage
+- [ ] Week 5-6: Real-time features & monitoring
+- [ ] Week 7-8: Shared utilities & testing
+
+### Q2 2026: Project Migration
+
+- [ ] April: Story Forge migration
+- [ ] May: Velvet Galaxy migration
+- [ ] June: Libra Keeper migration
+- [ ] July: Quest Hunt migration
+
+### Q3 2024: Games Migration
+
+- [ ] August: Simple & Board Games
+- [ ] September: Arcade Games
+- [ ] October: Narrative Games
+- [ ] November: 3D Games
+
+### Q4 2024: Optimization & Polish
+
+- [ ] Performance optimization
+- [ ] User testing
+- [ ] Documentation
+- [ ] Final deployment
 
 ---
 
