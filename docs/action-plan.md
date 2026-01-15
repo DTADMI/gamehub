@@ -176,14 +176,23 @@ This document contains:
 
 #### 🔜 Up Next (Priority Order)
 
-1. **⭐ PRIORITY 4: Build Unified Admin Dashboard** (4-6 weeks)
+1. **⭐ PRIORITY 1: Personal Blog Platform** (3-4 weeks)
+   - Build content management system with MDX support
+   - Rich text editor with preview functionality
+   - Tagging, categorization, and search
+   - SEO optimization and RSS feed generation
+   - Content areas: politics, entertainment, music, tech, essays
+   - Authentication for content management
+   - Responsive design for reading experience
+
+2. **⭐ PRIORITY 2: Build Unified Admin Dashboard** (4-6 weeks)
    - Expand NestJS backend with admin modules
    - Create admin frontend in main app
    - Unified management for all projects, games, users
    - Feature flags and access control
    - Connect to Firebase/Supabase data sources
 
-2. **Documentation & Optimization** (1-2 weeks)
+3. **Documentation & Optimization** (1-2 weeks)
    - Document current architecture patterns
    - Create deployment guides per project
    - Audit unused dependencies
@@ -407,7 +416,7 @@ Documentation:            █████████░  90% (all current work 
 
 **Bundle Optimization Potential**: 40-60% reduction after @games/shared split
 
-### Projects (2 Production, 2 Planned)
+### Projects (2 Production, 3 In Development)
 
 **Production**:
 
@@ -428,6 +437,27 @@ Documentation:            █████████░  90% (all current work 
   - **Keep Supabase - critical for geospatial** ✅
 
 **In Development**:
+
+- 🟡 **Personal Blog** - Content management & reviews platform
+  - Stack: Next.js 16 + Prisma + MDX + NextAuth
+  - Status: Planning/early development ⭐ **PRIORITY Q1 2026**
+  - Features:
+    - Political analysis and commentary
+    - Entertainment reviews (movies, anime, TV)
+    - Music reviews and concert experiences
+    - Tech commentary and software reviews
+    - Personal essays and creative writing
+  - Technical:
+    - Rich text editor with MDX support
+    - Tagging and categorization system
+    - Full-text search
+    - SEO optimization
+    - RSS feed generation
+    - Social media integration
+    - Comments system (future)
+  - Database: Prisma + PostgreSQL (main schema)
+  - Auth: NextAuth for content management
+  - Cost: $0/month (shared infrastructure)
 
 - 🔜 **StoryForge** - Writing platform
   - Stack: Next.js (planned: NextAuth + Prisma)
@@ -655,7 +685,167 @@ Documentation:            █████████░  90% (all current work 
 - [ ] Performance benchmarks (bundle sizes)
 - [ ] Document final architecture
 
-### Week 7-10 (Feb 12 - Mar 11) - Unified Admin Dashboard
+### Week 7-10 (Feb 12 - Mar 11) - Personal Blog Development
+
+**Goal**: Build content management system for personal reviews and commentary
+
+**Phase 1: Foundation (Week 7)**
+
+**1. Project Structure**
+
+- [ ] Create `packages/projects/personal-blog` directory
+- [ ] Set up Next.js 16 app structure
+- [ ] Configure Prisma schema for blog
+  - [ ] Post model (title, slug, content, excerpt, published_at)
+  - [ ] Category model (name, slug, description)
+  - [ ] Tag model (name, slug)
+  - [ ] PostCategory and PostTag junction tables
+- [ ] Set up MDX processing pipeline
+- [ ] Configure NextAuth for admin access
+
+**2. Database Schema**
+
+```prisma
+model BlogPost {
+  id           String      @id @default(cuid())
+  title        String
+  slug         String      @unique
+  excerpt      String?
+  content      String      @db.Text
+  mdxContent   String?     @db.Text
+  coverImage   String?
+  published    Boolean     @default(false)
+  publishedAt  DateTime?
+  viewCount    Int         @default(0)
+  authorId     String
+  author       User        @relation(fields: [authorId], references: [id])
+  categories   PostCategory[]
+  tags         PostTag[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Category {
+  id          String        @id @default(cuid())
+  name        String        @unique
+  slug        String        @unique
+  description String?
+  posts       PostCategory[]
+  createdAt   DateTime      @default(now())
+}
+
+model Tag {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  posts     PostTag[]
+  createdAt DateTime   @default(now())
+}
+
+model PostCategory {
+  postId     String
+  categoryId String
+  post       BlogPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+}
+
+model PostTag {
+  postId  String
+  tagId   String
+  post    BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag     Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}
+```
+
+**Phase 2: Core Features (Week 8)**
+
+**3. Content Management**
+
+- [ ] Build post editor component
+  - [ ] Rich text editor with MDX preview
+  - [ ] Image upload support
+  - [ ] Auto-save functionality
+  - [ ] Slug generation from title
+- [ ] Create admin dashboard routes
+  - [ ] `/blog/admin` - Post list
+  - [ ] `/blog/admin/new` - Create post
+  - [ ] `/blog/admin/edit/[slug]` - Edit post
+- [ ] Implement CRUD operations
+  - [ ] Create post API route
+  - [ ] Update post API route
+  - [ ] Delete post API route
+  - [ ] Publish/unpublish toggle
+
+**4. Category & Tag Management**
+
+- [ ] Category management UI
+- [ ] Tag management UI
+- [ ] Tag autocomplete/creation
+- [ ] Category assignment interface
+
+**Phase 3: Public Features (Week 9)**
+
+**5. Blog Frontend**
+
+- [ ] Blog home page (`/blog`)
+  - [ ] Featured posts
+  - [ ] Recent posts list
+  - [ ] Category navigation
+- [ ] Post detail page (`/blog/[slug]`)
+  - [ ] MDX rendering
+  - [ ] Reading time estimate
+  - [ ] Share buttons
+  - [ ] Related posts
+- [ ] Category page (`/blog/category/[slug]`)
+- [ ] Tag page (`/blog/tag/[slug]`)
+- [ ] Search functionality
+
+**6. Content Categories**
+
+- [ ] Politics category setup
+- [ ] Entertainment category (movies, anime, TV)
+- [ ] Music category
+- [ ] Tech category
+- [ ] Essays category
+
+**Phase 4: Enhancement & Polish (Week 10)**
+
+**7. SEO & Discovery**
+
+- [ ] Generate sitemap.xml
+- [ ] RSS feed generation
+- [ ] Open Graph meta tags
+- [ ] Twitter Card support
+- [ ] Structured data (JSON-LD)
+
+**8. Analytics & Engagement**
+
+- [ ] View counter
+- [ ] Reading progress indicator
+- [ ] Social sharing tracking
+- [ ] Basic analytics dashboard
+
+**9. Testing & Deployment**
+
+- [ ] Unit tests for API routes
+- [ ] E2E tests for editor
+- [ ] Responsive design testing
+- [ ] Deploy to production
+- [ ] Write first blog posts
+
+**Success Metrics**:
+
+- ✅ Content editor functional
+- ✅ Posts published and viewable
+- ✅ SEO optimized
+- ✅ Responsive design
+- ✅ Initial content published (3-5 posts)
+
+### Week 11-14 (Mar 12 - Apr 8) - Unified Admin Dashboard
 
 **Goal**: Build centralized management interface
 
