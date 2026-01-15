@@ -21,6 +21,16 @@
 
 LibraKeeper is a comprehensive digital library management system that helps users catalog, organize, and share their personal collections of books, music, movies, games, and more. It combines powerful collection management with social features for a complete library experience.
 
+### Current Status (January 2026)
+
+- **Development Stage**: ✅ Production (deployed and functional)
+- **Technology**: Next.js 16 + Prisma + PostgreSQL + NextAuth
+- **Current Users**: Personal use only
+- **Monthly Costs**: ~$0 (Vercel hobby tier)
+- **Monetization**: None (currently free, self-funded)
+
+> **📌 DOCUMENT PURPOSE**: This analysis explores monetization strategies and market opportunities **IF LibraKeeper were to become a commercial product**. The platform currently serves personal needs, with this document evaluating commercial viability.
+
 ## Key Features
 
 ### Core Functionality
@@ -40,17 +50,31 @@ LibraKeeper is a comprehensive digital library management system that helps user
 
 ## Technology Stack
 
-| Category             | Technology                       | Rationale                            |
-| -------------------- | -------------------------------- | ------------------------------------ |
-| **Frontend**         | Next.js 14, React 19, TypeScript | Modern, performant, and SEO-friendly |
-| **UI Framework**     | shadcn/ui, Tailwind CSS          | Beautiful, accessible components     |
-| **State Management** | React Query, Zustand             | Efficient data fetching and state    |
-| **Backend**          | Next.js API Routes               | Full-stack capabilities              |
-| **Database**         | PostgreSQL (Supabase)            | Reliable and scalable                |
-| **Search**           | Meilisearch                      | Fast, typo-tolerant search           |
-| **Storage**          | Supabase Storage                 | Secure file handling                 |
-| **Analytics**        | Plausible                        | Privacy-focused analytics            |
-| **DevOps**           | GitHub Actions, Docker           | CI/CD and containerization           |
+### Current Implementation (as of January 2026)
+
+| Category             | Technology                       | Rationale                            | Status     |
+| -------------------- | -------------------------------- | ------------------------------------ | ---------- |
+| **Frontend**         | Next.js 16, React 19, TypeScript | Modern, performant, and SEO-friendly | ✅ Current |
+| **UI Framework**     | shadcn/ui, Tailwind CSS          | Beautiful, accessible components     | ✅ Current |
+| **State Management** | React Context + Hooks            | Simple, no additional libraries      | ✅ Current |
+| **Backend**          | Next.js API Routes               | Full-stack capabilities              | ✅ Current |
+| **Database**         | PostgreSQL (self-hosted/Vercel)  | Reliable and scalable                | ✅ Current |
+| **ORM**              | Prisma                           | Type-safe database client            | ✅ Current |
+| **Auth**             | NextAuth.js                      | Flexible OAuth provider support      | ✅ Current |
+| **Search**           | PostgreSQL Full-Text Search      | Built-in, no additional services     | ✅ Current |
+| **Storage**          | Vercel Blob Storage / Local      | Simple file handling                 | ✅ Current |
+| **Analytics**        | None implemented                 | Consider: PostHog or Plausible       | 🔜 Planned |
+| **DevOps**           | GitHub Actions, Docker           | CI/CD and containerization           | ✅ Current |
+
+### Recommended Additions for Monetization
+
+| Technology            | Purpose                          | When to Add                                         | Priority |
+| --------------------- | -------------------------------- | --------------------------------------------------- | -------- |
+| **Meilisearch**       | Advanced search (typo-tolerance) | When > 5K users (PostgreSQL FTS sufficient for MVP) | Medium   |
+| **Stripe**            | Payment processing               | Before launching paid tiers                         | High     |
+| **PostHog/Plausible** | Privacy-focused analytics        | Before launch (understand user behavior)            | High     |
+| **OpenLibrary API**   | Book metadata enrichment         | Day 1 (core feature for UX)                         | High     |
+| **Redis**             | Caching, rate limiting           | When > 10K MAU (performance optimization)           | Low      |
 
 ## BaaS/SaaS Evaluation
 
@@ -349,50 +373,71 @@ supabase/
 
 #### 2. Book Lover
 
-- **Price**: $2.99/month or $29.99/year (17% savings)
+- **Price**: $4.99/month or $49.99/year (17% savings)
 - **Features**:
   - Up to 1,000 items
-  - Advanced search
-  - Cloud backup
-  - Basic stats
-  - Export options
+  - Advanced search with filters
+  - Cloud backup (automatic)
+  - Reading stats and insights
+  - Export options (CSV, JSON, PDF)
+  - ISBN lookup integration
+  - Cover image auto-fetch
 
 #### 3. Power User
 
-- **Price**: $5.99/month or $59.99/year (17% savings)
+- **Price**: $9.99/month or $99.99/year (17% savings)
 - **Features**:
   - All Book Lover features
   - Unlimited items
-  - Advanced stats
-  - Priority support
-  - Custom fields
+  - Advanced analytics dashboard
+  - Priority support (24h response)
+  - Custom fields and tags
+  - Bulk import/export
+  - Reading goal tracking
+  - Loan management with reminders
 
-#### 4. Library Plan
+#### 4. Library Plan (B2B)
 
-- **Price**: $9.99/month or $99.99/year (17% savings)
+- **Price**: $19.99/month or $199.99/year (17% savings)
 - **Features**:
   - All Power User features
-  - Multi-user access
-  - Team management
-  - API access
+  - Multi-user access (up to 10 users)
+  - Team management and roles
+  - API access (1,000 calls/month)
   - White-label options
+  - Advanced reporting
+  - Patron management
+  - Acquisitions workflow
+
+> **💡 PRICING RATIONALE**: Increased from original $2.99-9.99 to $4.99-19.99 based on competitive analysis. Scrivener ($49 one-time), Delicious Library ($25), Calibre (free but donations), BookBuddy ($4.99 mobile) set market expectations. LibraKeeper's web-first, multi-device approach justifies higher pricing than mobile-only apps.
 
 ### Additional Revenue Streams
 
-1. **Book Scanning Service**
-   - Bulk import: $0.10/item
-   - Professional organization: $50/hour
-   - Cataloging services: $100/month
+1. **API & Developer Services**
+   - **ISBN Lookup API**: $29/month (10K lookups), $99/month (50K lookups)
+   - **Bulk Import Service**: $49/month (unlimited imports with AI-powered metadata enrichment)
+   - **White-label Licensing**: $499-2,999/month (for bookstores, libraries, publishers)
+   - **Rationale**: B2B revenue more stable than B2C, higher ARPU
 
-2. **Merchandise**
-   - Book-related products
-   - Library supplies
-   - Branded items
+2. **Affiliate & Referral Revenue**
+   - **Amazon Associates**: 4-8% commission on book purchases via affiliate links
+   - **Bookshop.org**: 10% commission on sales
+   - **Audible Affiliate**: $5-15 per signup
+   - **ThriftBooks**: 5% commission on used book purchases
+   - **Projected**: $0.50-2/user/year (passive income, scales well)
 
-3. **Partnerships**
-   - Book retailers
-   - Publishers
-   - Literary events
+3. **Professional Services (High-Margin)**
+   - **Book Scanning**: $0.10-0.25/book (manual entry) or $0.05/book (barcode bulk import)
+   - **Collection Organization**: $75-150/hour (professional cataloging service)
+   - **Library Setup**: $500-2,000 flat fee (for schools, small libraries)
+   - **Custom Development**: $10,000-50,000 (enterprise features, integrations)
+   - **Rationale**: High-margin services for affluent collectors, institutions
+
+4. **Marketplace & Partnerships**
+   - **Used Book Marketplace**: 5-10% transaction fee (connect collectors buying/selling)
+   - **Book Club Integration**: $29/month per book club (enhanced features, reading schedules)
+   - **Publisher Partnerships**: Revenue share for discovery/recommendations
+   - **Literary Event Sponsorships**: $500-5,000/event (sponsored book launches, author talks)
 
 ### Pricing Strategy
 

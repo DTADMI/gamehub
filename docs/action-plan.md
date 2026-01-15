@@ -25,6 +25,8 @@ This document contains:
 - **[Architecture Strategy](./ARCHITECTURE_STRATEGY.md)** - Package splitting details
 - **[Game Engine Strategy](./GAME_ENGINE_STRATEGY.md)** - Game implementation patterns
 - **[Evaluation Criteria Update](./EVALUATION_CRITERIA_UPDATE.md)** - Why priorities changed ⭐ **NEW**
+- **[SpacetimeDB Evaluation](./SPACETIMEDB_EVALUATION.md)** - SpacetimeDB analysis ⭐ **NEW JAN 15**
+- **[Commercialization Guides](./projects_analysis/)** - Monetization & marketing strategies ⭐ **UPDATED JAN 15**
 - **[Completed Archive](./action-plan-archive.md)** - Historical completed tasks
 
 **Note**: `action-plan-current.md` has been marked outdated and replaced by detailed tasks in this document.
@@ -476,18 +478,27 @@ Documentation:            █████████░  90% (all current work 
 
 ### ⭐ High Priority (Do These)
 
-1. **Split @games/shared Package** (3-4 weeks)
-   - [ ] Create packages/ui directory
-   - [ ] Extract UI components to @gamehub/ui
-   - [ ] Create packages/game-platform
-   - [ ] Extract game infrastructure to @gamehub/game-platform
-   - [ ] Create packages/pointclick-engine
-   - [ ] Extract narrative engine to @games/pointclick-engine
-   - [ ] Update all game imports
-   - [ ] Test and validate all games
-   - **Impact**: 40-60% bundle reduction
+1. **Complete Commercialization Guides** (2-3 weeks) ⭐ **IN PROGRESS**
+   - [x] GameHub implementation guides (monetization, marketing, cost optimization) ✅
+   - [ ] LibraKeeper guides (B2B monetization, API strategies, affiliate revenue)
+   - [ ] QuestHunt guides (tourism partnerships, educational licensing, sponsored quests)
+   - [ ] StoryForge guides (AI assistant implementation, publishing marketplace)
+   - [ ] VelvetGalaxy guides (adult content compliance, payment processing, moderation)
+   - [ ] Financing strategies (bootstrapping, angel, VC pitch decks)
+   - **Impact**: Clear roadmap for potential commercialization
 
-2. **Build Unified Admin Dashboard** (4-6 weeks)
+2. **Split @games/shared Package** ✅ **COMPLETE**
+   - [x] Create packages/ui directory ✅
+   - [x] Extract UI components to @gamehub/ui ✅
+   - [x] Create packages/game-platform ✅
+   - [x] Extract game infrastructure to @gamehub/game-platform ✅
+   - [x] Create packages/pointclick-engine ✅
+   - [x] Extract narrative engine to @games/pointclick-engine ✅
+   - [x] Update all game imports ✅
+   - [ ] Test and validate bundle sizes (pending)
+   - **Impact**: 40-60% bundle reduction expected
+
+3. **Build Unified Admin Dashboard** (4-6 weeks)
    - [ ] Create admin modules in NestJS
    - [ ] Build admin frontend in main app
    - [ ] Implement user management
@@ -496,7 +507,9 @@ Documentation:            █████████░  90% (all current work 
    - [ ] Add analytics dashboard
    - **Impact**: Unified management of all projects/games
 
-3. **Documentation** (1-2 weeks)
+4. **Documentation** (1-2 weeks)
+   - [x] Document commercialization strategies ✅
+   - [x] SpacetimeDB evaluation ✅
    - [ ] Document deployment per project
    - [ ] Create admin user guide
    - [ ] Document feature flag system
@@ -1016,20 +1029,24 @@ model PostTag {
 
 **Recent (Jan 15, 2026)**:
 
-- ✅ **Phase 1 Complete**: @gamehub/ui package extracted and validated
-  - 59 files extracted (55 UI components + hooks + utils)
-  - Dependencies reduced: 87 → 23 for UI consumers
-  - Type checking passes successfully
-  - Package ready for future game development and project UIs
-- ✅ **Game Usage Analysis Complete**: Discovered no games use shadcn/ui components
-  - Chess, Checkers, Memory: Plain HTML/CSS with Tailwind
-  - All games: Use game infrastructure (GameContainer, soundManager)
-  - Narrative games: Use specialized components (DialogueBox, InventoryBar)
-- ✅ **Action Plan Updated**: Clarified next steps
-  - Skip game migration for UI components (not needed)
-  - Move directly to Phase 2: Extract @gamehub/game-platform
-  - Updated all documentation to reflect findings
-- 🔜 **Next**: Extract @gamehub/game-platform (game infrastructure)
+- ✅ **Commercialization Strategy Complete**: Comprehensive monetization & marketing guides
+  - **GameHub**: Full implementation guides added (Stripe integration, CRO, email campaigns, paid ads)
+  - **Cost Optimization**: Step-by-step guides (50-70% bandwidth savings, 30-50% compute savings)
+  - **Marketing**: Pre-launch → Launch → Growth phases with timelines, budgets, templates
+  - **Code Examples**: TypeScript implementations for subscriptions, analytics, referrals
+  - **Case Studies**: 6-month growth timeline with realistic projections
+  - **Remaining Projects**: LibraKeeper, QuestHunt, StoryForge, VelvetGalaxy need similar guides
+- ✅ **SpacetimeDB Evaluation**: Comprehensive analysis completed
+  - Evaluated for GameHub platform suitability
+  - **Verdict**: ❌ NOT RECOMMENDED (ECS wrong fit for 95% of platform)
+  - Documented risks, alternatives, and when it WOULD make sense (MMO games only)
+  - Added to evaluation framework documentation
+- ✅ **Phase 1-3 Complete**: All package extractions done
+  - @gamehub/ui: 59 files extracted (55 UI components + hooks + utils)
+  - @gamehub/game-platform: Game infrastructure separated
+  - @games/pointclick-engine: Narrative engine extracted
+  - All games migrated successfully (13 games updated)
+- 🔜 **Next**: Complete implementation guides for remaining projects
 
 **Previous (Jan 14, 2026)**:
 

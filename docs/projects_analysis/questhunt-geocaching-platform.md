@@ -21,6 +21,17 @@
 
 QuestHunt transforms traditional geocaching into an engaging, social, and gamified experience. The platform enables users to create and participate in location-based treasure hunts, connect with friends, earn badges, and compete on leaderboards while exploring real-world locations.
 
+### Current Status (January 2026)
+
+- **Development Stage**: ✅ Production (deployed via Supabase)
+- **Technology**: Next.js 16 + Supabase (PostGIS) + MapLibre GL + OpenStreetMap
+- **Current Users**: Personal use and beta testing
+- **Monthly Costs**: ~$0 (Supabase free tier)
+- **Monetization**: None (currently free, self-funded)
+- **Critical Feature**: PostGIS for geospatial queries (nearby quests, distance calculations)
+
+> **📌 DOCUMENT PURPOSE**: This analysis explores commercialization potential for QuestHunt. The platform's geospatial capabilities and social features position it well for monetization through tourism partnerships, educational licensing, and premium subscriptions.
+
 ## Key Features
 
 ### Core Functionality
@@ -41,17 +52,32 @@ QuestHunt transforms traditional geocaching into an engaging, social, and gamifi
 
 ## Technology Stack
 
-| Category             | Technology                       | Rationale                               |
-| -------------------- | -------------------------------- | --------------------------------------- |
-| **Frontend**         | Next.js 16, React 19, TypeScript | Modern, performant, and SEO-friendly    |
-| **Maps**             | MapLibre GL, OpenStreetMap       | Open-source, customizable maps          |
-| **State Management** | TanStack Query, Zustand          | Efficient data fetching and state       |
-| **Backend**          | Supabase (PostgreSQL)            | Integrated auth, database, and realtime |
-| **Authentication**   | Supabase Auth                    | Secure, scalable auth solution          |
-| **Search**           | PostgreSQL Full-Text Search      | Built-in, no additional services needed |
-| **Storage**          | Supabase Storage                 | Secure file storage                     |
-| **Analytics**        | Plausible                        | Privacy-focused analytics               |
-| **DevOps**           | Vercel, Docker                   | Seamless deployment and scaling         |
+### Current Implementation (as of January 2026)
+
+| Category             | Technology                       | Rationale                                                  | Status     |
+| -------------------- | -------------------------------- | ---------------------------------------------------------- | ---------- |
+| **Frontend**         | Next.js 16, React 19, TypeScript | Modern, performant, and SEO-friendly                       | ✅ Current |
+| **Maps**             | MapLibre GL, OpenStreetMap       | Open-source, free tiles with attribution                   | ✅ Current |
+| **Geospatial**       | PostGIS (via Supabase)           | **CRITICAL**: ST_Distance, ST_DWithin for location queries | ✅ Current |
+| **State Management** | React Context + Hooks            | Simple, no additional libraries needed                     | ✅ Current |
+| **Backend**          | Supabase (PostgreSQL + PostGIS)  | Integrated auth, database, and realtime                    | ✅ Current |
+| **Authentication**   | Supabase Auth                    | Secure, scalable auth solution                             | ✅ Current |
+| **Search**           | PostgreSQL Full-Text Search      | Built-in, no additional services needed                    | ✅ Current |
+| **Storage**          | Supabase Storage                 | Quest images, user avatars                                 | ✅ Current |
+| **Analytics**        | None implemented                 | Consider: PostHog or Plausible                             | 🔜 Planned |
+| **DevOps**           | Vercel                           | Seamless deployment and scaling                            | ✅ Current |
+
+### Recommended Additions for Monetization
+
+| Technology              | Purpose                             | When to Add                                            | Priority |
+| ----------------------- | ----------------------------------- | ------------------------------------------------------ | -------- |
+| **Redis**               | Caching nearby quests, leaderboards | When > 10K MAU (reduce PostGIS load)                   | High     |
+| **Cloudflare CDN**      | Map tile caching, static assets     | When > 50K MAU (reduce bandwidth costs)                | High     |
+| **Stripe**              | Payment processing                  | Before launching paid tiers                            | High     |
+| **PostHog**             | Product analytics + feature flags   | Before launch (understand user behavior)               | High     |
+| **Algolia/Meilisearch** | Advanced quest search               | When > 100K quests (PostgreSQL FTS sufficient for MVP) | Medium   |
+
+> **⚠️ CRITICAL**: PostGIS is **non-negotiable** for QuestHunt. Any database migration MUST support geospatial extensions. This ruled out Firebase, SpacetimeDB, and most NoSQL databases.
 
 ## BaaS/SaaS Evaluation
 
@@ -427,11 +453,14 @@ supabase/
 
 - **Price**: $0/month
 - **Features**:
-  - Basic quest access
-  - Limited to 3 quests/month
-  - Community-created content
-  - Basic maps
+  - **Unlimited quest participation** (play as many quests as you want)
+  - Create up to 3 quests/month
+  - Community-created content access
+  - Basic maps (OpenStreetMap)
   - Standard support
+  - Basic leaderboards
+
+> **🔑 CRITICAL STRATEGY CHANGE**: Original doc limited free users to "3 quests/month" which kills virality. **Free users MUST have unlimited quest participation** to build network effects. Monetize through **quest creation limits**, not consumption limits. Rationale: Players drive demand, creators drive supply and are willing to pay.
 
 #### 2. Explorer
 
@@ -466,20 +495,32 @@ supabase/
 
 ### Additional Revenue Streams
 
-1. **Premium Quests**
-   - Professional quests: $0.99-$4.99
-   - Guided tours: $9.99-$29.99
-   - Themed bundles: $19.99-$99.99
+1. **Tourism & Destination Partnerships** (Highest Potential)
+   - **Tourism Board Partnerships**: $1,000-10,000/month per region for featured quest campaigns
+   - **Hotel/Resort Packages**: $500-5,000/month for property-based quest experiences
+   - **City Tours**: $99-299 per custom quest creation for tour operators
+   - **Event Quests**: $499-2,999 for festivals, conferences, weddings (custom branded quests)
+   - **Rationale**: Tourism industry has budget, QuestHunt drives foot traffic to businesses
 
-2. **Merchandise**
-   - Branded merchandise
-   - Quest kits
-   - Educational materials
+2. **Educational Licensing** (High Margin, Stable Revenue)
+   - **School Districts**: $99-499/year per school (curriculum-aligned quests, student progress tracking)
+   - **Museums & Cultural Sites**: $299-1,999/month for interactive exhibits via quests
+   - **Universities**: $999-4,999/year for campus orientation, scavenger hunts
+   - **Homeschool Families**: $9.99/month (educational quest library access)
+   - **Rationale**: Educational market less price-sensitive, values engagement metrics
 
-3. **Advertising**
-   - Sponsored quests
-   - Location-based offers
-   - Partner promotions
+3. **Premium Content & Marketplace**
+   - **Professional Quest Packs**: $2.99-9.99 (curated by local experts, historians, authors)
+   - **Audio-Guided Quests**: $4.99-19.99 (narrated experiences, like audio tours)
+   - **AR/Interactive Quests**: $9.99-29.99 (augmented reality features, premium experiences)
+   - **Creator Marketplace**: 20-30% commission on creator-sold quests (enable creator economy)
+   - **Rationale**: High-quality content commands premium pricing, low marginal cost
+
+4. **Advertising & Sponsorships**
+   - **Sponsored Waypoints**: $50-500/month per business (drive foot traffic to cafes, shops)
+   - **Brand Integration**: $5,000-50,000 for branded quest campaigns (e.g., "Starbucks City Explorer")
+   - **Location-Based Offers**: $0.10-1.00 per quest completion with offer redemption
+   - **Rationale**: Local businesses need foot traffic, QuestHunt provides measurable ROI
 
 ### Pricing Strategy
 

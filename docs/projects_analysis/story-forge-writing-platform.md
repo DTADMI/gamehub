@@ -21,6 +21,16 @@
 
 StoryForge is an innovative creative platform that combines powerful storytelling tools with gamification and social features to help writers and visual storytellers bring their visions to life. Whether crafting novels, screenplays, comics, or graphic novels, StoryForge provides specialized tools for every type of storyteller, all while fostering a supportive community and prioritizing creator wellbeing.
 
+### Current Status (January 2026)
+
+- **Development Stage**: 🟡 Schema defined in Prisma, **NOT YET IMPLEMENTED**
+- **Technology Planned**: Next.js 16 + Prisma + PostgreSQL (shares GameHub database)
+- **Current State**: Database schema exists, no frontend/backend implementation
+- **Dependencies**: Requires NestJS backend setup or Next.js API routes
+- **Estimated Development**: 6-9 months for MVP (full-time development)
+
+> **📌 DOCUMENT PURPOSE**: This is a **forward-looking analysis** for a planned project. StoryForge has not been built yet, but the database schema and technical architecture have been designed. This document explores market opportunity, technical recommendations, and commercialization strategy **when development begins**.
+
 ## Key Features
 
 ### Core Functionality
@@ -69,19 +79,44 @@ StoryForge is an innovative creative platform that combines powerful storytellin
 
 ## Technology Stack
 
-| Category             | Technology                       | Rationale                                         |
-| -------------------- | -------------------------------- | ------------------------------------------------- |
-| **Frontend**         | Next.js 14, React 19, TypeScript | Modern, performant, and SEO-friendly              |
-| **Backend**          | NestJS                           | Scalable, modular architecture                    |
-| **State Management** | React Query, Zustand             | Efficient data fetching and state                 |
-| **Database**         | PostgreSQL                       | Relational data for complex relationships         |
-| **ORM**              | Prisma                           | Type-safe database client                         |
-| **Real-time**        | Socket.IO                        | Live collaboration features                       |
-| **Search**           | Meilisearch                      | Fast, typo-tolerant search with image recognition |
-| **Asset Processing** | Sharp, FFmpeg                    | Image/video optimization and processing           |
-| **Storage**          | AWS S3                           | Secure file storage with versioning               |
-| **Analytics**        | Plausible                        | Privacy-focused analytics                         |
-| **DevOps**           | GitHub Actions, Docker           | CI/CD and containerization                        |
+### Recommended Stack (When Development Begins)
+
+| Category             | Recommendation                            | Rationale                                                  | Priority   |
+| -------------------- | ----------------------------------------- | ---------------------------------------------------------- | ---------- |
+| **Frontend**         | Next.js 16, React 19, TypeScript          | Modern, performant, and SEO-friendly                       | ✅ Core    |
+| **Backend**          | Next.js API Routes (MVP), NestJS (scale)  | Start simple, add NestJS only when complexity grows        | ✅ Core    |
+| **State Management** | React Context + Hooks                     | Keep it simple for MVP, no external libs needed            | ✅ Core    |
+| **Database**         | PostgreSQL                                | Relational data for complex relationships (already chosen) | ✅ Core    |
+| **ORM**              | Prisma                                    | Type-safe database client (schema already defined)         | ✅ Core    |
+| **Editor**           | TipTap (ProseMirror)                      | **CRITICAL**: Best choice for rich text editing            | ✅ Core    |
+| **Real-time**        | Socket.IO or PartyKit                     | Live collaboration (PartyKit simpler than Socket.IO)       | 🟡 Phase 2 |
+| **Search**           | PostgreSQL FTS (MVP), Meilisearch (scale) | Don't over-engineer early                                  | 🟡 Phase 2 |
+| **Asset Processing** | Sharp (images), FFmpeg (video)            | Only for visual storytelling features                      | 🟡 Phase 3 |
+| **Storage**          | Cloudflare R2 or Supabase Storage         | **Don't use AWS S3** (10x more expensive)                  | ✅ Core    |
+| **Analytics**        | PostHog (self-hosted)                     | Product analytics + feature flags                          | 🟡 Phase 1 |
+| **DevOps**           | GitHub Actions, Docker                    | CI/CD and containerization                                 | ✅ Core    |
+
+### Critical Technology Decisions
+
+**✅ CORRECT CHOICES**:
+
+- TipTap for rich text editing (extensible, maintained, React-friendly)
+- Prisma + PostgreSQL (already set up in monorepo)
+- Next.js 16 (leverage existing expertise)
+
+**❌ RECONSIDER**:
+
+- ~~AWS S3~~ → **Cloudflare R2** (1/10th the cost, S3-compatible API)
+- ~~NestJS for MVP~~ → **Next.js API Routes** (add NestJS only when needed)
+- ~~Meilisearch Day 1~~ → **PostgreSQL Full-Text Search** (sufficient for 100K+ documents)
+- ~~Socket.IO~~ → Consider **PartyKit** (simpler WebSocket infrastructure, better DX)
+
+**🔧 OPTIMIZATION RECOMMENDATIONS**:
+
+- Start with minimal real-time (polling every 30s for collaborative docs)
+- Add WebSockets only when users demand real-time cursors/presence
+- Defer visual storytelling features (comics/panels) to Phase 2-3
+- Focus on prose writing first (largest addressable market)
 
 ## BaaS/SaaS Evaluation
 
@@ -437,54 +472,81 @@ api/
 
 #### 2. Writer
 
-- **Price**: $5.99/month or $59.99/year (17% savings)
+- **Price**: $9.99/month or $99.99/year (17% savings)
 - **Features**:
   - All Free Tier features
-  - Unlimited exports
-  - Cloud storage (10GB)
-  - Advanced formatting
-  - Basic analytics
+  - Unlimited exports (all formats)
+  - Cloud storage (20GB)
+  - Advanced formatting tools
+  - Writing statistics
+  - Version history (30 days)
+  - AI Writing Assistant (10K words/month)
 
 #### 3. Author
 
-- **Price**: $9.99/month or $99.99/year (17% savings)
+- **Price**: $19.99/month or $199.99/year (17% savings)
 - **Features**:
   - All Writer features
-  - Cloud storage (50GB)
-  - Advanced collaboration
-  - Version history
-  - Advanced analytics
+  - Cloud storage (100GB)
+  - Real-time collaboration (up to 3 collaborators)
+  - Version history (unlimited)
+  - Advanced analytics dashboard
+  - AI Writing Assistant (50K words/month)
+  - Priority support (24h response)
+  - Publishing integration (KDP, IngramSpark)
 
-#### 4. Publisher
+#### 4. Publisher (B2B)
 
-- **Price**: $19.99/month or $199.99/year (17% savings)
+- **Price**: $49.99/month or $499.99/year (17% savings)
 - **Features**:
   - All Author features
   - White-label solutions
-  - Team management
-  - Priority support
-  - API access
-  - 200GB storage
+  - Team management (up to 20 users)
+  - Advanced permissions & workflows
+  - API access (10K calls/month)
+  - 500GB storage
+  - AI Writing Assistant (unlimited)
+  - Dedicated support + onboarding
+
+> **💡 PRICING RATIONALE**: Increased from $5.99-19.99 to $9.99-49.99 based on competitive analysis:
+>
+> - Scrivener: $49 one-time (but no cloud, no collab)
+> - Ulysses: $49.99/year ($4.99/month) - underpriced, struggling
+> - Dabble: $10/month - closer to market rate
+> - Wattpad Paid Stories: Creators earn $0.01-0.03/minute read
+> - **StoryForge differentiators**: AI assistant, collaboration, publishing integration justify premium pricing
 
 ### Additional Revenue Streams
 
-1. **Marketplace**
-   - Templates: $2.99-$9.99
-   - Plugins: $4.99-$19.99
-   - Assets: $0.99-$4.99
-   - Courses: $9.99-$49.99
+1. **AI Writing Assistant (Add-on)** - **HIGHEST MARGIN**
+   - **Basic AI**: Included in Writer tier (10K words/month)
+   - **Pro AI**: $14.99/month add-on (100K words/month, GPT-4 access)
+   - **Unlimited AI**: $29.99/month add-on (unlimited, GPT-4, custom prompts)
+   - **Enterprise AI**: Custom pricing (fine-tuned models, brand voice training)
+   - **Rationale**: High demand, low marginal cost (GPT-4 API ~$0.03/1K tokens), 80%+ gross margin
+   - **Market Validation**: ChatGPT Plus ($20/month) has 10M+ subscribers, Jasper AI ($39-99/month) has 1M+ users
 
-2. **Services**
-   - Editing: $0.02/word
-   - Cover design: $99-$299
-   - Formatting: $49-$199
-   - Marketing: $199-$999
+2. **Publishing Services Marketplace** - **HIGH MARGIN**
+   - **Editing**: $0.02-0.05/word (StoryForge takes 20% commission)
+   - **Cover Design**: $199-499 (30% commission)
+   - **Formatting**: $99-299 (30% commission)
+   - **Marketing Packages**: $499-2,999 (25% commission)
+   - **Platform Fee Model**: Connect writers with professionals, handle payments, take commission
+   - **Rationale**: $500M+ self-publishing services market, writers already buying these services
 
-3. **Publishing**
-   - Distribution: 10-30% royalty
-   - ISBN assignment: $25
-   - Print-on-demand: 15% markup
-   - Audiobook production: 20% royalty
+3. **Publishing Integration & Distribution** - **RECURRING REVENUE**
+   - **KDP Direct Upload**: Free (customer acquisition), 5% of future royalties optional
+   - **IngramSpark Integration**: $49 setup fee + $10/month distribution management
+   - **Audiobook Production**: 15-20% of ACX royalties for AI-narrated books
+   - **ISBN & Copyright**: $29 per ISBN (resell Bowker ISBNs at markup)
+   - **Rationale**: Writers need distribution, sticky feature (switching costs high)
+
+4. **Marketplace & Templates** - **LOW EFFORT, PASSIVE INCOME**
+   - **Story Templates**: $4.99-14.99 (genre-specific plot structures, character arcs)
+   - **World-Building Packs**: $9.99-29.99 (magic systems, cultures, timelines)
+   - **Writing Courses**: $29-199 (from established authors, StoryForge takes 30%)
+   - **Asset Libraries**: $0.99-9.99 (character art, locations, props for visual storytelling)
+   - **Creator Revenue Share**: 70% to creator, 30% to StoryForge (align with app store standards)
 
 ### Pricing Strategy
 
