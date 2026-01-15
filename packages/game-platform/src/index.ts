@@ -50,18 +50,5 @@ export * from "./lib/sound";
 // lib/utils (cn function) moved to @gamehub/ui
 export * from "./metadata/games";
 export * from "./metadata/projects";
-export { GameEngine } from "./pointclick/core/Engine";
-export * from "./pointclick/core/Persistence";
-export { SceneManager } from "./pointclick/core/SceneManager";
-export * from "./pointclick/core/SceneServices";
-export * from "./pointclick/engine";
-export * from "./pointclick/puzzles/gears";
-export * from "./pointclick/puzzles/keypad";
-export * from "./pointclick/puzzles/pipes";
-export * from "./pointclick/puzzles/sequence";
-export * from "./pointclick/puzzles/wires";
-export { DialogueBox } from "./pointclick/react/DialogueBox";
-export { InventoryBar } from "./pointclick/react/InventoryBar";
-export { SceneController } from "./pointclick/react/SceneController";
-export * from "./pointclick/ui/InputSequenceDetector";
+// Pointclick engine exports moved to @games/pointclick-engine
 export * from "./projects";

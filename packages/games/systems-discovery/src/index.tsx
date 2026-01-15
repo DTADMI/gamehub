@@ -1,14 +1,14 @@
 "use client";
-import { Scene, SceneController } from "@gamehub/game-platform";
 import HomeostasisMeter from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { Scene, SceneController } from "@games/pointclick-engine";
 import {
   createPipesState,
   evaluatePipes,
   type PipesState,
   setTileRotation,
   toggleValve,
-} from "@gamehub/game-platform/pointclick/puzzles/pipes";
+} from "@games/pointclick-engine/puzzles/pipes";
 import React, { useState } from "react";
 
 const BreathPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) => {

@@ -6,6 +6,8 @@
       "@gamehub/ui/*": ["./packages/ui/src/*"],
       "@gamehub/game-platform": ["./packages/game-platform/src"],
       "@gamehub/game-platform/*": ["./packages/game-platform/src/*"],
+      "@games/pointclick-engine": ["./packages/pointclick-engine/src"],
+      "@games/pointclick-engine/*": ["./packages/pointclick-engine/src/*"],
       "@games/_engine": ["./packages/games/_engine"],
       "@games/*": ["./packages/games/*/src"],
       "@projects/*": ["./packages/projects/*"]

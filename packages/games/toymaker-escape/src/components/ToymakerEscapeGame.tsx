@@ -1,13 +1,8 @@
 "use client";
 
-import {
-  DialogueBox,
-  GameContainer,
-  InventoryBar,
-  versionedLoad,
-  versionedSave,
-} from "@gamehub/game-platform";
+import { GameContainer } from "@gamehub/game-platform";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { DialogueBox, InventoryBar, versionedLoad, versionedSave } from "@games/pointclick-engine";
 import {
   detectLang,
   effects,
@@ -15,19 +10,19 @@ import {
   type Lang,
   nextScene,
   type Scene,
-} from "@gamehub/game-platform/pointclick/engine";
+} from "@games/pointclick-engine/engine";
 import {
   createGearsState,
   evaluateGears,
   type GearsState,
   setGearsTeeth as setGearTeeth,
-} from "@gamehub/game-platform/pointclick/puzzles/gears";
+} from "@games/pointclick-engine/puzzles/gears";
 import {
   clearKeypad,
   createKeypadState,
   pressKey,
   submitKeypad,
-} from "@gamehub/game-platform/pointclick/puzzles/keypad";
+} from "@games/pointclick-engine/puzzles/keypad";
 import {
   createPipesState,
   evaluatePipes,
@@ -35,18 +30,18 @@ import {
   setTileRotation,
   type Tile,
   toggleValve,
-} from "@gamehub/game-platform/pointclick/puzzles/pipes";
+} from "@games/pointclick-engine/puzzles/pipes";
 import {
   createSequenceState,
   pressSeq as pressSequenceKey,
   type SequenceState,
-} from "@gamehub/game-platform/pointclick/puzzles/sequence";
+} from "@games/pointclick-engine/puzzles/sequence";
 import {
   createWiresState,
   hasWiresCrossing,
   setWiresConnection,
   type WiresState,
-} from "@gamehub/game-platform/pointclick/puzzles/wires";
+} from "@games/pointclick-engine/puzzles/wires";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { E1CabinetCanvas } from "./E1CabinetCanvas";

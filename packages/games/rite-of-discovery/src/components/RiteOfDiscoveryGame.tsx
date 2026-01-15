@@ -1,12 +1,13 @@
 "use client";
 
-import { DialogueBox, GameContainer, InventoryBar } from "@gamehub/game-platform";
+import { GameContainer } from "@gamehub/game-platform";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { DialogueBox, InventoryBar } from "@games/pointclick-engine";
 import {
   loadWithMigrations,
   SAVE_KEYS,
   versionedSave,
-} from "@gamehub/game-platform/pointclick/core/Persistence";
+} from "@games/pointclick-engine/core/Persistence";
 import {
   detectLang,
   effects,
@@ -14,17 +15,14 @@ import {
   type Lang,
   nextScene,
   type Scene,
-} from "@gamehub/game-platform/pointclick/engine";
+} from "@games/pointclick-engine/engine";
 import {
   clearKeypad,
   createKeypadState,
   pressKey,
   submitKeypad,
-} from "@gamehub/game-platform/pointclick/puzzles/keypad";
-import {
-  createWiresState,
-  setWiresConnection,
-} from "@gamehub/game-platform/pointclick/puzzles/wires";
+} from "@games/pointclick-engine/puzzles/keypad";
+import { createWiresState, setWiresConnection } from "@games/pointclick-engine/puzzles/wires";
 import React, { useEffect, useMemo, useState } from "react";
 
 const SAVE_KEY = SAVE_KEYS.rod;

@@ -161,24 +161,29 @@ This document contains:
    - ✅ Updated tsconfig.json aliases
    - ✅ Verified no remaining @games/shared references
    - **Impact**: Clear package separation, games now use @gamehub/game-platform
-   - **Status**: Phase 2 Complete - Ready for testing and Phase 3
+   - **Status**: Phase 2 Complete
+
+3. **Phase 3: @games/pointclick-engine Extraction** ✅ **COMPLETE**
+   - ✅ Created packages/pointclick-engine package
+   - ✅ Moved entire pointclick directory from game-platform
+   - ✅ Moved narrative game i18n files
+   - ✅ Updated 3 narrative game imports (rite-of-discovery, toymaker-escape, systems-discovery)
+   - ✅ Updated narrative game package.json dependencies
+   - ✅ Removed pointclick code from game-platform
+   - ✅ Updated tsconfig.json aliases
+   - **Impact**: Other games don't bundle narrative engine (~30KB savings per non-narrative game)
+   - **Status**: Phase 3 Complete - All extraction phases done!
 
 #### 🔜 Up Next (Priority Order)
 
-1. **⭐ PRIORITY 3: Extract @games/pointclick-engine** (1 week)
-   - Create packages/pointclick-engine
-   - Move narrative engine code
-   - Update 3 point-and-click games
-   - **Expected Impact**: Other games don't bundle narrative engine
-
-2. **⭐ PRIORITY 4: Build Unified Admin Dashboard** (4-6 weeks)
+1. **⭐ PRIORITY 4: Build Unified Admin Dashboard** (4-6 weeks)
    - Expand NestJS backend with admin modules
    - Create admin frontend in main app
    - Unified management for all projects, games, users
    - Feature flags and access control
    - Connect to Firebase/Supabase data sources
 
-3. **Documentation & Optimization** (1-2 weeks)
+2. **Documentation & Optimization** (1-2 weeks)
    - Document current architecture patterns
    - Create deployment guides per project
    - Audit unused dependencies
@@ -218,6 +223,10 @@ This document contains:
 - ✅ **Updated all game imports** - 15 files across 13 games migrated
 - ✅ **Updated tsconfig** - Aliases point to new package location
 - ✅ **Phase 2 Complete** - Clear package separation achieved
+- ✅ **Extracted @games/pointclick-engine** - Created new package for narrative engine
+- ✅ **Updated narrative games** - 3 games now use @games/pointclick-engine
+- ✅ **Removed pointclick from game-platform** - Clean separation complete
+- ✅ **Phase 3 Complete** - All package extractions done!
 
 ---
 

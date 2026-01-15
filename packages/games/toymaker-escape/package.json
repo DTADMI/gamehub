@@ -13,7 +13,8 @@
     "react-dom": ">=18 <20"
   },
   "dependencies": {
-    "@gamehub/game-platform": "workspace:*"
+    "@gamehub/game-platform": "workspace:*",
+    "@games/pointclick-engine": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "19.2.7",
