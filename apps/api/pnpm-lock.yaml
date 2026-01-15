@@ -5,10 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@types/react': 19.2.8
-  '@types/react-dom': 19.2.3
-  react: 19.2.3
-  react-dom: 19.2.3
+  '@types/react': ^19.2.8
+  '@types/react-dom': ^19.2.3
+  react: ^19.2.3
+  react-dom: ^19.2.3
   typescript: ^5.9.3
   mime: ^3.0.0
   glob-parent: ^6.0.2
@@ -882,9 +882,9 @@ packages:
   '@prisma/studio-core@0.9.0':
     resolution: {integrity: sha512-xA2zoR/ADu/NCSQuriBKTh6Ps4XjU0bErkEcgMfnSGh346K1VI7iWKnoq1l2DoxUqiddPHIEWwtxJ6xCHG6W7g==}
     peerDependencies:
-      '@types/react': 19.2.8
-      react: 19.2.3
-      react-dom: 19.2.3
+      '@types/react': ^19.2.8
+      react: ^19.2.3
+      react-dom: ^19.2.3
 
   '@scarf/scarf@1.4.0':
     resolution: {integrity: sha512-xxeapPiUXdZAE3che6f3xogoJPeZgig6omHEy1rIY5WVsB3H2BHNnZH+gHG6x91SCWyQCzWGsuL2Hh3ClO5/qQ==}
@@ -2704,7 +2704,7 @@ packages:
   react-dom@19.2.3:
     resolution: {integrity: sha512-yELu4WmLPw5Mr/lmeEpox5rw3RETacE++JgHqQzd2dg+YbJuat3jH4ingc+WPZhxaoFzdv9y33G+F7Nl5O0GBg==}
     peerDependencies:
-      react: 19.2.3
+      react: ^19.2.3
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}

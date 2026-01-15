@@ -1,8 +1,7 @@
 "use client";
 
+import { initI18n } from "@games/pointclick-engine";
 import { useEffect } from "react";
-
-import { initI18n } from "../lib/i18n";
 
 export function I18nInitializer() {
   useEffect(() => {

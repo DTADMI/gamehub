@@ -1,7 +1,7 @@
 // frontend/components/games/GameProgress.tsx
 "use client";
 
-import { Progress } from "@games/shared/components/ui/progress";
+import { Progress } from "@gamehub/ui";
 
 import { GameStats } from "../../lib/gameProgress";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@games/shared/components/ui/button";
+import { Button } from "@gamehub/ui";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 

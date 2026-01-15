@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@games/shared";
+import { ThemeProvider } from "@gamehub/ui";
 import { SessionProvider } from "next-auth/react";
 
 import { AuthProvider } from "../contexts/AuthContext";

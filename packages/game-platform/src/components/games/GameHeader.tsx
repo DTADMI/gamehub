@@ -1,12 +1,12 @@
 // frontend/components/games/GameHeader.tsx
 "use client";
 
-import { useSound } from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
+import { Button } from "@gamehub/ui";
 import { Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 
 import { useGame } from "../../contexts/GameContext";
+import { useSound } from "../../contexts/SoundContext";
 import { LanguageToggle } from "../LanguageToggle";
 import { GameProgress } from "./GameProgress";
 

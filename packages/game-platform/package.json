@@ -19,6 +19,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@gamehub/ui": "workspace:*",
+    "@games/pointclick-engine": "workspace:*",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@stomp/stompjs": "^7.2.1",

@@ -43,7 +43,6 @@ export * from "./lib/firebase";
 export * from "./lib/flags";
 export * from "./lib/gameProgress";
 export * from "./lib/graphql/queries";
-export { getLocale, i18n, initI18n, setLocale, t } from "./lib/i18n";
 export * from "./lib/input";
 export * from "./lib/particles";
 export * from "./lib/sound";

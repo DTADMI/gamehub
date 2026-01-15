@@ -1,7 +1,8 @@
 "use client";
 
-import { useSound } from "@games/shared";
 import React, { useEffect, useState } from "react";
+
+import { useSound } from "../contexts/SoundContext";
 
 export default function SoundControls() {
   const { isMuted, toggleMute, setVolume, volume } = useSound();

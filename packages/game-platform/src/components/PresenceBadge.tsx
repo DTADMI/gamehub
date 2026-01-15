@@ -1,7 +1,6 @@
 "use client";
 
-import { cn } from "../lib/utils";
-import { Badge } from "./ui/badge";
+import { Badge, cn } from "@gamehub/ui";
 
 export interface PresenceBadgeProps {
   status?: "online" | "offline" | "away";

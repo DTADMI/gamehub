@@ -17,8 +17,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@games/shared": ["./src/index.ts"],
-      "@games/shared/*": ["./src/*"]
+      "@gamehub/ui": ["../ui/src/index.ts"],
+      "@gamehub/ui/*": ["../ui/src/*"],
+      "@games/pointclick-engine": ["../pointclick-engine/src/index.ts"],
+      "@games/pointclick-engine/*": ["../pointclick-engine/src/*"]
     }
   },
   "include": ["src/**/*"],

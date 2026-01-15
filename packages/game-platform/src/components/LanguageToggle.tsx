@@ -1,9 +1,8 @@
 "use client";
 
+import { getLocale, initI18n, setLocale } from "@games/pointclick-engine";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-
-import { getLocale, initI18n, setLocale } from "../lib/i18n";
 
 /**
  * Small EN/FR language toggle for the header.

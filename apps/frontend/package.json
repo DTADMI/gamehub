@@ -19,12 +19,13 @@
     "clean": "rimraf .next out coverage test-results playwright-report"
   },
   "dependencies": {
+    "@gamehub/game-platform": "workspace:*",
+    "@gamehub/ui": "workspace:*",
     "@games/breakout": "workspace:*",
     "@games/checkers": "workspace:*",
     "@games/chess": "workspace:*",
     "@games/memory": "workspace:*",
     "@games/platformer": "workspace:*",
-    "@games/shared": "workspace:*",
     "@games/snake": "workspace:*",
     "@games/tetris": "workspace:*",
     "@games/tower-defense": "workspace:*",

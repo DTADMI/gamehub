@@ -3,7 +3,10 @@ export { GameEngine } from "./core/Engine";
 export * from "./core/Persistence";
 export { SceneManager } from "./core/SceneManager";
 export * from "./core/SceneServices";
-export * from "./engine";
+
+// Engine types and utilities (selective to avoid conflicts)
+export type { Choice, EngineCtx, Lang, Migrator, SaveState, Scene } from "./engine";
+export { effects, ensureCtx, guards, load, migrate, nextScene, save } from "./engine";
 
 // Convenience re-exports
 export { versionedLoad, versionedSave } from "./core/Persistence";
@@ -25,3 +28,6 @@ export * from "./ui/InputSequenceDetector";
 
 // Types
 export * from "./types";
+
+// Internationalization
+export * from "./lib/i18n";

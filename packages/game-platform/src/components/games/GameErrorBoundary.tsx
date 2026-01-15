@@ -1,8 +1,7 @@
 // frontend/components/games/GameErrorBoundary.tsx
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@games/shared/components/ui/alert";
-import { Button } from "@games/shared/components/ui/button";
+import { Alert, AlertDescription, AlertTitle, Button } from "@gamehub/ui";
 import { AlertCircle } from "lucide-react";
 import React, { Component, ErrorInfo, ReactNode } from "react";
 

@@ -1,7 +1,8 @@
 "use client";
 
-import { SoundProvider } from "@games/shared";
 import React from "react";
+
+import { SoundProvider } from "../contexts/SoundContext";
 
 type Props = {
   children: React.ReactNode;

@@ -1,10 +1,9 @@
 "use client";
 
+import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@gamehub/ui";
 import Link from "next/link";
 
 import type { Game } from "../metadata/games";
-import { Badge } from "./ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 export interface GameCardProps {
   featured?: boolean;

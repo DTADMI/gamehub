@@ -5,10 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@types/react': 19.2.8
-  '@types/react-dom': 19.2.3
-  react: 19.2.3
-  react-dom: 19.2.3
+  '@types/react': ^19.2.8
+  '@types/react-dom': ^19.2.3
+  react: ^19.2.3
+  react-dom: ^19.2.3
   typescript: ^5.9.3
   mime: ^3.0.0
   glob-parent: ^6.0.2
@@ -22,10 +22,10 @@ importers:
   .:
     devDependencies:
       '@types/react':
-        specifier: 19.2.8
+        specifier: ^19.2.8
         version: 19.2.8
       '@types/react-dom':
-        specifier: 19.2.3
+        specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.8)
 
 packages:
@@ -33,7 +33,7 @@ packages:
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
     peerDependencies:
-      '@types/react': 19.2.8
+      '@types/react': ^19.2.8
 
   '@types/react@19.2.8':
     resolution: {integrity: sha512-3MbSL37jEchWZz2p2mjntRZtPt837ij10ApxKfgmXCTuHWagYg7iA5bqPw6C8BMPfwidlvfPI/fxOc42HLhcyg==}
