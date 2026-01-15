@@ -664,6 +664,54 @@ supabase/
 - <7% monthly churn
 - 20%+ conversion to paid
 
+## B2C Monetization: Individual Users First
+
+> **💡 PRIMARY MARKET**: Before B2B partnerships, QuestHunt needs a strong base of individual users. Build to 10K+ MAU before aggressive B2B sales.
+
+### 1. Freemium Model for Individual Adventurers
+
+**Target**: Geocachers, weekend explorers, families, travel enthusiasts
+
+#### Free Tier
+
+- Play unlimited quests
+- Join 3 active quests
+- Basic stats & leaderboard
+- 10 friends max
+
+#### Explorer ($6.99/mo, $59.99/yr)
+
+- **Create 10 quests/month**
+- Private quests
+- Advanced analytics
+- 50 friends, custom themes
+
+#### Legend ($14.99/mo, $129.99/yr)
+
+- Unlimited quest creation
+- **Monetize quests (70% revenue share)**
+- Creator marketplace placement
+- Verified badge, unlimited friends
+
+### 2. Creator Marketplace (20% Commission)
+
+Individual creators sell premium quests ($5-15 each):
+
+- "Hidden Seattle Food Tour" - $12.99
+- "Capitol Hill History Hunt" - $9.99
+- "Family Scavenger Hunt" - $7.99
+
+**Revenue split**: Creator 70%, QuestHunt 20%, Stripe 10%
+
+### 3. User Acquisition
+
+- **SEO**: City landing pages ("geocaching Seattle", "scavenger hunt Portland")
+- **Referral**: Both users get 1 month free
+- **Social**: Share quest completions on Instagram/TikTok
+- **Viral challenges**: Weekly/seasonal events with prizes
+
+---
+
 ## Tourism Partnership Implementation Guide
 
 > **💡 REFERENCE**: See [IMPLEMENTATION_GUIDE_TEMPLATE.md](./IMPLEMENTATION_GUIDE_TEMPLATE.md) for general patterns. This section provides QuestHunt-specific tourism partnership strategies.

@@ -78,22 +78,117 @@ For Voicify, we recommend **Supabase** as the primary BaaS solution because:
 
 ## Monetization Strategy
 
-### Tiered Subscription Model
+> **💡 B2C FIRST**: Individual users (students, accessibility needs, content consumers) are the primary market. B2B comes later.
 
-- **Free Tier**:
-  - 10,000 characters/month
-  - Basic voices
-  - 5 active projects
-- **Pro Tier** ($6.99/month or $59.99/year):
-  - 100,000 characters/month
-  - Premium voices
-  - Unlimited projects
-  - Advanced export options
-- **Enterprise Tier** (Custom pricing):
-  - Custom character limits
-  - Dedicated infrastructure
-  - Priority support
-  - Custom voice training
+### Tiered Subscription Model (Individual Users)
+
+#### Free Tier (User Acquisition)
+
+- 10,000 characters/month (~10 articles or 1 short book chapter)
+- Basic voices (2-3 options)
+- 5 active projects
+- Standard quality (128kbps MP3)
+- Community support
+
+**Target**: Students, casual users testing the platform
+
+#### Pro Tier ($6.99/month or $59.99/year)
+
+- **100,000 characters/month** (~100 articles or 1-2 books)
+- Premium voices (15+ voices, multiple languages)
+- Unlimited projects
+- High quality audio (320kbps MP3, WAV)
+- Background listening
+- Offline downloads
+- Priority voice generation (faster processing)
+
+**Target**: Avid readers, students with heavy workloads, commuters
+
+**Conversion Triggers**:
+
+```typescript
+// Show upgrade at 8,000 chars (80% of free limit)
+{freeUser.charCount > 8000 && (
+  <UpgradePrompt>
+    You've used 8,000 of 10,000 free characters this month.
+    Upgrade to Pro for 100K characters + premium voices!
+  </UpgradePrompt>
+)}
+```
+
+#### Creator Tier ($14.99/month or $129.99/year)
+
+- **500,000 characters/month** (~50 articles or 5-10 books)
+- All Pro features
+- **Voice cloning** (custom voice from 30-second sample)
+- API access (5K requests/month)
+- White-label audio player embed
+- Commercial use license
+- Priority support
+
+**Target**: Podcasters, course creators, accessibility consultants, content creators
+
+#### Enterprise Tier (Custom pricing, $299+/month)
+
+- Custom character limits (1M+ chars/month)
+- Dedicated infrastructure
+- Priority support + account manager
+- Custom voice training (brand voice)
+- SSO, team management
+- SLA guarantees
+
+**Target**: Media companies, publishers, e-learning platforms (LATER stage, not MVP)
+
+### B2C Acquisition Strategy
+
+#### 1. Target Niches with High TTS Demand
+
+**Accessibility Market**:
+
+- Blind/low vision users (JAWS, NVDA users)
+- Dyslexic readers (30M+ in US alone)
+- Learning disabilities (ADHD, reading comprehension issues)
+
+**Marketing**: Partner with accessibility orgs, sponsor assistive tech conferences
+
+**Content Consumers**:
+
+- Busy professionals who "read" during commutes
+- Language learners (listen to articles in target language)
+- Multitaskers (listen while cooking, exercising, working)
+
+**Marketing**: TikTok/Instagram showing "How I 'read' 50 books a year while commuting"
+
+#### 2. Freemium Conversion Tactics
+
+**Onboarding** (Day 0):
+
+```markdown
+1. "Paste any article or upload a PDF to get started"
+2. Generate first audio (instant gratification)
+3. "Create a playlist of your favorite blogs" (show value)
+4. Prompt: "Try a premium voice!" (1-time free trial of premium voice)
+```
+
+**Email Sequence**:
+
+- Day 3: "3 ways to use Voicify" (commute, learning, accessibility)
+- Day 7: "You've generated 5,000 characters! 🎉" (show progress)
+- Day 14: "Upgrade now for 20% off" (limited-time offer)
+
+**Social Proof**:
+
+```tsx
+"Join 47,000+ users who listen to 2M+ articles monthly"
+⭐⭐⭐⭐⭐ "I listen to research papers while running. Game changer!" - @researcher_mike
+```
+
+### Enterprise Tier (B2B - Deprioritize Until 10K+ Users)
+
+- Custom character limits
+- Dedicated infrastructure
+- Priority support
+- Custom voice training
 
 ### Implementation
 

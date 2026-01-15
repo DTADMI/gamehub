@@ -583,6 +583,443 @@ supabase/
 - <5% monthly churn
 - 15%+ conversion to paid
 
+## B2C Monetization Implementation Guide (Individual Users)
+
+> **💡 PRIMARY FOCUS**: Individual book lovers, collectors, and reading enthusiasts represent 90%+ of potential users. This section covers strategies to convert free users into paying subscribers.
+
+### 1. Free-to-Paid Conversion Strategy
+
+**Target Audience**: Book lovers with 50-1,000+ books who want better organization
+
+#### 1.1 Free Tier Value Proposition
+
+**What's Included** (enough to be useful, limited enough to upsell):
+
+- Up to 100 books
+- Basic search (title, author)
+- Manual entry with ISBN lookup
+- 1 collection/shelf
+- Export to CSV once/month
+- Community support
+
+**Strategic Limits**:
+
+- 100-book limit hits 80% of casual readers (forces upgrade for collectors)
+- 1 collection = can't organize by genre, read status, etc. (key pain point)
+- CSV-only export (no PDF library catalogs with cover images)
+
+#### 1.2 Upgrade Triggers (Convert Free → Paid)
+
+**In-App Prompts**:
+
+```typescript
+// lib/upgrade-prompts.ts
+export const UPGRADE_TRIGGERS = {
+  bookLimit: {
+    threshold: 95, // 95 out of 100 books
+    message: "You're almost at your 100-book limit! Upgrade to track unlimited books.",
+    cta: "Upgrade to Book Lover",
+    timing: "immediate", // Show immediately when hit
+  },
+
+  collectionLimit: {
+    threshold: 1, // When trying to create 2nd collection
+    message: "Organize your library better with unlimited collections. Sort by genre, read status, rating, and more!",
+    cta: "Unlock Collections",
+    timing: "on_action",
+  },
+
+  exportRequest: {
+    threshold: null,
+    message: "Want a beautiful PDF catalog with cover images? Upgrade to export print-ready reports.",
+    cta: "See Export Options",
+    timing: "on_action",
+  },
+
+  readingStats: {
+    threshold: null, // After 30 days active
+    message: "See your reading insights: books read per month, favorite genres, reading pace, and more!",
+    cta: "Unlock Reading Stats",
+    timing: "scheduled", // Day 30, 60, 90
+  },
+};
+
+// Trigger upgrade modal
+export function shouldShowUpgradePrompt(
+  user: User,
+  action: keyof typeof UPGRADE_TRIGGERS
+): boolean {
+  const trigger = UPGRADE_TRIGGERS[action];
+
+  // Already paid user
+  if (user.subscription?.status === 'active') return false;
+
+  // Check threshold
+  if (trigger.threshold && user.bookCount >= trigger.threshold) {
+    return true;
+  }
+
+  return trigger.timing === 'on_action';
+}
+```
+
+**Usage in UI**:
+
+```tsx
+// components/AddBookButton.tsx
+'use client';
+
+import { useState } from 'react';
+import { useUser } from '@/lib/hooks/useUser';
+import { shouldShowUpgradePrompt } from '@/lib/upgrade-prompts';
+import { UpgradeModal } from './UpgradeModal';
+
+export function AddBookButton() {
+  const { user } = useUser();
+  const [showUpgrade, setShowUpgrade] = useState(false);
+
+  const handleAddBook = async () => {
+    // Check if upgrade needed
+    if (shouldShowUpgradePrompt(user, 'bookLimit')) {
+      setShowUpgrade(true);
+      return;
+    }
+
+    // Proceed with adding book
+    // ...
+  };
+
+  return (
+    <>
+      <button onClick={handleAddBook}>Add Book</button>
+      {showUpgrade && (
+        <UpgradeModal
+          trigger="bookLimit"
+          onClose={() => setShowUpgrade(false)}
+        />
+      )}
+    </>
+  );
+}
+```
+
+#### 1.3 Social Proof & FOMO Tactics
+
+**In-App Messaging**:
+
+```typescript
+// components/SocialProofBanner.tsx
+export function SocialProofBanner() {
+  return (
+    <div className="banner bg-blue-50 border-l-4 border-blue-500 p-4">
+      <p className="text-sm">
+        🎉 <strong>2,847 book lovers</strong> upgraded this month to organize their collections!
+      </p>
+      <p className="text-xs text-gray-600 mt-1">
+        Join readers with an average of 437 books beautifully cataloged.
+      </p>
+    </div>
+  );
+}
+```
+
+**Limited-Time Offers**:
+
+```tsx
+// Show during first 48 hours after signup
+{isWithin48Hours && (
+  <div className="offer-banner bg-green-600 text-white p-3 text-center">
+    ⏰ <strong>New User Special</strong>: Get 50% off your first year (${ANNUAL_PRICE * 0.5}/year)
+    <br />
+    <small>Offer expires in {timeRemaining}</small>
+  </div>
+)}
+```
+
+#### 1.4 Trial Strategy
+
+**14-Day Free Trial** (for Book Lover & Power User tiers):
+
+```typescript
+// app/api/trial/start/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { db } from '@/lib/db';
+
+export async function POST(req: NextRequest) {
+  const session = await auth(req);
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { tier } = await req.json(); // 'book_lover' or 'power_user'
+
+  // Check if already had trial
+  const existingTrial = await db.trial.findFirst({
+    where: { userId: session.user.id },
+  });
+
+  if (existingTrial) {
+    return NextResponse.json({ error: 'Trial already used' }, { status: 400 });
+  }
+
+  const trialEndDate = new Date();
+  trialEndDate.setDate(trialEndDate.getDate() + 14);
+
+  // Create trial record
+  await db.trial.create({
+    data: {
+      userId: session.user.id,
+      tier,
+      startDate: new Date(),
+      endDate: trialEndDate,
+      status: 'active',
+    },
+  });
+
+  // Send trial welcome email
+  await sendEmail({
+    to: session.user.email,
+    subject: 'Your LibraKeeper Trial Has Started! 📚',
+    template: 'trial-welcome',
+    data: {
+      userName: session.user.name,
+      tier,
+      endDate: trialEndDate,
+      features: tier === 'book_lover'
+        ? ['Unlimited books', 'ISBN lookup', 'Reading stats']
+        : ['All Book Lover features', 'Loan tracking', 'Advanced search'],
+    },
+  });
+
+  return NextResponse.json({ success: true, endDate: trialEndDate });
+}
+```
+
+**Trial Expiration Flow**:
+
+```typescript
+// Email sequence during trial
+const TRIAL_EMAILS = [
+  { day: 3, template: 'trial-day-3', subject: 'Getting the most from LibraKeeper' },
+  { day: 7, template: 'trial-halfway', subject: 'You\'re halfway through your trial!' },
+  { day: 12, template: 'trial-expiring', subject: '⏰ Your trial ends in 2 days' },
+  { day: 14, template: 'trial-expired', subject: 'Your trial has ended - Subscribe to keep your library' },
+];
+```
+
+#### 1.5 Pricing Psychology
+
+**Annual vs Monthly Positioning**:
+
+```tsx
+// components/PricingToggle.tsx
+<div className="pricing-comparison">
+  <div className="monthly">
+    <span className="price">$4.99/month</span>
+    <span className="total">= $59.88/year</span>
+  </div>
+
+  <div className="annual highlight">
+    <span className="price">$49.99/year</span>
+    <span className="savings">Save $9.89 (17%)</span>
+    <span className="badge">Best Value</span>
+  </div>
+</div>
+```
+
+**Anchor Pricing** (make middle tier look most attractive):
+
+| Tier       | Monthly | Annual | Position               |
+| ---------- | ------- | ------ | ---------------------- |
+| Book Lover | $4.99   | $49.99 | **← MOST POPULAR**     |
+| Power User | $9.99   | $99.99 | For serious collectors |
+
+### 2. Onboarding Flow for Individual Users
+
+#### 2.1 Post-Signup Experience
+
+```typescript
+// Day 0: Immediately after signup
+1. **Welcome Screen**: "Let's add your first 10 books!"
+2. **Import Options**:
+   - Scan barcode (mobile)
+   - Import from Goodreads CSV
+   - Enter ISBN manually
+   - Browse popular books to add
+3. **Create First Collection**: "How do you want to organize? (Genre, Read Status, Rating)"
+4. **Set Reading Goal**: "Want to track your reading? Set a goal (e.g., 24 books/year)"
+
+// Day 3: Email
+Subject: "3 Ways to Organize Your Library Like a Pro"
+- Tip 1: Use collections to separate read vs unread
+- Tip 2: Add tags for quick filtering
+- Tip 3: Enable loan tracking if you lend books
+
+// Day 7: Email + In-App
+Subject: "You've added 15 books! 🎉 Unlock more with Book Lover"
+- Showcase reading stats graph (blurred/locked)
+- Show example library (500+ books, beautifully organized)
+- CTA: "Upgrade to track unlimited books"
+
+// Day 14: Email
+Subject: "Still using LibraKeeper? Here's 50% off! 🎁"
+- Limited-time discount code
+- Success stories from users
+- Feature comparison table
+```
+
+#### 2.2 Gamification for Engagement
+
+```typescript
+// lib/gamification.ts
+export const ACHIEVEMENTS = {
+  first_book: { title: 'Bookworm Beginner', books: 1 },
+  ten_books: { title: 'Growing Library', books: 10 },
+  fifty_books: { title: 'Book Collector', books: 50 },
+  hundred_books: { title: 'Century Club', books: 100 },
+  five_hundred_books: { title: 'Master Librarian', books: 500 },
+
+  // Reading achievements
+  books_read_10: { title: 'Avid Reader', booksRead: 10 },
+  reading_streak_7: { title: 'Week-Long Reader', daysStreak: 7 },
+  reading_streak_30: { title: 'Monthly Reader', daysStreak: 30 },
+};
+
+// Show celebration modal when milestone reached
+export function checkAchievements(user: User, newBookCount: number) {
+  const unlockedAchievements = Object.entries(ACHIEVEMENTS)
+    .filter(([key, achievement]) => {
+      if (achievement.books && newBookCount >= achievement.books) {
+        return !user.achievements.includes(key);
+      }
+      return false;
+    })
+    .map(([key]) => key);
+
+  return unlockedAchievements;
+}
+```
+
+### 3. Retention & Churn Prevention (B2C)
+
+#### 3.1 Churn Indicators
+
+**Monitor These Signals**:
+
+```typescript
+// lib/churn-detection.ts
+export async function detectChurnRisk(userId: string): Promise<ChurnRisk> {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    include: {
+      books: true,
+      sessions: { where: { createdAt: { gte: subDays(new Date(), 30) } } },
+      subscription: true,
+    },
+  });
+
+  const riskFactors = {
+    noActivityIn14Days: user.sessions.length === 0,
+    lowBookCount: user.books.length < 10, // Never fully onboarded
+    neverUsedFeature: !user.hasCreatedCollection && !user.hasUsedSearch,
+    subscriptionEndingSoon: user.subscription?.currentPeriodEnd &&
+      differenceInDays(user.subscription.currentPeriodEnd, new Date()) <= 7,
+  };
+
+  const riskScore = Object.values(riskFactors).filter(Boolean).length;
+
+  return {
+    level: riskScore >= 3 ? 'high' : riskScore >= 2 ? 'medium' : 'low',
+    factors: riskFactors,
+  };
+}
+```
+
+#### 3.2 Win-Back Campaigns
+
+**Email Sequence for Inactive Users**:
+
+```typescript
+// Day 14 of inactivity
+Subject: "We miss you! Here's what's new in LibraKeeper"
+- Feature updates
+- Community highlights (e.g., "Users cataloged 10M books this month!")
+- Personal stats: "You've added 47 books - keep going!"
+
+// Day 30 of inactivity
+Subject: "Your library is waiting for you! 📚"
+- Reminder of books they've added
+- New feature: "Now you can scan barcodes to add books instantly!"
+- Offer: "Come back and get 1 month free"
+
+// Day 60 of inactivity (if paid user)
+Subject: "We'd love your feedback"
+- Survey: Why did you stop using LibraKeeper?
+- Incentive: "$10 Amazon gift card for completing survey"
+```
+
+#### 3.3 Cancellation Flow (Retention Offers)
+
+```typescript
+// app/settings/cancel/page.tsx
+export default function CancelSubscriptionPage() {
+  const [reason, setReason] = useState('');
+  const [offer, setOffer] = useState<RetentionOffer | null>(null);
+
+  const cancelReasons = [
+    { id: 'too_expensive', label: 'Too expensive', offer: '50% off for 3 months' },
+    { id: 'not_using', label: 'Not using it enough', offer: 'Pause for 60 days (free)' },
+    { id: 'missing_features', label: 'Missing features', offer: 'Tell us what you need' },
+    { id: 'found_alternative', label: 'Found a better tool', offer: 'What do they have that we don\'t?' },
+  ];
+
+  const handleSelectReason = async (reasonId: string) => {
+    setReason(reasonId);
+
+    const response = await fetch('/api/retention/offer', {
+      method: 'POST',
+      body: JSON.stringify({ reason: reasonId }),
+    });
+
+    const data = await response.json();
+    setOffer(data);
+  };
+
+  return (
+    <div className="cancel-flow">
+      <h1>We're sorry to see you go 😢</h1>
+      <p>Before you cancel, can you tell us why?</p>
+
+      {!offer ? (
+        <div className="reasons">
+          {cancelReasons.map((r) => (
+            <button
+              key={r.id}
+              onClick={() => handleSelectReason(r.id)}
+              className="reason-button"
+            >
+              {r.label}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="retention-offer">
+          <h2>{offer.title}</h2>
+          <p>{offer.description}</p>
+          <button onClick={offer.action} className="btn-primary">
+            {offer.cta}
+          </button>
+          <button className="btn-link">No thanks, cancel anyway</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
 ## B2B Monetization Implementation Guide
 
 > **💡 REFERENCE**: See [IMPLEMENTATION_GUIDE_TEMPLATE.md](./IMPLEMENTATION_GUIDE_TEMPLATE.md) for general patterns. This section provides LibraKeeper-specific B2B implementations.

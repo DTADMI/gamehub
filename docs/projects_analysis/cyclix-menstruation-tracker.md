@@ -84,24 +84,73 @@ For Cyclix, we recommend a **self-hosted Supabase** instance because:
 
 ## Monetization Strategy
 
-### Freemium + Premium Features
+> **💡 B2C FOCUS**: 99% B2C (individual women), <1% B2B (healthcare providers). Optimize for self-service subscriptions.
 
-- **Free Tier**:
-  - Basic cycle tracking
-  - Limited symptom logging
-  - Community support
-  - Basic insights
-- **Premium Tier** ($3.99/month or $29.99/year):
-  - Advanced health insights
-  - Medical report generation
-  - Cloud backup & sync
-  - Priority support
-  - Advanced analytics
-- **Healthcare Provider Program**:
-  - White-label solutions
-  - Custom integrations
-  - Enterprise support
-  - HIPAA compliance
+> **⚠️ CRITICAL**: Avoid selling user data (privacy concern kills health apps). Monetize through subscriptions only.
+
+### Freemium + Premium Features (Individual Users)
+
+#### Free Tier (User Acquisition)
+
+- Basic cycle tracking (period dates, flow)
+- Simple predictions (next period date)
+- Limited symptom logging (10 symptoms)
+- Community forums (read-only)
+- Basic insights (cycle length average)
+- Local storage only (no cloud sync)
+
+**Strategic Limits**: Just enough to be useful, but missing key features power users need
+
+#### Premium Tier ($4.99/month or $39.99/year)
+
+- **All Free features, plus**:
+- Advanced health insights (pattern recognition across 50+ symptoms)
+- **Medical report generation** (PDF export for doctor visits)
+- Cloud backup & sync (multi-device)
+- Fertility tracking (BBT, cervical mucus, ovulation)
+- Medication reminders
+- Partner access (share cycle info)
+- Priority support (24h response)
+- Export data (CSV, PDF)
+
+**Target**: Women actively trying to conceive, those with PCOS/endometriosis, anyone seeing gynecologist regularly
+
+**Conversion Triggers**:
+
+```typescript
+// Show upgrade after 3 cycles tracked (user is engaged)
+{cyclesTracked >= 3 && !isPremium && (
+  <UpgradeModal>
+    You've tracked 3 cycles! 🎉
+    Upgrade to see advanced insights:
+    - Symptom patterns across cycles
+    - Export reports for your doctor
+    - Fertility predictions
+  </UpgradeModal>
+)}
+```
+
+#### Premium+ Tier ($9.99/month or $79.99/year)
+
+- All Premium features
+- **Telehealth integration** (schedule virtual consultations)
+- Advanced analytics dashboard
+- Nutrition & wellness tracking
+- Custom reminders & notifications
+- Educational content library
+- Community forums (full access)
+
+**Target**: Women with chronic conditions (PCOS, endometriosis), those actively managing fertility
+
+#### Healthcare Provider Program (B2B - Deprioritize)
+
+- White-label solutions
+- Custom integrations (EMR/EHR)
+- HIPAA-compliant data sharing
+- Enterprise support
+- **Pricing**: Custom (negotiate after 50K+ users)
+
+**Reality Check**: Healthcare sales cycles are 12-18 months. Don't chase until strong B2C base.
 
 ### Data Privacy Focus
 

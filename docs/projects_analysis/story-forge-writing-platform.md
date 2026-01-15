@@ -458,9 +458,11 @@ api/
 
 ## Monetization Strategy
 
-### Subscription Tiers
+> **💡 B2C FOCUS**: 95% of revenue will come from individual writers, not businesses. Optimize for single-user subscriptions.
 
-#### 1. Free Tier
+### Subscription Tiers (Individual Writers)
+
+#### 1. Free Tier (User Acquisition)
 
 - **Price**: $0/month
 - **Features**:
@@ -495,9 +497,10 @@ api/
   - Priority support (24h response)
   - Publishing integration (KDP, IngramSpark)
 
-#### 4. Publisher (B2B)
+#### 4. Publisher (B2B - Optional, Low Priority)
 
 - **Price**: $49.99/month or $499.99/year (17% savings)
+- **Target**: Small publishing houses, writing agencies
 - **Features**:
   - All Author features
   - White-label solutions
@@ -507,6 +510,164 @@ api/
   - 500GB storage
   - AI Writing Assistant (unlimited)
   - Dedicated support + onboarding
+
+> **⚠️ DEPRIORITIZE B2B**: Don't chase Publisher tier until 5,000+ individual subscribers. B2B sales cycles are 6-12 months and require dedicated sales team. Focus on self-service B2C first.
+
+### B2C Conversion Strategies (Individual Writers)
+
+#### 1. Free-to-Paid Triggers
+
+**Strategic Limits** (designed to convert at 50K words):
+
+```typescript
+// lib/usage-limits.ts
+export const FREE_TIER_LIMITS = {
+  exportPerMonth: 3,
+  aiWordCount: 10000, // 10K words = ~40 pages
+  cloudStorage: 1, // 1GB
+  projects: 3, // Most writers have 2-5 active WIPs
+  versionHistory: 7, // days
+};
+
+// Upgrade prompts
+export const UPGRADE_TRIGGERS = {
+  exportLimit: {
+    at: 2, // Show after 2nd export
+    message: "You've used 2 of 3 free exports this month. Upgrade for unlimited exports in all formats (PDF, EPUB, DOCX, FDX).",
+  },
+  aiLimit: {
+    at: 8000, // 80% of AI limit
+    message: "You've used 8,000 of 10,000 free AI words. Upgrade to Writer for 50K AI words/month + GPT-4 access.",
+  },
+  storageLimit: {
+    at: 0.9, // 900MB of 1GB
+    message: "Your storage is 90% full. Upgrade to Author for 100GB storage + unlimited version history.",
+  },
+  projectLimit: {
+    at: 3, // When trying to create 4th project
+    message: "Free users can have 3 active projects. Upgrade to track unlimited novels, short stories, and screenplays.",
+  },
+};
+```
+
+#### 2. Onboarding for Conversion
+
+**Day 0**: First session
+
+```markdown
+1. Welcome: "What are you writing?" (Novel / Screenplay / Short Story / Other)
+2. Create first project: Pre-populated templates based on selection
+3. Tutorial: "Try the AI assistant!" (give 100 free words to test)
+4. Milestone: "Write your first 1,000 words and unlock a badge"
+```
+
+**Day 3**: Email
+
+```
+Subject: "3 Ways to Overcome Writer's Block with StoryForge"
+
+Hi [Name],
+
+Congrats on starting your [project type]! Here are 3 features that can help:
+
+1. **AI Assistant**: Get suggestions when you're stuck (you have 10,000 free words!)
+2. **World-Building Tools**: Organize characters, locations, timelines
+3. **Writing Goals**: Set daily word count goals and track streaks
+
+[CTA: Continue Writing]
+
+P.S. Upgrade to Writer for 50K AI words/month + priority support.
+```
+
+**Day 7**: In-app notification
+
+```
+"🎉 You've written 5,000 words! You're on fire! 🔥"
+
+[Show upgrade banner]
+"Want to finish your novel faster? Upgrade to Writer for:
+- 50K AI words/month (GPT-4)
+- Unlimited exports
+- Advanced analytics"
+```
+
+**Day 14**: Email + retargeting ads
+
+```
+Subject: "Your novel is 20% done. Don't lose momentum!"
+
+You've written 12,000 words - that's amazing progress! 📚
+
+Many writers hit a wall around 50K words. Here's how StoryForge can help:
+- **AI Plot Hole Detection**: Catch inconsistencies early
+- **Character Arc Tracking**: Ensure character growth
+- **Publishing Integration**: One-click upload to KDP when done
+
+[CTA: Upgrade to Author - $19.99/mo]
+
+💡 Use code NOVELIST20 for 20% off your first 3 months
+```
+
+#### 3. Social Proof & FOMO
+
+```tsx
+// components/UpgradeBanner.tsx
+<div className="upgrade-banner bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4">
+  <p className="text-sm font-semibold">
+    🎉 1,247 writers upgraded this week to finish their novels faster
+  </p>
+  <p className="text-xs opacity-90">
+    Join authors who've published 3,482 books using StoryForge
+  </p>
+  <button className="mt-2 bg-white text-purple-600 px-4 py-2 rounded">
+    Upgrade Now - 20% Off
+  </button>
+</div>
+```
+
+**Testimonials** (on pricing page):
+
+```markdown
+⭐⭐⭐⭐⭐ "StoryForge helped me finish my first novel in 6 months. The AI assistant got me through writer's block!" - Sarah M., Author
+
+⭐⭐⭐⭐⭐ "Switched from Scrivener. The publishing integration saved me hours." - James K., Self-Published Author
+
+⭐⭐⭐⭐⭐ "Worth every penny for the AI alone. It's like having a writing partner." - Maria T., Screenwriter
+```
+
+#### 4. Retention: Keep Writers Engaged
+
+**Weekly Digest Email**:
+
+```
+Subject: "Your writing progress this week"
+
+Hi [Name],
+
+Here's your weekly summary:
+- 📝 Words written: 3,420 (+12% from last week!)
+- 🎯 Streak: 5 days (keep going!)
+- 📚 Chapter completed: Chapter 7
+
+[Progress bar: 35,420 / 80,000 words (44%)]
+
+This week's tip: Use the Timeline feature to track your story's chronology and avoid plot holes.
+
+[CTA: Continue Writing]
+```
+
+**Gamification**:
+
+```typescript
+// Badges to unlock
+const BADGES = {
+  first_1k: { title: 'First Thousand', words: 1000 },
+  consistent_writer: { title: '7-Day Streak', streak: 7 },
+  nano_winner: { title: 'NaNoWriMo Champion', words: 50000, timeframe: '30_days' },
+  published_author: { title: 'Published!', requirement: 'published_to_kdp' },
+  ai_power_user: { title: 'AI Collaborator', aiWords: 100000 },
+};
+```
 
 > **💡 PRICING RATIONALE**: Increased from $5.99-19.99 to $9.99-49.99 based on competitive analysis:
 >
