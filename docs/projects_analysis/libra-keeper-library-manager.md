@@ -583,6 +583,876 @@ supabase/
 - <5% monthly churn
 - 15%+ conversion to paid
 
+## B2B Monetization Implementation Guide
+
+> **💡 REFERENCE**: See [IMPLEMENTATION_GUIDE_TEMPLATE.md](./IMPLEMENTATION_GUIDE_TEMPLATE.md) for general patterns. This section provides LibraKeeper-specific B2B implementations.
+
+### 1. ISBN Lookup API Implementation
+
+**Target Market**: Bookstores, small libraries, book clubs, reading apps
+
+**Implementation** (Next.js API Route):
+
+```typescript
+// app/api/v1/isbn/[isbn]/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rate-limit';
+import { authenticateApiKey } from '@/lib/api-auth';
+
+const limiter = rateLimit({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 500,
+});
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { isbn: string } }
+) {
+  // Authenticate API key
+  const apiKey = req.headers.get('x-api-key');
+  const customer = await authenticateApiKey(apiKey);
+
+  if (!customer) {
+    return NextResponse.json({ error: 'Invalid API key' }, { status: 401 });
+  }
+
+  // Rate limiting based on plan
+  const limit = customer.plan === 'basic' ? 10 : 50; // per minute
+  try {
+    await limiter.check(limit, apiKey);
+  } catch {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+  }
+
+  // Fetch from OpenLibrary API (free)
+  const isbn = params.isbn.replace(/[^0-9X]/gi, '');
+  const response = await fetch(
+    `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
+  );
+
+  const data = await response.json();
+  const book = data[`ISBN:${isbn}`];
+
+  if (!book) {
+    return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+  }
+
+  // Transform to our schema
+  const result = {
+    isbn,
+    title: book.title,
+    authors: book.authors?.map((a: any) => a.name) || [],
+    publisher: book.publishers?.[0]?.name,
+    publishedDate: book.publish_date,
+    pageCount: book.number_of_pages,
+    coverImage: book.cover?.large || book.cover?.medium,
+    subjects: book.subjects?.map((s: any) => s.name) || [],
+    description: book.notes || book.subtitle,
+  };
+
+  // Log usage for billing
+  await db.apiUsage.create({
+    data: {
+      customerId: customer.id,
+      endpoint: '/isbn',
+      timestamp: new Date(),
+    },
+  });
+
+  return NextResponse.json(result);
+}
+```
+
+**Pricing Tiers**:
+
+```typescript
+// lib/api-plans.ts
+export const API_PLANS = {
+  basic: {
+    price: 29,
+    lookupsPerMonth: 10000,
+    rateLimit: 10, // per minute
+  },
+  professional: {
+    price: 99,
+    lookupsPerMonth: 50000,
+    rateLimit: 50,
+  },
+  enterprise: {
+    price: 299,
+    lookupsPerMonth: 200000,
+    rateLimit: 200,
+    features: ['Bulk endpoints', 'Webhooks', 'Priority support'],
+  },
+};
+```
+
+**Customer Onboarding Flow**:
+
+1. **Self-service signup**: Stripe Checkout with automatic API key generation
+2. **Developer portal**: Dashboard showing usage, docs, rate limits
+3. **Webhook notifications**: Alert when 80% of monthly quota used
+
+**Expected Revenue**: $500-2,000/month within 6 months (15-50 API customers)
+
+---
+
+### 2. White-Label Licensing Implementation
+
+**Target Market**: Independent bookstores, small library systems, book clubs
+
+**Setup Process**:
+
+```typescript
+// prisma/schema.prisma (add to existing schema)
+model WhiteLabelClient {
+  id              String   @id @default(cuid())
+  name            String
+  domain          String   @unique
+  customDomain    String?  @unique
+
+  // Branding
+  logoUrl         String?
+  primaryColor    String   @default("#000000")
+  secondaryColor  String   @default("#ffffff")
+
+  // Features
+  tier            String   // starter | professional | enterprise
+  maxUsers        Int
+  customFields    Json?
+  apiAccess       Boolean  @default(false)
+
+  // Billing
+  monthlyFee      Int
+  billingEmail    String
+  stripeCustomerId String?
+
+  createdAt       DateTime @default(now())
+  users           User[]
+}
+```
+
+**Deployment Automation**:
+
+```typescript
+// lib/white-label/deploy.ts
+import { execSync } from 'child_process';
+import { createSubdomain } from './vercel-api';
+
+export async function deployWhiteLabel(client: WhiteLabelClient) {
+  // 1. Create subdomain (e.g., clientname.librakeeper.com)
+  await createSubdomain(client.domain);
+
+  // 2. Generate environment variables
+  const env = {
+    CLIENT_ID: client.id,
+    BRAND_NAME: client.name,
+    PRIMARY_COLOR: client.primaryColor,
+    LOGO_URL: client.logoUrl,
+  };
+
+  // 3. Deploy via Vercel CLI
+  execSync(
+    `vercel deploy --prod --env-file .env.${client.id}`,
+    { stdio: 'inherit' }
+  );
+
+  // 4. Setup custom domain (if provided)
+  if (client.customDomain) {
+    await setupCustomDomain(client.customDomain);
+  }
+
+  // 5. Send welcome email with credentials
+  await sendWhiteLabelWelcome(client);
+}
+```
+
+**Pricing Structure**:
+
+| Tier         | Price/Month | Users | Custom Domain | API Access | Support       |
+| ------------ | ----------- | ----- | ------------- | ---------- | ------------- |
+| Starter      | $499        | 50    | ❌            | ❌         | Email (48h)   |
+| Professional | $1,299      | 200   | ✅            | ✅         | Email (24h)   |
+| Enterprise   | $2,999      | 1,000 | ✅            | ✅         | Priority (4h) |
+
+**Sales Process**:
+
+1. **Discovery call** (30 min): Understand client needs, demo platform
+2. **Proposal**: Custom quote based on user count, features
+3. **Onboarding** (1-2 weeks): Setup, data migration, training
+4. **Go-live**: Soft launch → full launch
+5. **Ongoing support**: Monthly check-ins, feature requests
+
+**Target**: 5-10 white-label clients by end of Year 2 ($30K-80K MRR)
+
+---
+
+### 3. Professional Services Implementation
+
+**Book Scanning & Cataloging Service**
+
+**Target Market**: Affluent collectors (10,000+ books), estate libraries, academic collections
+
+**Service Workflow**:
+
+```typescript
+// app/services/scanning/route.ts
+export async function POST(req: Request) {
+  const { userId, serviceType, bookCount } = await req.json();
+
+  // Calculate pricing
+  const pricing = {
+    barcodeBulk: 0.05,      // per book (customer ships us barcodes)
+    manualEntry: 0.15,       // per book (we type everything)
+    onSite: 150,             // per hour (we come to customer)
+  };
+
+  const quote = {
+    serviceType,
+    bookCount,
+    pricePerBook: pricing[serviceType],
+    total: bookCount * pricing[serviceType],
+    estimatedDays: Math.ceil(bookCount / 500), // 500 books/day capacity
+  };
+
+  // Create service order
+  const order = await db.serviceOrder.create({
+    data: {
+      userId,
+      type: serviceType,
+      status: 'quote_sent',
+      quote,
+    },
+  });
+
+  // Send quote email
+  await sendQuoteEmail(order);
+
+  return Response.json({ orderId: order.id, quote });
+}
+```
+
+**Execution Process**:
+
+1. **Quote request**: Customer submits collection size, type
+2. **Quote delivery**: Automated pricing + manual adjustments
+3. **Payment**: 50% upfront, 50% on completion
+4. **Scanning**: Dedicated scanning station (barcode scanner + laptop)
+5. **Quality check**: Customer reviews, requests corrections
+6. **Delivery**: Import into their LibraKeeper account
+
+**Pricing Examples**:
+
+- **500 books** (barcode bulk): $25 + 2 hours labor ($150) = **$175**
+- **2,000 books** (manual entry): $300 + 8 hours labor ($600) = **$900**
+- **10,000 books** (on-site for 3 days): $500 material + $3,600 labor = **$4,100**
+
+**Marketing Channels**:
+
+- Local library sales (estate libraries)
+- Bookstore partnerships (refer customers downsizing)
+- Ads on BookCollecting.com, LibraryThing forums
+- LinkedIn ads targeting "rare book collectors"
+
+**Expected Revenue**: $2K-5K/month (2-5 projects/month, high-margin)
+
+---
+
+## Affiliate Revenue Implementation Guide
+
+> **💡 STRATEGY**: Passive revenue stream that scales with user base. Integrate seamlessly into UX without being intrusive.
+
+### 1. Amazon Associates Integration
+
+**Implementation** (Book Detail Page):
+
+```typescript
+// components/BookDetail.tsx
+import { generateAffiliateLink } from '@/lib/affiliates/amazon';
+
+export function BookDetail({ book }: { book: Book }) {
+  const affiliateLink = generateAffiliateLink({
+    isbn: book.isbn,
+    tag: process.env.AMAZON_ASSOCIATE_TAG, // your-tag-20
+  });
+
+  return (
+    <div className="book-detail">
+      <h1>{book.title}</h1>
+      <p>{book.authors.join(', ')}</p>
+
+      {/* Affiliate link (clearly labeled) */}
+      <a
+        href={affiliateLink}
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        className="buy-button"
+      >
+        Buy on Amazon
+        <span className="text-xs text-muted">
+          (We earn a small commission)
+        </span>
+      </a>
+    </div>
+  );
+}
+```
+
+**Link Generation**:
+
+```typescript
+// lib/affiliates/amazon.ts
+export function generateAffiliateLink({
+  isbn,
+  tag,
+}: {
+  isbn: string;
+  tag: string;
+}) {
+  return `https://www.amazon.com/dp/${isbn}?tag=${tag}`;
+}
+
+// Track clicks for analytics
+export async function trackAffiliateClick(userId: string, isbn: string) {
+  await db.affiliateClick.create({
+    data: { userId, isbn, provider: 'amazon', timestamp: new Date() },
+  });
+}
+```
+
+**Revenue Projections**:
+
+- **Commission rate**: 4-8% (depends on category)
+- **Click-through rate**: 5-10% of users viewing book details
+- **Conversion rate**: 3-5% of clicks result in purchase
+- **Average order value**: $15-25
+
+**Example** (10,000 MAU):
+
+- 10,000 users × 10 book views/month = 100,000 views
+- 100,000 × 5% CTR = 5,000 clicks
+- 5,000 × 4% conversion = 200 purchases
+- 200 × $20 AOV × 6% commission = **$240/month** (~$0.024/user)
+
+**At scale** (100,000 MAU): **$2,400/month**
+
+---
+
+### 2. Bookshop.org Integration
+
+**Why Bookshop.org**: Higher commission (10%), indie bookstore focus appeals to target audience
+
+**Implementation**:
+
+```typescript
+// lib/affiliates/bookshop.ts
+export function generateBookshopLink({
+  isbn,
+  affiliateId,
+}: {
+  isbn: string;
+  affiliateId: string;
+}) {
+  return `https://bookshop.org/a/${affiliateId}/${isbn}`;
+}
+```
+
+**UX Pattern** (Give users choice):
+
+```tsx
+<div className="purchase-options">
+  <a href={amazonLink}>Buy on Amazon (4-8% commission)</a>
+  <a href={bookshopLink} className="indie-badge">
+    Support Indie Bookstores (10% commission)
+  </a>
+</div>
+```
+
+**Expected Revenue**: Higher per-transaction but lower volume than Amazon (~30% of total affiliate revenue)
+
+---
+
+### 3. Audible Affiliate Program
+
+**Target**: Users with audiobook collections
+
+**Implementation**:
+
+```typescript
+// components/AudiobookPromo.tsx
+export function AudiobookPromo({ book }: { book: Book }) {
+  if (!book.hasAudiobook) return null;
+
+  const audibleLink = `https://www.audible.com/pd/${book.asin}?tag=${AUDIBLE_TAG}`;
+
+  return (
+    <div className="audiobook-cta">
+      <h3>Listen to this book</h3>
+      <a href={audibleLink}>
+        Try Audible Free for 30 Days
+        <span className="commission-note">($5-15 per signup)</span>
+      </a>
+    </div>
+  );
+}
+```
+
+**Revenue Model**:
+
+- $5 per free trial signup
+- $15 per paid membership (first month)
+- **Target**: 50-100 signups/month at scale = **$250-1,500/month**
+
+---
+
+### 4. Revenue Tracking Dashboard
+
+```typescript
+// app/admin/affiliates/page.tsx
+export default async function AffiliatesAdmin() {
+  const stats = await db.affiliateClick.groupBy({
+    by: ['provider'],
+    _count: true,
+    where: {
+      timestamp: { gte: subDays(new Date(), 30) },
+    },
+  });
+
+  const revenue = await db.affiliateRevenue.aggregate({
+    _sum: { amount: true },
+    where: {
+      timestamp: { gte: subDays(new Date(), 30) },
+    },
+  });
+
+  return (
+    <div>
+      <h1>Affiliate Revenue (Last 30 Days)</h1>
+      <div className="stats">
+        <div>Total Clicks: {stats._count}</div>
+        <div>Estimated Revenue: ${revenue._sum.amount}</div>
+        <div>Revenue per User: ${(revenue._sum.amount / MAU).toFixed(3)}</div>
+      </div>
+    </div>
+  );
+}
+```
+
+**Total Affiliate Revenue Projection**:
+
+| Year | MAU  | Amazon | Bookshop | Audible | Total/Month | Annual  |
+| ---- | ---- | ------ | -------- | ------- | ----------- | ------- |
+| 2025 | 5K   | $120   | $40      | $100    | $260        | $3,120  |
+| 2026 | 20K  | $480   | $160     | $400    | $1,040      | $12,480 |
+| 2027 | 50K  | $1,200 | $400     | $1,000  | $2,600      | $31,200 |
+| 2028 | 100K | $2,400 | $800     | $2,000  | $5,200      | $62,400 |
+
+---
+
+## Marketing Implementation Guide
+
+> **💡 TARGET AUDIENCE**: Book lovers, collectors, librarians, reading groups, homeschool families
+
+### Phase 1: Pre-Launch (Months 1-2)
+
+**Goal**: Build waitlist of 500-1,000 engaged users
+
+**Tactics**:
+
+1. **Landing Page + Waitlist**:
+   - Hero: "Your Personal Library, Beautifully Organized"
+   - Social proof: "Join 500+ book lovers organizing their collections"
+   - Referral incentive: "Refer 3 friends → Free Pro for 6 months"
+
+2. **Content Marketing**:
+   - **Blog posts** (SEO-optimized):
+     - "How to Organize a 1,000-Book Home Library"
+     - "The Ultimate Guide to Cataloging Your Book Collection"
+     - "10 Best Book Management Apps in 2026"
+   - **YouTube videos**:
+     - Library tour walkthroughs
+     - "How I Cataloged 5,000 Books in a Weekend"
+   - **Reddit engagement**:
+     - r/books, r/bookshelf, r/bookcollecting, r/Libraries
+     - Post: "I built a tool to catalog my 2,000-book library [demo video]"
+
+3. **Influencer Outreach** (Bookstagrammers, BookTubers):
+   - Find micro-influencers (10K-50K followers) with large personal libraries
+   - Offer: Free lifetime Pro account + $100 if they post about LibraKeeper
+   - Target: 10-20 influencers → 500-2,000 waitlist signups
+
+**Budget**: $1,000-2,000
+
+- Content creation: $500
+- Influencer payments: $1,000-1,500
+
+---
+
+### Phase 2: Launch Week (Month 3)
+
+**Goal**: Convert 20-30% of waitlist → Free users, 5-10% → Paid users
+
+**Tactics**:
+
+1. **Product Hunt Launch**:
+   - Post on Tuesday (best day)
+   - Title: "LibraKeeper - Notion for your book collection"
+   - Offer: 50% off Pro for first 100 users
+   - Coordinate with waitlist email blast same day
+
+2. **Email Drip Campaign** (see below)
+
+3. **Social Media Blitz**:
+   - Twitter/X: Thread showing beautiful library screenshots
+   - Instagram: Carousel post with before/after organization
+   - TikTok: "Watch me catalog 100 books in 10 minutes" video
+   - LinkedIn: "How we built a library management platform" case study
+
+4. **Press Outreach**:
+   - Submit to: The Verge, TechCrunch, Product Hunt, Hacker News
+   - Pitch: "Solo developer builds beautiful alternative to Goodreads"
+
+**Budget**: $500-1,000 (mostly content creation)
+
+---
+
+### Phase 3: Growth (Months 4-12)
+
+**Goal**: Reach 20,000 MAU, 10% paid conversion
+
+**Tactics**:
+
+1. **Paid Advertising** ($3,000-5,000/month):
+   - **Facebook/Instagram** (60% of budget):
+     - Target: Age 25-55, interests: "Reading", "Books", "Libraries", "Goodreads"
+     - Ad creative: Library organization before/after, user testimonials
+     - Conversion goal: Free signups (retarget to paid later)
+   - **Google Ads** (30% of budget):
+     - Keywords: "book catalog software", "library management app", "organize book collection"
+     - Landing page: Feature comparison vs competitors
+   - **Reddit Ads** (10% of budget):
+     - Subreddits: r/books, r/bookshelf, r/LibraryScience
+     - Ad format: Native posts with comments enabled
+
+2. **Content Marketing** (SEO focus):
+   - Publish 2-3 blog posts/week
+   - Target long-tail keywords: "how to catalog books at home", "best way to organize book collection"
+   - Build backlinks via guest posts on book blogs
+
+3. **Community Building**:
+   - **Discord server**: Book club integrations, organization tips
+   - **Monthly challenges**: "Catalog 100 books in January" with prizes
+   - **User spotlight**: Feature beautiful libraries on blog/social media
+
+4. **Partnership Outreach**:
+   - **Local libraries**: Offer free accounts for staff, co-marketing
+   - **Book clubs**: Group plans with special features
+   - **Bookstores**: White-label for their customers' "home libraries"
+
+**Budget**: $3,000-5,000/month (mostly paid ads)
+
+---
+
+### Phase 4: Viral Features (Year 2+)
+
+**Goal**: Achieve organic growth via network effects
+
+**Tactics**:
+
+1. **Social Sharing Features**:
+   - "Share your library" public pages (like Linktree for books)
+   - "Most popular books among LibraKeeper users" rankings
+   - "Find users near you with similar reading tastes" (local book swaps)
+
+2. **Reading Challenges**:
+   - "Read 50 books in 2027" tracker
+   - Monthly themes: "Banned Books Month", "Women's History Reads"
+   - Leaderboards with prizes
+
+3. **Book Club Integration**:
+   - Shared reading lists for book clubs
+   - Discussion forums tied to specific books
+   - Schedule reading deadlines
+
+4. **Referral Program Optimization**:
+   - Increase rewards: "Refer 5 friends → 1 year Pro free"
+   - Shareable milestone graphics: "I just cataloged 1,000 books!"
+
+**Budget**: $5,000-10,000/month (expand paid acquisition)
+
+---
+
+### Email Drip Campaign
+
+**Sequence for Free Users → Paid Conversion**:
+
+**Day 0**: Welcome email
+
+```
+Subject: Welcome to LibraKeeper! Let's catalog your first 10 books 📚
+
+Hi [Name],
+
+Thanks for joining LibraKeeper! Here's how to get started:
+1. Add your first book (use ISBN lookup!)
+2. Create your first collection
+3. Explore our community
+
+[CTA: Add Your First Book]
+```
+
+**Day 3**: Feature highlight
+
+```
+Subject: Did you know? LibraKeeper can auto-fetch book covers
+
+Many users don't realize we automatically find book covers and metadata.
+Just enter the ISBN and we'll do the rest!
+
+[Video: 30-second demo]
+```
+
+**Day 7**: Social proof + upgrade prompt
+
+```
+Subject: 10,000+ book lovers have upgraded to Pro
+
+Here's why:
+- Unlimited books (vs 100 on Free)
+- Reading stats and insights
+- Export to CSV/PDF
+
+[CTA: Upgrade to Pro - 14 Day Free Trial]
+```
+
+**Day 14**: Last chance offer
+
+```
+Subject: [EXPIRING] 50% off Pro for your first year
+
+You're one of our early users, so we're offering an exclusive discount.
+Upgrade before midnight for 50% off ($49.99 → $24.99/year).
+
+[CTA: Claim 50% Off]
+```
+
+**Churn Prevention** (for users who downgrade/cancel):
+
+```
+Subject: We'd love your feedback
+
+We noticed you canceled your Pro subscription. Could you share why?
+
+[Survey with incentive: "$10 Amazon gift card for feedback"]
+```
+
+---
+
+## LibraKeeper-Specific Cost Optimization
+
+> **💡 UNIQUE CHALLENGES**: Book metadata caching, cover image storage, search performance
+
+### 1. Metadata Caching Strategy
+
+**Problem**: Fetching book metadata from OpenLibrary API on every ISBN lookup is slow (200-500ms) and expensive at scale.
+
+**Solution**: Cache frequently-requested ISBNs
+
+```typescript
+// lib/metadata/cache.ts
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
+
+export async function fetchBookMetadata(isbn: string) {
+  // Check cache first
+  const cached = await redis.get(`book:${isbn}`);
+  if (cached) {
+    return cached;
+  }
+
+  // Fetch from OpenLibrary
+  const response = await fetch(
+    `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
+  );
+  const data = await response.json();
+
+  // Cache for 30 days (books don't change)
+  await redis.set(`book:${isbn}`, JSON.stringify(data), {
+    ex: 60 * 60 * 24 * 30,
+  });
+
+  return data;
+}
+```
+
+**Expected Savings**:
+
+- 80% cache hit rate at scale → 80% reduction in API calls
+- Upstash Redis pricing: $0.20 per 100K commands
+- Cost: ~$10-20/month for 100K MAU vs $0 (OpenLibrary is free but rate-limited)
+- **Benefit**: Speed improvement (20ms vs 200ms), reliability
+
+---
+
+### 2. Cover Image Optimization
+
+**Problem**: Book cover images are large (200KB-1MB), expensive to store and serve
+
+**Solution**: Cloudflare Images (automatic optimization)
+
+```typescript
+// next.config.js
+module.exports = {
+  images: {
+    loader: 'cloudflare',
+    path: 'https://librakeeper.com/cdn-cgi/image/',
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080],
+  },
+};
+```
+
+**Usage**:
+
+```tsx
+// components/BookCover.tsx
+import Image from 'next/image';
+
+export function BookCover({ coverUrl }: { coverUrl: string }) {
+  return (
+    <Image
+      src={coverUrl}
+      alt="Book cover"
+      width={200}
+      height={300}
+      loading="lazy"
+      quality={75} // Cloudflare automatically optimizes
+    />
+  );
+}
+```
+
+**Expected Savings**:
+
+- **Bandwidth**: 60-70% reduction (AVIF/WebP compression)
+- **Storage**: Cloudflare Images: $5/month for 100K images (first 100K free)
+- **Alternative**: AWS S3 ($0.023/GB storage + $0.09/GB egress) = $50-200/month for same scale
+
+**Savings**: $45-195/month at 100K MAU
+
+---
+
+### 3. Search Performance Optimization
+
+**Problem**: PostgreSQL Full-Text Search sufficient for MVP but slows down at 50K+ books in database
+
+**Solution**: Hybrid approach (PostgreSQL FTS + materialized views)
+
+```sql
+-- Materialized view for search
+CREATE MATERIALIZED VIEW book_search AS
+SELECT
+  id,
+  isbn,
+  title,
+  authors,
+  to_tsvector('english', title || ' ' || authors || ' ' || COALESCE(subjects, '')) as search_vector
+FROM books;
+
+-- Index for fast lookups
+CREATE INDEX idx_book_search ON book_search USING GIN(search_vector);
+
+-- Refresh nightly (books added during day won't be searchable until next day)
+-- This is acceptable trade-off for cost savings
+```
+
+**Query**:
+
+```typescript
+// lib/search/books.ts
+export async function searchBooks(query: string) {
+  return await db.$queryRaw`
+    SELECT id, isbn, title, authors
+    FROM book_search
+    WHERE search_vector @@ plainto_tsquery('english', ${query})
+    ORDER BY ts_rank(search_vector, plainto_tsquery('english', ${query})) DESC
+    LIMIT 20
+  `;
+}
+```
+
+**When to switch to Meilisearch**:
+
+- **Threshold**: >50K MAU or >500K books in database
+- **Cost**: Meilisearch Cloud: $30/month (Hobby) → $90/month (Startup)
+- **Benefit**: Typo-tolerance, instant search, better relevance
+
+**Savings**: $360/year by delaying Meilisearch until necessary
+
+---
+
+### 4. Database Query Optimization
+
+**Problem**: User dashboard loads slowly (fetches all books + loans + stats)
+
+**Solution**: Aggregate tables + caching
+
+```typescript
+// prisma/schema.prisma
+model UserStats {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  totalBooks      Int      @default(0)
+  booksRead       Int      @default(0)
+  activeLoans     Int      @default(0)
+  lastUpdated     DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id])
+}
+```
+
+**Background Job** (update stats nightly):
+
+```typescript
+// lib/jobs/update-stats.ts
+export async function updateUserStats() {
+  const users = await db.user.findMany();
+
+  for (const user of users) {
+    const stats = await db.book.aggregate({
+      where: { userId: user.id },
+      _count: true,
+    });
+
+    await db.userStats.upsert({
+      where: { userId: user.id },
+      create: { userId: user.id, totalBooks: stats._count },
+      update: { totalBooks: stats._count, lastUpdated: new Date() },
+    });
+  }
+}
+```
+
+**Expected Savings**:
+
+- **Query reduction**: 40-60% (1 query instead of 3-5 for dashboard)
+- **Database costs**: $50-100/month savings at 100K MAU
+
+---
+
+### Total Cost Optimization Summary (LibraKeeper)
+
+| Optimization        | Savings/Month (at 100K MAU) | Complexity |
+| ------------------- | --------------------------- | ---------- |
+| Metadata caching    | Speed improvement (free)    | Low        |
+| Cover image CDN     | $45-195                     | Low        |
+| Search optimization | $30 (delay Meilisearch)     | Medium     |
+| Aggregate stats     | $50-100                     | Medium     |
+| **Total**           | **$125-325/month**          | -          |
+
+---
+
 ## Next Steps
 
 1. Finalize development roadmap
@@ -595,4 +1465,4 @@ supabase/
 
 ## Conclusion
 
-Libra Keeper is positioned to become the go-to platform for book lovers and libraries with a clear path to profitability. The combination of subscription models, additional services, and partnerships creates a sustainable business model with significant growth potential. The platform's unique value proposition and strong technical foundation make it an attractive acquisition target for major players in the book and library management industries.
+LibraKeeper is positioned to become the go-to platform for book lovers and libraries with a clear path to profitability. The combination of subscription models, B2B API services, white-label licensing, affiliate revenue, and professional services creates a diversified, sustainable business model with significant growth potential. The platform's unique value proposition and strong technical foundation make it an attractive acquisition target for major players in the book and library management industries.
