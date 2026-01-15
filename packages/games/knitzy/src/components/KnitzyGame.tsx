@@ -1,7 +1,7 @@
 // games/knitzy/src/components/KnitzyGame.tsx
 "use client";
 
-import { soundManager } from "@games/shared";
+import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 // Board settings

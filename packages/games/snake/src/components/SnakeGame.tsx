@@ -1,8 +1,8 @@
 "use client";
 
 // games/snake/src/components/SnakeGame.tsx
-import { GameContainer, soundManager } from "@games/shared";
-import { submitScore } from "@games/shared/lib/graphql/queries";
+import { GameContainer, soundManager } from "@gamehub/game-platform";
+import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import {

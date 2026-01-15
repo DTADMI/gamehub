@@ -16,7 +16,7 @@
     "three": ">=0.150 <1"
   },
   "dependencies": {
-    "@games/shared": "workspace:*",
+    "@gamehub/game-platform": "workspace:*",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.2",
     "three": "^0.181.2"

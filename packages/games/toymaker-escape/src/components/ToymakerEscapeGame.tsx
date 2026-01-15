@@ -6,8 +6,8 @@ import {
   InventoryBar,
   versionedLoad,
   versionedSave,
-} from "@games/shared";
-import { t } from "@games/shared/lib/i18n";
+} from "@gamehub/game-platform";
+import { t } from "@gamehub/game-platform/lib/i18n";
 import {
   detectLang,
   effects,
@@ -15,19 +15,19 @@ import {
   type Lang,
   nextScene,
   type Scene,
-} from "@games/shared/pointclick/engine";
+} from "@gamehub/game-platform/pointclick/engine";
 import {
   createGearsState,
   evaluateGears,
   type GearsState,
   setGearsTeeth as setGearTeeth,
-} from "@games/shared/pointclick/puzzles/gears";
+} from "@gamehub/game-platform/pointclick/puzzles/gears";
 import {
   clearKeypad,
   createKeypadState,
   pressKey,
   submitKeypad,
-} from "@games/shared/pointclick/puzzles/keypad";
+} from "@gamehub/game-platform/pointclick/puzzles/keypad";
 import {
   createPipesState,
   evaluatePipes,
@@ -35,18 +35,18 @@ import {
   setTileRotation,
   type Tile,
   toggleValve,
-} from "@games/shared/pointclick/puzzles/pipes";
+} from "@gamehub/game-platform/pointclick/puzzles/pipes";
 import {
   createSequenceState,
   pressSeq as pressSequenceKey,
   type SequenceState,
-} from "@games/shared/pointclick/puzzles/sequence";
+} from "@gamehub/game-platform/pointclick/puzzles/sequence";
 import {
   createWiresState,
   hasWiresCrossing,
   setWiresConnection,
   type WiresState,
-} from "@games/shared/pointclick/puzzles/wires";
+} from "@gamehub/game-platform/pointclick/puzzles/wires";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { E1CabinetCanvas } from "./E1CabinetCanvas";
@@ -211,12 +211,13 @@ export const ToymakerEscapeGame: React.FC = () => {
 
   const scene = scenes[sceneId];
 
-  const title = typeof scene?.title === 'string' ? scene.title : scene?.title?.[lang] || "Toymaker Escape";
-  const description = typeof scene?.body === 'string' ? scene.body : scene?.body?.[lang] || "";
+  const title =
+    typeof scene?.title === "string" ? scene.title : scene?.title?.[lang] || "Toymaker Escape";
+  const description = typeof scene?.body === "string" ? scene.body : scene?.body?.[lang] || "";
   return (
     <GameContainer
-        title={title}
-        description={description}
+      title={title}
+      description={description}
       lockTouch={false}
       showParticleControls={false}
     >

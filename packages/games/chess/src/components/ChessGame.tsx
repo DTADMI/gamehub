@@ -1,8 +1,8 @@
 // games/chess/src/components/ChessGame.tsx
 "use client";
 
+import { soundManager } from "@gamehub/game-platform";
 import { Board, Color, GameState, Move, Piece, PieceType, Pos, SIZE, Square } from "@games/chess";
-import { soundManager } from "@games/shared";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 function inBounds(r: number, c: number) {

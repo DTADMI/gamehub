@@ -1,12 +1,12 @@
 "use client";
 
-import { DialogueBox, GameContainer, InventoryBar } from "@games/shared";
-import { t } from "@games/shared/lib/i18n";
+import { DialogueBox, GameContainer, InventoryBar } from "@gamehub/game-platform";
+import { t } from "@gamehub/game-platform/lib/i18n";
 import {
   loadWithMigrations,
   SAVE_KEYS,
   versionedSave,
-} from "@games/shared/pointclick/core/Persistence";
+} from "@gamehub/game-platform/pointclick/core/Persistence";
 import {
   detectLang,
   effects,
@@ -14,14 +14,17 @@ import {
   type Lang,
   nextScene,
   type Scene,
-} from "@games/shared/pointclick/engine";
+} from "@gamehub/game-platform/pointclick/engine";
 import {
   clearKeypad,
   createKeypadState,
   pressKey,
   submitKeypad,
-} from "@games/shared/pointclick/puzzles/keypad";
-import { createWiresState, setWiresConnection } from "@games/shared/pointclick/puzzles/wires";
+} from "@gamehub/game-platform/pointclick/puzzles/keypad";
+import {
+  createWiresState,
+  setWiresConnection,
+} from "@gamehub/game-platform/pointclick/puzzles/wires";
 import React, { useEffect, useMemo, useState } from "react";
 
 const SAVE_KEY = SAVE_KEYS.rod;
@@ -129,13 +132,11 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   }, [sceneId, ctx]);
 
   const scene = scenes[sceneId];
-  const title = typeof scene.title === "string" ? scene.title : scene.title[lang] || "Rite of Discovery";
+  const title =
+    typeof scene.title === "string" ? scene.title : scene.title[lang] || "Rite of Discovery";
   const body = typeof scene.body === "string" ? scene.body : (scene.body?.[lang] ?? "");
   return (
-    <GameContainer
-      title={title}
-      description={body}
-    >
+    <GameContainer title={title} description={body}>
       <div className="mx-auto max-w-2xl p-4">
         <h2 className="mb-4 text-2xl font-bold">{title}</h2>
         <p className="mb-6">{body}</p>

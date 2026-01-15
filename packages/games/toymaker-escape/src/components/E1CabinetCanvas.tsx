@@ -1,6 +1,6 @@
 "use client";
 
-import { GameEngine } from "@games/shared";
+import { GameEngine } from "@gamehub/game-platform";
 import React from "react";
 
 /**

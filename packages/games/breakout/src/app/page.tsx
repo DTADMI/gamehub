@@ -1,7 +1,7 @@
 // games/breakout/src/app/page.tsx
 "use client";
 
-import { soundManager } from "@games/shared";
+import { soundManager } from "@gamehub/game-platform";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 

@@ -1,7 +1,7 @@
 "use client";
 
 // games/memory/src/components/MemoryGame.tsx
-import { GameContainer, soundManager } from "@games/shared";
+import { GameContainer, soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 interface Card {

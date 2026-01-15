@@ -4,7 +4,7 @@
   "private": true,
   "main": "src/index.ts",
   "dependencies": {
-    "@games/shared": "workspace:*"
+    "@gamehub/game-platform": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "19.2.7",

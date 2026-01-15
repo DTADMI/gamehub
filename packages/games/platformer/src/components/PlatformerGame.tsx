@@ -1,7 +1,7 @@
 // games/platformer/src/components/PlatformerGame.tsx
 "use client";
 
-import { soundManager } from "@games/shared";
+import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 // Minimal platformer constants

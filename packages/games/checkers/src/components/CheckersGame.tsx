@@ -1,7 +1,7 @@
 // games/checkers/src/components/CheckersGame.tsx
 "use client";
 
-import { soundManager } from "@games/shared";
+import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Color = "w" | "b";
