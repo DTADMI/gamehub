@@ -179,6 +179,113 @@ export function shouldShowUpgradePrompt(user: User, context: GameContext): boole
 - "Join 50,000+ gamers in weekly tournaments"
 - "Win prizes: Premium subscriptions, gift cards, swag"
 
+**Infrastructure Costs Analysis**:
+
+WebSocket infrastructure for real-time multiplayer is a significant cost driver:
+
+**Concurrent User Tiers**:
+
+| Concurrent Users | WebSocket Connections | Monthly Cost (AWS/Vercel) | Solution                    |
+| ---------------- | --------------------- | ------------------------- | --------------------------- |
+| 100 CCU          | 200-400 connections   | $50-100/month             | Vercel Serverless Functions |
+| 1,000 CCU        | 2,000-4,000           | $200-400/month            | Dedicated WebSocket server  |
+| 10,000 CCU       | 20,000-40,000         | $500-2,000/month          | Socket.io + Redis Pub/Sub   |
+| 50,000 CCU       | 100,000-200,000       | $2,500-10,000/month       | Agora.io or PubNub API      |
+
+**Implementation Cost Breakdown** (at 10K concurrent users):
+
+```typescript
+// WebSocket server costs (self-hosted on AWS)
+const MULTIPLAYER_COSTS = {
+  compute: {
+    ec2_instances: 2, // t3.medium instances
+    cost_per_instance: 35, // $/month
+    total: 70 // $/month
+  },
+  redis: {
+    service: 'AWS ElastiCache',
+    instance: 'cache.t3.micro',
+    cost: 15 // $/month
+  },
+  bandwidth: {
+    data_transfer: 500, // GB/month (10K CCU × 2KB/s × 3600s)
+    cost_per_gb: 0.09,
+    total: 45 // $/month
+  },
+  total_monthly: 130 // $/month at 10K CCU
+};
+
+// Alternative: Managed solution (Ably, Pusher, PubNub)
+const MANAGED_SOLUTION = {
+  service: 'Ably Realtime',
+  price_per_connection: 0.001, // $/connection/month
+  connections: 10000,
+  messages: 50000000, // 50M messages/month
+  cost_per_million_messages: 2.50,
+  total_monthly: 135 // $/month (similar cost but zero ops)
+};
+```
+
+**Recommendation**: Start with managed solution (Ably/Pusher) at $135/month for 10K CCU, migrate to self-hosted at 50K+ CCU to reduce costs by 60-70%.
+
+**Tournament Prize Pool Economics**:
+
+```typescript
+// Tournament revenue model
+const TOURNAMENT_ECONOMICS = {
+  entry_fee: {
+    free_tier: 0, // Ad-supported
+    premium_tier: 0, // Included in subscription
+    paid_entry: 2.99, // Optional paid tournaments
+  },
+  prize_pool: {
+    weekly_tournament: {
+      participants: 100,
+      entry_revenue: 0, // Free for premium users
+      prize_pool: 50, // $50 total
+      breakdown: {
+        first: 25, // 50%
+        second: 15, // 30%
+        third: 10, // 20%
+      },
+      cost_to_gamehub: 50, // Pure marketing expense
+    },
+    monthly_championship: {
+      participants: 500,
+      paid_entries: 50, // 10% opt for paid entry
+      entry_revenue: 149.5, // 50 × $2.99
+      prize_pool: 200,
+      breakdown: {
+        first: 100,
+        second: 60,
+        third: 40,
+      },
+      cost_to_gamehub: 50.5, // $200 pool - $149.5 revenue
+    },
+  },
+  // ROI calculation
+  retention_value: {
+    churn_reduction: 0.02, // Tournaments reduce churn by 2%
+    affected_users: 1000, // Premium users
+    monthly_value: 5.0, // ARPU
+    annual_value: 1200, // 1000 × $5 × 12 × 0.02
+  },
+  net_annual_benefit: 600, // $1,200 retention - $600 prize costs
+};
+```
+
+**Tournament Strategy**:
+
+1. **Free Weekly Tournaments**: $50 prize, 100% marketing expense
+   - **Goal**: Engagement and retention
+   - **ROI**: Indirect (reduces churn by 2-3%)
+2. **Paid Monthly Championships**: $200 prize, 50% player-funded
+   - **Goal**: Revenue + competitive scene
+   - **ROI**: Break-even to 25% profit
+3. **Sponsored Tournaments**: $1,000+ prizes, 100% sponsor-funded
+   - **Goal**: Brand partnerships
+   - **ROI**: 100% profit (sponsor pays all costs)
+
 #### 3. **Achievement System & Gamification** (Free + Premium)
 
 **Free Achievements** (hook users):
@@ -300,12 +407,169 @@ export const USER_LEVELS = {
 - Onboarding: New hire icebreaker games
 - Wellness initiatives: Break-time gaming
 
-**Sales Process**:
+**Sales Process** (Detailed B2B Sales Cycle):
 
-1. Free pilot (1 month, 50 employees)
-2. Success metrics report (engagement, feedback)
-3. Annual contract negotiation
-4. Dedicated support + custom features
+**Stage 1: Discovery (Week 1)**
+
+- **Outreach**: Cold email to HR/People Ops leaders
+- **Hook**: "Free team building solution used by [social proof companies]"
+- **Goal**: Book 30-minute discovery call
+- **Conversion**: 5-10% response rate (100 emails → 5-10 calls)
+
+**Email Template**:
+
+```
+Subject: Quick question about [Company] team building
+
+Hi [Name],
+
+I noticed [Company] has [X] remote employees. We help companies like [Similar Company] improve team engagement through casual gaming tournaments.
+
+Our platform (GameHub) offers:
+- Weekly tournaments (chess, trivia, puzzles)
+- Team leaderboards (department vs department)
+- Zero setup, works in browser
+
+Would you be open to a free pilot for your team? We're offering 50 seats free for 30 days to 5 companies this month.
+
+[Your Name]
+Founder, GameHub
+```
+
+**Stage 2: Discovery Call (Week 1-2)**
+
+- **Duration**: 30 minutes
+- **Agenda**:
+  1. Understanding current team building initiatives (10 min)
+  2. Pain points with remote engagement (10 min)
+  3. Demo GameHub corporate features (5 min)
+  4. Propose pilot program (5 min)
+- **Qualification Criteria**:
+  - Company size: 50-500 employees
+  - Remote/hybrid team
+  - Budget authority: $5K-50K/year for team building
+  - Decision timeline: <3 months
+- **Conversion**: 50% of calls → pilot (5 calls → 2-3 pilots)
+
+**Stage 3: Pilot Program (Weeks 3-6)**
+
+- **Setup**: 1 hour onboarding call
+- **Duration**: 30 days
+- **Participants**: 50-100 employees
+- **Activities**:
+  - Week 1: Onboarding + first tournament
+  - Week 2: Department competition
+  - Week 3: Company-wide championship
+  - Week 4: Feedback survey + usage report
+- **Success Metrics**:
+  - Participation rate: >40% (20+ employees active)
+  - Engagement: >2 sessions per employee
+  - NPS: >50 (promoters - detractors)
+- **Conversion**: 40-60% of pilots → paid (2-3 pilots → 1 customer)
+
+**Stage 4: Proposal (Week 7)**
+
+- **Deliverable**: Success report + ROI analysis
+- **Pricing Proposal**:
+  - 50 employees: $499/year ($41/month)
+  - 100 employees: $899/year ($75/month)
+  - 250 employees: $1,999/year ($166/month)
+- **Value Proposition**:
+  - ROI: "Employees engaged 4 hours in team building, equivalent to $2,000 value (at $50/hour)"
+  - Retention: "63% of employees said tournaments improved team connection"
+  - Cost: "$10-20 per employee per year vs $100+ for traditional team building events"
+
+**Stage 5: Negotiation (Weeks 8-10)**
+
+- **Common Objections**:
+  - "Too expensive" → Show per-employee cost vs alternatives
+  - "Need more features" → Add to roadmap, offer discount for early commitment
+  - "Need approval" → Provide one-pager for executive buy-in
+- **Close Tactics**:
+  - Offer: "Sign by end of month → 20% discount first year"
+  - Urgency: "Only 2 pilot slots left for Q2"
+  - Risk Reversal: "60-day money-back guarantee"
+
+**Stage 6: Onboarding & Expansion (Month 3+)**
+
+- **Onboarding**: 2-week setup + training
+- **Quarterly Business Reviews**: Usage metrics, feedback, renewals
+- **Upsell Opportunities**:
+  - Additional seats (grow with company)
+  - Premium features (custom games, branded tournaments)
+  - Multi-year contract (discount for commitment)
+- **Retention**: 80-90% annual retention (typical SaaS)
+
+**B2B Sales Metrics**:
+
+| Metric                      | Target          | Industry Benchmark |
+| --------------------------- | --------------- | ------------------ |
+| Lead → Call Conversion      | 5-10%           | 2-5%               |
+| Call → Pilot Conversion     | 50%             | 30-50%             |
+| Pilot → Paid Conversion     | 40-60%          | 25-40%             |
+| **Overall Conversion**      | **1-3%**        | **0.5-2%**         |
+| Average Contract Value      | $500-2,000/year | -                  |
+| Sales Cycle Length          | 60-90 days      | 90-180 days (SaaS) |
+| Customer Acquisition Cost   | $200-500        | $500-2,000         |
+| Annual Retention Rate       | 80-90%          | 70-85%             |
+| Expansion Revenue (Year 2+) | 20-30%          | 10-25%             |
+
+**Scaling B2B Sales** (Month 12+):
+
+```typescript
+const B2B_SALES_SCALING = {
+  year_1: {
+    founder_led: true,
+    outreach: 500, // emails/month
+    calls: 25, // per month
+    pilots: 12, // per month
+    closed_deals: 5, // per month
+    mrr: 400, // $80 avg × 5 customers
+  },
+  year_2: {
+    sales_rep: 1, // Commission-based ($50K base + 20% commission)
+    outreach: 2000, // emails/month (4x)
+    calls: 100,
+    pilots: 50,
+    closed_deals: 20, // per month
+    mrr: 3333, // $166 avg × 20 customers
+    cost: 5000, // $4K salary + $1K tools
+  },
+  year_3: {
+    sales_team: 3, // 1 manager + 2 reps
+    outreach: 6000,
+    calls: 300,
+    pilots: 150,
+    closed_deals: 60, // per month
+    mrr: 20000, // $333 avg × 60 (larger deals)
+    cost: 20000, // Team salaries + tools
+  },
+};
+```
+
+**B2B Playbook Automation**:
+
+```typescript
+// Automate outreach with Lemlist or similar
+const OUTREACH_AUTOMATION = {
+  email_sequence: [
+    { day: 0, template: 'initial_outreach' },
+    { day: 3, template: 'value_proposition', condition: 'no_reply' },
+    { day: 7, template: 'case_study', condition: 'no_reply' },
+    { day: 14, template: 'final_touchpoint', condition: 'no_reply' },
+  ],
+  personalization: {
+    company_name: true,
+    employee_count: true,
+    industry: true,
+    recent_news: false, // Too time-consuming, skip
+  },
+  follow_up: {
+    linkedin_connection: true, // Connect on day 2
+    linkedin_message: true, // Message on day 5 if no email reply
+  },
+};
+```
 
 ### 2. **Educational Licensing** (K-12, Universities)
 
@@ -824,28 +1088,317 @@ Given market reality, consider these alternatives:
   - 1x DevOps Engineer ($100,000-$150,000)
   - 1x QA Engineer ($80,000-$120,000)
 
-### Infrastructure (Monthly)
+### Infrastructure (Monthly) - Detailed Breakdown
 
-- **Hosting (Vercel Pro)**: $20/user/month
-- **Database (Supabase)**: $25-$500/month
-- **Storage (Supabase)**: $10/TB/month
-- **CDN (Vercel)**: Included
-- **Email (Resend)**: $0.10/1000 emails
+**Current State** (Self-hosted, 1K MAU):
 
-### Marketing (Monthly)
+```typescript
+const INFRASTRUCTURE_COSTS_CURRENT = {
+  hosting: {
+    service: 'Self-hosted VPS',
+    cost: 40,
+  },
+  total: 40,
+};
+```
 
-- **Content Creation**: $3,000-8,000
-  - Game trailers, tutorials, blog posts
-  - Social media content
-  - Community events
-- **Paid Acquisition**: $5,000-15,000
-  - Social media ads
-  - Influencer partnerships
-  - Game review sites
-- **Community Building**: $2,000-5,000
-  - Discord moderation
-  - Community events
-  - User engagement programs
+**Scaling State** (10K MAU):
+
+```typescript
+const INFRASTRUCTURE_COSTS_10K_MAU = {
+  hosting: {
+    service: 'Vercel Pro',
+    bandwidth: 1000, // GB/month
+    builds: 6000, // minutes/month
+    cost: 20, // Base + overages
+  },
+  database: {
+    service: 'Supabase Pro',
+    storage: 50, // GB
+    bandwidth: 250, // GB/month
+    cost: 25,
+  },
+  cdn: {
+    service: 'Cloudflare (included with Vercel)',
+    cost: 0,
+  },
+  storage: {
+    service: 'Supabase Storage',
+    game_assets: 100, // GB (images, audio)
+    user_data: 10, // GB (saves, profiles)
+    cost: 11, // $0.10/GB
+  },
+  email: {
+    service: 'Resend',
+    volume: 50000, // emails/month
+    cost: 5, // $0.10/1000
+  },
+  analytics: {
+    service: 'PostHog Cloud',
+    events: 1000000, // events/month
+    cost: 0, // Free tier covers this
+  },
+  websockets: {
+    service: 'Ably (for multiplayer)',
+    connections: 1000, // concurrent
+    messages: 10000000, // per month
+    cost: 30,
+  },
+  monitoring: {
+    service: 'Sentry',
+    events: 10000, // errors/month
+    cost: 26,
+  },
+  total_monthly: 117,
+  total_annual: 1404,
+};
+```
+
+**Scale State** (100K MAU):
+
+```typescript
+const INFRASTRUCTURE_COSTS_100K_MAU = {
+  hosting: {
+    vercel: 80, // Upgraded tier + bandwidth
+  },
+  database: {
+    supabase_team: 599, // Team plan (or self-hosted for $200/mo)
+  },
+  storage: {
+    cdn_assets: 1000, // GB (cache hit rate 90%)
+    cost: 50,
+  },
+  email: {
+    resend: 100, // 1M emails/month
+  },
+  websockets: {
+    ably: 150, // 10K concurrent connections
+  },
+  monitoring: {
+    sentry: 100,
+    datadog: 200, // Advanced monitoring
+  },
+  redis: {
+    upstash: 50, // Caching layer
+  },
+  total_monthly: 1329,
+  total_annual: 15948,
+};
+```
+
+**Cost per User Analysis**:
+
+| Scale   | MAU  | Monthly Cost | Cost per MAU | Cost per Paid User (4% conversion) |
+| ------- | ---- | ------------ | ------------ | ---------------------------------- |
+| Current | 1K   | $40          | $0.04        | $1.00                              |
+| Growth  | 10K  | $117         | $0.012       | $0.29                              |
+| Scale   | 100K | $1,329       | $0.013       | $0.33                              |
+| Mature  | 1M   | $8,500       | $0.009       | $0.21                              |
+
+**Cost Optimization Opportunities**:
+
+1. **Database**: Migrate from Supabase ($599/mo) to self-hosted Postgres ($200/mo) at 100K MAU = **$400/mo savings**
+2. **WebSockets**: Self-host Socket.io instead of Ably at 50K+ CCU = **$1,000-2,000/mo savings**
+3. **CDN**: Leverage Cloudflare Workers for edge computing = **$100-300/mo savings**
+4. **Total potential savings at scale**: **$1,500-2,700/month (30-40% reduction)**
+
+### Marketing (Monthly) - Channel-Specific CAC Breakdown
+
+**Marketing Budget Allocation by Growth Stage**:
+
+**Stage 1: MVP Launch** ($500-1,000/month):
+
+```typescript
+const MARKETING_BUDGET_STAGE_1 = {
+  organic: {
+    content_creation: 200, // DIY content
+    community_management: 100, // Part-time moderator
+  },
+  paid: {
+    facebook_ads: 200, // Testing
+    google_ads: 0, // Too expensive for MVP
+    reddit_ads: 100, // Niche targeting
+  },
+  total: 600,
+  expected_cac: 60, // High initial CAC
+  expected_signups: 10, // paid users
+};
+```
+
+**Stage 2: Growth Phase** ($5,000-10,000/month):
+
+```typescript
+const MARKETING_BUDGET_STAGE_2 = {
+  // Month 6-12, have PMF
+  paid_acquisition: {
+    facebook_instagram: {
+      budget: 2000,
+      cpc: 1.2, // Cost per click
+      clicks: 1667,
+      conversion_rate: 0.03, // 3% signup rate
+      signups: 50,
+      paid_conversion: 0.05, // 5% of signups pay
+      paid_users: 2.5,
+      cac: 800, // $2,000 / 2.5 = $800 per paid user
+    },
+    google_ads: {
+      budget: 1500,
+      cpc: 0.80, // Search ads
+      clicks: 1875,
+      conversion_rate: 0.04, // 4% (higher intent)
+      signups: 75,
+      paid_conversion: 0.06,
+      paid_users: 4.5,
+      cac: 333, // $1,500 / 4.5 = $333 per paid user
+    },
+    reddit_ads: {
+      budget: 500,
+      cpm: 5, // Cost per 1000 impressions
+      impressions: 100000,
+      ctr: 0.015, // 1.5% click-through
+      clicks: 1500,
+      conversion_rate: 0.02,
+      signups: 30,
+      paid_conversion: 0.04,
+      paid_users: 1.2,
+      cac: 417, // $500 / 1.2
+    },
+    tiktok_ads: {
+      budget: 1000,
+      cpc: 0.50, // Lower CPC, younger audience
+      clicks: 2000,
+      conversion_rate: 0.025,
+      signups: 50,
+      paid_conversion: 0.03,
+      paid_users: 1.5,
+      cac: 667, // $1,000 / 1.5
+    },
+  },
+  content_marketing: {
+    blog_seo: {
+      budget: 800, // Freelance writers
+      articles_per_month: 8,
+      traffic_per_article: 200, // over 6 months
+      monthly_traffic: 400, // Builds over time
+      conversion_rate: 0.02,
+      signups: 8,
+      paid_conversion: 0.05,
+      paid_users: 0.4,
+      cac: 2000, // High initially, drops over time as content ages
+    },
+    youtube: {
+      budget: 1200, // Video production
+      videos_per_month: 4,
+      views_per_video: 1000,
+      ctr: 0.05, // 5% to website
+      traffic: 200,
+      conversion_rate: 0.03,
+      signups: 6,
+      paid_conversion: 0.05,
+      paid_users: 0.3,
+      cac: 4000, // Very high, but builds brand
+    },
+  },
+  influencer_partnerships: {
+    micro_influencers: {
+      budget: 1000,
+      partnerships: 5, // $200 each
+      avg_views: 10000,
+      total_views: 50000,
+      ctr: 0.03,
+      traffic: 1500,
+      conversion_rate: 0.025,
+      signups: 37,
+      paid_conversion: 0.04,
+      paid_users: 1.5,
+      cac: 667, // $1,000 / 1.5
+    },
+  },
+  community_building: {
+    discord_events: {
+      budget: 500,
+      tournaments_prizes: 300,
+      moderation: 200,
+      retention_value: 'Indirect (reduces churn)',
+    },
+  },
+  total_budget: 8500,
+  total_paid_users: 12.4,
+  blended_cac: 685, // $8,500 / 12.4
+};
+```
+
+**Channel Performance Summary**:
+
+| Channel             | Monthly Budget | CAC   | Conversion Rate | Scalability | Priority |
+| ------------------- | -------------- | ----- | --------------- | ----------- | -------- |
+| Google Ads (Search) | $1,500         | $333  | 4%              | High        | 🟢 1     |
+| Reddit Ads          | $500           | $417  | 2%              | Medium      | 🟢 2     |
+| Micro-Influencers   | $1,000         | $667  | 2.5%            | High        | 🟡 3     |
+| TikTok Ads          | $1,000         | $667  | 2.5%            | High        | 🟡 3     |
+| Facebook/Instagram  | $2,000         | $800  | 3%              | High        | 🟠 4     |
+| Blog/SEO            | $800           | $2000 | 2%              | Very High   | 🟢 1\*   |
+| YouTube             | $1,200         | $4000 | 3%              | Medium      | 🔴 5     |
+
+\*SEO is highest priority for long-term, despite high initial CAC (decreases over time)
+
+**Optimized Budget Allocation** (Target CAC: $30-50):
+
+```typescript
+const OPTIMIZED_MARKETING_MIX = {
+  // After 6 months of testing, double down on winners
+  google_ads: 3000, // Best CAC, highest intent
+  reddit_ads: 1500, // Niche gaming communities
+  seo_content: 1500, // Compounds over time
+  influencers: 1500, // Authentic reach
+  facebook_ads: 1000, // Retargeting only
+  referrals: 500, // Incentivize word-of-mouth
+  total: 9000,
+  expected_paid_users: 180, // per month (9,000 / $50 target CAC)
+  ltv_target: 150, // $5/mo × 30 months × (1 - churn)
+  ltv_cac_ratio: 3.0, // Healthy ratio
+};
+```
+
+**LTV:CAC Optimization Path**:
+
+| Month | Blended CAC | LTV  | LTV:CAC | Status           |
+| ----- | ----------- | ---- | ------- | ---------------- |
+| 1     | $80         | $40  | 0.5x    | ❌ Unsustainable |
+| 3     | $65         | $60  | 0.9x    | 🟠 Still burning |
+| 6     | $50         | $90  | 1.8x    | 🟡 Approaching   |
+| 12    | $35         | $120 | 3.4x    | ✅ Healthy       |
+| 24    | $25         | $150 | 6.0x    | 🟢 Excellent     |
+
+**Marketing Execution Playbook**:
+
+**Week 1-4: Channel Testing**
+
+```bash
+# Allocate $100-200 per channel to test
+facebook_test: $200 → Measure CPC, CTR, conversion
+google_test: $200 → Test 3-5 keyword groups
+reddit_test: $100 → Test 2-3 subreddits
+tiktok_test: $200 → Test 3-5 creative variants
+
+# Kill underperformers Week 2
+# 2x budget on winners Week 3-4
+```
+
+**Month 2-3: Scale Winners**
+
+```bash
+# Pour 70% budget into channels with CAC < $50
+# Keep 30% for testing new channels (LinkedIn, Pinterest, etc.)
+```
+
+**Month 4-6: Optimize & Compound**
+
+```bash
+# Build SEO moat (content that ranks for "browser games", "indie games online")
+# Launch referral program (reduce CAC by 30-50%)
+# Influencer partnerships (negotiate revenue share instead of flat fee)
+```
 
 ## Monetization Implementation Guide
 
@@ -2222,6 +2775,17 @@ frontend/
   - Cloud saves
   - Basic stats tracking
 
+**Pricing Justification ($2.99/month)**:
+
+- **Competitor Analysis**:
+  - Spotify: $10.99/month (music streaming)
+  - Netflix Basic: $6.99/month (video streaming)
+  - Apple Arcade: $4.99/month (mobile games)
+  - **GameHub**: $2.99/month (browser games)
+- **Value Proposition**: 45% cheaper than Apple Arcade, positioned as "casual gaming snack" not "full meal"
+- **Psychology**: Under $3/month = impulse purchase territory (cost of a coffee)
+- **Conversion Goal**: 5-8% of free users at this price point
+
 #### 3. Game Enthusiast
 
 - **Price**: $4.99/month or $49.99/year (17% savings)
@@ -2233,6 +2797,26 @@ frontend/
   - Priority support
   - Exclusive in-game items (cosmetics only)
 
+**Pricing Justification ($4.99/month)**:
+
+- **Competitor Analysis**:
+  - Apple Arcade: $4.99/month (100+ games, mobile-only)
+  - Discord Nitro Basic: $2.99/month (enhanced chat features)
+  - Patreon typical tier: $5-10/month (creator support)
+  - **GameHub**: $4.99/month (games + early access + customization)
+- **Value Proposition**: Matches Apple Arcade pricing but for web + exclusive features
+- **Target Market**: Enthusiasts who want to support indie developers + get perks
+- **Upsell Strategy**: 20-30% of Casual tier users upgrade for early access
+- **Conversion Goal**: 2-3% of free users convert directly to this tier
+
+**Why $4.99 Works**:
+
+1. **Perceived Value**: Premium feel without "expensive" tag ($5-10 is sweet spot)
+2. **Competitive**: Same as Apple Arcade (establishes legitimacy)
+3. **Margin**: Higher ARPU ($4.99 vs $2.99 = 67% increase) with only marginal cost increase
+4. **Psychology**: "Under $5" threshold = still impulse purchase
+5. **Annual Conversion**: $49.99/year = $4.16/month (strong incentive to go annual)
+
 #### 4. Family Plan
 
 - **Price**: $9.99/month or $99.99/year (17% savings)
@@ -2243,6 +2827,127 @@ frontend/
   - Family sharing
   - Custom profiles per family member
   - Shared progress tracking
+
+**Pricing Justification ($9.99/month)**:
+
+- **Competitor Analysis**:
+  - Spotify Family: $16.99/month (6 accounts)
+  - Netflix Standard: $15.49/month (2 screens)
+  - Xbox Game Pass Ultimate: $16.99/month (family sharing)
+  - **GameHub Family**: $9.99/month (4 accounts)
+- **Value Proposition**: $2.50 per account (50% discount vs individual)
+- **Target Market**: Families with 2-4 gamers, households with kids
+- **Upsell Strategy**: Detect multiple users from same IP/billing address
+- **Conversion Goal**: 10-15% of enthusiast users upgrade to family
+
+#### 5. **Lifetime Access** (One-time purchase)
+
+- **Price**: $299 one-time (or $399 for Lifetime Family)
+- **Features**:
+  - All Game Enthusiast features (individual) or Family Plan features (family)
+  - Lifetime access to all current and future games
+  - Exclusive "Founder" badge
+  - Priority feature voting rights
+  - Annual "thank you" gift (premium cosmetics)
+  - Risk-free 60-day refund policy
+
+**Lifetime Tier Analysis**:
+
+```typescript
+// Financial modeling for lifetime subscriptions
+const LIFETIME_TIER_ECONOMICS = {
+  price: {
+    individual: 299,
+    family: 399,
+  },
+  breakeven: {
+    vs_monthly: {
+      casual: 299 / 2.99, // 100 months = 8.3 years
+      enthusiast: 299 / 4.99, // 60 months = 5 years
+    },
+    vs_annual: {
+      casual: 299 / 29.99, // 10 years
+      enthusiast: 299 / 49.99, // 6 years
+    },
+  },
+  assumptions: {
+    average_user_lifetime: 36, // months (3 years)
+    churn_rate_monthly: 0.045, // 4.5% monthly churn
+    churn_rate_lifetime: 0.01, // Lifetime users rarely "churn" (usage drops)
+  },
+  financial_impact: {
+    cash_now: 299, // Immediate revenue
+    lost_recurring: 180, // 36 months × $4.99 × (1-churn) ≈ $180
+    net_benefit: 119, // $299 - $180 = net gain
+  },
+  strategic_value: {
+    cash_flow: 'Upfront capital for growth',
+    retention: 'Higher lifetime engagement (sunk cost effect)',
+    marketing: 'Creates "FOMO" for limited lifetime offers',
+    community: 'Founders become brand advocates',
+  },
+};
+```
+
+**Lifetime Tier Recommendations**:
+
+**✅ PROS (Why Offer It)**:
+
+1. **Cash Flow**: Immediate capital injection ($299 vs $60/year)
+2. **Lower Churn**: Psychological commitment (sunk cost fallacy)
+3. **Marketing**: Scarcity tactics ("Only 500 lifetime spots available")
+4. **Community**: Lifetime members become brand evangelists
+5. **Simplicity**: No recurring billing hassles
+
+**❌ CONS (Why Be Cautious)**:
+
+1. **Opportunity Cost**: Lose $180 in LTV if user stays 5+ years
+2. **Revenue Predictability**: MRR decreases as lifetime sales increase
+3. **Feature Creep**: Lifetime users expect perpetual improvements
+4. **Market Signal**: May devalue monthly subscriptions
+
+**Strategic Implementation**:
+
+```typescript
+// How to offer lifetime tier strategically
+const LIFETIME_OFFER_STRATEGY = {
+  phase_1_launch: {
+    timing: 'Launch week only',
+    price: 199, // Early bird discount
+    limit: 100, // First 100 users only
+    goal: 'Generate $20K immediate capital + early adopters',
+  },
+  phase_2_annual: {
+    timing: 'Black Friday, anniversaries (2x per year)',
+    price: 299,
+    limit: 500, // Per event
+    goal: 'Cash injection + FOMO marketing',
+  },
+  phase_3_steady_state: {
+    timing: 'Always available',
+    price: 399, // Higher price to reduce cannibalization
+    limit: null, // No limit
+    goal: 'Option for whales and super fans',
+  },
+};
+```
+
+**Recommendation**:
+
+**OFFER LIFETIME TIER** with these guardrails:
+
+1. **Launch Window**: $199 for first 100 users (generate $20K capital + evangelists)
+2. **Regular Price**: $399 (not $299) to reduce cannibalization
+3. **Limited Quantity**: "Only 1,000 lifetime spots ever" (creates scarcity)
+4. **Positioning**: Market as "Founder's Pass" not "Lifetime Subscription"
+5. **Monitoring**: Cap lifetime sales at 10% of total paying users
+
+**Expected Results**:
+
+- **Year 1**: Sell 200 lifetime passes × $299 avg = $59,800 upfront
+- **Cash Flow**: Accelerate growth by 6-9 months
+- **Trade-off**: Lose ~$36K in recurring revenue over 5 years
+- **Net Benefit**: $23,800 gain + strategic advantages (evangelism, cash flow timing)
 
 > **💡 ALTERNATIVE STRATEGY**: Consider "pay-what-you-want" model for indie game platform (minimum $1/month), with suggested tiers at $3, $5, $10. This builds goodwill and aligns with indie game community values.
 
@@ -2409,16 +3114,480 @@ frontend/
 - <5% monthly churn
 - 25%+ conversion to paid
 
-## Next Steps
+## Comprehensive Action Plan
 
-1. Finalize development roadmap
-2. Secure initial funding
-3. Build partnerships
-4. Launch MVP
-5. Implement growth strategy
-6. Scale operations
-7. Prepare for exit
+### Phase 0: Pre-Launch Preparation (Months -3 to 0)
+
+**Goal**: Launch-ready MVP with 1,000+ email waitlist
+
+#### Month -3: Foundation
+
+**Week 1-2: Technical Setup**
+
+- [ ] Implement Stripe integration (test mode)
+- [ ] Set up PostHog analytics
+- [ ] Configure feature flags for premium tiers
+- [ ] Database schema for subscriptions
+- [ ] Deploy staging environment
+
+**Code Checklist**:
+
+```typescript
+// Critical files to create
+/api/subscriptions/create.ts
+/api/subscriptions/webhook.ts
+/lib/stripe-config.ts
+/lib/feature-flags.ts
+/middleware/subscription-check.ts
+```
+
+**Week 3-4: Landing Page & Waitlist**
+
+- [ ] Design "coming soon" landing page
+- [ ] Implement email capture form
+- [ ] Set up email automation (Resend)
+- [ ] Create referral system for waitlist
+
+**Marketing Assets**:
+
+- 5 game preview GIFs
+- Value proposition copy (3 variants for A/B test)
+- Social media profiles (Twitter, Reddit, Discord)
+
+#### Month -2: Content & Community
+
+**Week 1-2: Content Creation**
+
+- [ ] Write 4 blog posts ("Building in public" series)
+- [ ] Create 2 gameplay videos (Tetris, Chess)
+- [ ] Design social media templates
+- [ ] Set up Discord server
+
+**Week 3-4: Organic Marketing**
+
+- [ ] Post on Reddit (r/WebGames, r/IndieGaming)
+- [ ] Share on Indie Hackers
+- [ ] Reach out to 10 micro-influencers
+- [ ] Submit to Beta List, Product Hunt (upcoming)
+
+**Target**: 500 email signups by end of month
+
+#### Month -1: Polish & Prepare
+
+**Week 1-2: Product Polish**
+
+- [ ] Fix critical bugs (aim for zero P0 bugs)
+- [ ] Optimize game loading times (<2s)
+- [ ] Mobile responsiveness testing
+- [ ] Accessibility audit (WCAG 2.1)
+
+**Week 3-4: Launch Preparation**
+
+- [ ] Product Hunt launch assets prepared
+- [ ] Press kit created (screenshots, logo, copy)
+- [ ] Pricing page finalized
+- [ ] Customer support docs (FAQ, help center)
+- [ ] Launch day schedule (hourly tasks)
+
+**Target**: 1,000 email signups, 100% launch readiness
+
+### Phase 1: Launch (Month 0)
+
+**Goal**: 1,000+ users, 30-50 paid subscribers, $150-250 MRR
+
+#### Week 1: Soft Launch
+
+**Monday** (Day 1):
+
+- 6am EST: Launch on Product Hunt
+- 8am: Send email to waitlist (1,000 users)
+- 10am: Post on Reddit, Hacker News, Twitter
+- 12pm: Monitor analytics, fix critical issues
+- 5pm: Respond to all comments (PH, Reddit, HN)
+- 9pm: First status update to community
+
+**Tuesday-Wednesday** (Day 2-3):
+
+- Continue Product Hunt engagement (stay in top 5)
+- Send follow-up email to non-converters
+- Monitor server load (prepare to scale if needed)
+- Fix reported bugs within 24 hours
+
+**Thursday-Sunday** (Day 4-7):
+
+- Analyze first-week data
+- Identify drop-off points in funnel
+- Implement quick wins (UI tweaks)
+- Prepare week 2 content
+
+**Week 1 Targets**:
+
+- 2,500 signups (1,000 waitlist + 1,500 organic)
+- 75 paid conversions (3% conversion rate)
+- $375 MRR (avg $5 ARPU)
+- 4+ star rating on Product Hunt
+
+#### Week 2-4: Post-Launch Growth
+
+**Focus**: Conversion optimization, retention, feedback loop
+
+- [ ] Implement 3 highest-requested features
+- [ ] Launch referral program ("Give friends $5, get $5")
+- [ ] Start paid ads ($500/month budget)
+- [ ] Weekly newsletter to all users
+- [ ] First community tournament ($50 prize)
+
+**Month 0 Targets**:
+
+- 5,000 total users
+- 150 paid subscribers
+- $750 MRR
+- <10% churn rate
+
+### Phase 2: Growth (Months 1-6)
+
+**Goal**: 50,000 MAU, 2,000 paid, $10K MRR
+
+#### Month 1-2: Optimize & Scale
+
+**Focus**: Find product-market fit, optimize conversion funnel
+
+**Key Initiatives**:
+
+1. **A/B Testing** (Weeks 5-8)
+   - Test 3 pricing tiers: $2.99 vs $3.99 vs $4.99
+   - Test trial length: 7 days vs 14 days
+   - Test upgrade prompts: timing and copy
+
+2. **Feature Development** (Weeks 5-8)
+   - Ship multiplayer for Chess (Week 6)
+   - Ship achievement system (Week 7)
+   - Ship custom themes (Week 8)
+
+3. **Marketing** (Weeks 5-8)
+   - Scale ads to $2K/month
+   - Publish 8 blog posts (SEO)
+   - 2 influencer partnerships
+
+**Month 2 Targets**:
+
+- 15,000 MAU
+- 600 paid subscribers
+- $3,000 MRR
+- CAC: $50-60
+
+#### Month 3-4: Scale What Works
+
+**Focus**: Double down on winning channels, expand game library
+
+**Key Initiatives**:
+
+1. **Game Expansion** (Weeks 9-16)
+   - Add 5 new games (premium tier)
+   - Launch creator beta (10 selected creators)
+   - First community-created level pack
+
+2. **Marketing Scale** (Weeks 9-16)
+   - Increase ad budget to $5K/month
+   - 4 micro-influencer partnerships/month
+   - Launch YouTube channel (weekly videos)
+
+3. **B2B Pilot** (Weeks 13-16)
+   - Reach out to 20 companies for team-building pilot
+   - Offer free 30-day trial for first 5 companies
+   - Build corporate admin dashboard
+
+**Month 4 Targets**:
+
+- 30,000 MAU
+- 1,200 paid subscribers
+- $6,000 MRR
+- 2 corporate pilots signed
+
+#### Month 5-6: Expansion & Retention
+
+**Focus**: New revenue streams, reduce churn
+
+**Key Initiatives**:
+
+1. **Creator Economy** (Weeks 17-24)
+   - Open creator program to all
+   - Launch marketplace (user-generated levels)
+   - First creator payouts (70/30 split)
+
+2. **Tournaments & Events** (Weeks 17-24)
+   - Weekly tournaments (Chess, Tetris)
+   - First sponsored tournament ($500 prize, brand partner)
+   - Leaderboard seasons
+
+3. **Churn Reduction** (Weeks 17-24)
+   - Implement win-back campaigns
+   - Add "pause subscription" option
+   - Build habit-forming features (daily challenges)
+
+**Month 6 Targets**:
+
+- 50,000 MAU
+- 2,000 paid subscribers
+- $10,000 MRR
+- 5% monthly churn (down from 8%)
+- 3 corporate customers ($500/mo each)
+
+### Phase 3: Scaling (Months 7-12)
+
+**Goal**: 200,000 MAU, 8,000 paid, $40K MRR
+
+#### Month 7-9: Market Expansion
+
+**Focus**: Geographic expansion, mobile optimization, B2B push
+
+**Key Initiatives**:
+
+1. **International Expansion** (Weeks 25-36)
+   - Add Spanish, French, German localization
+   - Regional pricing (adjust for PPP)
+   - Partner with EU/LATAM influencers
+
+2. **Mobile Optimization** (Weeks 25-36)
+   - PWA (Progressive Web App) implementation
+   - Touch-optimized controls for all games
+   - iOS/Android homescreen install prompts
+
+3. **B2B Sales Engine** (Weeks 25-36)
+   - Hire first sales rep (commission-based)
+   - Outreach to 100 companies/month
+   - Build enterprise features (SSO, custom branding)
+
+**Month 9 Targets**:
+
+- 100,000 MAU
+- 4,000 paid subscribers
+- $20,000 MRR
+- 10 corporate customers ($500-2K/mo each)
+
+#### Month 10-12: Profitability Push
+
+**Focus**: Achieve profitability, prepare for Series A
+
+**Key Initiatives**:
+
+1. **Cost Optimization** (Weeks 37-48)
+   - Migrate to self-hosted database (save $400/mo)
+   - Implement aggressive caching (reduce compute 40%)
+   - Negotiate better ad rates (volume discounts)
+
+2. **Revenue Optimization** (Weeks 37-48)
+   - Launch lifetime tier ($299, limited to 500)
+   - Increase annual subscriptions (target 30% of paid users)
+   - Upsell family plans (10% of users)
+
+3. **Series A Prep** (Weeks 37-48)
+   - Hire CFO/financial consultant
+   - Build investor deck
+   - Reach out to 10-15 VCs
+
+**Month 12 Targets**:
+
+- 200,000 MAU
+- 8,000 paid subscribers
+- $40,000 MRR
+- Break-even on operational costs
+- Series A term sheet ($10M at $40M pre)
+
+### Phase 4: Maturity (Year 2+)
+
+**Goal**: 1M MAU, 40,000 paid, $200K MRR, Series A secured
+
+#### Year 2 Focus Areas
+
+1. **Product Expansion**
+   - 50+ games in library
+   - Advanced multiplayer (voice chat, tournaments)
+   - VR/AR game experiments
+   - AI-powered game recommendations
+
+2. **Revenue Diversification**
+   - B2B: $50K MRR (25% of revenue)
+   - Marketplace: $20K MRR (creator economy)
+   - Ads: $30K MRR (strategic brand partnerships)
+   - Subscriptions: $100K MRR (50% of revenue)
+
+3. **Team Scaling**
+   - Hire 20+ employees (10 eng, 5 marketing, 5 ops)
+   - Open second office (international)
+   - Build executive team (CTO, CMO, COO)
+
+4. **Market Position**
+   - Recognized brand in indie gaming
+   - 10K+ creators on platform
+   - Strategic partnerships (game studios, publishers)
+   - M&A opportunities explored
+
+**Year 2 Targets**:
+
+- 1M MAU
+- 40,000 paid subscribers
+- $200,000 MRR
+- $2.4M ARR
+- 30% profit margin
+- Valuation: $20-30M
+
+### Critical Success Factors
+
+**Must-Have** (Non-negotiable):
+
+1. **Product-Market Fit**: Achieve by Month 3 (evidence: <5% churn, >3% conversion)
+2. **Unit Economics**: LTV:CAC > 3x by Month 6
+3. **Cash Runway**: Maintain 12+ months runway at all times
+4. **Team**: Hire A-players only, culture > skills
+
+**Nice-to-Have** (Accelerators):
+
+1. **Viral Growth**: K-factor > 1.0 (referrals driving >30% growth)
+2. **Press Coverage**: Feature in TechCrunch, The Verge, etc.
+3. **Strategic Partner**: Gaming studio or platform partnership
+4. **Community**: 10K+ Discord members, active contributors
+
+### Risk Mitigation Plan
+
+**Scenario 1: Low Conversion (<2%)**
+
+- **Action**: Extend free trial to 30 days
+- **Action**: Add "freemium forever" tier with ads
+- **Action**: Pivot pricing down to $1.99/month
+
+**Scenario 2: High Churn (>8%)**
+
+- **Action**: Add pause subscription option
+- **Action**: Implement retention campaigns
+- **Action**: Increase content release cadence (weekly new games)
+
+**Scenario 3: CAC Too High (>$80)**
+
+- **Action**: Cut paid ads, focus on organic + referrals
+- **Action**: Double down on SEO content
+- **Action**: Launch aggressive referral program ($10 per referral)
+
+**Scenario 4: Slow Growth (<Target 50%)**
+
+- **Action**: Pivot to B2B focus (higher ARPU, lower churn)
+- **Action**: Launch white-label offering
+- **Action**: Seek strategic partnership instead of venture funding
+
+### Decision Points & Milestones
+
+**Month 3 Decision**: Continue or Pivot?
+
+- **Continue If**: >2,000 users, >60 paid, <8% churn, feedback positive
+- **Pivot If**: <1,000 users, <30 paid, >10% churn, feedback negative
+
+**Month 6 Decision**: Raise Seed or Bootstrap?
+
+- **Raise Seed If**: >$10K MRR, growing >15%/month, clear path to $1M ARR
+- **Bootstrap If**: Profitable, slow/steady growth, want to maintain control
+
+**Month 12 Decision**: Raise Series A or Stay Independent?
+
+- **Raise Series A If**: >$40K MRR, need capital to scale faster, competitive pressure
+- **Stay Independent If**: Profitable, sustainable growth, no burning need for capital
+
+## Next Steps (Immediate - Next 30 Days)
+
+### Week 1: Foundation
+
+1. **Technical**:
+   - [ ] Integrate Stripe (test mode)
+   - [ ] Set up analytics (PostHog)
+   - [ ] Deploy staging environment
+
+2. **Marketing**:
+   - [ ] Create landing page
+   - [ ] Set up email capture
+   - [ ] Create social media accounts
+
+3. **Content**:
+   - [ ] Write first blog post
+   - [ ] Record 2 gameplay videos
+   - [ ] Design 5 social media graphics
+
+### Week 2: Validation
+
+1. **Product**:
+   - [ ] Fix top 10 bugs
+   - [ ] Optimize load times
+   - [ ] Mobile testing
+
+2. **Marketing**:
+   - [ ] Post on Reddit (3 subreddits)
+   - [ ] Share on Indie Hackers
+   - [ ] Email 10 micro-influencers
+
+3. **Sales**:
+   - [ ] Reach out to 5 companies for pilot
+   - [ ] Create corporate pitch deck
+   - [ ] Build pricing comparison page
+
+### Week 3: Pre-Launch
+
+1. **Product**:
+   - [ ] Final QA pass
+   - [ ] Accessibility audit
+   - [ ] Performance optimization
+
+2. **Marketing**:
+   - [ ] Prepare Product Hunt launch
+   - [ ] Create press kit
+   - [ ] Schedule launch day posts
+
+3. **Operations**:
+   - [ ] Set up customer support (help desk)
+   - [ ] Write FAQ documentation
+   - [ ] Create internal playbooks
+
+### Week 4: Launch Week
+
+1. **Launch Day** (Tuesday, optimal for Product Hunt)
+2. **Monitor & Respond** (first 48 hours critical)
+3. **Analyze & Iterate** (end of week: what worked, what didn't)
+
+**Success Metrics** (Week 4):
+
+- 1,000+ signups
+- 30+ paid subscribers
+- $150+ MRR
+- 4+ star rating
+- 90%+ uptime
 
 ## Conclusion
 
-GameHub is positioned to become a leading gaming platform with multiple revenue streams and a clear path to profitability. The combination of subscription models, in-game purchases, and advertising creates a sustainable business model with significant growth potential. The platform's unique value proposition and strong technical foundation make it an attractive acquisition target for major players in the gaming and technology industries.
+GameHub is positioned to become a leading gaming platform with multiple revenue streams and a clear path to profitability. The combination of subscription models, in-game purchases, and advertising creates a sustainable business model with significant growth potential.
+
+**Key Differentiators**:
+
+1. **Hybrid Platform**: Games + productivity tools (unique combination)
+2. **Indie Focus**: Support indie developers vs competing with AAA platforms
+3. **Creator Economy**: Empower users to build and monetize content
+4. **Price**: $2.99-4.99/month vs $9.99 competitors (50% cheaper)
+
+**Critical Success Factors**:
+
+- **Product-Market Fit**: Validate by Month 3
+- **Unit Economics**: LTV:CAC > 3x by Month 6
+- **Execution**: Ship fast, learn fast, iterate fast
+- **Community**: Build passionate evangelists, not just users
+
+**Realistic Outcome** (5 years):
+
+- 500K-1M MAU
+- 20K-40K paid subscribers
+- $1.2M-2.4M ARR
+- Exit valuation: $10-20M (8-10x ARR)
+
+**Optimistic Outcome** (with strong execution + luck):
+
+- 2M-3M MAU
+- 100K-150K paid subscribers
+- $6M-10M ARR
+- Exit valuation: $50-100M (8-10x ARR)
+
+The platform's strong technical foundation, clear monetization strategy, and detailed execution roadmap make it an attractive opportunity for both organic growth and strategic acquisition. Success hinges on achieving product-market fit quickly, maintaining sustainable unit economics, and building a passionate community of gamers and creators.

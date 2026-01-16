@@ -356,26 +356,353 @@ export async function lookupISBN(isbn: string, tier: UserTier) {
 
 ### 10. **Bookstore Inventory Management** (Custom pricing: $199-999/month)
 
-**Target**: Independent bookstores, used bookstores
+**Target**: Independent bookstores, used bookstores, antiquarian dealers
 
-**Features**:
+#### 10.1 Target Customer Segments
 
-- **Inventory system**:
-  - Track stock (new, used, rare books)
-  - Low stock alerts
-  - Purchase order management
-- **POS integration**:
-  - Sell books directly (Stripe/Square)
-  - Automatic inventory reduction
-  - Sales reports & analytics
-- **Customer database**:
-  - Track customer purchases
-  - Personalized recommendations
-  - Email marketing (new arrivals, sales)
-- **Multi-location**:
-  - Manage multiple store locations
-  - Transfer books between locations
-  - Centralized reporting
+| Segment                    | Size (US) | Pain Points                                        | Pricing           |
+| -------------------------- | --------- | -------------------------------------------------- | ----------------- |
+| **Independent Bookstores** | ~2,500    | Outdated POS, manual inventory, no online presence | $299-499/mo       |
+| **Used Bookstores**        | ~3,000    | No ISBN scanning, disorganized inventory           | $199-299/mo       |
+| **Antiquarian Dealers**    | ~1,500    | Need condition tracking, appraisal tools           | $499-999/mo       |
+| **Book Fairs/Markets**     | ~500      | Temporary inventory needs, mobile checkout         | $99/mo (seasonal) |
+
+**Total Addressable Market**: 7,500 stores × $300 avg = **$2.25M MRR** (full market saturation - unrealistic)
+**Realistic Target**: 1% penetration in Year 2 = 75 stores × $300 = **$22,500 MRR** ($270K ARR)
+
+#### 10.2 Feature Breakdown
+
+**Core Features** (All Tiers):
+
+- **Inventory Management**:
+  - ISBN barcode scanning (bulk import support)
+  - Track stock levels (new, used, rare books)
+  - Automatic low-stock alerts (email/SMS)
+  - Multi-location inventory tracking
+  - Book condition tracking (Fine, Very Good, Good, Fair, Poor)
+  - Purchase order management (supplier tracking)
+
+- **Point of Sale (POS)**:
+  - Integrated checkout (Stripe Terminal, Square, Clover)
+  - Cash/card/check payment processing
+  - Receipt printing (physical + email)
+  - Tax calculation (configurable by location)
+  - Discount codes & promotions
+  - Loyalty program integration
+
+- **Customer Management**:
+  - Customer profiles (purchase history)
+  - Email marketing (Mailchimp/SendGrid integration)
+  - Personalized recommendations (based on past purchases)
+  - Wishlist & hold requests
+  - Store credit tracking
+
+- **Reporting & Analytics**:
+  - Daily sales reports
+  - Inventory turnover analysis
+  - Best-selling books & authors
+  - Profit margin tracking
+  - Sales forecasting
+
+**Premium Features** (Pro/Enterprise):
+
+- **Online Store Integration**:
+  - Public-facing website (white-labeled)
+  - E-commerce checkout (buy online, pick up in-store)
+  - Inventory sync with online listings
+  - Integration with AbeBooks, Alibris, Amazon Marketplace
+
+- **Advanced Tools**:
+  - Book valuation tools (AbeBooks pricing API)
+  - Rare book appraisal system
+  - Book club management (schedule, orders, discounts)
+  - Consignment tracking (sell books on behalf of customers)
+  - Event management (author signings, book launches)
+
+#### 10.3 Pricing Structure
+
+| Tier           | Price/Month | Locations | Users | Features                                  |
+| -------------- | ----------- | --------- | ----- | ----------------------------------------- |
+| **Starter**    | $199        | 1         | 2     | Basic inventory + POS + reporting         |
+| **Pro**        | $399        | 3         | 5     | + Online store + integrations + marketing |
+| **Enterprise** | $799-999    | Unlimited | 10+   | + White-label + API + dedicated support   |
+
+**Additional Charges**:
+
+- Transaction fees: 1.5% + $0.30 per sale (covers Stripe/Square fees + margin)
+- SMS alerts: $0.05/message
+- Additional users: $20/user/month
+- Onboarding/training: $500-1,500 (one-time)
+- Data migration: $250-1,000 (one-time, depends on data volume)
+
+#### 10.4 Implementation Example
+
+**Inventory Management**:
+
+```typescript
+// app/bookstore/inventory/page.tsx
+export default async function InventoryPage() {
+  const books = await db.bookstoreInventory.findMany({
+    where: { storeId: session.user.storeId },
+    include: { book: true },
+    orderBy: { quantity: 'asc' }, // Low stock first
+  });
+
+  return (
+    <div>
+      <h1>Inventory Management</h1>
+
+      {/* Quick Actions */}
+      <div className="actions">
+        <button onClick={scanBarcode}>Scan Barcode</button>
+        <button onClick={bulkImport}>Import CSV</button>
+        <button onClick={generatePO}>Create Purchase Order</button>
+      </div>
+
+      {/* Low Stock Alerts */}
+      {books.filter(b => b.quantity < b.reorderThreshold).length > 0 && (
+        <div className="alert warning">
+          ⚠️ {books.filter(b => b.quantity < b.reorderThreshold).length} books below reorder threshold
+        </div>
+      )}
+
+      {/* Inventory Table */}
+      <table>
+        <thead>
+          <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Quantity</th>
+            <th>Condition</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {books.map(book => (
+            <tr key={book.id} className={book.quantity === 0 ? 'out-of-stock' : ''}>
+              <td>{book.isbn}</td>
+              <td>{book.book.title}</td>
+              <td>{book.book.authors.join(', ')}</td>
+              <td>
+                {book.quantity}
+                {book.quantity < book.reorderThreshold && (
+                  <span className="badge">Low</span>
+                )}
+              </td>
+              <td>{book.condition}</td>
+              <td>${book.price.toFixed(2)}</td>
+              <td>
+                <button onClick={() => editBook(book.id)}>Edit</button>
+                <button onClick={() => sellBook(book.id)}>Sell</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+```
+
+**POS Integration**:
+
+```typescript
+// app/api/bookstore/checkout/route.ts
+export async function POST(req: Request) {
+  const { items, customer, paymentMethod } = await req.json();
+
+  // Calculate total
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = subtotal * 0.08; // 8% sales tax (configurable)
+  const total = subtotal + tax;
+
+  // Process payment via Stripe
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: Math.round(total * 100), // cents
+    currency: 'usd',
+    payment_method: paymentMethod,
+    confirm: true,
+    metadata: {
+      storeId: session.user.storeId,
+      customerId: customer.id,
+    },
+  });
+
+  if (paymentIntent.status === 'succeeded') {
+    // Create sale record
+    const sale = await db.bookstoreSale.create({
+      data: {
+        storeId: session.user.storeId,
+        customerId: customer.id,
+        items: {
+          create: items.map(item => ({
+            bookId: item.bookId,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        },
+        subtotal,
+        tax,
+        total,
+        paymentMethod: 'card',
+        stripePaymentIntentId: paymentIntent.id,
+      },
+    });
+
+    // Reduce inventory
+    for (const item of items) {
+      await db.bookstoreInventory.update({
+        where: { id: item.inventoryId },
+        data: { quantity: { decrement: item.quantity } },
+      });
+    }
+
+    // Send receipt email
+    await sendReceiptEmail(customer.email, sale);
+
+    return Response.json({ success: true, saleId: sale.id });
+  }
+
+  return Response.json({ error: 'Payment failed' }, { status: 400 });
+}
+```
+
+#### 10.5 Sales Process & Implementation Steps
+
+**Phase 1: Lead Generation** (Months 1-3)
+
+1. **Identify Target Bookstores**:
+   - Use American Booksellers Association (ABA) directory (~2,500 indie bookstores)
+   - Yelp/Google Maps: Search "used bookstores" in major cities
+   - Target criteria: 1,000-10,000 book inventory, no modern POS system
+
+2. **Outreach Strategy**:
+   - **Cold Email** (personalized):
+
+     ```
+     Subject: [Store Name] - Modernize Your Inventory System
+
+     Hi [Owner Name],
+
+     I noticed [Store Name] on [ABA/Yelp]. As a fellow book lover, I built LibraKeeper
+     to help independent bookstores like yours compete with online retailers.
+
+     Features:
+     - ISBN barcode scanning (add 100 books in 10 minutes)
+     - Integrated POS (Stripe/Square)
+     - Online store (sell 24/7, even when closed)
+
+     Would you be open to a 15-min demo?
+
+     [Demo booking link]
+     ```
+
+   - **Phone Calls**: Follow up 3 days after email
+   - **In-Person Visits**: Target local bookstores (bring iPad with demo)
+
+3. **Lead Magnet**:
+   - Free trial: 30 days full access (no credit card required)
+   - Free bookstore directory listing (drives foot traffic)
+   - Free website template (if they don't have one)
+
+**Phase 2: Sales & Onboarding** (Months 4-12)
+
+1. **Discovery Call** (30 min):
+   - Current pain points: "How do you track inventory today?"
+   - Tech comfort level: "Are you using any software currently?"
+   - Decision timeline: "When are you looking to make a change?"
+
+2. **Demo** (45 min):
+   - Live walkthrough: Scan real books from their store
+   - Highlight pain point solutions (e.g., "No more Excel spreadsheets!")
+   - ROI calculation: "Save 10 hours/week on inventory management = $5,200/year"
+
+3. **Trial Conversion**:
+   - Offer 30-day trial with hands-on onboarding call
+   - Schedule check-in at Day 7, 14, 21 (ensure adoption)
+   - Closing call on Day 28: "How has LibraKeeper helped?"
+
+4. **Onboarding** (1-2 weeks):
+   - Step 1: Import existing inventory (CSV or manual scanning)
+   - Step 2: Connect payment processor (Stripe/Square)
+   - Step 3: Train staff (2-hour training session)
+   - Step 4: Go live (soft launch for 1 week, then full launch)
+
+**Phase 3: Retention & Upsell** (Ongoing)
+
+1. **Customer Success**:
+   - Monthly check-ins (first 6 months)
+   - Quarterly business reviews (show ROI metrics)
+   - Feature training webinars (monthly)
+
+2. **Upsell Opportunities**:
+   - Starter → Pro: Offer online store when they mention low foot traffic
+   - Pro → Enterprise: Offer multi-location when they open 2nd store
+   - Add-ons: SMS alerts, additional users, integrations
+
+3. **Churn Prevention**:
+   - Monitor usage (flag accounts with <10 logins/month)
+   - Proactive outreach: "Haven't seen you log in lately, need help?"
+   - Retention offer: "Stay for 3 more months, get 25% off"
+
+#### 10.6 Case Study Example
+
+**"The Book Nook" - Used Bookstore in Portland, OR**
+
+**Before LibraKeeper**:
+
+- 5,000 books tracked in Excel spreadsheet
+- 15 hours/week spent on inventory management
+- No online presence (foot traffic only)
+- Manual cash register (no sales analytics)
+
+**After LibraKeeper** (6 months):
+
+- Entire inventory digitized in 2 weeks
+- 3 hours/week on inventory management (80% time savings)
+- Online store launched: $2,400/month in online sales
+- POS data shows best-selling genres (mysteries, sci-fi) → adjusted purchasing
+
+**ROI Calculation**:
+
+- LibraKeeper cost: $399/month = $4,788/year
+- Time saved: 12 hours/week × $15/hour × 52 weeks = $9,360/year
+- Online sales: $2,400/month × 12 = $28,800/year (new revenue)
+- **Net benefit**: $9,360 + $28,800 - $4,788 = **$33,372/year**
+
+**Testimonial**:
+
+> "LibraKeeper transformed our bookstore. We went from chaos to organized in weeks. The online store alone paid for the software 10x over."
+> — Sarah M., Owner, The Book Nook
+
+#### 10.7 Expected Revenue (Bookstore B2B)
+
+**Conservative Estimates**:
+
+| Timeline  | Starter | Pro | Enterprise | MRR     | ARR      |
+| --------- | ------- | --- | ---------- | ------- | -------- |
+| 6 months  | 5       | 2   | 0          | $1,793  | $21,516  |
+| 12 months | 12      | 5   | 1          | $4,383  | $52,596  |
+| 24 months | 25      | 15  | 5          | $14,960 | $179,520 |
+
+**Aggressive Estimates** (with dedicated sales team):
+
+| Timeline  | Starter | Pro | Enterprise | MRR     | ARR      |
+| --------- | ------- | --- | ---------- | ------- | -------- |
+| 6 months  | 10      | 5   | 1          | $4,784  | $57,408  |
+| 12 months | 25      | 15  | 5          | $14,960 | $179,520 |
+| 24 months | 50      | 30  | 15         | $33,920 | $407,040 |
+
+**Key Metrics to Track**:
+
+- Lead → Demo conversion: 25-30%
+- Demo → Trial conversion: 40-50%
+- Trial → Paid conversion: 30-40%
+- Annual churn rate: 10-15% (lower if product fits well)
+
+**Target**: 20-30 bookstore customers by end of Year 2 ($6K-12K MRR)
 
 ---
 
@@ -1474,17 +1801,44 @@ export default function CancelSubscriptionPage() {
 
 > **💡 REFERENCE**: See [IMPLEMENTATION_GUIDE_TEMPLATE.md](./IMPLEMENTATION_GUIDE_TEMPLATE.md) for general patterns. This section provides LibraKeeper-specific B2B implementations.
 
-### 1. ISBN Lookup API Implementation
+### 1. ISBN Lookup API Implementation & Cost Analysis
 
-**Target Market**: Bookstores, small libraries, book clubs, reading apps
+**Target Market**: Bookstores, small libraries, book clubs, reading apps, educational platforms
 
-**Implementation** (Next.js API Route):
+#### 1.1 ISBN Data Source Analysis
+
+**Free Sources** (Recommended for MVP):
+
+| Source              | Cost   | Rate Limit      | Data Quality | Coverage   |
+| ------------------- | ------ | --------------- | ------------ | ---------- |
+| **OpenLibrary API** | Free   | 100 req/min     | Good         | 20M+ books |
+| **Google Books**    | Free   | 1K req/day free | Excellent    | 40M+ books |
+| **ISBNdb**          | $10/mo | 500 req/day     | Excellent    | 30M+ books |
+
+**Premium Sources** (For enhanced metadata):
+
+| Source                  | Cost             | Benefits                                       | When to Add      |
+| ----------------------- | ---------------- | ---------------------------------------------- | ---------------- |
+| **ISBNdb Pro**          | $49-199/mo       | Better descriptions, series info, bulk lookups | 1K+ paid users   |
+| **Goodreads API**       | Deprecated       | (No longer available for new apps)             | N/A              |
+| **Amazon Product API**  | Free (affiliate) | Rich metadata, reviews, pricing                | Day 1 (free)     |
+| **Library of Congress** | Free             | Authority data, Dewey/LC classification        | Power User tier  |
+| **WorldCat Search**     | $500-2K/year     | Library holdings, editions, scholarly data     | 5K+ users or B2B |
+
+**Recommended Strategy**:
+
+1. **MVP (0-1K users)**: OpenLibrary + Google Books (aggregate both) - **$0/month**
+2. **Growth (1K-10K users)**: Add ISBNdb Basic ($10/mo) + Amazon Product API (free) - **$10/month**
+3. **Scale (10K+ users)**: ISBNdb Pro ($49-199/mo) + WorldCat ($500-2K/year) - **$90-365/month**
+
+#### 1.2 Implementation with Multi-Source Aggregation
 
 ```typescript
 // app/api/v1/isbn/[isbn]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rate-limit';
 import { authenticateApiKey } from '@/lib/api-auth';
+import { aggregateBookData } from '@/lib/isbn/aggregator';
 
 const limiter = rateLimit({
   interval: 60 * 1000, // 1 minute
@@ -1504,83 +1858,308 @@ export async function GET(
   }
 
   // Rate limiting based on plan
-  const limit = customer.plan === 'basic' ? 10 : 50; // per minute
+  const limit = customer.plan === 'basic' ? 10 : customer.plan === 'professional' ? 50 : 200;
   try {
     await limiter.check(limit, apiKey);
   } catch {
     return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
   }
 
-  // Fetch from OpenLibrary API (free)
   const isbn = params.isbn.replace(/[^0-9X]/gi, '');
-  const response = await fetch(
-    `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
-  );
 
-  const data = await response.json();
-  const book = data[`ISBN:${isbn}`];
+  // Check cache first (Redis)
+  const cached = await redis.get(`isbn:${isbn}`);
+  if (cached) {
+    await logApiUsage(customer.id, '/isbn', true); // hit=true
+    return NextResponse.json(JSON.parse(cached));
+  }
 
-  if (!book) {
+  // Aggregate from multiple sources
+  const bookData = await aggregateBookData(isbn, customer.plan);
+
+  if (!bookData) {
     return NextResponse.json({ error: 'Book not found' }, { status: 404 });
   }
 
-  // Transform to our schema
-  const result = {
-    isbn,
-    title: book.title,
-    authors: book.authors?.map((a: any) => a.name) || [],
-    publisher: book.publishers?.[0]?.name,
-    publishedDate: book.publish_date,
-    pageCount: book.number_of_pages,
-    coverImage: book.cover?.large || book.cover?.medium,
-    subjects: book.subjects?.map((s: any) => s.name) || [],
-    description: book.notes || book.subtitle,
-  };
+  // Cache for 30 days (book metadata rarely changes)
+  await redis.set(`isbn:${isbn}`, JSON.stringify(bookData), { ex: 60 * 60 * 24 * 30 });
 
   // Log usage for billing
-  await db.apiUsage.create({
-    data: {
-      customerId: customer.id,
-      endpoint: '/isbn',
-      timestamp: new Date(),
-    },
-  });
+  await logApiUsage(customer.id, '/isbn', false); // hit=false
 
-  return NextResponse.json(result);
+  return NextResponse.json(bookData);
 }
 ```
 
-**Pricing Tiers**:
+**Multi-Source Aggregator**:
+
+```typescript
+// lib/isbn/aggregator.ts
+export async function aggregateBookData(isbn: string, tier: 'basic' | 'professional' | 'enterprise') {
+  // Basic tier: OpenLibrary only
+  if (tier === 'basic') {
+    return await fetchOpenLibrary(isbn);
+  }
+
+  // Pro/Enterprise: Aggregate multiple sources in parallel
+  const [openLibrary, googleBooks, isbnDb, amazon] = await Promise.allSettled([
+    fetchOpenLibrary(isbn),
+    fetchGoogleBooks(isbn),
+    tier === 'enterprise' ? fetchISBNdb(isbn) : null,
+    fetchAmazonProduct(isbn),
+  ]);
+
+  // Merge data with priority: ISBNdb > Google Books > OpenLibrary
+  return {
+    isbn,
+    title: extractBestValue([isbnDb, googleBooks, openLibrary], 'title'),
+    authors: extractBestValue([isbnDb, googleBooks, openLibrary], 'authors'),
+    publisher: extractBestValue([isbnDb, googleBooks, openLibrary], 'publisher'),
+    publishedDate: extractBestValue([isbnDb, googleBooks, openLibrary], 'publishedDate'),
+    pageCount: extractBestValue([googleBooks, isbnDb, openLibrary], 'pageCount'),
+
+    // Enhanced metadata (Pro/Enterprise only)
+    description: extractBestValue([googleBooks, amazon, isbnDb], 'description'),
+    coverImages: [
+      googleBooks?.coverImage,
+      openLibrary?.coverImage,
+      amazon?.coverImage,
+    ].filter(Boolean),
+    subjects: [...new Set([
+      ...(googleBooks?.categories || []),
+      ...(openLibrary?.subjects || []),
+    ])],
+
+    // Enterprise only
+    ...(tier === 'enterprise' && {
+      series: isbnDb?.series,
+      edition: isbnDb?.edition,
+      language: isbnDb?.language,
+      deweyDecimal: isbnDb?.dewey_decimal,
+      lcClassification: isbnDb?.lc_classification,
+      msrp: amazon?.listPrice,
+      reviews: {
+        amazon: amazon?.rating,
+        goodreads: null, // API deprecated
+      },
+    }),
+  };
+}
+```
+
+#### 1.3 Pricing Tiers (Updated)
 
 ```typescript
 // lib/api-plans.ts
 export const API_PLANS = {
   basic: {
     price: 29,
-    lookupsPerMonth: 10000,
+    lookupsPerMonth: 10_000,
     rateLimit: 10, // per minute
+    sources: ['OpenLibrary'],
+    features: ['Basic metadata', 'Single cover image', 'Email support (48h)'],
   },
   professional: {
     price: 99,
-    lookupsPerMonth: 50000,
+    lookupsPerMonth: 50_000,
     rateLimit: 50,
+    sources: ['OpenLibrary', 'Google Books', 'Amazon'],
+    features: [
+      'Enhanced metadata',
+      'Multiple cover images',
+      'Descriptions & reviews',
+      'Email support (24h)',
+    ],
   },
   enterprise: {
     price: 299,
-    lookupsPerMonth: 200000,
+    lookupsPerMonth: 200_000,
     rateLimit: 200,
-    features: ['Bulk endpoints', 'Webhooks', 'Priority support'],
+    sources: ['All sources + ISBNdb Pro'],
+    features: [
+      'All Professional features',
+      'Series & edition info',
+      'Dewey Decimal & LC classification',
+      'Bulk endpoints (100 ISBNs/request)',
+      'Webhooks',
+      'Priority support (4h)',
+      'SLA guarantee (99.9% uptime)',
+    ],
   },
 };
 ```
 
-**Customer Onboarding Flow**:
+#### 1.4 Cost Analysis (B2B ISBN API)
 
-1. **Self-service signup**: Stripe Checkout with automatic API key generation
-2. **Developer portal**: Dashboard showing usage, docs, rate limits
-3. **Webhook notifications**: Alert when 80% of monthly quota used
+**Infrastructure Costs** (at scale):
 
-**Expected Revenue**: $500-2,000/month within 6 months (15-50 API customers)
+| Volume       | Basic Users | Pro Users | Enterprise | Redis Cache | Total Cost/Month |
+| ------------ | ----------- | --------- | ---------- | ----------- | ---------------- |
+| 100K lookups | 10 users    | 2 users   | 0          | $5          | $5               |
+| 500K lookups | 20 users    | 10 users  | 2          | $10         | $20              |
+| 2M lookups   | 30 users    | 30 users  | 10         | $30         | $80              |
+
+**External API Costs** (at 2M lookups/month):
+
+- OpenLibrary: Free
+- Google Books: Free (under 1K req/day) or $0 with proper caching
+- ISBNdb Pro: $199/month (unlimited lookups)
+- Redis (Upstash): $30/month
+- **Total**: ~$230/month
+
+**Revenue** (at 2M lookups):
+
+- 30 Basic ($29) = $870
+- 30 Pro ($99) = $2,970
+- 10 Enterprise ($299) = $2,990
+- **Total**: $6,830/month
+
+**Profit Margin**: ($6,830 - $230) / $6,830 = **96.6%** (extremely high-margin)
+
+#### 1.5 Customer Onboarding Flow
+
+**Self-Service Signup** (Stripe Checkout):
+
+```typescript
+// app/api/checkout/api-plan/route.ts
+export async function POST(req: Request) {
+  const { plan } = await req.json(); // 'basic' | 'professional' | 'enterprise'
+
+  const session = await stripe.checkout.sessions.create({
+    mode: 'subscription',
+    line_items: [{ price: API_PLANS[plan].stripePriceId, quantity: 1 }],
+    success_url: `${process.env.NEXT_PUBLIC_URL}/dashboard/api?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_URL}/pricing`,
+    metadata: { plan },
+  });
+
+  return Response.json({ url: session.url });
+}
+
+// Webhook: On successful payment, generate API key
+export async function handleCheckoutComplete(event: Stripe.Event) {
+  const session = event.data.object as Stripe.Checkout.Session;
+  const plan = session.metadata.plan;
+
+  // Generate API key
+  const apiKey = `lk_${plan.substring(0, 3)}_${randomBytes(32).toString('hex')}`;
+
+  await db.apiCustomer.create({
+    data: {
+      userId: session.customer as string,
+      plan,
+      apiKey,
+      stripeSubscriptionId: session.subscription as string,
+    },
+  });
+
+  // Send welcome email with API key
+  await sendEmail({
+    to: session.customer_email,
+    subject: 'Your LibraKeeper API Key',
+    template: 'api-welcome',
+    data: { apiKey, plan, docs: 'https://docs.librakeeper.com/api' },
+  });
+}
+```
+
+**Developer Portal** (Usage Dashboard):
+
+```tsx
+// app/dashboard/api/page.tsx
+export default async function ApiDashboard() {
+  const customer = await getApiCustomer();
+  const usage = await db.apiUsage.count({
+    where: {
+      customerId: customer.id,
+      timestamp: { gte: startOfMonth(new Date()) },
+    },
+  });
+
+  const plan = API_PLANS[customer.plan];
+  const percentUsed = (usage / plan.lookupsPerMonth) * 100;
+
+  return (
+    <div>
+      <h1>API Dashboard</h1>
+      <div className="stats">
+        <div>Plan: {customer.plan}</div>
+        <div>Usage: {usage.toLocaleString()} / {plan.lookupsPerMonth.toLocaleString()}</div>
+        <div>
+          <progress value={percentUsed} max={100} />
+          {percentUsed >= 80 && (
+            <span className="warning">⚠️ You've used {percentUsed.toFixed(0)}% of your quota</span>
+          )}
+        </div>
+      </div>
+
+      <div className="api-key">
+        <h2>API Key</h2>
+        <code>{customer.apiKey}</code>
+        <button onClick={regenerateKey}>Regenerate</button>
+      </div>
+
+      <div className="docs">
+        <a href="/docs/api">View Documentation</a>
+      </div>
+    </div>
+  );
+}
+```
+
+**Webhook Notifications** (Quota alerts):
+
+```typescript
+// lib/cron/check-api-quotas.ts (runs hourly)
+export async function checkApiQuotas() {
+  const customers = await db.apiCustomer.findMany();
+
+  for (const customer of customers) {
+    const usage = await db.apiUsage.count({
+      where: {
+        customerId: customer.id,
+        timestamp: { gte: startOfMonth(new Date()) },
+      },
+    });
+
+    const plan = API_PLANS[customer.plan];
+    const percentUsed = (usage / plan.lookupsPerMonth) * 100;
+
+    // Alert at 80%, 90%, 100%
+    if (percentUsed >= 80 && !customer.notifiedAt80) {
+      await sendEmail({
+        to: customer.email,
+        subject: '⚠️ API Quota Alert: 80% Used',
+        body: `You've used ${percentUsed.toFixed(0)}% of your ${plan.lookupsPerMonth.toLocaleString()} monthly lookups. Consider upgrading to avoid disruption.`,
+      });
+      await db.apiCustomer.update({
+        where: { id: customer.id },
+        data: { notifiedAt80: new Date() },
+      });
+    }
+  }
+}
+```
+
+#### 1.6 Expected Revenue
+
+**Conservative Estimates**:
+
+| Timeline  | Basic Users | Pro Users | Enterprise | MRR    | ARR     |
+| --------- | ----------- | --------- | ---------- | ------ | ------- |
+| 6 months  | 15          | 3         | 1          | $1,032 | $12,384 |
+| 12 months | 30          | 10        | 3          | $2,757 | $33,084 |
+| 24 months | 60          | 25        | 10         | $6,215 | $74,580 |
+
+**Aggressive Estimates** (with outbound sales):
+
+| Timeline  | Basic Users | Pro Users | Enterprise | MRR     | ARR      |
+| --------- | ----------- | --------- | ---------- | ------- | -------- |
+| 6 months  | 25          | 8         | 2          | $2,317  | $27,804  |
+| 12 months | 50          | 20        | 8          | $5,872  | $70,464  |
+| 24 months | 100         | 50        | 20         | $14,850 | $178,200 |
+
+**Target**: $5K-10K MRR by end of Year 1
 
 ---
 
@@ -2340,16 +2919,424 @@ export async function updateUserStats() {
 
 ---
 
-## Next Steps
+## Comprehensive Action Plan
 
-1. Finalize development roadmap
-2. Secure initial funding
-3. Build partnerships
-4. Launch MVP
-5. Implement growth strategy
-6. Scale operations
-7. Prepare for exit
+### Phase 1: Foundation & MVP (Months 1-6) - "Get to Market"
+
+**Goal**: Launch minimum viable product with B2C freemium model and validate product-market fit
+
+#### Development (Months 1-3)
+
+**Priority 1 - Core Platform** (Must-have):
+
+- [ ] Implement feature flagging system (Flagsmith or PostHog)
+- [ ] Set up Stripe payments (subscription management)
+- [ ] Build freemium tier limits (100 books, 1 collection)
+- [ ] Implement upgrade prompts (book limit, collection limit, export triggers)
+- [ ] Add ISBN lookup with OpenLibrary + Google Books aggregation
+- [ ] Build reading stats dashboard (books read, progress tracking)
+- [ ] Implement basic export (CSV, PDF with covers)
+
+**Priority 2 - Analytics & Tracking** (Should-have):
+
+- [ ] Install PostHog or Plausible analytics
+- [ ] Set up conversion funnel tracking (signup → trial → paid)
+- [ ] Build admin dashboard (MRR, churn, user stats)
+- [ ] Implement usage tracking (which features users engage with)
+
+**Priority 3 - Onboarding** (Nice-to-have):
+
+- [ ] Create onboarding flow (add first 10 books, create collection, set goal)
+- [ ] Build email drip campaign templates (welcome, tips, upgrade prompts)
+- [ ] Add gamification (achievements for milestones)
+
+**Cost**: $0-500/month (Vercel, Supabase, Stripe free tiers)
+
+#### Pre-Launch Marketing (Months 2-4)
+
+**Waitlist Building**:
+
+- [ ] Create landing page with waitlist signup (ConvertKit: free for <1K subscribers)
+- [ ] Write 5-10 SEO blog posts ("how to organize book collection", "best library apps 2026")
+- [ ] Record 2-3 YouTube videos (library tour, app demo, book cataloging tips)
+- [ ] Post on Reddit (r/books, r/bookshelf) with demo video
+- [ ] Reach out to 10-20 Bookstagrammers/BookTubers (offer lifetime Pro for post)
+
+**Target**: 500-1,000 waitlist signups
+
+**Budget**: $500-1,000 (influencer payments, content creation tools)
+
+#### Launch (Month 6)
+
+**Launch Strategy**:
+
+- [ ] Product Hunt launch (Tuesday morning, coordinate with email blast)
+- [ ] Email waitlist: "LibraKeeper is live! 50% off for first 100 users"
+- [ ] Social media blitz (Twitter thread, Instagram carousel, TikTok video)
+- [ ] Submit to The Verge, TechCrunch, Lifehacker (indie dev story angle)
+
+**Success Metrics**:
+
+- 2,000-5,000 free signups (Month 1)
+- 50-100 paid users (Month 3)
+- $500-1,000 MRR (Month 6)
+- 5-10% free → paid conversion rate
+
+---
+
+### Phase 2: Growth & Monetization (Months 7-18) - "Scale B2C"
+
+**Goal**: Reach 20,000 MAU, 10% paid conversion, $20K MRR
+
+#### Feature Development (Months 7-12)
+
+**Priority 1 - Retention Features**:
+
+- [ ] Mobile app (React Native + Expo) with barcode scanner
+- [ ] Social features (follow friends, activity feed, book recommendations)
+- [ ] Reading challenges ("Read 50 books in 2026")
+- [ ] Book clubs (create/join groups, shared reading lists)
+- [ ] Lending management (track who borrowed what, reminders)
+
+**Priority 2 - Engagement Features**:
+
+- [ ] Smart collections (auto-populate based on rules)
+- [ ] Advanced search (filters, full-text search)
+- [ ] Reading goal tracker with streaks
+- [ ] Shareable library pages (public profiles)
+- [ ] Reading recap (Spotify Wrapped style)
+
+**Cost**: $500-2,000/month (Vercel Pro, Supabase Pro, Stripe fees, email service)
+
+#### Marketing Expansion (Months 7-18)
+
+**Paid Acquisition** ($3,000-5,000/month):
+
+- [ ] Facebook/Instagram ads (60% of budget)
+  - Target: Age 25-55, interests: "Reading", "Books", "Goodreads"
+  - Creative: Before/after library organization, testimonials
+- [ ] Google Ads (30% of budget)
+  - Keywords: "book catalog software", "organize book collection", "library management app"
+- [ ] Reddit Ads (10% of budget)
+  - Subreddits: r/books, r/bookshelf, r/LibraryScience
+
+**Content Marketing** (2-3 posts/week):
+
+- [ ] SEO blog posts (target long-tail keywords)
+- [ ] User-generated content (feature beautiful libraries)
+- [ ] Monthly challenges (prizes for participation)
+- [ ] Community building (Discord server, monthly book club)
+
+**Partnerships**:
+
+- [ ] Local libraries (offer free accounts for staff)
+- [ ] Book clubs (group plans with special features)
+- [ ] Homeschool communities (curriculum-aligned features)
+
+**Success Metrics**:
+
+- 20,000 MAU (Month 18)
+- 2,000 paid users (10% conversion)
+- $10,000-20,000 MRR (Month 18)
+- <5% monthly churn
+
+**Budget**: $3,000-5,000/month (paid ads, content creation, tools)
+
+---
+
+### Phase 3: B2B Expansion (Months 19-36) - "Enterprise Revenue"
+
+**Goal**: Launch B2B products, reach $50K MRR (60% B2C, 40% B2B)
+
+#### B2B Product Development (Months 19-24)
+
+**Priority 1 - ISBN Lookup API**:
+
+- [ ] Build API with rate limiting and authentication
+- [ ] Create developer portal (usage dashboard, docs, API key management)
+- [ ] Set up Stripe for API subscriptions
+- [ ] Implement caching layer (Redis) to reduce external API costs
+- [ ] Write API documentation (interactive examples with Postman/Insomnia)
+- [ ] Add webhook notifications (quota alerts)
+
+**Launch Plan**:
+
+- Month 19-20: Build API
+- Month 21: Beta testing with 5-10 customers (free trial)
+- Month 22: Public launch (Product Hunt, Reddit, HN)
+
+**Target**: 15-30 API customers by Month 36 ($1K-3K MRR)
+
+**Priority 2 - Bookstore Inventory Management**:
+
+- [ ] Build inventory system (barcode scanning, stock tracking, alerts)
+- [ ] Integrate POS (Stripe Terminal, Square)
+- [ ] Create customer management features (purchase history, email marketing)
+- [ ] Build online store module (white-labeled storefront)
+- [ ] Add reporting & analytics dashboard
+
+**Launch Plan**:
+
+- Month 22-24: Build core features
+- Month 25: Beta with 3-5 bookstores (deep customer development)
+- Month 26: Public launch (target ABA members)
+
+**Target**: 20-30 bookstore customers by Month 36 ($6K-12K MRR)
+
+**Priority 3 - White-Label Licensing**:
+
+- [ ] Build white-label infrastructure (subdomain provisioning, branding config)
+- [ ] Create automated deployment pipeline (Vercel API integration)
+- [ ] Set up multi-tenant database architecture
+- [ ] Build client admin panel (manage users, view analytics)
+
+**Launch Plan**:
+
+- Month 26-28: Build infrastructure
+- Month 29-30: Pilot with 2-3 clients (manual onboarding)
+- Month 31+: Self-service signup with automated provisioning
+
+**Target**: 5-10 white-label clients by Month 36 ($2.5K-13K MRR)
+
+#### B2B Sales & Marketing (Months 25-36)
+
+**Outbound Sales**:
+
+- [ ] Hire part-time BDR (Business Development Rep) or VA for outreach
+- [ ] Build lead lists (ABA directory for bookstores, indie dev forums for API)
+- [ ] Create sales deck and demo videos
+- [ ] Set up demo booking system (Calendly)
+- [ ] Implement CRM (HubSpot free tier or Pipedrive)
+
+**Sales Process**:
+
+1. Cold email/LinkedIn outreach (personalized, 50-100/week)
+2. Discovery call (30 min, understand pain points)
+3. Demo (45 min, live walkthrough)
+4. Trial (30 days, hands-on onboarding)
+5. Closing call (show ROI, address objections)
+
+**Content Marketing for B2B**:
+
+- [ ] Write case studies (successful bookstore implementations)
+- [ ] Create ROI calculators (time saved, revenue gained)
+- [ ] Build comparison pages (vs competitors like Koha, LibraryThing)
+- [ ] Guest post on bookstore/library blogs
+
+**Success Metrics**:
+
+- 50-70 total B2B customers (API + bookstores + white-label)
+- $20K-30K MRR from B2B (40% of total revenue)
+- $50K-70K total MRR (Month 36)
+
+**Budget**: $5,000-8,000/month (BDR salary, ads, tools, travel for in-person demos)
+
+---
+
+### Phase 4: Profitability & Scale (Year 3+) - "Sustainable Growth"
+
+**Goal**: Reach $100K MRR, 25%+ profit margin, prepare for exit
+
+#### Optimization (Months 37-48)
+
+**Cost Reduction**:
+
+- [ ] Implement metadata caching (Redis) - save $50-100/month
+- [ ] Optimize cover images (Cloudflare Images) - save $100-200/month
+- [ ] Database query optimization (materialized views) - save $50-100/month
+- [ ] Delay Meilisearch until >50K MAU (save $360/year)
+
+**Automation**:
+
+- [ ] Automate customer support (chatbot, knowledge base)
+- [ ] Self-service onboarding for B2B (reduce manual work)
+- [ ] Automated churn prevention (win-back campaigns)
+- [ ] Referral program (incentivize word-of-mouth)
+
+**Team Expansion** (if needed):
+
+- [ ] Hire full-time engineer (if growth justifies it)
+- [ ] Contract designer (improve UI/UX based on feedback)
+- [ ] Part-time customer success manager (B2B accounts)
+
+#### Exit Preparation (Year 4-5)
+
+**Financials**:
+
+- [ ] Achieve $1M-2M ARR
+- [ ] Maintain 25%+ net profit margin
+- [ ] Demonstrate <10% annual churn
+- [ ] Show 20-30% YoY growth
+
+**Potential Acquirers**:
+
+1. **Library Software**: LibraryThing, Goodreads, Libib
+2. **Retailers**: Amazon, Barnes & Noble, AbeBooks
+3. **Publishers**: Penguin Random House, HarperCollins
+
+**Exit Valuation**:
+
+- **Conservative**: 5-7x ARR → $5M-14M (at $1M-2M ARR)
+- **Optimistic**: 8-10x ARR → $8M-20M (with high growth, low churn)
+
+**Timeline**: Year 4-5 (begin outreach), Year 5-6 (close deal)
+
+---
+
+## Cost Summary by Phase
+
+### Year 1 (Months 1-12): Foundation & Launch
+
+| Category       | Monthly Cost     | Annual Cost        |
+| -------------- | ---------------- | ------------------ |
+| Infrastructure | $100-500         | $1,200-6,000       |
+| Marketing      | $1,000-2,000     | $12,000-24,000     |
+| Tools/Software | $100-300         | $1,200-3,600       |
+| **Total**      | **$1,200-2,800** | **$14,400-33,600** |
+
+**Revenue Goal**: $10K-20K MRR by Month 12 → Break-even at 1,000-2,000 paid users
+
+### Year 2 (Months 13-24): Growth & B2B Launch
+
+| Category       | Monthly Cost      | Annual Cost         |
+| -------------- | ----------------- | ------------------- |
+| Infrastructure | $500-2,000        | $6,000-24,000       |
+| Marketing      | $3,000-5,000      | $36,000-60,000      |
+| Sales (BDR)    | $2,000-3,000      | $24,000-36,000      |
+| Tools/Software | $300-500          | $3,600-6,000        |
+| **Total**      | **$5,800-10,500** | **$69,600-126,000** |
+
+**Revenue Goal**: $50K-70K MRR by Month 24 → Profitable at $60K+ MRR
+
+### Year 3+: Profitability & Scale
+
+| Category        | Monthly Cost       | Annual Cost          |
+| --------------- | ------------------ | -------------------- |
+| Infrastructure  | $2,000-5,000       | $24,000-60,000       |
+| Marketing       | $5,000-10,000      | $60,000-120,000      |
+| Sales & Support | $5,000-10,000      | $60,000-120,000      |
+| Team (if hired) | $10,000-20,000     | $120,000-240,000     |
+| Tools/Software  | $500-1,000         | $6,000-12,000        |
+| **Total**       | **$22,500-46,000** | **$270,000-552,000** |
+
+**Revenue Goal**: $100K-150K MRR → 25-30% net profit margin = $25K-45K profit/month
+
+---
+
+## Revenue Projections Summary
+
+### Conservative Scenario
+
+| Timeline | B2C Users | B2C MRR | B2B Customers | B2B MRR | Total MRR | ARR      |
+| -------- | --------- | ------- | ------------- | ------- | --------- | -------- |
+| Month 6  | 50        | $250    | 0             | $0      | $250      | $3,000   |
+| Month 12 | 200       | $1,000  | 5             | $500    | $1,500    | $18,000  |
+| Month 18 | 800       | $4,000  | 15            | $2,000  | $6,000    | $72,000  |
+| Month 24 | 2,000     | $10,000 | 30            | $5,000  | $15,000   | $180,000 |
+| Month 36 | 5,000     | $25,000 | 70            | $20,000 | $45,000   | $540,000 |
+
+### Aggressive Scenario (with funding/team)
+
+| Timeline | B2C Users | B2C MRR | B2B Customers | B2B MRR | Total MRR | ARR        |
+| -------- | --------- | ------- | ------------- | ------- | --------- | ---------- |
+| Month 6  | 100       | $500    | 0             | $0      | $500      | $6,000     |
+| Month 12 | 500       | $2,500  | 10            | $1,500  | $4,000    | $48,000    |
+| Month 18 | 2,000     | $10,000 | 30            | $6,000  | $16,000   | $192,000   |
+| Month 24 | 5,000     | $25,000 | 60            | $15,000 | $40,000   | $480,000   |
+| Month 36 | 10,000    | $50,000 | 120           | $40,000 | $90,000   | $1,080,000 |
+
+**Key Assumptions**:
+
+- B2C ARPU: $5/month (blend of $4.99 Book Lover + $9.99 Power User)
+- B2C conversion rate: 10% (free → paid)
+- B2B ARPU: $300/month (blend of API, bookstores, white-label)
+- Annual churn: 10-15% (improve with better onboarding and support)
+
+---
+
+## Key Success Factors
+
+### What Must Go Right
+
+1. **Product-Market Fit**: Book lovers must love the product (NPS >50)
+2. **Viral Growth**: Word-of-mouth and social sharing drive organic signups
+3. **Free → Paid Conversion**: 10%+ conversion rate (industry avg: 2-5%)
+4. **B2B Sales**: Successfully land 20-30 bookstore/API customers in Year 2
+5. **Low Churn**: Keep annual churn <15% (monthly churn <1.5%)
+6. **Cost Control**: Maintain 25%+ profit margin through optimization
+
+### Biggest Risks & Mitigation
+
+| Risk                            | Impact | Likelihood | Mitigation                                   |
+| ------------------------------- | ------ | ---------- | -------------------------------------------- |
+| **Low conversion rate (<5%)**   | High   | Medium     | A/B test pricing, features, onboarding       |
+| **High churn (>20%)**           | High   | Medium     | Improve onboarding, add sticky features      |
+| **B2B sales fail**              | Medium | Low        | Focus on B2C, delay B2B until PMF proven     |
+| **Competitor launches similar** | Medium | Medium     | Build moat via community, data, integrations |
+| **ISBN API costs spike**        | Low    | Low        | Cache aggressively, use free sources first   |
+
+---
+
+## Next Steps (Immediate)
+
+### If Starting Today (Q1 2026):
+
+**Week 1-2: Planning**
+
+- [ ] Review this document and prioritize features
+- [ ] Set up project management (Linear, GitHub Projects, or Notion)
+- [ ] Create development roadmap (Months 1-6)
+- [ ] Set up analytics (PostHog or Plausible)
+
+**Week 3-4: Development**
+
+- [ ] Implement feature flagging (Flagsmith)
+- [ ] Set up Stripe payments (test mode)
+- [ ] Build freemium tier limits
+- [ ] Create upgrade prompts (modals, banners)
+
+**Month 2: Pre-Launch Marketing**
+
+- [ ] Create landing page with waitlist
+- [ ] Write 5 SEO blog posts
+- [ ] Record 2 demo videos
+- [ ] Reach out to 10 BookTubers/Bookstagrammers
+
+**Month 3-5: Beta Testing**
+
+- [ ] Invite 50-100 waitlist users to beta
+- [ ] Collect feedback (surveys, interviews)
+- [ ] Iterate on features based on feedback
+- [ ] Refine pricing and positioning
+
+**Month 6: Launch**
+
+- [ ] Product Hunt launch
+- [ ] Email waitlist
+- [ ] Social media blitz
+- [ ] Press outreach
+
+**Success Criteria for Month 6**:
+
+- 2,000+ free signups
+- 50-100 paid users
+- $500-1,000 MRR
+- NPS score >40
+
+---
 
 ## Conclusion
 
-LibraKeeper is positioned to become the go-to platform for book lovers and libraries with a clear path to profitability. The combination of subscription models, B2B API services, white-label licensing, affiliate revenue, and professional services creates a diversified, sustainable business model with significant growth potential. The platform's unique value proposition and strong technical foundation make it an attractive acquisition target for major players in the book and library management industries.
+LibraKeeper has strong potential as a **high-margin SaaS business** with **diversified revenue streams** (B2C subscriptions, B2B API, bookstore management, white-label licensing, affiliate revenue). The combination of:
+
+1. **Large addressable market**: 100M+ book lovers in US alone
+2. **Low competition**: Goodreads (social only), Libib (basic features), LibraryThing (outdated UI)
+3. **High switching costs**: Once users catalog 100+ books, they won't leave
+4. **Multiple monetization paths**: B2C, B2B, services, affiliates
+5. **Defensibility**: Network effects (social features), data moat (user-generated content)
+
+...makes this a **compelling opportunity** for a solo founder or small team.
+
+**Recommended Path**: Start with B2C (Months 1-18), achieve $10K-20K MRR and product-market fit, then expand to B2B (Months 19+) to reach $50K-100K MRR. Exit in Year 4-5 at $1M-2M ARR for $5M-20M valuation.
+
+**Key Decision Point**: Month 12 - If MRR <$5K, pivot strategy or shut down. If MRR >$10K, double down and hire team.
