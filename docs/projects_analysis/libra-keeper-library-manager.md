@@ -33,12 +33,462 @@ LibraKeeper is a comprehensive digital library management system that helps user
 
 ## Key Features
 
-### Core Functionality
+> **💡 FEATURE STRATEGY**: Build for individual book lovers first (B2C), then expand to librarians and bookstores (B2B).
 
-- **Multi-format Cataloging**: Track books, music, movies, games, and collectibles
-- **Lending System**: Manage item loans with status tracking
-- **Social Features**: User interactions, comments, and messaging
-- **Admin Dashboard**: Comprehensive system management
+---
+
+## 📚 Core Cataloging Features (Current + Expanded)
+
+### 1. **Intelligent Book Entry** (Free + Premium)
+
+**Current Implementation**:
+
+- Manual entry (title, author, ISBN)
+- Basic metadata (publisher, pages, year)
+
+**Expanded Features** (B2C):
+
+#### Free Tier:
+
+- **ISBN Lookup** (10 searches/month)
+  - Scan barcode with phone camera
+  - Auto-fill from OpenLibrary API
+  - Basic metadata only (title, author, cover)
+- **Manual entry** (unlimited)
+- **CSV import** (once/month, 100 books max)
+
+#### Book Lover Tier ($4.99/month):
+
+- **Unlimited ISBN lookups**
+- **Enhanced metadata**:
+  - Multiple cover options (choose your favorite)
+  - Synopsis from Goodreads/Amazon
+  - Genre tags (auto-suggested)
+  - Original publication dates
+  - Series information
+- **Bulk import**:
+  - Goodreads CSV (unlimited)
+  - LibraryThing import
+  - Excel/CSV (unlimited size)
+- **Duplicate detection** (smart merging)
+- **Barcode scanner** (mobile app, batch mode)
+
+#### Power User Tier ($9.99/month):
+
+- All Book Lover features
+- **Advanced cataloging**:
+  - Custom fields (condition, location, purchase price, value)
+  - Multiple editions tracking
+  - Book versions (hardcover, paperback, e-book, audiobook)
+  - Signed copies/first editions
+- **Professional metadata**:
+  - Library of Congress data
+  - Dewey Decimal Classification
+  - Subject headings
+- **OCR scanning** (scan book spines, auto-catalog)
+
+**Implementation**:
+
+```typescript
+// lib/features/isbn-lookup.ts
+export async function lookupISBN(isbn: string, tier: UserTier) {
+  // Free tier: OpenLibrary only
+  if (tier === 'free') {
+    return await fetchOpenLibrary(isbn);
+  }
+
+  // Paid tiers: Aggregate multiple sources
+  const [openLibrary, goodreads, amazon] = await Promise.all([
+    fetchOpenLibrary(isbn),
+    fetchGoodreads(isbn), // Paid tier only
+    fetchAmazon(isbn), // Paid tier only
+  ]);
+
+  return {
+    ...openLibrary,
+    synopsis: goodreads.synopsis || amazon.description,
+    genres: [...goodreads.genres, ...amazon.categories],
+    coverImages: [openLibrary.cover, goodreads.cover, amazon.cover],
+    ratings: {
+      goodreads: goodreads.rating,
+      amazon: amazon.rating,
+    },
+  };
+}
+```
+
+### 2. **Smart Organization & Collections** (Free + Premium)
+
+**Free Tier Limits**:
+
+- 1 collection/shelf (e.g., "My Books")
+- Basic sorting (title, author, date added)
+- No tags
+
+**Book Lover Tier**:
+
+- **Unlimited collections**:
+  - By genre (Fiction, Non-Fiction, Mystery, Sci-Fi)
+  - By status (Read, Currently Reading, To Be Read, DNF)
+  - By location (Living Room, Bedroom, Office)
+  - By rating (5-star, 4-star, etc.)
+- **Custom tags** (unlimited):
+  - "Page-turners", "Beach Reads", "Book Club Picks"
+- **Smart collections** (auto-populate based on rules):
+  - "Books read in 2026"
+  - "Unread books by favorite authors"
+  - "Books borrowed from library"
+
+**Power User Tier**:
+
+- All Book Lover features
+- **Advanced organization**:
+  - Sub-collections (Fiction → Mystery → Cozy Mystery)
+  - Multiple collection membership (one book in several collections)
+  - Collection sharing (share specific shelves publicly)
+- **Physical library mapping**:
+  - Room-by-room organization
+  - Shelf-by-shelf layout (visual map)
+  - Custom locations ("Mom's house", "Storage unit")
+
+### 3. **Reading Tracking & Statistics** (Premium Feature)
+
+**Book Lover Tier**:
+
+- **Reading progress**:
+  - Current page tracking
+  - Progress percentage
+  - Estimated completion date
+- **Reading stats**:
+  - Books read per month/year
+  - Total pages read
+  - Average books per month
+  - Reading pace (pages/day)
+  - Favorite genres (pie chart)
+- **Reading goals**:
+  - Annual goal (e.g., "Read 50 books in 2026")
+  - Progress tracking with milestones
+  - Streak tracking (consecutive days reading)
+- **Personal ratings & reviews**:
+  - 5-star ratings
+  - Private notes
+  - Quotes & highlights
+
+**Power User Tier**:
+
+- All Book Lover features
+- **Advanced analytics**:
+  - Author breakdown (books by author)
+  - Publisher analytics
+  - Genre trends over time
+  - Average rating by genre
+  - Reading velocity (books/month trend)
+  - Book length preferences
+- **Reading challenges**:
+  - Genre diversity challenge
+  - Author nationality challenge
+  - Decade challenge (books from each decade)
+- **Data visualization**:
+  - Interactive charts (D3.js)
+  - Exportable infographics
+  - Yearly reading recap (Spotify Wrapped style)
+
+### 4. **Lending & Library Management** (Free + Premium)
+
+**Free Tier**:
+
+- Basic lending tracking (who borrowed what, when)
+- Manual reminders (no automation)
+
+**Book Lover Tier**:
+
+- **Smart lending**:
+  - Track who has borrowed books
+  - Due date tracking
+  - Automatic email/SMS reminders (3 days before due)
+  - Lending history (who borrowed, when returned)
+- **Borrowing requests**:
+  - Friends can request to borrow books
+  - Accept/decline with messages
+  - Calendar integration (blocks books from being lent)
+
+**Power User Tier**:
+
+- All Book Lover features
+- **Professional lending**:
+  - Lending agreements (PDF generated)
+  - Late fees tracking (for little free libraries)
+  - Condition notes (before/after lending)
+  - Insurance value tracking
+  - Lending statistics (most borrowed books, reliable borrowers)
+
+### 5. **Social & Discovery Features** (Free + Premium)
+
+**Free Tier**:
+
+- Public profile (opt-in)
+- Follow up to 10 users
+- View friends' libraries (read-only)
+
+**Book Lover Tier**:
+
+- **Enhanced social**:
+  - Follow unlimited users
+  - Activity feed (friends' recent additions, ratings)
+  - Book recommendations based on friends
+  - Private messaging (discuss books)
+- **Community features**:
+  - Join book clubs (public/private groups)
+  - Participate in reading challenges
+  - Share collections publicly (e.g., "My Top 100 Books")
+- **Discovery**:
+  - "Books your friends love"
+  - "Popular in your genre"
+  - "Trending this month"
+
+**Power User Tier**:
+
+- All Book Lover features
+- **Advanced social**:
+  - Create book clubs (up to 50 members)
+  - Reading lists collaboration (shared lists)
+  - Book swap coordination (organize book exchanges)
+  - Public library page (showcase your collection)
+
+### 6. **Export & Backup** (Tiered Access)
+
+**Free Tier**:
+
+- CSV export (once/month)
+- Basic fields only (title, author, ISBN)
+
+**Book Lover Tier**:
+
+- **Unlimited exports**:
+  - CSV (all fields)
+  - Excel (formatted spreadsheet)
+  - JSON (for developers)
+- **Printable catalogs**:
+  - PDF with cover images
+  - Book spine labels (print and stick on books)
+  - Bookplate generator (custom "From the library of..." labels)
+
+**Power User Tier**:
+
+- All Book Lover features
+- **Professional exports**:
+  - Library catalog format (MARC21 standard)
+  - Goodreads import format
+  - LibraryThing format
+  - Custom templates
+- **Automated backups**:
+  - Daily cloud backups
+  - Version history (restore from any date)
+  - Multi-device sync (real-time)
+
+---
+
+## 🏢 B2B Features (Professional & Enterprise)
+
+### 7. **Professional Services** ($199-999 one-time)
+
+**Target**: Book collectors who want help digitizing their libraries
+
+**Services Offered**:
+
+1. **Book Scanning Service**:
+   - Customer ships books (or we visit for large collections)
+   - We scan ISBNs and photograph covers
+   - Return books with complete digital catalog
+   - Pricing: $1/book (minimum 200 books)
+
+2. **Library Consulting**:
+   - Organization advice (how to arrange your library)
+   - Collection appraisal (estimated value)
+   - Insurance documentation (for rare/valuable books)
+   - Pricing: $199/hour (2-hour minimum)
+
+3. **Custom Cataloging**:
+   - For rare books without ISBNs
+   - Manual research and data entry
+   - Pricing: $5-20/book (depending on research needed)
+
+### 8. **Little Free Library Management** ($14.99/month)
+
+**Target**: Little Free Library stewards, community book exchanges
+
+**Features**:
+
+- **Inventory tracking** (books in your LFL)
+- **QR code system**:
+  - Print QR codes for each book
+  - Users scan when taking/leaving books
+  - Automatic inventory updates
+- **Analytics**:
+  - Most popular genres
+  - Turnover rate (how fast books get taken)
+  - Peak usage times
+- **Donation tracking**:
+  - Who donated which books
+  - Thank-you notes automation
+- **Wishlist**:
+  - Public wishlist (genres needed)
+  - Donation suggestions
+
+### 9. **School/Classroom Libraries** ($49/year per classroom)
+
+**Target**: Teachers, school librarians, homeschool families
+
+**Features**:
+
+- **Student checkout system**:
+  - Track which student has which book
+  - Automatic overdue reminders (to parents)
+  - Reading level matching (suggest books for each student)
+- **Curriculum alignment**:
+  - Tag books by subject (Science, History, English)
+  - Lesson plan integration
+  - Reading list templates
+- **Parent portal**:
+  - Parents see what their child is reading
+  - Reading progress reports
+  - Suggested books for home
+
+### 10. **Bookstore Inventory Management** (Custom pricing: $199-999/month)
+
+**Target**: Independent bookstores, used bookstores
+
+**Features**:
+
+- **Inventory system**:
+  - Track stock (new, used, rare books)
+  - Low stock alerts
+  - Purchase order management
+- **POS integration**:
+  - Sell books directly (Stripe/Square)
+  - Automatic inventory reduction
+  - Sales reports & analytics
+- **Customer database**:
+  - Track customer purchases
+  - Personalized recommendations
+  - Email marketing (new arrivals, sales)
+- **Multi-location**:
+  - Manage multiple store locations
+  - Transfer books between locations
+  - Centralized reporting
+
+---
+
+## 🆕 Advanced Features (Power Users & Collectors)
+
+### 11. **Book Valuation & Collection Management** (Power User)
+
+**Features**:
+
+- **Estimated value**:
+  - Track purchase price
+  - Current market value (AbeBooks API)
+  - Value trends over time
+- **Insurance documentation**:
+  - Export collection value report (PDF)
+  - Detailed condition notes
+  - Photographic evidence (for claims)
+- **Collection analysis**:
+  - Most valuable books
+  - Potential investment pieces
+  - Genre distribution by value
+
+### 12. **Advanced Search & Filters** (Book Lover+)
+
+**Search Capabilities**:
+
+- **Full-text search**:
+  - Search titles, authors, descriptions, notes
+  - Fuzzy matching (typo-tolerant)
+  - Boolean operators (AND, OR, NOT)
+- **Advanced filters**:
+  - Publication date range (1800-2025)
+  - Page count range (50-1000 pages)
+  - Rating range (3-5 stars)
+  - Read status (Read, Unread, Reading)
+  - Owned format (Physical, E-book, Audiobook, All)
+  - Location (specific shelf/room)
+  - Custom field filters
+
+### 13. **API Access** (Power User + Developer Tier $29.99/month)
+
+**For Developers**:
+
+- REST API (10K requests/month)
+- GraphQL API
+- Webhooks (book added, rating changed, etc.)
+- Official libraries (JavaScript, Python, Ruby)
+
+**Use Cases**:
+
+- Build custom mobile apps
+- Integrate with home automation (display currently reading book on smart display)
+- Create browser extensions (add books from Amazon with one click)
+- Build recommendation engines
+
+---
+
+## 📱 Mobile App Features (All Tiers)
+
+### Mobile-Specific Features:
+
+1. **Barcode Scanner**:
+   - Instant ISBN lookup
+   - Batch scanning mode (scan 20 books in a row)
+   - Offline queue (sync when back online)
+
+2. **Location-Based**:
+   - "Books near me" (based on GPS, show which books are in current room)
+   - "Find this book" (navigate to book's physical location)
+
+3. **Reading Tracker**:
+   - Quick page updates
+   - Reading timer (track reading sessions)
+   - Offline access to currently reading books
+
+4. **Voice Input**:
+   - "Add book: [Title] by [Author]"
+   - "Mark [Book] as read"
+   - "Lend [Book] to [Friend]"
+
+---
+
+## 🎯 Feature Prioritization
+
+### Phase 1: MVP (Current)
+
+- ✅ Basic cataloging
+- ✅ Lending tracking
+- ✅ Social features
+- ✅ NextAuth authentication
+
+### Phase 2: B2C Monetization (Months 1-3)
+
+- 🔄 Premium tiers (Book Lover, Power User)
+- 🔄 ISBN lookup integration
+- 🔄 Reading statistics
+- 🔄 Export features (PDF catalogs)
+
+### Phase 3: Engagement (Months 4-6)
+
+- 🔜 Book clubs & social features
+- 🔜 Reading challenges
+- 🔜 Mobile app (barcode scanner)
+- 🔜 Smart collections
+
+### Phase 4: B2B Expansion (Months 7-12)
+
+- 🔜 Little Free Library tools
+- 🔜 School/classroom edition
+- 🔜 Professional services
+- 🔜 Bookstore inventory system
+
+---
 
 ### Technical Highlights
 
