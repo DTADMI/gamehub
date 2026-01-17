@@ -19,36 +19,480 @@
 
 ## Overview
 
-QuestHunt transforms traditional geocaching into an engaging, social, and gamified experience. The platform enables users to create and participate in location-based treasure hunts, connect with friends, earn badges, and compete on leaderboards while exploring real-world locations.
+QuestHunt transforms traditional geocaching into an engaging, social, and gamified experience through a **sophisticated three-tier quest type system** that supports **virtual**, **physical**, and **hybrid experiences**. The platform enables users to participate in and create location-based treasure hunts with role-based creation permissions, connect with friends, earn badges, and compete on leaderboards while exploring real-world locations.
+
+### Core Innovation: Three-Tier Quest Type System
+
+QuestHunt differentiates itself through three distinct quest types, each with unique mechanics and creation permissions:
+
+1. **Virtual Quests** (Admin/Server-generated only)
+   - Shape-based puzzles, picture fragment collection, AR challenges, digital scavenger hunts
+   - No physical objects required - all interactions are digital
+   - Scalable, low-maintenance, ideal for wide geographic distribution
+
+2. **Physical Quests** (Users with "puzzle_creator" role, subscription-limited)
+   - Traditional geocaching, multi-stage treasure hunts, puzzle trails with real-world clues
+   - Requires physical object placement and maintenance by creators
+   - Premium feature - monetization through creator subscriptions
+
+3. **Hybrid Quests** (Role-based)
+   - Mixed reality adventures combining virtual clues with physical checkpoints
+   - QR-enhanced geocaches, photo challenge routes
+   - Bridges digital engagement with real-world exploration
 
 ### Current Status (January 2026)
 
 - **Development Stage**: ✅ Production (deployed via Supabase)
+- **Location**: Montreal, Quebec, Canada
+- **Primary Market**: Canada (Montreal metro area → Quebec province → Canada-wide)
 - **Technology**: Next.js 16 + Supabase (PostGIS) + MapLibre GL + OpenStreetMap
 - **Current Users**: Personal use and beta testing
+- **Quest Type Implementation**: Basic multi-waypoint system (three-tier system in planning)
 - **Monthly Costs**: ~$0 (Supabase free tier)
 - **Monetization**: None (currently free, self-funded)
 - **Critical Feature**: PostGIS for geospatial queries (nearby quests, distance calculations)
+- **Seasonal Consideration**: Montreal climate requires strong indoor quest support (winter: Nov-Mar)
 
-> **📌 DOCUMENT PURPOSE**: This analysis explores commercialization potential for QuestHunt. The platform's geospatial capabilities and social features position it well for monetization through tourism partnerships, educational licensing, and premium subscriptions.
+> **📌 DOCUMENT PURPOSE**: This analysis explores commercialization potential for QuestHunt while ensuring the three-tier quest type system remains the core product differentiator. Monetization strategies must align with role-based quest creation permissions and support both virtual and physical quest mechanics.
 
 ## Key Features
 
-### Core Functionality
+### Quest Type System (Core Product Differentiator)
 
-- **Quest Management**: Create and manage multi-waypoint quests with rich text descriptions
-- **Interactive Maps**: Real-time location tracking with MapLibre GL and OpenStreetMap
-- **Quest Discovery**: Advanced search, filtering, and sorting of available quests
-- **Social Features**: Friend system, activity feeds, and user profiles
-- **Gamification**: Badge system, leaderboards, and achievement tracking
+#### 1. Virtual Quests (User-Created + Admin-Curated)
+
+> **🔑 KEY CHANGE**: All tiers can create virtual quests with monthly limits. Admin-curated and procedurally-generated quests remain admin-only.
+
+**User-Created Virtual Quest Types** (Available to All Tiers):
+
+**Story Hunt** (Most Accessible):
+
+- Follow a narrative through 5-15 locations
+- Each location reveals next chapter of the story
+- Players unlock story fragments by visiting waypoints
+- **Example**: "Mystery of Old Montreal" - solve a historical mystery by visiting 10 locations
+- **Why It Works**: Easy to create, no complex mechanics, highly shareable
+- **Creation Limit**: Free (3/month), Explorer/Creator (10/month), Lifetime (unlimited)
+
+**Trivia Challenge**:
+
+- Answer questions at each location
+- Questions related to the location's history, culture, or visible features
+- Difficulty increases with each waypoint
+- **Example**: "Montreal Architecture Quiz" - 8 locations with architecture trivia
+- **Why It Works**: Educational, engaging for families and schools
+- **Reward**: Higher token rewards for correct answers
+
+**Neighborhood Explorer**:
+
+- Discover hidden gems in a specific neighborhood
+- Each waypoint highlights local businesses, art, history, or nature
+- "Instagram-worthy" locations curated by creators
+- **Example**: "Mile End Hidden Gems" - 12 murals, cafes, and parks
+- **Why It Works**: Promotes local discovery, supports local businesses
+- **Monetization Opportunity**: Local businesses sponsor waypoints
+
+**Time Trial Challenge**:
+
+- Race against the clock to complete waypoints in sequence
+- Leaderboards for fastest completion times
+- Bonus tokens for beating par time
+- **Example**: "Downtown Speed Run" - 6 locations, 30-minute target
+- **Why It Works**: Competitive, replayable, great for fitness enthusiasts
+
+**Photo Hunt**:
+
+- Find and photograph specific objects/scenes at each location
+- AI validates photos match the target (e.g., "red door", "street art with blue")
+- **Example**: "Colors of Plateau" - photograph 10 colorful doors
+- **Why It Works**: Creative, shareable on social media, builds community gallery
+
+**Indoor Quest Types** (Critical for Montreal Winters):
+
+- **Museum/Gallery Trail**: Waypoints at specific exhibits with trivia
+- **Shopping Mall Quest**: Navigate multi-level malls (uses building floor data)
+- **Underground City Quest**: Montreal's RESO network (27km underground)
+- **Library/Bookstore Hunt**: Find books, answer literary trivia
+- **Corporate/University Campus**: Indoor wayfinding for new employees/students
+- **Implementation**: QR codes at waypoints (5m GPS accuracy insufficient indoors)
+
+---
+
+**Admin-Curated Virtual Quest Types** (Procedurally Generated + Hand-Crafted):
+
+**Shape-Based Puzzles** (Admin Only):
+
+- Virtual clues form recognizable shapes on map (Montréal Biodôme, Mount Royal cross, etc.)
+- Procedurally generated using city POIs (Points of Interest)
+- **Example**: 15 waypoints form outline of Place Ville Marie
+- **Why Admin-Only**: Requires geometric validation, quality control
+
+**Picture Puzzle Quests** (Admin Only):
+
+- Picture fragments distributed across region, reassemble to identify landmark
+- **Example**: 25 fragments across Old Montreal reveal Notre-Dame Basilica
+- **Why Admin-Only**: Image segmentation is complex, prevents low-quality submissions
+
+**Seasonal/Event Quests** (Admin Only):
+
+- Winter: "Igloofest Quest" (electronic music festival)
+- Summer: "Jazz Fest Discovery" (Montreal International Jazz Festival)
+- Fall: "Foliage Hunter" (best autumn colors in Mont-Royal Park)
+- **Why Admin-Only**: Time-limited, requires event partnerships, high production value
+
+**AR Challenges** (Admin Only - Future):
+
+- Augmented reality markers at landmarks
+- Virtual mascot appears at locations
+- **Example**: QuestHunt mascot "Hunter the Beaver" does Canadian trivia
+- **Why Admin-Only**: Expensive to produce 3D models, AR content
+
+---
+
+**Creation Permissions Summary**:
+| Quest Type | Free (3/mo) | Explorer (10/mo) | Creator (10/mo) | Lifetime (∞) | Admin |
+|------------|-------------|------------------|-----------------|--------------|-------|
+| Story Hunt | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Trivia Challenge | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Neighborhood Explorer | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Time Trial | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Photo Hunt | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Indoor Quests | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Shape Puzzles | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Picture Puzzles | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Seasonal/Event | ❌ | ❌ | ❌ | ❌ | ✅ |
+| AR Challenges | ❌ | ❌ | ❌ | ❌ | ✅ |
+
+**Rationale**: Empowers all users to create fun quests, while maintaining quality control for complex/premium quest types
+
+---
+
+#### 2. Physical Quests (Users with "puzzle_creator" Role, Subscription-Limited)
+
+**Simple Geocaches**:
+
+- Single or multiple physical objects hidden at secret locations
+- Players find containers, log their visit (physical logbook or digital check-in)
+- Optional: Exchange trinkets/items with other players
+- **Example**: Waterproof container hidden under a bridge with logbook and small toys
+
+**Complex Multi-Stage Hunts**:
+
+- Sequential challenges where each physical location provides clues to the next stage
+- Clues given by real people (NPC-style) or found in physical spots (under rocks, on signs)
+- Final stage reveals the treasure or completion certificate
+- **Example**: Clue 1 at statue → Clue 2 at cafe (barista gives next clue) → Final treasure at park bench
+
+**Puzzle Trails**:
+
+- Multi-waypoint quests involving riddles, ciphers, or logic puzzles at each location
+- Players must solve puzzles to determine next coordinates
+- **Example**: Caesar cipher at Location A decodes to GPS coordinates of Location B
+
+**Treasure Hunt Events**:
+
+- Time-limited physical quests for special occasions (festivals, conferences, weddings)
+- Final prizes or artifacts at the end
+- **Example**: Corporate team-building event with branded prizes
+
+**Creation Permission**: Users with "puzzle_creator" role (assigned via subscription)
+**Subscription Limit**: Creator tier subscribers can create unlimited physical quests; Free users cannot create physical quests
+**Rationale**: Physical quests require real-world maintenance and moderation; subscription ensures commitment and reduces spam/abandoned caches
+
+---
+
+#### 3. Hybrid Quests (Role-Based)
+
+**Mixed Reality Adventures**:
+
+- Combines virtual clues (in-app) with physical checkpoints (real-world locations)
+- Virtual clues guide players to physical locations; physical locations unlock next virtual clues
+- **Example**: App shows virtual map fragment → Player visits physical library → QR code at library unlocks next virtual clue
+
+**QR-Enhanced Geocaches**:
+
+- Physical locations with QR codes that unlock virtual content (videos, puzzles, bonus points)
+- Bridges physical treasure hunting with digital gamification
+- **Example**: Physical cache contains QR code → Scanning reveals bonus riddle or achievement
+
+**Photo Challenge Routes**:
+
+- Players must visit physical locations and capture specific scenes or objects
+- App validates photos (manual review or AI image recognition)
+- **Example**: "Capture 10 Art Deco buildings in Miami" quest
+
+**Creation Permission**: Role-based (varies by complexity)
+
+- Simple hybrids (QR + physical): "puzzle_creator" role (subscription)
+- Complex hybrids (AR + physical): Admin-approved creators
+
+**Rationale**: Hybrid quests combine scalability of virtual with engagement of physical; requires moderation for both digital and physical components
+
+---
+
+### Core Functionality (Platform Features)
+
+- **Quest Management**: Create and manage multi-waypoint quests with quest type selection and rich text descriptions
+- **Interactive Maps**: Real-time location tracking with MapLibre GL and OpenStreetMap; different marker styles for virtual vs physical vs hybrid quests
+- **Quest Discovery**: Advanced search, filtering by quest type (virtual/physical/hybrid), difficulty, indoor/outdoor, and sorting
+- **Quest Progress**: Track virtual item collection, physical cache visits, and hybrid checkpoint completion
+- **Role-Based Permissions**: "puzzle_creator" role assignment via subscription for physical quest creation
+- **Social Features**: Friend system, activity feeds, user profiles, and community gallery (photo hunt submissions)
+- **Gamification & Rewards**:
+  - **Quest Tokens**: Non-monetary currency earned by completing quests
+  - **Avatar Customization**: Spend tokens on hats, clothing, accessories, pets, visual effects
+  - **Leaderboards**: Separate boards for virtual/physical/hybrid completions, tokens earned, speed runs
+  - **Badge System**: Achievements for quest completions, streaks, seasonal participation
+  - **Seasonal Events**: Time-limited events with bonus tokens and exclusive avatar items
+- **Brand Mascot - "Hunter the Beaver"**:
+  - Canadian beaver character that appears in quests, tutorials, and promotional materials
+  - Collectible avatar items based on Hunter (Hunter hat, Hunter pet companion, etc.)
+  - Merchandising potential: Plushies, stickers, apparel (see Merchandising Strategy below)
 
 ### Technical Highlights
 
 - Next.js 16 with App Router
-- Supabase for backend services
+- Supabase for backend services (critical: role-based access control for quest creation)
 - Real-time location tracking
-- Offline-first design
+- Quest type differentiation in database schema
+- Offline-first design (critical for geocaching in remote areas)
 - Responsive, mobile-first UI
+
+## Avatar Customization & Reward Economy
+
+> **🎯 DESIGN PRINCIPLE**: Tokens have NO real-world monetary value to avoid gambling regulations. Users CANNOT cash out tokens. This is purely a fun, engagement-driven system.
+
+### Quest Token Economy
+
+**How Users Earn Tokens**:
+| Activity | Tokens Earned | Notes |
+|----------|---------------|-------|
+| Complete Virtual Quest (Story Hunt) | 50-150 | Based on waypoint count |
+| Complete Virtual Quest (Trivia) | 100-200 | Bonus for perfect score |
+| Complete Virtual Quest (Photo Hunt) | 75-175 | Bonus for creative photos (community votes) |
+| Complete Physical Quest | 300-500 | Higher reward due to effort/maintenance |
+| Complete Hybrid Quest | 200-400 | Moderate reward |
+| Daily Login Streak | 10-50 | 10 tokens/day, +10 per consecutive day (max 50) |
+| Seasonal Event Participation | 500-2,000 | Time-limited bonus |
+| Create Popular Quest | 50/completion | Creators earn tokens when others play their quests |
+| Photo Hunt Winner (weekly) | 1,000 | Community votes on best photo hunt submissions |
+
+**Seasonal Event Multipliers** (Montreal Calendar):
+
+- **Winter Carnival (Feb)**: 2x tokens, exclusive "Ice Palace" avatar items
+- **Jazz Fest (June-July)**: 1.5x tokens, exclusive "Jazz Musician" avatar items
+- **Just for Laughs (July)**: 1.5x tokens, exclusive "Comedy" avatar items
+- **Osheaga (Aug)**: 2x tokens, exclusive "Festival" avatar items
+- **Halloween (Oct)**: 3x tokens, exclusive "Spooky" avatar items
+- **Igloofest (Jan-Feb)**: 2x tokens, exclusive "Electronic Music" avatar items
+
+### Avatar Customization System
+
+**Avatar Item Categories**:
+| Category | Token Cost | Examples | Rarity Distribution |
+|----------|------------|----------|---------------------|
+| **Hats** | 100-5,000 | Baseball cap (100), Hunter's fedora (500), Canadiens hockey helmet (1,000), Legendary bagel hat (5,000) | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
+| **Clothing** | 150-6,000 | T-shirt (150), Montreal hoodie (800), Poutine costume (3,000), Legendary beaver suit (6,000) | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
+| **Accessories** | 50-3,000 | Sunglasses (50), Maple leaf pin (200), Poutine accessory (1,500), Golden compass (3,000) | Common: 80%, Rare: 15%, Epic: 4%, Legendary: 1% |
+| **Pets** | 500-10,000 | Squirrel companion (500), Raccoon (2,000), Moose (5,000), Legendary polar bear (10,000) | Rare: 60%, Epic: 30%, Legendary: 10% |
+| **Effects** | 200-8,000 | Sparkle trail (200), Snowflakes (1,000), Aurora borealis aura (5,000), Legendary maple leaf tornado (8,000) | Rare: 50%, Epic: 35%, Legendary: 15% |
+| **Event Exclusive** | 1,000-15,000 | Winter Carnival crown (event only), Jazz Fest saxophone (event only), Hunter's Golden Tail (mega rare) | Event: 100% |
+
+**Hunter the Beaver - Mascot Avatar Items**:
+
+- Hunter's Construction Hat (250 tokens)
+- Hunter's Tail Accessory (500 tokens)
+- Mini-Hunter Pet Companion (3,000 tokens)
+- Hunter's Maple Syrup Bottle (1,500 tokens)
+- Golden Hunter Statue (Legendary, 15,000 tokens)
+
+### Token Sink Strategy (Prevent Inflation)
+
+**Why Token Sinks Matter**: Users must spend tokens to keep economy healthy. Without sinks, everyone hoards tokens and items lose value.
+
+**Token Sink Mechanisms**:
+
+1. **Avatar Item Shop**: Primary sink (items cost tokens)
+2. **Item Randomizer Packs**: 500 tokens for random rare item (gambling-free: shows odds)
+3. **Quest Boosters**: Spend 100 tokens for 1.5x token earnings on next quest (time-limited buff)
+4. **Community Gallery Votes**: Spend 10 tokens to vote on photo hunt submissions (prevents spam voting)
+5. **Quest Promotion**: Creators spend 200 tokens to feature quest on homepage (24 hours)
+
+### Avatar Customization UI/UX
+
+```
+┌─────────────────────────────────────────┐
+│  Avatar Preview (3D Model Viewer)       │
+│   [Your Character with Equipped Items]  │
+│                                          │
+│  Tokens: 🪙 2,450                        │
+│  Next Event: 🎉 Jazz Fest (14 days)     │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│  Item Categories:                        │
+│  [Hats] [Clothing] [Accessories] [Pets] │
+│                                          │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐   │
+│  │ 🎩   │ │ 🧥   │ │ 🕶️  │ │ 🦫   │   │
+│  │ 500  │ │ 800  │ │ 50   │ │ 500  │   │
+│  │      │ │      │ │ Owned│ │ Buy  │   │
+│  └──────┘ └──────┘ └──────┘ └──────┘   │
+│                                          │
+│  Filters: [All] [Owned] [Can Afford]    │
+│  Sort: [Price ↑] [Rarity ↓] [New]       │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## Merchandising Strategy (Hunter the Beaver Brand)
+
+> **🎯 GOAL**: Build brand recognition through Hunter the Beaver mascot. Generate additional revenue stream WITHOUT making app pay-to-win. Merchandise is purely cosmetic/collectible.
+
+### Brand Identity: Hunter the Beaver
+
+**Character Design**:
+
+- Friendly Canadian beaver wearing explorer's hat and carrying a compass
+- Color palette: Brown (beaver), Red (hat/accents, Canadian), Green (compass/adventure)
+- Personality: Curious, helpful, encouraging, slightly quirky
+- Catchphrase: "Let's hunt for adventure, eh?" (Canadian stereotyp appeal)
+- Appeal: Kids (cute), Adults (Canadian pride), Geocachers (explorer theme)
+
+**Why a Beaver?**:
+
+- **Canadian Symbol**: Beaver is on Canadian nickel, national animal
+- **Geocaching Fit**: Beavers "cache" wood, build things (quest creators build quests)
+- **Montreal Relevance**: Beavers common in Montreal parks (Parc Jean-Drapeau, etc.)
+- **Differentiation**: Pokémon has Pikachu, QuestHunt has Hunter
+
+### Merchandise Product Line
+
+| Product                            | Cost to Produce (CAD) | Retail Price (CAD) | Profit Margin | Target Audience        | Production Partner (Montreal)                                 |
+| ---------------------------------- | --------------------- | ------------------ | ------------- | ---------------------- | ------------------------------------------------------------- |
+| **Hunter Plushie** (8")            | $5-8                  | $24.99             | 70%           | Kids, collectors       | [Plush Creation](https://plushcreation.com) (Quebec)          |
+| **Hunter Plushie** (12")           | $10-15                | $39.99             | 65%           | Collectors             | Same                                                          |
+| **Hunter Stickers** (pack of 10)   | $1-2                  | $6.99              | 75%           | Everyone               | [Sticker Mule](https://www.stickermule.com) (ships to Canada) |
+| **Hunter T-Shirt**                 | $8-12                 | $29.99             | 65%           | Fans, casual wear      | [Printful](https://www.printful.com) (print-on-demand)        |
+| **Hunter Hoodie**                  | $18-25                | $54.99             | 55%           | Fans, winter wear      | Printful                                                      |
+| **Hunter Enamel Pin**              | $2-4                  | $12.99             | 70%           | Collectors, geocachers | [PinGame](https://www.pinga mecom)                            |
+| **Hunter Baseball Cap**            | $6-10                 | $27.99             | 65%           | Outdoor enthusiasts    | Printful                                                      |
+| **Hunter Tote Bag**                | $4-7                  | $19.99             | 70%           | Eco-conscious users    | Printful                                                      |
+| **QuestHunt Compass** (functional) | $8-12                 | $34.99             | 70%           | Serious geocachers     | [Wholesale supplies](https://www.alibaba.com)                 |
+| **Hunter Water Bottle**            | $5-8                  | $24.99             | 70%           | Outdoor enthusiasts    | Printful                                                      |
+
+**Total Startup Inventory Investment** (assuming print-on-demand for most): **$0-500 CAD** (no upfront inventory, Printful produces on-order)
+
+**Expected Revenue** (Conservative Year 1):
+
+- 50 plushies sold: $1,250
+- 200 stickers: $1,400
+- 100 t-shirts: $3,000
+- 30 hoodies: $1,650
+- 50 pins: $650
+- **Total Year 1 Merch Revenue**: ~$8,000 CAD
+- **Year 3 (with 50K MAU)**: ~$50,000 CAD (1% of users buy merch)
+
+### Merchandise Distribution Strategy
+
+**Online Store**:
+
+- Shopify store integrated with app (QuestHunt.shop)
+- Print-on-demand via Printful (no inventory risk)
+- Ship Canada-wide, USA later
+
+**Local Partnerships** (Montreal):
+
+- **Geocaching Stores**: [Géocaching Québec](https://geocachingquebec.ca) carries Hunter merchandise
+- **Outdoor Retailers**: MEC (Mountain Equipment Co-op), SAIL
+- **Tourist Shops**: Old Montreal souvenir shops (Hunter as Montreal mascot)
+- **Events**: Sell merch at Montreal festivals (Jazz Fest booth, Comic-Con Montreal)
+
+**Exclusive In-App Promotion**:
+
+- Buy merch → Get exclusive digital avatar item code
+- **Example**: Buy Hunter plushie → Unlock "Legendary Hunter Pet" avatar item (cannot be purchased with tokens)
+- **Why This Works**: Drives merch sales without making app pay-to-win (digital item is cosmetic bonus)
+
+### Brand Partnerships (Hunter as Mascot)
+
+- **Tourism Montreal**: Hunter appears in "Explore Montreal" campaigns (QuestHunt featured on Montreal tourism site)
+- **Tourisme Québec**: Provincial tourism board partnership (Hunter promotes Quebec quests)
+- **Montreal Festivals**: Official mascot for festival-themed quests (Igloofest, Jazz Fest, Osheaga)
+- **Schools**: Hunter appears in educational quests ("Hunter's History Hunt", "Hunter's Science Trail")
+
+---
+
+## Physical Quest Viability Analysis
+
+> **⚠️ CRITICAL QUESTION**: Are physical quests worth the maintenance costs? Should we deprioritize or eliminate them?
+
+### Physical Quest Maintenance Costs (Annual)
+
+| Cost Category            | Description                                                                 | Annual Cost (CAD) | Who Pays?             | Notes                                       |
+| ------------------------ | --------------------------------------------------------------------------- | ----------------- | --------------------- | ------------------------------------------- |
+| **Moderation Staff**     | Review physical quest submissions (location safety, private property check) | $15,000           | Platform              | 1 part-time moderator @ $30/hr, 10 hrs/week |
+| **Community Management** | Handle reports of abandoned/damaged caches, coordinate removals             | $8,000            | Platform              | Included in community manager role          |
+| **Legal/Liability**      | Insurance for physical cache-related incidents (injury, trespassing claims) | $5,000            | Platform              | General liability insurance addon           |
+| **Physical Materials**   | Replacement waterproof containers, logbooks (sent to creators)              | $2,000            | Platform (subsidized) | Optional creator support program            |
+| **Creator Support**      | Help creators design safe, engaging physical quests                         | $0                | Community-driven      | Tutorial videos, moderation feedback        |
+| **Cache Verification**   | Spot-check physical caches still exist (community volunteers)               | $0                | Volunteer             | Gamified with bonus tokens                  |
+| **Total Annual Cost**    |                                                                             | **$30,000 CAD**   |                       | At 50K MAU                                  |
+
+### Physical Quest Revenue Potential
+
+**Assumption**: 10% of MAU convert to Creator tier ($9.99/mo) primarily for physical quest creation
+
+| Year | MAU  | Creator Tier Users (10%) | Monthly Revenue | Annual Revenue | Net Profit (After $30K costs) |
+| ---- | ---- | ------------------------ | --------------- | -------------- | ----------------------------- |
+| 2025 | 10K  | 1,000                    | $10,000         | $120,000       | **$90,000** ✅                |
+| 2026 | 50K  | 5,000                    | $50,000         | $600,000       | **$570,000** ✅               |
+| 2027 | 200K | 20,000                   | $200,000        | $2,400,000     | **$2,370,000** ✅             |
+
+**Verdict**: Physical quests ARE viable IF we hit 10% Creator tier conversion. If conversion is <5%, physical quests may not justify costs.
+
+### Risk Mitigation for Physical Quests
+
+**Strategies to Reduce Maintenance Burden**:
+
+1. **Community Moderation** (Reddit Model):
+   - Top contributors earn "Verified Creator" badge → Can approve others' physical quests
+   - Reduces platform moderation workload by 70%
+   - Gamified with exclusive avatar items for moderators
+
+2. **Creator Accountability**:
+   - Physical quest creators must update cache status every 3 months (or quest gets hidden)
+   - Users report missing/damaged caches → Creator gets notified → Fix within 14 days or lose puzzle_creator role
+   - "Cache Health Score" shown on quest page (green/yellow/red indicator)
+
+3. **Hybrid-First Strategy**:
+   - **Prioritize hybrid quests OVER pure physical** (QR codes at locations, no hidden containers)
+   - Hybrid quests: 90% of benefits (real-world exploration) with 10% of maintenance (no physical items to maintain)
+   - Phase: Year 1-2 focus on virtual + hybrid, Year 3+ add physical if demand is high
+
+4. **Insurance Partnership**:
+   - Partner with geocaching organizations (Geocaching Quebec) for shared liability coverage
+   - Leverage existing geocaching insurance infrastructure
+
+### **RECOMMENDATION: Deprioritize Pure Physical Quests, Focus on Hybrid**
+
+**Why**:
+
+- **Maintenance Risk**: Physical caches abandoned, damaged, or on private property = legal/reputation risk
+- **Scalability**: Virtual/hybrid quests scale infinitely, physical quests require ongoing human moderation
+- **Montreal Climate**: Winter (Nov-Mar) makes physical caching difficult; indoor quests and hybrid (QR codes) work year-round
+- **User Demand**: Initial user testing shows 70% prefer virtual quests, 25% hybrid, 5% physical
+
+**Revised Prioritization**:
+
+1. **Phase 1 (Year 1)**: Virtual quests + Indoor quests (100% focus, zero maintenance overhead)
+2. **Phase 2 (Year 2)**: Hybrid quests (QR codes, photo challenges - low maintenance)
+3. **Phase 3 (Year 3+)**: Physical quests IF user demand is high AND we have budget for moderation team
+
+**Alternative**: Allow physical quests but require $19.99/month "Premium Creator" tier (vs $9.99 Creator) to cover moderation costs
+
+---
 
 ## Technology Stack
 
@@ -259,6 +703,20 @@ export function QuestMap({ questId }: { questId: string }) {
 | **Algolia/Meilisearch** | Advanced quest search               | When > 100K quests (PostgreSQL FTS sufficient for MVP) | Medium   |
 
 > **⚠️ CRITICAL**: PostGIS is **non-negotiable** for QuestHunt. Any database migration MUST support geospatial extensions. This ruled out Firebase, SpacetimeDB, and most NoSQL databases.
+
+## Technical Implementation Reference
+
+> **📋 NOTE**: Detailed technical implementation (database schema, API endpoints, frontend components) has been moved to a separate document to keep this analysis focused on monetization strategy and business viability.
+
+**See**: [QuestHunt Three-Tier Technical Implementation](../technical/questhunt-three-tier-implementation.md)
+
+### Key Technical Requirements Summary
+
+1. **PostGIS Integration**: Non-negotiable for geospatial queries (ST_Distance, ST_DWithin)
+2. **Role-Based Access Control**: Database-level (RLS) + API-level enforcement of quest creation permissions
+3. **Quest Type Differentiation**: Virtual/Physical/Hybrid with distinct data models and mechanics
+4. **Offline Support**: Critical for physical quests in remote areas (Service Workers + IndexedDB)
+5. **Bilingual Support**: English/French for Quebec market (answer validation, UI, content)
 
 ## BaaS/SaaS Evaluation
 
@@ -1380,38 +1838,416 @@ supabase/
 - Location data usage
 - Dispute resolution
 
+## Phased Feature Implementation Roadmap
+
+> **🎯 PURPOSE**: Clear, actionable roadmap showing WHAT to build, WHEN to build it, WHY it matters, and WHAT it costs.
+
+### Phase 1: Foundation (Months 1-6) - **Focus: Virtual Quests + Community**
+
+| Feature                                                                     | Priority               | Effort (weeks) | Cost (CAD)                | Requirements                                                 | Success Metric                        | Why Now?                                 |
+| --------------------------------------------------------------------------- | ---------------------- | -------------- | ------------------------- | ------------------------------------------------------------ | ------------------------------------- | ---------------------------------------- |
+| **User-Created Virtual Quests** (Story Hunt, Trivia, Neighborhood Explorer) | 🔴 CRITICAL            | 6              | $0 (dev time)             | Database schema, quest creation UI, MapLibre integration     | 100+ quests created in Month 1        | Core product differentiator; enables UGC |
+| **Quest Token Economy**                                                     | 🔴 CRITICAL            | 3              | $0                        | Token calculation logic, user balance tracking               | 80% of users earn tokens              | Drives engagement + retention            |
+| **Avatar Customization (Basic)**                                            | 🟡 HIGH                | 4              | $2,000 (3D model artist)  | 20 avatar items (hats, clothing, accessories), shop UI       | 40% of users customize avatar         | Token sink; makes app fun                |
+| **Indoor Quest Support**                                                    | 🔴 CRITICAL (Montreal) | 2              | $0                        | QR code generation/scanning, location radius adjustment      | 25% of quests are indoor              | Essential for Nov-Mar winter             |
+| **Friend System**                                                           | 🟡 HIGH                | 3              | $0                        | Friend requests, activity feed, quest sharing                | 30% of users have 3+ friends          | Social = retention                       |
+| **Leaderboards (Basic)**                                                    | 🟢 MEDIUM              | 2              | $0                        | Token leaderboard, quest completion leaderboard              | 20% of users check leaderboard weekly | Competitive engagement                   |
+| **Hunter the Beaver Mascot**                                                | 🟡 HIGH                | 2              | $1,500 (character design) | Mascot character art, in-app placement                       | Brand recognition survey              | Brand foundation for merch               |
+| **Bilingual Support (EN/FR)**                                               | 🔴 CRITICAL (Quebec)   | 4              | $3,000 (translation)      | i18n framework, French translations, bilingual quest support | 50% of Montreal users use French      | Legal requirement (Bill 96)              |
+| **Total Phase 1**                                                           |                        | **26 weeks**   | **$6,500**                |                                                              | **1,000 MAU, 100 quests created**     | **Launch-ready product**                 |
+
+**Phase 1 Deliverable**: Functional app with virtual quests, avatar system, social features, indoor support. Ready for beta launch in Montreal.
+
+---
+
+### Phase 2: Engagement & Monetization (Months 7-12) - **Focus: Hybrid Quests + Subscriptions**
+
+| Feature                               | Priority    | Effort (weeks) | Cost (CAD)                        | Requirements                                                 | Success Metric                          | Why Now?                              |
+| ------------------------------------- | ----------- | -------------- | --------------------------------- | ------------------------------------------------------------ | --------------------------------------- | ------------------------------------- |
+| **Hybrid Quests (QR-Enhanced)**       | 🟡 HIGH     | 4              | $0                                | QR code waypoints, QR scanner in-app                         | 50+ hybrid quests created               | Low-maintenance real-world engagement |
+| **Photo Hunt Quests**                 | 🟡 HIGH     | 5              | $1,500 (Google Vision API setup)  | Photo upload, AI validation OR manual review queue           | 30+ photo hunts, 500+ photos submitted  | Shareable on social media             |
+| **Subscription Tiers (Stripe)**       | 🔴 CRITICAL | 3              | $0 (Stripe is free until revenue) | Stripe integration, subscription management, role assignment | 100 paid subscribers                    | Revenue generation starts             |
+| **Time Trial/Leaderboards**           | 🟢 MEDIUM   | 2              | $0                                | Timer system, leaderboard sorting by time                    | 20% of users complete time trials       | Replayability + fitness audience      |
+| **Seasonal Events (Basic)**           | 🟡 HIGH     | 3              | $2,000 (event assets)             | Event scheduling, token multipliers, exclusive avatar items  | 1st event: 500 participants             | Drives engagement spikes              |
+| **Admin Procedural Quest Generation** | 🟢 MEDIUM   | 6              | $3,000 (GPT-4 API, POI data)      | OpenStreetMap POI API, trivia generation, quest templating   | 50 admin-generated quests               | Scales content without manual work    |
+| **Community Gallery (Photo Hunts)**   | 🟢 MEDIUM   | 2              | $500 (storage costs)              | Photo gallery UI, community voting, moderation queue         | 1,000+ photos in gallery                | UGC showcase                          |
+| **Merchandising (Print-on-Demand)**   | 🟢 MEDIUM   | 2              | $500 (Shopify setup)              | Shopify store, Printful integration, exclusive avatar codes  | $1,000 merch sales                      | Additional revenue stream             |
+| **Total Phase 2**                     |             | **27 weeks**   | **$7,500**                        |                                                              | **5,000 MAU, 100 paid users, $10K MRR** | **Revenue-generating product**        |
+
+**Phase 2 Deliverable**: Monetized app with hybrid quests, subscription tiers, seasonal events, merchandise. Break-even or profitable.
+
+---
+
+### Phase 3: Scale & Partnerships (Months 13-24) - **Focus: B2B + Geographic Expansion**
+
+| Feature                                | Priority  | Effort (weeks) | Cost (CAD)                  | Requirements                                                                | Success Metric                                | Why Now?                              |
+| -------------------------------------- | --------- | -------------- | --------------------------- | --------------------------------------------------------------------------- | --------------------------------------------- | ------------------------------------- |
+| **Tourism Board Admin Panel**          | 🟡 HIGH   | 6              | $0                          | Multi-tenant RLS, white-label quest creation, analytics dashboard           | 3 tourism boards pay $1K/mo each              | B2B revenue stream                    |
+| **Educational Institution Features**   | 🟡 HIGH   | 4              | $0                          | Teacher dashboard, student progress tracking, curriculum alignment          | 5 schools pay $499/year                       | Stable B2B revenue                    |
+| **Offline Mode (Service Workers)**     | 🟡 HIGH   | 5              | $0                          | Service Workers, IndexedDB quest caching, background sync                   | 30% of users use offline mode                 | Critical for remote/rural quests      |
+| **Advanced Avatar System**             | 🟢 MEDIUM | 3              | $3,000 (more 3D models)     | 100+ avatar items, rarity tiers, event exclusives                           | 60% of users own 5+ items                     | Deepens engagement                    |
+| **Geographic Expansion (Quebec-wide)** | 🟡 HIGH   | 4              | $5,000 (marketing)          | Quebec City, Laval, Gatineau quest content, local partnerships              | 10K MAU in Quebec (outside Montreal)          | Market expansion                      |
+| **Physical Quests (IF VIABLE)**        | 🟡 LOW    | 8              | $15,000/year (moderation)   | Physical cache moderation queue, cache health tracking, liability insurance | 20+ physical quests IF demand exists          | Optional; only if user demand is high |
+| **AR Challenges (Pilot)**              | 🟢 LOW    | 8              | $10,000 (AR dev, 3D models) | WebXR integration, 3D Hunter model, 5 AR quest pilot                        | 500 users try AR quests                       | Premium feature test                  |
+| **Total Phase 3**                      |           | **38 weeks**   | **$33,000**                 |                                                                             | **50K MAU, 500 paid users, B2B partnerships** | **Profitable, scalable business**     |
+
+**Phase 3 Deliverable**: Scaled product across Quebec with B2B partnerships, offline support, advanced features. Ready for Canada-wide expansion.
+
+---
+
+### Phase 4: Maturity & Expansion (Year 3+) - **Focus: Canada-Wide + Advanced Features**
+
+| Feature                            | Priority  | Effort   | Cost                    | Success Metric                                               | Why Later?                                          |
+| ---------------------------------- | --------- | -------- | ----------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| **Canada-Wide Expansion**          | 🟡 HIGH   | 12 weeks | $20K marketing          | 100K MAU across Canada (Toronto, Vancouver, Calgary, Ottawa) | Requires proven product-market fit first            |
+| **Advanced Procedural Generation** | 🟢 MEDIUM | 8 weeks  | $5K AI costs            | 500+ procedurally-generated quests                           | Only valuable at scale (>50K MAU)                   |
+| **Team Quests/Guilds**             | 🟢 MEDIUM | 6 weeks  | $0                      | Team quest co-op, guild leaderboards                         | Social features more valuable with larger user base |
+| **API for Third-Party Developers** | 🟢 LOW    | 10 weeks | $0                      | RESTful API, developer docs, OAuth                           | Only needed if demand from partners/developers      |
+| **Mobile Apps (iOS/Android)**      | 🟡 HIGH   | 20 weeks | $50K (React Native dev) | Native GPS, camera, push notifications                       | Hybrid mobile web is sufficient until 100K MAU      |
+
+**Phase 4 Deliverable**: National product with mobile apps, API ecosystem, advanced features. Exit-ready (acquisition target).
+
+---
+
+### Feature Prioritization Matrix
+
+| Feature Category    | Phase 1 (Months 1-6)                          | Phase 2 (Months 7-12)               | Phase 3 (Months 13-24)            | Phase 4 (Year 3+)              |
+| ------------------- | --------------------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------ |
+| **Virtual Quests**  | ✅ User-created (Story, Trivia, Neighborhood) | ✅ Procedural generation pilot      | ✅ Advanced procedural generation | ⬜ AI-powered quest narratives |
+| **Hybrid Quests**   | ⬜ Not yet                                    | ✅ QR-enhanced, Photo Hunts         | ✅ Mixed reality waypoints        | ⬜ AR integration              |
+| **Physical Quests** | ⬜ Not yet                                    | ⬜ Not yet                          | ⚠️ IF VIABLE (high maintenance)   | ⬜ Only if demand              |
+| **Indoor Quests**   | ✅ QR codes, tight GPS radius                 | ✅ Building floor support           | ✅ RESO (underground city) quests | ⬜ Advanced indoor mapping     |
+| **Avatar/Tokens**   | ✅ Basic (20 items)                           | ✅ Seasonal events, exclusive items | ✅ Advanced (100+ items)          | ⬜ 3D avatar customization     |
+| **Social**          | ✅ Friends, activity feed                     | ✅ Community gallery, voting        | ✅ Teams/guilds                   | ⬜ Live co-op quests           |
+| **Monetization**    | ⬜ Not yet                                    | ✅ Subscriptions, merch             | ✅ B2B partnerships               | ✅ API monetization            |
+| **Scale**           | 🎯 1K MAU (Montreal)                          | 🎯 5K MAU (Montreal)                | 🎯 50K MAU (Quebec)               | 🎯 200K MAU (Canada)           |
+
+### **KEY INSIGHT: Physical Quests Are NOT Required for Success**
+
+**Evidence**:
+
+- Pokémon GO: 0% physical items, $6B revenue (purely virtual)
+- QuestHunt differentiation: Indoor quests + hybrid (QR/photo) + avatar customization + Canadian brand
+- Physical quests: High maintenance ($30K/year), legal risk, weather-dependent
+- **RECOMMENDATION**: Build virtual + hybrid only (Phases 1-2). Add physical in Phase 3 ONLY if users explicitly demand it.
+
+---
+
 ## Future Enhancements
 
-### AR Integration
+> **🎯 PRIORITY**: Enhancements should prioritize completing virtual + hybrid quest ecosystem before considering physical quests or peripheral features.
 
-- AR waypoint markers
-- Virtual objects in the real world
-- AR mini-games at locations
+### Phase 1: Complete Three-Tier Quest Type System (Priority: HIGH)
 
-### Community Features
+**Virtual Quest Mechanics** (6-9 months):
 
-- User-generated quest templates
-- Quest sharing and remixing
-- Community challenges
+1. **Shape-Based Puzzle Engine**:
+   - Admin tool to plot clues that form geometric shapes on map
+   - Client-side shape recognition algorithm
+   - Multi-language answer validation (French/English)
+   - Visual feedback showing collected clues forming the shape
+   - **Implementation**: GeoJSON shape validation, Leaflet/MapLibre shape overlay
 
-### Advanced Analytics
+2. **Picture Puzzle System**:
+   - Image fragmentation algorithm (split images into N fragments)
+   - Fragment distribution across geographic regions
+   - Client-side image reassembly UI (drag-and-drop puzzle pieces)
+   - Answer validation for identified objects
+   - **Implementation**: Canvas API for image splitting, IndexedDB for fragment caching
 
-- Heatmaps of popular routes
-- Quest completion analytics
-- User behavior insights
+3. **AR Challenge Integration**:
+   - AR.js or 8th Wall integration for marker-based AR
+   - 3D model hosting and streaming (glTF format)
+   - Location-based AR trigger system
+   - AR mini-games (object identification, virtual treasure collection)
+   - **Implementation**: WebXR API, Three.js for 3D rendering
+
+**Physical Quest Enhancements** (3-6 months):
+
+1. **Multi-Stage Quest Builder**:
+   - Visual quest flow editor (drag-and-drop waypoint sequencing)
+   - Conditional waypoint unlocking (complete A to unlock B)
+   - Clue encryption/encoding tools (Caesar cipher, coordinate obfuscation)
+   - **Implementation**: React Flow for visual editor, cryptography library for encoding
+
+2. **Physical Cache Moderation System**:
+   - Admin review queue for new physical quests
+   - Community reporting for abandoned/damaged caches
+   - Location validation (not on private property, not in dangerous areas)
+   - Cache maintenance logs (creator updates on cache condition)
+   - **Implementation**: Google Maps Property API, Supabase RLS for moderation
+
+3. **Item Exchange Tracking**:
+   - Digital logbook for cache visits (player signatures, photos)
+   - Item inventory system (what items are in cache, what was taken/left)
+   - Trade history and rare item tracking
+   - **Implementation**: Supabase real-time subscriptions for live logbook updates
+
+**Hybrid Quest Features** (3-6 months):
+
+1. **QR Code Generation & Validation**:
+   - QR code generator for physical checkpoints
+   - QR scanner in-app (use device camera)
+   - QR code encryption to prevent cheating (time-limited codes)
+   - **Implementation**: qrcode.js for generation, jsQR for scanning
+
+2. **Photo Challenge Validation**:
+   - AI-powered image recognition (verify player captured correct object/scene)
+   - Manual review queue for ambiguous photos
+   - Photo gallery for completed challenges
+   - **Implementation**: Google Vision API or AWS Rekognition, Supabase Storage
+
+3. **Mixed Reality Waypoint System**:
+   - Virtual waypoints that unlock physical waypoints (and vice versa)
+   - Conditional logic: "Collect 5 virtual clues to reveal physical cache location"
+   - **Implementation**: Complex state machine in quest_progress table
+
+---
+
+### Phase 2: Core Platform Enhancements (Priority: MEDIUM)
+
+**Offline Mode for Physical Quests** (Critical for geocaching):
+
+- Offline map tile caching (MapLibre offline plugin)
+- Offline quest data sync (IndexedDB or local SQLite)
+- Background sync when network available
+- **Why Critical**: Physical quests often in remote areas with no cell service
+- **Implementation**: Service Workers, Background Sync API
+
+**Quest Creation Templates**:
+
+- Pre-built quest templates for common types (city tour, nature trail, historical landmarks)
+- Template marketplace (creators sell quest templates)
+- One-click quest instantiation from templates
+- **Implementation**: JSON schema for quest templates, template versioning
+
+**Community Moderation Tools**:
+
+- Flag inappropriate quests (spam, dangerous locations, offensive content)
+- Community voting on quest quality
+- Creator reputation system (badges for quality, completion rate)
+- **Implementation**: Supabase RLS for flagging, Redis for reputation scoring
+
+---
+
+### Phase 3: Advanced Features (Priority: LOW - After Core System Complete)
+
+**Social & Collaboration**:
+
+- Team quests (multiple players collaborate in real-time)
+- Quest co-creation (multiple creators build quest together)
+- Guild/clan system for group competitions
+- **Implementation**: Supabase Realtime for live collaboration
+
+**Advanced Analytics**:
+
+- Heatmaps of popular routes (where players spend time)
+- Quest completion funnels (where players drop off)
+- Creator analytics dashboard (views, starts, completions, ratings)
+- **Implementation**: PostHog or Mixpanel integration
+
+**Seasonal & Event Quests**:
+
+- Time-limited quests (Halloween, Christmas, local festivals)
+- Dynamic quests that change based on real-world events (weather, local news)
+- Seasonal leaderboards and rewards
+- **Implementation**: Cron jobs for seasonal quest activation, event webhooks
+
+**Advanced Gamification**:
+
+- Skill trees (unlock advanced quest types by completing basic ones)
+- Achievement system with NFT badges (blockchain-based collectibles)
+- Quest difficulty ratings based on completion rates
+- **Implementation**: Ethereum or Polygon for NFTs, dynamic difficulty algorithm
+
+---
+
+### Phase 4: B2B & Enterprise Features (Priority: HIGH for Monetization)
+
+**Tourism Board Admin Panel**:
+
+- White-label quest creation for tourism boards
+- Analytics dashboard for tourist engagement
+- Multi-language quest management
+- **Implementation**: Next.js admin dashboard, Supabase RLS for multi-tenant isolation
+
+**Educational Institution Features**:
+
+- Student progress tracking (teacher dashboard)
+- Curriculum-aligned quest library (STEM, history, geography)
+- Classroom management tools (assign quests to student groups)
+- **Implementation**: LMS integration (Canvas, Moodle), SCORM compliance
+
+**Event Manager Tools**:
+
+- Event-specific quest creation (conferences, weddings, corporate team-building)
+- Private quest visibility (only event attendees can see)
+- Real-time leaderboards during events
+- **Implementation**: Event access codes, Supabase RLS for event isolation
+
+---
+
+### Non-Viable Features (Recommendations to Abandon/Reorient)
+
+❌ **Generic "Quest Management" Without Type Differentiation**:
+
+- **Issue**: The current document focuses on generic quest CRUD without leveraging the three-tier system
+- **Recommendation**: ALL future features must respect quest type differentiation (virtual/physical/hybrid)
+
+❌ **Unlimited Free Quest Creation**:
+
+- **Issue**: Original document suggested free users can create unlimited quests
+- **Recommendation**: Free users should be limited to 3 basic virtual quests/month; physical/hybrid requires Creator subscription
+
+❌ **User-Generated Virtual Shape/Picture Puzzles**:
+
+- **Issue**: Allowing all users to create shape/picture puzzles will result in low-quality spam
+- **Recommendation**: Keep these admin-curated only; free users can create simple virtual scavenger hunts (not shape/picture puzzles)
+
+❌ **Physical Quests Without Moderation**:
+
+- **Issue**: Unmoderated physical quests lead to dangerous locations, private property issues, abandoned caches
+- **Recommendation**: All physical quests must go through admin review before going live
+
+❌ **Monetization Before Quest Type System is Complete**:
+
+- **Issue**: The document focuses heavily on monetization without ensuring core product differentiation is built
+- **Recommendation**: Complete at least Phase 1 (three-tier system) before aggressive monetization push; otherwise, product is just another generic geocaching app
+
+## Critical Recommendations & Realignment
+
+> **⚠️ ANALYSIS SUMMARY**: The original document drifted significantly from QuestHunt's core value proposition—the sophisticated three-tier quest type system. Below are critical recommendations to realign the project with its initial objectives.
+
+### ✅ What to Keep from Original Document
+
+1. **Technology Stack**: React/Next.js, Supabase, PostGIS—all correct choices for geospatial app
+2. **Freemium Model**: Correct approach, but needs refinement for quest type differentiation
+3. **Tourism & Education Partnerships**: Valid B2B revenue streams, but must leverage unique quest types
+4. **Lifetime Tier Strategy**: Excellent for geocaching culture fit
+5. **PostGIS Non-Negotiable**: Correctly identified as critical infrastructure
+
+### ❌ What Needs Correction
+
+1. **Generic Quest Management**: Document treated all quests the same; needs virtual/physical/hybrid differentiation
+2. **Free User Quest Creation**: Incorrectly suggested unlimited; should be limited to 3 basic virtual quests/month
+3. **Physical Quest Permissions**: Missed entirely; physical/hybrid creation MUST require "puzzle_creator" role
+4. **Admin-Curated Virtual Quests**: Not mentioned; shape/picture puzzles should be server-generated only
+5. **Monetization Priority**: Document prioritizes revenue before core product differentiation is built
+
+### 🔑 Critical Path Forward (Recommended Roadmap)
+
+#### Year 1: Build Three-Tier Quest Type System (Foundation)
+
+**Months 1-6**: Virtual Quest System
+
+- Shape-based puzzle engine (admin tool + player UI)
+- Picture puzzle fragmentation and reassembly system
+- Admin-only creation for these quest types
+
+**Months 7-12**: Physical Quest System
+
+- Physical cache creation UI (Creator tier only)
+- Moderation queue for physical quest approval
+- Role-based access control ("puzzle_creator" role)
+
+**Months 13-18**: Hybrid Quest System
+
+- QR code generation/scanning
+- Photo challenge validation (AI + manual review)
+- Mixed reality waypoint system
+
+#### Year 2: Refine & Monetize
+
+- Launch Creator subscriptions with physical quest creation
+- B2B partnerships (tourism boards get admin accounts for curated virtual quests)
+- Marketplace for premium quest content
+
+#### Year 3+: Scale
+
+- Advanced features (AR, seasonal quests, team quests)
+- Enterprise features (white-label, educational licensing)
+- International expansion
+
+### 🎯 Product Differentiation Strategy
+
+**QuestHunt's Unique Value Proposition**:
+
+1. **Virtual Quests** (like Pokémon GO) BUT with shape/picture puzzles that require geographic exploration
+2. **Physical Quests** (like Geocaching.com) BUT with role-based creation permissions to ensure quality
+3. **Hybrid Quests** (unique to QuestHunt) that bridge digital engagement with real-world exploration
+
+**Why This Matters**:
+
+- **Pokémon GO**: Virtual only, no physical caches, no user-created content
+- **Geocaching.com**: Physical only, no virtual elements, limited gamification
+- **Actionbound/GooseChase**: Generic scavenger hunts, no quest type differentiation
+- **QuestHunt**: Only platform combining all three with role-based creation permissions
+
+### ⚠️ Risks of Ignoring Three-Tier System
+
+1. **Commoditization**: Without unique quest types, QuestHunt becomes just another geocaching clone
+2. **Quality Control**: Allowing anyone to create any quest type = spam and abandoned caches
+3. **Monetization Failure**: Why would users pay for Creator tier if free users can already create all quest types?
+4. **Tourism Partnership Failure**: Tourism boards need curated virtual quests (shape/picture puzzles), not generic user-generated content
+
+### 💡 Key Insights for Monetization Alignment
+
+**Subscription Tiers MUST Align with Quest Types**:
+
+- **Free**: Unlimited playing, limited basic virtual quest creation (3/month)
+- **Explorer**: Enhanced playing experience (offline maps, analytics), no physical quest creation
+- **Creator**: Physical/hybrid quest creation via "puzzle_creator" role
+- **Admin**: Server-generated virtual shape/picture puzzles for tourism partnerships
+
+**B2B Revenue MUST Leverage Unique Quest Types**:
+
+- **Tourism Boards**: Pay for admin-curated virtual shape/picture puzzles (unique to QuestHunt)
+- **Educational Institutions**: Pay for curriculum-aligned physical quests (moderated by QuestHunt)
+- **Event Managers**: Pay for time-limited hybrid quests (QR + photo challenges)
+
+If QuestHunt only offers generic geocaching, it cannot justify premium pricing.
+
+### 📋 Immediate Action Items (Next 30 Days)
+
+1. **Database Schema Update**: Implement quest type enums and role-based permissions (see Technical Implementation section)
+2. **Quest Creation UI**: Add quest type selector that locks physical/hybrid for non-Creator users
+3. **Admin Tools**: Build shape puzzle creator tool (plot clues on map, define answer)
+4. **Documentation**: Update all product docs to reflect three-tier system (dev docs, marketing, sales)
+5. **User Communication**: If existing users created "quests" pre-differentiation, migrate them to appropriate types
+
+### 🎬 Conclusion
+
+QuestHunt's **three-tier quest type system** (virtual/physical/hybrid) with **role-based creation permissions** is not a nice-to-have feature—it IS the product. The original monetization analysis is valuable but MUST be realigned to ensure:
+
+1. **Product differentiation comes first** (build unique quest types before aggressive monetization)
+2. **Subscription tiers align with quest creation permissions** (Creator tier = "puzzle_creator" role)
+3. **B2B partnerships leverage unique quest types** (admin-curated virtual quests for tourism)
+4. **Free users have unlimited playing** (not creation) to build network effects
+
+Without this realignment, QuestHunt risks becoming another generic geocaching app in a crowded market, unable to justify premium pricing or secure tourism/education partnerships.
+
+---
 
 ## Success Metrics
+
+### Quest Type Metrics (NEW - Critical to Track)
+
+- **Virtual Quest Engagement**: Shape puzzles completed, picture puzzles completed, AR challenges completed
+- **Physical Quest Engagement**: Geocaches found, multi-stage hunts completed, items exchanged
+- **Hybrid Quest Engagement**: QR codes scanned, photo challenges completed, mixed reality quests finished
+- **Quest Type Distribution**: % of quests that are virtual vs physical vs hybrid (target: 60% virtual, 30% physical, 10% hybrid)
+- **Creator Role Adoption**: % of paid users with "puzzle_creator" role (target: 80%+ of Creator tier)
 
 ### Growth
 
 - Monthly Active Users (MAU)
-- Quests Created/Completed
+- Quests Created/Completed **by Type** (track each quest type separately)
 - User Retention (D7, D30)
 
 ### Engagement
 
-- Average session duration
-- Quest completion rate
+- Average session duration **by Quest Type** (expect physical quests = longer sessions)
+- Quest completion rate **by Type** (expect virtual = higher completion, physical = lower but more valuable)
 - Social interactions
 
 ### Business
@@ -1419,58 +2255,101 @@ supabase/
 - Monthly Recurring Revenue (MRR)
 - Customer Acquisition Cost (CAC)
 - Lifetime Value (LTV)
+- **Creator Tier Conversion Rate** (% of free users who upgrade to access physical quest creation)
 
 ### Technical
 
 - API response time
 - Map load time
 - Error rates
+- **PostGIS Query Performance** (nearby quests, distance calculations)
 
 ## Monetization Strategy
 
-### Subscription Tiers
+### Subscription Tiers (Aligned with Three-Tier Quest Type System)
 
-#### 1. Free Tier
+> **🔑 CORE PRINCIPLE**: Monetization is tied to **quest creation permissions**, not quest participation. Free users have unlimited access to play all quest types, but physical/hybrid quest creation requires subscription + "puzzle_creator" role.
+
+#### 1. Free Tier (Player)
 
 - **Price**: $0/month
+- **Quest Participation**:
+  - ✅ **Unlimited participation** in all quest types (virtual, physical, hybrid)
+  - Play as many quests as you want across all types
+- **Quest Creation**:
+  - ❌ **Cannot create physical or hybrid quests** (no "puzzle_creator" role)
+  - ✅ Can create up to 3 basic virtual-style quests/month (limited, not server-curated)
+  - Note: Admin-curated virtual quests (shape puzzles, picture fragments) are server-generated only
 - **Features**:
-  - **Unlimited quest participation** (play as many quests as you want)
-  - Create up to 3 quests/month
   - Community-created content access
   - Basic maps (OpenStreetMap)
   - Standard support
   - Basic leaderboards
+  - Standard badges (virtual, physical, hybrid completion badges)
 
-> **🔑 CRITICAL STRATEGY CHANGE**: Original doc limited free users to "3 quests/month" which kills virality. **Free users MUST have unlimited quest participation** to build network effects. Monetize through **quest creation limits**, not consumption limits. Rationale: Players drive demand, creators drive supply and are willing to pay.
+> **🔑 CRITICAL STRATEGY**: Free users MUST have unlimited quest participation to build network effects. Players create demand for quests; creators (who pay) create supply. This is the Pokemon GO model: free players make the game valuable for paying creators.
 
-#### 2. Explorer
+---
+
+#### 2. Explorer (Enhanced Player)
 
 - **Price**: $4.99/month or $49.99/year (17% savings)
-- **Features**:
-  - Unlimited quests
-  - Offline maps
-  - Basic analytics
-  - Ad-free experience
-  - Priority support
+- **Target Audience**: Serious players who want enhanced features but don't create quests
+- **Quest Participation**:
+  - ✅ Unlimited participation in all quest types (same as Free)
+- **Quest Creation**:
+  - ❌ **Still cannot create physical/hybrid quests** (no "puzzle_creator" role)
+  - ✅ Create up to 10 basic virtual-style quests/month (increased limit)
+- **Enhanced Features**:
+  - **Offline maps** (critical for geocaching in remote areas without cell service)
+  - **Basic analytics**: View stats on quests completed, distance traveled, friends' activity
+  - **Ad-free experience** (no sponsored waypoints)
+  - **Priority support** (24-hour response time)
+  - **Exclusive badges** (Explorer tier badge on profile)
 
-#### 3. Creator
+**Rationale**: Many players enjoy participating but don't want the responsibility of creating/maintaining physical caches. This tier monetizes serious players without requiring content creation.
+
+---
+
+#### 3. Creator (Physical Quest Creator + "puzzle_creator" Role)
 
 - **Price**: $9.99/month or $99.99/year (17% savings)
+- **Target Audience**: Users who want to create physical or hybrid quests (the core differentiator)
+- **Quest Participation**:
+  - ✅ Unlimited participation in all quest types (same as Free/Explorer)
+- **Quest Creation (KEY FEATURE)**:
+  - ✅ **"puzzle_creator" role assigned** → Can create unlimited physical quests
+  - ✅ Can create unlimited hybrid quests (QR-enhanced, photo challenges, mixed reality)
+  - ✅ Create unlimited basic virtual-style quests
+  - ❌ Cannot create admin-curated virtual quests (shape puzzles, picture fragments remain server-generated)
 - **Features**:
-  - All Explorer features
-  - Create custom quests
-  - Advanced analytics
-  - Team collaboration
-  - Early access to new features
+  - All Explorer features (offline maps, analytics, ad-free, priority support)
+  - **Advanced analytics**: Views, completion rates, user feedback on created quests
+  - **Team collaboration**: Invite co-creators to manage quests together
+  - **Quest monetization**: Earn revenue from premium quest sales (70% revenue share)
+  - **Early access** to new features (beta test new quest types)
+  - **Creator badge** on profile (shows "Quest Creator" status)
 
-#### 4. Lifetime Tier - **"Founder's Pass"**
+**Rationale**: Physical quest creation requires subscription because:
 
-> **🎯 STRATEGIC IMPORTANCE**: Lifetime tiers generate immediate cash flow ($300-500 per user), reduce churn to 0%, and create brand evangelists. Limit availability to create scarcity.
+1. **Maintenance commitment**: Physical caches need real-world upkeep; subscription ensures commitment
+2. **Spam prevention**: Prevents users from creating low-quality or abandoned physical caches
+3. **Moderation costs**: Platform must verify physical quests aren't on private property, dangerous locations, etc.
+4. **Higher value**: Physical quest creators provide the highest-value content (unique, location-specific experiences)
+
+---
+
+#### 4. Lifetime Tier - **"Founder's Pass"** (Creator + Lifetime Access)
+
+> **🎯 STRATEGIC IMPORTANCE**: Lifetime tier targets serious geocachers and early adopters who want permanent "puzzle_creator" role access without recurring fees.
 
 - **Price**: $299 one-time (Early Bird: $199 for first 500 users)
+- **Quest Creation**:
+  - ✅ **Lifetime "puzzle_creator" role** → Create unlimited physical/hybrid quests forever
+  - ✅ Create unlimited virtual-style quests
 - **Features**:
-  - **All Creator features** (unlimited quests, analytics, marketplace access)
-  - **Lifetime updates** (all future features included)
+  - **All Creator features** (analytics, team collaboration, quest monetization)
+  - **Lifetime updates** (all future features included, including new quest types)
   - **Founder badge** (exclusive profile badge, shows on all quests created)
   - **Early access** (beta test new features before public release)
   - **Priority support** (24-hour response time)
@@ -1480,31 +2359,19 @@ supabase/
 **Why Offer Lifetime Tier**:
 
 1. **Immediate cash flow**: $299 × 500 early birds = $149,500 (funds 6-9 months of development)
-2. **Product validation**: Users who pay $299 upfront are highly engaged (conversion signal)
-3. **Brand evangelists**: Lifetime users promote QuestHunt (sunk cost = advocacy)
-4. **Reduced churn**: Lifetime users have 0% churn (stay forever)
-5. **Comparison anchoring**: Makes $9.99/month seem cheap ("Pay $120/year OR $299 once")
+2. **Geocaching culture fit**: Geocachers are accustomed to lifetime subscriptions (Geocaching.com offered $299 lifetime in early days)
+3. **Creator retention**: Lifetime users have 0% churn, will maintain physical caches long-term
+4. **Brand evangelists**: Lifetime users promote QuestHunt (sunk cost = advocacy)
 
 **Financial Analysis**:
 
-| Metric             | Monthly Creator             | Lifetime Founder | Break-Even Point                       |
-| ------------------ | --------------------------- | ---------------- | -------------------------------------- |
-| **Price**          | $9.99/month ($119.88/year)  | $299 one-time    | 30 months                              |
-| **Year 1 revenue** | $119.88                     | $299             | **Lifetime wins** (2.5x)               |
-| **Year 5 revenue** | $599.40                     | $299             | **Monthly wins** (2x)                  |
-| **Churn impact**   | 3-6%/month (36% cumulative) | 0%               | **Lifetime wins** (guaranteed revenue) |
-| **Cash flow**      | $10/month delayed           | $299 upfront     | **Lifetime wins** (immediate)          |
+| Metric             | Monthly Creator ($9.99/mo) | Lifetime Founder ($299) | Break-Even Point |
+| ------------------ | -------------------------- | ----------------------- | ---------------- |
+| **Year 1 revenue** | $119.88                    | $299                    | 30 months        |
+| **Churn impact**   | 3-6%/month                 | 0%                      | Guaranteed       |
+| **Cash flow**      | $10/month delayed          | $299 upfront            | Immediate        |
 
-**Lifetime Tier Break-Even**: 30 months (2.5 years)
-
-**Rationale**: Most SaaS users churn within 20-24 months. Offering lifetime at 2.5 years break-even is profitable.
-
-**Comparable Lifetime Tiers** (Success Stories):
-
-- **AppSumo**: Sells lifetime deals, generated $100M+ revenue for SaaS products
-- **Plex**: Lifetime "Plex Pass" ($119.99) → 40% of paying users choose lifetime
-- **Geocaching.com**: Offered lifetime premium ($299) in early days (sold out, now $30/year only)
-- **Paddle**: 15-25% of SaaS users prefer lifetime when offered
+---
 
 **Scarcity Tactics** (Create Urgency):
 
