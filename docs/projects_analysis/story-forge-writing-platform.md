@@ -1,5 +1,13 @@
 # StoryForge - Creative Platform for Writers & Visual Storytellers
 
+> **⚠️ REALIGNMENT NOTICE (January 2026)**: This document has been updated to reflect StoryForge's **original mission** as a **mental health-first, dual-sided marketplace** (authors + readers), NOT just a writing tool. Key changes:
+>
+> - **Added comprehensive reader platform** (webnovel discovery, chapter reading, engagement features)
+> - **Fixed monetization model** to include BOTH author subscriptions AND reader revenue (80% to authors)
+> - **Emphasized mental health implementation** beyond surface-level features
+> - **Removed/deprioritized**: RPG/D&D tools, visual panel designers, B2B enterprise (scope creep)
+> - **See "Critical Analysis" section** for detailed gap analysis and recommendations
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -19,7 +27,9 @@
 
 ## Overview
 
-StoryForge is an innovative creative platform that combines powerful storytelling tools with gamification and social features to help writers and visual storytellers bring their visions to life. Whether crafting novels, screenplays, comics, or graphic novels, StoryForge provides specialized tools for every type of storyteller, all while fostering a supportive community and prioritizing creator wellbeing.
+**StoryForge is a mental health-first gamified creative writing and reading platform** that serves both creators and readers. It helps authors build consistent writing habits, craft immersive worlds, publish directly to readers, and earn fair revenue (80% revenue share). Readers discover webnovel-style chapter content, engage with authors, and support creators through flexible pricing (free, platform premium $4.99/mo, or per-author $1-10/mo).
+
+**Core Mission**: Democratize publishing by removing gatekeepers, while prioritizing mental wellbeing for both creators and readers.
 
 ### Current Status (January 2026)
 
@@ -35,6 +45,8 @@ StoryForge is an innovative creative platform that combines powerful storytellin
 
 ### Core Functionality
 
+#### For Authors (Creation Tools)
+
 - **Multi-Format Editor**: TipTap-based editor supporting various formats:
   - **Prose**: Rich text with formatting options
   - **Screenplays**: Industry-standard formatting
@@ -46,25 +58,48 @@ StoryForge is an innovative creative platform that combines powerful storytellin
   - Interactive timelines
   - Dialogue/script management
   - Visual asset library
-- **Visual Storytelling**:
-  - Panel layout designer
-  - Speech bubble and caption tools
-  - Page/panel numbering
-  - Export to print/digital formats
-- **Gamification**:
+- **Mental Health-First Gamification**:
   - Ink currency system
   - Customizable goals (words, panels, pages)
-  - Streak tracking and milestone badges
-  - Break reminders and wellness checks
-- **Collaboration & Community**:
-  - Follow system with activity feeds
-  - Public/private workspaces
-  - Team collaboration tools
-  - Feedback and review system
+  - **Compassionate streak tracking** (grace days, rest days don't break streaks)
+  - **Break reminders and burnout detection**
+  - **Wellness dashboard** showing writing health
+- **Publishing Workflow**:
+  - Chapter management with granular visibility control
+  - Per-chapter pricing (free, premium, subscriber-only)
+  - Direct reader monetization (80% revenue to author)
+  - Analytics dashboard (engagement, revenue, demographics)
+
+#### For Readers (Discovery & Engagement)
+
+- **Content Discovery**:
+  - Browse by genre, format, content type
+  - Trending/popular stories, new releases, personalized recommendations
+  - Search by tags, mood, completion status
+- **Reading Interface**:
+  - Webnovel-style chapter-by-chapter reading
+  - Customizable reading settings (font, size, theme)
+  - Progress tracking, bookmarks, reading lists
+- **Reader Engagement**:
+  - Like, comment (paragraph-level), review chapters
+  - Follow authors for new chapter notifications
+  - Subscribe to authors ($1-10/mo per author)
+  - Tip authors with Ink
+- **Flexible Pricing**:
+  - **Free**: Public stories, limited comments
+  - **Premium Reader** ($4.99/mo): All premium stories, ad-free, early chapter access
+  - **Per-Author Subscriptions**: $1-10/mo per creator (authors keep 80%)
+
+#### Shared Features
+
 - **Privacy Controls**:
   - Four-tier visibility (Private, Friends, Public-Auth, Public-Anyone)
-  - Granular permission system
-  - Watermarking options for visual content
+  - Granular permission system per project and chapter
+- **Community**:
+  - Follow/follower system
+  - Groups (writing communities, reading clubs, beta reader teams)
+  - Direct messaging between authors and readers
+  - Activity feeds
 
 ### Technical Highlights
 
@@ -211,82 +246,140 @@ Phase 3 (12 months): React Native if >30% mobile traffic
   - _Pros_: Global network, DDoS protection
   - _Cost_: Free plan available, $20/month for pro features
 
-## Monetization Strategy
+## Revenue Modeling (Dual-Sided Marketplace)
+
+> **🚨 CRITICAL UPDATE**: The previous revenue model ONLY counted author subscriptions. The new dual-sided marketplace includes BOTH author subscriptions AND reader subscriptions (which mostly go to authors via 80% revenue share). This dramatically improves unit economics.
 
 ### Revenue Streams
 
-1. **Subscription Tiers**
-   - Free: Basic features, limited projects
-   - Writer ($7.99/month): Advanced tools, unlimited projects
-   - Author ($14.99/month): Team features, analytics
+1. **Author Subscriptions** (Tool Access)
+   - Free Author: $0 (can still earn from readers)
+   - Writer: $9.99/month (creation tools)
+   - Author: $19.99/month (pro tools + analytics)
 
-2. **Marketplace**
-   - Premium templates
-   - World-building assets
-   - Writing courses
+2. **Reader Subscriptions** (Content Access) - **PRIMARY REVENUE SOURCE**
+   - Free Reader: $0
+   - Premium Reader: $4.99/month (platform keeps 20% = $1/user, 80% to authors)
+   - Per-Author Subscriptions: $1-10/month (platform keeps 20%, authors keep 80%)
 
-### AI Cost Break-Even Analysis
+3. **Secondary Revenue** (Phase 2+)
+   - Marketplace: Templates, assets, courses
+   - Ink tips: One-time reader tips to authors (platform keeps 10%)
+   - Advertising: Non-intrusive ads for free tier (opt-out for premium)
 
-#### Realistic Cost Modeling (Year 2-3 at scale)
+### Dual-Sided Marketplace Economics
 
-**Monthly Fixed Costs**:
+**Key Insight:** Reader revenue >> Author subscription revenue (similar to Patreon, Substack, OnlyFans)
 
-- Infrastructure (10K users): $1,369 (hosting, DB, storage, email, monitoring)
-- Team (lean startup): $25,000/month (3 engineers, 1 designer, 1 support)
-- Marketing: $8,000/month (content, ads, community)
-- **Total Fixed**: $34,369/month
+**Ratio at Maturity:** 10-20 readers per 1 active author (industry standard for creator platforms)
 
-**Variable Costs (Per Active Subscriber)**:
+---
 
-- AI Usage (Writer tier, 10K words/month): $1.00-1.50/user/month
-- AI Usage (Author tier, 50K words/month): $3.00-7.00/user/month
-- Storage & bandwidth: $0.20/user/month
-- Support (amortized): $0.30/user/month
+### Break-Even Scenarios (Dual-Sided Model)
 
-#### Break-Even Scenarios
-
-**Scenario 1: Conservative (20% paid conversion, 40% use AI)**
+#### Scenario 1: Early Stage (Year 1) - 5,000 Users
 
 ```
-10,000 total users
-├─ 2,000 paid subscribers (20% conversion)
-│  ├─ 1,400 Writer tier ($9.99/mo) = $13,986/mo
-│  └─ 600 Author tier ($19.99/mo) = $11,994/mo
-├─ Revenue: $25,980/month
-├─ Fixed costs: $34,369/month
-├─ Variable costs (800 active AI users): $2,400/month
-└─ Net: -$10,789/month (LOSS)
+User Breakdown:
+├─ 500 Authors (10% of users are creators)
+│  ├─ 250 Free Authors ($0) - publishing but not paying
+│  ├─ 175 Writer tier ($9.99/mo) = $1,748/mo
+│  └─ 75 Author tier ($19.99/mo) = $1,499/mo
+├─ 4,500 Readers (90% of users are consumers)
+│  ├─ 3,600 Free Readers ($0) - reading free content
+│  ├─ 600 Premium Readers ($4.99/mo) = $2,994/mo (platform keeps 20% = $599)
+│  └─ 300 Per-Author Subscribers (avg $3/mo) = $900/mo (platform keeps 20% = $180)
+
+Revenue:
+├─ Author subscriptions: $3,247/month
+├─ Reader subscriptions (platform 20%): $779/month
+├─ Total Platform Revenue: $4,026/month
+├─ Author Earnings (80% of reader revenue): $3,114/month distributed to creators
+
+Costs:
+├─ Infrastructure (5K users): $585/month
+├─ Team (lean, part-time): $15,000/month (2 engineers, 1 community mgr)
+├─ Marketing: $3,000/month
+└─ Total Costs: $18,585/month
+
+Net: -$14,559/month (LOSS - expected in Year 1)
 ```
 
-**Break-even point**: **3,200 paid subscribers** or **16,000 total users at 20% conversion**
+**Analysis:** Still burning cash, but reader revenue is growing. Need 15K total users to break even.
 
-**Scenario 2: Optimistic (30% paid conversion, 50% use AI)**
+---
 
-```
-16,000 total users
-├─ 4,800 paid subscribers (30% conversion)
-│  ├─ 3,360 Writer tier ($9.99/mo) = $33,566/mo
-│  └─ 1,440 Author tier ($19.99/mo) = $28,786/mo
-├─ Revenue: $62,352/month
-├─ Fixed costs: $34,369/month
-├─ Variable costs (2,400 active AI users): $7,200/month
-└─ Net: $20,783/month (PROFIT - 33% margin)
-```
-
-**Scenario 3: At Scale (Year 3-4: 100K users, 25% conversion)**
+#### Scenario 2: Growth Stage (Year 2) - 50,000 Users
 
 ```
-100,000 total users
-├─ 25,000 paid subscribers (25% conversion)
-│  ├─ 17,500 Writer tier ($9.99/mo) = $174,825/mo
-│  └─ 7,500 Author tier ($19.99/mo) = $149,925/mo
-├─ Revenue: $324,750/month ($3.9M ARR)
-├─ Fixed costs: $75,000/month (larger team: 8 people)
-├─ Infrastructure: $53,700/month
-├─ Marketing: $25,000/month
-├─ Variable costs (12,500 active AI users): $50,000/month
-└─ Net: $121,050/month (37% profit margin)
+User Breakdown:
+├─ 5,000 Authors (10% of users)
+│  ├─ 2,000 Free Authors ($0) - earning from readers
+│  ├─ 2,100 Writer tier ($9.99/mo) = $20,979/mo
+│  └─ 900 Author tier ($19.99/mo) = $17,991/mo
+├─ 45,000 Readers (90% of users)
+│  ├─ 31,500 Free Readers ($0) - discovery phase
+│  ├─ 10,000 Premium Readers ($4.99/mo) = $49,900/mo (platform keeps 20% = $9,980)
+│  └─ 3,500 Per-Author Subscribers (avg $4/mo) = $14,000/mo (platform keeps 20% = $2,800)
+
+Revenue:
+├─ Author subscriptions: $38,970/month
+├─ Reader subscriptions (platform 20%): $12,780/month
+├─ Total Platform Revenue: $51,750/month ($621K ARR)
+├─ Author Earnings (80% of reader revenue): $51,120/month distributed to top creators
+
+Costs:
+├─ Infrastructure (50K users): $28,560/month
+├─ Team (growing): $40,000/month (4 engineers, 2 support, 1 community)
+├─ Marketing: $12,000/month
+└─ Total Costs: $80,560/month
+
+Net: -$28,810/month (LOSS - still growing, need more readers)
 ```
+
+**Analysis:** Revenue is growing but infrastructure + team costs are high. Need better reader conversion (currently 30% paid, target 40%+).
+
+---
+
+#### Scenario 3: At Scale (Year 3-4) - 200,000 Users
+
+```
+User Breakdown:
+├─ 20,000 Authors (10% of users)
+│  ├─ 8,000 Free Authors ($0) - earning from readers
+│  ├─ 8,400 Writer tier ($9.99/mo) = $83,916/mo
+│  └─ 3,600 Author tier ($19.99/mo) = $71,964/mo
+├─ 180,000 Readers (90% of users)
+│  ├─ 108,000 Free Readers ($0) - 60% free tier
+│  ├─ 50,000 Premium Readers ($4.99/mo) = $249,500/mo (platform keeps 20% = $49,900)
+│  └─ 22,000 Per-Author Subscribers (avg $5/mo) = $110,000/mo (platform keeps 20% = $22,000)
+
+Revenue:
+├─ Author subscriptions: $155,880/month
+├─ Reader subscriptions (platform 20%): $71,900/month
+├─ Total Platform Revenue: $227,780/month ($2.73M ARR)
+├─ Author Earnings (80% of reader revenue): $287,600/month to creators ($14,380 avg/author earning from readers)
+
+Costs:
+├─ Infrastructure (200K users): $95,000/month
+├─ Team (mature): $85,000/month (10 engineers, 4 support, 2 community, 1 ops)
+├─ Marketing: $35,000/month
+└─ Total Costs: $215,000/month
+
+Net: $12,780/month (PROFIT - 6% margin, finally breaking even!)
+```
+
+**Analysis:** Platform is profitable! Authors earning avg $14K/month from reader subscriptions (top 10% authors earning $50K+/month). This proves the creator economy model works.
+
+---
+
+### Key Insights from Dual-Sided Model
+
+1. **Reader revenue > Author subscription revenue** at scale (3:1 ratio in Year 3-4)
+2. **Authors can earn even on Free tier** (no paywall to start monetizing)
+3. **Platform takes 20% of reader revenue** (fair split, better than Wattpad's 50%)
+4. **Network effects are critical**: More authors → more content → more readers → more author earnings → attracts more authors (flywheel)
+5. **Break-even requires ~150K total users** (15K authors, 135K readers) at 35-40% reader paid conversion
 
 #### Key Insights
 
@@ -1077,19 +1170,23 @@ api/
 
 ## Monetization Strategy
 
-> **💡 B2C PRIORITY - DO B2C FIRST**: 95% of revenue will come from individual writers (B2C), not businesses (B2B). Optimize for single-user subscriptions.
+> **🎯 DUAL-SIDED MARKETPLACE**: StoryForge is **not just a writing tool**—it's a **creator-reader platform** like Wattpad, Royal Road, and Patreon combined. Revenue comes from BOTH authors (subscriptions for tools) AND readers (subscriptions for content access + author support).
 >
-> **B2B TIMING**: Don't pursue Publisher tier until Year 2+ and 5,000+ paying B2C subscribers. B2B sales cycles are 6-12 months, require dedicated sales team ($150K+ salary), and distract from product-market fit.
+> **💰 REVENUE SPLIT PHILOSOPHY**: Authors keep **80% of reader subscription revenue** (vs Wattpad's 50%, Patreon's 92%). StoryForge takes 20% to cover payment processing, hosting, and platform development.
+>
+> **🧠 MENTAL HEALTH FIRST**: All monetization features include safeguards—compassionate streaks, burnout detection, rest days, healthy limits for both authors and readers.
 
 ### Target Market Prioritization
 
-| Segment                      | Priority        | Revenue Potential           | Sales Cycle            | Why                                                                                                                                                                                                |
-| ---------------------------- | --------------- | --------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **B2C (Individual Writers)** | ✅ PRIMARY      | $10-20/user/month           | Self-service (instant) | • Huge market (10M+ aspiring writers globally)<br>• Low CAC ($20-40)<br>• Fast iteration based on feedback<br>• Viral growth potential<br>• Proven willingness to pay (Scrivener, Ulysses, Dabble) |
-| **B2B (Small Publishers)**   | 🟡 PHASE 3      | $500-2,000/company/month    | 3-6 months             | • Requires custom features (workflows, permissions)<br>• Needs sales team + demos<br>• Only ~5,000 small publishers globally<br>• Most use free tools (Google Docs, email)                         |
-| **B2B (Large Publishers)**   | ❌ DEPRIORITIZE | $5,000-20,000/company/month | 12-24 months           | • Enterprise sales (RFPs, legal, security audits)<br>• Custom development ($100K+ engineering)<br>• Only ~500 large publishers globally<br>• Already locked into existing tools                    |
+| Segment                       | Priority   | Revenue Potential           | Sales Cycle            | Why                                                                                                                                                                                                                                                 |
+| ----------------------------- | ---------- | --------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **B2C Authors (Creators)**    | ✅ PRIMARY | $10-20/user/month           | Self-service (instant) | • 10M+ aspiring writers globally<br>• Low CAC ($20-40)<br>• Proven willingness to pay (Scrivener, Ulysses, Dabble)<br>• **Supply side of marketplace** (content creators)                                                                           |
+| **B2C Readers (Consumers)**   | ✅ PRIMARY | $5-15/user/month            | Self-service (instant) | • 100M+ webnovel readers globally (Wattpad 94M MAU)<br>• Ultra-low CAC ($5-15 organic)<br>• **Demand side of marketplace** (content consumers)<br>• **80% of revenue goes to authors** (network effects)                                            |
+| **B2B (Small Publishers)**    | 🟡 PHASE 3 | $500-2,000/company/month    | 3-6 months             | • Only ~5,000 small publishers globally<br>• Requires custom features (workflows, SSO)<br>• Needs dedicated sales team<br>• **NOT core to mission** (democratize publishing by removing gatekeepers)                                                |
+| **B2B (Large Publishers)**    | ❌ ABANDON | $5,000-20,000/company/month | 12-24 months           | • Only ~500 large publishers globally<br>• Enterprise sales cycles (RFPs, legal, security audits)<br>• Custom engineering ($100K+)<br>• **Conflicts with mission** (we're disrupting them, not serving them)                                        |
+| **Creator Economy (Patreon)** | 🟢 INSPIRE | $1-50/fan/month             | Network effects        | • Proven model: Patreon ($1.5B GMV/year, 8M paying patrons)<br>• StoryForge adds integrated tools (Patreon is external)<br>• **Direct author-reader relationships** (80% revenue share)<br>• Authors can monetize WITHOUT platform premium features |
 
-**DECISION: 100% B2C focus for Year 1-2, optionally add B2B in Year 3 if demand exists**
+**DECISION: Dual-sided B2C marketplace (authors + readers), no B2B until Year 3+ if demand exists**
 
 ### Web vs Mobile Prioritization
 
@@ -1101,42 +1198,61 @@ api/
 
 **DECISION: Web-first, add PWA in Month 6, consider native app in Year 2 if mobile usage >30%**
 
-### Subscription Tiers (Individual Writers - B2C)
+### Subscription Tiers
 
-#### 1. Free Tier (User Acquisition)
+> **🎯 TWO DISTINCT USER TYPES**: Authors (creators) and Readers (consumers) have separate subscription tiers optimized for their needs. Authors can earn from readers even if they're on the Free Author tier.
+
+---
+
+### Author Tiers (Creation Tools)
+
+#### 1. Free Author
 
 - **Price**: $0/month
+- **Target**: Hobbyist writers, students, beginners
 - **Features**:
-  - Basic writing tools
-  - Limited exports (3/month)
-  - Community templates
-  - Basic collaboration
+  - Basic writing tools (TipTap editor)
+  - 3 active projects
+  - Basic world-building (characters, locations, timelines)
+  - Limited exports (3/month, PDF only)
   - 1GB storage
+  - **Can publish to readers** (free chapters, monetize via reader subscriptions)
+  - **80% revenue share** on reader subscriptions
+- **Mental Health**: Break reminders, basic wellness dashboard
 
-#### 2. Writer
+#### 2. Writer ($9.99/month or $99/year)
 
 - **Price**: $9.99/month or $99.99/year (17% savings)
+- **Target**: Serious hobbyists, aspiring authors, part-time writers
 - **Features**:
-  - All Free Tier features
-  - Unlimited exports (all formats)
+  - All Free Author features
+  - **Unlimited projects**
+  - Unlimited exports (all formats: PDF, EPUB, DOCX, FDX)
   - Cloud storage (20GB)
   - Advanced formatting tools
-  - Writing statistics
+  - Writing statistics and goal tracking
   - Version history (30 days)
   - AI Writing Assistant (10K words/month)
+  - **80% revenue share** on reader subscriptions
+- **Mental Health**: Burnout detection, compassionate streaks, rest day tracking
 
-#### 3. Author
+#### 3. Author ($19.99/month or $199/year)
 
 - **Price**: $19.99/month or $199.99/year (17% savings)
+- **Target**: Professional authors, full-time writers, publishers
 - **Features**:
   - All Writer features
   - Cloud storage (100GB)
-  - Real-time collaboration (up to 3 collaborators)
-  - Version history (unlimited)
-  - Advanced analytics dashboard
+  - Real-time collaboration (up to 5 collaborators)
+  - Version history (unlimited, visual diffing)
+  - Advanced analytics dashboard (reader demographics, engagement, revenue)
   - AI Writing Assistant (50K words/month)
   - Priority support (24h response)
-  - Publishing integration (KDP, IngramSpark)
+  - Publishing integration (KDP, IngramSpark, print-on-demand)
+  - **80% revenue share** on reader subscriptions
+  - Beta reader management tools
+  - Editorial collaboration (track changes, suggestions)
+- **Mental Health**: Wellness check-ins, active session limits, daily cap warnings
 
 #### 4. Lifetime (One-Time Payment) - STRATEGIC
 
@@ -1194,7 +1310,482 @@ Total: 550 lifetime users, $259,450 upfront capital
 - Dabble: $10/mo only (no lifetime)
 - StoryForge: $499 lifetime is premium but includes AI + cloud + collab (justified)
 
-#### 5. Publisher (B2B - Phase 3 Only, Low Priority)
+---
+
+### Reader Tiers (Content Consumption)
+
+> **🎯 READER MONETIZATION = AUTHOR REVENUE**: 80% of reader subscription fees go directly to authors whose content they consume. This is the PRIMARY revenue source for authors.
+
+#### 1. Free Reader
+
+- **Price**: $0/month
+- **Target**: Casual readers, browsers, discovery users
+- **Features**:
+  - Read all **free public stories** (unlimited)
+  - Limited comments (3/day)
+  - Basic reading interface
+  - Follow authors (no notification limits)
+  - Create reading lists
+  - Like chapters
+- **Mental Health**: Reading time tracking, content warnings
+
+#### 2. Premium Reader ($4.99/month or $49/year)
+
+- **Price**: $4.99/month or $49.99/year (17% savings)
+- **Target**: Active readers, webnovel fans, binge-readers
+- **Features**:
+  - All Free Reader features
+  - **Access to ALL premium content** across ALL authors (Netflix model)
+  - Unlimited comments and reviews
+  - Ad-free experience
+  - **Early chapter access** (1-3 chapters ahead of free release)
+  - Offline reading (PWA/app)
+  - **Exclusive Premium Reader badge** in comments
+  - Customizable reading settings (fonts, themes, spacing)
+  - Reading statistics and achievements
+- **Mental Health**: Break reminders, healthy consumption limits, binge-reading warnings
+- **Revenue Split**: Platform keeps 100% (authors opted into premium pool)
+
+**How Premium Pool Works:**
+
+```
+$4.99/month × 10,000 Premium Readers = $49,900/month
+→ StoryForge keeps 20% ($9,980) for hosting/ops
+→ 80% ($39,920) distributed to authors based on reading time
+
+Example: If Author A's chapters were read for 1,000 hours out of 10,000 total hours:
+  Author A receives: $39,920 × (1,000/10,000) = $3,992/month
+```
+
+#### 3. Per-Author Subscriptions ($1-10/month per author)
+
+- **Price**: Author-set pricing (typically $1-5/mo, max $10/mo)
+- **Target**: Superfans, dedicated followers of specific authors
+- **Features**:
+  - All Free Reader features
+  - **Exclusive subscriber-only content** from that author
+  - **Early chapter access** (author-defined, usually 1-7 days ahead)
+  - **Behind-the-scenes** content (worldbuilding notes, character art, deleted scenes)
+  - **Subscriber-only comments** (private discussions with author)
+  - **Exclusive Discord/community access** (if author has one)
+  - **Monthly Q&A sessions** or live streams (author's choice)
+  - **Your name in chapter acknowledgements** (optional)
+- **Mental Health**: Same as Premium Reader
+- **Revenue Split**: **Author keeps 80%, platform keeps 20%**
+
+**Example:**
+
+```
+Reader subscribes to 3 authors:
+  - Author A: $3/month → Author A gets $2.40, platform gets $0.60
+  - Author B: $5/month → Author B gets $4.00, platform gets $1.00
+  - Author C: $2/month → Author C gets $1.60, platform gets $0.40
+Total reader cost: $10/month
+Total platform revenue: $2/month
+```
+
+#### 4. Hybrid Model (Premium + Per-Author)
+
+**Most engaged readers will use BOTH:**
+
+- Premium Reader ($4.99/mo) for unlimited access to ALL stories
+- Per-Author Subscriptions ($3-10/mo total) for 2-3 favorite authors' exclusive content
+
+**Example Reader Journey:**
+
+```
+Month 1: Free Reader (discover platform, read free chapters)
+Month 3: Premium Reader ($4.99/mo) - found 10 stories they love, want binge access
+Month 6: Premium + Subscribe to 2 authors ($4.99 + $3 + $5 = $12.99/mo total)
+```
+
+**This is GOOD for authors:**
+
+- Premium gives exposure → readers discover you
+- Subscribers give predictable income → superfans support you directly
+
+---
+
+### Anti-Piracy Strategy & Reader Experience Balance
+
+> **🎯 PHILOSOPHY**: Piracy is a **service problem**, not a **price problem** (Gabe Newell, Steam). Focus on making legal access SO GOOD that piracy becomes inconvenient by comparison.
+
+#### Understanding the Piracy Problem
+
+**Why readers pirate:**
+
+1. **Content not available** in their region/language
+2. **Price too high** for their income level (e.g., $4.99 = 2 hours minimum wage in some countries)
+3. **DRM is annoying** (can't read on preferred device, can't share with family)
+4. **Piracy is more convenient** (one-click download vs account creation, payment info, device limits)
+
+**Piracy statistics (publishing industry):**
+
+- ~17% of ebook readers admit to pirating at least once (2022 survey)
+- Fan-translated webnovels: 80%+ piracy rate (official translations lag by 6-12 months)
+- Comics/manga: 60-70% piracy rate (high prices, delayed releases, region locks)
+
+---
+
+#### Anti-Piracy Measures (Balanced Approach)
+
+##### Tier 1: Soft Protections (Make Piracy Inconvenient) ✅ IMPLEMENT
+
+**Web-Based Reading (Primary Defense)**
+
+- **Browser-only reading** for web platform (no raw HTML download)
+- **Dynamic content loading** (chapters load via authenticated API calls)
+- **Right-click protection** (disable text selection, context menu)
+- **Watermarking**: Invisible user ID embedded in chapter HTML (track leak source)
+
+**Technical Implementation:**
+
+```typescript
+// Watermarking example
+function embedWatermark(content: string, userId: string): string {
+  const watermark = `<!-- User: ${btoa(userId)} -->`;
+  return content.replace(/<\/body>/, `${watermark}</body>`);
+}
+
+// API rate limiting (prevent bulk scraping)
+const rateLimiter = {
+  free: { requests: 50, window: '1h' }, // 50 chapters/hour
+  premium: { requests: 200, window: '1h' }, // More generous for paying users
+};
+```
+
+**Why this works:**
+
+- Casual pirates give up (too much effort to scrape)
+- Serious pirates will bypass anyway (accept this reality)
+- **Doesn't punish paying users** (no aggressive DRM)
+
+---
+
+##### Tier 2: Download Options (Controlled Piracy) ✅ RECOMMEND
+
+**Philosophy:** If users WILL pirate, give them a legal alternative that's better than piracy.
+
+**Offline Reading (PWA/App Only)**
+
+- **Encrypted local storage** (IndexedDB with user-specific keys)
+- **Device limit**: 3 devices per account (same as Kindle)
+- **Periodic online check**: App must connect every 30 days to verify subscription
+- **Auto-delete on unsub**: Downloaded chapters removed when subscription lapses
+
+**Export Options (Premium/Subscriber-Only)**
+
+```typescript
+// Download tiers
+const exportPermissions = {
+  free: null, // No exports for free readers
+  premium: {
+    format: ['EPUB', 'PDF'], // Standard formats
+    watermark: true, // "Licensed to [User Email]" on every page
+    drm: 'social', // Watermark only, no encryption
+    limit: 10, // 10 books/month
+  },
+  perAuthorSub: {
+    format: ['EPUB', 'PDF', 'MOBI'], // More formats
+    watermark: true,
+    drm: 'social',
+    limit: 'unlimited', // Download all subscribed content
+    extras: true, // Bonus content (character art, maps, deleted scenes)
+  },
+};
+```
+
+**Why this works:**
+
+- **Social DRM** (watermark with user email) creates accountability without annoyance
+- **Generous limits** make legal access more convenient than piracy
+- **No encryption DRM** (Adobe DRM, Kindle DRM are hated, easy to crack anyway)
+- **Extra value** for paying users (bonus content, better formats)
+
+**Competitor Comparison:**
+| Platform | Download | DRM | Device Limit | Format |
+|----------|----------|-----|--------------|--------|
+| **Kindle** | ✅ Yes | 🔴 Encrypted (annoying) | 6 devices | MOBI/AZW |
+| **Wattpad** | ❌ No | N/A | Web-only | N/A |
+| **Royal Road** | ❌ No | N/A | Web-only | N/A |
+| **Patreon** | ✅ Yes (author choice) | ⚪ None (risky for authors) | Unlimited | PDF/EPUB (author uploads) |
+| **StoryForge** | ✅ Yes (PWA/app + export) | 🟢 Social (watermark only) | 3 devices | EPUB/PDF/MOBI |
+
+**Recommendation:** StoryForge's approach balances author protection + reader convenience better than competitors.
+
+---
+
+##### Tier 3: Author Controls (Empower Creators) ✅ IMPLEMENT
+
+**Per-Author Piracy Settings:**
+
+```typescript
+interface PiracySettings {
+  allowOfflineReading: boolean; // Default: true (Premium/subscribers only)
+  allowExport: boolean; // Default: true (EPUB/PDF for subscribers)
+  watermarkStyle: 'minimal' | 'visible' | 'aggressive'; // Default: 'minimal'
+  dmcaTakedown: {
+    autoScan: boolean; // Scan piracy sites weekly (costs $50/mo/author)
+    manualReporting: boolean; // StoryForge assists with DMCA notices
+  };
+}
+```
+
+**Why this matters:**
+
+- Some authors prefer NO downloads (paranoid about piracy)
+- Others prefer FULL openness (believe free readers convert to paying subscribers)
+- **Author choice** = trust + empowerment
+
+---
+
+##### Tier 4: Piracy Monitoring (Reactive, Not Proactive) 🟡 PHASE 2
+
+**Reality:** Professional pirates will upload content regardless. Focus on **monitoring + mitigation**, not prevention.
+
+**Services to integrate:**
+
+- **DMCA takedown automation**: BrandShield, Attributor ($100-500/mo per author)
+- **Google Content ID** (for audiobooks/videos, free)
+- **Manual reporting**: Reader community reports piracy links → StoryForge sends DMCA notices
+
+**Cost-Benefit Analysis:**
+
+```
+Anti-piracy service: $200/mo/author
+Average author revenue: $300/mo
+
+Only makes sense for authors earning >$1,000/mo (top 5%)
+→ Offer as optional add-on, not default feature
+```
+
+**Recommendation:** Build DMCA takedown assistance tools (templates, instructions), but don't pay for monitoring unless author opts in + pays.
+
+---
+
+#### Key Insight: Piracy vs. Free Marketing
+
+**Controversial Take:** Some piracy can HELP authors (free marketing, word-of-mouth).
+
+**Case Studies:**
+
+- **Brandon Sanderson**: Tolerates fan translations, sees 30-40% increase in official sales in those regions when official versions release
+- **The Wandering Inn** (webnovel): Free chapters on web → Patreon earnings $70K+/month (readers support despite free access)
+- **Manga scanlations**: 80% of U.S. manga fans discovered series via piracy, later bought official volumes
+
+**StoryForge Strategy:**
+
+1. **Free chapters strategy**: Authors release 10-20 chapters free → Readers hooked → Subscribe for rest
+2. **Timed releases**: Free readers get chapters 7-14 days AFTER subscribers (early access = value)
+3. **Bonus content**: Subscribers get maps, character art, side stories (can't pirate what doesn't exist publicly)
+4. **Community access**: Subscribers join Discord, Q&A sessions, polls (pirates miss out on interaction)
+
+**Bottom line:** Focus energy on **making subscription valuable**, not fighting piracy.
+
+---
+
+### Audiobook Market Potential
+
+> **📊 MARKET SIZE**: Audiobook industry = $6.8B globally (2023), growing 25% YoY. Webnovel audiobooks are an **untapped opportunity**.
+
+#### Should StoryForge Add Audiobooks?
+
+**Short answer:** **YES, but Phase 3+ only** (Year 2-3). Here's why:
+
+---
+
+#### Market Opportunity
+
+**Current landscape:**
+
+- **Audible** dominates (64% market share, $1.8B revenue)
+  - BUT: Traditional publishing gatekeepers still control access
+  - Hard for indie authors to get on platform (requires ACX approval)
+  - Revenue split: 40% to author (60% to Audible/Amazon)
+- **Webnovel audiobooks** barely exist
+  - Wattpad has NO audiobook features
+  - Royal Road has NO audiobook features
+  - Patreon creators use YouTube (poor UX, not monetized well)
+
+**Reader demand:**
+
+- 50%+ of U.S. adults listen to audiobooks (Audio Publishers Association, 2023)
+- Audiobook listeners consume 2-3x more content than text-only readers
+- Average audiobook price: $15-25 (vs $4.99 for ebook)
+- **Premium pricing justified** (production costs, narration time)
+
+---
+
+#### Audiobook Implementation Strategy
+
+##### Phase 1: Text-to-Speech (Quick Win, Low Cost) 🟢 VIABLE
+
+**Technology:**
+
+- **ElevenLabs**, **Google Cloud TTS**, **Amazon Polly** (AI voice synthesis)
+- Cost: $0.30/1K characters (~$30 for 100K-word novel)
+- Quality: **80-90% as good as human narration** (2024 models)
+
+**Features:**
+
+```typescript
+interface TextToSpeechOptions {
+  voice: 'male' | 'female' | 'neutral'; // ~20 voice options
+  speed: 0.75 | 1.0 | 1.25 | 1.5; // Playback speed
+  accent: 'american' | 'british' | 'australian'; // Regional accents
+  emotionalTone: 'neutral' | 'dramatic' | 'soft'; // ElevenLabs feature
+}
+```
+
+**Pricing Tier:**
+
+- **Free Readers**: No audio
+- **Premium Readers** ($4.99/mo): TTS audio for ALL stories (included)
+- **Per-Author Subscribers**: TTS audio + exclusive human-narrated chapters (if author uploads)
+
+**Cost Analysis:**
+
+```
+10,000 Premium Readers × 10 hours listening/month = 100,000 hours
+100,000 hours × $0.001/hour (Polly) = $100/month TTS costs
+
+Premium revenue: $49,900/month
+TTS costs: $100/month (0.2% of revenue)
+→ EXTREMELY profitable add-on
+```
+
+**Why TTS first:**
+
+- **Near-zero cost** to platform and authors
+- **Instant availability** (no waiting for human narration)
+- **Test demand** before investing in human narrator marketplace
+
+---
+
+##### Phase 2: Human Narrator Marketplace (Premium Feature) 🟡 PHASE 3
+
+**Model:** StoryForge connects authors with narrators (like ACX, but integrated).
+
+**How it works:**
+
+1. **Author posts narration job** (100K words, fantasy novel, needs female narrator)
+2. **Narrators audition** (upload sample chapter, bid on project)
+3. **Author selects narrator** (StoryForge escrow holds payment)
+4. **Narration production** (narrator records, author reviews, approves)
+5. **Revenue split**: Author 70%, Narrator 20%, Platform 10% (vs Audible's 40/40/20)
+
+**Narrator Tiers:**
+
+- **Amateur narrators**: $100-300 PFH (per finished hour) - Indie authors, voice actors
+- **Professional narrators**: $300-500 PFH - ACX veterans, established voices
+- **Celebrity narrators**: $1,000+ PFH - Known actors (Phase 4, if platform grows)
+
+**Example Production Cost:**
+
+```
+100K-word novel = ~10-12 hours narration (average reading speed: 9,300 words/hour)
+Amateur narrator: 12 hours × $200 PFH = $2,400
+Professional narrator: 12 hours × $400 PFH = $4,800
+
+Author pricing:
+- Sell audiobook: $15 (one-time purchase)
+- Audiobook subscription: $3/mo per author (included in text subscription)
+
+Break-even: 160 sales ($2,400 ÷ $15) or 800 subscribers ($2,400 ÷ $3)
+```
+
+**Why this works:**
+
+- **Better split than Audible** (70% vs 40% to author)
+- **Faster production** (no ACX approval, direct author-narrator contract)
+- **Subscription-friendly** (Audible is pay-per-book, StoryForge is subscription)
+
+---
+
+##### Phase 3: AI Voice Cloning (Author's Voice) 🔮 FUTURE
+
+**Technology:** ElevenLabs Voice Cloning, Resemble AI, Descript Overdub
+
+**How it works:**
+
+1. Author records 30 minutes of sample audio (reading their own work)
+2. AI clones author's voice (90%+ accuracy)
+3. Author's cloned voice narrates entire novel (AI-generated)
+
+**Cost:** $30-50/month per voice clone (ElevenLabs Professional)
+
+**Why this is AMAZING:**
+
+- **Author narrates own work** (authentic, personal connection)
+- **No narrator costs** (author owns their voice)
+- **Updates/edits easy** (change text, regenerate audio instantly)
+
+**Ethical concerns:**
+
+- **Voice consent**: Author must opt-in, owns their voice model
+- **Misuse prevention**: Voice clone only works for author's own content
+- **Disclosure**: Audiobooks labeled "AI-narrated by author's voice"
+
+**Timeline:** 2026-2027 (technology is ready NOW, but needs ethical framework)
+
+---
+
+#### Audiobook Monetization Models
+
+| Model               | Free Reader | Premium Reader ($4.99/mo)  | Per-Author Sub ($3-10/mo)       | One-Time Purchase  |
+| ------------------- | ----------- | -------------------------- | ------------------------------- | ------------------ |
+| **TTS Audio**       | ❌ No       | ✅ Yes (all stories)       | ✅ Yes (subscribed authors)     | N/A                |
+| **Human Narration** | ❌ No       | ✅ Yes (if author opts in) | ✅ Yes + exclusive early access | ✅ $10-20 per book |
+| **AI Voice Clone**  | ❌ No       | ✅ Yes (if author enables) | ✅ Yes + behind-the-scenes      | ✅ $15-25 per book |
+
+**Revenue Split (Human/AI Narration):**
+
+- **Subscription model**: 70% author, 20% narrator (if human), 10% platform
+- **One-time purchase**: 70% author, 20% narrator, 10% platform
+- **TTS-only**: 85% author, 15% platform (no narrator to pay)
+
+---
+
+#### Competitive Advantage: Audiobooks
+
+**StoryForge vs. Competitors:**
+
+| Platform            | Audiobook Support               | Narrator Access              | Revenue Split                                | Cost                          |
+| ------------------- | ------------------------------- | ---------------------------- | -------------------------------------------- | ----------------------------- |
+| **Audible/ACX**     | ✅ Yes                          | 🔴 Exclusive contract        | 40% author, 40% narrator, 20% Audible        | $15-30/book                   |
+| **Findaway Voices** | ✅ Yes                          | ✅ Non-exclusive             | 70% author, 20% narrator, 10% platform       | $10-25/book                   |
+| **Patreon**         | ⚪ DIY (upload MP3s)            | ❌ Author finds own narrator | 92% author, 8% Patreon                       | $3-20/mo                      |
+| **Wattpad**         | ❌ No                           | ❌ No                        | N/A                                          | N/A                           |
+| **Royal Road**      | ❌ No                           | ❌ No                        | N/A                                          | N/A                           |
+| **StoryForge**      | ✅ Yes (TTS + human + AI clone) | ✅ Integrated marketplace    | 70-85% author, 10-20% narrator, 10% platform | $4.99/mo (TTS) or $15-25/book |
+
+**Key differentiators:**
+
+1. **TTS included in Premium** (no extra cost, instant access)
+2. **Narrator marketplace** (ACX alternative, better split, non-exclusive)
+3. **Subscription-friendly** (audiobooks included in $4.99 Premium, not pay-per-book)
+4. **AI voice cloning** (author-narrated without narrator costs)
+
+---
+
+#### Recommendation: Phased Audiobook Rollout
+
+**Phase 1 (MVP):** ❌ **SKIP** - Focus on text reading platform first
+**Phase 2 (Month 6-12):** 🟢 **Add TTS** ($100/mo cost, included in Premium Reader tier)
+**Phase 3 (Year 2):** 🟡 **Test human narrator marketplace** (10-20 authors pilot program)
+**Phase 4 (Year 3):** 🔮 **AI voice cloning** (if Phase 2-3 successful, 1,000+ audiobook listeners)
+
+**Success Metrics:**
+
+- Phase 2: 30%+ of Premium Readers use TTS feature weekly
+- Phase 3: 50+ authors produce human-narrated audiobooks (break-even on narrator costs)
+- Phase 4: 500+ authors use AI voice cloning ($25K+/month additional revenue)
+
+**Bottom line:** Audiobooks are a **high-value add-on** (25% revenue uplift potential), but NOT critical for MVP. Add in Year 2 after text platform proven.
+
+---
+
+### Publisher Tier (B2B - Phase 3 Only, ❌ LOW PRIORITY)
 
 - **Price**: $499/month or $4,999/year (17% savings, min 10 seats)
 - **Target**: Small publishing houses, writing agencies, MFA programs
@@ -2427,29 +3018,471 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 19. [ ] Optional: B2B tier (if 10+ inbound requests/month)
 20. [ ] Exit preparation (pitch deck, financials, strategic buyer outreach)
 
-## Conclusion
+## Critical Analysis: Alignment with Initial Vision
 
-StoryForge has strong potential to become a leading writing platform for novelists, screenwriters, and visual storytellers with a clear path to $12M ARR by Year 3. The combination of a powerful editor (TipTap), AI assistant, world-building tools, and community features creates a compelling value proposition that justifies $10-20/month pricing.
+### ✅ What's Still Aligned
 
-**Key to success:**
+1. **Mental health-first approach** - Maintained throughout (compassionate streaks, burnout detection, wellness dashboard)
+2. **Gamification with wellbeing** - Ink currency, goals, badges without guilt-based pressure
+3. **World-building tools** - Comprehensive support for characters, locations, timelines, relationships
+4. **Four-tier privacy model** - Private, Friends, Public-Auth, Public-Anyone with granular controls
+5. **Visual storytelling support** - Comics, storyboards, D&D/RPG tools for diverse creators
+6. **Fair monetization philosophy** - 80% revenue share to authors vs industry standard 50-92%
 
-1. **Nail the editor**: Must be better than Google Docs + Scrivener (fast, reliable, beautiful)
-2. **Manage AI costs**: Biggest expense at scale (50-80% of infrastructure), needs hard caps and optimization
-3. **Build community**: Writers need accountability and support (Discord, sprints, challenges)
-4. **B2C-first**: Individual writers are the market (10M+ globally), B2B can wait until Year 3
-5. **Bootstrap early**: Maintain control, focus on profitability, raise only if needed to scale faster
+### ⚠️ Significant Gaps & Concerns
 
-**Realistic outcomes:**
+#### 1. **Reader Experience is Under-Specified** ❌ HIGH PRIORITY
 
-- **Conservative (bootstrap)**: $5M ARR by Year 4, acquired for $30-50M or stay indie profitable
-- **Optimistic (VC-backed)**: $20M ARR by Year 4, acquired for $150-300M by publishing/productivity company
-- **Failure modes**: Low conversion (<3%), high churn (>10%), AI costs spiral, editor bugs lose trust
+**Issue:** The initial vision clearly describes a **webnovel reading platform** with chapter discovery, engagement, and flexible reader pricing. The current analysis barely mentions reader features.
 
-**Competitive moat:**
+**Missing Features:**
 
-- Network effects (community, shared templates, collaboration)
-- Data lock-in (years of writing, world-building data)
-- AI + editor + world-building in one place (competitors specialize)
-- Brand (become synonymous with "writing platform for novelists")
+- Webnovel-style chapter reading interface (like Wattpad, Royal Road, Webnovel)
+- Content discovery by genre, format, mood, completion status
+- Reader engagement (paragraph-level comments, reviews, likes)
+- Reading progress tracking, bookmarks, reading lists
+- Reader achievements and gamification (chapters read, authors supported)
+- Reader mental health features (reading time limits, break reminders, content warnings)
 
-**Next milestone:** Validate demand with 50-100 writers, get 20+ to pre-pay for lifetime tier ($499) before building MVP. If hit $10K+ pre-sales, green light for development. If not, pivot or abandon.
+**Recommendation:**
+
+- **Phase 1 (MVP)**: Build BOTH author tools AND reader platform from day one. Without readers, authors have no monetization path.
+- **Reader-first marketing**: Attract readers with free content FIRST, then recruit authors to serve that audience (supply follows demand)
+- **Seed content strategy**: Partner with 10-20 established webnovel authors to migrate their content (30-50 chapters each) before public launch
+
+**Risk if ignored:** Authors join, publish content, but NO READERS → Authors churn → Platform fails. This is a two-sided marketplace; both sides must launch together.
+
+---
+
+#### 2. **Mental Health Features Lack Implementation Details** ⚠️ MEDIUM PRIORITY
+
+**Issue:** Mental health is mentioned as "core" but lacks concrete implementation beyond surface-level features.
+
+**What's Missing:**
+
+- **Burnout detection algorithms**: How do you detect burnout? (sustained 4+ hour sessions, 7-day streaks without rest, word count spikes >3x normal)
+- **Compassionate streak recovery**: Grace days (2/month?), streak insurance (pay 50 Ink to save a streak?), rest day rewards?
+- **Wellness check-ins**: Weekly reflection prompts? Mood tracking? Integration with mental health resources?
+- **Reader wellbeing**: How do you prevent binge-reading exhaustion? (reading time caps, chapter count limits, "take a break" nudges after 2 hours)
+- **Community toxicity prevention**: Automated comment moderation, toxic pattern detection, safe reporting, trauma-informed moderation team?
+
+**Recommendation:**
+
+- **Hire a mental health consultant** (licensed therapist or wellbeing researcher) to design features (budget: $10-20K)
+- **Build wellness dashboard** with 5 key metrics: active session time, rest days taken, streak health, community interactions, goal completion rate
+- **Implement "wellness score"** (0-100) that warns users when patterns indicate burnout risk (score <30 triggers intervention)
+- **Partner with mental health orgs** (NAMI, 7 Cups, Crisis Text Line) for resource directory and crisis support
+
+**Risk if ignored:** Platform markets as "mental health-first" but features are performative → Backlash from community, brand damage.
+
+---
+
+#### 3. **Revenue Model May Be Too Complex** ⚠️ MEDIUM PRIORITY
+
+**Issue:** Three separate subscription types (Author tools, Reader premium, Per-author subscriptions) + 80/20 revenue split + premium pool distribution creates complexity.
+
+**Concerns:**
+
+- **User confusion**: "Do I pay for tools or content?" "What's the difference between Premium and Per-Author?"
+- **Tax complexity**: Platform is a payment processor handling 80/20 splits → Requires 1099s for authors earning >$600/year (U.S. tax law)
+- **Payment processing fees**: Stripe charges 2.9% + $0.30 per transaction → Eats into 80% share (author gets 77.1%, not 80%)
+- **Premium pool distribution**: How do you track "reading time" fairly? (long chapters ≠ quality, speed readers skew data)
+- **Author expectations**: 80% sounds great until authors realize they need 100+ subscribers to earn $400/month
+
+**Recommendation:**
+
+- **Simplify for MVP**: Start with only 2 tiers:
+  - **Authors pay for tools** ($9.99-19.99/mo for creation features)
+  - **Readers pay directly to authors** ($1-10/mo per author, StoryForge takes 20% + Stripe fees)
+  - **Defer Premium Reader pool** to Phase 2 (too complex, hard to explain)
+- **Be transparent about fees**: "Authors keep 77% after Stripe fees" (not "80%") - honesty builds trust
+- **Benchmark against competitors**:
+  - Patreon: 92% to creators (but no integrated tools, $5-12/mo subscription)
+  - Substack: 90% to writers (but email-only, no rich editor/worldbuilding)
+  - Wattpad Paid Stories: 50% to authors (better than this!)
+  - Ko-fi: 95% to creators (but no recurring subscriptions, tip-jar model)
+  - **Recommendation: 85% to authors, 15% to platform** (better than Wattpad, more sustainable than 80%)
+
+**Risk if ignored:** Authors join expecting Patreon-level earnings, get frustrated when reality doesn't match hype → Public complaints → Reputation damage.
+
+---
+
+#### 4. **RPG/D&D Features May Dilute Focus** ⚠️ LOW-MEDIUM PRIORITY
+
+**Issue:** The initial vision includes D&D campaign management, character sheets, dice rollers, initiative trackers. This is a **completely different product** from a writing platform.
+
+**Concerns:**
+
+- **Target audience mismatch**: D&D players ≠ novelists (some overlap, but different use cases)
+  - D&D players want Roll20, Foundry VTT, D&D Beyond (established competitors)
+  - Novelists want Scrivener, Ulysses, Dabble (writing-focused tools)
+- **Feature bloat**: Building RPG tools adds 6-12 months development time
+- **Marketing confusion**: "Is this a writing tool or a virtual tabletop?"
+- **CAC increases**: Now you're marketing to TWO audiences (writers + gamers) with different channels
+
+**Recommendation:**
+
+- **Phase 1 (MVP)**: **SKIP RPG features entirely**. Focus on prose/screenplay/comic writers.
+- **Phase 2 (Year 1-2)**: Add ONLY worldbuilding features that ALSO help D&D users:
+  - Character profiles (works for novels AND D&D)
+  - Location maps (works for fantasy novels AND campaigns)
+  - Timeline tracking (works for plot AND session logs)
+  - Relationship graphs (works for character arcs AND party dynamics)
+- **Phase 3 (Year 2+)**: **IF** you see organic demand from D&D community (>500 requests), THEN add dice roller, character sheets, initiative tracker
+- **Alternative:** Partner with existing VTT platforms (Roll20, Foundry) for API integration instead of building custom
+
+**Risk if ignored:** Spend 12 months building RPG features, launch, discover D&D community doesn't adopt (they already have tools) → Wasted engineering time.
+
+---
+
+#### 5. **Visual Storytelling (Comics/Webtoons) is Extremely Complex** ❌ HIGH RISK
+
+**Issue:** The analysis includes panel layout designers, speech bubble tools, print-ready PDFs, and webcomic export. This is **enterprise-level complexity**.
+
+**Reality Check:**
+
+- **Comics/webtoons are a DIFFERENT MARKET** from prose writing
+  - Comic creators need Clip Studio Paint, Procreate, Photoshop (art tools)
+  - Webcomic platforms: Webtoon, Tapas, ComicFury (already exist)
+  - StoryForge would compete with Celtx, Final Draft (screenplay tools)
+- **Panel design tools are HARD**: Requires canvas rendering, drag-drop UI, export to print specs (CMYK, bleeds, crop marks)
+- **Development time**: 12-18 months for MVP panel designer (this is a full product, not a feature)
+- **Market size is smaller**: ~500K comic creators globally vs 10M+ prose writers
+
+**Recommendation:**
+
+- **Phase 1 (MVP)**: **SKIP visual storytelling entirely**. Focus on prose writers (largest market).
+- **Phase 2 (Year 1)**: Add ONLY script formatting for comics/screenplays:
+  - Structured dialogue format (Speaker: Line)
+  - Scene descriptions (Panel 1: Description)
+  - Export to plain text or PDF (no visual layout)
+- **Phase 3 (Year 2+)**: **IF** >1,000 users request panel tools, partner with existing tools (Celtx, Comic Life) or build minimal MVP
+- **Alternative:** Position StoryForge as "planning tool for comics" (outlining, character design, scriptwriting) but NOT the art/layout tool
+
+**Risk if ignored:** Spend 18+ months building comic tools, launch, discover comic creators still use Clip Studio Paint → Wasted resources, delayed prose writer features.
+
+---
+
+### 🎯 Recommended Action Plan (Realigned with Vision)
+
+#### Phase 1: MVP (Months 1-6) - **Dual-Sided Marketplace Launch**
+
+**Author Side:**
+
+- ✅ TipTap editor with autosave, word tracking, distraction-free mode
+- ✅ Basic world-building (characters, locations, timelines, relationships)
+- ✅ Chapter management with visibility controls (free, premium, subscriber-only)
+- ✅ Mental health features: Break reminders, compassionate streaks, wellness dashboard
+- ✅ Analytics: Word count, writing sessions, reader engagement
+- ❌ SKIP: AI assistant, version history, collaboration, RPG tools, comic tools
+
+**Reader Side:**
+
+- ✅ Content discovery by genre, trending stories, new releases
+- ✅ Chapter-by-chapter reading interface with customizable settings
+- ✅ Engagement: Like, comment (chapter-level), review
+- ✅ Follow authors, reading lists, progress tracking
+- ✅ Reader mental health: Reading time tracking, content warnings
+- ❌ SKIP: Premium pool (too complex), per-chapter purchases, offline reading
+
+**Monetization:**
+
+- ✅ Author subscriptions: Free, Writer ($9.99/mo), Author ($19.99/mo)
+- ✅ Reader per-author subscriptions: $1-10/mo (85% to author, 15% to platform)
+- ❌ SKIP: Premium Reader ($4.99/mo pool) - defer to Phase 2
+
+**Success Metrics:**
+
+- 500 authors publishing content (250+ with 10+ chapters published)
+- 5,000 readers (1,000+ returning weekly)
+- 50+ authors earning >$50/month from reader subscriptions
+- 200+ paid author subscriptions (Writer/Author tiers)
+
+---
+
+#### Phase 2: Growth (Months 6-18) - **Refine & Scale**
+
+**Add:**
+
+- ✅ AI writing assistant (10K-50K words/month, GPT-4o-mini)
+- ✅ Premium Reader pool ($4.99/mo for all-access)
+- ✅ Mobile PWA for reading (test mobile demand)
+- ✅ Version history and rollback (30 days for Writer, unlimited for Author)
+- ✅ Collaboration v1 (share links, beta reader feedback, commenting)
+- ✅ Advanced mental health: Burnout detection, wellness check-ins, community moderation tools
+
+**Success Metrics:**
+
+- 5,000 authors (500+ earning >$500/month from readers)
+- 50,000 readers (10,000+ paying $4.99/mo Premium OR $1-10/mo per-author subs)
+- $50K+ MRR platform revenue
+- $200K+ monthly paid to authors (creator economy working)
+
+---
+
+#### Phase 3: Mature (Year 2-3) - **Expand Optionally**
+
+**Consider adding (IF demand exists):**
+
+- 🟡 Visual storytelling LITE (script formatting for comics/screenplays, no layout tools)
+- 🟡 RPG worldbuilding (character sheets, campaign logs, IF >500 requests)
+- 🟡 Native mobile app (IF PWA usage >30%)
+- 🟡 Marketplace (templates, assets, writing courses)
+- 🟡 International expansion (Spanish, French, German)
+- ❌ ABANDON: B2B enterprise features (conflicts with "democratize publishing" mission)
+
+---
+
+### 📋 Visual Artists & Storyboard Features: Phased Implementation Roadmap
+
+> **🎨 STRATEGY**: Start with features that serve BOTH prose writers AND visual creators (dual-use), then add specialized tools based on demand. This avoids building features for a niche audience that may not materialize.
+
+---
+
+#### Target Audiences (Market Sizing)
+
+| Creator Type                     | Global Market Size | Willingness to Pay       | Overlap with Prose Writers         | Priority   |
+| -------------------------------- | ------------------ | ------------------------ | ---------------------------------- | ---------- |
+| **Prose Writers**                | 10M+               | ✅ High ($10-20/mo)      | 100% (core audience)               | ✅ PRIMARY |
+| **Screenwriters**                | 500K+              | ✅ High ($10-30/mo)      | 60% (also write novels)            | 🟢 HIGH    |
+| **Comic Script Writers**         | 300K+              | ✅ Medium ($10-15/mo)    | 40% (write prose too)              | 🟡 MEDIUM  |
+| **Graphic Novel Artists**        | 200K+              | ⚠️ Low (use Clip Studio) | 10% (art-first, not writing-first) | 🔴 LOW     |
+| **Storyboard Artists (Film/TV)** | 50K+               | ✅ High ($20-50/mo)      | 30% (screenwriters crossover)      | 🟡 MEDIUM  |
+| **D&D/TTRPG Game Masters**       | 2M+                | ⚠️ Medium ($5-15/mo)     | 20% (worldbuilding hobbyists)      | 🟡 MEDIUM  |
+| **Visual Novel Creators**        | 100K+              | ✅ Medium ($10-20/mo)    | 50% (writers who add visuals)      | 🟡 MEDIUM  |
+
+**Key Insight:** Focus on **WRITERS who add visual elements**, NOT visual artists who need writing tools. This means prioritize scriptwriting, storyboarding, worldbuilding over pixel-perfect panel layout or art production.
+
+---
+
+#### Feature Roadmap by Phase
+
+| Feature Category          | Phase 1: MVP (Mo 1-6)                                                                                                                                                                               | Phase 2: Growth (Mo 6-18)                                                                                                                                                                                                                                                  | Phase 3: Mature (Yr 2-3)                                                                                                                                                                                                                                                                                   | Phase 4: Advanced (Yr 3+)                                                                                                                                                                                                                         |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **🖋️ PROSE WRITING**      | ✅ **TipTap editor**<br>✅ **Autosave**<br>✅ **Word tracking**<br>✅ **Distraction-free mode**                                                                                                     | ✅ **Version history** (30 days)<br>✅ **AI writing assistant** (10K-50K words)<br>✅ **Export to EPUB/PDF/DOCX**                                                                                                                                                          | ✅ **Collaboration** (real-time editing)<br>✅ **Advanced AI** (plot analysis, style checking)<br>✅ **Voice dictation**                                                                                                                                                                                   | ✅ **Multi-language support**<br>✅ **AI translation**<br>✅ **Publisher integrations** (KDP, IngramSpark)                                                                                                                                        |
+| **🎬 SCREENPLAY/SCRIPT**  | ✅ **Basic formatting** (dialogue, action, sluglines)<br>✅ **Scene numbering**                                                                                                                     | ✅ **Industry-standard formats** (Final Draft, Fountain)<br>✅ **Character name auto-complete**<br>✅ **Transition macros** (CUT TO, FADE OUT)<br>✅ **Export to FDX/Fountain/PDF**                                                                                        | ✅ **Storyboard integration** (link scenes to visual boards)<br>✅ **Shot list generator**<br>✅ **Production calendar** (shooting schedule)                                                                                                                                                               | ✅ **Collaboration** (script notes, revisions tracking)<br>✅ **Actor/crew management**<br>✅ **Integration with production tools** (Movie Magic, Celtx)                                                                                          |
+| **💬 COMIC/GN SCRIPTING** | ❌ SKIP                                                                                                                                                                                             | ✅ **Comic script format** (Panel: Description / Character: Dialogue)<br>✅ **Page/panel numbering**<br>✅ **Character/location tags** (auto-link to worldbuilding)                                                                                                        | ✅ **Panel layout templates** (3-panel, 6-panel, splash page)<br>✅ **Speech bubble notes** (placement hints for artist)<br>✅ **Export to PDF** (script only, no visual layout)                                                                                                                           | 🟡 **Visual panel designer** (drag-drop, IF >1K requests)<br>🟡 **Collaboration** (writer-artist workflow)<br>🟡 **Print specs** (CMYK, bleeds, crop marks)                                                                                       |
+| **🖼️ VISUAL ASSETS**      | ✅ **Image upload** (character/location references)<br>✅ **Basic metadata** (name, description, tags)                                                                                              | ✅ **Image galleries** (organize by project/character)<br>✅ **Reference boards** (Pinterest-style visual inspiration)<br>✅ **Version tracking** (character design v1, v2, v3)                                                                                            | ✅ **Asset library** (reusable props, locations, items)<br>✅ **Mood boards** (color palettes, style references)<br>✅ **AI image generation** (concept art via DALL-E/Midjourney API)                                                                                                                     | ✅ **3D model integration** (link to Sketchfab, Blender)<br>✅ **Augmented reality previews** (AR view of locations/characters)<br>✅ **NFT minting** (limited edition art for subscribers)                                                       |
+| **🗺️ WORLDBUILDING**      | ✅ **Characters** (name, bio, traits, image)<br>✅ **Locations** (name, description, image)<br>✅ **Timelines** (events, dates, linked entities)<br>✅ **Relationships** (family, friends, enemies) | ✅ **Interactive maps** (pinnable locations, custom markers)<br>✅ **Relationship graphs** (visual family trees, faction webs)<br>✅ **Encyclopedia modules** (magic systems, cultures, flora/fauna)<br>✅ **Calendar systems** (custom calendars, festivals, moon phases) | ✅ **Cross-project templates** (reusable worldbuilding)<br>✅ **Collaborative worldbuilding** (multiple authors, one universe)<br>✅ **Timeline visualization** (Gantt-style plot tracking)<br>✅ **Worldbuilding exports** (wiki-style HTML, PDF codex)                                                   | ✅ **AI worldbuilding assistant** (generate cultures, languages, ecosystems)<br>✅ **Interactive 3D maps** (zoom, rotate, fly-through)<br>✅ **VR worldbuilding** (walk through locations in VR)                                                  |
+| **🎲 TTRPG/D&D TOOLS**    | ❌ SKIP                                                                                                                                                                                             | ✅ **Character sheets** (basic stats, inventory, notes)<br>✅ **Session logs** (date, participants, summary, linked events)<br>✅ **NPC database** (quick reference for game masters)                                                                                      | ✅ **D&D 5e character sheets** (auto-calculate stats, spells)<br>✅ **Dice roller** (d20, d6, advantage/disadvantage)<br>✅ **Initiative tracker** (combat order, HP tracking)<br>✅ **Loot tables** (random treasure generation)<br>✅ **Quest tracking** (active quests, completed, failed)              | ✅ **VTT integration** (Roll20, Foundry VTT API)<br>✅ **Custom game systems** (Pathfinder, Call of Cthulhu, homebrew)<br>✅ **Audio/video session recording** (auto-transcript session)<br>✅ **Miniature tracker** (digital minis, battle maps) |
+| **📐 STORYBOARD TOOLS**   | ❌ SKIP                                                                                                                                                                                             | ✅ **Scene breakdown** (list scenes, descriptions, duration)<br>✅ **Shot list** (camera angle, lens, movement notes)<br>✅ **Visual flow** (thumbnail sketches, image upload)                                                                                             | ✅ **Storyboard templates** (16:9, 2.35:1, vertical for TikTok)<br>✅ **Frame-by-frame editor** (drag-drop images, add notes)<br>✅ **Transition markers** (cut, dissolve, wipe)<br>✅ **Timing/duration** (per shot, per scene, total runtime)<br>✅ **Export to PDF/CBZ** (print or share with crew)     | ✅ **Animatic generator** (auto-create video from storyboard)<br>✅ **Collaboration** (director notes, client feedback)<br>✅ **Production integration** (link to shot schedules, script)<br>✅ **AR preview** (frame shots using phone camera)   |
+| **🎨 VISUAL NOVEL TOOLS** | ❌ SKIP                                                                                                                                                                                             | ❌ SKIP                                                                                                                                                                                                                                                                    | ✅ **Branching narrative editor** (choice trees, IF/THEN logic)<br>✅ **Character sprite manager** (expressions, outfits, poses)<br>✅ **Background library** (locations, day/night variants)<br>✅ **Dialogue system** (character name tags, text boxes)<br>✅ **Export to Ren'Py** (visual novel engine) | ✅ **Interactive preview** (playtest visual novel in-browser)<br>✅ **Music/SFX integration** (audio cues, background music)<br>✅ **Translation** tools (multi-language visual novels)<br>✅ **Publish to Steam/Itch.io** (direct distribution)  |
+| **📱 WEBTOON/WEBCOMIC**   | ❌ SKIP                                                                                                                                                                                             | ❌ SKIP                                                                                                                                                                                                                                                                    | ✅ **Vertical scroll format** (infinite canvas for webtoons)<br>✅ **Panel spacing** (auto-calculate for mobile screens)<br>✅ **Speech bubble placement** (notes for artist)<br>✅ **Episode management** (chapters as episodes, release schedule)                                                        | ✅ **Webtoon canvas** (draw panels directly in StoryForge)<br>✅ **Mobile preview** (test on phone dimensions)<br>✅ **Publish to Webtoon/Tapas** (API integration)<br>✅ **Reader engagement** (likes, comments per panel)                       |
+
+---
+
+#### Decision Matrix: When to Build Each Feature
+
+| Feature Category            | Build in MVP?          | Build in Phase 2?        | Build in Phase 3?         | Build in Phase 4?   | Reasoning                                                   |
+| --------------------------- | ---------------------- | ------------------------ | ------------------------- | ------------------- | ----------------------------------------------------------- |
+| **Prose writing tools**     | ✅ YES                 | ✅ YES                   | ✅ YES                    | ✅ YES              | **Core audience** (10M+ writers), highest ROI               |
+| **Screenplay formatting**   | ✅ YES (basic)         | ✅ YES                   | ✅ YES                    | 🟡 IF >500 users    | **Large crossover** with prose writers (60%)                |
+| **Comic scripting**         | ❌ NO                  | ✅ YES (text only)       | ✅ YES (layout hints)     | 🟡 IF >1K requests  | **Medium market** (300K), but art tools exist               |
+| **Visual asset management** | ✅ YES (basic uploads) | ✅ YES (galleries)       | ✅ YES (AI gen)           | 🟡 IF >2K users     | **Dual-use** (prose + visual creators)                      |
+| **Worldbuilding**           | ✅ YES                 | ✅ YES                   | ✅ YES                    | ✅ YES              | **Dual-use** (writers + D&D GMs + visual creators)          |
+| **D&D/TTRPG tools**         | ❌ NO                  | ✅ YES (basic sheets)    | ✅ YES (dice, initiative) | 🟡 IF >500 requests | **Different audience**, risk dilution                       |
+| **Storyboard tools**        | ❌ NO                  | ✅ YES (scene breakdown) | ✅ YES (frame editor)     | 🟡 IF >200 users    | **Niche market** (50K), but high willingness to pay         |
+| **Visual novel tools**      | ❌ NO                  | ❌ NO                    | ✅ YES                    | 🟡 IF >300 requests | **Very niche** (100K), complex branching logic              |
+| **Webtoon canvas**          | ❌ NO                  | ❌ NO                    | ✅ YES (vertical format)  | 🟡 IF >1K requests  | **Different platform** (Webtoon dominates), hard to compete |
+| **Panel design (visual)**   | ❌ NO                  | ❌ NO                    | ❌ NO                     | 🟡 IF >1K requests  | **Extremely complex**, competes with Clip Studio Paint      |
+
+---
+
+#### Demand Thresholds (When to Greenlight Features)
+
+**How to measure demand:**
+
+1. **Feature requests** (users explicitly ask for feature in surveys, support tickets)
+2. **Workaround usage** (users hack together solutions, e.g., using character sheets for D&D)
+3. **Competitor migration** (users say "I'd switch from [Tool X] if you had [Feature Y]")
+4. **Revenue potential** (users willing to pay extra for feature)
+
+**Greenlight criteria:**
+
+| Feature Category                     | Minimum Requests | Minimum Revenue Potential  | Timeline              |
+| ------------------------------------ | ---------------- | -------------------------- | --------------------- |
+| **Comic panel designer**             | 1,000 users      | $50K ARR ($50/user/year)   | 12-18 months dev time |
+| **D&D character sheets (advanced)**  | 500 users        | $30K ARR ($60/user/year)   | 6-9 months dev time   |
+| **Storyboard frame editor**          | 200 users        | $50K ARR ($250/user/year)  | 9-12 months dev time  |
+| **Visual novel engine**              | 300 users        | $60K ARR ($200/user/year)  | 12-18 months dev time |
+| **VTT integration (Roll20/Foundry)** | 500 users        | $25K ARR ($50/user/year)   | 3-6 months dev time   |
+| **Webtoon canvas**                   | 1,000 users      | $100K ARR ($100/user/year) | 12-15 months dev time |
+
+**Critical rule:** Only greenlight if **revenue potential ≥ 2x development cost** + **demand from ≥500 users**
+
+---
+
+#### Recommended Focus by Year
+
+**Year 1 (MVP + Growth):**
+
+- 🎯 **100% focus on prose writers** (10M market, proven willingness to pay)
+- ✅ Basic visual asset uploads (dual-use for all creators)
+- ✅ Worldbuilding tools (dual-use for writers, D&D GMs, visual creators)
+- ❌ Zero resources on specialized visual tools
+
+**Year 2 (Expand to Adjacent Markets):**
+
+- 🎯 **70% prose, 30% adjacent markets**
+- ✅ Screenplay formatting (60% crossover with prose writers)
+- ✅ Comic scripting (text-only, no visual layout)
+- ✅ Basic D&D character sheets (IF >500 requests)
+- ✅ Storyboard scene breakdown (IF >200 requests)
+
+**Year 3 (Specialize Based on Demand):**
+
+- 🎯 **50% prose, 50% highest-demand verticals**
+- 🟡 IF comic requests >1K: Build panel layout tools
+- 🟡 IF D&D requests >500: Build dice roller, initiative tracker
+- 🟡 IF storyboard requests >200: Build frame-by-frame editor
+- 🟡 IF visual novel requests >300: Build branching narrative editor
+
+**Year 4+ (Only if Platform is Profitable):**
+
+- 🎯 **Maintain core, experiment with niches**
+- 🔮 VR worldbuilding (IF >1K users + VR adoption hits 10%+ mainstream)
+- 🔮 AI-generated comics (IF AI art legal issues resolved)
+- 🔮 NFT limited editions (IF crypto markets recover)
+
+---
+
+#### Risk Mitigation: Avoiding Feature Bloat
+
+**Failure mode:** Build features for small audiences, neglect core prose writers → Platform becomes "jack of all trades, master of none" → Everyone churns
+
+**Mitigation strategies:**
+
+1. **Separate pricing tiers for specialized tools**
+
+   ```typescript
+   const pricingTiers = {
+     writer: { price: 9.99, features: ['prose', 'worldbuilding'] },
+     author: { price: 19.99, features: ['writer', 'screenplay', 'collaboration'] },
+     creator: { price: 29.99, features: ['author', 'comics', 'storyboards', 'dnd'] }, // ONLY if >1K users want this
+   };
+   ```
+
+2. **Feature flags + A/B testing**
+   - Release features to 10% of users first
+   - Measure engagement (do they use it 3+ times/month?)
+   - Only roll out to 100% if retention increases
+
+3. **Sunset underused features**
+   - If <5% of users engage with feature after 6 months → Deprecate
+   - Example: If D&D dice roller only used by 50 users → Remove, focus resources elsewhere
+
+4. **Partner instead of build**
+   - Storyboard tools → Partner with Celtx, Shot Lister (API integration)
+   - D&D tools → Partner with D&D Beyond, Roll20 (deep link)
+   - Comic tools → Partner with Clip Studio Paint (export script to CSP)
+
+**Bottom line:** Every feature must justify its existence with **usage (≥10% of users) + revenue (≥$50K ARR) + retention (+5% churn reduction)**. Otherwise, cut it.
+
+---
+
+### 🚨 Viability Concerns & Hard Questions
+
+#### 1. **Can you compete with Wattpad?** (94M MAU, $600M valuation, acquired by Naver)
+
+**Wattpad advantages:**
+
+- 15+ years of content (millions of stories)
+- Network effects (readers go where content is)
+- Strong mobile app (90%+ of usage)
+- Brand recognition (synonymous with "free webnovels")
+
+**StoryForge differentiation:**
+
+- **Better author tools** (Wattpad editor is terrible, no world-building)
+- **Better revenue share** (85% vs Wattpad's 50% Paid Stories)
+- **Mental health focus** (Wattpad has toxicity issues)
+- **Integrated creation** (write + publish in one place, Wattpad is publish-only)
+
+**Path to compete:**
+
+- Target authors LEAVING Wattpad (frustrated by 50% split, toxic community, poor tools)
+- Focus on QUALITY over QUANTITY (curated community, higher standards)
+- Market to SERIOUS writers (aspiring professionals, not teenagers)
+
+---
+
+#### 2. **Is the market big enough?**
+
+**Total Addressable Market (TAM):**
+
+- 10M+ aspiring novelists globally (NaNoWriMo: 500K annual participants)
+- 100M+ webnovel readers (Wattpad: 94M MAU, Royal Road: 10M MAU, AO3: 8M MAU)
+- Creator economy: $250B+ market (Patreon, Substack, OnlyFans combined)
+
+**Serviceable Addressable Market (SAM):**
+
+- English-language webnovel readers: 50M+ (US, UK, Canada, Australia, India, Philippines)
+- Serious hobbyist + professional writers: 2M+ (willing to pay for tools)
+
+**Target Market (Year 3):**
+
+- 20,000 paying authors ($10-20/mo) = $200K-400K MRR from author subs
+- 50,000 paying readers ($5-15/mo) = $250K-750K MRR from reader subs (80% to authors, 20% to platform = $50K-150K MRR to platform)
+- **Total platform MRR: $250K-550K ($3-6.6M ARR)** - viable but not huge
+
+**Verdict:** Market is big enough for a $5-10M ARR indie business, but probably NOT a unicorn ($1B+ valuation) without international expansion.
+
+---
+
+#### 3. **What if authors don't get readers?**
+
+**Risk:** Authors join, publish 50 chapters, get 10 readers, earn $5/month → Churn and complain publicly.
+
+**Mitigation:**
+
+- **Seed reader base FIRST**: Launch with 10K readers BEFORE recruiting authors (chicken-and-egg problem)
+  - Partner with existing webnovel authors to migrate content (cross-post from Wattpad/Royal Road)
+  - Run reader acquisition ads ($5-10 CAC, bring readers to platform with free content)
+  - Once readers exist, THEN recruit authors with pitch: "We have 10K active readers waiting for content"
+- **Guarantee initial exposure**: Platform spotlights new authors (homepage feature, email newsletter)
+- **Set expectations**: "Avg author earns $50-200/month in first 6 months" (be realistic, not overpromising)
+
+---
+
+#### 4. **Can you afford reader acquisition?**
+
+**Reader CAC:** $5-15 organic (SEO, content marketing), $20-50 paid (Facebook/Google ads)
+
+**Reader LTV:** $4.99/mo × 12 months = $60/year (assumes 50% churn, 12-month avg lifetime)
+
+**Math:** If reader CAC = $30, LTV = $60 → LTV:CAC = 2:1 (barely profitable)
+
+**Problem:** Reader revenue mostly goes to AUTHORS (80%), so platform only keeps $12/year per reader
+
+**Solution:**
+
+- **Authors must pay for tools** ($10-20/mo) to subsidize reader acquisition
+- **Target 10:1 reader:author ratio** (10 readers × $12/year platform cut = $120/year, pays for 1 author's tools)
+- **Organic reader growth** via SEO, viral content, author-driven marketing (authors share their stories, bring their fans)
+
+---
+
+### ✅ Final Verdict: Is This Viable?
+
+**YES, but with significant changes:**
+
+1. **✅ KEEP:** Mental health-first philosophy, compassionate gamification, 85% author revenue share
+2. **✅ PRIORITIZE:** Dual-sided marketplace (authors + readers must launch together)
+3. **⚠️ SIMPLIFY:** Remove RPG features, visual storytelling tools, B2B enterprise from MVP (focus on prose)
+4. **⚠️ INVEST:** Reader experience needs EQUAL development time as author tools (not an afterthought)
+5. **❌ REMOVE:** Premium Reader pool (too complex for MVP), comic panel designer (separate product)
+
+**Path to success:**
+
+- Launch with 500 authors + 5,000 readers (both sides seeded via partnerships)
+- Achieve $50K MRR by Month 12 (200 paying authors + 20% of reader subscription revenue)
+- Break even at 20K authors + 180K readers by Year 3 ($250K MRR platform revenue)
+
+**Path to failure:**
+
+- Launch author tools only → No readers → Authors churn
+- Overpromise author earnings → Reality doesn't match → Backlash
+- Build RPG/comic features → Dilute focus → Miss prose writing market
+- Underinvest in mental health → "Mental health-first" is performative → Brand damage
+
+**Recommendation:** Proceed, but ONLY if committed to building BOTH author AND reader platforms from day one. This is a two-sided marketplace, not a writing tool.
