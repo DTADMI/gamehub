@@ -81,7 +81,7 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 - Difficulty increases with each waypoint
 - **Example**: "Montreal Architecture Quiz" - 8 locations with architecture trivia
 - **Why It Works**: Educational, engaging for families and schools
-- **Reward**: Higher token rewards for correct answers
+- **Reward**: Higher Treasure rewards for correct answers
 
 **Neighborhood Explorer**:
 
@@ -96,7 +96,7 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 
 - Race against the clock to complete waypoints in sequence
 - Leaderboards for fastest completion times
-- Bonus tokens for beating par time
+- Bonus Treasures for beating par time
 - **Example**: "Downtown Speed Run" - 6 locations, 30-minute target
 - **Why It Works**: Competitive, replayable, great for fitness enthusiasts
 
@@ -239,15 +239,16 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 - **Role-Based Permissions**: "puzzle_creator" role assignment via subscription for physical quest creation
 - **Social Features**: Friend system, activity feeds, user profiles, and community gallery (photo hunt submissions)
 - **Gamification & Rewards**:
-  - **Quest Tokens**: Non-monetary currency earned by completing quests
-  - **Avatar Customization**: Spend tokens on hats, clothing, accessories, pets, visual effects
-  - **Leaderboards**: Separate boards for virtual/physical/hybrid completions, tokens earned, speed runs
+  - **Quest Treasures**: Non-monetary currency earned by completing quests
+  - **Avatar Customization**: Spend Treasures on hats, clothing, accessories, pets, visual effects
+  - **Leaderboards**: Separate boards for virtual/physical/hybrid completions, Treasures earned, speed runs
   - **Badge System**: Achievements for quest completions, streaks, seasonal participation
-  - **Seasonal Events**: Time-limited events with bonus tokens and exclusive avatar items
-- **Brand Mascot - "Hunter the Beaver"**:
-  - Canadian beaver character that appears in quests, tutorials, and promotional materials
-  - Collectible avatar items based on Hunter (Hunter hat, Hunter pet companion, etc.)
-  - Merchandising potential: Plushies, stickers, apparel (see Merchandising Strategy below)
+  - **Seasonal Events**: Time-limited events with bonus Treasures and exclusive avatar items
+- **Brand Mascots**:
+  - **Hunter the Beaver** (Primary) - Canadian beaver character, guardian of treasures, appears in quests and tutorials
+  - **Scout the Squirrel** (Phase 2) - Hunter's clever companion, introduced 12+ months post-launch
+  - Collectible avatar items based on both characters
+  - Merchandising potential: Plushies, stickers, apparel (see Mascot Strategy & Merchandising below)
 
 ### Technical Highlights
 
@@ -260,36 +261,36 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 
 ## Avatar Customization & Reward Economy
 
-> **🎯 DESIGN PRINCIPLE**: Tokens have NO real-world monetary value to avoid gambling regulations. Users CANNOT cash out tokens. This is purely a fun, engagement-driven system.
+> **🎯 DESIGN PRINCIPLE**: Treasures have NO real-world monetary value to avoid gambling regulations. Users CANNOT cash out Treasures. This is purely a fun, engagement-driven system.
 
-### Quest Token Economy
+### Quest Treasure Economy
 
-**How Users Earn Tokens**:
-| Activity | Tokens Earned | Notes |
+**How Users Earn Treasures**:
+| Activity | Treasures Earned | Notes |
 |----------|---------------|-------|
 | Complete Virtual Quest (Story Hunt) | 50-150 | Based on waypoint count |
 | Complete Virtual Quest (Trivia) | 100-200 | Bonus for perfect score |
 | Complete Virtual Quest (Photo Hunt) | 75-175 | Bonus for creative photos (community votes) |
 | Complete Physical Quest | 300-500 | Higher reward due to effort/maintenance |
 | Complete Hybrid Quest | 200-400 | Moderate reward |
-| Daily Login Streak | 10-50 | 10 tokens/day, +10 per consecutive day (max 50) |
+| Daily Login Streak | 10-50 | 10 Treasures/day, +10 per consecutive day (max 50) |
 | Seasonal Event Participation | 500-2,000 | Time-limited bonus |
-| Create Popular Quest | 50/completion | Creators earn tokens when others play their quests |
+| Create Popular Quest | 50/completion | Creators earn Treasures when others play their quests |
 | Photo Hunt Winner (weekly) | 1,000 | Community votes on best photo hunt submissions |
 
 **Seasonal Event Multipliers** (Montreal Calendar):
 
-- **Winter Carnival (Feb)**: 2x tokens, exclusive "Ice Palace" avatar items
-- **Jazz Fest (June-July)**: 1.5x tokens, exclusive "Jazz Musician" avatar items
-- **Just for Laughs (July)**: 1.5x tokens, exclusive "Comedy" avatar items
-- **Osheaga (Aug)**: 2x tokens, exclusive "Festival" avatar items
-- **Halloween (Oct)**: 3x tokens, exclusive "Spooky" avatar items
-- **Igloofest (Jan-Feb)**: 2x tokens, exclusive "Electronic Music" avatar items
+- **Winter Carnival (Feb)**: 2x Treasures, exclusive "Ice Palace" avatar items
+- **Jazz Fest (June-July)**: 1.5x Treasures, exclusive "Jazz Musician" avatar items
+- **Just for Laughs (July)**: 1.5x Treasures, exclusive "Comedy" avatar items
+- **Osheaga (Aug)**: 2x Treasures, exclusive "Festival" avatar items
+- **Halloween (Oct)**: 3x Treasures, exclusive "Spooky" avatar items
+- **Igloofest (Jan-Feb)**: 2x Treasures, exclusive "Electronic Music" avatar items
 
 ### Avatar Customization System
 
 **Avatar Item Categories**:
-| Category | Token Cost | Examples | Rarity Distribution |
+| Category | Treasure Cost | Examples | Rarity Distribution |
 |----------|------------|----------|---------------------|
 | **Hats** | 100-5,000 | Baseball cap (100), Hunter's fedora (500), Canadiens hockey helmet (1,000), Legendary bagel hat (5,000) | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
 | **Clothing** | 150-6,000 | T-shirt (150), Montreal hoodie (800), Poutine costume (3,000), Legendary beaver suit (6,000) | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
@@ -300,23 +301,23 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 
 **Hunter the Beaver - Mascot Avatar Items**:
 
-- Hunter's Construction Hat (250 tokens)
-- Hunter's Tail Accessory (500 tokens)
-- Mini-Hunter Pet Companion (3,000 tokens)
-- Hunter's Maple Syrup Bottle (1,500 tokens)
-- Golden Hunter Statue (Legendary, 15,000 tokens)
+- Hunter's Construction Hat (250 Treasures)
+- Hunter's Tail Accessory (500 Treasures)
+- Mini-Hunter Pet Companion (3,000 Treasures)
+- Hunter's Maple Syrup Bottle (1,500 Treasures)
+- Golden Hunter Statue (Legendary, 15,000 Treasures)
 
-### Token Sink Strategy (Prevent Inflation)
+### Treasure Sink Strategy (Prevent Inflation)
 
-**Why Token Sinks Matter**: Users must spend tokens to keep economy healthy. Without sinks, everyone hoards tokens and items lose value.
+**Why Treasure Sinks Matter**: Users must spend Treasures to keep economy healthy. Without sinks, everyone hoards Treasures and items lose value.
 
-**Token Sink Mechanisms**:
+**Treasure Sink Mechanisms**:
 
-1. **Avatar Item Shop**: Primary sink (items cost tokens)
-2. **Item Randomizer Packs**: 500 tokens for random rare item (gambling-free: shows odds)
-3. **Quest Boosters**: Spend 100 tokens for 1.5x token earnings on next quest (time-limited buff)
-4. **Community Gallery Votes**: Spend 10 tokens to vote on photo hunt submissions (prevents spam voting)
-5. **Quest Promotion**: Creators spend 200 tokens to feature quest on homepage (24 hours)
+1. **Avatar Item Shop**: Primary sink (items cost Treasures)
+2. **Item Randomizer Packs**: 500 Treasures for random rare item (gambling-free: shows odds)
+3. **Quest Boosters**: Spend 100 Treasures for 1.5x Treasure earnings on next quest (time-limited buff)
+4. **Community Gallery Votes**: Spend 10 Treasures to vote on photo hunt submissions (prevents spam voting)
+5. **Quest Promotion**: Creators spend 200 Treasures to feature quest on homepage (24 hours)
 
 ### Avatar Customization UI/UX
 
@@ -325,7 +326,7 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 │  Avatar Preview (3D Model Viewer)       │
 │   [Your Character with Equipped Items]  │
 │                                          │
-│  Tokens: 🪙 2,450                        │
+│  Treasures: 💎 2,450                     │
 │  Next Event: 🎉 Jazz Fest (14 days)     │
 └─────────────────────────────────────────┘
 
@@ -2344,11 +2345,11 @@ supabase/
 | Feature                                                                     | Priority               | Effort (weeks) | Cost (CAD)                | Requirements                                                 | Success Metric                        | Why Now?                                 |
 | --------------------------------------------------------------------------- | ---------------------- | -------------- | ------------------------- | ------------------------------------------------------------ | ------------------------------------- | ---------------------------------------- |
 | **User-Created Virtual Quests** (Story Hunt, Trivia, Neighborhood Explorer) | 🔴 CRITICAL            | 6              | $0 (dev time)             | Database schema, quest creation UI, MapLibre integration     | 100+ quests created in Month 1        | Core product differentiator; enables UGC |
-| **Quest Token Economy**                                                     | 🔴 CRITICAL            | 3              | $0                        | Token calculation logic, user balance tracking               | 80% of users earn tokens              | Drives engagement + retention            |
-| **Avatar Customization (Basic)**                                            | 🟡 HIGH                | 4              | $2,000 (3D model artist)  | 20 avatar items (hats, clothing, accessories), shop UI       | 40% of users customize avatar         | Token sink; makes app fun                |
+| **Quest Treasure Economy**                                                  | 🔴 CRITICAL            | 3              | $0                        | Treasure calculation logic, user balance tracking            | 80% of users earn Treasures           | Drives engagement + retention            |
+| **Avatar Customization (Basic)**                                            | 🟡 HIGH                | 4              | $2,000 (3D model artist)  | 20 avatar items (hats, clothing, accessories), shop UI       | 40% of users customize avatar         | Treasure sink; makes app fun             |
 | **Indoor Quest Support**                                                    | 🔴 CRITICAL (Montreal) | 2              | $0                        | QR code generation/scanning, location radius adjustment      | 25% of quests are indoor              | Essential for Nov-Mar winter             |
 | **Friend System**                                                           | 🟡 HIGH                | 3              | $0                        | Friend requests, activity feed, quest sharing                | 30% of users have 3+ friends          | Social = retention                       |
-| **Leaderboards (Basic)**                                                    | 🟢 MEDIUM              | 2              | $0                        | Token leaderboard, quest completion leaderboard              | 20% of users check leaderboard weekly | Competitive engagement                   |
+| **Leaderboards (Basic)**                                                    | 🟢 MEDIUM              | 2              | $0                        | Treasure leaderboard, quest completion leaderboard           | 20% of users check leaderboard weekly | Competitive engagement                   |
 | **Hunter the Beaver Mascot**                                                | 🟡 HIGH                | 2              | $1,500 (character design) | Mascot character art, in-app placement                       | Brand recognition survey              | Brand foundation for merch               |
 | **Bilingual Support (EN/FR)**                                               | 🔴 CRITICAL (Quebec)   | 4              | $3,000 (translation)      | i18n framework, French translations, bilingual quest support | 50% of Montreal users use French      | Legal requirement (Bill 96)              |
 | **Total Phase 1**                                                           |                        | **26 weeks**   | **$6,500**                |                                                              | **1,000 MAU, 100 quests created**     | **Launch-ready product**                 |
@@ -2359,17 +2360,17 @@ supabase/
 
 ### Phase 2: Engagement & Monetization (Months 7-12) - **Focus: Hybrid Quests + Subscriptions**
 
-| Feature                               | Priority    | Effort (weeks) | Cost (CAD)                        | Requirements                                                 | Success Metric                          | Why Now?                              |
-| ------------------------------------- | ----------- | -------------- | --------------------------------- | ------------------------------------------------------------ | --------------------------------------- | ------------------------------------- |
-| **Hybrid Quests (QR-Enhanced)**       | 🟡 HIGH     | 4              | $0                                | QR code waypoints, QR scanner in-app                         | 50+ hybrid quests created               | Low-maintenance real-world engagement |
-| **Photo Hunt Quests**                 | 🟡 HIGH     | 5              | $1,500 (Google Vision API setup)  | Photo upload, AI validation OR manual review queue           | 30+ photo hunts, 500+ photos submitted  | Shareable on social media             |
-| **Subscription Tiers (Stripe)**       | 🔴 CRITICAL | 3              | $0 (Stripe is free until revenue) | Stripe integration, subscription management, role assignment | 100 paid subscribers                    | Revenue generation starts             |
-| **Time Trial/Leaderboards**           | 🟢 MEDIUM   | 2              | $0                                | Timer system, leaderboard sorting by time                    | 20% of users complete time trials       | Replayability + fitness audience      |
-| **Seasonal Events (Basic)**           | 🟡 HIGH     | 3              | $2,000 (event assets)             | Event scheduling, token multipliers, exclusive avatar items  | 1st event: 500 participants             | Drives engagement spikes              |
-| **Admin Procedural Quest Generation** | 🟢 MEDIUM   | 6              | $3,000 (GPT-4 API, POI data)      | OpenStreetMap POI API, trivia generation, quest templating   | 50 admin-generated quests               | Scales content without manual work    |
-| **Community Gallery (Photo Hunts)**   | 🟢 MEDIUM   | 2              | $500 (storage costs)              | Photo gallery UI, community voting, moderation queue         | 1,000+ photos in gallery                | UGC showcase                          |
-| **Merchandising (Print-on-Demand)**   | 🟢 MEDIUM   | 2              | $500 (Shopify setup)              | Shopify store, Printful integration, exclusive avatar codes  | $1,000 merch sales                      | Additional revenue stream             |
-| **Total Phase 2**                     |             | **27 weeks**   | **$7,500**                        |                                                              | **5,000 MAU, 100 paid users, $10K MRR** | **Revenue-generating product**        |
+| Feature                               | Priority    | Effort (weeks) | Cost (CAD)                        | Requirements                                                   | Success Metric                          | Why Now?                              |
+| ------------------------------------- | ----------- | -------------- | --------------------------------- | -------------------------------------------------------------- | --------------------------------------- | ------------------------------------- |
+| **Hybrid Quests (QR-Enhanced)**       | 🟡 HIGH     | 4              | $0                                | QR code waypoints, QR scanner in-app                           | 50+ hybrid quests created               | Low-maintenance real-world engagement |
+| **Photo Hunt Quests**                 | 🟡 HIGH     | 5              | $1,500 (Google Vision API setup)  | Photo upload, AI validation OR manual review queue             | 30+ photo hunts, 500+ photos submitted  | Shareable on social media             |
+| **Subscription Tiers (Stripe)**       | 🔴 CRITICAL | 3              | $0 (Stripe is free until revenue) | Stripe integration, subscription management, role assignment   | 100 paid subscribers                    | Revenue generation starts             |
+| **Time Trial/Leaderboards**           | 🟢 MEDIUM   | 2              | $0                                | Timer system, leaderboard sorting by time                      | 20% of users complete time trials       | Replayability + fitness audience      |
+| **Seasonal Events (Basic)**           | 🟡 HIGH     | 3              | $2,000 (event assets)             | Event scheduling, Treasure multipliers, exclusive avatar items | 1st event: 500 participants             | Drives engagement spikes              |
+| **Admin Procedural Quest Generation** | 🟢 MEDIUM   | 6              | $3,000 (GPT-4 API, POI data)      | OpenStreetMap POI API, trivia generation, quest templating     | 50 admin-generated quests               | Scales content without manual work    |
+| **Community Gallery (Photo Hunts)**   | 🟢 MEDIUM   | 2              | $500 (storage costs)              | Photo gallery UI, community voting, moderation queue           | 1,000+ photos in gallery                | UGC showcase                          |
+| **Merchandising (Print-on-Demand)**   | 🟢 MEDIUM   | 2              | $500 (Shopify setup)              | Shopify store, Printful integration, exclusive avatar codes    | $1,000 merch sales                      | Additional revenue stream             |
+| **Total Phase 2**                     |             | **27 weeks**   | **$7,500**                        |                                                                | **5,000 MAU, 100 paid users, $10K MRR** | **Revenue-generating product**        |
 
 **Phase 2 Deliverable**: Monetized app with hybrid quests, subscription tiers, seasonal events, merchandise. Break-even or profitable.
 
@@ -5466,9 +5467,213 @@ QuestHunt is positioned to become a profitable player in the location-based gami
 
 ---
 
+## Mascot Strategy: Hunter vs Scout - Strategic Decision Analysis
+
+> **🎯 KEY DECISION**: Which mascot should launch first? Hunter the Beaver or Scout the Squirrel? Which currency term works for both? This section provides comprehensive analysis to inform the brand foundation strategy.
+
+### Currency Terminology: Universal Solution
+
+**Decision: "Treasures" 💎**
+
+**Why Treasures?**
+
+- ✅ **Perfect thematic fit**: Treasure hunt app = finding treasures
+- ✅ **Works for both mascots**: Hunter guards treasures in caches, Scout helps find them
+- ✅ **Scalable**: Future mascots can all earn/use Treasures
+- ✅ **Clearly non-monetary**: No crypto/gambling connotation
+- ✅ **Exciting & aspirational**: "Earn Treasures" > "Earn Points"
+- ✅ **Professional**: Appeals to adults and kids
+
+**Alternative Currency Terms Considered**:
+| Term | Pros | Cons | Verdict |
+|------|------|------|---------|
+| **Acorns** 🌰 | Perfect for Scout, cute, unique | Requires Scout introduction first, awkward before Scout launch | ❌ Scout-dependent |
+| **Logs** 🪵 | Thematic for Hunter (beaver builds with logs) | Less treasure-hunt themed, feels resource-y | ❌ Too utilitarian |
+| **Coins** 🪙 | Treasure hunt metaphor, universal | Generic, used by many games | ⚠️ Acceptable fallback |
+| **Cache Points** 🗺️ | Perfect geocaching term, works for both | Slightly technical | ⚠️ Good alternative |
+| **Quest Points** | Safe, clear, professional | Generic, boring | ❌ No personality |
+| **Treasures** 💎 | Perfect thematic fit, works for both, exciting | None | ✅ **RECOMMENDED** |
+
+**Implementation**:
+
+- UI Display: "Treasures: 💎 2,450"
+- Earning: "You earned 250 Treasures!"
+- Spending: "Spend 500 Treasures to unlock Hunter's Hat"
+- Shop Name: "Treasure Vault" or "Hunter's Treasure Cache"
+
+---
+
+### Primary Mascot Decision: Hunter the Beaver vs Scout the Squirrel
+
+#### **Hunter the Beaver** 🦫 - ⭐ RECOMMENDED FOR LAUNCH
+
+**Pros:**
+
+- ✅ **Canadian Identity**: National animal = instant Canadian branding
+- ✅ **Geocaching Perfect**: Beavers cache food, build hidden lodges (natural caching behavior)
+- ✅ **Tourism Appeal**: Foreign tourists associate beavers with Canada (marketing advantage)
+- ✅ **Rugged/Outdoor**: Matches geocaching adventure vibe (physical quests)
+- ✅ **Builder Theme**: Fits UGC quest creation model ("Build your own quest")
+- ✅ **Government Appeal**: Tourism boards/municipalities prefer national animal
+- ✅ **Versatile**: Works for virtual AND physical quests
+- ✅ **Mature Appeal**: Appeals to adults, families, and kids
+- ✅ **Unique**: Few apps use beavers as mascots (differentiation)
+- ✅ **Treasure Guardian**: Natural role as "Guardian of hidden treasures"
+
+**Cons:**
+
+- ❌ **Expected**: "Of course the Canadian app has a beaver" (could feel obvious)
+- ❌ **Less "Cute"**: More utilitarian than whimsical (but family-friendly)
+
+**Brand Positioning**:
+
+> "Hunter the Beaver is the guardian of Canada's hidden treasures. He's been caching treasures across the country for centuries, and now he's inviting you to join the hunt. Complete quests to earn Treasures from Hunter's legendary collection."
+
+---
+
+#### **Scout the Squirrel** 🐿️ - Phase 2 Introduction (12+ months)
+
+**Pros:**
+
+- ✅ **Acorns Currency**: Perfect if launching with acorn-based economy
+- ✅ **Universal Appeal**: Squirrels beloved worldwide
+- ✅ **Clever Connotation**: "Scout" = exploration, intelligence, discovery
+- ✅ **Smaller/Cuter**: More approachable for kids
+- ✅ **Non-Threatening**: Friendly, playful energy
+- ✅ **Virtual Quest Fit**: Nimble, quick, puzzle-solver personality
+
+**Cons:**
+
+- ❌ **Less Canadian**: Squirrels are everywhere (no national identity)
+- ❌ **Weaker Geocaching Theme**: Not traditionally associated with treasure hunting
+- ❌ **Less Rugged**: Doesn't match physical outdoor adventure vibe
+- ❌ **Acorns Problem**: If using "Acorns" currency, awkward before Scout launches
+- ❌ **No Government Appeal**: Tourism boards won't connect with squirrels vs beavers
+
+**Brand Positioning (Phase 2)**:
+
+> "Scout the Squirrel is Hunter's clever companion. When Hunter needs help finding the trickiest treasures, Scout uses his sharp eyes and quick wit to crack the puzzle. Scout specializes in detail hunts, photo challenges, and brain teasers."
+
+---
+
+### Strategic Recommendation: Launch Timeline
+
+#### **Phase 1: Launch (Months 1-12)** - Hunter the Beaver + Treasures
+
+**Primary Mascot**: Hunter the Beaver 🦫
+**Currency**: Treasures 💎
+**Brand Message**: "Join Hunter the Beaver on Canada's greatest treasure hunt"
+
+**Why This Works**:
+
+1. Strong Canadian identity for tourism partnerships
+2. Perfect geocaching metaphor (beavers cache, treasure hunters find)
+3. Treasures work universally (no character dependency)
+4. Single mascot = clear brand identity
+5. Appeals to target market (outdoor enthusiasts, families, tourists)
+
+**Hunter's Role**:
+
+- Appears in onboarding tutorial
+- Mascot on app icon
+- Hosts seasonal events (Winter: Beaver Lodge Challenge)
+- 20 Hunter-themed avatar items in Treasure Vault
+- Merchandising: Hunter plushie, stickers, apparel
+
+---
+
+#### **Phase 2: Scout Introduction (Months 13-24)** - Dual Mascot Expansion
+
+**Secondary Mascot**: Scout the Squirrel 🐿️
+**Currency**: Still Treasures (no change)
+**Brand Message**: "Hunter & Scout - Canada's dynamic treasure-hunting duo"
+
+**Why This Timing**:
+
+1. Hunter established (10K+ MAU recognizability)
+2. Users asking for "more characters" (market validation)
+3. Budget available ($2,500 character design affordable in Phase 3)
+4. Narrative opportunity: Story quest "Hunter's New Friend"
+5. Merchandising expansion: Scout plushie, duo sets
+
+**Scout's Role**:
+
+- Complements Hunter (detail-oriented vs big-picture)
+- Hosts different quest types (Photo Hunts vs Story Hunts)
+- 15 Scout-themed avatar items added to Treasure Vault
+- Seasonal events: Scout hosts Fall (Acorn references acceptable now)
+- Merchandising: Scout plushie, Hunter+Scout duo sets
+
+**Character Differentiation**:
+| Aspect | Hunter the Beaver | Scout the Squirrel |
+|--------|-------------------|-------------------|
+| **Personality** | Calm, encouraging, adventurous | Energetic, curious, playful |
+| **Quest Type** | Story hunts, exploration, physical quests | Photo hunts, trivia, detail puzzles |
+| **Seasonal** | Winter/Summer (Beaver Lodge, Lake) | Fall/Spring (Acorn Hunt, Tree Climbing) |
+| **Role** | Treasure guardian, main mascot | Treasure finder, companion |
+| **Merchandising** | 60% of merch sales (primary) | 40% of merch sales (secondary) |
+
+---
+
+### Dual Mascot Currency Strategy
+
+**Why "Treasures" Works for Both**:
+
+**For Hunter**:
+
+- "Hunter has been caching treasures across Canada for centuries"
+- "Complete quests to earn Treasures from Hunter's secret vaults"
+- Hunter's role: **Guardian/Hoarder** of treasures
+
+**For Scout**:
+
+- "Scout helps you find Hunter's hidden treasures"
+- "Scout's sharp eyes spot treasures others miss"
+- Scout's role: **Finder/Detective** of treasures
+
+**Narrative Tie-In**:
+
+> Hunter builds the caches and guards the treasures. Scout provides clues and helps adventurers find them. Together, they make the ultimate treasure-hunting team. Every time you complete a quest, you earn Treasures from their legendary collection.
+
+---
+
+### Rejected Alternative: Dual Currency System
+
+**Considered**: Hunter's Logs 🪵 vs Scout's Acorns 🌰
+
+**How It Would Work**:
+
+- Physical quests earn Hunter's Logs
+- Virtual quests earn Scout's Acorns
+- Separate shops for each currency
+
+**Why Rejected**:
+
+- ❌ Too complex for users (two currencies)
+- ❌ Harder to balance economy
+- ❌ Fragments user experience
+- ❌ Awkward before Scout launch (only Logs? confusing)
+- ❌ Limits item purchases (can't mix currencies)
+
+**Verdict**: Single currency (Treasures) is cleaner, more user-friendly, and more flexible.
+
+---
+
+### Final Decision Summary
+
+| Decision Point         | Choice                            | Rationale                                         |
+| ---------------------- | --------------------------------- | ------------------------------------------------- |
+| **Launch Mascot**      | Hunter the Beaver 🦫              | Canadian identity, geocaching fit, tourism appeal |
+| **Currency Term**      | Treasures 💎                      | Thematic, works for both mascots, scalable        |
+| **Scout Introduction** | Phase 2 (Months 13-24)            | After Hunter established, when budget allows      |
+| **Currency System**    | Single (Treasures only)           | Simpler, more user-friendly                       |
+| **Brand Positioning**  | Hunter = Guardian, Scout = Finder | Clear role differentiation                        |
+
+---
+
 ## Secondary Character Strategy: "Scout the Squirrel"
 
-> **🎯 KEY QUESTION**: Should QuestHunt introduce a secondary character to complement Hunter the Beaver? When? Why? What are the pros, cons, and optimal implementation strategy?
+> **🎯 IMPLEMENTATION PLAN**: With Hunter established as primary mascot and Treasures as currency, this section details the Scout introduction strategy for Phase 2 (Months 13-24).
 
 ### Character Concept: Scout the Squirrel
 
@@ -5579,12 +5784,12 @@ QuestHunt is positioned to become a profitable player in the location-based gami
    - Scout Easter eggs: Hidden Scout icons in existing quests (collectible)
 
 5. **Avatar Customization**:
-   - 15 Scout avatar items added to token shop:
-     - Scout's Acorn Hat (250 tokens)
-     - Scout's Magnifying Glass (500 tokens)
-     - Mini-Scout Pet Companion (3,500 tokens - slightly more than Hunter's)
-     - Scout's Red Scarf (1,000 tokens)
-     - Golden Acorn Trophy (Legendary, 12,000 tokens)
+   - 15 Scout avatar items added to Treasure Vault:
+     - Scout's Acorn Hat (250 Treasures)
+     - Scout's Magnifying Glass (500 Treasures)
+     - Mini-Scout Pet Companion (3,500 Treasures - slightly more than Hunter's)
+     - Scout's Red Scarf (1,000 Treasures)
+     - Golden Acorn Trophy (Legendary, 12,000 Treasures)
 
 6. **Merchandising** (Month 19 - 4 months after design):
    - Scout plushie (8") - $24.99 (same price as Hunter)
@@ -5634,13 +5839,13 @@ QuestHunt is positioned to become a profitable player in the location-based gami
 
 #### Revenue Impact (Annual, Year 2):
 
-| Revenue Stream                        | Estimated Impact             | Notes                                    |
-| ------------------------------------- | ---------------------------- | ---------------------------------------- |
-| **Avatar item sales** (token economy) | $0 (tokens are free to earn) | Drives engagement, not revenue           |
-| **Merchandising** (Scout products)    | +$12,000/year                | 40% of Year 2 merch revenue ($30K total) |
-| **User engagement** (retention boost) | +5% retention = +$30K ARR    | New character excitement reduces churn   |
-| **Brand partnerships** (dual mascots) | +$5,000/year                 | Tourism boards pay more for duo mascots  |
-| **Total Revenue Impact**              | **+$47,000/year**            | ROI: 10x in Year 2                       |
+| Revenue Stream                           | Estimated Impact                | Notes                                    |
+| ---------------------------------------- | ------------------------------- | ---------------------------------------- |
+| **Avatar item sales** (Treasure economy) | $0 (Treasures are free to earn) | Drives engagement, not revenue           |
+| **Merchandising** (Scout products)       | +$12,000/year                   | 40% of Year 2 merch revenue ($30K total) |
+| **User engagement** (retention boost)    | +5% retention = +$30K ARR       | New character excitement reduces churn   |
+| **Brand partnerships** (dual mascots)    | +$5,000/year                    | Tourism boards pay more for duo mascots  |
+| **Total Revenue Impact**                 | **+$47,000/year**               | ROI: 10x in Year 2                       |
 
 **ROI Analysis**:
 
@@ -5657,7 +5862,7 @@ QuestHunt is positioned to become a profitable player in the location-based gami
 
 1. **Brand Depth**: Two characters = richer storytelling, more merchandising
 2. **User Engagement**: New character drives returning users ("I want to meet Scout!")
-3. **Avatar Economy**: 15 new items = more token sinks (prevents inflation)
+3. **Avatar Economy**: 15 new items = more Treasure sinks (prevents inflation)
 4. **Seasonal Variety**: Different characters host different events (avoids fatigue)
 5. **Merchandising Diversification**: Scout appeals to different demographics (kids vs adults)
 6. **Marketing Hooks**: "Dynamic duo" campaigns, "Which character are you?" quizzes
