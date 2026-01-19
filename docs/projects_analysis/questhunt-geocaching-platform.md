@@ -55,6 +55,82 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 
 > **📌 DOCUMENT PURPOSE**: This analysis explores commercialization potential for QuestHunt while ensuring the three-tier quest type system remains the core product differentiator. Monetization strategies must align with role-based quest creation permissions and support both virtual and physical quest mechanics.
 
+---
+
+## 🎯 FUNDING & AI FEATURES: STRATEGIC RECOMMENDATIONS
+
+> **⚠️ CRITICAL CROSS-REFERENCE**: For detailed grant/loan application recommendations, day job vs full-time analysis, and comprehensive AI features decision analysis, see **[company_creation.md](./company_creation.md)** sections:
+>
+> - **"🎯 CRITICAL ANALYSIS: SHOULD YOU APPLY TO EACH GRANT/LOAN?"** (Lines 939-1391)
+> - **"🤖 AI FEATURES DECISION ANALYSIS"** (Lines 1450-1617)
+
+### **Quick Summary: Recommended Strategy**
+
+**Funding (Year 1):**
+
+- ✅ **APPLY IMMEDIATELY**: Black Opportunity Fund ($2K grant), SR`&ED tax credits ($33K), RL-1 Multimedia ($10K)
+- ⚠️ **APPLY WITH CAUTION**: Futurpreneur loan ($75K) - Only if you lack $50K+ personal savings
+- ✅ **APPLY MONTH 5-6**: IRAP grant ($22K for AI development)
+- ❌ **AVOID YEAR 1**: BDC loans, FACE loans, Investissement Québec (too early, wrong stage)
+- ⚠️ **DELAY TO MONTH 12**: Angel investors - Raise with traction ($500K at $6M valuation, 20% dilution)
+
+**Employment Strategy:**
+
+- ✅ **Months 0-6**: KEEP DAY JOB (20 hrs/week on QuestHunt, validate MVP)
+- ✅ **Month 7+**: QUIT DAY JOB (full-time, after 1,000 MAU + $5K MRR + $50K cash in bank)
+
+**AI Features:**
+
+- ❌ **Phase 1 (Months 0-6)**: NO AI - Bootstrap MVP with manual quest creation
+- ✅ **Phase 2 (Months 7-12)**: ADD AI (Quest Generator $15K, Photo Verification $8K, Translation $5K)
+  - **Net cost after grants**: -$17K profit (IRAP $22K + SR`&ED $23K = $45K return on $28K investment)
+  - **Why NOW**: Bill 96 compliance mandatory, B2B partnerships require anti-cheating, scale to 5,000 MAU
+- ⚠️ **Phase 3 (Year 2+)**: ADVANCED AI (Recommendation Engine $6K, Content Moderation)
+
+**2-Year Funding Summary:**
+
+- **Total Raised**: $647K ($50K personal + $2K BOF + $22K IRAP + $33K SR`&ED + $10K RL-1 + $30K revenue + $500K angel)
+- **Repayable**: $0 (100% non-dilutive except 20% equity to angels at Month 12)
+- **Founder Equity After 2 Years**: 80% (valued at $16M in $20M Series A valuation)
+
+**See [company_creation.md](./company_creation.md) for full analysis with detailed pros/cons, day job impact, timing recommendations, and financial projections.**
+
+---
+
+#### Recommended AI Features for Grant Applications
+
+**Priority 1: Implement for Maximum Grant Funding**
+
+1. **AI Quest Generator** 🔥
+   - GPT-4 powered procedural quest generation using location data
+   - Generates story narratives, trivia, waypoint descriptions
+   - Solves cold-start problem (100+ quests without manual work)
+   - **Dev Cost**: $15K | **Annual API**: $3K | **Grant Value**: IRAP $100K + SR`&ED $10K
+
+2. **AI Photo Verification System** 🔥
+   - Computer vision to verify users reached correct locations
+   - Reduces cheating, important for B2B partnerships
+   - Custom CV model for Montreal landmarks
+   - **Dev Cost**: $8K | **Annual API**: $1K | **Grant Value**: IRAP $50K + SR`&ED $8K
+
+3. **AI Translation & Localization** 🔥
+   - Real-time quest translation (EN ↔ FR + other languages)
+   - Critical for Quebec market (Bill 96 compliance)
+   - Enables international tourism
+   - **Dev Cost**: $5K | **Annual API**: $2K | **Grant Value**: IRAP $50K + SR`&ED $5K
+
+**Total Investment**: $28K dev + $6K/year = **$34K Year 1**
+**Total Grant Return**: IRAP $200K + SR`&ED $23K = **$223K**
+**ROI**: 6.5x return on investment
+
+**Priority 2: Future Development**
+
+- AI Recommendation Engine (personalized quest suggestions)
+- AI Content Moderation (safety/compliance)
+- AI Difficulty Analyzer (automatic quest rating)
+
+---
+
 ## Key Features
 
 ### Quest Type System (Core Product Differentiator)
