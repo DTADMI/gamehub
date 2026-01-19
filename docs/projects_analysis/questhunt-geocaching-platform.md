@@ -5464,4 +5464,649 @@ QuestHunt is positioned to become a profitable player in the location-based gami
 - ✅ Geocaching strategy with ROI projections ($20K ARR Year 1)
 - ✅ Step-by-step outreach scripts with conversion rates (8-10% tourism, 4% education)
 
-This document now provides a **comprehensive, realistic, and actionable** roadmap for QuestHunt commercialization.
+---
+
+## Secondary Character Strategy: "Scout the Squirrel"
+
+> **🎯 KEY QUESTION**: Should QuestHunt introduce a secondary character to complement Hunter the Beaver? When? Why? What are the pros, cons, and optimal implementation strategy?
+
+### Character Concept: Scout the Squirrel
+
+**Character Design**:
+
+- **Species**: Red squirrel (native to Montreal/Quebec)
+- **Personality**: Energetic, curious, detail-oriented, slightly mischievous
+- **Role**: Quest companion, puzzle helper, seasonal event host
+- **Visual Design**: Smaller, nimbler than Hunter; carries acorn-shaped magnifying glass
+- **Color Palette**: Russet red/brown (squirrel), Gold (acorn accents), Green (nature)
+- **Relationship to Hunter**: Best friend, sidekick, "Watson to Hunter's Sherlock"
+
+**Why a Squirrel?**:
+
+1. **Complementary to Beaver**: Hunter is builder/explorer (macro), Scout is finder/observer (micro)
+2. **Ecological Fit**: Squirrels are ubiquitous in Montreal parks (Mount Royal, Parc La Fontaine)
+3. **Behavioral Analogy**: Squirrels "cache" acorns = geocaching metaphor
+4. **Size Contrast**: Small, nimble character contrasts with sturdy beaver (visual variety)
+5. **Kid Appeal**: Squirrels are relatable, energetic, and playful (family-friendly)
+
+---
+
+### Timing Analysis: When to Introduce Scout?
+
+#### Option 1: Phase 2 (Months 7-12) ❌ **TOO EARLY**
+
+**Pros**:
+
+- Early brand diversification
+- More merchandising options from start
+- Two characters = more avatar customization items
+
+**Cons**:
+
+- **Brand dilution**: Hunter not yet established (need 10K+ MAU first)
+- **Development cost**: $2,500 for character design + integration (10% of Phase 2 budget)
+- **Merchandising risk**: Two characters = split inventory, higher minimum orders
+- **User confusion**: "Is this Hunter's game or Scout's game?"
+- **Marketing complexity**: Two mascots = diluted messaging ("Who's the main character?")
+
+**Verdict**: Too early. Hunter needs to become recognizable first (12-18 months).
+
+---
+
+#### Option 2: Phase 3 (Months 13-24) ✅ **OPTIMAL TIMING**
+
+**Pros**:
+
+- **Brand established**: Hunter recognized by 10K-50K MAU (Year 1-2 users)
+- **Budget availability**: Phase 3 has $33K budget; $2,500 character design is affordable
+- **Merchandising demand**: Year 2 users asking for "more characters" (market validation)
+- **Narrative opportunity**: Scout introduced via story quest ("Hunter's New Friend")
+- **Seasonal events**: Scout hosts seasonal events (Hunter can't do everything alone)
+- **Avatar system maturity**: Users already engaged with Hunter items, ready for Scout items
+
+**Cons**:
+
+- **Merchandising lag**: Scout plushies take 6 months to produce (introduce Month 13 → available Month 19)
+- **Avatar item backlog**: Design 10-15 Scout avatar items (2 weeks design time)
+- **Marketing update**: Update website/app store with Scout imagery
+
+**Verdict**: **RECOMMENDED**. Hunter established, budget available, user base ready for expansion.
+
+---
+
+#### Option 3: Phase 4 (Year 3+) ⚠️ **TOO LATE**
+
+**Pros**:
+
+- **Stable brand**: Hunter is iconic (100K+ MAU)
+- **High budget**: Year 3+ has resources for full character rollout
+- **Market data**: Clear evidence users want second character
+
+**Cons**:
+
+- **Missed opportunity**: Users may have created unofficial secondary characters (lost control)
+- **Stale brand**: Hunter-only for 3 years = brand stagnation
+- **Competitor risk**: Other geocaching apps may introduce duo characters first
+
+**Verdict**: Safe but conservative. Phase 3 is better timing for growth.
+
+---
+
+### Recommended Introduction Strategy: Phase 3 (Month 13)
+
+#### Pre-Launch (Months 13-14):
+
+1. **Character Design** ($2,500):
+   - Hire same illustrator who designed Hunter (brand consistency)
+   - Create Scout character sheet: 5 poses, 3 expressions, 2 seasonal outfits
+   - Design 15 Scout avatar items (acorn hat, magnifying glass accessory, etc.)
+
+2. **Narrative Introduction** (Free):
+   - Create story quest: "Hunter's New Friend" (10 waypoints, Montreal-based)
+   - Players discover Scout character through quest completion
+   - Final waypoint: Scout joins player as permanent companion
+
+3. **Marketing Teaser Campaign** ($500):
+   - Social media hints: Acorn icons appear in app (3 weeks before launch)
+   - "Who's the mystery character?" email to users
+   - Reveal trailer: 30-second animated video (Hunter meets Scout)
+
+#### Launch (Month 15):
+
+4. **In-App Integration**:
+   - Scout appears in tutorials (complements Hunter's explanations)
+   - Scout hosts "Detail Hunt" quests (photo verification challenges)
+   - Scout Easter eggs: Hidden Scout icons in existing quests (collectible)
+
+5. **Avatar Customization**:
+   - 15 Scout avatar items added to token shop:
+     - Scout's Acorn Hat (250 tokens)
+     - Scout's Magnifying Glass (500 tokens)
+     - Mini-Scout Pet Companion (3,500 tokens - slightly more than Hunter's)
+     - Scout's Red Scarf (1,000 tokens)
+     - Golden Acorn Trophy (Legendary, 12,000 tokens)
+
+6. **Merchandising** (Month 19 - 4 months after design):
+   - Scout plushie (8") - $24.99 (same price as Hunter)
+   - Scout + Hunter duo plushie set (12") - $59.99 (10% discount vs buying separately)
+   - Scout sticker pack - $6.99
+   - "Hunter & Scout" t-shirt - $29.99
+
+#### Post-Launch (Months 16-24):
+
+7. **Seasonal Event Hosting**:
+   - **Scout hosts fall events**: "Acorn Harvest Hunt" (September-October)
+   - **Hunter hosts winter events**: "Beaver Lodge Challenge" (November-February)
+   - **Both appear in summer**: "Montreal Adventure Duo" (June-August)
+
+8. **Community Engagement**:
+   - "Scout's Photo Challenge": Weekly photo hunt with Scout theme (detail-oriented)
+   - "Hunter's Exploration Quest": Weekly story hunt with Hunter theme (big adventures)
+
+---
+
+### Character Role Differentiation
+
+| Aspect              | Hunter the Beaver                                     | Scout the Squirrel                                      |
+| ------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| **Role**            | Main mascot, explorer, quest creator                  | Companion, puzzle helper, detail finder                 |
+| **Quest Type**      | Story hunts, exploration quests, wide-area adventures | Photo hunts, trivia challenges, detail-oriented puzzles |
+| **Personality**     | Calm, encouraging, adventurous                        | Energetic, curious, playful                             |
+| **Tutorial Role**   | Introduces quest creation, navigation basics          | Explains photo verification, detail tips                |
+| **Seasonal Events** | Winter (Beaver Lodge), Summer (Lake Adventures)       | Fall (Acorn Hunt), Spring (Tree Climbing)               |
+| **Merchandising**   | Primary character (60% of merch sales)                | Secondary character (40% of merch sales)                |
+| **Avatar Items**    | 20 items (established)                                | 15 items (new)                                          |
+
+---
+
+### Financial Impact: Scout Introduction
+
+#### Costs (One-Time):
+
+| Item                                            | Cost       | Timeline            |
+| ----------------------------------------------- | ---------- | ------------------- |
+| Character design + asset creation               | $2,500     | Month 13-14         |
+| Avatar item design (15 items)                   | $1,500     | Month 14            |
+| Marketing campaign (teaser + launch)            | $500       | Month 15            |
+| Story quest creation ("Hunter's New Friend")    | $0         | Internal (20 hours) |
+| Merchandising initial setup (Printful products) | $200       | Month 15            |
+| **Total One-Time Cost**                         | **$4,700** | **Months 13-15**    |
+
+#### Revenue Impact (Annual, Year 2):
+
+| Revenue Stream                        | Estimated Impact             | Notes                                    |
+| ------------------------------------- | ---------------------------- | ---------------------------------------- |
+| **Avatar item sales** (token economy) | $0 (tokens are free to earn) | Drives engagement, not revenue           |
+| **Merchandising** (Scout products)    | +$12,000/year                | 40% of Year 2 merch revenue ($30K total) |
+| **User engagement** (retention boost) | +5% retention = +$30K ARR    | New character excitement reduces churn   |
+| **Brand partnerships** (dual mascots) | +$5,000/year                 | Tourism boards pay more for duo mascots  |
+| **Total Revenue Impact**              | **+$47,000/year**            | ROI: 10x in Year 2                       |
+
+**ROI Analysis**:
+
+- **Investment**: $4,700 (one-time)
+- **Year 2 revenue boost**: $47,000
+- **Payback period**: 1.2 months
+- **5-year value**: $235,000 (assuming linear growth)
+
+---
+
+### Pros & Cons Summary
+
+#### ✅ PROS: Introducing Scout the Squirrel
+
+1. **Brand Depth**: Two characters = richer storytelling, more merchandising
+2. **User Engagement**: New character drives returning users ("I want to meet Scout!")
+3. **Avatar Economy**: 15 new items = more token sinks (prevents inflation)
+4. **Seasonal Variety**: Different characters host different events (avoids fatigue)
+5. **Merchandising Diversification**: Scout appeals to different demographics (kids vs adults)
+6. **Marketing Hooks**: "Dynamic duo" campaigns, "Which character are you?" quizzes
+7. **B2B Appeal**: Schools/tourism boards like "duo mascots" (more versatile)
+8. **Community Building**: "Team Hunter" vs "Team Scout" friendly competition
+
+#### ❌ CONS: Introducing Scout the Squirrel
+
+1. **Brand Dilution Risk**: Hunter may lose "main character" status if poorly executed
+2. **Development Cost**: $4,700 upfront (7% of Phase 3 budget)
+3. **Merchandising Complexity**: Split inventory between two characters (higher minimums)
+4. **Marketing Effort**: All materials need updating (website, app store, ads)
+5. **User Confusion**: "Is this Hunter's app or Scout's app?" (requires clear hierarchy)
+6. **Cannibalization**: Scout merch may reduce Hunter merch sales (not additive)
+7. **Commitment**: Once introduced, Scout must appear regularly (ongoing effort)
+
+---
+
+### Recommendations
+
+#### ✅ **INTRODUCE SCOUT IN PHASE 3 (MONTH 13)**
+
+**Rationale**:
+
+1. Hunter established with 10K-50K MAU (brand foundation secure)
+2. Budget available ($33K Phase 3 budget, $4.7K is affordable)
+3. Users ready for expansion (Year 1 users asking for "more content")
+4. Optimal timing for Year 2 merchandising (6-month production lead time)
+5. Competitive advantage (most geocaching apps lack mascot storytelling)
+
+**Implementation Checklist**:
+
+- [ ] **Month 13**: Commission Scout character design ($2,500)
+- [ ] **Month 14**: Design 15 Scout avatar items ($1,500)
+- [ ] **Month 14**: Create "Hunter's New Friend" story quest (internal, 20 hours)
+- [ ] **Month 15**: Launch marketing teaser campaign ($500)
+- [ ] **Month 15**: Release Scout character in-app (avatar items live)
+- [ ] **Month 15**: Update website, app store with dual mascot branding
+- [ ] **Month 19**: Launch Scout merchandise (Printful products)
+- [ ] **Month 16-24**: Scout hosts seasonal events (Fall acorn hunt, Spring challenges)
+
+**Success Metrics** (Month 24):
+
+- 20% of users own at least 1 Scout avatar item
+- Scout merchandise accounts for 30-40% of total merch sales
+- "Hunter's New Friend" quest completed by 50% of active users
+- User retention improves by 5% (new content excitement)
+
+**Alternative**: If budget is tight, delay to **Phase 4 (Year 3)** but risk competitor copying strategy.
+
+---
+
+### Character Expansion Roadmap (Long-Term)
+
+**Phase 3 (Year 2)**: Scout the Squirrel introduced
+**Phase 4 (Year 3)**: Seasonal characters considered (e.g., "Maple the Moose" for winter events)
+**Phase 5 (Year 4+)**: Regional mascots (e.g., "Rocky the Raccoon" for Toronto quests)
+
+**Rule**: No more than 3 core characters to avoid brand dilution. Hunter + Scout remain primary duo.
+
+---
+
+## IP Expansion: Comics, Games & Media Strategy
+
+> **🎯 KEY QUESTION**: When should QuestHunt expand beyond the core app into comics, point-and-click games, or other media? What's the ROI? Which phase? What are the risks?
+
+### Strategic Context: Building a Multi-Platform IP
+
+**The Vision**: Transform Hunter the Beaver from "app mascot" into a recognizable Canadian IP (like Dora the Explorer, but for geocaching/exploration). This requires moving beyond the app into:
+
+1. **Comics** (Webcomics → Print collections)
+2. **Point-and-Click Adventure Games** (Browser → Mobile)
+3. **Animated Shorts** (YouTube → Streaming services)
+4. **Children's Books** (Print-on-demand → Publishers)
+
+**Critical Success Factor**: Only expand into media AFTER core app is successful (50K+ MAU). Otherwise, you're building a media empire with no audience.
+
+---
+
+### Medium 1: Webcomics & Print Collections
+
+#### When to Launch: **Phase 3 (Months 13-24)** ✅ **RECOMMENDED**
+
+**Why Comics?**
+
+1. **Low production cost**: $200-500 per comic strip (vs $10K+ for animated shorts)
+2. **Marketing tool**: Free content drives app downloads (SEO, social shares)
+3. **Brand storytelling**: Develop Hunter & Scout personalities beyond app
+4. **Merchandising bridge**: Comics test which characters/stories resonate (informs future merch)
+5. **Evergreen content**: Comics stay online forever, compound SEO benefits
+
+---
+
+#### Comic Strategy: "Hunter's Adventures" Webcomic Series
+
+**Format**:
+
+- **Medium**: 4-panel webcomic strips (like Calvin and Hobbes, Garfield)
+- **Release Schedule**: 1 comic per week (52 per year)
+- **Platform**: QuestHunt blog + Instagram/Twitter + Reddit (r/comics)
+- **Theme**: Hunter & Scout's geocaching mishaps, Montreal locations, Canadian humor
+
+**Sample Comics**:
+
+1. "First Geocache": Hunter finds cache, discovers it's full of trinkets, doesn't understand exchange system
+2. "Winter Woes": Hunter tries to find cache buried under 2 feet of snow
+3. "Scout's Acorn Obsession": Scout keeps caching acorns instead of finding quests
+4. "Poutine Quest": Hunter creates quest that's just an excuse to visit 10 poutine restaurants
+5. "Lost in the RESO": Hunter & Scout get lost in Montreal's underground city
+
+**Production Timeline** (Month 13 launch):
+
+| Task                    | Cost          | Timeline     | Notes                                                         |
+| ----------------------- | ------------- | ------------ | ------------------------------------------------------------- |
+| **Hire Comic Artist**   | $300/comic    | Ongoing      | Find Montreal-based illustrator (same style as Hunter design) |
+| **Write 12 scripts**    | $0 (internal) | Month 12     | Founder writes, or community contest for ideas                |
+| **Produce 12 comics**   | $3,600        | Months 13-15 | Batch produce 12 comics (3 months buffer)                     |
+| **Website integration** | $500          | Month 13     | Add "Comics" section to QuestHunt site                        |
+| **Social media setup**  | $0            | Month 13     | Create @HunterComics Instagram, auto-post via Buffer          |
+| **Total Year 1 Cost**   | **$4,100**    | Months 12-24 | 52 comics @ $300/each = $15,600/year ongoing                  |
+
+---
+
+#### Monetization Strategy: Comics
+
+**Phase 1 (Year 1-2): Free Webcomics** - Loss Leader Strategy
+
+- All comics free online (marketing expense, not revenue stream)
+- Goal: Drive app downloads (1 comic = 50-100 new app installs @ $0 CAC)
+- **Expected CAC Reduction**: $5,000/year savings (vs paid ads)
+- **ROI**: $15,600 cost → $5,000 CAC savings + 2,500 new users → Positive by Month 18
+
+**Phase 2 (Year 3): Print Collections** - Revenue Stream
+
+- Compile 52 comics into "Hunter's Adventures Vol. 1" print book
+- Print-on-demand via [Blurb](https://www.blurb.ca) or [Lulu](https://www.lulu.com)
+- Price: $19.99 CAD (8.5" x 11", full color, 60 pages)
+- Production cost: $8/book (print-on-demand, no inventory risk)
+- **Expected Sales**: 500 books/year @ $12 profit = $6,000/year revenue
+
+**Phase 3 (Year 4+): Syndication** - Licensing Revenue
+
+- License comics to Montreal newspapers (La Presse, Montreal Gazette)
+- License to tourism magazines (Tourisme Montréal, Explore Magazine)
+- **Expected Revenue**: $500-1,000/month = $6-12K/year
+
+**Total Comics Revenue (Year 5)**: $18,000/year + $5,000 CAC savings = **$23,000/year value**
+
+---
+
+#### Success Metrics: Webcomics
+
+| Metric                         | Year 1 Target         | Year 3 Target | Notes                           |
+| ------------------------------ | --------------------- | ------------- | ------------------------------- |
+| **Comics Published**           | 52                    | 156           | 1 per week                      |
+| **Website Traffic**            | 5,000/month           | 20,000/month  | SEO compounds over time         |
+| **Social Media Followers**     | 2,000                 | 10,000        | @HunterComics Instagram/Twitter |
+| **App Downloads (attributed)** | 2,500                 | 15,000        | "I found you via comic!"        |
+| **Print Books Sold**           | 0 (not launched)      | 500           | Year 3+                         |
+| **Revenue**                    | -$15,600 (investment) | +$18,000      | Breakeven Month 30              |
+
+---
+
+### Medium 2: Point-and-Click Adventure Game
+
+#### When to Launch: **Phase 4 (Year 3+)** ⚠️ **HIGH RISK, HIGH REWARD**
+
+**Why a Point-and-Click Game?**
+
+1. **Brand extension**: Games keep users engaged between real-world quests (winter retention)
+2. **New revenue stream**: Sell game separately ($4.99) or include in premium subscription
+3. **Story depth**: Develop Hunter/Scout lore beyond app capabilities
+4. **Indie game appeal**: Point-and-click is experiencing renaissance (Thimbleweed Park, Broken Age)
+5. **Montreal winter solution**: When it's -25°C, users play game instead of outdoor quests
+
+---
+
+#### Game Concept: "Hunter's Great Montreal Mystery"
+
+**Genre**: Point-and-Click Adventure (2D, narrative-driven)
+**Platform**: Web (playable on QuestHunt site) + Mobile (iOS/Android in-app purchase)
+**Story**: Hunter & Scout must solve a mystery involving Montreal's history (e.g., lost treasure of Jacques Cartier)
+**Gameplay**: Explore 10 Montreal locations (Old Montreal, Mount Royal, etc.), solve puzzles, collect clues
+**Length**: 2-3 hours gameplay (casual, family-friendly)
+**Art Style**: Same illustrator as Hunter character design (brand consistency)
+
+---
+
+#### Production Requirements: Point-and-Click Game
+
+| Task                                          | Cost          | Timeline     | Notes                                                                 |
+| --------------------------------------------- | ------------- | ------------ | --------------------------------------------------------------------- |
+| **Game Design Document**                      | $0 (internal) | Month 24     | Founder writes story, puzzle design                                   |
+| **Concept Art** (10 locations)                | $5,000        | Months 25-26 | $500/location                                                         |
+| **Character Animation** (Hunter, Scout, NPCs) | $3,000        | Month 27     | 5 characters, 3 animations each                                       |
+| **Game Development** (programming)            | $20,000       | Months 27-30 | Hire indie game studio (Montreal-based, e.g., Clever Endeavour Games) |
+| **Writing & Voice Acting**                    | $2,000        | Month 29     | 1,000 lines dialogue, voice actors for Hunter/Scout                   |
+| **Sound Design & Music**                      | $3,000        | Month 30     | Background music, sound effects                                       |
+| **Testing & QA**                              | $1,000        | Month 31     | Beta test with 100 app users                                          |
+| **App Store Submission**                      | $500          | Month 32     | iOS ($99/year), Android ($25 one-time), web hosting                   |
+| **Marketing & Trailer**                       | $2,000        | Month 32     | Launch trailer, press release                                         |
+| **Total Production Cost**                     | **$36,500**   | 8 months     | Month 24-32                                                           |
+
+---
+
+#### Monetization Strategy: Point-and-Click Game
+
+**Revenue Model Options**:
+
+1. **Standalone Purchase** ($4.99 USD / $6.99 CAD):
+   - Sell game on Steam, iOS App Store, Google Play
+   - Target: 5,000 sales Year 1 @ $5 = $25,000 revenue
+   - **Pros**: Clean revenue, no ongoing costs
+   - **Cons**: Splits user attention (game vs main app)
+
+2. **Premium Subscription Bonus** (Included in $9.99/month tier):
+   - Premium subscribers get game free (incentive to subscribe)
+   - Target: 1,000 new premium subs @ $120/year = $120,000 ARR
+   - **Pros**: Drives subscription revenue (10x better than standalone)
+   - **Cons**: Must produce new game content yearly (ongoing cost)
+
+3. **Hybrid Model** (RECOMMENDED):
+   - Game free for premium subscribers
+   - $6.99 one-time purchase for free users
+   - Target: 3,000 purchases ($21,000) + 500 new subs ($60,000) = **$81,000 Year 1**
+
+---
+
+#### Financial Analysis: Point-and-Click Game
+
+**Year 1 (Launch Year)**:
+
+- **Production Cost**: $36,500
+- **Revenue**: $81,000 (hybrid model)
+- **Net Profit**: $44,500 ✅
+- **ROI**: 122% (1.2x return)
+- **Payback Period**: 5 months
+
+**Year 2+ (Ongoing)**:
+
+- **Maintenance Cost**: $5,000/year (bug fixes, new puzzles)
+- **Revenue**: $50,000/year (ongoing sales + subscriptions)
+- **Net Profit**: $45,000/year
+- **5-Year Total Profit**: $224,500 (after initial $36.5K investment)
+
+---
+
+#### Risks & Mitigations: Point-and-Click Game
+
+**❌ RISKS**:
+
+1. **Production Overruns**: Games often cost 2-3x initial budget
+   - **Mitigation**: Fixed-price contract with indie studio, detailed scope document
+
+2. **Low Sales**: Indie games have 90% failure rate (most sell <1,000 copies)
+   - **Mitigation**: Captive audience (50K+ app users), premium subscription bundle
+
+3. **Development Time**: 8 months is optimistic (could take 12-18 months)
+   - **Mitigation**: Start in Year 2, launch in Year 3 (no rush)
+
+4. **Distracts from Core App**: Resources diverted from app development
+   - **Mitigation**: Outsource game development (don't build in-house)
+
+5. **Brand Confusion**: Users think QuestHunt is a game company, not geocaching app
+   - **Mitigation**: Market as "bonus content for winter months", not replacement for app
+
+---
+
+#### Alternative: Mini-Games Instead of Full Game
+
+**Lower-Risk Option**: Integrate mini-games INTO the main app (Phase 2-3)
+
+**Examples**:
+
+1. **Puzzle Mini-Game**: Solve jigsaw puzzle of Montreal landmark (unlocks bonus tokens)
+2. **Memory Game**: Match pairs of Montreal icons (beaver, poutine, bagel, hockey stick)
+3. **Trivia Quiz**: Answer Montreal history questions (daily challenge)
+4. **Spot the Difference**: Find 5 differences between two photos of same location
+
+**Cost**: $5,000-10,000 (vs $36,500 for full game)
+**Timeline**: 2-3 months (vs 8 months)
+**Revenue**: $0 direct, but increases retention 10% = $30K ARR value
+
+**RECOMMENDATION**: Start with mini-games (Phase 2-3), build full point-and-click game ONLY if mini-games are wildly successful (Phase 4)
+
+---
+
+### Medium 3: Animated Shorts (YouTube Series)
+
+#### When to Launch: **Phase 4 (Year 3+)** ⚠️ **HIGHEST COST, OPTIONAL**
+
+**Why Animated Shorts?**
+
+1. **YouTube SEO**: Videos rank in Google, drive app downloads
+2. **Kid appeal**: Animated Hunter/Scout = family-friendly content
+3. **Viral potential**: Funny shorts can go viral (millions of views)
+4. **Sponsorship revenue**: YouTube ads + tourism board sponsorships
+
+**Format**:
+
+- **Length**: 2-5 minute episodes
+- **Style**: 2D animation (like Kurzgesagt, but more playful)
+- **Release**: 1 episode per month (12/year)
+- **Content**: Hunter & Scout's adventures in Montreal (educational + entertaining)
+
+**Production Cost**:
+
+- **Professional Animation**: $3,000-5,000 per minute = $10,000-15,000 per episode
+- **Year 1 Cost**: 12 episodes = $120,000-180,000 ❌ **TOO EXPENSIVE**
+
+**Alternative (Cost-Effective)**:
+
+- **Motion Graphics**: $500-1,000 per episode (vs $15,000 for full animation)
+- **Simple 2D Animation**: Use tools like Animaker, Vyond ($1,000/year subscription)
+- **Year 1 Cost**: 12 episodes = $6,000-12,000 ✅ **FEASIBLE**
+
+**Revenue Potential**:
+
+- **YouTube Ad Revenue**: 100K views/video @ $2 CPM = $200/video = $2,400/year ❌ **NOT WORTH IT**
+- **App Downloads**: 12 videos × 500 downloads/video = 6,000 new users × $50 LTV = $300,000 value ✅ **WORTH IT**
+
+**RECOMMENDATION**: Only pursue animated shorts if you can produce in-house cheaply ($1,000/episode). Outsourcing at $15K/episode is not cost-effective until Year 4-5.
+
+---
+
+### Medium 4: Children's Books (Print & Digital)
+
+#### When to Launch: **Phase 3 (Year 2-3)** ✅ **LOW RISK, HIGH BRAND VALUE**
+
+**Why Children's Books?**
+
+1. **Educational market**: Schools, libraries, parents (aligned with educational quests)
+2. **Low production cost**: $3,000-5,000 for professional children's book
+3. **Print-on-demand**: No inventory risk (Lulu, Blurb, Amazon KDP)
+4. **Brand legitimacy**: "As seen in the book 'Hunter's Montreal Adventure'" (credibility)
+
+**Book Concept**: "Hunter's First Geocache" (Ages 5-8)
+
+- **Story**: Hunter discovers geocaching, learns about Montreal landmarks, makes friend (Scout)
+- **Length**: 32 pages, full color illustrations
+- **Format**: 8.5" x 11" hardcover (print-on-demand)
+- **Price**: $24.99 CAD retail
+
+**Production Cost**:
+| Task | Cost | Timeline |
+|------|------|----------|
+| **Writing** | $0 (internal) | Month 18 |
+| **Illustration** (32 pages) | $4,000 | Months 19-21 |
+| **Editing & Layout** | $500 | Month 22 |
+| **ISBN & Publishing Setup** | $200 | Month 22 |
+| **Print-on-Demand Setup** | $0 | Month 22 |
+| **Total Cost** | **$4,700** | 5 months |
+
+**Revenue Potential**:
+
+- **Direct Sales**: 500 books/year @ $15 profit = $7,500/year
+- **School Licensing**: 20 schools buy 25 copies each = 500 books = $12,500
+- **Library Sales**: 50 Quebec libraries @ $25/book = $1,250
+- **Total Year 1 Revenue**: $21,250 (after $4,700 investment = $16,550 profit)
+
+**ROI**: 352% in Year 1 ✅ **EXCELLENT**
+
+---
+
+### Comprehensive IP Expansion Roadmap
+
+| Medium                      | Phase     | Timeline     | Cost                         | Revenue (Year 1)            | ROI                | Priority      |
+| --------------------------- | --------- | ------------ | ---------------------------- | --------------------------- | ------------------ | ------------- |
+| **Webcomics**               | Phase 3   | Months 13-24 | $15,600/year                 | -$10,600 (CAC savings: $5K) | Breakeven Month 30 | 🟢 **HIGH**   |
+| **Children's Book**         | Phase 3   | Months 18-22 | $4,700                       | $21,250                     | 352%               | 🟢 **HIGH**   |
+| **Mini-Games (in-app)**     | Phase 2-3 | Months 12-15 | $8,000                       | $30,000 (retention value)   | 275%               | 🟢 **HIGH**   |
+| **Point-and-Click Game**    | Phase 4   | Months 24-32 | $36,500                      | $81,000                     | 122%               | 🟡 **MEDIUM** |
+| **Animated Shorts**         | Phase 4+  | Months 36+   | $12,000/year                 | $300,000 (download value)   | 2400%              | 🟡 **MEDIUM** |
+| **Print Comic Collections** | Phase 4   | Month 36+    | $0 (compiled from webcomics) | $6,000/year                 | Infinite           | 🟢 **HIGH**   |
+
+---
+
+### Recommended Phased Rollout
+
+#### **Phase 2 (Months 7-12): Mini-Games**
+
+- **Cost**: $8,000
+- **Goal**: Test in-app gaming interest, improve winter retention
+- **Success Metric**: 40% of users play mini-games weekly
+
+#### **Phase 3 (Months 13-24): Comics + Children's Book**
+
+- **Cost**: $20,300 ($15,600 comics + $4,700 book)
+- **Goal**: Establish Hunter/Scout as media IP beyond app
+- **Success Metric**: 5,000 website visits/month (comics), 500 books sold
+
+#### **Phase 4 (Year 3): Point-and-Click Game + Animated Shorts**
+
+- **Cost**: $48,500 ($36,500 game + $12,000 animation)
+- **Goal**: Multi-platform IP (app + game + video + print)
+- **Success Metric**: 5,000 game sales, 100K YouTube views/video
+
+#### **Phase 5 (Year 4+): Licensing & Partnerships**
+
+- **Cost**: $0 (revenue-generating)
+- **Goal**: License Hunter/Scout to toy companies, TV networks, publishers
+- **Success Metric**: $50K+/year licensing revenue
+
+---
+
+### Critical Success Factors: IP Expansion
+
+**✅ DO THIS**:
+
+1. **Start with lowest-cost media first** (comics, mini-games, books)
+2. **Use same illustrator** for all media (brand consistency)
+3. **Test audience demand** before big investments (poll users: "Would you play a Hunter game?")
+4. **Integrate with app** (comics drive downloads, games increase retention)
+5. **Outsource production** (hire specialists, don't build in-house)
+
+**❌ DON'T DO THIS**:
+
+1. **Don't launch media before 50K MAU** (no audience = no ROI)
+2. **Don't build expensive animation studio** ($180K/year cost is insane)
+3. **Don't create media that competes with app** (game should complement, not replace)
+4. **Don't ignore metrics** (if comics get 0 engagement, don't double down)
+5. **Don't dilute brand** (all media must feature Hunter/Scout consistently)
+
+---
+
+### Financial Summary: IP Expansion (5-Year Total)
+
+| Category                       | Total Cost (5 years) | Total Revenue (5 years)     | Net Profit        |
+| ------------------------------ | -------------------- | --------------------------- | ----------------- |
+| **Webcomics**                  | $78,000              | $115,000                    | **$37,000**       |
+| **Children's Books** (3 books) | $14,100              | $106,250                    | **$92,150**       |
+| **Mini-Games**                 | $8,000               | $150,000 (retention value)  | **$142,000**      |
+| **Point-and-Click Game**       | $41,500              | $225,000                    | **$183,500**      |
+| **Animated Shorts**            | $36,000              | $1,500,000 (download value) | **$1,464,000**    |
+| **Licensing** (Year 4-5)       | $0                   | $100,000                    | **$100,000**      |
+| **TOTAL**                      | **$177,600**         | **$2,196,250**              | **$2,018,650** ✅ |
+
+**5-Year ROI**: 1,136% (11.4x return on investment)
+
+**Key Insight**: IP expansion is HIGHLY profitable, but ONLY if done strategically:
+
+- Phase 1-2: Focus on core app (don't distract)
+- Phase 3: Low-cost media (comics, books) to test audience
+- Phase 4+: High-cost media (games, animation) once audience proven
+
+**FINAL RECOMMENDATION**:
+
+- ✅ **Launch webcomics Month 13** (marketing tool, low risk)
+- ✅ **Launch children's book Month 18** (high ROI, brand legitimacy)
+- ✅ **Launch mini-games Month 12** (retention, low cost)
+- ⚠️ **Consider point-and-click game Year 3** (only if mini-games successful)
+- ⚠️ **Consider animated shorts Year 3** (only if budget allows in-house production)
