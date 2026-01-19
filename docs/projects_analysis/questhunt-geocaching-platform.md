@@ -492,7 +492,7 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 **Exclusive In-App Promotion**:
 
 - Buy merch → Get exclusive digital avatar item code
-- **Example**: Buy Hunter plushie → Unlock "Legendary Hunter Pet" avatar item (cannot be purchased with tokens)
+- **Example**: Buy Hunter plushie → Unlock "Legendary Hunter Pet" avatar item (cannot be purchased with Treasures)
 - **Why This Works**: Drives merch sales without making app pay-to-win (digital item is cosmetic bonus)
 
 ### Brand Partnerships (Hunter as Mascot)
@@ -517,7 +517,7 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 | **Legal/Liability**      | Insurance for physical cache-related incidents (injury, trespassing claims) | $5,000            | Platform              | General liability insurance addon           |
 | **Physical Materials**   | Replacement waterproof containers, logbooks (sent to creators)              | $2,000            | Platform (subsidized) | Optional creator support program            |
 | **Creator Support**      | Help creators design safe, engaging physical quests                         | $0                | Community-driven      | Tutorial videos, moderation feedback        |
-| **Cache Verification**   | Spot-check physical caches still exist (community volunteers)               | $0                | Volunteer             | Gamified with bonus tokens                  |
+| **Cache Verification**   | Spot-check physical caches still exist (community volunteers)               | $0                | Volunteer             | Gamified with bonus Treasures               |
 | **Total Annual Cost**    |                                                                             | **$30,000 CAD**   |                       | At 50K MAU                                  |
 
 ### Physical Quest Revenue Potential
@@ -735,7 +735,7 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 
 - English-only UGC may violate language laws
 - Cannot force French translations
-- **Mitigation**: Encourage bilingual (bonus tokens), admin-translate popular quests
+- **Mitigation**: Encourage bilingual (bonus Treasures), admin-translate popular quests
 
 ### Business Impact Analysis
 
@@ -1496,13 +1496,13 @@ export function QuestMap({ questId }: { questId: string }) {
 
 **Goal**: Reduce CAC to <$10 by optimizing channel mix
 
-| Strategy                    | Year 3 Target                         | Implementation                                                                   |
-| --------------------------- | ------------------------------------- | -------------------------------------------------------------------------------- |
-| **Double down on referral** | 40% of new users                      | Incentive: Free month for both referrer/referee, leaderboard prizes ($500/month) |
-| **SEO dominance**           | Rank #1 for 50+ city keywords         | Publish 5 articles/week, build backlinks from tourism sites                      |
-| **Creator program**         | Quest creators become marketers       | Creators earn $1-5 per quest completion → they promote their quests              |
-| **Partnerships**            | Tourism boards drive 20% of new users | Co-marketing (partners share QuestHunt with their audiences)                     |
-| **Reduce paid ads**         | <10% of budget                        | Only for retargeting (cheaper) and new city launches                             |
+| Strategy                    | Year 3 Target                         | Implementation                                                                          |
+| --------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Double down on referral** | 40% of new users                      | Incentive: Free month for both referrer/referee, leaderboard prizes ($500/month)        |
+| **SEO dominance**           | Rank #1 for 50+ city keywords         | Publish 5 articles/week, build backlinks from tourism sites                             |
+| **Creator program**         | Quest creators become marketers       | Creators earn Treasures/recognition when others play their quests → they promote quests |
+| **Partnerships**            | Tourism boards drive 20% of new users | Co-marketing (partners share QuestHunt with their audiences)                            |
+| **Reduce paid ads**         | <10% of budget                        | Only for retargeting (cheaper) and new city launches                                    |
 
 **Expected Year 3 CAC**: $12.50 (50% lower than Year 2)
 
@@ -1540,13 +1540,13 @@ LTV = $100
 
 ##### 1. Increase ARPU (Average Revenue Per User)
 
-| Strategy                          | Current ARPU | Target ARPU | Implementation                                                                         | Expected Impact       |
-| --------------------------------- | ------------ | ----------- | -------------------------------------------------------------------------------------- | --------------------- |
-| **Upsell Explorer → Creator**     | $7           | $8.50       | In-app prompt after 3 quest creations: "Upgrade to Creator for unlimited quests"       | +20% ARPU             |
-| **Annual plan discount**          | N/A          | N/A         | 17% discount for annual ($49.99/year vs $59.88/year monthly) → 40% choose annual       | +5% LTV (lower churn) |
-| **Add premium quest marketplace** | $0           | $1.50       | Creators sell quests ($5-15), QuestHunt takes 20-30% cut                               | +$1.50 ARPU           |
-| **Sponsored waypoints**           | $0           | $0.50       | Local businesses pay $50-500/month to be waypoints → share revenue with quest creators | +$0.50 ARPU           |
-| **Total Target ARPU**             | **$7**       | **$11.50**  | Increase ARPU by 64%                                                                   | **LTV increases 64%** |
+| Strategy                      | Current ARPU | Target ARPU | Implementation                                                                         | Expected Impact       |
+| ----------------------------- | ------------ | ----------- | -------------------------------------------------------------------------------------- | --------------------- |
+| **Upsell Explorer → Creator** | $7           | $8.50       | In-app prompt after 3 quest creations: "Upgrade to Creator for unlimited quests"       | +20% ARPU             |
+| **Annual plan discount**      | N/A          | N/A         | 17% discount for annual ($49.99/year vs $59.88/year monthly) → 40% choose annual       | +5% LTV (lower churn) |
+| **Add premium avatar items**  | $0           | $0.75       | Exclusive seasonal/event avatar items available only to paid tiers                     | +$0.75 ARPU           |
+| **Sponsored waypoints**       | $0           | $0.50       | Local businesses pay $50-500/month to be waypoints → share revenue with quest creators | +$0.50 ARPU           |
+| **Total Target ARPU**         | **$7**       | **$11.50**  | Increase ARPU by 64%                                                                   | **LTV increases 64%** |
 
 **Code Example - Upsell Prompt**:
 
@@ -1587,8 +1587,8 @@ export function UpsellModal() {
         </p>
         <ul>
           <li>✅ Unlimited quest creation</li>
-          <li>✅ Earn 70% revenue from premium quests</li>
-          <li>✅ Creator marketplace placement</li>
+          <li>✅ Create physical & hybrid quests</li>
+          <li>✅ Priority homepage featuring</li>
           <li>✅ Advanced analytics</li>
         </ul>
 
@@ -1626,7 +1626,7 @@ export function UpsellModal() {
 **Psychological Triggers**:
 
 - **Scarcity**: "You've hit your limit" creates urgency
-- **Social proof**: "Join 1,200 creators earning from their quests"
+- **Social proof**: "Join 1,200 creators building amazing quests"
 - **Loss aversion**: "Don't lose your 4th quest" (suggest saving as draft, upgrade to publish)
 - **Anchoring**: Show annual price discount (17% savings = $10/year)
 
@@ -1676,7 +1676,7 @@ Not all customers have equal LTV. Target high-value segments.
 
 1. **Creators have 2x higher LTV** ($240 vs $120) → focus on creator acquisition, provide tools
 2. **Social users have 50% lower churn** (4% vs 7%) → prioritize friend invites, group quests
-3. **Tourists have terrible LTV** ($12) → monetize via single-purchase quests ($5-15), not subscriptions
+3. **Tourists have terrible LTV** ($12) → engage via free featured quests, monetize via merchandise and B2B tourism partnerships
 4. **Geocachers are whales** ($154 LTV) → allocate 25% of marketing budget to geocaching community
 
 **Actionable**: Segment emails, ads, and features by user type (e.g., show "Invite friends" to social users, "Create your first quest" to potential creators)
@@ -1706,7 +1706,7 @@ Not all customers have equal LTV. Target high-value segments.
 - **SEO compounds**: Year 1 content ranks → free organic traffic → lower CAC
 - **Referral kicks in**: Network effects (users invite friends) → CAC drops to $10-25
 - **Churn reduces**: Onboarding improvements, better product-market fit → LTV increases 2.5x
-- **ARPU increases**: More premium features, marketplace revenue → LTV increases 150%
+- **ARPU increases**: More premium features, merchandise, B2B partnerships → LTV increases 150%
 
 **Comparable LTV:CAC Ratios** (SaaS industry):
 
@@ -2451,7 +2451,7 @@ supabase/
 | **Merchandising (Print-on-Demand)**   | 🟢 MEDIUM   | 2              | $500 (Shopify setup)              | Shopify store, Printful integration, exclusive avatar codes    | $1,000 merch sales                      | Additional revenue stream             |
 | **Total Phase 2**                     |             | **27 weeks**   | **$7,500**                        |                                                                | **5,000 MAU, 100 paid users, $10K MRR** | **Revenue-generating product**        |
 
-**Phase 2 Deliverable**: Monetized app with hybrid quests, subscription tiers, seasonal events, merchandise. Break-even or profitable.
+**Phase 2 Deliverable**: Monetized app with hybrid quests, subscription tiers, seasonal events, merchandise, B2B partnerships. Break-even or profitable.
 
 ---
 
@@ -2488,16 +2488,16 @@ supabase/
 
 ### Feature Prioritization Matrix
 
-| Feature Category    | Phase 1 (Months 1-6)                          | Phase 2 (Months 7-12)               | Phase 3 (Months 13-24)            | Phase 4 (Year 3+)              |
-| ------------------- | --------------------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------ |
-| **Virtual Quests**  | ✅ User-created (Story, Trivia, Neighborhood) | ✅ Procedural generation pilot      | ✅ Advanced procedural generation | ⬜ AI-powered quest narratives |
-| **Hybrid Quests**   | ⬜ Not yet                                    | ✅ QR-enhanced, Photo Hunts         | ✅ Mixed reality waypoints        | ⬜ AR integration              |
-| **Physical Quests** | ⬜ Not yet                                    | ⬜ Not yet                          | ⚠️ IF VIABLE (high maintenance)   | ⬜ Only if demand              |
-| **Indoor Quests**   | ✅ QR codes, tight GPS radius                 | ✅ Building floor support           | ✅ RESO (underground city) quests | ⬜ Advanced indoor mapping     |
-| **Avatar/Tokens**   | ✅ Basic (20 items)                           | ✅ Seasonal events, exclusive items | ✅ Advanced (100+ items)          | ⬜ 3D avatar customization     |
-| **Social**          | ✅ Friends, activity feed                     | ✅ Community gallery, voting        | ✅ Teams/guilds                   | ⬜ Live co-op quests           |
-| **Monetization**    | ⬜ Not yet                                    | ✅ Subscriptions, merch             | ✅ B2B partnerships               | ✅ API monetization            |
-| **Scale**           | 🎯 1K MAU (Montreal)                          | 🎯 5K MAU (Montreal)                | 🎯 50K MAU (Quebec)               | 🎯 200K MAU (Canada)           |
+| Feature Category     | Phase 1 (Months 1-6)                          | Phase 2 (Months 7-12)               | Phase 3 (Months 13-24)            | Phase 4 (Year 3+)              |
+| -------------------- | --------------------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------ |
+| **Virtual Quests**   | ✅ User-created (Story, Trivia, Neighborhood) | ✅ Procedural generation pilot      | ✅ Advanced procedural generation | ⬜ AI-powered quest narratives |
+| **Hybrid Quests**    | ⬜ Not yet                                    | ✅ QR-enhanced, Photo Hunts         | ✅ Mixed reality waypoints        | ⬜ AR integration              |
+| **Physical Quests**  | ⬜ Not yet                                    | ⬜ Not yet                          | ⚠️ IF VIABLE (high maintenance)   | ⬜ Only if demand              |
+| **Indoor Quests**    | ✅ QR codes, tight GPS radius                 | ✅ Building floor support           | ✅ RESO (underground city) quests | ⬜ Advanced indoor mapping     |
+| **Avatar/Treasures** | ✅ Basic (20 items)                           | ✅ Seasonal events, exclusive items | ✅ Advanced (100+ items)          | ⬜ 3D avatar customization     |
+| **Social**           | ✅ Friends, activity feed                     | ✅ Community gallery, voting        | ✅ Teams/guilds                   | ⬜ Live co-op quests           |
+| **Monetization**     | ⬜ Not yet                                    | ✅ Subscriptions, merch             | ✅ B2B partnerships               | ✅ API monetization            |
+| **Scale**            | 🎯 1K MAU (Montreal)                          | 🎯 5K MAU (Montreal)                | 🎯 50K MAU (Quebec)               | 🎯 200K MAU (Canada)           |
 
 ### **KEY INSIGHT: Physical Quests Are NOT Required for Success**
 
@@ -2594,7 +2594,7 @@ supabase/
 **Quest Creation Templates**:
 
 - Pre-built quest templates for common types (city tour, nature trail, historical landmarks)
-- Template marketplace (creators sell quest templates)
+- Template library (free community-shared quest templates)
 - One-click quest instantiation from templates
 - **Implementation**: JSON schema for quest templates, template versioning
 
@@ -2737,7 +2737,7 @@ supabase/
 
 - Launch Creator subscriptions with physical quest creation
 - B2B partnerships (tourism boards get admin accounts for curated virtual quests)
-- Marketplace for premium quest content
+- Community gallery for featured quest content
 
 #### Year 3+: Scale
 
@@ -2903,7 +2903,7 @@ Without this realignment, QuestHunt risks becoming another generic geocaching ap
   - All Explorer features (offline maps, analytics, ad-free, priority support)
   - **Advanced analytics**: Views, completion rates, user feedback on created quests
   - **Team collaboration**: Invite co-creators to manage quests together
-  - **Quest monetization**: Earn revenue from premium quest sales (70% revenue share)
+  - **Creator recognition**: Featured quest placement on homepage, community spotlight
   - **Early access** to new features (beta test new quest types)
   - **Creator badge** on profile (shows "Quest Creator" status)
 
@@ -2925,13 +2925,13 @@ Without this realignment, QuestHunt risks becoming another generic geocaching ap
   - ✅ **Lifetime "puzzle_creator" role** → Create unlimited physical/hybrid quests forever
   - ✅ Create unlimited virtual-style quests
 - **Features**:
-  - **All Creator features** (analytics, team collaboration, quest monetization)
+  - **All Creator features** (analytics, team collaboration, creator recognition)
   - **Lifetime updates** (all future features included, including new quest types)
   - **Founder badge** (exclusive profile badge, shows on all quests created)
   - **Early access** (beta test new features before public release)
   - **Priority support** (24-hour response time)
   - **Exclusive community** (Slack/Discord channel with founders)
-  - **Revenue share bonus**: 75% marketplace revenue (vs 70% for monthly Creator)
+  - **Bonus Treasure earnings**: 2x Treasure rewards when players complete your quests
 
 **Why Offer Lifetime Tier**:
 
@@ -2972,7 +2972,7 @@ export function LifetimeTierModal() {
         <li>✅ Unlimited quest creation (forever)</li>
         <li>✅ All future features included</li>
         <li>✅ Founder badge + exclusive community</li>
-        <li>✅ 75% marketplace revenue share</li>
+        <li>✅ 2x creator Treasure rewards</li>
       </ul>
 
       <div className="comparison">
@@ -3058,12 +3058,12 @@ export function LifetimeTierModal() {
    - **Homeschool Families**: $9.99/month (educational quest library access)
    - **Rationale**: Educational market less price-sensitive, values engagement metrics
 
-3. **Premium Content & Marketplace**
-   - **Professional Quest Packs**: $2.99-9.99 (curated by local experts, historians, authors)
-   - **Audio-Guided Quests**: $4.99-19.99 (narrated experiences, like audio tours)
-   - **AR/Interactive Quests**: $9.99-29.99 (augmented reality features, premium experiences)
-   - **Creator Marketplace**: 20-30% commission on creator-sold quests (enable creator economy)
-   - **Rationale**: High-quality content commands premium pricing, low marginal cost
+3. **Premium Content & B2B Partnerships**
+   - **Sponsored Quests**: Tourism boards and businesses pay $1,000-5,000 per custom quest (free to users)
+   - **Educational Packages**: Schools/universities pay $500-2,500 for curriculum-aligned quest sets
+   - **Corporate Events**: Team-building quest packages $1,000-10,000 per event
+   - **Premium Subscription Features**: Exclusive avatar items, offline maps, advanced analytics
+   - **Rationale**: B2B revenue scales without charging users, maintains accessibility
 
 4. **Advertising & Sponsorships**
    - **Sponsored Waypoints**: $50-500/month per business (drive foot traffic to cafes, shops)
@@ -3435,9 +3435,9 @@ export default function GeocachersPage() {
             <td>✅ (easy drag-drop)</td>
           </tr>
           <tr>
-            <td>Monetize your quests</td>
+            <td>Priority quest featuring</td>
             <td>❌</td>
-            <td>✅ (70% revenue share)</td>
+            <td>✅ (homepage promotion)</td>
           </tr>
           <tr>
             <td>Price</td>
@@ -3532,21 +3532,12 @@ export default function MigrationPage() {
 #### Legend ($14.99/mo, $129.99/yr)
 
 - Unlimited quest creation
-- **Monetize quests (70% revenue share)**
-- Creator marketplace placement
+- **Priority quest featuring** (quests promoted on homepage)
+- **Exclusive creator badges & recognition**
 - Verified badge, unlimited friends
+- Early access to new features
 
-### 2. Creator Marketplace (20% Commission)
-
-Individual creators sell premium quests ($5-15 each):
-
-- "Hidden Seattle Food Tour" - $12.99
-- "Capitol Hill History Hunt" - $9.99
-- "Family Scavenger Hunt" - $7.99
-
-**Revenue split**: Creator 70%, QuestHunt 20%, Stripe 10%
-
-### 3. User Acquisition
+### 2. User Acquisition
 
 - **SEO**: City landing pages ("geocaching Seattle", "scavenger hunt Portland")
 - **Referral**: Both users get 1 month free
@@ -4727,9 +4718,9 @@ export async function getMuseumInsights(museumId: string) {
 **Tactics**:
 
 1. **Quest Creator Program**:
-   - **Incentive**: Creators earn $1-5 per completion of their premium quests (70% revenue share)
+   - **Incentive**: Creators earn 50 Treasures per quest completion + featured placement + community badges
    - **Promotion**: Feature top creators on homepage, monthly "Creator Spotlight"
-   - **Tools**: Quest creation template library, analytics dashboard, payout tracking
+   - **Tools**: Quest creation template library, analytics dashboard, engagement metrics
 
 2. **Leaderboards & Competitions**:
    - City-wide leaderboards (monthly reset)
@@ -5102,14 +5093,14 @@ async function sendLocationBatch(locations) {
 
 **Why prioritize**:
 
-- **2x higher LTV**: $240 per creator (earn from marketplace)
+- **2x higher LTV**: $240 per creator (higher engagement, lifetime purchases)
 - **Supply-side growth**: Creators build quests → attract more players (flywheel)
 - **Lower churn**: 3% (vs 6% avg) — creators invested in platform
 
 **Go-to-Market**:
 
 - **Creator tools**: Launch quest editor with templates, analytics
-- **Marketplace**: Enable creators to sell quests ($5-15), 70% revenue share
+- **Recognition**: Featured creator spotlights, community badges, leaderboards
 - **Creator fund**: Top 10 creators each month get $100-500 bonus
 
 **Target**: 500 active creators by Month 12, creating 2,000+ quests
@@ -5135,17 +5126,15 @@ async function sendLocationBatch(locations) {
 **Implementation**:
 
 ```typescript
-// Separate pricing for tourists (single-purchase quests)
-export const TOURIST_PRICING = {
-  quest_type: 'single_purchase',
-  price_range: { min: 4.99, max: 19.99 },
-  creator_revenue_share: 0.70,
-  stripe_fee: 0.10,
-  questhunt_cut: 0.20,
+// All quests are FREE to play for users
+export const QUEST_ACCESS = {
+  free_tier: { quests_playable: 'unlimited', quest_creation: 3 },
+  explorer_tier: { quests_playable: 'unlimited', quest_creation: 10 },
+  creator_tier: { quests_playable: 'unlimited', quest_creation: 'unlimited' },
 };
 
-// Tourist checkout flow (no subscription required)
-export async function purchaseQuest(questId: string) {
+// Tourist engagement flow (free quests, monetize via merchandise/tourism partnerships)
+export async function startQuest(questId: string) {
   const quest = await db.quest.findUnique({ where: { id: questId } });
 
   // Stripe one-time payment
@@ -5364,7 +5353,7 @@ Timeline: Months 1-24 (Year 1-2)
 **Q2 (Months 4-6): B2C Freemium Expansion**
 
 - 🔄 **Month 4**: Implement self-hosted map tiles + CDN (save $3,600-4,800/year at scale)
-- 🔄 **Month 5**: Launch creator marketplace (70% revenue share for quest creators)
+- 🔄 **Month 5**: Launch creator spotlight program (featured quests, community recognition)
 - 🔄 **Month 6**: Reddit/Facebook ads ($50/day), local influencer partnerships ($200 × 5 influencers)
 - **Target**: 5,000 total MAU, 500 premium users ($7,500 MRR)
 
@@ -6216,7 +6205,7 @@ QuestHunt is positioned to become a profitable player in the location-based gami
 
 **Examples**:
 
-1. **Puzzle Mini-Game**: Solve jigsaw puzzle of Montreal landmark (unlocks bonus tokens)
+1. **Puzzle Mini-Game**: Solve jigsaw puzzle of Montreal landmark (unlocks bonus Treasures)
 2. **Memory Game**: Match pairs of Montreal icons (beaver, poutine, bagel, hockey stick)
 3. **Trivia Quiz**: Answer Montreal history questions (daily challenge)
 4. **Spot the Difference**: Find 5 differences between two photos of same location
