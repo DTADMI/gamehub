@@ -150,18 +150,19 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 ---
 
 **Creation Permissions Summary**:
-| Quest Type | Free (3/mo) | Explorer (10/mo) | Creator (10/mo) | Lifetime (∞) | Admin |
-|------------|-------------|------------------|-----------------|--------------|-------|
-| Story Hunt | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Trivia Challenge | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Neighborhood Explorer | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Time Trial | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Photo Hunt | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Indoor Quests | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Shape Puzzles | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Picture Puzzles | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Seasonal/Event | ❌ | ❌ | ❌ | ❌ | ✅ |
-| AR Challenges | ❌ | ❌ | ❌ | ❌ | ✅ |
+
+| Quest Type            | Free (3/mo) | Explorer (10/mo) | Creator (10/mo) | Lifetime (∞) | Admin |
+| --------------------- | ----------- | ---------------- | --------------- | ------------ | ----- |
+| Story Hunt            | ✅          | ✅               | ✅              | ✅           | ✅    |
+| Trivia Challenge      | ✅          | ✅               | ✅              | ✅           | ✅    |
+| Neighborhood Explorer | ✅          | ✅               | ✅              | ✅           | ✅    |
+| Time Trial            | ✅          | ✅               | ✅              | ✅           | ✅    |
+| Photo Hunt            | ✅          | ✅               | ✅              | ✅           | ✅    |
+| Indoor Quests         | ✅          | ✅               | ✅              | ✅           | ✅    |
+| Shape Puzzles         | ❌          | ❌               | ❌              | ❌           | ✅    |
+| Picture Puzzles       | ❌          | ❌               | ❌              | ❌           | ✅    |
+| Seasonal/Event        | ❌          | ❌               | ❌              | ❌           | ✅    |
+| AR Challenges         | ❌          | ❌               | ❌              | ❌           | ✅    |
 
 **Rationale**: Empowers all users to create fun quests, while maintaining quality control for complex/premium quest types
 
@@ -266,17 +267,18 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 ### Quest Treasure Economy
 
 **How Users Earn Treasures**:
-| Activity | Treasures Earned | Notes |
-|----------|---------------|-------|
-| Complete Virtual Quest (Story Hunt) | 50-150 | Based on waypoint count |
-| Complete Virtual Quest (Trivia) | 100-200 | Bonus for perfect score |
-| Complete Virtual Quest (Photo Hunt) | 75-175 | Bonus for creative photos (community votes) |
-| Complete Physical Quest | 300-500 | Higher reward due to effort/maintenance |
-| Complete Hybrid Quest | 200-400 | Moderate reward |
-| Daily Login Streak | 10-50 | 10 Treasures/day, +10 per consecutive day (max 50) |
-| Seasonal Event Participation | 500-2,000 | Time-limited bonus |
-| Create Popular Quest | 50/completion | Creators earn Treasures when others play their quests |
-| Photo Hunt Winner (weekly) | 1,000 | Community votes on best photo hunt submissions |
+
+| Activity                            | Treasures Earned | Notes                                                 |
+| ----------------------------------- | ---------------- | ----------------------------------------------------- |
+| Complete Virtual Quest (Story Hunt) | 50-150           | Based on waypoint count                               |
+| Complete Virtual Quest (Trivia)     | 100-200          | Bonus for perfect score                               |
+| Complete Virtual Quest (Photo Hunt) | 75-175           | Bonus for creative photos (community votes)           |
+| Complete Physical Quest             | 300-500          | Higher reward due to effort/maintenance               |
+| Complete Hybrid Quest               | 200-400          | Moderate reward                                       |
+| Daily Login Streak                  | 10-50            | 10 Treasures/day, +10 per consecutive day (max 50)    |
+| Seasonal Event Participation        | 500-2,000        | Time-limited bonus                                    |
+| Create Popular Quest                | 50/completion    | Creators earn Treasures when others play their quests |
+| Photo Hunt Winner (weekly)          | 1,000            | Community votes on best photo hunt submissions        |
 
 **Seasonal Event Multipliers** (Montreal Calendar):
 
@@ -290,14 +292,15 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 ### Avatar Customization System
 
 **Avatar Item Categories**:
-| Category | Treasure Cost | Examples | Rarity Distribution |
-|----------|------------|----------|---------------------|
-| **Hats** | 100-5,000 | Baseball cap (100), Hunter's fedora (500), Canadiens hockey helmet (1,000), Legendary bagel hat (5,000) | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
-| **Clothing** | 150-6,000 | T-shirt (150), Montreal hoodie (800), Poutine costume (3,000), Legendary beaver suit (6,000) | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
-| **Accessories** | 50-3,000 | Sunglasses (50), Maple leaf pin (200), Poutine accessory (1,500), Golden compass (3,000) | Common: 80%, Rare: 15%, Epic: 4%, Legendary: 1% |
-| **Pets** | 500-10,000 | Squirrel companion (500), Raccoon (2,000), Moose (5,000), Legendary polar bear (10,000) | Rare: 60%, Epic: 30%, Legendary: 10% |
-| **Effects** | 200-8,000 | Sparkle trail (200), Snowflakes (1,000), Aurora borealis aura (5,000), Legendary maple leaf tornado (8,000) | Rare: 50%, Epic: 35%, Legendary: 15% |
-| **Event Exclusive** | 1,000-15,000 | Winter Carnival crown (event only), Jazz Fest saxophone (event only), Hunter's Golden Tail (mega rare) | Event: 100% |
+
+| Category            | Treasure Cost | Examples                                                                                                    | Rarity Distribution                             |
+| ------------------- | ------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| **Hats**            | 100-5,000     | Baseball cap (100), Hunter's fedora (500), Canadiens hockey helmet (1,000), Legendary bagel hat (5,000)     | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
+| **Clothing**        | 150-6,000     | T-shirt (150), Montreal hoodie (800), Poutine costume (3,000), Legendary beaver suit (6,000)                | Common: 70%, Rare: 20%, Epic: 8%, Legendary: 2% |
+| **Accessories**     | 50-3,000      | Sunglasses (50), Maple leaf pin (200), Poutine accessory (1,500), Golden compass (3,000)                    | Common: 80%, Rare: 15%, Epic: 4%, Legendary: 1% |
+| **Pets**            | 500-10,000    | Squirrel companion (500), Raccoon (2,000), Moose (5,000), Legendary polar bear (10,000)                     | Rare: 60%, Epic: 30%, Legendary: 10%            |
+| **Effects**         | 200-8,000     | Sparkle trail (200), Snowflakes (1,000), Aurora borealis aura (5,000), Legendary maple leaf tornado (8,000) | Rare: 50%, Epic: 35%, Legendary: 15%            |
+| **Event Exclusive** | 1,000-15,000  | Winter Carnival crown (event only), Jazz Fest saxophone (event only), Hunter's Golden Tail (mega rare)      | Event: 100%                                     |
 
 **Hunter the Beaver - Mascot Avatar Items**:
 
