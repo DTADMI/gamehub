@@ -494,6 +494,503 @@ QuestHunt differentiates itself through three distinct quest types, each with un
 
 ---
 
+## Virtual Quest User-Generated Content (UGC) Strategy Analysis
+
+> **🔍 CRITICAL DECISION**: Should all users be allowed to create virtual quests, or should quest creation be restricted to admins/event winners only? This section analyzes spam risks, quality control, security/legal issues, and business impact.
+
+### Executive Summary
+
+**RECOMMENDATION**: ✅ **Allow user-generated virtual quests with the current 3/month free tier limit.**
+
+**Rationale**: Admin-only virtual quests would cost $72K/year (36% of Year 1 budget) and prevent achieving the 100+ quests Month 1 target. UGC is not optional - it's required for the business model to work. The alternative guarantees failure.
+
+**Key Finding**: The risk of UGC spam is LOWER than the certainty of admin-only failure.
+
+**Implementation**: Hybrid approach - allow simple virtual quests (Story, Trivia, Neighborhood, Time Trial, Photo) with moderation, while keeping complex quest types (shape puzzles, picture puzzles, AR) admin-only.
+
+### User vs Admin Quest Creation: Practical Examples
+
+#### Story Hunt: HYBRID APPROACH (Both Have Value)
+
+**USER Example**: "Mystery of Old Montreal"
+
+- **Creator**: Local history enthusiast
+- **Content**: 10 locations through their neighborhood using publicly available historical facts
+- **Why they create**: Personal passion, wants to share favorite spots
+- **Quality**: May contain factual errors, poor narrative structure
+
+**ADMIN Example**: "Secrets of the Underground City"
+
+- **Creator**: Professional content team with Tourism Montreal partnership
+- **Content**: 15 locations through RESO with verified facts, exclusive access
+- **Why they create**: $1K/month partnership, professional consultation
+- **Quality**: Fact-checked, optimized, premium positioning
+
+**VERDICT**: Both serve different purposes
+
+- User quests: Volume, local authenticity, grassroots appeal
+- Admin quests: Quality, B2B credibility, tourism partnerships
+
+#### Neighborhood Explorer: USER CLEARLY WINS
+
+**USER Example**: "Mile End Hidden Gems" - 12 favorite cafes, murals, parks
+**Why USER is better**: Local knowledge beats central planning - users know their neighborhoods better than any admin
+
+**ADMIN Example**: "Mile End Official Guide" - sponsored waypoints
+**Problem**: Feels like advertising, loses authenticity
+
+**VERDICT**: User authenticity > admin polish for neighborhood discovery
+
+#### Indoor Quests: ADMIN CLEARLY WINS
+
+**USER Example**: "Library Scavenger Hunt"
+**Problem**: Books may be checked out, library-specific, no permission
+
+**ADMIN Example**: "Museum Partnership Quest"
+**Why ADMIN wins**: Requires institutional partnerships, legal clearance, insurance
+
+**VERDICT**: Indoor quests require official partnerships - admin-only
+
+### Comprehensive Pros and Cons
+
+#### ✅ PROS of User-Generated Virtual Quests
+
+**1. Content Volume (CRITICAL)**
+
+- Target: 100+ quests Month 1 (impossible with admin-only)
+- Admin cost: $3,000/50 quests = $6K for 100 quests
+- Year 1 budget: $200K total → admin content consumes 36%
+- UGC scales infinitely at $0 cost
+
+**2. Viral Growth (83% Cheaper Acquisition)**
+
+- Referral CAC: $10-25 (users invite friends to try their quests)
+- Paid ads CAC: $125-133
+- Creators share on Instagram/TikTok (free marketing)
+- "Users who create ≥1 quest have 50% lower churn"
+
+**3. Local Authenticity (Competitive Advantage)**
+
+- Users know neighborhoods better than central team
+- Hyperlocal knowledge impossible for admins to replicate
+- Geocaching culture values community contribution
+
+**4. Higher Engagement & LTV**
+
+- Creators have 2x higher LTV: $240 vs $120
+- Creating deepens platform investment
+- 20% conversion to Creator tier after hitting 3-quest limit
+
+#### ❌ CONS of User-Generated Virtual Quests
+
+**1. Quality Control**
+
+- Factual errors in trivia
+- Poor narrative quality in stories
+- "Walk around the block" low-effort quests
+
+**2. Brand Damage (B2B Risk)**
+
+- Tourism boards need professional quality ($1K/month partnerships at stake)
+- Educational institutions require curriculum-aligned content
+- Corporate clients expect polish
+
+**3. Moderation Burden**
+
+- $15K/year for part-time moderator
+- Month 1: 250 hours moderation needed (1,000 users × 3 quests × 5 min)
+- Requires content moderation queue in UI
+
+**4. Inconsistent Experience**
+
+- Quality varies wildly (some amazing, some terrible)
+- New users may try low-quality quest first → churn
+
+### Security & Legal Issues
+
+#### 🔒 Security Concerns
+
+**1. Inappropriate Content**
+
+- Sexual, violent, or discriminatory themes
+- **Mitigation**: Profanity filters, content moderation, community flagging
+
+**2. Location Safety**
+
+- Dangerous locations: high-crime areas, traffic hazards, icy paths (Montreal winter)
+- **Mitigation**: Pre-moderate first 3 quests, "Report Unsafe Location" button
+
+**3. Privacy & Doxxing**
+
+- Waypoints at creator's home/school
+- Photo hunts of private property
+- **Mitigation**: 100m residential buffer check, automated address detection
+
+**4. Digital Vandalism**
+
+- Spam links (phishing, malware)
+- Offensive trivia answers
+- **Mitigation**: Link sanitization, human review
+
+#### ⚖️ Legal Issues
+
+**1. Private Property Trespassing**
+
+- Virtual quests can direct to private property
+- Indoor quests without business permission
+- **Mitigation**: TOS disclaimer, $1M liability insurance ($5K/year budgeted)
+
+**2. Personal Injury Liability**
+
+- User-created quest → dangerous location → injury
+- **Mitigation**: Participation waiver, insurance, creator accountability system
+
+**3. Intellectual Property**
+
+- Copying trivia from copyrighted sources
+- Plagiarizing stories
+- **Mitigation**: DMCA takedown process, 3-strike system
+
+**4. Quebec Bill 96 Compliance**
+
+- English-only UGC may violate language laws
+- Cannot force French translations
+- **Mitigation**: Encourage bilingual (bonus tokens), admin-translate popular quests
+
+### Business Impact Analysis
+
+#### 💰 Revenue Impact: UGC INCREASES Revenue
+
+**Free Tier Limit Drives Upgrades**
+
+- 3 quests/month free → upgrade prompt → Creator tier (unlimited)
+- Expected ARPU increase: 20% from upgrade prompts
+- Conversion: 10% of creators upgrade to paid
+
+**Fatal Flaw of Admin-Only**
+
+- Cost: $72K/year for 1,200 admin quests (36% of budget)
+- No viral growth (CAC stays at $125 vs $10 with UGC)
+- Cannot achieve 10K MAU needed for B2B credibility
+
+#### 📣 Marketing Impact: Amplification
+
+**Viral Growth**
+
+- 83% cheaper acquisition ($10 vs $125)
+- Network effects at 5K MAU (self-sustaining growth)
+- Year 2 CAC drops to $17 from compounding SEO
+
+**SEO Benefits**
+
+- User quests create unique landing pages
+- Long-tail keywords: "Mile End hidden gems," "Old Montreal mystery"
+
+**Social Proof**
+
+- "100+ quests Month 1" impossible without UGC
+- Geographic diversity shows platform breadth
+
+#### 🏢 Brand Impact: Two-Tier Strategy
+
+**Solution: Separate "Community" vs "Originals"**
+
+**QuestHunt Community** (User-Generated)
+
+- Authentic, diverse, hyperlocal
+- 1,000+ quests (volume play)
+- SEO and viral engine
+- Target: Individual users, casual explorers
+
+**QuestHunt Originals** (Admin-Curated)
+
+- Professional, polished, partnerships
+- 50-100 premium quests (quality play)
+- B2B credibility
+- Target: Tourism boards, schools, corporate
+
+### Alternative Approaches Compared
+
+#### Option A: Time-Limited Event Prizes ❌
+
+Winners get 7-30 day quest creation passes
+
+- **FATAL FLAW**: Only 50-100 quests/year (cannot achieve Month 1 target)
+
+#### Option B: Top Users Only (50 Quest Minimum) ⚠️
+
+- **FATAL FLAW**: Cold start problem (need quests before anyone can create)
+- **Consider**: Phase 2 implementation after initial UGC
+
+#### Option C: Admin/Server Only ❌
+
+- **FATAL FLAW**: $72K/year cost (36% of budget), no viral growth, cannot compete
+
+#### Option D: Hybrid Moderation Tiers ✅ RECOMMENDED
+
+**Implementation:**
+
+- Free: 3 simple virtual quests/month
+- Explorer: 10 quests/month
+- Creator: Unlimited quests
+- Complex types (shape/picture puzzles, AR): Admin-only
+
+**Moderation:**
+
+- First 3 quests: Pre-moderation (24-48 hrs)
+- After 3 approved + 4★ rating: Post-moderation
+- Community flagging: 5+ flags = auto-hide
+
+**Phase Rollout:**
+
+- **Phase 1 (Months 1-6)**: Post-moderation only (accept some spam for speed)
+- **Phase 2 (Months 7-12)**: Add pre-moderation ($15K/year moderator)
+- **Phase 3 (Months 13-18)**: Community moderation (70% workload reduction)
+
+### Quality Metrics to Monitor
+
+| Metric             | Target | Action if Below                     |
+| ------------------ | ------ | ----------------------------------- |
+| Completion rate    | >50%   | Hide quests with <30%               |
+| Average rating     | 3.5+   | Require 4+ stars for verified badge |
+| Report rate        | <5%    | Increase moderation rigor           |
+| Creator conversion | 20%    | Add tutorials, reduce friction      |
+
+**Green Light (Continue UGC)**: All targets met
+**Yellow Light (Increase Moderation)**: 1-2 targets missed
+**Red Light (Restrict UGC)**: 3+ targets missed, legal issues, B2B cancellations
+
+### Final Recommendation
+
+✅ **ALLOW USER-GENERATED VIRTUAL QUESTS with the current 3/month free tier policy.**
+
+**Why This Is Correct:**
+
+1. Admin-only would cost $72K/year (36% of budget) and prevent 100+ quests Month 1
+2. Viral growth reduces CAC by 83% ($10 vs $125)
+3. Geocaching.com succeeded with 3M+ user-generated caches
+4. UGC enables B2B credibility (need 10K MAU before tourism boards pay)
+5. Keep complex quests (shape/picture puzzles) admin-only for premium positioning
+
+**The Alternative Guarantees Failure:**
+
+- Cannot achieve content volume
+- Cannot afford viral-less user acquisition
+- Cannot compete with Geocaching.com
+- Cannot prove B2B credibility
+
+**Risk Assessment**: UGC spam risk < Admin-only certainty of failure
+
+---
+
+## Funding Strategy: Personal Finance vs Loans & Founder Employment
+
+> **💰 CRITICAL DECISION**: Should the founder bootstrap from personal savings, take loans, or seek external funding? Should the founder keep their day job or go full-time?
+
+### Current Funding Model
+
+**Bootstrapping (Months 0-12):**
+
+- Personal Investment: $100,000
+- Friends & Family: $50,000
+- Revenue Reinvestment: 100%
+- **Total**: $150,000
+
+**Seed Round (Month 12):** $1.5M at $6M valuation
+**Series A (Month 24):** $5M at $20M valuation
+
+### Personal Finance vs Loans Analysis
+
+#### ✅ RECOMMENDED: Personal Savings ($100K)
+
+**Pros:**
+
+- No debt obligations (flexibility to pivot/shutdown)
+- No interest ($10K-20K saved over 3 years)
+- Full equity until seed round
+- Shows investor confidence ("skin in the game")
+
+**Cons:**
+
+- Risk $100K if failure
+- Opportunity cost: $21K foregone (7% returns over 3 years)
+
+**Required Profile:**
+
+- $100K liquid (not retirement funds)
+- 6-12 month emergency fund SEPARATE
+- Age 25-40 (time to recover)
+- Low obligations (no mortgage/dependents OR partner income)
+
+#### ❌ NOT RECOMMENDED: Business Loans ($100K at 8-12% APR)
+
+**Loan Options:**
+
+- SBA Microloan: $50K at 8-13% (requires collateral)
+- Business Line of Credit: $25K-100K at 10-18% (requires revenue)
+- Personal Loan: $100K at 8-15% (unsecured, damages credit if default)
+
+**Cons:**
+
+- Monthly payments: $2,125/month ($25.5K/year = 17% of Year 1 budget)
+- Must pay even if business fails (personal liability)
+- Damages credit if default
+- Adds pressure ("I MUST make this work")
+- Investors view negatively
+
+**VERDICT**: Avoid loans - 90% startup failure rate creates catastrophic downside
+
+**Exception**: Revenue-based loans Year 2+ (once $10K+ MRR)
+
+#### ⚠️ Delay Seed Funding: Month 12, Not Month 0
+
+**Raising seed immediately (Month 0):**
+
+- **Dilution**: 33% at $3M valuation (pre-product)
+- **Time cost**: 3-6 months fundraising vs building
+- **Pressure**: Investor demands may force bad decisions
+
+**Raising seed at Month 12:**
+
+- **Dilution**: 20% at $6M valuation (with traction)
+- **Leverage**: 25K MAU, $25K MRR proves demand
+- **Valuation**: 3x higher ($6M vs $2M)
+
+**VERDICT**: Bootstrap Year 1, then raise from position of strength
+
+### Founder Employment: Day Job vs Full-Time
+
+#### Montreal Cost of Living
+
+- Rent (1-BR): $1,500/mo
+- Food: $500/mo
+- Transport: $100/mo
+- Utilities: $150/mo
+- Insurance: $200/mo
+- Misc: $300/mo
+- **Total**: $2,750/mo = $33K/year
+
+**Day Job Salary (Assumption)**: $80K-120K/year as developer
+
+#### ✅ RECOMMENDED: Keep Day Job Months 0-6, Then Full-Time
+
+**Phase 1 (Months 0-6): Part-Time + Day Job**
+
+- Day job: 40 hrs/week ($80K salary covers $33K expenses + $47K savings)
+- QuestHunt: 20 hrs/week (evenings/weekends)
+- MVP timeline: 19 weeks part-time vs 6 weeks full-time (3x slower, but safer)
+
+**Pros:**
+
+- Income safety net
+- Health insurance from employer
+- Can bootstrap longer
+- Less stress
+
+**Cons:**
+
+- 3x slower (19 weeks vs 6 weeks)
+- Fatigue (60 hr weeks)
+- Cannot attend weekday events
+- Ethical: Employer may claim IP
+
+**Phase 2 (Months 7-12): Full-Time ($60K Salary)**
+
+**Quit Day Job When:**
+
+1. MVP launched (Phase 1 complete)
+2. 1,000 MAU (product-market fit signals)
+3. $5K MRR (100 paid subscribers)
+4. $50K cash in bank (12 months runway)
+
+**At Month 7:**
+
+- 1,000-5,000 MAU
+- $5K-10K MRR
+- $100K remaining capital
+- Ready for full growth focus
+
+#### ⚠️ Full-Time Month 0: Only If...
+
+**Requires:**
+
+- $60K/year salary
+- Burn: $80K/year (founder + infrastructure)
+- Runway: 23 months ($150K ÷ $80K)
+
+**Pros:**
+
+- 3x faster (6 weeks MVP)
+- Full attention
+- Available for meetings
+
+**Cons:**
+
+- Higher risk (no fallback)
+- Shorter runway (23 vs 36+ months)
+- Must raise seed by Month 12
+
+**Only If Founder Has:**
+
+1. 12-month emergency fund ($33K) SEPARATE from $100K
+2. No dependents/mortgage
+3. Partner with stable income
+4. High conviction (prior geocaching experience)
+
+### Recommended Strategy
+
+| Phase       | Duration     | Funding           | Amount | Employment        | Rationale                    |
+| ----------- | ------------ | ----------------- | ------ | ----------------- | ---------------------------- |
+| **Phase 1** | Months 0-6   | Personal + F&F    | $75K   | Day job (20hr/wk) | Minimize risk, validate idea |
+| **Phase 2** | Months 7-12  | Capital + Revenue | $120K  | Full-time ($60K)  | Accelerate after MVP         |
+| **Phase 3** | Months 13-24 | Seed ($1.5M)      | $1.5M  | Full-time ($100K) | Scale with investor capital  |
+
+**Phase 1 Budget ($75K for 6 months):**
+
+- Personal savings: $50K (save $50K for emergency)
+- Friends & Family: $25K (delay full $50K until MVP)
+- Infrastructure: $3K
+- Contractors: $5K
+- Marketing: $2K
+- **Remaining**: $65K
+
+**Phase 2 Budget ($120K for 6 months):**
+
+- Remaining Phase 1: $65K
+- F&F Round 2: $25K (now have MVP proof)
+- Revenue: $30K ($5K/mo × 6)
+- Founder salary: $30K (6 months)
+- Contractors: $15K
+- Infrastructure: $3K
+- Marketing: $10K
+- **Remaining**: $62K (seed fundraising buffer)
+
+### Summary: Funding Recommendations
+
+**✅ DO:**
+
+- Bootstrap from personal savings (not loans)
+- Keep day job Months 0-6 (validate idea safely)
+- Quit at Month 7 (after 1K MAU, $5K MRR)
+- Raise seed at Month 12 (after 25K MAU, $25K MRR)
+
+**❌ DON'T:**
+
+- Take business loans (90% failure rate = debt catastrophe)
+- Go full-time Month 0 (burns runway 2x faster)
+- Raise seed pre-product (30%+ dilution, 6 months wasted)
+
+**Risk Tolerance Check:**
+
+- Can founder lose $50K-100K if failure? ✓
+- Can founder work 60hr/week for 6 months? ✓
+- Can founder live on $60K/year (vs $80K-120K)? ✓
+- Does founder have $33K emergency fund SEPARATE? ✓
+
+**If NO to any → Keep day job through Month 12, delay seed to Month 18.**
+
+---
+
 ## Technology Stack
 
 ### Current Implementation (as of January 2026)
