@@ -1,13 +1,15 @@
 "use client";
 
-import {Carousel, Game, GameCard, listGames, listProjects} from "@games/shared";
-import { Button } from "@games/shared/components/ui/button";
-import { useFeature } from "@games/shared/lib/flags";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@games/shared/components/ui/tabs";
-import { FolderKanban, Gamepad2 } from "lucide-react";
+import { Carousel } from "@/components/carousel";
+import { GameCard } from "@/components/game-card";
+import { Button } from "@/components/ui/button";
+import { listGames } from "@/lib/games";
+import { listProjects } from "@/lib/projects";
+import { FolderKanban, Gamepad2, Github } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
-const ALL_GAMES: Game[] = listGames()
+const ALL_GAMES = listGames()
   .filter((g) => g.visible !== false)
   .map((g) => ({
     id: g.slug,
@@ -18,40 +20,19 @@ const ALL_GAMES: Game[] = listGames()
     slug: g.slug,
     upcoming: !!g.upcoming,
     featured: g.enabled !== false && !g.upcoming,
-    // Add logic to check for feature flags/admin status if needed
   }));
 
-type Project = {
-  title: string;
-  description: string;
-  tags: string[];
-  repo?: string;
-  demo?: string;
-  comingSoon?: boolean;
-  slug: string;
-  // Add access control fields
-  hasAccess?: boolean;
-};
-
-const PROJECTS: Project[] = listProjects()
-  .filter((p) => p.visible !== false)
-  .map((p) => ({
-    title: p.title,
-    description: p.shortDescription,
-    tags: p.tags,
-    repo: p.repo,
-    demo: p.demo,
-    comingSoon: p.enabled === false || p.upcoming,
-    slug: p.slug,
-    hasAccess: true, // Defaulting to true for visibility, but should be filtered by user context
-  }));
+const PROJECTS = listProjects().map((p) => ({
+  title: p.title,
+  description: p.shortDescription,
+  tags: p.tags,
+  repo: p.repo,
+  slug: p.slug,
+  upcoming: !!p.upcoming,
+}));
 
 export default function ExplorePage() {
-  const useCarousels = useFeature("EXPLORE_CAROUSELS", true);
-  const showGamesFeatured = useFeature("EXPLORE_SHOW_FEATURED", true);
-  const showGamesUpcoming = useFeature("EXPLORE_SHOW_UPCOMING", true);
-  const showProjectsFeatured = useFeature("EXPLORE_SHOW_PROJECTS_FEATURED", true);
-  const showProjectsComing = useFeature("EXPLORE_SHOW_PROJECTS_COMING_SOON", true);
+  const [tab, setTab] = useState<"games" | "projects">("games");
 
   return (
     <section className="space-y-8 px-6 py-8 md:px-8">
@@ -59,188 +40,88 @@ export default function ExplorePage() {
         <h1 className="text-3xl font-bold">Explore</h1>
       </div>
 
-      <Tabs defaultValue="games" className="w-full">
-        <TabsList className="bg-muted text-muted-foreground inline-flex h-10 items-center justify-center rounded-md p-1">
-          <TabsTrigger
-            value="games"
-            className="ring-offset-background focus-visible:ring-ring/50 data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center gap-2 rounded-sm px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:outline-none"
-          >
-            <Gamepad2 className="h-4 w-4" /> Games
-          </TabsTrigger>
-          <TabsTrigger
-            value="projects"
-            className="ring-offset-background focus-visible:ring-ring/50 data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center gap-2 rounded-sm px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:outline-none"
-          >
-            <FolderKanban className="h-4 w-4" /> Projects
-          </TabsTrigger>
-        </TabsList>
+      <div className="flex gap-2">
+        <Button
+          variant={tab === "games" ? "default" : "outline"}
+          onClick={() => setTab("games")}
+          className="gap-2"
+        >
+          <Gamepad2 className="h-4 w-4" /> Games
+        </Button>
+        <Button
+          variant={tab === "projects" ? "default" : "outline"}
+          onClick={() => setTab("projects")}
+          className="gap-2"
+        >
+          <FolderKanban className="h-4 w-4" /> Projects
+        </Button>
+      </div>
 
-        <TabsContent value="games" className="mt-6 space-y-6">
-          {showGamesFeatured && (
-            <>
-              <h3 className="text-lg font-semibold">Featured</h3>
-              {useCarousels ? (
-                <Carousel>
-                  {ALL_GAMES.filter((g) => g.featured).map((g) => (
-                    <GameCard key={g.id} game={g} featured={g.featured} />
-                  ))}
-                </Carousel>
-              ) : (
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {ALL_GAMES.filter((g) => g.featured).map((g) => (
-                    <GameCard key={g.id} game={g} featured={g.featured} />
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-          {showGamesUpcoming && (
-            <>
-              <h3 className="text-lg font-semibold">Upcoming</h3>
-              {useCarousels ? (
-                <Carousel>
-                  {ALL_GAMES.filter((g) => g.upcoming).map((g) => (
-                    <GameCard key={g.id} game={g} />
-                  ))}
-                </Carousel>
-              ) : (
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {ALL_GAMES.filter((g) => g.upcoming).map((g) => (
-                    <GameCard key={g.id} game={g} />
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-          <div className="mt-6">
-            <Button asChild variant="outline">
-              <Link href="/games">Open Games page</Link>
-            </Button>
+      {tab === "games" && (
+        <div className="space-y-6">
+          <div>
+            <h3 className="mb-4 text-lg font-semibold">Featured</h3>
+            <Carousel>
+              {ALL_GAMES.filter((g) => g.featured).map((g) => (
+                <GameCard key={g.id} game={g} featured={g.featured} />
+              ))}
+            </Carousel>
           </div>
-        </TabsContent>
+          <div>
+            <h3 className="mb-4 text-lg font-semibold">Upcoming</h3>
+            <Carousel>
+              {ALL_GAMES.filter((g) => g.upcoming).map((g) => (
+                <GameCard key={g.id} game={g} />
+              ))}
+            </Carousel>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/games">Open Games page</Link>
+          </Button>
+        </div>
+      )}
 
-        <TabsContent value="projects" className="mt-6 space-y-6">
-          {showProjectsFeatured && (
-            <>
-              <h3 className="text-lg font-semibold">Featured</h3>
-              {useCarousels ? (
-                <Carousel>
-                  {PROJECTS.filter((p) => !p.comingSoon).map((p) => (
-                    <article
-                      key={p.title}
-                      className="bg-card text-card-foreground rounded-lg border shadow-sm"
-                    >
-                      <div className="space-y-3 p-5">
-                        <h2 className="text-lg font-semibold">{p.title}</h2>
-                        <p className="text-muted-foreground text-sm">{p.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {p.tags.map((t) => (
-                            <span
-                              key={t}
-                              className="bg-accent/10 text-accent dark:bg-accent/20 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </article>
-                  ))}
-                </Carousel>
-              ) : (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {PROJECTS.filter((p) => !p.comingSoon).map((p) => (
-                    <article
-                      key={p.title}
-                      className="bg-card text-card-foreground rounded-lg border shadow-sm"
-                    >
-                      <div className="space-y-3 p-5">
-                        <h2 className="text-lg font-semibold">{p.title}</h2>
-                        <p className="text-muted-foreground text-sm">{p.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {p.tags.map((t) => (
-                            <span
-                              key={t}
-                              className="bg-accent/10 text-accent dark:bg-accent/20 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </article>
-                  ))}
+      {tab === "projects" && (
+        <div className="space-y-6">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {PROJECTS.map((p) => (
+              <a
+                key={p.slug}
+                href={p.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-card text-card-foreground block rounded-lg border shadow-sm transition-shadow hover:shadow-md"
+              >
+                <div className="space-y-3 p-5">
+                  <h2 className="flex items-center gap-2 text-lg font-semibold">
+                    {p.title}
+                    <Github className="text-muted-foreground h-4 w-4" />
+                  </h2>
+                  <p className="text-muted-foreground text-sm">{p.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {p.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="bg-accent/10 text-accent-foreground inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  {p.upcoming && (
+                    <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+                      Coming soon
+                    </span>
+                  )}
                 </div>
-              )}
-            </>
-          )}
-          {showProjectsComing && (
-            <>
-              <h3 className="text-lg font-semibold">Coming Soon</h3>
-              {useCarousels ? (
-                <Carousel>
-                  {PROJECTS.filter((p) => p.comingSoon).map((p) => (
-                    <article
-                      key={p.title}
-                      className="bg-card text-card-foreground rounded-lg border shadow-sm"
-                    >
-                      <div className="space-y-3 p-5">
-                        <h2 className="text-lg font-semibold">{p.title}</h2>
-                        <p className="text-muted-foreground text-sm">{p.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {p.tags.map((t) => (
-                            <span
-                              key={t}
-                              className="bg-accent/10 text-accent dark:bg-accent/20 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                        <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
-                          Coming soon
-                        </span>
-                      </div>
-                    </article>
-                  ))}
-                </Carousel>
-              ) : (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {PROJECTS.filter((p) => p.comingSoon).map((p) => (
-                    <article
-                      key={p.title}
-                      className="bg-card text-card-foreground rounded-lg border shadow-sm"
-                    >
-                      <div className="space-y-3 p-5">
-                        <h2 className="text-lg font-semibold">{p.title}</h2>
-                        <p className="text-muted-foreground text-sm">{p.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {p.tags.map((t) => (
-                            <span
-                              key={t}
-                              className="bg-accent/10 text-accent dark:bg-accent/20 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                        <span className="rounded bg-amber-100 px-2 py-1 text-xs text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
-                          Coming soon
-                        </span>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-          <div className="mt-6">
-            <Button asChild variant="outline">
-              <Link href="/projects">Open Projects page</Link>
-            </Button>
+              </a>
+            ))}
           </div>
-        </TabsContent>
-      </Tabs>
+          <Button asChild variant="outline">
+            <Link href="/projects">Open Projects page</Link>
+          </Button>
+        </div>
+      )}
     </section>
   );
 }

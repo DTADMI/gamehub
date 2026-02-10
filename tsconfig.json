@@ -2,18 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@games/shared": ["./packages/game-platform/src"],
-      "@games/shared/*": ["./packages/game-platform/src/*"],
-      "@gamehub/ui": ["./packages/ui/src"],
-      "@gamehub/ui/*": ["./packages/ui/src/*"],
-      "@gamehub/game-platform": ["./packages/game-platform/src"],
-      "@gamehub/game-platform/*": ["./packages/game-platform/src/*"],
-      "@games/pointclick-engine": ["./packages/pointclick-engine/src"],
-      "@games/pointclick-engine/*": ["./packages/pointclick-engine/src/*"],
-      "@games/_engine": ["./packages/games/_engine"],
-      "@games/*": ["./packages/games/*/src"],
-      "@projects/*": ["./packages/projects/*"]
+      "@/*": ["./*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -43,9 +32,7 @@
     "components/**/*.ts",
     "components/**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "./packages/**/*.ts",
-    "./packages/**/*.tsx"
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "**/node_modules", "**/dist", "**/*.md", "**/*.mdx"]
+  "exclude": ["node_modules"]
 }

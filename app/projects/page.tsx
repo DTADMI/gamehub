@@ -1,111 +1,92 @@
-import { getAllProjects, getEnabledProjects, getFeaturedProjects } from "@games/shared";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@games/shared";
-import { Metadata } from "next";
+import { Badge } from "@/components/ui/badge";
+import { listProjects } from "@/lib/projects";
+import { ExternalLink, Github } from "lucide-react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Projects | GameHub",
-  description: "Explore interactive projects and applications built on GameHub",
+  description: "Explore my projects -- each links to its GitHub repository.",
 };
 
 export default function ProjectsPage() {
-  const allProjects = getEnabledProjects();
-  const featuredProjects = getFeaturedProjects();
-  const freeProjects = allProjects.filter(
-    (p) => p.accessTier === "free" || p.accessTier === "freemium",
-  );
-  const premiumProjects = allProjects.filter(
-    (p) => p.accessTier === "premium" || p.accessTier === "enterprise",
-  );
-
-  const categories = Array.from(new Set(allProjects.map((p) => p.category)));
+  const allProjects = listProjects();
+  const featured = allProjects.filter((p) => p.featured);
+  const upcoming = allProjects.filter((p) => p.upcoming);
+  const rest = allProjects.filter((p) => !p.featured && !p.upcoming);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
+    <div className="px-6 py-8 md:px-8">
       <div className="mb-8">
         <h1 className="mb-2 text-4xl font-bold tracking-tight">Projects</h1>
         <p className="text-muted-foreground text-lg">
-          Discover powerful applications and interactive experiences built on GameHub
+          Explore my projects. Each one links to its GitHub repository.
         </p>
       </div>
 
-      {/* Tabs for filtering */}
-      <Tabs defaultValue="all" className="w-full">
-        <TabsList className="mb-6">
-          <TabsTrigger value="all">All Projects ({allProjects.length})</TabsTrigger>
-          <TabsTrigger value="featured">Featured ({featuredProjects.length})</TabsTrigger>
-          <TabsTrigger value="free">Free ({freeProjects.length})</TabsTrigger>
-          <TabsTrigger value="premium">Premium ({premiumProjects.length})</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all">
-          {categories.map((category) => {
-            const categoryProjects = allProjects.filter((p) => p.category === category);
-            if (categoryProjects.length === 0) {return null;}
-
-            return (
-              <div key={category} className="mb-12">
-                <h2 className="mb-4 text-2xl font-semibold capitalize">
-                  {category.replace("-", " ")}
-                </h2>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {categoryProjects.map((project) => (
-                    <div key={project.slug} className="rounded-lg border p-4">
-                      <h3 className="text-lg font-semibold">{project.title}</h3>
-                      <p className="text-muted-foreground text-sm">{project.shortDescription}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </TabsContent>
-
-        <TabsContent value="featured">
+      {featured.length > 0 && (
+        <section className="mb-10">
+          <h2 className="mb-4 text-2xl font-semibold">Featured</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.length > 0 ? (
-              featuredProjects.map((project) => (
-                <div key={project.slug} className="rounded-lg border p-4">
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm">{project.shortDescription}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-muted-foreground">No featured projects at the moment. Check back soon!</p>
-            )}
+            {featured.map((p) => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
           </div>
-        </TabsContent>
+        </section>
+      )}
 
-        <TabsContent value="free">
+      {rest.length > 0 && (
+        <section className="mb-10">
+          <h2 className="mb-4 text-2xl font-semibold">All Projects</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {freeProjects.length > 0 ? (
-              freeProjects.map((project) => (
-                <div key={project.slug} className="rounded-lg border p-4">
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm">{project.shortDescription}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-muted-foreground">No free projects available at the moment.</p>
-            )}
+            {rest.map((p) => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
           </div>
-        </TabsContent>
+        </section>
+      )}
 
-        <TabsContent value="premium">
+      {upcoming.length > 0 && (
+        <section>
+          <h2 className="mb-4 text-2xl font-semibold">Coming Soon</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {premiumProjects.length > 0 ? (
-              premiumProjects.map((project) => (
-                <div key={project.slug} className="rounded-lg border p-4">
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm">{project.shortDescription}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-muted-foreground">No premium projects available at the moment.</p>
-            )}
+            {upcoming.map((p) => (
+              <ProjectCard key={p.slug} project={p} upcoming />
+            ))}
           </div>
-        </TabsContent>
-      </Tabs>
+        </section>
+      )}
     </div>
+  );
+}
+
+function ProjectCard({ project, upcoming }: { project: ReturnType<typeof listProjects>[number]; upcoming?: boolean }) {
+  return (
+    <a
+      href={project.repo}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-card text-card-foreground block rounded-lg border p-5 shadow-sm transition-shadow hover:shadow-md"
+    >
+      <div className="space-y-3">
+        <div className="flex items-start justify-between">
+          <h3 className="text-lg font-semibold">{project.title}</h3>
+          <Github className="text-muted-foreground h-5 w-5 shrink-0" />
+        </div>
+        <p className="text-muted-foreground text-sm">{project.shortDescription}</p>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((t) => (
+            <Badge key={t} variant="secondary">{t}</Badge>
+          ))}
+          {upcoming && (
+            <Badge variant="outline" className="border-amber-500/30 text-amber-600 dark:text-amber-400">
+              Coming Soon
+            </Badge>
+          )}
+        </div>
+        <p className="text-muted-foreground flex items-center gap-1 text-xs">
+          <ExternalLink className="h-3 w-3" /> View on GitHub
+        </p>
+      </div>
+    </a>
   );
 }

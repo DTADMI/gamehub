@@ -1,74 +1,71 @@
 "use client";
 
-import { GameShell, getGame } from "@games/shared";
-import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
-import dynamic from "next/dynamic";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { getGame } from "@/lib/games";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import React, { use } from "react";
+import { use } from "react";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-export default function GameLauncherPage({ params }: PageProps) {
+export default function GameDetailPage({ params }: PageProps) {
   const { slug } = use(params);
   const entry = getGame(slug);
-  if (!entry) {
-    return notFound();
-  }
+  if (!entry) return notFound();
 
-  const isNonProd =
-    typeof window !== "undefined" &&
-    (process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_E2E === "true");
-  const allowUpcomingLocal =
-    typeof window !== "undefined" &&
-    process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL === "true" &&
-    isNonProd;
-
-  if (entry.upcoming && !allowUpcomingLocal) {
+  if (entry.upcoming) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="px-6 py-8 md:px-8">
+        <Link href="/games" className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1 text-sm">
+          <ArrowLeft className="h-4 w-4" /> Back to Games
+        </Link>
         <h1 className="mb-2 text-2xl font-bold">{entry.title}</h1>
         <p className="text-muted-foreground mb-4">{entry.shortDescription}</p>
         <div className="rounded-md border bg-amber-50 p-4 dark:bg-amber-900/20">
-          {"This game is marked as "}
-          <b>Coming Soon</b>.
+          {"This game is marked as "}<b>Coming Soon</b>.
         </div>
       </div>
     );
   }
+
   if (entry.enabled === false) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="px-6 py-8 md:px-8">
+        <Link href="/games" className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1 text-sm">
+          <ArrowLeft className="h-4 w-4" /> Back to Games
+        </Link>
         <h1 className="mb-2 text-2xl font-bold">{entry.title}</h1>
         <p className="text-muted-foreground mb-4">{entry.shortDescription}</p>
         <div className="rounded-md border bg-gray-50 p-4 dark:bg-gray-800">
-          {"This game is currently "}
-          <b>disabled by admin</b>.
+          {"This game is currently "}<b>disabled</b>.
         </div>
       </div>
     );
   }
 
-  const Game = dynamic(() => entry.getComponent().then((m: any) => m.default ?? m), {
-    ssr: false,
-    loading: () => (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-xl">Loading game...</div>
-      </div>
-    ),
-  });
-
   return (
-    <GameShell
-      ariaLabel={`${entry.title} game`}
-      tips={undefined}
-      preloadSounds={entry.preloadAssets}
-    >
-      <Game />
-      {entry.slug === "breakout" ? (
-        <div className="px-4">
-          <MiniBoard gameType="BREAKOUT" limit={10} />
+    <div className="px-6 py-8 md:px-8">
+      <Link href="/games" className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1 text-sm">
+        <ArrowLeft className="h-4 w-4" /> Back to Games
+      </Link>
+      <h1 className="mb-2 text-3xl font-bold">{entry.title}</h1>
+      <p className="text-muted-foreground mb-4">{entry.shortDescription}</p>
+      <div className="mb-4 flex flex-wrap gap-2">
+        {entry.tags.map((t) => <Badge key={t} variant="secondary">{t}</Badge>)}
+      </div>
+      <div className="bg-muted/30 flex min-h-[50vh] items-center justify-center rounded-lg border">
+        <div className="text-center">
+          <p className="text-muted-foreground mb-2 text-lg">Game will load here</p>
+          <p className="text-muted-foreground text-sm">
+            The {entry.title} game component will be rendered when the game packages are connected.
+          </p>
+          <Button asChild variant="outline" className="mt-4">
+            <Link href="/games">Browse Other Games</Link>
+          </Button>
         </div>
-      ) : null}
-    </GameShell>
+      </div>
+    </div>
   );
 }

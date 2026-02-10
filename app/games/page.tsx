@@ -1,50 +1,49 @@
-// frontend/app/games/page.tsx
 "use client";
 
-import { listGames } from "@games/shared";
-import GamesList from "@games/shared/components/games/GamesList";
-import { useFlags } from "@games/shared/contexts/FlagsContext";
-import React from "react";
+import { GameCard } from "@/components/game-card";
+import { listGames } from "@/lib/games";
 
 export default function GamesPage() {
-  const { flags } = useFlags();
-  // Map manifest entries into the GamesList shape, overriding image from lib/games.ts when available
   const entries = listGames().filter((e) => e.visible !== false);
-  const isNonProd =
-    typeof window !== "undefined" &&
-    (process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_E2E === "true");
-  const enableUpcomingLocal =
-    (typeof window !== "undefined" &&
-      process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL === "true" &&
-      isNonProd) ||
-    !!flags.ui?.allowPlayUpcomingLocal;
+  const games = entries.map((e) => ({
+    id: e.slug,
+    title: e.title,
+    description: e.shortDescription,
+    image: e.image,
+    tags: e.tags,
+    slug: e.slug,
+    featured: e.enabled !== false && !e.upcoming,
+    upcoming: !!e.upcoming,
+  }));
 
-  const games: any[] = entries.map((e) => {
-    // Determine if an upcoming game should be playable in local/dev
-    const devPlayable = Boolean(e.upcoming && e.enabled === false && enableUpcomingLocal);
-    return {
-      id: e.slug,
-      title: e.title,
-      description: e.shortDescription,
-      image: e.image,
-      tags: e.tags,
-      // GamesList treats `featured` as "playable now"
-      featured: (e.enabled !== false && !e.upcoming) || devPlayable,
-      devPlayable,
-    };
-  });
-  // Optionally expose Systems Discovery — Body Systems as a separate card via flags
-  if (flags.sdBodEnabled) {
-    games.push({
-      id: "systems-discovery?pack=breath",
-      title: "Systems Discovery — Body Systems",
-      description:
-        "Explore the Body Systems sub‑packs (Breath, Fuel, Move, Signal & Defend, Grow).",
-      image: "https://picsum.photos/seed/systems-discovery-body/1280/1280",
-      tags: ["Educational", "Packs", "Accessible"],
-      featured: true,
-    });
-  }
+  const featured = games.filter((g) => g.featured);
+  const upcoming = games.filter((g) => g.upcoming);
 
-  return <GamesList games={games} />;
+  return (
+    <div className="px-6 py-8 md:px-8">
+      <h1 className="mb-8 text-3xl font-bold">All Games</h1>
+
+      {featured.length > 0 && (
+        <section className="mb-10">
+          <h2 className="mb-4 text-xl font-semibold">Available Now</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featured.map((g) => (
+              <GameCard key={g.id} game={g} featured />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {upcoming.length > 0 && (
+        <section>
+          <h2 className="mb-4 text-xl font-semibold">Coming Soon</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {upcoming.map((g) => (
+              <GameCard key={g.id} game={g} />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
 }
