@@ -1,12 +1,12 @@
 import type { NextConfig } from "next";
-import path from "path";
+import path from "node:path";
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const root = process.cwd();
 
-const gamesPath = path.resolve(__dirname, "packages/games");
-const gamePlatformPath = path.resolve(__dirname, "packages/game-platform/src");
-const pointclickPath = path.resolve(__dirname, "packages/pointclick-engine/src");
-const uiPath = path.resolve(__dirname, "packages/ui/src");
+const gamesPath = path.resolve(root, "packages/games");
+const gamePlatformPath = path.resolve(root, "packages/game-platform/src");
+const pointclickPath = path.resolve(root, "packages/pointclick-engine/src");
+const uiPath = path.resolve(root, "packages/ui/src");
 
 // Shared alias map used by both webpack and turbopack
 const aliases: Record<string, string> = {
