@@ -1,5 +1,6 @@
-// @gamehub/ui barrel – re-exports UI primitives from game-platform
-// so internal components can `import { Button } from "@gamehub/ui"`
+// @gamehub/ui barrel – re-exports UI primitives and ThemeProvider
+// Internal game-platform components import from "@gamehub/ui"
+// We re-export from the game-platform components using relative paths
 
 export { Button, buttonVariants } from "../../game-platform/src/components/ui/button";
 export { Badge, badgeVariants } from "../../game-platform/src/components/ui/badge";
