@@ -36,8 +36,24 @@ export { default as GameContainer } from "./components/GameContainer";
 export { GameHUD } from "./components/GameHUD";
 export { GameShell } from "./components/GameShell";
 
-// Note: UI components have been moved to @gamehub/ui package
-// Import from '@gamehub/ui' instead of '@games/shared' for UI components
+// UI components (also available via @gamehub/ui)
+export * from "./components/ui/alert";
+export * from "./components/ui/badge";
+export * from "./components/ui/button";
+export * from "./components/ui/card";
+export * from "./components/ui/input";
+export * from "./components/ui/label";
+export * from "./components/ui/progress";
+export * from "./components/ui/select";
+export * from "./components/ui/separator";
+export * from "./components/ui/skeleton";
+export * from "./components/ui/switch";
+export * from "./components/ui/table";
+export * from "./components/ui/tabs";
+
+// Utilities
+export { cn } from "./lib/utils";
+
 export * from "./lib/env";
 export * from "./lib/firebase";
 export * from "./lib/flags";
