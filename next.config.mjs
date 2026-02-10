@@ -1,15 +1,15 @@
-import type { NextConfig } from "next";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = process.cwd();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const gamesPath = path.resolve(root, "packages/games");
-const gamePlatformPath = path.resolve(root, "packages/game-platform/src");
-const pointclickPath = path.resolve(root, "packages/pointclick-engine/src");
-const uiPath = path.resolve(root, "packages/ui/src");
+const gamesPath = path.resolve(__dirname, "packages/games");
+const gamePlatformPath = path.resolve(__dirname, "packages/game-platform/src");
+const pointclickPath = path.resolve(__dirname, "packages/pointclick-engine/src");
+const uiPath = path.resolve(__dirname, "packages/ui/src");
 
-// Shared alias map used by both webpack and turbopack
-const aliases: Record<string, string> = {
+/** @type {Record<string, string>} */
+const aliases = {
   "@games/shared": gamePlatformPath,
   "@games/shared/components": path.resolve(gamePlatformPath, "components"),
   "@games/shared/contexts": path.resolve(gamePlatformPath, "contexts"),
@@ -31,12 +31,14 @@ const aliases: Record<string, string> = {
   "@games/chrono-shift": path.resolve(gamesPath, "chrono-shift/src"),
   "@games/elemental-conflux": path.resolve(gamesPath, "elemental-conflux/src"),
   "@games/quantum-architect": path.resolve(gamesPath, "quantum-architect/src"),
+  "@games/block-blast": path.resolve(gamesPath, "block-blast/src"),
   "@games/pointclick-engine": pointclickPath,
   "@gamehub/ui": uiPath,
   "@gamehub/game-platform": gamePlatformPath,
 };
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   turbopack: {
     resolveAlias: aliases,
   },
