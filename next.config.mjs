@@ -1,48 +1,5 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const gamesPath = path.resolve(__dirname, "packages/games");
-const gamePlatformPath = path.resolve(__dirname, "packages/game-platform/src");
-const pointclickPath = path.resolve(__dirname, "packages/pointclick-engine/src");
-const uiPath = path.resolve(__dirname, "packages/ui/src");
-
-/** @type {Record<string, string>} */
-const aliases = {
-  "@games/shared": gamePlatformPath,
-  "@games/shared/components": path.resolve(gamePlatformPath, "components"),
-  "@games/shared/contexts": path.resolve(gamePlatformPath, "contexts"),
-  "@games/shared/lib": path.resolve(gamePlatformPath, "lib"),
-  "@games/_engine": path.resolve(gamesPath, "_engine"),
-  "@games/breakout": path.resolve(gamesPath, "breakout/src"),
-  "@games/knitzy": path.resolve(gamesPath, "knitzy/src"),
-  "@games/memory": path.resolve(gamesPath, "memory/src"),
-  "@games/snake": path.resolve(gamesPath, "snake/src"),
-  "@games/checkers": path.resolve(gamesPath, "checkers/src"),
-  "@games/chess": path.resolve(gamesPath, "chess/src"),
-  "@games/bubble-pop": path.resolve(gamesPath, "bubble-pop/src"),
-  "@games/platformer": path.resolve(gamesPath, "platformer/src"),
-  "@games/tetris": path.resolve(gamesPath, "tetris/src"),
-  "@games/tower-defense": path.resolve(gamesPath, "tower-defense/src"),
-  "@games/rite-of-discovery": path.resolve(gamesPath, "rite-of-discovery/src"),
-  "@games/systems-discovery": path.resolve(gamesPath, "systems-discovery/src"),
-  "@games/toymaker-escape": path.resolve(gamesPath, "toymaker-escape/src"),
-  "@games/chrono-shift": path.resolve(gamesPath, "chrono-shift/src"),
-  "@games/elemental-conflux": path.resolve(gamesPath, "elemental-conflux/src"),
-  "@games/quantum-architect": path.resolve(gamesPath, "quantum-architect/src"),
-  "@games/block-blast": path.resolve(gamesPath, "block-blast/src"),
-  "@games/pointclick-engine": pointclickPath,
-  "@gamehub/ui": uiPath,
-  "@gamehub/game-platform": gamePlatformPath,
-};
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  turbopack: {
-    resolveAlias: aliases,
-  },
-
   experimental: {
     externalDir: true,
   },
@@ -58,6 +15,28 @@ const nextConfig = {
   },
 
   transpilePackages: [
+    "@games/shared",
+    "@games/snake",
+    "@games/memory",
+    "@games/breakout",
+    "@games/knitzy",
+    "@games/checkers",
+    "@games/chess",
+    "@games/bubble-pop",
+    "@games/platformer",
+    "@games/tetris",
+    "@games/tower-defense",
+    "@games/rite-of-discovery",
+    "@games/systems-discovery",
+    "@games/toymaker-escape",
+    "@games/block-blast",
+    "@games/chrono-shift",
+    "@games/elemental-conflux",
+    "@games/quantum-architect",
+    "@games/pointclick-engine",
+    "@games/_engine",
+    "@gamehub/ui",
+    "@gamehub/game-platform",
     "embla-carousel-react",
     "embla-carousel",
     "lucide-react",
@@ -66,20 +45,8 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "via.placeholder.com" },
-      { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "**" },
     ],
-  },
-
-  webpack: (config) => {
-    config.resolve = config.resolve || {};
-    config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      ...aliases,
-    };
-    return config;
   },
 
   env: {
