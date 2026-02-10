@@ -31,7 +31,8 @@ export interface ProjectMetadata {
 
   // Technical
   route: string;
-  externalUrl?: string; // For projects hosted externally
+  repo: string; // GitHub repository URL
+  externalUrl?: string; // For projects hosted externally (live demo)
 
   // Metadata
   version: string;
@@ -90,6 +91,7 @@ export const projectsManifest: ProjectMetadata[] = [
     requiresSubscription: false,
 
     route: "/projects/libra-keeper",
+    repo: "https://github.com/DTADMI/libra-keeper",
 
     version: "0.1.0",
     author: "GameHub Team",
@@ -144,6 +146,7 @@ export const projectsManifest: ProjectMetadata[] = [
     requiresSubscription: false,
 
     route: "/projects/quest-hunt",
+    repo: "https://github.com/DTADMI/quest-hunt",
 
     version: "0.1.0",
     author: "GameHub Team",
@@ -199,6 +202,7 @@ export const projectsManifest: ProjectMetadata[] = [
     requiresSubscription: true,
 
     route: "/projects/story-forge",
+    repo: "https://github.com/DTADMI/story-forge",
 
     version: "0.1.0",
     author: "GameHub Team",

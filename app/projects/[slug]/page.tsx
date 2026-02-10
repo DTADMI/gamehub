@@ -10,9 +10,10 @@ interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return listProjects().map((p) => ({ slug: p.slug }));
-}
+// ISR: pages generated on-demand and revalidated every hour.
+// No generateStaticParams -- avoids pre-rendering all pages at build time.
+export const revalidate = 3600;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;

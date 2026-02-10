@@ -4,9 +4,7 @@
   "private": true,
   "description": "GameHub Next.js Frontend Application",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build:legacy": "echo 'Superseded by root app'",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
