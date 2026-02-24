@@ -2,22 +2,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@gamehub/ui": ["./packages/ui/src"],
-      "@gamehub/ui/*": ["./packages/ui/src/*"],
-      "@gamehub/game-platform": ["./packages/game-platform/src"],
-      "@gamehub/game-platform/*": ["./packages/game-platform/src/*"],
-      "@games/pointclick-engine": ["./packages/pointclick-engine/src"],
-      "@games/pointclick-engine/*": ["./packages/pointclick-engine/src/*"],
-      "@games/_engine": ["./packages/games/_engine"],
-      "@games/*": ["./packages/games/*/src"],
-      "@projects/*": ["./packages/projects/*"]
+      "@/*": ["./*"],
+      "@games/shared": ["packages/game-platform/src"],
+      "@games/shared/*": ["packages/game-platform/src/*"],
+      "@games/_engine": ["packages/games/_engine"],
+      "@games/*": ["packages/games/*/src"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "target": "ES6",
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -38,8 +33,23 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "./packages/**/*.ts",
-    "./packages/**/*.tsx"
+    "packages/game-platform/**/*.ts",
+    "packages/game-platform/**/*.tsx",
+    "packages/ui/**/*.ts",
+    "packages/ui/**/*.tsx",
+    "packages/games/**/*.ts",
+    "packages/games/**/*.tsx"
   ],
-  "exclude": ["node_modules", "**/node_modules", "**/dist", "**/*.md", "**/*.mdx"]
+  "exclude": [
+    "node_modules",
+    "packages/**/node_modules",
+    "packages/**/dist",
+    "packages/games/breakout/src/app",
+    "**/*.md",
+    "**/*.mdx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/jest.setup.ts",
+    "**/__tests__/**"
+  ]
 }

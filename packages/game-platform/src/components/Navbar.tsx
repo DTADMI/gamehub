@@ -2,7 +2,7 @@
 "use client";
 
 import { Button, cn } from "@gamehub/ui";
-import { Gamepad2, Github, Linkedin, LogIn, Menu, UserPlus, X } from "lucide-react";
+import { Gamepad2, Github, Linkedin, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,9 +14,10 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "Games", href: "/games" },
   { name: "Projects", href: "/projects" },
+  { name: "Resume", href: "/resume" },
+  { name: "Blog", href: "/blog" },
   { name: "Explore", href: "/explore" },
   { name: "Admin", href: "/admin" },
-  { name: "Leaderboard", href: "/leaderboard" },
 ];
 
 export function Navbar() {
@@ -94,25 +95,6 @@ export function Navbar() {
                 </a>
               </Button>
             )}
-            <Button
-              variant="ghost"
-              asChild
-              className="focus-visible:ring-primary/60 focus-visible:ring-2"
-            >
-              <Link href="/login" className="flex items-center space-x-2">
-                <LogIn className="h-4 w-4" />
-                <span>Sign In</span>
-              </Link>
-            </Button>
-            <Button
-              asChild
-              className="bg-primary hover:bg-primary/90 focus-visible:ring-primary/60 focus-visible:ring-2"
-            >
-              <Link href="/register" className="flex items-center space-x-2">
-                <UserPlus className="h-4 w-4" />
-                <span>Sign up</span>
-              </Link>
-            </Button>
           </div>
           <ModeToggle />
 
@@ -186,25 +168,6 @@ export function Navbar() {
                   )}
                 </div>
               )}
-              <Button
-                variant="ghost"
-                className="focus-visible:ring-primary/60 w-full justify-start focus-visible:ring-2"
-                asChild
-              >
-                <Link href="/login" className="flex items-center space-x-2">
-                  <LogIn className="h-4 w-4" />
-                  <span>Sign In</span>
-                </Link>
-              </Button>
-              <Button
-                className="bg-primary hover:bg-primary/90 focus-visible:ring-primary/60 mt-2 w-full justify-start focus-visible:ring-2"
-                asChild
-              >
-                <Link href="/register" className="flex items-center space-x-2">
-                  <UserPlus className="h-4 w-4" />
-                  <span>Create Account</span>
-                </Link>
-              </Button>
             </div>
           </div>
         </div>

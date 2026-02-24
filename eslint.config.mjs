@@ -14,15 +14,6 @@ import {fileURLToPath} from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Next.js configuration (scoped to frontend package)
-const nextConfig = {
-    rootDir: path.join(__dirname, "frontend"),
-    basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
-    experimental: {
-        appDir: true,
-    },
-};
-
 // Common TypeScript parser options
 const tsParserOptions = {
     tsconfigRootDir: __dirname,
@@ -43,8 +34,7 @@ export default [
         files: [
             "**/*.{ts,tsx,js,jsx}",
             "app/**/*",
-            "games/**/*",
-            "libs/**/*",
+            "packages/**/*",
             "components/**/*",
             "contexts/**/*",
             "lib/**/*",
@@ -111,9 +101,7 @@ export default [
                         {
                             group: [
                                 "@games/*/src/**",
-                                "../../games/*/src/**",
-                                "../games/*/src/**",
-                                "games/*/src/**",
+                                "packages/games/*/src/**",
                             ],
                             message:
                                 "Do not deep-import from games/*/src in the frontend. Import from the package root, e.g. `@games/<name>`.",
@@ -193,7 +181,6 @@ export default [
             "**/eslint.config.*",
             "**/postcss.config.*",
             "**/next-env.d.ts",
-            "**/*.md", // Exclude all Markdown files
         ],
     },
 
