@@ -1,4 +1,4 @@
-import { Carousel, GameCard, listGames, listProjects } from "@games/shared";
+import { Carousel, GameCard, listGames, listProjects } from "@gamehub/game-platform";
 import { Button } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -106,3 +106,4 @@ export default function HomePage() {
     </div>
   );
 }
+

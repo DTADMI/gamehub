@@ -1,15 +1,15 @@
 "use client";
 
-import { GameShell } from "@games/shared";
-import { PresenceBadge } from "@games/shared";
-import LocalLeaderboard, { submitLocalScore } from "@games/shared/components/games/LocalLeaderboard";
-import StatsPanel from "@games/shared/components/games/StatsPanel";
-import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
-import { useAuth } from "@games/shared/contexts/AuthContext";
-import { useProfile } from "@games/shared/contexts/ProfileContext";
-import { useFeature } from "@games/shared/lib/flags";
-import { submitScore } from "@games/shared/lib/graphql/queries";
-import { useStomp } from "@games/shared/lib/realtime/useStomp";
+import { GameShell } from "@gamehub/game-platform";
+import { PresenceBadge } from "@gamehub/game-platform";
+import LocalLeaderboard, { submitLocalScore } from "@gamehub/game-platform/components/games/LocalLeaderboard";
+import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
+import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
+import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
+import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
+import { useFeature } from "@gamehub/game-platform/lib/flags";
+import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { useStomp } from "@gamehub/game-platform/lib/realtime/useStomp";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
@@ -175,3 +175,4 @@ export default function SnakeGamePage() {
     </GameShell>
   );
 }
+

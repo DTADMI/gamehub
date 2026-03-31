@@ -333,3 +333,11 @@ export function getGame(slug: string): GameEntry | undefined {
 export function listGames(): GameEntry[] {
   return Object.values(games);
 }
+
+/**
+ * Returns whether a game entry has an implementation that can be rendered by the launcher.
+ * We treat `impl:none` as a scaffold/placeholder marker that should not be exposed as playable.
+ */
+export function isGameLaunchable(entry: GameEntry): boolean {
+  return !entry.tags.includes("impl:none");
+}

@@ -25,7 +25,7 @@ export function DialogueBox({
       </h2>
       {body && <p className="mb-3 text-sm opacity-90">{body}</p>}
       <div className="mt-2 flex flex-col gap-2">
-        {scene.choices.map((c) => (
+        {(scene.choices ?? []).map((c) => (
           <button
             key={c.id}
             className="bg-primary text-primary-foreground hover:bg-primary/90 min-h-11 rounded-md px-4 py-2 text-left text-sm"

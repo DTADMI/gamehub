@@ -25,7 +25,7 @@ export function ResumeAdmin() {
   const [loading, setLoading] = useState(false);
 
   const loadSections = async () => {
-    const supabase = createBrowserClient();
+    const supabase = createBrowserClient() as any;
     const { data } = await supabase
       .from("resume_sections")
       .select("*")
@@ -56,7 +56,7 @@ export function ResumeAdmin() {
 
   const saveSection = async () => {
     setLoading(true);
-    const supabase = createBrowserClient();
+    const supabase = createBrowserClient() as any;
     if (editing) {
       await supabase
         .from("resume_sections")
@@ -83,7 +83,7 @@ export function ResumeAdmin() {
   };
 
   const deleteSection = async (id: string) => {
-    const supabase = createBrowserClient();
+    const supabase = createBrowserClient() as any;
     await supabase.from("resume_sections").delete().eq("id", id);
     loadSections();
   };

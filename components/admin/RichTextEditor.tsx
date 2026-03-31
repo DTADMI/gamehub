@@ -43,7 +43,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       return;
     }
     if (value !== editor.getHTML()) {
-      editor.commands.setContent(value, false);
+      editor.commands.setContent(value);
     }
   }, [editor, value]);
 

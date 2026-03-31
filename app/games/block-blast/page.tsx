@@ -1,6 +1,6 @@
 "use client";
 
-import { enableGameKeyCapture, GameHUD } from "@games/shared";
+import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
 import { Button } from "@gamehub/ui";
 import { useEffect, useRef, useState } from "react";
 
@@ -216,3 +216,4 @@ export default function BlockBlastPage() {
     </div>
   );
 }
+

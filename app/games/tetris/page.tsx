@@ -1,9 +1,9 @@
 "use client";
 
-import { GameShell } from "@games/shared";
-import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
-import { useAuth } from "@games/shared/contexts/AuthContext";
-import { submitScore } from "@games/shared/lib/graphql/queries";
+import { GameShell } from "@gamehub/game-platform";
+import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
+import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
+import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
@@ -65,3 +65,4 @@ export default function TetrisGamePage() {
     </GameShell>
   );
 }
+

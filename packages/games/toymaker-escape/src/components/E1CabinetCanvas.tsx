@@ -1,6 +1,6 @@
 "use client";
 
-import { GameEngine } from "@gamehub/game-platform";
+import { GameEngine } from "@games/pointclick-engine";
 import React from "react";
 
 /**

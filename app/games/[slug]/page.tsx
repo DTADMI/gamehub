@@ -1,15 +1,18 @@
 "use client";
 
-import { GameShell, getGame } from "@games/shared";
-import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
+import { GameShell, getGame } from "@gamehub/game-platform";
+import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
+import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
+import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import React from "react";
 
-type PageProps = { params: Promise<{ slug: string }> };
+type PageProps = { params: { slug: string } };
 
-export default async function GameLauncherPage({ params }: PageProps) {
-  const { slug } = await params;
+export default function GameLauncherPage({ params }: PageProps) {
+  const { flags } = useFlags();
+  const { slug } = params;
   const entry = getGame(slug);
   if (!entry) {
     return notFound();
@@ -19,9 +22,11 @@ export default async function GameLauncherPage({ params }: PageProps) {
     typeof window !== "undefined" &&
     (process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_E2E === "true");
   const allowUpcomingLocal =
-    typeof window !== "undefined" &&
-    process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL === "true" &&
-    isNonProd;
+    ((typeof window !== "undefined" &&
+      process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL === "true" &&
+      isNonProd) ||
+      !!flags.ui?.allowPlayUpcomingLocal) &&
+    isGameLaunchable(entry);
 
   if (entry.upcoming && !allowUpcomingLocal) {
     return (
@@ -34,7 +39,7 @@ export default async function GameLauncherPage({ params }: PageProps) {
       </div>
     );
   }
-  if (entry.enabled === false) {
+  if (entry.enabled === false && !allowUpcomingLocal) {
     return (
       <div className="container mx-auto px-4 py-8">
         <h1 className="mb-2 text-2xl font-bold">{entry.title}</h1>
@@ -71,3 +76,4 @@ export default async function GameLauncherPage({ params }: PageProps) {
     </GameShell>
   );
 }
+

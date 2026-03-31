@@ -44,7 +44,7 @@ export function BlogAdmin() {
   const [loading, setLoading] = useState(false);
 
   const loadPosts = async () => {
-    const supabase = createBrowserClient();
+    const supabase = createBrowserClient() as any;
     const { data } = await supabase
       .from("blog_posts")
       .select("*")
@@ -79,7 +79,7 @@ export function BlogAdmin() {
 
   const savePost = async () => {
     setLoading(true);
-    const supabase = createBrowserClient();
+    const supabase = createBrowserClient() as any;
     const payload = {
       title: form.title,
       slug: form.slug,
@@ -109,7 +109,7 @@ export function BlogAdmin() {
   };
 
   const deletePost = async (id: string) => {
-    const supabase = createBrowserClient();
+    const supabase = createBrowserClient() as any;
     await supabase.from("blog_posts").delete().eq("id", id);
     loadPosts();
   };

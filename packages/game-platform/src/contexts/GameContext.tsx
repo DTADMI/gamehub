@@ -46,7 +46,8 @@ export function GameProvider({ children, gameId }: { children: React.ReactNode; 
         // Load game progress if user is authenticated
         if (user) {
           try {
-            const progress = await getGameProgress(user.uid, gameId);
+            const userId = user.uid ?? user.id;
+            const progress = await getGameProgress(userId, gameId);
             if (progress) {
               setStats(progress);
             } else {
@@ -121,7 +122,8 @@ export function GameProvider({ children, gameId }: { children: React.ReactNode; 
     }
 
     try {
-      await saveGameProgress(user.uid, gameId, stats);
+      const userId = user.uid ?? user.id;
+      await saveGameProgress(userId, gameId, stats);
     } catch (err) {
       console.error("Failed to save game progress:", err);
       throw err;

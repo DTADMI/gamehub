@@ -28,6 +28,7 @@ export type Database = {
           role?: string;
           created_at?: string;
         };
+        Relationships: [];
       };
       resume_sections: {
         Row: {
@@ -60,6 +61,7 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       blog_posts: {
         Row: {
@@ -104,7 +106,12 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { enableGameKeyCapture, GameHUD } from "@games/shared";
+import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
@@ -45,3 +45,4 @@ export default function PlatformerPage() {
     </div>
   );
 }
+

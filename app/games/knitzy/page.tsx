@@ -1,6 +1,6 @@
 "use client";
 
-import { enableGameKeyCapture } from "@games/shared";
+import { enableGameKeyCapture } from "@gamehub/game-platform";
 import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 
@@ -35,3 +35,4 @@ export default function KnitzyPage() {
     </div>
   );
 }
+

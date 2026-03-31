@@ -1,4 +1,4 @@
-import { listProjects } from "@games/shared";
+import { listProjects } from "@gamehub/game-platform";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";
 import { Metadata } from "next";
@@ -88,3 +88,4 @@ export default function ProjectsPage() {
     </div>
   );
 }
+

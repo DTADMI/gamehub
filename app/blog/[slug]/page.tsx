@@ -3,19 +3,22 @@ import { notFound } from "next/navigation";
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 
 import { createServerClient } from "@/lib/supabase/server";
+import type { Database } from "@/lib/supabase/types";
 
 type BlogPostPageProps = {
   params: { slug: string };
 };
+type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const supabase = createServerClient();
-  const { data: post } = await supabase
+  const supabase = createServerClient() as any;
+  const { data: postRaw } = await supabase
     .from("blog_posts")
     .select("*")
     .eq("slug", params.slug)
     .eq("status", "published")
     .maybeSingle();
+  const post = (postRaw ?? null) as BlogPost | null;
 
   if (!post) {
     notFound();

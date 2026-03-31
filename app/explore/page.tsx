@@ -1,8 +1,8 @@
 "use client";
 
-import { Carousel, Game, GameCard, listGames, listProjects } from "@games/shared";
+import { Carousel, Game, GameCard, listGames, listProjects } from "@gamehub/game-platform";
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@gamehub/ui";
-import { useFeature } from "@games/shared/lib/flags";
+import { useFeature } from "@gamehub/game-platform/lib/flags";
 import { FolderKanban, Gamepad2 } from "lucide-react";
 import Link from "next/link";
 
@@ -269,3 +269,4 @@ export default function ExplorePage() {
     </section>
   );
 }
+

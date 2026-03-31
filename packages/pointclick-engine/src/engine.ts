@@ -60,7 +60,7 @@ export function nextScene(
   if (!scene) {
     return { sceneId: currentSceneId, ctx: safeCtx };
   }
-  const choice = scene.choices.find((c) => c.id === choiceId);
+  const choice = scene.choices?.find((c) => c.id === choiceId);
   if (!choice) {
     return { sceneId: currentSceneId, ctx: safeCtx };
   }

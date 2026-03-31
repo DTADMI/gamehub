@@ -1,9 +1,10 @@
 // frontend/app/games/page.tsx
 "use client";
 
-import { listGames } from "@games/shared";
-import GamesList from "@games/shared/components/games/GamesList";
-import { useFlags } from "@games/shared/contexts/FlagsContext";
+import { listGames } from "@gamehub/game-platform";
+import GamesList from "@gamehub/game-platform/components/games/GamesList";
+import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
+import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
 import React from "react";
 
 export default function GamesPage() {
@@ -21,7 +22,9 @@ export default function GamesPage() {
 
   const games: any[] = entries.map((e) => {
     // Determine if an upcoming game should be playable in local/dev
-    const devPlayable = Boolean(e.upcoming && e.enabled === false && enableUpcomingLocal);
+    const devPlayable = Boolean(
+      e.upcoming && e.enabled === false && enableUpcomingLocal && isGameLaunchable(e),
+    );
     return {
       id: e.slug,
       title: e.title,
@@ -48,3 +51,4 @@ export default function GamesPage() {
 
   return <GamesList games={games} />;
 }
+

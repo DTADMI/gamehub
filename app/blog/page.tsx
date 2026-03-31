@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 
 import { createServerClient } from "@/lib/supabase/server";
+import type { Database } from "@/lib/supabase/types";
+
+type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 
 export const metadata = {
   title: "Blog | GameHub",
@@ -10,12 +13,13 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const supabase = createServerClient();
-  const { data: posts } = await supabase
+  const supabase = createServerClient() as any;
+  const { data: postsRaw } = await supabase
     .from("blog_posts")
     .select("*")
     .eq("status", "published")
     .order("published_at", { ascending: false });
+  const posts = (postsRaw ?? []) as BlogPost[];
 
   return (
     <div className="container mx-auto space-y-10 px-4 py-10">

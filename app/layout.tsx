@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Footer, Header, I18nInitializer, Providers } from "@games/shared";
+import { Footer, Header, I18nInitializer, Providers } from "@gamehub/game-platform";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -35,3 +35,4 @@ export default function RootLayout({
     </html>
   );
 }
+

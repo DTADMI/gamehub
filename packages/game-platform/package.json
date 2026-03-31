@@ -24,6 +24,8 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@stomp/stompjs": "^7.2.1",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "firebase": "^12.7.0",
     "next-auth": "^4.24.13",
     "react": "^19.2.3",

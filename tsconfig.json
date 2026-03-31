@@ -3,6 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
+      "@gamehub/game-platform": ["packages/game-platform/src"],
+      "@gamehub/game-platform/*": ["packages/game-platform/src/*"],
+      "@games/pointclick-engine": ["packages/pointclick-engine/src"],
+      "@games/pointclick-engine/*": ["packages/pointclick-engine/src/*"],
       "@games/shared": ["packages/game-platform/src"],
       "@games/shared/*": ["packages/game-platform/src/*"],
       "@games/_engine": ["packages/games/_engine"],
@@ -38,7 +42,9 @@
     "packages/ui/**/*.ts",
     "packages/ui/**/*.tsx",
     "packages/games/**/*.ts",
-    "packages/games/**/*.tsx"
+    "packages/games/**/*.tsx",
+    "packages/pointclick-engine/**/*.ts",
+    "packages/pointclick-engine/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

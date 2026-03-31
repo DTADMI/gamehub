@@ -1,10 +1,10 @@
 "use client";
 
-import { GameShell } from "@games/shared";
-import LocalLeaderboard, { submitLocalScore } from "@games/shared/components/games/LocalLeaderboard";
-import StatsPanel from "@games/shared/components/games/StatsPanel";
-import MiniBoard from "@games/shared/components/leaderboards/MiniBoard";
-import { useProfile } from "@games/shared/contexts/ProfileContext";
+import { GameShell } from "@gamehub/game-platform";
+import LocalLeaderboard, { submitLocalScore } from "@gamehub/game-platform/components/games/LocalLeaderboard";
+import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
+import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
+import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
@@ -62,3 +62,4 @@ export default function MemoryGamePage() {
     </GameShell>
   );
 }
+

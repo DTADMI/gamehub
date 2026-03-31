@@ -70,6 +70,7 @@ scripts/              # Supabase SQL rollouts/rollbacks
 - `docs/SETUP.md` for environment and Supabase setup
 - `docs/DEPLOYMENT.md` for deployment notes
 - `docs/ADMIN_DASHBOARD_REQUIREMENTS.md` for admin scope
+- `docs/ARCHITECTURE_CURRENT_STATE_2026-03-31.md` for current architecture, functionality status, and gap analysis
 
 ---
 
