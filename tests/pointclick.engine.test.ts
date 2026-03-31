@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { nextScene, type Scene } from "@games/shared/pointclick/engine";
+import { nextScene, type Scene } from "@games/pointclick-engine/engine";
 
 describe("pointclick engine", () => {
   const scenes: Record<string, Scene> = {
@@ -38,3 +38,4 @@ describe("pointclick engine", () => {
     expect(res.sceneId).toBe("C");
   });
 });
+

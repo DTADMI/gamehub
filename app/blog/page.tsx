@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const supabase = createServerClient() as any;
+  const supabase = (await createServerClient()) as any;
   const { data: postsRaw } = await supabase
     .from("blog_posts")
     .select("*")

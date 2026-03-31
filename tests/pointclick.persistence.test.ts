@@ -4,7 +4,7 @@ import {
   SAVE_KEYS,
   versionedLoad,
   versionedSave,
-} from "@games/shared/pointclick/core/Persistence";
+} from "@games/pointclick-engine/core/Persistence";
 
 // jsdom provides localStorage
 
@@ -41,3 +41,4 @@ describe("Persistence — versioned saves", () => {
     expect(migrated).toBeNull();
   });
 });
+

@@ -3,8 +3,8 @@ import {
   Blackboard,
   CutsceneRunner,
   TimerService,
-} from "@games/shared/pointclick/core/SceneServices";
-import { EventSystem } from "@games/shared/pointclick/utils/EventSystem";
+} from "@games/pointclick-engine/core/SceneServices";
+import { EventSystem } from "@games/pointclick-engine/utils/EventSystem";
 
 describe("Scene Services — Blackboard", () => {
   it("sets and gets typed values", () => {
@@ -97,3 +97,4 @@ describe("Scene Services — CutsceneRunner", () => {
     expect(results).toEqual(["one", "two"]);
   });
 });
+

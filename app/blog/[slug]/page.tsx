@@ -11,7 +11,7 @@ type BlogPostPageProps = {
 type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const supabase = createServerClient() as any;
+  const supabase = (await createServerClient()) as any;
   const { data: postRaw } = await supabase
     .from("blog_posts")
     .select("*")

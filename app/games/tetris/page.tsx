@@ -1,13 +1,12 @@
 "use client";
-
 import { GameShell } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const TetrisGame = dynamic(() => import("@games/tetris").then((m) => m.TetrisGame), {
+const TetrisGame = dynamicImport(() => import("@games/tetris").then((m) => m.TetrisGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -65,4 +64,7 @@ export default function TetrisGamePage() {
     </GameShell>
   );
 }
+
+
+
 

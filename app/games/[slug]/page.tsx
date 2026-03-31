@@ -1,10 +1,9 @@
 "use client";
-
 import { GameShell, getGame } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -51,7 +50,7 @@ export default function GameLauncherPage({ params }: PageProps) {
     );
   }
 
-  const Game = dynamic(() => entry.getComponent().then((m) => m.default ?? m), {
+  const Game = dynamicImport(() => entry.getComponent().then((m) => m.default ?? m), {
     ssr: false,
     loading: () => (
       <div className="flex min-h-[50vh] items-center justify-center">
@@ -76,4 +75,7 @@ export default function GameLauncherPage({ params }: PageProps) {
     </GameShell>
   );
 }
+
+
+
 

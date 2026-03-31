@@ -1,7 +1,7 @@
 import { createServerClient } from "./server";
 
 export async function getAdminUser() {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

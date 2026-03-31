@@ -4,7 +4,7 @@ import {
   createWiresState,
   hasWiresCrossing,
   setWiresConnection,
-} from "@games/shared/pointclick/puzzles/wires";
+} from "@games/pointclick-engine/puzzles/wires";
 
 describe("wires negative/crossing cases", () => {
   it("detects a crossing when right indices decrease", () => {
@@ -34,3 +34,4 @@ describe("wires negative/crossing cases", () => {
     expect(s.connections.length).toBe(0);
   });
 });
+

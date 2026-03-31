@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { soundManager as mgrModule } from "@games/shared";
+import { soundManager as mgrModule } from "@gamehub/game-platform";
 
 // We import via the built package path to ensure the same instance
 const soundManager = mgrModule;
@@ -85,3 +85,4 @@ describe("SoundManager fail-safe", () => {
     expect(soundManager.isDisabled("bg-bad")).toBe(true);
   });
 });
+

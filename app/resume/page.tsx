@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 export default async function ResumePage() {
-  const supabase = createServerClient() as any;
+  const supabase = (await createServerClient()) as any;
   const { data: sectionsRaw } = await supabase
     .from("resume_sections")
     .select("*")

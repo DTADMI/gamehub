@@ -30,6 +30,9 @@ Create a Supabase project and copy the env vars into `.env.local`:
 ```bash
 NEXT_PUBLIC_SUPABASE_URL="https://YOUR_PROJECT.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY"
+SUPABASE_SERVICE_ROLE_KEY="YOUR_SUPABASE_SERVICE_ROLE_KEY"
+KV_REST_API_URL="https://YOUR_UPSTASH_INSTANCE.upstash.io"
+KV_REST_API_TOKEN="YOUR_UPSTASH_TOKEN"
 ```
 
 Run the rollout SQL in `scripts/001_resume_blog_content.rollout.sql` to create the content tables and seed the resume data.
@@ -63,7 +66,10 @@ scripts/              # Supabase SQL rollouts/rollbacks
 - `pnpm dev`
 - `pnpm build`
 - `pnpm lint`
-- `pnpm test`
+- `pnpm test:unit`
+- `pnpm test:integration`
+- `pnpm test:e2e:smoke`
+- `pnpm test:all`
 
 ## 📚 Documentation
 
@@ -71,6 +77,14 @@ scripts/              # Supabase SQL rollouts/rollbacks
 - `docs/DEPLOYMENT.md` for deployment notes
 - `docs/ADMIN_DASHBOARD_REQUIREMENTS.md` for admin scope
 - `docs/ARCHITECTURE_CURRENT_STATE_2026-03-31.md` for current architecture, functionality status, and gap analysis
+
+## ☁️ CI/CD
+
+- GitHub CI workflows in `.github/workflows/`:
+  - `ci.yml` for lint/type/unit/integration/build
+  - `e2e.yml` for Playwright smoke E2E
+  - `deploy.yml` for Vercel production deploy from `main`
+- Vercel project config in `vercel.json`
 
 ---
 

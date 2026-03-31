@@ -1,81 +1,38 @@
-name: E2E Tests
+﻿name: E2E
 
 on:
   pull_request:
-    branches: [main, develop]
-  push:
     branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "20.20.0"
-  PNPM_VERSION: "9.15.4"
+  NODE_VERSION: "22"
+  NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: "public-anon-key-for-ci"
+  NEXT_PUBLIC_DISABLE_PROVIDERS: "true"
 
 jobs:
-  e2e:
-    name: Playwright E2E Tests
+  smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: gamehub_test
-          POSTGRES_PASSWORD: test_password
-          POSTGRES_DB: gamehub_test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Playwright browsers
-        run: pnpm --filter @gamehub/app exec playwright install --with-deps
-
-      - name: Generate Prisma Client
-        run: pnpm prisma:generate
-        env:
-          DATABASE_URL: postgresql://gamehub_test:test_password@localhost:5432/gamehub_test
-
-      - name: Build application
-        run: pnpm build
-        env:
-          DATABASE_URL: postgresql://gamehub_test:test_password@localhost:5432/gamehub_test
-          NEXT_PUBLIC_API_URL: http://localhost:8080/api
-
-      - name: Run E2E tests
-        run: pnpm test:e2e
-        env:
-          DATABASE_URL: postgresql://gamehub_test:test_password@localhost:5432/gamehub_test
-          NEXT_PUBLIC_API_URL: http://localhost:8080/api
-
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v4
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e:smoke
+      - name: Upload Playwright Report
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: apps/app/playwright-report/
+          path: playwright-report/
           retention-days: 7

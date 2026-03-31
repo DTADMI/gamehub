@@ -5,7 +5,7 @@ import {
   setTileRotation,
   type Tile,
   toggleValve,
-} from "@games/shared/pointclick/puzzles/pipes";
+} from "@games/pointclick-engine/puzzles/pipes";
 
 describe("pipes multi-source/sink variants", () => {
   it("solves when both sinks connect to any source with open valves and no open ends", () => {
@@ -53,3 +53,4 @@ describe("pipes multi-source/sink variants", () => {
     expect((s.errors ?? []).length).toBeGreaterThanOrEqual(0);
   });
 });
+

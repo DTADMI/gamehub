@@ -3,7 +3,7 @@ import {
   createGearsState,
   evaluateGears,
   setGearsTeeth,
-} from "@games/shared/pointclick/puzzles/gears";
+} from "@games/pointclick-engine/puzzles/gears";
 
 describe("gears puzzle primitive", () => {
   it("solves a simple 2-gear ratio (20 -> 40 = 1/2)", () => {
@@ -46,3 +46,4 @@ describe("gears puzzle primitive", () => {
     expect(s.solved).toBe(true);
   });
 });
+

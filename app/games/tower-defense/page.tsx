@@ -1,10 +1,9 @@
 "use client";
-
 import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-const TowerDefenseGame = dynamic(
+const TowerDefenseGame = dynamicImport(
   () => import("@games/tower-defense").then((m) => m.TowerDefenseGame),
   {
     ssr: false,
@@ -46,4 +45,7 @@ export default function TowerDefensePage() {
     </div>
   );
 }
+
+
+
 

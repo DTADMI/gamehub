@@ -1,10 +1,9 @@
 "use client";
-
 import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-const CheckersGame = dynamic(() => import("@games/checkers").then((m) => m.CheckersGame), {
+const CheckersGame = dynamicImport(() => import("@games/checkers").then((m) => m.CheckersGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -44,4 +43,7 @@ export default function CheckersPage() {
     </div>
   );
 }
+
+
+
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createSequenceState, pressSeq, resetSeq } from "@games/shared/pointclick/puzzles/sequence";
+import { createSequenceState, pressSeq, resetSeq } from "@games/pointclick-engine/puzzles/sequence";
 
 describe("sequence puzzle", () => {
   it("solves when full sequence is entered correctly", () => {
@@ -31,3 +31,4 @@ describe("sequence puzzle", () => {
     expect(s.lives).toBe(3);
   });
 });
+

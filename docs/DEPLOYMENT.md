@@ -7,6 +7,9 @@ GameHub is a single Next.js application backed by Supabase. Deploy the Next.js a
 ```
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+KV_REST_API_URL
+KV_REST_API_TOKEN
 ```
 
 Optional:
@@ -29,3 +32,15 @@ pnpm install
 pnpm build
 pnpm start
 ```
+
+## GitHub and Vercel Deployment
+
+- GitHub Actions:
+  - `.github/workflows/ci.yml`
+  - `.github/workflows/e2e.yml`
+  - `.github/workflows/deploy.yml`
+- Required GitHub Secrets for deploy:
+  - `VERCEL_TOKEN`
+  - `VERCEL_ORG_ID`
+  - `VERCEL_PROJECT_ID`
+- Vercel build behavior is configured in `vercel.json`.

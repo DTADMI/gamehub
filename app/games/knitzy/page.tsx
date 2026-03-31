@@ -1,10 +1,9 @@
 "use client";
-
 import { enableGameKeyCapture } from "@gamehub/game-platform";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useRef } from "react";
 
-const KnitzyGame = dynamic(() => import("@games/knitzy").then((m) => m.KnitzyGame), {
+const KnitzyGame = dynamicImport(() => import("@games/knitzy").then((m) => m.KnitzyGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -35,4 +34,7 @@ export default function KnitzyPage() {
     </div>
   );
 }
+
+
+
 

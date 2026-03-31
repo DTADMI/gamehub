@@ -13,9 +13,8 @@ export interface GameStats {
   // Add more stats as needed
 }
 
-const db = getFireStore();
-
 function ensureDbInitialized(): Firestore {
+  const db = getFireStore();
   if (!db) {
     throw new Error("Firestore is not initialized");
   }

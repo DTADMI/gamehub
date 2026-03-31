@@ -1,10 +1,9 @@
 "use client";
-
 import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-const ChessGame = dynamic(() => import("@games/chess").then((m) => m.ChessGame), {
+const ChessGame = dynamicImport(() => import("@games/chess").then((m) => m.ChessGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -43,4 +42,7 @@ export default function ChessPage() {
     </div>
   );
 }
+
+
+
 

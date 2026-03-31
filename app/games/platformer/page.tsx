@@ -1,10 +1,9 @@
 "use client";
-
 import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-const PlatformerGame = dynamic(() => import("@games/platformer").then((m) => m.PlatformerGame), {
+const PlatformerGame = dynamicImport(() => import("@games/platformer").then((m) => m.PlatformerGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -45,4 +44,7 @@ export default function PlatformerPage() {
     </div>
   );
 }
+
+
+
 

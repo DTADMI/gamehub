@@ -1,8 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import React from "react";
 
-const SystemsDiscovery = dynamic(
+const SystemsDiscovery = dynamicImport(
   () => import("@games/systems-discovery").then((m) => m.SystemsDiscoveryGame),
   { ssr: false, loading: () => <div className="p-8">Loading…</div> },
 );
@@ -10,3 +10,6 @@ const SystemsDiscovery = dynamic(
 export default function SystemsDiscoveryPage() {
   return <SystemsDiscovery />;
 }
+
+
+

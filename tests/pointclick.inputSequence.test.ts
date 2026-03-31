@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { EventSystem } from "@games/shared/pointclick/utils/EventSystem";
-import { InputManager } from "@games/shared/pointclick/core/InputManager";
+import { EventSystem } from "@games/pointclick-engine/utils/EventSystem";
+import { InputManager } from "@games/pointclick-engine/core/InputManager";
 
 function createCanvas(width = 320, height = 180): HTMLCanvasElement {
   const canvas = document.createElement("canvas");
@@ -94,3 +94,4 @@ describe("InputSequenceDetector integration", () => {
     expect(payload.sequence).toEqual(["doubletap"]);
   });
 });
+

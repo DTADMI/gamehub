@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { GameSettingsProvider, useGameSettings } from "@games/shared";
+import { GameSettingsProvider, useGameSettings } from "@gamehub/game-platform";
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -141,3 +141,4 @@ describe("GameSettingsProvider — particles & mode gating", () => {
     expect(modeSelect.value).toBe("chaos");
   });
 });
+

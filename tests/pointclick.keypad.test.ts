@@ -4,7 +4,7 @@ import {
   createKeypadState,
   pressKey,
   submitKeypad,
-} from "@games/shared/pointclick/puzzles/keypad";
+} from "@games/pointclick-engine/puzzles/keypad";
 
 describe("keypad puzzle", () => {
   it("enters digits and solves when code matches", () => {
@@ -45,3 +45,4 @@ describe("keypad puzzle", () => {
     expect(s.input).toBe("");
   });
 });
+

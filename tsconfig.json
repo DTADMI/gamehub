@@ -7,8 +7,6 @@
       "@gamehub/game-platform/*": ["packages/game-platform/src/*"],
       "@games/pointclick-engine": ["packages/pointclick-engine/src"],
       "@games/pointclick-engine/*": ["packages/pointclick-engine/src/*"],
-      "@games/shared": ["packages/game-platform/src"],
-      "@games/shared/*": ["packages/game-platform/src/*"],
       "@games/_engine": ["packages/games/_engine"],
       "@games/*": ["packages/games/*/src"]
     },

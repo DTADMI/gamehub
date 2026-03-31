@@ -23,18 +23,11 @@ const nextConfig: NextConfig = {
   // Enable React Strict Mode
   reactStrictMode: true,
 
-  // TypeScript configuration
-  typescript: {
-    // Skip type checking during build since external projects cause issues
-    ignoreBuildErrors: true,
-  },
-
   // Ensure Next transpiles our local workspace packages
   transpilePackages: [
     "@gamehub/game-platform",
     "@gamehub/ui",
     "@games/pointclick-engine",
-    "@games/shared",
     "@games/snake",
     "@games/memory",
     "@games/breakout",
@@ -73,7 +66,6 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       "@gamehub/game-platform": platformPath,
-      "@games/shared": platformPath,
       "@games/pointclick-engine": pointClickPath,
       "@games/_engine": path.resolve(gamesPath, "_engine"),
       "@games/breakout": path.resolve(gamesPath, "breakout/src"),

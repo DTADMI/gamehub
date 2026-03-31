@@ -1,5 +1,4 @@
 "use client";
-
 import { GameShell } from "@gamehub/game-platform";
 import LocalLeaderboard, { submitLocalScore } from "@gamehub/game-platform/components/games/LocalLeaderboard";
 import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
@@ -7,10 +6,10 @@ import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard"
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const BreakoutGame = dynamic(() => import("@games/breakout").then((m) => m.BreakoutGame), {
+const BreakoutGame = dynamicImport(() => import("@games/breakout").then((m) => m.BreakoutGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -87,4 +86,7 @@ export default function BreakoutGamePage() {
     </GameShell>
   );
 }
+
+
+
 

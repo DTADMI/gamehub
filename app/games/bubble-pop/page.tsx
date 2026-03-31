@@ -1,13 +1,12 @@
 "use client";
-
 import { GameShell } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { useEffect } from "react";
 
-const BubblePopGame = dynamic(() => import("@games/bubble-pop").then((m) => m.BubblePopGame), {
+const BubblePopGame = dynamicImport(() => import("@games/bubble-pop").then((m) => m.BubblePopGame), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center">
@@ -55,4 +54,7 @@ export default function BubblePopPage() {
     </GameShell>
   );
 }
+
+
+
 

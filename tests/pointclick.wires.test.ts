@@ -4,7 +4,7 @@ import {
   createWiresState,
   hasWiresCrossing,
   setWiresConnection,
-} from "@games/shared/pointclick/puzzles/wires";
+} from "@games/pointclick-engine/puzzles/wires";
 
 describe("wires puzzle", () => {
   it("verifies goal connections regardless of order", () => {
@@ -38,3 +38,4 @@ describe("wires puzzle", () => {
     expect(s.solved).toBe(false);
   });
 });
+

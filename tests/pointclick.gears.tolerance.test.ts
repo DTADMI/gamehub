@@ -3,7 +3,7 @@ import {
   createGearsState,
   evaluateGears,
   setGearsTeeth,
-} from "@games/shared/pointclick/puzzles/gears";
+} from "@games/pointclick-engine/puzzles/gears";
 
 describe("gears tolerance edge cases", () => {
   it("solves when ratio within tolerance, fails just outside", () => {
@@ -48,3 +48,4 @@ describe("gears tolerance edge cases", () => {
     expect(s.solved).toBe(true);
   });
 });
+

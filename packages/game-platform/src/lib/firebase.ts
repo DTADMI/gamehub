@@ -39,9 +39,10 @@ export function getFirebaseApp() {
 
 export function getFireStore() {
   const app = getFirebaseApp();
-  return app ? getFirestore(app) : getFirestore();
+  return app ? getFirestore(app) : undefined;
 }
 
 export function getFirebaseAuth() {
-  return getAuth(getFirebaseApp());
+  const app = getFirebaseApp();
+  return app ? getAuth(app) : undefined;
 }

@@ -1,5 +1,6 @@
 import type { FullConfig } from "@playwright/test";
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 
 const DEFAULT_API = "http://localhost:8080/api";
 
@@ -19,6 +20,9 @@ async function isHealthy(baseUrl: string): Promise<boolean> {
 }
 
 function maybeStartFallbackBackend(): void {
+  if (!existsSync("./scripts/dev-backend-fallback.mjs")) {
+    return;
+  }
   // Run the existing helper script which prefers AR image and falls back to Docker Hub
   const result = spawnSync(process.execPath, ["./scripts/dev-backend-fallback.mjs", "--quiet"], {
     stdio: "inherit",

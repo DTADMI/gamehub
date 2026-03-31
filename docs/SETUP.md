@@ -15,6 +15,9 @@ Create `.env.local` and add:
 ```
 NEXT_PUBLIC_SUPABASE_URL="https://YOUR_PROJECT.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY"
+SUPABASE_SERVICE_ROLE_KEY="YOUR_SUPABASE_SERVICE_ROLE_KEY"
+KV_REST_API_URL="https://YOUR_UPSTASH_INSTANCE.upstash.io"
+KV_REST_API_TOKEN="YOUR_UPSTASH_TOKEN"
 ```
 
 Optional social links used in the header:
@@ -39,6 +42,16 @@ To rollback:
 ```bash
 pnpm install
 pnpm dev
+```
+
+## Validation Commands
+
+```bash
+pnpm lint
+pnpm type-check
+pnpm test:unit
+pnpm test:integration
+pnpm test:e2e:smoke
 ```
 
 ## Admin Access

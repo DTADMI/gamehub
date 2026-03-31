@@ -1,8 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import React from "react";
 
-const ToymakerEscape = dynamic(
+const ToymakerEscape = dynamicImport(
   () => import("@games/toymaker-escape").then((m) => m.ToymakerEscapeGame),
   { ssr: false, loading: () => <div className="p-8">Loading…</div> },
 );
@@ -10,3 +10,6 @@ const ToymakerEscape = dynamic(
 export default function ToymakerEscapePage() {
   return <ToymakerEscape />;
 }
+
+
+

@@ -1,8 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import React from "react";
 
-const RiteOfDiscovery = dynamic(
+const RiteOfDiscovery = dynamicImport(
   () => import("@games/rite-of-discovery").then((m) => m.RiteOfDiscoveryGame),
   { ssr: false, loading: () => <div className="p-8">Loading…</div> },
 );
@@ -10,3 +10,6 @@ const RiteOfDiscovery = dynamic(
 export default function RiteOfDiscoveryPage() {
   return <RiteOfDiscovery />;
 }
+
+
+

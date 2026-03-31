@@ -36,14 +36,6 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "packages/game-platform/src") + "/$1",
       },
       {
-        find: "@games/shared",
-        replacement: path.resolve(__dirname, "packages/game-platform/src"),
-      },
-      {
-        find: /^@games\/shared\/(.*)$/,
-        replacement: path.resolve(__dirname, "packages/game-platform/src") + "/$1",
-      },
-      {
         find: "@games/pointclick-engine",
         replacement: path.resolve(__dirname, "packages/pointclick-engine/src"),
       },

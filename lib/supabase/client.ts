@@ -1,5 +1,21 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient as createSupabaseBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 import type { Database } from "./types";
 
-export const createBrowserClient = () => createClientComponentClient<Database>();
+const globalForSupabase = globalThis as unknown as {
+  supabaseClient: SupabaseClient<Database> | undefined;
+};
+
+export function createBrowserClient() {
+  if (globalForSupabase.supabaseClient) {
+    return globalForSupabase.supabaseClient;
+  }
+
+  globalForSupabase.supabaseClient = createSupabaseBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+
+  return globalForSupabase.supabaseClient;
+}

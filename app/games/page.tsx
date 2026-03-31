@@ -52,3 +52,4 @@ export default function GamesPage() {
   return <GamesList games={games} />;
 }
 
+

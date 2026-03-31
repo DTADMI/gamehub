@@ -5,7 +5,7 @@ import {
   setTileRotation,
   type Tile,
   toggleValve,
-} from "@games/shared/pointclick/puzzles/pipes";
+} from "@games/pointclick-engine/puzzles/pipes";
 
 describe("pipes/flow puzzle", () => {
   it("solves a simple straight connection source→sink", () => {
@@ -66,3 +66,4 @@ describe("pipes/flow puzzle", () => {
     expect(s.solved).toBe(true);
   });
 });
+
