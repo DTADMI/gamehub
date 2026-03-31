@@ -13,8 +13,7 @@
     "react-dom": ">=18 <20"
   },
   "dependencies": {
-    "@gamehub/game-platform": "workspace:*",
-    "axios": "^1.13.2"
+    "@gamehub/game-platform": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "19.2.7",

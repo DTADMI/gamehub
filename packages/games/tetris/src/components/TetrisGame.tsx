@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -285,11 +284,17 @@ const TetrisGame = () => {
         return;
       }
 
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/scores`,
-        { gameType: "tetris", score: gameState.score },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/scores`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ gameType: "tetris", score: gameState.score }),
+      });
+      if (!response.ok) {
+        throw new Error(`Score save failed with status ${response.status}`);
+      }
     } catch (error) {
       console.error("Failed to save score:", error);
     }

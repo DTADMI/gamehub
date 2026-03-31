@@ -33,6 +33,7 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     "@gamehub/game-platform",
     "@gamehub/ui",
+    "@games/pointclick-engine",
     "@games/shared",
     "@games/snake",
     "@games/memory",
@@ -49,7 +50,6 @@ const nextConfig: NextConfig = {
     "@react-three/fiber",
     "@react-three/drei",
     "three",
-    "axios",
     "lucide-react",
     "sonner",
     "date-fns",
@@ -69,9 +69,12 @@ const nextConfig: NextConfig = {
     config.resolve = config.resolve || {};
     const gamesPath = path.resolve(__dirname, "packages/games");
     const platformPath = path.resolve(__dirname, "packages/game-platform/src");
+    const pointClickPath = path.resolve(__dirname, "packages/pointclick-engine/src");
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
+      "@gamehub/game-platform": platformPath,
       "@games/shared": platformPath,
+      "@games/pointclick-engine": pointClickPath,
       "@games/_engine": path.resolve(gamesPath, "_engine"),
       "@games/breakout": path.resolve(gamesPath, "breakout/src"),
       "@games/knitzy": path.resolve(gamesPath, "knitzy/src"),
@@ -88,7 +91,6 @@ const nextConfig: NextConfig = {
       three: path.resolve(__dirname, "node_modules/three"),
       "@react-three/fiber": path.resolve(__dirname, "node_modules/@react-three/fiber"),
       "@react-three/drei": path.resolve(__dirname, "node_modules/@react-three/drei"),
-      axios: path.resolve(__dirname, "node_modules/axios"),
       sonner: path.resolve(__dirname, "node_modules/sonner"),
       "date-fns": path.resolve(__dirname, "node_modules/date-fns"),
     };
