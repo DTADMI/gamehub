@@ -28,6 +28,11 @@
     "check:deps": "knip --include dependencies,unlisted,binaries",
     "check:deps:strict": "knip --strict",
     "check:env": "node scripts/validate-env.mjs",
+    "audit:outdated": "node scripts/run-outdated-audit.mjs",
+    "audit:deps:graph": "node scripts/export-dependency-graph.mjs",
+    "audit:module-replacements": "node scripts/module-replacements-audit.mjs",
+    "audit:e18e": "node scripts/run-e18e-audit.mjs",
+    "audit:all": "pnpm audit:outdated && pnpm audit:deps:graph && pnpm audit:module-replacements && pnpm audit:e18e && pnpm check:deps",
     "smoke": "node scripts/smoke-test.mjs",
     "clean": "rimraf .next out coverage test-results playwright-report"
   },
