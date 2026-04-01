@@ -70,8 +70,8 @@ export default function HomePage() {
           <section className="rounded-xl p-0">
             <h2 className="text-foreground mb-6 text-2xl font-semibold">{copy.featuredGames}</h2>
             <Carousel>
-              {featured.map((game) => (
-                <GameCard key={game.id} game={game} featured />
+              {featured.map((game, index) => (
+                <GameCard key={game.id} game={game} featured priorityImage={index === 0} />
               ))}
             </Carousel>
           </section>

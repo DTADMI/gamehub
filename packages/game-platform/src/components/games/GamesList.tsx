@@ -62,7 +62,7 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
         )}
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {games.map((game) => (
+          {games.map((game, index) => (
             <div key={game.id}>
               {game.playable ? (
                 <Link
@@ -74,6 +74,8 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
                       src={game.image}
                       alt={game.title}
                       fill
+                      priority={index === 0}
+                      loading={index === 0 ? "eager" : "lazy"}
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
@@ -113,6 +115,8 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
                       src={game.image}
                       alt={game.title}
                       fill
+                      priority={index === 0}
+                      loading={index === 0 ? "eager" : "lazy"}
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />

@@ -3,7 +3,7 @@ import { Github, Linkedin } from "lucide-react";
 
 import { GITHUB_URL, LINKEDIN_URL } from "@gamehub/game-platform";
 
-import { createServerClient } from "@/lib/supabase/server";
+import { getVisibleResumeSections } from "@/lib/content-cache";
 import type { Database } from "@/lib/supabase/types";
 
 type ResumeSection = Database["public"]["Tables"]["resume_sections"]["Row"];
@@ -14,13 +14,7 @@ export const metadata = {
 };
 
 export default async function ResumePage() {
-  const supabase = (await createServerClient()) as any;
-  const { data: sectionsRaw } = await supabase
-    .from("resume_sections")
-    .select("*")
-    .eq("visible", true)
-    .order("sort_order", { ascending: true });
-  const sections = (sectionsRaw ?? []) as ResumeSection[];
+  const sections = (await getVisibleResumeSections()) as ResumeSection[];
 
   return (
     <div className="container mx-auto space-y-10 px-4 py-10">

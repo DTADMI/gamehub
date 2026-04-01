@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 
+import { getPublishedPosts } from "@/lib/content-cache";
 import { getServerLocale } from "@/lib/server-locale";
 import { siteCopy } from "@/lib/site-copy";
-import { createServerClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/types";
 
 type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
@@ -17,15 +17,7 @@ export const metadata = {
 export default async function BlogPage() {
   const locale = await getServerLocale();
   const copy = siteCopy[locale].blog;
-
-  const supabase = (await createServerClient()) as any;
-  const { data: postsRaw } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
-
-  const posts = (postsRaw ?? []) as BlogPost[];
+  const posts = (await getPublishedPosts()) as BlogPost[];
   const featured = posts.find((post) => post.featured) ?? posts[0] ?? null;
   const remaining = posts.filter((post) => post.id !== featured?.id);
 

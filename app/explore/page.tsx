@@ -53,16 +53,16 @@ export default function ExplorePage() {
             <Carousel>
               {allGames
                 .filter((game) => game.featured)
-                .map((game) => (
-                  <GameCard key={game.id} game={game} featured />
+                .map((game, index) => (
+                  <GameCard key={game.id} game={game} featured priorityImage={index === 0} />
                 ))}
             </Carousel>
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {allGames
                 .filter((game) => game.featured)
-                .map((game) => (
-                  <GameCard key={game.id} game={game} featured />
+                .map((game, index) => (
+                  <GameCard key={game.id} game={game} featured priorityImage={index === 0} />
                 ))}
             </div>
           )}

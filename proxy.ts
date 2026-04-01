@@ -2,9 +2,26 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
+
 export async function proxy(request: NextRequest) {
   if (!request.nextUrl.pathname.startsWith("/admin")) {
     return NextResponse.next();
+  }
+
+  const ip = clientIpFromHeaders(request.headers);
+  const throttle = await rateLimit({
+    key: `admin:path:${ip}`,
+    windowMs: 60_000,
+    limit: 120,
+  });
+  if (!throttle.allowed) {
+    return new NextResponse("Too many requests", {
+      status: 429,
+      headers: {
+        "Retry-After": String(Math.max(1, Math.ceil((throttle.resetAt - Date.now()) / 1000))),
+      },
+    });
   }
 
   if (request.nextUrl.pathname.startsWith("/admin/sign-in")) {

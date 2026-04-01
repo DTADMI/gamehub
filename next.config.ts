@@ -1,6 +1,18 @@
 import type { NextConfig } from "next";
 import path from "path";
 
+const supabaseHost = (() => {
+  const raw = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!raw) {
+    return null;
+  }
+  try {
+    return new URL(raw).hostname;
+  } catch {
+    return null;
+  }
+})();
+
 // Central Next.js config (single source of truth)
 const nextConfig: NextConfig = {
   // Prefer standalone when building in Docker runtime
@@ -53,7 +65,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "via.placeholder.com" },
-      { protocol: "https", hostname: "*" },
+      ...(supabaseHost ? [{ protocol: "https" as const, hostname: supabaseHost }] : []),
     ],
   },
 
@@ -107,16 +119,22 @@ const nextConfig: NextConfig = {
     // Allow Google Fonts when used by older pages; next/font is self-hosted and works with 'self'
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https: http:",
+      "connect-src 'self' https:",
       "frame-ancestors 'self'",
       "base-uri 'self'",
+      "object-src 'none'",
+      "form-action 'self'",
     ].join("; ");
 
     return [
+      {
+        source: "/images/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
       {
         source: "/:path*",
         headers: [

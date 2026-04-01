@@ -10,8 +10,25 @@ type RedisLike = {
 
 class MemoryRedis implements RedisLike {
   private store = new Map<string, string>();
+  private expiresAt = new Map<string, number>();
+
+  private isExpired(key: string) {
+    const expires = this.expiresAt.get(key);
+    if (!expires) {
+      return false;
+    }
+    if (Date.now() >= expires) {
+      this.store.delete(key);
+      this.expiresAt.delete(key);
+      return true;
+    }
+    return false;
+  }
 
   async get<T>(key: string) {
+    if (this.isExpired(key)) {
+      return null;
+    }
     const raw = this.store.get(key);
     if (!raw) {
       return null;
@@ -23,12 +40,18 @@ class MemoryRedis implements RedisLike {
     }
   }
 
-  async set(key: string, value: unknown, _opts?: { ex?: number }) {
+  async set(key: string, value: unknown, opts?: { ex?: number }) {
     this.store.set(key, JSON.stringify(value));
+    if (opts?.ex && Number.isFinite(opts.ex)) {
+      this.expiresAt.set(key, Date.now() + opts.ex * 1000);
+    } else {
+      this.expiresAt.delete(key);
+    }
   }
 
   async del(key: string) {
     this.store.delete(key);
+    this.expiresAt.delete(key);
   }
 
   async incr(key: string) {

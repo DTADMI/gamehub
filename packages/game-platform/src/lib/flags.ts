@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * Simple feature flag reader for the frontend.
@@ -9,28 +9,30 @@ import { useEffect, useState } from "react";
  */
 export function useFeature(flag: string, defaultValue = false, opts?: { preferBackend?: boolean }) {
   const preferBackend = opts?.preferBackend ?? false;
-  const [value, setValue] = useState<boolean>(() => readEnv(flag, defaultValue));
+  const fallbackValue = readEnv(flag, defaultValue);
+  const api = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:8080/api";
 
-  useEffect(() => {
-    if (!preferBackend) {
-      return;
-    }
-    // Try to read from backend (best effort)
-    const api = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:8080/api";
-    fetch(`${api}/features`)
-      .then(async (res) => {
-        if (!res.ok) {
-          return;
-        }
-        const json = await res.json();
-        if (typeof json?.[flag] === "boolean") {
-          setValue(Boolean(json[flag]));
-        }
-      })
-      .catch(() => void 0);
-  }, [flag, preferBackend]);
+  const { data } = useQuery<Record<string, unknown> | null>({
+    queryKey: ["feature-flags", api],
+    enabled: preferBackend,
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
+    retry: 1,
+    queryFn: async () => {
+      const res = await fetch(`${api}/features`);
+      if (!res.ok) {
+        return null;
+      }
+      const json = (await res.json()) as Record<string, unknown>;
+      return json;
+    },
+  });
 
-  return value;
+  if (preferBackend && typeof data?.[flag] === "boolean") {
+    return Boolean(data[flag]);
+  }
+
+  return fallbackValue;
 }
 
 export function readEnv(flag: string, defaultValue = false): boolean {

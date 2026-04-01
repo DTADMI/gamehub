@@ -1,9 +1,30 @@
 import { NextResponse } from "next/server";
 
+import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { redis } from "@/lib/redis";
 import { createServerClient } from "@/lib/supabase/server";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const ip = clientIpFromHeaders(request.headers);
+  const limit = await rateLimit({
+    key: `api:health:${ip}`,
+    windowMs: 60_000,
+    limit: 60,
+  });
+
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { status: "rate_limited", message: "Too many requests" },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(Math.max(1, Math.ceil((limit.resetAt - Date.now()) / 1000))),
+          "Cache-Control": "no-store",
+        },
+      },
+    );
+  }
+
   const checks = {
     app: "ok",
     redis: "degraded",
@@ -38,6 +59,11 @@ export async function GET() {
       checks: { ...checks, redis: redisStatus, supabase: supabaseStatus },
       timestamp: new Date().toISOString(),
     },
-    { status: 200 },
+    {
+      status: 200,
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    },
   );
 }
