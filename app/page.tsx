@@ -1,6 +1,7 @@
 "use client";
 
 import { Carousel, GameCard } from "@gamehub/game-platform";
+import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import type { GameEntry } from "@gamehub/game-platform/metadata/games";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
@@ -25,6 +26,7 @@ type HomeGame = {
 };
 
 export default function HomePage() {
+  const { flags } = useFlags();
   const { locale } = useSiteLocale();
   const copy = siteCopy[locale].home;
   const { data: gamesData, isError: gamesError } = useGamesManifest();
@@ -57,10 +59,14 @@ export default function HomePage() {
     <div className="min-h-screen">
       <main className="flex-1">
         <div className="space-y-10 px-6 py-6 md:px-8">
-          <section className="surface rounded-xl p-6">
+          <section className={`surface rounded-xl p-6 ${flags.ui.animatedHero ? "animate-fade-in-up" : ""}`}>
             <div className="max-w-4xl">
-              <h1 className="text-foreground mb-4 text-4xl font-bold text-balance">{copy.title}</h1>
-              <p className="text-muted-foreground mb-6 text-lg text-pretty">{copy.subtitle}</p>
+              <h1 className={`text-foreground mb-4 text-4xl font-bold text-balance ${flags.ui.animatedHero ? "animate-fade-in-up" : ""}`}>
+                {copy.title}
+              </h1>
+              <p className={`text-muted-foreground mb-6 text-lg text-pretty ${flags.ui.animatedHero ? "animate-fade-in-up animation-delay-100" : ""}`}>
+                {copy.subtitle}
+              </p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild size="lg" className="gap-2">
                   <Link href="/explore">
@@ -97,9 +103,9 @@ export default function HomePage() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 3 }).map((_, index) => (
                   <div key={`game-skeleton-${index}`} className="space-y-3">
-                    <Skeleton className="aspect-[16/9] w-full rounded-md" />
-                    <Skeleton className="h-5 w-2/3" />
-                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className={`aspect-[16/9] w-full rounded-md ${flags.ui.shimmerSkeletons ? "animate-shimmer" : ""}`} />
+                    <Skeleton className={`h-5 w-2/3 ${flags.ui.shimmerSkeletons ? "animate-shimmer" : ""}`} />
+                    <Skeleton className={`h-4 w-full ${flags.ui.shimmerSkeletons ? "animate-shimmer" : ""}`} />
                   </div>
                 ))}
               </div>
@@ -171,9 +177,9 @@ export default function HomePage() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 3 }).map((_, index) => (
                   <div key={`project-skeleton-${index}`} className="space-y-3">
-                    <Skeleton className="aspect-[16/9] w-full rounded-md" />
-                    <Skeleton className="h-5 w-1/2" />
-                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className={`aspect-[16/9] w-full rounded-md ${flags.ui.shimmerSkeletons ? "animate-shimmer" : ""}`} />
+                    <Skeleton className={`h-5 w-1/2 ${flags.ui.shimmerSkeletons ? "animate-shimmer" : ""}`} />
+                    <Skeleton className={`h-4 w-full ${flags.ui.shimmerSkeletons ? "animate-shimmer" : ""}`} />
                   </div>
                 ))}
               </div>

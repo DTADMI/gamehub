@@ -19,6 +19,7 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | Leaderboard auth gating | DONE | `/leaderboard` now requires signed-in session to access ranking preview content |
 | Admin feature-flag pilot UI | DONE | `/admin/flags` now controls local rollout toggles |
 | Local CI parity gate | DONE | Pre-push now runs `pnpm ci:local` to mirror pipeline checks |
+| UI/UX recommendation integration pass | DONE | Enhanced cards/carousel + hero/loading feedback + leaderboard teaser integrated in active runtime files |
 
 ## Remaining Gaps and Tasks
 
@@ -29,6 +30,7 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | P1 | Server-backed feature flag persistence | Flags are currently browser-local | Move flags to Supabase table + audited admin API + RLS policy | NEXT |
 | P2 | Real leaderboard backend | Current leaderboard is signed-in preview UI | Implement score ingestion + ranking retrieval with anti-abuse controls | NEXT |
 | P3 | Feature flag management UI | Operational toggles still code/env driven | Expand `/admin/flags` to environment-scoped persistent controls | IN_PROGRESS |
+| P1 | Post-game completion CTA modal integration | Auth CTA exists on game pages but not yet on completion events | Add shared completion contract in games and wire modal display | NEXT |
 
 ## Recommendations
 

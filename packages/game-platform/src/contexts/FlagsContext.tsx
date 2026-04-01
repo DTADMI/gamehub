@@ -9,9 +9,21 @@ type Flags = {
   sdBodMove: boolean;
   sdBodSignal: boolean;
   sdBodGrow: boolean;
-  // Admin/UI seam: allow Upcoming games to be playable locally without rebuilds
-  ui?: {
-    allowPlayUpcomingLocal?: boolean;
+  ui: {
+    // Admin/UI seam: allow upcoming games to be playable locally without rebuilds
+    allowPlayUpcomingLocal: boolean;
+    enhancedGameCards: boolean;
+    enhancedCarousel: boolean;
+    shimmerSkeletons: boolean;
+    animatedHero: boolean;
+    postGameAuthCTA: boolean;
+  };
+  auth: {
+    leaderboardGuestTeaser: boolean;
+    postGameCTAFrequency: "always" | "occasional" | "rare" | "never";
+  };
+  games: {
+    socialShare: boolean;
   };
 };
 
@@ -22,7 +34,21 @@ const DEFAULT_FLAGS: Flags = {
   sdBodMove: true,
   sdBodSignal: true,
   sdBodGrow: true,
-  ui: { allowPlayUpcomingLocal: false },
+  ui: {
+    allowPlayUpcomingLocal: false,
+    enhancedGameCards: true,
+    enhancedCarousel: true,
+    shimmerSkeletons: true,
+    animatedHero: true,
+    postGameAuthCTA: true,
+  },
+  auth: {
+    leaderboardGuestTeaser: true,
+    postGameCTAFrequency: "occasional",
+  },
+  games: {
+    socialShare: false,
+  },
 };
 
 const STORAGE_KEY = "gh:flags:v1";
@@ -38,13 +64,30 @@ const FlagsContext = createContext<FlagsContextValue | null>(null);
 export function FlagsProvider({ children }: { children: React.ReactNode }) {
   const [flags, setFlags] = useState<Flags>(DEFAULT_FLAGS);
 
+  const mergeWithDefaults = (next: Partial<Flags>): Flags => ({
+    ...DEFAULT_FLAGS,
+    ...next,
+    ui: {
+      ...DEFAULT_FLAGS.ui,
+      ...(next.ui ?? {}),
+    },
+    auth: {
+      ...DEFAULT_FLAGS.auth,
+      ...(next.auth ?? {}),
+    },
+    games: {
+      ...DEFAULT_FLAGS.games,
+      ...(next.games ?? {}),
+    },
+  });
+
   // load
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw);
-        setFlags({ ...DEFAULT_FLAGS, ...parsed });
+        const parsed = JSON.parse(raw) as Partial<Flags>;
+        setFlags(mergeWithDefaults(parsed));
       }
     } catch {}
   }, []);

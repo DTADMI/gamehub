@@ -1,9 +1,12 @@
 "use client";
 import { GameShell, getGame } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
+import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 import dynamicImport from "next/dynamic";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -11,6 +14,7 @@ type PageProps = { params: { slug: string } };
 
 export default function GameLauncherPage({ params }: PageProps) {
   const { flags } = useFlags();
+  const { user } = useAuth();
   const { slug } = params;
   const entry = getGame(slug);
   if (!entry) {
@@ -70,6 +74,23 @@ export default function GameLauncherPage({ params }: PageProps) {
       {entry.slug === "breakout" ? (
         <div className="px-4">
           <MiniBoard gameType="BREAKOUT" limit={10} />
+        </div>
+      ) : null}
+      {!user ? (
+        <div className="px-4 pb-6">
+          <Card className="bg-card/80">
+            <CardHeader>
+              <CardTitle className="text-base">Save your progress and unlock rankings</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-3">
+              <Button asChild size="sm">
+                <Link href={`/auth?redirect=/games/${entry.slug}`}>Create account</Link>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href={`/auth?redirect=/games/${entry.slug}`}>Sign in</Link>
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       ) : null}
     </GameShell>

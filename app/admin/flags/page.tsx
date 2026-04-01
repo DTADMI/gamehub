@@ -88,6 +88,101 @@ export default function AdminFlagsPage() {
             />
           </div>
 
+          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
+            <div className="space-y-1">
+              <p className="font-medium">Enhanced game cards</p>
+              <p className="text-muted-foreground text-xs">
+                Enables animated card visuals and richer card metadata on home and explore pages.
+              </p>
+            </div>
+            <Switch
+              checked={Boolean(flags.ui?.enhancedGameCards)}
+              onCheckedChange={(nextValue) =>
+                setFlag("ui", {
+                  ...flags.ui,
+                  enhancedGameCards: Boolean(nextValue),
+                })
+              }
+              aria-label="Enhanced game cards"
+            />
+          </div>
+
+          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
+            <div className="space-y-1">
+              <p className="font-medium">Enhanced carousel</p>
+              <p className="text-muted-foreground text-xs">
+                Enables carousel dots, keyboard navigation, and optional autoplay behavior.
+              </p>
+            </div>
+            <Switch
+              checked={Boolean(flags.ui?.enhancedCarousel)}
+              onCheckedChange={(nextValue) =>
+                setFlag("ui", {
+                  ...flags.ui,
+                  enhancedCarousel: Boolean(nextValue),
+                })
+              }
+              aria-label="Enhanced carousel"
+            />
+          </div>
+
+          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
+            <div className="space-y-1">
+              <p className="font-medium">Hero animation</p>
+              <p className="text-muted-foreground text-xs">
+                Enables progressive entry animations for homepage hero and related call-to-action blocks.
+              </p>
+            </div>
+            <Switch
+              checked={Boolean(flags.ui?.animatedHero)}
+              onCheckedChange={(nextValue) =>
+                setFlag("ui", {
+                  ...flags.ui,
+                  animatedHero: Boolean(nextValue),
+                })
+              }
+              aria-label="Hero animation"
+            />
+          </div>
+
+          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
+            <div className="space-y-1">
+              <p className="font-medium">Shimmer loading states</p>
+              <p className="text-muted-foreground text-xs">
+                Uses shimmer skeletons for game and project loading placeholders.
+              </p>
+            </div>
+            <Switch
+              checked={Boolean(flags.ui?.shimmerSkeletons)}
+              onCheckedChange={(nextValue) =>
+                setFlag("ui", {
+                  ...flags.ui,
+                  shimmerSkeletons: Boolean(nextValue),
+                })
+              }
+              aria-label="Shimmer loading states"
+            />
+          </div>
+
+          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
+            <div className="space-y-1">
+              <p className="font-medium">Leaderboard guest teaser</p>
+              <p className="text-muted-foreground text-xs">
+                Shows a blurred leaderboard preview with contextual sign-in call-to-action to guests.
+              </p>
+            </div>
+            <Switch
+              checked={Boolean(flags.auth?.leaderboardGuestTeaser)}
+              onCheckedChange={(nextValue) =>
+                setFlag("auth", {
+                  ...flags.auth,
+                  leaderboardGuestTeaser: Boolean(nextValue),
+                })
+              }
+              aria-label="Leaderboard guest teaser"
+            />
+          </div>
+
           <div className="pt-2">
             <Button variant="outline" onClick={reset}>
               Reset to defaults
