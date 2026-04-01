@@ -1,5 +1,4 @@
 export type ProjectSlug =
-  | "gamehub"
   | "story-forge"
   | "quest-hunt"
   | "libra-keeper"
@@ -11,7 +10,10 @@ export type ProjectEntry = {
   shortDescription: string;
   tags: string[];
   image: string;
-  repo: string;
+  repoUrl: string;
+  websiteUrl?: string;
+  repoVisibility: "public" | "private";
+  deployed: boolean;
   featured?: boolean;
   enabled?: boolean;
   visible?: boolean;
@@ -21,29 +23,20 @@ export type ProjectEntry = {
 export type ProjectManifest = Record<ProjectSlug, ProjectEntry>;
 
 export const projects: ProjectManifest = {
-  gamehub: {
-    slug: "gamehub",
-    title: "GameHub",
-    shortDescription:
-      "Unified platform hosting 15+ interactive games with shared UI, performance tuning, and real-time features.",
-    tags: ["Platform", "Games", "Monorepo", "Next.js"],
-    image: "https://picsum.photos/seed/gamehub/1280/1280",
-    repo: "https://github.com/DTADMI/gamehub-app",
-    featured: true,
-    enabled: true,
-    visible: true,
-  },
   "story-forge": {
     slug: "story-forge",
     title: "StoryForge",
     shortDescription:
       "Gamified writing platform with world-building tools, versioning, and habit-building loops.",
     tags: ["Writing", "Gamification", "Productivity"],
-    image: "https://picsum.photos/seed/story-forge/1280/1280",
-    repo: "https://github.com/DTADMI/story-forge",
+    image: "/images/projects/story-forge-card.svg",
+    repoUrl: "https://github.com/DTADMI/story-forge",
+    repoVisibility: "public",
+    deployed: false,
     featured: true,
     enabled: true,
     visible: true,
+    upcoming: true,
   },
   "quest-hunt": {
     slug: "quest-hunt",
@@ -51,11 +44,15 @@ export const projects: ProjectManifest = {
     shortDescription:
       "Mobile-first geocaching experience with social quests, live maps, and progress tracking.",
     tags: ["Geocaching", "Social", "Mobile"],
-    image: "https://picsum.photos/seed/quest-hunt/1280/1280",
-    repo: "https://github.com/DTADMI/quest-hunt",
+    image: "/images/projects/quest-hunt-card.svg",
+    repoUrl: "https://github.com/DTADMI/quest-hunt-web",
+    websiteUrl: "https://questhunt.app",
+    repoVisibility: "private",
+    deployed: true,
     featured: true,
     enabled: true,
     visible: true,
+    upcoming: false,
   },
   "libra-keeper": {
     slug: "libra-keeper",
@@ -63,11 +60,14 @@ export const projects: ProjectManifest = {
     shortDescription:
       "Personal library manager with cataloging, lending workflows, and multilingual support.",
     tags: ["Library", "Management", "PWA"],
-    image: "https://picsum.photos/seed/libra-keeper/1280/1280",
-    repo: "https://github.com/DTADMI/libra-keeper",
+    image: "/images/projects/libra-keeper-card.svg",
+    repoUrl: "https://github.com/DTADMI/libra-keep",
+    repoVisibility: "public",
+    deployed: false,
     featured: false,
     enabled: true,
     visible: true,
+    upcoming: true,
   },
   "velvet-galaxy": {
     slug: "velvet-galaxy",
@@ -75,11 +75,14 @@ export const projects: ProjectManifest = {
     shortDescription:
       "Customizable social network focused on community curation and fine-grained interaction controls.",
     tags: ["Social", "Community", "Next.js"],
-    image: "https://picsum.photos/seed/velvet-galaxy/1280/1280",
-    repo: "https://github.com/DTADMI/velvet-galaxy",
+    image: "/images/projects/velvet-galaxy-card.svg",
+    repoUrl: "https://github.com/DTADMI/velvet-galaxy",
+    repoVisibility: "public",
+    deployed: false,
     featured: false,
     enabled: true,
     visible: true,
+    upcoming: true,
   },
 };
 

@@ -1,11 +1,14 @@
 "use client";
 
-import { Carousel, GameCard, listGames, listProjects } from "@gamehub/game-platform";
+import { Carousel, GameCard } from "@gamehub/game-platform";
+import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import { Button } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
+import { useGamesManifest, useProjectsManifest } from "@/lib/portfolio-queries";
 import { siteCopy } from "@/lib/site-copy";
 
 type HomeGame = {
@@ -21,8 +24,10 @@ type HomeGame = {
 export default function HomePage() {
   const { locale } = useSiteLocale();
   const copy = siteCopy[locale].home;
+  const { data: games = [] } = useGamesManifest();
+  const { data: projects = [] } = useProjectsManifest();
 
-  const entries = listGames().filter((e) => e.visible !== false);
+  const entries = games.filter((e) => e.visible !== false);
   const allGames: HomeGame[] = entries.map((e) => ({
     id: e.slug,
     title: e.title,
@@ -30,10 +35,12 @@ export default function HomePage() {
     image: e.image,
     tags: e.tags,
     slug: e.slug,
-    featured: e.enabled !== false && !e.upcoming,
+    featured: e.enabled !== false && !e.upcoming && isGameLaunchable(e),
   }));
   const featured = allGames.filter((g) => g.featured);
-  const featuredProjects = listProjects().filter((p) => p.featured && p.visible !== false);
+  const featuredProjects = projects.filter(
+    (p) => p.featured && p.visible !== false && p.enabled !== false,
+  );
 
   return (
     <div className="min-h-screen">
@@ -73,26 +80,53 @@ export default function HomePage() {
             <h2 className="text-foreground mb-6 text-2xl font-semibold">{copy.featuredProjects}</h2>
             <Carousel>
               {featuredProjects.map((p) => (
-                <a
-                  key={p.slug}
-                  href={p.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="focus-visible:ring-primary block h-full rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                  aria-label={`Open project ${p.title}`}
-                >
-                  <div className="group flex h-full flex-col overflow-hidden rounded-lg shadow transition-all duration-300 hover:shadow-lg">
-                    <div className="bg-muted/30 relative aspect-[16/9] w-full">
-                      <img src={p.image} alt={p.title} className="h-full w-full object-cover" />
-                    </div>
-                    <div className="bg-card/80 text-card-foreground flex flex-1 flex-col p-4 backdrop-blur-sm">
-                      <h3 className="mb-1 text-lg font-semibold">{p.title}</h3>
-                      <p className="text-muted-foreground line-clamp-2 text-sm">
-                        {p.shortDescription}
-                      </p>
+                <article key={p.slug} className="group flex h-full flex-col overflow-hidden rounded-lg shadow transition-all duration-300 hover:shadow-lg">
+                  <div className="bg-muted/30 relative aspect-[16/9] w-full">
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      fill
+                      className="h-full w-full object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    />
+                  </div>
+                  <div className="bg-card/80 text-card-foreground flex flex-1 flex-col gap-3 p-4 backdrop-blur-sm">
+                    <h3 className="mb-1 text-lg font-semibold">{p.title}</h3>
+                    <p className="text-muted-foreground line-clamp-2 text-sm">{p.shortDescription}</p>
+                    <div className="mt-auto flex gap-2">
+                      <Button
+                        asChild={p.repoVisibility === "public"}
+                        size="sm"
+                        variant={p.repoVisibility === "public" ? "outline" : "secondary"}
+                        className="flex-1"
+                        disabled={p.repoVisibility !== "public"}
+                      >
+                        {p.repoVisibility === "public" ? (
+                          <a href={p.repoUrl} target="_blank" rel="noreferrer">
+                            GitHub repo
+                          </a>
+                        ) : (
+                          <span>Private repo</span>
+                        )}
+                      </Button>
+                      <Button
+                        asChild={p.deployed && !!p.websiteUrl}
+                        size="sm"
+                        className="flex-1"
+                        variant={p.deployed ? "default" : "secondary"}
+                        disabled={!p.deployed || !p.websiteUrl}
+                      >
+                        {p.deployed && p.websiteUrl ? (
+                          <a href={p.websiteUrl} target="_blank" rel="noreferrer">
+                            Website
+                          </a>
+                        ) : (
+                          <span>Coming soon</span>
+                        )}
+                      </Button>
                     </div>
                   </div>
-                </a>
+                </article>
               ))}
             </Carousel>
           </section>

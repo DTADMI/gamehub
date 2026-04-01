@@ -1,20 +1,19 @@
-// frontend/app/games/page.tsx
 "use client";
 
-import { listGames } from "@gamehub/game-platform";
 import GamesList from "@gamehub/game-platform/components/games/GamesList";
-import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
+import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
-import React from "react";
 
+import { useGamesManifest } from "@/lib/portfolio-queries";
 import { siteCopy } from "@/lib/site-copy";
 
 export default function GamesPage() {
   const { flags } = useFlags();
   const { locale } = useSiteLocale();
-  // Map manifest entries into the GamesList shape, overriding image from lib/games.ts when available
-  const entries = listGames().filter((e) => e.visible !== false);
+  const { data: manifest = [] } = useGamesManifest();
+
+  const entries = manifest.filter((entry) => entry.visible !== false);
   const isNonProd =
     typeof window !== "undefined" &&
     (process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_E2E === "true");
@@ -24,36 +23,44 @@ export default function GamesPage() {
       isNonProd) ||
     !!flags.ui?.allowPlayUpcomingLocal;
 
-  const games: any[] = entries.map((e) => {
-    // Determine if an upcoming game should be playable in local/dev
+  type GamesListItem = {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    tags: string[];
+    playable?: boolean;
+    devPlayable?: boolean;
+  };
+
+  const games: GamesListItem[] = entries.map((entry) => {
     const devPlayable = Boolean(
-      e.upcoming && e.enabled === false && enableUpcomingLocal && isGameLaunchable(e),
+      entry.upcoming && entry.enabled === false && enableUpcomingLocal && isGameLaunchable(entry),
     );
+
     return {
-      id: e.slug,
-      title: e.title,
-      description: e.shortDescription,
-      image: e.image,
-      tags: e.tags,
-      // GamesList treats `featured` as "playable now"
-      featured: (e.enabled !== false && !e.upcoming) || devPlayable,
+      id: entry.slug,
+      title: entry.title,
+      description: entry.shortDescription,
+      image: entry.image,
+      tags: entry.tags,
+      playable:
+        (entry.enabled !== false && !entry.upcoming && isGameLaunchable(entry)) || devPlayable,
       devPlayable,
     };
   });
-  // Optionally expose Systems Discovery — Body Systems as a separate card via flags
+
   if (flags.sdBodEnabled) {
     games.push({
       id: "systems-discovery?pack=breath",
-      title: "Systems Discovery — Body Systems",
+      title: "Systems Discovery - Body Systems",
       description:
-        "Explore the Body Systems sub‑packs (Breath, Fuel, Move, Signal & Defend, Grow).",
-      image: "https://picsum.photos/seed/systems-discovery-body/1280/1280",
+        "Explore the Body Systems sub-packs (Breath, Fuel, Move, Signal and Defend, Grow).",
+      image: "/images/games/systems-discovery-card.svg",
       tags: ["Educational", "Packs", "Accessible"],
-      featured: true,
+      playable: true,
     });
   }
 
   return <GamesList games={games} copy={siteCopy[locale].games} />;
 }
-
-

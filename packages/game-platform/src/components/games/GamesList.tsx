@@ -11,7 +11,7 @@ interface Game {
   description: string;
   image: string;
   tags: string[];
-  featured?: boolean;
+  playable?: boolean;
   devPlayable?: boolean;
 }
 
@@ -63,24 +63,59 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {games.map((game) => (
-            <div
-              key={game.id}
-              className="group bg-card text-card-foreground relative overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl"
-            >
-              <div className="relative h-48 w-full">
-                <Image
-                  src={game.image}
-                  alt={game.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                {game.featured ? (
-                  <div className="absolute top-2 right-2 rounded-full bg-green-500 px-2.5 py-1 text-xs font-bold text-white">
-                    {copy.featured}
+            <div key={game.id}>
+              {game.playable ? (
+                <Link
+                  href={`/games/${game.id}`}
+                  className="group bg-card text-card-foreground relative block overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl"
+                >
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={game.image}
+                      alt={game.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute top-2 right-2 rounded-full bg-green-500 px-2.5 py-1 text-xs font-bold text-white">
+                      {copy.featured}
+                    </div>
                   </div>
-                ) : (
-                  <>
+                  <div className="p-6">
+                    <div className="mb-2 flex items-center justify-between">
+                      <h3 className="text-card-foreground text-xl font-bold">{game.title}</h3>
+                      <div className="flex flex-wrap justify-end gap-1">
+                        {game.devPlayable && (
+                          <span className="inline-flex items-center rounded-full bg-purple-600 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                            {copy.devPlayable}
+                          </span>
+                        )}
+                        {game.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="bg-accent/15 text-foreground inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground mb-2">{game.description}</p>
+                    <span className="bg-primary text-primary-foreground inline-flex items-center rounded-md px-4 py-2 text-sm font-medium">
+                      {copy.playNow}
+                    </span>
+                  </div>
+                </Link>
+              ) : (
+                <div className="group bg-card text-card-foreground relative overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl">
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={game.image}
+                      alt={game.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                     <div className="absolute top-2 right-2 rounded-full bg-yellow-400 px-2.5 py-1 text-xs font-bold text-yellow-900">
                       {copy.upcoming}
                     </div>
@@ -89,57 +124,31 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
                         {copy.comingSoon}
                       </span>
                     </div>
-                  </>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="text-card-foreground text-xl font-bold">{game.title}</h3>
-                  <div className="flex flex-wrap justify-end gap-1">
-                    {game.devPlayable && (
-                      <span className="inline-flex items-center rounded-full bg-purple-600 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                        {copy.devPlayable}
-                      </span>
-                    )}
-                    {game.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-accent/15 text-foreground inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  </div>
+                  <div className="p-6">
+                    <div className="mb-2 flex items-center justify-between">
+                      <h3 className="text-card-foreground text-xl font-bold">{game.title}</h3>
+                      <div className="flex flex-wrap justify-end gap-1">
+                        {game.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="bg-accent/15 text-foreground inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground mb-4">{game.description}</p>
+                    <button
+                      disabled
+                      className="inline-flex cursor-not-allowed items-center rounded-md border border-transparent bg-gray-400 px-4 py-2 text-sm font-medium text-white shadow-sm"
+                    >
+                      {copy.comingSoon}
+                    </button>
                   </div>
                 </div>
-                <p className="text-muted-foreground mb-4">{game.description}</p>
-                {!game.featured ? (
-                  <button
-                    disabled
-                    className="inline-flex cursor-not-allowed items-center rounded-md border border-transparent bg-gray-400 px-4 py-2 text-sm font-medium text-white shadow-sm"
-                  >
-                    {copy.comingSoon}
-                  </button>
-                ) : (
-                  <Link
-                    href={`/games/${game.id}`}
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none"
-                  >
-                    {copy.playNow}
-                    <svg
-                      className="-mr-1 ml-2 h-4 w-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </Link>
-                )}
-              </div>
+              )}
             </div>
           ))}
         </div>
