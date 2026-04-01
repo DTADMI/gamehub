@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
 interface User {
   id: string;
@@ -17,13 +18,46 @@ interface AuthContextType {
   isLoading: boolean;
   signin: (emailOrUsername: string, password: string) => Promise<void>;
   signup: (email: string, username: string, password: string) => Promise<void>;
-  signout: () => void;
+  signout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey, {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true,
+        },
+      })
+    : null;
+
+function mapUser(raw: {
+  id: string;
+  email?: string | null;
+  user_metadata?: Record<string, unknown> | null;
+}): User {
+  const usernameFromMeta = raw.user_metadata?.username;
+  const username =
+    typeof usernameFromMeta === "string" && usernameFromMeta.trim().length > 0
+      ? usernameFromMeta
+      : (raw.email ?? "").split("@")[0] || "player";
+
+  return {
+    id: raw.id,
+    email: raw.email ?? "",
+    username,
+    isAdmin: false,
+    uid: raw.id,
+    displayName: username,
+  };
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -31,100 +65,143 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Load token from localStorage on mount
-    const storedToken = localStorage.getItem("auth_token");
-    if (storedToken) {
-      setToken(storedToken);
-      fetchUser(storedToken);
-    } else {
+    if (!supabase) {
+      setUser(null);
+      setToken(null);
       setIsLoading(false);
+      return;
     }
+
+    let mounted = true;
+
+    const boot = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (!mounted) {
+        return;
+      }
+
+      if (error || !data.session) {
+        setUser(null);
+        setToken(null);
+        setIsLoading(false);
+        return;
+      }
+
+      setUser(mapUser(data.session.user));
+      setToken(data.session.access_token);
+      setIsLoading(false);
+    };
+
+    void boot();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!mounted) {
+        return;
+      }
+
+      if (!session) {
+        setUser(null);
+        setToken(null);
+        return;
+      }
+
+      setUser(mapUser(session.user));
+      setToken(session.access_token);
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const fetchUser = async (authToken: string) => {
-    try {
-      const response = await fetch(`${API_URL}/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+  const value = useMemo<AuthContextType>(
+    () => ({
+      user,
+      token,
+      isLoading,
+      signin: async (emailOrUsername: string, password: string) => {
+        if (!supabase) {
+          throw new Error("Supabase is not configured.");
+        }
 
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-      } else {
-        // Token is invalid
-        localStorage.removeItem("auth_token");
-        setToken(null);
+        if (!emailOrUsername.includes("@")) {
+          throw new Error("Please use your email address to sign in.");
+        }
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: emailOrUsername,
+          password,
+        });
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        if (data.session) {
+          setUser(mapUser(data.session.user));
+          setToken(data.session.access_token);
+        }
+      },
+      signup: async (email: string, username: string, password: string) => {
+        if (!supabase) {
+          throw new Error("Supabase is not configured.");
+        }
+
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              username,
+            },
+          },
+        });
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        if (data.session) {
+          setUser(mapUser(data.session.user));
+          setToken(data.session.access_token);
+        }
+      },
+      signout: async () => {
+        if (!supabase) {
+          setUser(null);
+          setToken(null);
+          return;
+        }
+
+        await supabase.auth.signOut();
         setUser(null);
-      }
-    } catch (error) {
-      console.error("Failed to fetch user:", error);
-      localStorage.removeItem("auth_token");
-      setToken(null);
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const signin = async (emailOrUsername: string, password: string) => {
-    const response = await fetch(`${API_URL}/auth/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+        setToken(null);
       },
-      body: JSON.stringify({ emailOrUsername, password }),
-    });
+      refreshUser: async () => {
+        if (!supabase) {
+          return;
+        }
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to sign in");
-    }
+        const {
+          data: { user: refreshedUser },
+        } = await supabase.auth.getUser();
 
-    const data = await response.json();
-    setUser(data.user);
-    setToken(data.token);
-    localStorage.setItem("auth_token", data.token);
-  };
+        if (!refreshedUser) {
+          setUser(null);
+          setToken(null);
+          return;
+        }
 
-  const signup = async (email: string, username: string, password: string) => {
-    const response = await fetch(`${API_URL}/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+        setUser(mapUser(refreshedUser));
       },
-      body: JSON.stringify({ email, username, password }),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to sign up");
-    }
-
-    const data = await response.json();
-    setUser(data.user);
-    setToken(data.token);
-    localStorage.setItem("auth_token", data.token);
-  };
-
-  const signout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("auth_token");
-  };
-
-  const refreshUser = async () => {
-    if (token) {
-      await fetchUser(token);
-    }
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, token, isLoading, signin, signup, signout, refreshUser }}>
-      {children}
-    </AuthContext.Provider>
+    }),
+    [user, token, isLoading],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

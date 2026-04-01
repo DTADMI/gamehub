@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 
+import { getServerLocale } from "@/lib/server-locale";
+import { siteCopy } from "@/lib/site-copy";
 import { createServerClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/types";
 
@@ -13,26 +15,67 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
+  const locale = await getServerLocale();
+  const copy = siteCopy[locale].blog;
+
   const supabase = (await createServerClient()) as any;
   const { data: postsRaw } = await supabase
     .from("blog_posts")
     .select("*")
     .eq("status", "published")
     .order("published_at", { ascending: false });
+
   const posts = (postsRaw ?? []) as BlogPost[];
+  const featured = posts.find((post) => post.featured) ?? posts[0] ?? null;
+  const remaining = posts.filter((post) => post.id !== featured?.id);
 
   return (
-    <div className="container mx-auto space-y-10 px-4 py-10">
+    <div className="container mx-auto space-y-8 px-4 py-10">
       <section className="space-y-3">
-        <h1 className="text-4xl font-bold tracking-tight">Blog</h1>
-        <p className="text-muted-foreground max-w-2xl text-lg">
-          Deep dives into product thinking, engineering lessons, and behind-the-scenes work.
-        </p>
+        <h1 className="text-4xl font-bold tracking-tight">{copy.title}</h1>
+        <p className="text-muted-foreground max-w-2xl text-lg">{copy.subtitle}</p>
       </section>
 
-      {posts?.length ? (
+      {featured ? (
+        <Card className="overflow-hidden">
+          {featured.cover_image_url ? (
+            <div className="bg-muted relative h-56 w-full sm:h-72">
+              <img
+                src={featured.cover_image_url}
+                alt={featured.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ) : null}
+          <CardHeader className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge>{featured.featured ? "Featured" : "Latest"}</Badge>
+              {featured.published_at ? (
+                <span className="text-muted-foreground text-xs">
+                  {new Date(featured.published_at).toLocaleDateString(
+                    locale === "fr" ? "fr-CA" : "en-CA",
+                  )}
+                </span>
+              ) : null}
+            </div>
+            <CardTitle className="text-2xl">
+              <Link href={`/blog/${featured.slug}`} className="hover:text-primary transition-colors">
+                {featured.title}
+              </Link>
+            </CardTitle>
+            {featured.excerpt ? <p className="text-muted-foreground">{featured.excerpt}</p> : null}
+          </CardHeader>
+          <CardContent>
+            <Link href={`/blog/${featured.slug}`} className="text-primary text-sm hover:underline">
+              {copy.readArticle}
+            </Link>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {remaining.length ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {remaining.map((post) => (
             <Card key={post.id} className="flex h-full flex-col">
               <CardHeader className="space-y-3">
                 <CardTitle>
@@ -40,7 +83,7 @@ export default async function BlogPage() {
                     {post.title}
                   </Link>
                 </CardTitle>
-                {post.excerpt && <p className="text-muted-foreground text-sm">{post.excerpt}</p>}
+                {post.excerpt ? <p className="text-muted-foreground text-sm">{post.excerpt}</p> : null}
               </CardHeader>
               <CardContent className="mt-auto space-y-3">
                 {post.tags?.length ? (
@@ -52,20 +95,29 @@ export default async function BlogPage() {
                     ))}
                   </div>
                 ) : null}
-                <p className="text-muted-foreground text-xs">
-                  {post.published_at ? new Date(post.published_at).toLocaleDateString() : ""}
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-muted-foreground text-xs">
+                    {post.published_at
+                      ? new Date(post.published_at).toLocaleDateString(
+                          locale === "fr" ? "fr-CA" : "en-CA",
+                        )
+                      : ""}
+                  </p>
+                  <Link href={`/blog/${post.slug}`} className="text-primary text-xs hover:underline">
+                    {copy.readArticle}
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           ))}
         </div>
-      ) : (
+      ) : posts.length === 0 ? (
         <Card>
           <CardContent className="py-8 text-center text-sm text-muted-foreground">
-            No posts published yet. Check back soon.
+            {copy.fallback}
           </CardContent>
         </Card>
-      )}
+      ) : null}
     </div>
   );
 }

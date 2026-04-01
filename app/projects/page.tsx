@@ -3,12 +3,17 @@ import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehu
 import { ExternalLink } from "lucide-react";
 import { Metadata } from "next";
 
+import { getServerLocale } from "@/lib/server-locale";
+import { siteCopy } from "@/lib/site-copy";
+
 export const metadata: Metadata = {
   title: "Projects | GameHub",
   description: "Explore full-stack projects and products in the GameHub portfolio.",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const locale = await getServerLocale();
+  const copy = siteCopy[locale].projects;
   const projects = listProjects().filter((p) => p.visible !== false);
   const featured = projects.filter((p) => p.featured);
   const all = projects.filter((p) => p.enabled !== false);
@@ -16,17 +21,16 @@ export default function ProjectsPage() {
   return (
     <div className="container mx-auto space-y-10 px-4 py-10">
       <section className="space-y-3">
-        <h1 className="text-4xl font-bold tracking-tight">Projects</h1>
-        <p className="text-muted-foreground max-w-2xl text-lg">
-          Product-focused builds with clear technical depth, shipping discipline, and modern UX.
-          Every project links directly to its GitHub repository.
-        </p>
+        <h1 className="text-4xl font-bold tracking-tight">{copy.title}</h1>
+        <p className="text-muted-foreground max-w-2xl text-lg">{copy.subtitle}</p>
       </section>
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Featured</h2>
-          <Badge variant="secondary">{featured.length} highlighted</Badge>
+          <h2 className="text-2xl font-semibold">{copy.featured}</h2>
+          <Badge variant="secondary">
+            {featured.length} {copy.highlighted}
+          </Badge>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((project) => (
@@ -46,7 +50,7 @@ export default function ProjectsPage() {
                 <Button asChild variant="outline" className="w-full">
                   <a href={project.repo} target="_blank" rel="noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    View on GitHub
+                    {copy.viewOnGithub}
                   </a>
                 </Button>
               </CardContent>
@@ -57,8 +61,10 @@ export default function ProjectsPage() {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">All Projects</h2>
-          <Badge variant="secondary">{all.length} total</Badge>
+          <h2 className="text-2xl font-semibold">{copy.allProjects}</h2>
+          <Badge variant="secondary">
+            {all.length} {copy.total}
+          </Badge>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {all.map((project) => (
@@ -77,7 +83,7 @@ export default function ProjectsPage() {
                 </div>
                 <Button asChild variant="ghost" className="w-full">
                   <a href={project.repo} target="_blank" rel="noreferrer">
-                    View repository
+                    {copy.viewRepository}
                   </a>
                 </Button>
               </CardContent>
@@ -88,4 +94,3 @@ export default function ProjectsPage() {
     </div>
   );
 }
-

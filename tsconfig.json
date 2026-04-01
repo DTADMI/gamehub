@@ -2,19 +2,45 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@gamehub/game-platform": ["packages/game-platform/src"],
-      "@gamehub/game-platform/*": ["packages/game-platform/src/*"],
-      "@games/pointclick-engine": ["packages/pointclick-engine/src"],
-      "@games/pointclick-engine/*": ["packages/pointclick-engine/src/*"],
-      "@games/_engine": ["packages/games/_engine"],
-      "@games/*": ["packages/games/*/src"],
-      "react": ["./node_modules/@types/react"],
-      "react/*": ["./node_modules/@types/react/*"],
-      "react-dom": ["./node_modules/@types/react-dom"],
-      "react-dom/*": ["./node_modules/@types/react-dom/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@gamehub/game-platform": [
+        "packages/game-platform/src"
+      ],
+      "@gamehub/game-platform/*": [
+        "packages/game-platform/src/*"
+      ],
+      "@games/pointclick-engine": [
+        "packages/pointclick-engine/src"
+      ],
+      "@games/pointclick-engine/*": [
+        "packages/pointclick-engine/src/*"
+      ],
+      "@games/_engine": [
+        "packages/games/_engine"
+      ],
+      "@games/*": [
+        "packages/games/*/src"
+      ],
+      "react": [
+        "./node_modules/@types/react"
+      ],
+      "react/*": [
+        "./node_modules/@types/react/*"
+      ],
+      "react-dom": [
+        "./node_modules/@types/react-dom"
+      ],
+      "react-dom/*": [
+        "./node_modules/@types/react-dom/*"
+      ]
     },
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "target": "ES6",
     "skipLibCheck": true,
@@ -23,7 +49,9 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -39,7 +67,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
     "packages/game-platform/**/*.ts",
     "packages/game-platform/**/*.tsx",
     "packages/ui/**/*.ts",
@@ -47,7 +74,8 @@
     "packages/games/**/*.ts",
     "packages/games/**/*.tsx",
     "packages/pointclick-engine/**/*.ts",
-    "packages/pointclick-engine/**/*.tsx"
+    "packages/pointclick-engine/**/*.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

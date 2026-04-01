@@ -3,12 +3,16 @@
 
 import { listGames } from "@gamehub/game-platform";
 import GamesList from "@gamehub/game-platform/components/games/GamesList";
+import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
 import React from "react";
 
+import { siteCopy } from "@/lib/site-copy";
+
 export default function GamesPage() {
   const { flags } = useFlags();
+  const { locale } = useSiteLocale();
   // Map manifest entries into the GamesList shape, overriding image from lib/games.ts when available
   const entries = listGames().filter((e) => e.visible !== false);
   const isNonProd =
@@ -49,7 +53,7 @@ export default function GamesPage() {
     });
   }
 
-  return <GamesList games={games} />;
+  return <GamesList games={games} copy={siteCopy[locale].games} />;
 }
 
 

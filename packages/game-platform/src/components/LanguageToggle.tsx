@@ -1,34 +1,20 @@
 "use client";
 
-import { getLocale, initI18n, setLocale } from "@games/pointclick-engine";
 import { useRouter } from "next/navigation";
-import * as React from "react";
 
-/**
- * Small EN/FR language toggle for the header.
- * - Persists selection to localStorage via lib/i18n
- * - Calls router.refresh() to re-render client components using `t()`
- * - Accessible: ≥44px target, aria-label, role, and data-testid hooks
- */
+import { setSiteLocale, useSiteLocale } from "../lib/site-locale";
+
 export function LanguageToggle({ className = "" }: { className?: string }) {
   const router = useRouter();
-  const [locale, setLoc] = React.useState<"en" | "fr">("en");
+  const { locale } = useSiteLocale();
 
-  React.useEffect(() => {
-    initI18n();
-    setLoc(getLocale());
-  }, []);
-
-  const switchTo = (l: "en" | "fr") => {
-    if (l === locale) {
+  const switchTo = (nextLocale: "en" | "fr") => {
+    if (nextLocale === locale) {
       return;
     }
-    setLocale(l);
-    setLoc(l);
-    // Trigger a soft refresh so components reading `t()` re-render
-    try {
-      router.refresh();
-    } catch {}
+
+    setSiteLocale(nextLocale);
+    router.refresh();
   };
 
   return (
