@@ -19,7 +19,10 @@ export function ModeToggle() {
   }
 
   const activeTheme = theme === "system" || !theme ? resolvedTheme : theme;
-  const next = activeTheme === "dark" ? "light" : "dark";
+  const isDarkByClass =
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark");
+  const isDark = isDarkByClass || activeTheme === "dark";
+  const next = isDark ? "light" : "dark";
 
   const applyTheme = (target: "light" | "dark") => {
     if (typeof document !== "undefined") {
@@ -27,9 +30,6 @@ export function ModeToggle() {
       root.classList.remove("light", "dark");
       root.classList.add(target);
     }
-    try {
-      localStorage.setItem("theme", target);
-    } catch {}
     setTheme(target);
   };
 

@@ -1,11 +1,10 @@
 "use client";
 
-import { ThemeProvider } from "@gamehub/ui";
-
 import { AuthProvider } from "../contexts/AuthContext";
 import { FlagsProvider } from "../contexts/FlagsContext";
 import { ProfileProvider } from "../contexts/ProfileContext";
 import { SubscriptionProvider } from "../contexts/SubscriptionContext";
+import { ThemeProvider } from "./ThemeProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // In CI/E2E we want to avoid initializing Firebase/Auth and hitting the backend
