@@ -83,7 +83,7 @@ scripts/              # Supabase SQL rollouts/rollbacks
 - GitHub CI workflows in `.github/workflows/`:
   - `ci.yml` for lint/type/unit/integration/build
   - `e2e.yml` for Playwright smoke E2E
-  - `deploy.yml` for Vercel production deploy from `main`
+- Vercel deploys via native Git integration (push-to-deploy)
 - Vercel project config in `vercel.json`
 
 ---

@@ -38,9 +38,15 @@ pnpm start
 - GitHub Actions:
   - `.github/workflows/ci.yml`
   - `.github/workflows/e2e.yml`
-  - `.github/workflows/deploy.yml`
-- Required GitHub Secrets for deploy:
-  - `VERCEL_TOKEN`
-  - `VERCEL_ORG_ID`
-  - `VERCEL_PROJECT_ID`
-- Vercel build behavior is configured in `vercel.json`.
+- Vercel deployment path:
+  - Native Vercel Git integration (no GitHub `vercel` CLI deploy workflow).
+  - Vercel build behavior is configured in `vercel.json`.
+- Vercel dashboard settings (recommended):
+  - Framework Preset: `Next.js`
+  - Root Directory: `/`
+  - Node.js Version: `24.x`
+  - Include files outside root directory in the Build Step: `Enabled`
+  - Skip deployments when no changes to root directory/dependencies: `Enabled`
+  - Ignored Build Step: `Automatic`
+  - On-Demand Concurrent Builds: `Run all builds immediately`
+  - Build Machine: `Turbo` (or `Elastic` to reduce cost)
