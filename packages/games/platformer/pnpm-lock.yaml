@@ -15,50 +15,6 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  ../../..: {}
-
-  ../../game-platform: {}
-
-  ../../pointclick-engine: {}
-
-  ../../projects-metadata: {}
-
-  ../../tsconfig: {}
-
-  ../../ui: {}
-
-  ../_engine: {}
-
-  ../breakout: {}
-
-  ../bubble-pop: {}
-
-  ../checkers: {}
-
-  ../chess: {}
-
-  ../chrono-shift: {}
-
-  ../elemental-conflux: {}
-
-  ../knitzy: {}
-
-  ../memory: {}
-
-  ../quantum-architect: {}
-
-  ../rite-of-discovery: {}
-
-  ../snake: {}
-
-  ../systems-discovery: {}
-
-  ../tetris: {}
-
-  ../tower-defense: {}
-
-  ../toymaker-escape: {}
-
 packages:
 
   '@types/react@19.2.14':

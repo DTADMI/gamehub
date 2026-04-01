@@ -2,6 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 
+import { platformQueryClient } from "./query-client";
+
 /**
  * Simple feature flag reader for the frontend.
  * - Reads NEXT_PUBLIC_FEATURE_* env at build/runtime first
@@ -12,21 +14,24 @@ export function useFeature(flag: string, defaultValue = false, opts?: { preferBa
   const fallbackValue = readEnv(flag, defaultValue);
   const api = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:8080/api";
 
-  const { data } = useQuery<Record<string, unknown> | null>({
-    queryKey: ["feature-flags", api],
-    enabled: preferBackend,
-    staleTime: 60_000,
-    gcTime: 10 * 60_000,
-    retry: 1,
-    queryFn: async () => {
-      const res = await fetch(`${api}/features`);
-      if (!res.ok) {
-        return null;
-      }
-      const json = (await res.json()) as Record<string, unknown>;
-      return json;
+  const { data } = useQuery<Record<string, unknown> | null>(
+    {
+      queryKey: ["feature-flags", api],
+      enabled: preferBackend,
+      staleTime: 60_000,
+      gcTime: 10 * 60_000,
+      retry: 1,
+      queryFn: async () => {
+        const res = await fetch(`${api}/features`);
+        if (!res.ok) {
+          return null;
+        }
+        const json = (await res.json()) as Record<string, unknown>;
+        return json;
+      },
     },
-  });
+    platformQueryClient,
+  );
 
   if (preferBackend && typeof data?.[flag] === "boolean") {
     return Boolean(data[flag]);

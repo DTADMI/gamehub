@@ -19,7 +19,6 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.90.5",
     "@gamehub/ui": "workspace:*",
     "@games/pointclick-engine": "workspace:*",
     "@stomp/stompjs": "^7.3.0",
@@ -41,6 +40,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
+    "@tanstack/react-query": "^5.96.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

@@ -4,13 +4,15 @@ import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehu
 import Image from "next/image";
 
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
+import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { useProjectsManifest } from "@/lib/portfolio-queries";
 import { siteCopy } from "@/lib/site-copy";
 
 export default function ProjectsClientPage() {
   const { locale } = useSiteLocale();
   const copy = siteCopy[locale].projects;
-  const { data: manifest = [] } = useProjectsManifest();
+  const { data: manifestData } = useProjectsManifest();
+  const manifest = (manifestData ?? []) as ProjectEntry[];
 
   const projects = manifest
     .filter((project) => project.visible !== false && project.enabled !== false);

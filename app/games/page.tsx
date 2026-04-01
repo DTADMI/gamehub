@@ -4,6 +4,7 @@ import GamesList from "@gamehub/game-platform/components/games/GamesList";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
+import type { GameEntry } from "@gamehub/game-platform/metadata/games";
 
 import { useGamesManifest } from "@/lib/portfolio-queries";
 import { siteCopy } from "@/lib/site-copy";
@@ -11,7 +12,8 @@ import { siteCopy } from "@/lib/site-copy";
 export default function GamesPage() {
   const { flags } = useFlags();
   const { locale } = useSiteLocale();
-  const { data: manifest = [] } = useGamesManifest();
+  const { data: manifestData } = useGamesManifest();
+  const manifest = (manifestData ?? []) as GameEntry[];
 
   const entries = manifest.filter((entry) => entry.visible !== false);
   const isNonProd =

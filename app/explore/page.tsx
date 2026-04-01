@@ -2,6 +2,8 @@
 
 import { Carousel, Game, GameCard } from "@gamehub/game-platform";
 import { useFeature } from "@gamehub/game-platform/lib/flags";
+import type { GameEntry } from "@gamehub/game-platform/metadata/games";
+import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@gamehub/ui";
 import { FolderKanban, Gamepad2 } from "lucide-react";
 import Image from "next/image";
@@ -10,8 +12,10 @@ import Link from "next/link";
 import { useGamesManifest, useProjectsManifest } from "@/lib/portfolio-queries";
 
 export default function ExplorePage() {
-  const { data: gameManifest = [] } = useGamesManifest();
-  const { data: projectManifest = [] } = useProjectsManifest();
+  const { data: gameManifestData } = useGamesManifest();
+  const { data: projectManifestData } = useProjectsManifest();
+  const gameManifest = (gameManifestData ?? []) as GameEntry[];
+  const projectManifest = (projectManifestData ?? []) as ProjectEntry[];
 
   const allGames: Game[] = gameManifest
     .filter((game) => game.visible !== false)

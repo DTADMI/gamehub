@@ -148,50 +148,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  ../..: {}
-
-  ../game-platform: {}
-
-  ../games/_engine: {}
-
-  ../games/breakout: {}
-
-  ../games/bubble-pop: {}
-
-  ../games/checkers: {}
-
-  ../games/chess: {}
-
-  ../games/chrono-shift: {}
-
-  ../games/elemental-conflux: {}
-
-  ../games/knitzy: {}
-
-  ../games/memory: {}
-
-  ../games/platformer: {}
-
-  ../games/quantum-architect: {}
-
-  ../games/rite-of-discovery: {}
-
-  ../games/snake: {}
-
-  ../games/systems-discovery: {}
-
-  ../games/tetris: {}
-
-  ../games/tower-defense: {}
-
-  ../games/toymaker-escape: {}
-
-  ../pointclick-engine: {}
-
-  ../projects-metadata: {}
-
-  ../tsconfig: {}
-
 packages:
 
   '@date-fns/tz@1.4.1':

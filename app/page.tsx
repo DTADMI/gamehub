@@ -2,6 +2,8 @@
 
 import { Carousel, GameCard } from "@gamehub/game-platform";
 import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
+import type { GameEntry } from "@gamehub/game-platform/metadata/games";
+import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import { Button } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";
@@ -24,8 +26,10 @@ type HomeGame = {
 export default function HomePage() {
   const { locale } = useSiteLocale();
   const copy = siteCopy[locale].home;
-  const { data: games = [] } = useGamesManifest();
-  const { data: projects = [] } = useProjectsManifest();
+  const { data: gamesData } = useGamesManifest();
+  const { data: projectsData } = useProjectsManifest();
+  const games = (gamesData ?? []) as GameEntry[];
+  const projects = (projectsData ?? []) as ProjectEntry[];
 
   const entries = games.filter((e) => e.visible !== false);
   const allGames: HomeGame[] = entries.map((e) => ({
