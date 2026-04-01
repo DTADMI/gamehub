@@ -70,6 +70,9 @@ scripts/              # Supabase SQL rollouts/rollbacks
 - `pnpm test:integration`
 - `pnpm test:e2e:smoke`
 - `pnpm test:all`
+- `pnpm check:env`
+- `pnpm smoke`
+- `pnpm check:deps`
 
 Guardrail:
 

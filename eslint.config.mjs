@@ -147,6 +147,19 @@ export default [
         },
     },
 
+    {
+        files: ["scripts/**/*.mjs"],
+        languageOptions: {
+            sourceType: "module",
+            globals: {
+                ...globals.node,
+            },
+        },
+        rules: {
+            "no-undef": "off",
+        },
+    },
+
     // Ignore specific directories
     {
         ignores: [
@@ -161,7 +174,6 @@ export default [
             "**/*.sublime-*",
             "**/public/**",
             "**/target/**",
-            "**/cypress/**",
             "**/tests-e2e/**",
             "**/__tests__/**",
             "**/*.test.*",

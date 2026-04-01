@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignore": [
+    "docs/**",
+    ".next/**",
+    "dist/**",
+    "coverage/**",
+    "test-results/**",
+    "playwright-report/**",
+    "tests/**",
+    "tests-e2e/**",
+    "e2e/**",
+    "cypress/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/pnpm-lock.yaml"
+  ],
+  "ignoreDependencies": ["@games/*"]
+}

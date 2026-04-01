@@ -21,6 +21,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL ?? "";
+  const linkedinUrl = process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "";
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`flex min-h-[100svh] flex-col font-sans antialiased`}>
@@ -28,7 +32,7 @@ export default function RootLayout({
           <I18nInitializer />
           <Header />
           <main className="min-h-0 flex-1">{children}</main>
-          <Footer />
+          <Footer githubUrl={githubUrl} linkedinUrl={linkedinUrl} contactEmail={contactEmail} />
           <Analytics />
         </Providers>
       </body>

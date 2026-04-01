@@ -257,3 +257,6 @@ package.json.*
 
 .working_docs
 build-output.txt
+
+.vercel
+.env*.local

@@ -1,4 +1,3 @@
-// frontend/components/Footer.tsx
 "use client";
 
 import { Button } from "@gamehub/ui";
@@ -6,10 +5,16 @@ import { Gamepad2, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { CONTACT_EMAIL, GITHUB_URL, LINKEDIN_URL, mailto } from "../lib/env";
+import { mailto } from "../lib/env";
 import { ModeToggle } from "./ModeToggle";
 
-const footerLinks = [
+type FooterProps = {
+  githubUrl?: string;
+  linkedinUrl?: string;
+  contactEmail?: string;
+};
+
+const footerSections = [
   {
     title: "Games",
     items: [
@@ -39,25 +44,21 @@ const footerLinks = [
   },
   {
     title: "Social",
-    items: [
-      { name: "GitHub", href: GITHUB_URL, icon: Github },
-      { name: "LinkedIn", href: LINKEDIN_URL, icon: Linkedin },
-      {
-        name: "Email",
-        href: CONTACT_EMAIL ? mailto(CONTACT_EMAIL) : "",
-        icon: Mail,
-      },
-    ],
+    items: [],
   },
 ];
 
-export function Footer() {
+export function Footer({ githubUrl = "", linkedinUrl = "", contactEmail = "" }: FooterProps) {
   const [email, setEmail] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const socialLinks = [
+    { name: "GitHub", href: githubUrl || "#", icon: Github },
+    { name: "LinkedIn", href: linkedinUrl || "#", icon: Linkedin },
+    { name: "Email", href: contactEmail ? mailto(contactEmail) : "#", icon: Mail },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement newsletter subscription
     console.log("Subscribed with email:", email);
     setEmail("");
   };
@@ -65,7 +66,6 @@ export function Footer() {
   return (
     <footer className="bg-background/95 supports-[backdrop-filter]:bg-background/60 w-full border-t backdrop-blur">
       <div className="container w-full max-w-[100vw] px-4 py-3 md:py-4">
-        {/* Compact header row */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="col-span-2 space-y-4">
             <Link href="/" className="flex items-center space-x-2">
@@ -92,100 +92,40 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Expandable content */}
         <div id="footer-more" hidden={!expanded} className="mt-4">
           <div className="grid w-full grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-5">
-            {footerLinks.map((section) => {
-              const items =
-                section.title === "Social"
-                  ? section.items.filter((item) => {
-                      if (item.name === "GitHub") {
-                        return Boolean(GITHUB_URL);
-                      }
-                      if (item.name === "LinkedIn") {
-                        return Boolean(LINKEDIN_URL);
-                      }
-                      if (item.name === "Email") {
-                        return Boolean(CONTACT_EMAIL);
-                      }
-                      return true;
-                    })
-                  : section.items;
-
-              if (items.length === 0) {
-                return null;
-              }
+            {footerSections.map((section) => {
+              const items = section.title === "Social" ? socialLinks : section.items;
 
               return (
                 <div key={section.title} className="space-y-4">
-                  {/* Mobile: collapsible */}
-                  <details className="group md:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold select-none">
-                      {section.title}
-                      <span className="text-muted-foreground ml-2 transition-transform group-open:rotate-180">
-                        ▾
-                      </span>
-                    </summary>
-                    <ul className="mt-2 space-y-2">
-                      {items.map((item) => {
-                        const isExternal =
-                          item.href.startsWith("http") || item.href.startsWith("mailto:");
-                        return (
-                          <li key={item.name}>
-                            {isExternal ? (
-                              <a
-                                href={item.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-muted-foreground hover:text-foreground focus-visible:ring-primary/60 block rounded py-1 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-                              >
-                                {item.name}
-                              </a>
-                            ) : (
-                              <Link
-                                href={item.href}
-                                className="text-muted-foreground hover:text-foreground focus-visible:ring-primary/60 block rounded py-1 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-                              >
-                                {item.name}
-                              </Link>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </details>
-
-                  {/* Desktop/Tablet: static list */}
-                  <div className="hidden md:block">
-                    <h4 className="text-sm font-semibold">{section.title}</h4>
-                    <ul className="mt-2 space-y-2">
-                      {items.map((item) => {
-                        const isExternal =
-                          item.href.startsWith("http") || item.href.startsWith("mailto:");
-                        return (
-                          <li key={item.name}>
-                            {isExternal ? (
-                              <a
-                                href={item.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-muted-foreground hover:text-foreground focus-visible:ring-primary/60 rounded text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-                              >
-                                {item.name}
-                              </a>
-                            ) : (
-                              <Link
-                                href={item.href}
-                                className="text-muted-foreground hover:text-foreground focus-visible:ring-primary/60 rounded text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
-                              >
-                                {item.name}
-                              </Link>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                  <h4 className="text-sm font-semibold">{section.title}</h4>
+                  <ul className="mt-2 space-y-2">
+                    {items.map((item) => {
+                      const isExternal = item.href.startsWith("http") || item.href.startsWith("mailto:");
+                      return (
+                        <li key={item.name}>
+                          {isExternal ? (
+                            <a
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-foreground focus-visible:ring-primary/60 rounded text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                            >
+                              {item.name}
+                            </a>
+                          ) : (
+                            <Link
+                              href={item.href}
+                              className="text-muted-foreground hover:text-foreground focus-visible:ring-primary/60 rounded text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                            >
+                              {item.name}
+                            </Link>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               );
             })}
@@ -195,11 +135,7 @@ export function Footer() {
               <p id="newsletter-help" className="text-muted-foreground text-sm">
                 Get the latest updates and news.
               </p>
-              <form
-                onSubmit={handleSubmit}
-                className="flex space-x-2"
-                aria-describedby="newsletter-help"
-              >
+              <form onSubmit={handleSubmit} className="flex space-x-2" aria-describedby="newsletter-help">
                 <label htmlFor="newsletter-email" className="sr-only">
                   Email address
                 </label>
@@ -228,9 +164,7 @@ export function Footer() {
 
         <div className="mt-4 pt-3 md:mt-6 md:pt-4">
           <div className="flex w-full flex-col items-center justify-between gap-3 md:flex-row">
-            <p className="text-muted-foreground text-sm">
-              &copy; {new Date().getFullYear()} Gamehub. All rights reserved.
-            </p>
+            <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} Gamehub. All rights reserved.</p>
           </div>
         </div>
       </div>

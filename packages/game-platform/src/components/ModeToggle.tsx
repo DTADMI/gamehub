@@ -20,12 +20,25 @@ export function ModeToggle() {
 
   const activeTheme = theme === "system" || !theme ? resolvedTheme : theme;
   const next = activeTheme === "dark" ? "light" : "dark";
+
+  const applyTheme = (target: "light" | "dark") => {
+    if (typeof document !== "undefined") {
+      const root = document.documentElement;
+      root.classList.remove("light", "dark");
+      root.classList.add(target);
+    }
+    try {
+      localStorage.setItem("theme", target);
+    } catch {}
+    setTheme(target);
+  };
+
   return (
     <Button
       variant="ghost"
       size="icon"
       aria-label="Toggle theme"
-      onClick={() => setTheme(next)}
+      onClick={() => applyTheme(next)}
       className="relative"
     >
       <Sun className="h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
