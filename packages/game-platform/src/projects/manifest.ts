@@ -228,6 +228,58 @@ export const projectsManifest: ProjectMetadata[] = [
       "Tiptap Editor",
     ],
   },
+  {
+    id: "collectometal",
+    slug: "collectometal",
+    title: "CollectoMetal",
+    shortDescription: "Bilingual dispatch platform for metal pickup operations",
+    fullDescription:
+      "CollectoMetal is a bilingual EN/FR operations platform for scrap and metal pickup. It includes dispatch routing, worker status workflows, proof-of-pickup, admin feature flags, and compliance-oriented data controls.",
+    category: "utility",
+    tags: ["dispatch", "logistics", "recycling", "operations", "supabase", "mobile"],
+
+    image: "/images/projects/collectometal-card.svg",
+    backgroundImage: "/images/projects/collectometal-bg.svg",
+    icon: "/images/projects/collectometal-icon.svg",
+
+    enabled: true,
+    featured: false,
+    upcoming: true,
+    inPreview: true,
+
+    accessTier: "enterprise",
+    requiresAuth: true,
+    requiresSubscription: true,
+
+    route: "/projects/collectometal",
+    externalUrl: "https://collectometal.app",
+
+    version: "0.2.0",
+    author: "Nebula Forge Digital Studio",
+    releaseDate: "2026-04-01",
+    lastUpdated: "2026-04-01",
+
+    supportedLanguages: ["en", "fr"],
+
+    features: [
+      "Request intake and dispatch queue",
+      "Route planning and assignment scoring",
+      "Worker mobile flow with offline sync",
+      "Outbox notifications and retries",
+      "Admin feature flags and account controls",
+      "Billing usage metering and invoice rollups",
+    ],
+
+    technologies: [
+      "Next.js 16",
+      "Expo React Native",
+      "Supabase",
+      "PostGIS",
+      "Upstash Redis",
+      "TanStack Query",
+      "TypeScript",
+    ],
+  },
 ];
 
 /**
