@@ -249,6 +249,8 @@ pnpm-lock.yaml.*
 package.json.*
 
 *.husky
+!.husky/
+!.husky/pre-commit
 *.idea
 *.qodo
 *.turbo

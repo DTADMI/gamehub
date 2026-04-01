@@ -71,6 +71,10 @@ scripts/              # Supabase SQL rollouts/rollbacks
 - `pnpm test:e2e:smoke`
 - `pnpm test:all`
 
+Guardrail:
+
+- A repo pre-commit hook runs `pnpm build` and blocks commits on build failure.
+
 ## 📚 Documentation
 
 - `docs/SETUP.md` for environment and Supabase setup
