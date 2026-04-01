@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useAuth } from "../contexts/AuthContext";
-import { useFeature } from "../lib/flags";
 import { useSiteLocale } from "../lib/site-locale";
 import { LanguageToggle } from "./LanguageToggle";
 import { ModeToggle } from "./ModeToggle";
@@ -36,7 +35,6 @@ const copy = {
 
 export function Header() {
   const router = useRouter();
-  const showAdmin = useFeature("ADMIN", false);
   const { user, signout, isLoading } = useAuth();
   const { locale } = useSiteLocale();
   const t = copy[locale];
@@ -64,7 +62,7 @@ export function Header() {
             <Link href="/blog" className="hover:text-foreground">
               {t.blog}
             </Link>
-            {showAdmin ? (
+            {user ? (
               <Link href="/admin/flags" className="hover:text-foreground">
                 {t.admin}
               </Link>

@@ -1,11 +1,11 @@
 "use client";
 
+import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
+import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 import Image from "next/image";
 import { startTransition, useCallback, useDeferredValue, useMemo, useState } from "react";
 
-import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
-import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { useProjectsManifest } from "@/lib/portfolio-queries";
 import { siteCopy } from "@/lib/site-copy";
 
@@ -13,14 +13,13 @@ export default function ProjectsClientPage() {
   const { locale } = useSiteLocale();
   const copy = siteCopy[locale].projects;
   const { data: manifestData, isError, isFetching } = useProjectsManifest();
-  const manifest = (manifestData ?? []) as ProjectEntry[];
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
   const [scope, setScope] = useState<"all" | "deployed" | "upcoming">("all");
 
   const projects = useMemo(
     () =>
-      manifest
+      ((manifestData ?? []) as ProjectEntry[])
         .filter((project) => project.visible !== false && project.enabled !== false)
         .filter((project) => {
           if (scope === "deployed") {
@@ -38,7 +37,7 @@ export default function ProjectsClientPage() {
           const haystack = `${project.title} ${project.shortDescription} ${project.tags.join(" ")}`.toLowerCase();
           return haystack.includes(deferredQuery);
         }),
-    [manifest, deferredQuery, scope],
+    [manifestData, deferredQuery, scope],
   );
   const featured = useMemo(() => projects.filter((project) => project.featured), [projects]);
 

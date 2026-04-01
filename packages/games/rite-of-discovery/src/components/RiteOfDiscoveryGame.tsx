@@ -31,7 +31,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   const lang = useMemo<Lang>(() => detectLang(), []);
 
   const [keypad, setKeypad] = useState(() => createKeypadState());
-  const [wires, setWires] = useState(() =>
+  const [_wires, setWires] = useState(() =>
     createWiresState(["L1", "L2"], ["R1", "R2"], {
       red: [{ from: "L1", to: "R2" }],
       blue: [{ from: "L2", to: "R1" }],

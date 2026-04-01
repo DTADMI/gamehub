@@ -1,4 +1,8 @@
-import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+"use client";
+
+import { useAuth } from "@gamehub/game-platform";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import Link from "next/link";
 
 type LeaderboardEntry = {
   rank: number;
@@ -13,12 +17,41 @@ const placeholderEntries: LeaderboardEntry[] = [
 ];
 
 export default function LeaderboardPage() {
+  const { user, isLoading } = useAuth();
+
+  if (!user) {
+    return (
+      <div className="container mx-auto space-y-6 px-4 py-10">
+        <Card>
+          <CardHeader>
+            <CardTitle>Sign in to unlock leaderboards</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground text-sm">
+              Leaderboards are available to signed-in users only. Create an account to track scores,
+              compete, and unlock profile progression.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href="/auth">Sign in</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/auth">Create account</Link>
+              </Button>
+            </div>
+            {isLoading ? <p className="text-xs text-muted-foreground">Checking session...</p> : null}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto space-y-6 px-4 py-10">
       <section className="space-y-2">
         <h1 className="text-4xl font-bold tracking-tight">Leaderboard</h1>
         <p className="text-muted-foreground">
-          Global rankings are coming soon. Preview standings are shown for UI testing.
+          Global rankings are coming soon. Preview standings are shown for signed-in users.
         </p>
       </section>
 

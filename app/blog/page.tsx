@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import Link from "next/link";
 
 import { getPublishedPosts } from "@/lib/content-cache";
 import { getServerLocale } from "@/lib/server-locale";

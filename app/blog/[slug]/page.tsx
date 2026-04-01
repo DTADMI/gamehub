@@ -1,6 +1,5 @@
-import { notFound } from "next/navigation";
-
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import { notFound } from "next/navigation";
 
 import { getPublishedPostBySlug } from "@/lib/content-cache";
 

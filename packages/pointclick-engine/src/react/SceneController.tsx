@@ -103,8 +103,8 @@ export function SceneController({
     (k: string, v: any) => dispatch({ type: "SET_FLAG", key: k, value: v }),
     [dispatch],
   );
-  const addItem = useCallback((id: string) => dispatch({ type: "ADD_ITEM", id }), [dispatch]);
-  const removeItem = useCallback((id: string) => dispatch({ type: "REMOVE_ITEM", id }), [dispatch]);
+  const _addItem = useCallback((id: string) => dispatch({ type: "ADD_ITEM", id }), [dispatch]);
+  const _removeItem = useCallback((id: string) => dispatch({ type: "REMOVE_ITEM", id }), [dispatch]);
 
   const scene = map.get(state.sceneId);
 

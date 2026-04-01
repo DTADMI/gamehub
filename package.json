@@ -28,6 +28,7 @@
     "check:deps": "knip --include dependencies,unlisted,binaries",
     "check:deps:strict": "knip --strict",
     "check:env": "node scripts/validate-env.mjs",
+    "ci:local": "pnpm guard:lockfile && pnpm lint && pnpm type-check && pnpm test:unit && pnpm test:integration && pnpm build && pnpm test:e2e:smoke",
     "audit:outdated": "node scripts/run-outdated-audit.mjs",
     "audit:deps:graph": "node scripts/export-dependency-graph.mjs",
     "audit:module-replacements": "node scripts/module-replacements-audit.mjs",

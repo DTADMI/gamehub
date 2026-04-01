@@ -1,10 +1,10 @@
 "use client";
 
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label, Switch } from "@gamehub/ui";
 import { useEffect, useState } from "react";
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label, Switch } from "@gamehub/ui";
-import { createBrowserClient } from "@/lib/supabase/client";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { createBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 
 type ResumeSection = Database["public"]["Tables"]["resume_sections"]["Row"];

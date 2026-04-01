@@ -1,10 +1,10 @@
 "use client";
 
 import { Carousel, GameCard } from "@gamehub/game-platform";
-import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
-import type { GameEntry } from "@gamehub/game-platform/metadata/games";
-import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
+import type { GameEntry } from "@gamehub/game-platform/metadata/games";
+import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
+import type { ProjectEntry } from "@gamehub/game-platform/metadata/projects";
 import { Badge, Button, Skeleton } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
@@ -29,10 +29,9 @@ export default function HomePage() {
   const copy = siteCopy[locale].home;
   const { data: gamesData, isError: gamesError } = useGamesManifest();
   const { data: projectsData, isError: projectsError } = useProjectsManifest();
-  const games = (gamesData ?? []) as GameEntry[];
-  const projects = (projectsData ?? []) as ProjectEntry[];
 
   const featured = useMemo(() => {
+    const games = (gamesData ?? []) as GameEntry[];
     const entries = games.filter((e) => e.visible !== false);
     const allGames: HomeGame[] = entries.map((e) => ({
       id: e.slug,
@@ -44,11 +43,14 @@ export default function HomePage() {
       featured: e.enabled !== false && !e.upcoming && isGameLaunchable(e),
     }));
     return allGames.filter((g) => g.featured);
-  }, [games]);
+  }, [gamesData]);
 
   const featuredProjects = useMemo(
-    () => projects.filter((p) => p.featured && p.visible !== false && p.enabled !== false),
-    [projects],
+    () =>
+      ((projectsData ?? []) as ProjectEntry[]).filter(
+        (p) => p.featured && p.visible !== false && p.enabled !== false,
+      ),
+    [projectsData],
   );
 
   return (

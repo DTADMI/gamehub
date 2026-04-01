@@ -1,6 +1,6 @@
 ﻿# GameHub Action Plan
 
-**Last Updated**: March 31, 2026
+**Last Updated**: April 1, 2026
 **Current Focus**: Deployment-ready stabilization (Vercel + GitHub)
 
 Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
@@ -16,6 +16,9 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | Supabase SSR auth clients | DONE | `@supabase/ssr` used in browser, server, and proxy auth guard |
 | CI/CD deployment path | DONE | GitHub Actions + Vercel deployment workflow configured |
 | Redis provider | DONE | Upstash Redis adapter with safe in-memory fallback for local/CI |
+| Leaderboard auth gating | DONE | `/leaderboard` now requires signed-in session to access ranking preview content |
+| Admin feature-flag pilot UI | DONE | `/admin/flags` now controls local rollout toggles |
+| Local CI parity gate | DONE | Pre-push now runs `pnpm ci:local` to mirror pipeline checks |
 
 ## Remaining Gaps and Tasks
 
@@ -23,7 +26,9 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | --- | --- | --- | --- | --- |
 | P1 | Full legacy Vitest suite triage (non-unit folders) | Some older tests are still outside new staged gates | Incrementally migrate/repair old tests and fold into staged pipelines | IN_PROGRESS |
 | P2 | Portfolio/blog media upload workflow | Admin UX still uses URL-only cover image input | Add Supabase Storage upload flow in admin | NEXT |
-| P3 | Feature flag management UI | Operational toggles still code/env driven | Build admin-facing feature flag panel with audit metadata | BACKLOG |
+| P1 | Server-backed feature flag persistence | Flags are currently browser-local | Move flags to Supabase table + audited admin API + RLS policy | NEXT |
+| P2 | Real leaderboard backend | Current leaderboard is signed-in preview UI | Implement score ingestion + ranking retrieval with anti-abuse controls | NEXT |
+| P3 | Feature flag management UI | Operational toggles still code/env driven | Expand `/admin/flags` to environment-scoped persistent controls | IN_PROGRESS |
 
 ## Recommendations
 
@@ -46,6 +51,11 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | Added Vercel deployment workflow + `vercel.json` | DONE |
 | Added and validated unit/integration/e2e smoke commands | DONE |
 | Ran end-to-end local validation (`pnpm test:all`) | PASSING |
+| Added signed-in gating for leaderboard route | DONE |
+| Added games account CTA for profile/leaderboard unlock messaging | DONE |
+| Added admin flags management page | DONE |
+| Fixed integration test crash on `/api/health` optional request handling | DONE |
+| Upgraded CI workflow actions and switched to Corepack-managed pnpm | DONE |
 
 ## Next Execution Steps
 

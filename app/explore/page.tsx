@@ -15,12 +15,10 @@ import { useGamesManifest, useProjectsManifest } from "@/lib/portfolio-queries";
 export default function ExplorePage() {
   const { data: gameManifestData, isError: gamesError } = useGamesManifest();
   const { data: projectManifestData, isError: projectsError } = useProjectsManifest();
-  const gameManifest = (gameManifestData ?? []) as GameEntry[];
-  const projectManifest = (projectManifestData ?? []) as ProjectEntry[];
 
   const allGames: Game[] = useMemo(
     () =>
-      gameManifest
+      ((gameManifestData ?? []) as GameEntry[])
         .filter((game) => game.visible !== false)
         .map((game) => ({
           id: game.slug,
@@ -32,14 +30,17 @@ export default function ExplorePage() {
           upcoming: !!game.upcoming,
           featured: game.enabled !== false && !game.upcoming,
         })),
-    [gameManifest],
+    [gameManifestData],
   );
 
   const playableGames = useMemo(() => allGames.filter((game) => game.featured), [allGames]);
   const upcomingGames = useMemo(() => allGames.filter((game) => game.upcoming), [allGames]);
   const projects = useMemo(
-    () => projectManifest.filter((project) => project.visible !== false && project.enabled !== false),
-    [projectManifest],
+    () =>
+      ((projectManifestData ?? []) as ProjectEntry[]).filter(
+        (project) => project.visible !== false && project.enabled !== false,
+      ),
+    [projectManifestData],
   );
 
   const useCarousels = useFeature("EXPLORE_CAROUSELS", true);

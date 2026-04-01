@@ -1,7 +1,6 @@
+import { GITHUB_URL, LINKEDIN_URL } from "@gamehub/game-platform";
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 import { Github, Linkedin } from "lucide-react";
-
-import { GITHUB_URL, LINKEDIN_URL } from "@gamehub/game-platform";
 
 import { getVisibleResumeSections } from "@/lib/content-cache";
 import type { Database } from "@/lib/supabase/types";

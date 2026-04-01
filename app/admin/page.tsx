@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import Link from "next/link";
 
 export default function AdminHomePage() {
   return (
@@ -37,6 +36,20 @@ export default function AdminHomePage() {
             </p>
             <Button asChild>
               <Link href="/admin/blog">Manage blog</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Feature flags</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-muted-foreground text-sm">
+              Pilot gameplay rollout behavior and QA-only toggles from one place.
+            </p>
+            <Button asChild>
+              <Link href="/admin/flags">Manage feature flags</Link>
             </Button>
           </CardContent>
         </Card>

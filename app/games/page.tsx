@@ -3,8 +3,8 @@
 import GamesList from "@gamehub/game-platform/components/games/GamesList";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
-import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
 import type { GameEntry } from "@gamehub/game-platform/metadata/games";
+import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
 
 import { useGamesManifest } from "@/lib/portfolio-queries";
 import { siteCopy } from "@/lib/site-copy";

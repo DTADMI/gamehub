@@ -1,13 +1,12 @@
 "use client";
 
+import { Button } from "@gamehub/ui";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Bold, Italic, LinkIcon, List, ListOrdered } from "lucide-react";
 import { useEffect } from "react";
-
-import { Button } from "@gamehub/ui";
 
 type RichTextEditorProps = {
   value: string;

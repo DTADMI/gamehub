@@ -88,6 +88,23 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
         {!user && (
           <div className="bg-card/80 text-card-foreground mb-8 rounded-lg p-4 text-center backdrop-blur-sm">
             <p>{copy.signInHint}</p>
+            <p className="text-muted-foreground mx-auto mt-2 max-w-2xl text-sm">
+              Create an account to save game progress, appear on leaderboards, and unlock profile-based features.
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/auth"
+                className="bg-primary text-primary-foreground inline-flex min-h-11 items-center rounded-md px-4 text-sm font-medium"
+              >
+                Create account
+              </Link>
+              <Link
+                href="/auth"
+                className="bg-muted text-foreground inline-flex min-h-11 items-center rounded-md border px-4 text-sm font-medium"
+              >
+                Sign in
+              </Link>
+            </div>
           </div>
         )}
 

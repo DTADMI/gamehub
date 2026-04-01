@@ -3,6 +3,8 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("@/lib/redis", () => ({
   redis: {
     ping: vi.fn().mockResolvedValue("PONG"),
+    incr: vi.fn().mockResolvedValue(1),
+    set: vi.fn().mockResolvedValue(undefined),
   },
 }));
 

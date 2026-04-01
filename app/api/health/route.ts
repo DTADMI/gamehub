@@ -4,8 +4,9 @@ import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { redis } from "@/lib/redis";
 import { createServerClient } from "@/lib/supabase/server";
 
-export async function GET(request: Request) {
-  const ip = clientIpFromHeaders(request.headers);
+export async function GET(request?: Request) {
+  const safeRequest = request ?? new Request("http://localhost/api/health");
+  const ip = clientIpFromHeaders(safeRequest.headers);
   const limit = await rateLimit({
     key: `api:health:${ip}`,
     windowMs: 60_000,

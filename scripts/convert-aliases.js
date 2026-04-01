@@ -3,7 +3,6 @@ const path = require("path");
 const { parse } = require("@babel/parser");
 const traverse = require("@babel/traverse").default;
 const generate = require("@babel/generator").default;
-const t = require("@babel/types");
 
 // Get all TypeScript/JavaScript files in the project
 function getFiles(dir, fileList = []) {

@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import {
   Badge,
   Button,
@@ -18,8 +16,10 @@ import {
   SelectValue,
   Switch,
 } from "@gamehub/ui";
-import { createBrowserClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { createBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 
 type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];

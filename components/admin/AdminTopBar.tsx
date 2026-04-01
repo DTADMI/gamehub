@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Button } from "@gamehub/ui";
+import { useRouter } from "next/navigation";
 
 import { createBrowserClient } from "@/lib/supabase/client";
 

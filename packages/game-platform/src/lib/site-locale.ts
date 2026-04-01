@@ -57,7 +57,7 @@ export function useSiteLocale() {
       window.removeEventListener(LOCALE_EVENT, onLocaleChangeEvent as EventListener);
       window.removeEventListener("storage", onStorageEvent);
     };
-  }, [onLocaleChangeEvent, onStorageEvent]);
+  }, []);
 
   return { locale, setLocale: setSiteLocale };
 }
