@@ -1,9 +1,39 @@
 "use client";
 
 // games/snake/src/components/SnakeGame.tsx
-import { GameContainer, soundManager } from "@gamehub/game-platform";
+import { 
+  GameContainer, 
+  soundManager, 
+  GameOverModal,
+  Countdown,
+  useFeature,
+  GAME_FLAGS,
+  AUTH_FLAGS,
+  useAuth
+} from "@gamehub/game-platform";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+// Particle system for food collection effects
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  color: string;
+  size: number;
+}
+
+// Score popup for animated score display
+interface ScorePopupData {
+  id: string;
+  x: number;
+  y: number;
+  points: number;
+  life: number;
+}
 
 import {
   CELL_SIZE,
@@ -31,6 +61,21 @@ export const SnakeGame: React.FC = () => {
   const [highScore, setHighScore] = useState(0);
   const [_leaderboard, setLeaderboard] = useState<number[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
+  
+  // New UI/UX enhancement states
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
+  const [scoreSaved, setScoreSaved] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [scorePopups, setScorePopups] = useState<ScorePopupData[]>([]);
+  const [screenShake, setScreenShake] = useState(false);
+  
+  // Feature flags
+  const useParticles = useFeature(GAME_FLAGS.SNAKE_PARTICLES);
+  const useCountdown = useFeature(GAME_FLAGS.COUNTDOWN);
+  const showLoginCTA = useFeature(AUTH_FLAGS.POST_GAME_LOGIN_CTA);
+  const { isAuthenticated, isGuest } = useAuth();
   const [pendingMode, setPendingMode] = useState<GameMode | null>(null);
   const [config, setConfig] = useState<GameConfig>({
     mode: "classic",
@@ -78,6 +123,93 @@ export const SnakeGame: React.FC = () => {
         setLeaderboard(savedBoard);
       }
     } catch {}
+  }, []);
+
+  // Create particle burst effect at a position
+  const createParticleBurst = useCallback((x: number, y: number, color: string = "#ef4444") => {
+    if (!useParticles) return;
+    
+    const newParticles: Particle[] = [];
+    const particleCount = 12;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (i / particleCount) * Math.PI * 2 + Math.random() * 0.5;
+      const speed = 2 + Math.random() * 3;
+      newParticles.push({
+        x: x * CELL_SIZE + CELL_SIZE / 2,
+        y: y * CELL_SIZE + CELL_SIZE / 2,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1,
+        maxLife: 1,
+        color,
+        size: 3 + Math.random() * 4,
+      });
+    }
+    
+    setParticles(prev => [...prev, ...newParticles]);
+  }, [useParticles]);
+
+  // Add score popup
+  const addScorePopup = useCallback((x: number, y: number, points: number) => {
+    const popup: ScorePopupData = {
+      id: `${Date.now()}-${Math.random()}`,
+      x: x * CELL_SIZE + CELL_SIZE / 2,
+      y: y * CELL_SIZE,
+      points,
+      life: 1,
+    };
+    setScorePopups(prev => [...prev, popup]);
+  }, []);
+
+  // Update particles each frame
+  useEffect(() => {
+    if (particles.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setParticles(prev => 
+        prev
+          .map(p => ({
+            ...p,
+            x: p.x + p.vx,
+            y: p.y + p.vy,
+            vy: p.vy + 0.15, // gravity
+            life: p.life - 0.03,
+          }))
+          .filter(p => p.life > 0)
+      );
+    }, 16);
+    
+    return () => clearInterval(interval);
+  }, [particles.length]);
+
+  // Update score popups
+  useEffect(() => {
+    if (scorePopups.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setScorePopups(prev =>
+        prev
+          .map(p => ({
+            ...p,
+            y: p.y - 1.5,
+            life: p.life - 0.025,
+          }))
+          .filter(p => p.life > 0)
+      );
+    }, 16);
+    
+    return () => clearInterval(interval);
+  }, [scorePopups.length]);
+
+  // Trigger screen shake
+  const triggerScreenShake = useCallback(() => {
+    // Respect reduced motion preference
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    setScreenShake(true);
+    setTimeout(() => setScreenShake(false), 300);
   }, []);
 
   // Generate random position
@@ -468,10 +600,17 @@ export const SnakeGame: React.FC = () => {
         try {
           (navigator as any)?.vibrate?.(12);
         } catch {}
+        
+        // Create particle burst at food location
+        createParticleBurst(food.x, food.y, "#ef4444");
+        // Add score popup
+        addScorePopup(food.x, food.y, 10);
+        
         setScore((prev) => {
           const newScore = prev + 10;
           if (newScore > highScore) {
             setHighScore(newScore);
+            setIsNewHighScore(true);
           }
           return newScore;
         });
