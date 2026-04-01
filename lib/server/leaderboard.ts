@@ -16,6 +16,7 @@ export const SUPPORTED_GAME_TYPES = [
 ] as const;
 
 export type LeaderboardGameType = (typeof SUPPORTED_GAME_TYPES)[number];
+export type LeaderboardScoreStatus = "valid" | "flagged" | "removed";
 
 export function isSupportedGameType(value: string): value is LeaderboardGameType {
   return SUPPORTED_GAME_TYPES.includes(value as LeaderboardGameType);
@@ -78,4 +79,14 @@ export async function getActiveSeasonId() {
     .eq("is_active", true)
     .maybeSingle();
   return data?.id ?? null;
+}
+
+export async function getActiveSeason() {
+  const supabase = await createServerClient();
+  const { data } = await supabase
+    .from("leaderboard_seasons")
+    .select("id, slug, is_active, is_locked, starts_at, ends_at")
+    .eq("is_active", true)
+    .maybeSingle();
+  return data ?? null;
 }

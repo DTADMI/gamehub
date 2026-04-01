@@ -1,13 +1,14 @@
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 import Link from "next/link";
 
-import { hasRoleAtLeast } from "@/lib/admin/roles";
+import { canModerateLeaderboard, hasRoleAtLeast } from "@/lib/admin/roles";
 import { getAdminUser } from "@/lib/supabase/admin";
 
 export default async function AdminHomePage() {
   const { role } = await getAdminUser();
   const canEditContent = role ? hasRoleAtLeast(role, "editor") : false;
   const canManageFlags = role ? hasRoleAtLeast(role, "admin") : false;
+  const canModerate = role ? canModerateLeaderboard(role) : false;
 
   return (
     <div className="space-y-8">
@@ -58,6 +59,20 @@ export default async function AdminHomePage() {
             </p>
             <Button asChild disabled={!canManageFlags}>
               <Link href="/admin/flags">Manage feature flags</Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Leaderboard moderation</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-muted-foreground text-sm">
+              Moderate suspicious score entries and lock/activate seasonal windows.
+            </p>
+            <Button asChild disabled={!canModerate}>
+              <Link href="/admin/leaderboard">Manage leaderboard</Link>
             </Button>
           </CardContent>
         </Card>

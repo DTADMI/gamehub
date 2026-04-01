@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import {
   dedupeHash,
-  getActiveSeasonId,
+  getActiveSeason,
   normalizeGameType,
   sanitizeMetadata,
   validateScore,
@@ -63,7 +63,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ accepted: true, duplicate: true }, { status: 202 });
   }
 
-  const seasonId = await getActiveSeasonId();
+  const activeSeason = await getActiveSeason();
+  if (activeSeason?.is_locked) {
+    return NextResponse.json(
+      { error: "Active leaderboard season is locked for new submissions" },
+      { status: 409 },
+    );
+  }
+  const seasonId = activeSeason?.id ?? null;
   const playerName =
     (typeof user.user_metadata?.username === "string" && user.user_metadata.username.trim()) ||
     user.email?.split("@")[0] ||

@@ -42,6 +42,8 @@ export function BlogAdmin() {
   const [editing, setEditing] = useState<BlogPost | null>(null);
   const [form, setForm] = useState(emptyPost);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState<string | null>(null);
 
   const loadPosts = async () => {
     const supabase = createBrowserClient() as any;
@@ -106,6 +108,37 @@ export function BlogAdmin() {
     setLoading(false);
     resetForm();
     loadPosts();
+  };
+
+  const uploadCoverImage = async (file: File | null) => {
+    if (!file) {
+      return;
+    }
+    setUploading(true);
+    setUploadMessage(null);
+
+    try {
+      const formData = new FormData();
+      formData.set("file", file);
+
+      const response = await fetch("/api/admin/uploads/blog-cover", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => ({}))) as { error?: string };
+        throw new Error(payload.error ?? "Upload failed");
+      }
+
+      const payload = (await response.json()) as { url: string };
+      setForm((current) => ({ ...current, cover_image_url: payload.url }));
+      setUploadMessage("Cover uploaded.");
+    } catch (err) {
+      setUploadMessage(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const deletePost = async (id: string) => {
@@ -196,6 +229,18 @@ export function BlogAdmin() {
               value={form.cover_image_url}
               onChange={(event) => setForm({ ...form, cover_image_url: event.target.value })}
             />
+            <Input
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/avif"
+              onChange={(event) => {
+                const file = event.target.files?.[0] ?? null;
+                void uploadCoverImage(file);
+                event.target.value = "";
+              }}
+            />
+            <p className="text-muted-foreground text-xs">
+              {uploading ? "Uploading..." : uploadMessage ?? "Upload to Supabase media bucket or paste a URL."}
+            </p>
           </div>
           <div className="space-y-2">
             <Label>Status</Label>

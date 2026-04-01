@@ -1,16 +1,20 @@
 ﻿# Admin Dashboard - Scope Update
 
 **Project**: GameHub Admin Dashboard
-**Status**: ✅ Implemented (content-only)
+**Status**: ✅ Implemented (content + flags + leaderboard moderation)
 **Priority**: High (portfolio readiness)
 
 ## Implemented Scope
 
-The admin dashboard now focuses on portfolio content management:
+The admin dashboard now supports:
 
 - Resume sections (create, update, reorder, hide)
 - Blog posts (draft, publish, edit, delete)
+- Blog cover uploads to Supabase Storage
 - Rich Text Editor for content editing
+- Server-backed feature flags with audit trail
+- Feature-flag audit timeline + CSV export
+- Leaderboard moderation (score status, season lock, active season switch)
 
 ## Routes
 
@@ -18,6 +22,8 @@ The admin dashboard now focuses on portfolio content management:
 /admin
 /admin/resume
 /admin/blog
+/admin/flags
+/admin/leaderboard
 ```
 
 ## Authentication
@@ -29,5 +35,5 @@ The admin dashboard now focuses on portfolio content management:
 
 - User management
 - Project analytics
-- Game moderation
-- Feature flags and experiments
+- Delegated policy UI for per-feature approvals
+- Unified post-game CTA telemetry and experimentation

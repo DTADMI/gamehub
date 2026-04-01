@@ -15,7 +15,8 @@ Improve clarity, responsiveness, conversion, and accessibility without regressio
 | Add guest-to-auth conversion UX on leaderboard and game surfaces | Better account conversion and clearer value | DONE |
 | Keep controls touch-friendly and keyboard-usable | Mobile and accessibility baseline | DONE |
 | Add post-game completion modal with smart CTA frequency | High-value conversion point after game completion | IN_PROGRESS |
-| Persist feature flags server-side with auditability | Team-wide consistent behavior across devices | NEXT |
+| Persist feature flags server-side with auditability | Team-wide consistent behavior across devices | DONE |
+| Add leaderboard moderation + season control operations | Safer anti-abuse and operational playbook | DONE |
 
 ## Security and UX guardrails
 
@@ -31,6 +32,4 @@ Improve clarity, responsiveness, conversion, and accessibility without regressio
 | Priority | Task | Notes |
 | --- | --- | --- |
 | P1 | Hook game completion events to shared post-game modal | Requires a small completion contract per playable game |
-| P1 | Persist flags to Supabase table + admin API | Replace browser-local flag storage |
-| P2 | Add real leaderboard backend ingestion/ranking | Replace preview-only signed-in data |
 | P2 | Add e2e coverage for guest/auth UX flows | Validate teaser/CTA and redirect behavior |

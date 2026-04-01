@@ -46,6 +46,10 @@ export function canWriteFeatureFlags(role: AdminRole, path: string): boolean {
   return true;
 }
 
+export function canModerateLeaderboard(role: AdminRole): boolean {
+  return hasRoleAtLeast(role, "admin");
+}
+
 export function adminRoleMatrix() {
   return [
     {

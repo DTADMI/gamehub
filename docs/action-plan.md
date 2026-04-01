@@ -28,8 +28,8 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | P1 | Full legacy Vitest suite triage (non-unit folders) | Some older tests are still outside new staged gates | Incrementally migrate/repair old tests and fold into staged pipelines | IN_PROGRESS |
 | P2 | Portfolio/blog media upload workflow | Admin UX still uses URL-only cover image input | Add Supabase Storage upload flow in admin | NEXT |
 | P1 | Server-backed feature flag persistence | Flags are now persisted via Supabase + audited admin API with Redis fallback | Continue with dashboard analytics and staged rollout tooling | DONE |
-| P2 | Real leaderboard backend | Scores and seasons are now server-backed with validation and rate limits | Add moderation workflows and per-window segmentation | IN_PROGRESS |
-| P3 | Feature flag management UI | Admin matrix + sensitive toggle restrictions now enforced | Add historical diff viewer and export | IN_PROGRESS |
+| P2 | Real leaderboard backend | Scores and seasons are now server-backed with validation and rate limits | Added moderation workflows, season lock controls, and active-season guardrail | DONE |
+| P3 | Feature flag management UI | Admin matrix + sensitive toggle restrictions now enforced | Added audit timeline view and CSV export from admin | DONE |
 | P1 | Post-game completion CTA modal integration | Auth CTA is available in launcher and ranking flows | Expand to unified modal contracts in all games | IN_PROGRESS |
 
 ## Recommendations
@@ -61,11 +61,15 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | Added Supabase-backed feature flags + audit API + role-gated admin controls | DONE |
 | Added Supabase-backed leaderboard seasons/scores with anti-spam and rate-limit guardrails | DONE |
 | Added e2e coverage for leaderboard auth gating and admin flags toggles | DONE |
+| Added leaderboard moderation APIs/UI, season lock + activation controls, and moderation audit trail | DONE |
+| Added feature flag audit timeline endpoint + admin CSV export | DONE |
+| Added blog cover image upload API (Supabase Storage) + admin UI integration | DONE |
+| Added and applied migration `003_leaderboard_moderation_and_flags_audit.rollout.sql` | DONE |
 
 ## Next Execution Steps
 
 | Order | Step | Owner | Target |
 | --- | --- | --- | --- |
 | 1 | Migrate additional legacy Vitest specs into staged unit/integration buckets | Agent | Next iteration |
-| 2 | Add Supabase Storage image upload for blog covers | Agent | Next iteration |
-| 3 | Add admin feature-flag management page/API | Agent | Future iteration |
+| 2 | Complete post-game CTA modal wiring across all game end events | Agent | Next iteration |
+| 3 | Migrate additional legacy Vitest specs into staged unit/integration buckets | Agent | Ongoing |

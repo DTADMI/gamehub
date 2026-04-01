@@ -23,4 +23,5 @@ This index tracks the current GameHub UI/UX recommendation set, implementation s
 | Leaderboard guest teaser UX | DONE | Flag-controlled teaser + sign-in CTA live in `/leaderboard` |
 | Game-level auth CTA | DONE | CTA banner added on `/games/[slug]` for guests |
 | Post-game completion modal | NEXT | Shared component design exists, but per-game completion hooks still needed |
-| Server-persisted flags | NEXT | Flags remain browser-local until Supabase persistence is added |
+| Server-persisted flags | DONE | Flags are persisted in Supabase with admin audit history |
+| Leaderboard moderation controls | DONE | Admin moderation + season controls are now available in `/admin/leaderboard` |

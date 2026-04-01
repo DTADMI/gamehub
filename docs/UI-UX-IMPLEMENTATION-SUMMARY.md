@@ -17,6 +17,9 @@ Compared documented recommendations against current runtime implementation.
 | Leaderboard UX | Added guest teaser and improved signed-in preview experience | `app/leaderboard/page.tsx` |
 | Game auth CTA | Added signed-out CTA panel on game launcher pages | `app/games/[slug]/page.tsx` |
 | Admin controls | Added toggles for new UI/UX flags | `app/admin/flags/page.tsx` |
+| Flag audit visibility | Added admin audit timeline + CSV export | `app/api/admin/feature-flags/audit/route.ts`, `app/admin/flags/page.tsx` |
+| Leaderboard moderation | Added moderation API/UI + season lock controls | `app/api/admin/leaderboard/*`, `app/admin/leaderboard/*` |
+| Blog admin media workflow | Added Supabase Storage cover upload path | `app/api/admin/uploads/blog-cover/route.ts`, `app/admin/blog/BlogAdmin.tsx` |
 
 ## Assessed gaps and result
 
@@ -32,6 +35,4 @@ Compared documented recommendations against current runtime implementation.
 | Priority | Task | Status |
 | --- | --- | --- |
 | P1 | Wire post-game completion modal through playable game end events | NEXT |
-| P1 | Persist admin flags to Supabase (RLS + audit trail) | NEXT |
-| P2 | Replace leaderboard preview data with backend scores | NEXT |
-| P2 | Expand CI e2e for auth conversion and responsive states | NEXT |
+| P2 | Expand CI e2e for auth conversion and responsive states | IN_PROGRESS |

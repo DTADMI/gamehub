@@ -8,7 +8,7 @@ A single Next.js + Supabase application that hosts a curated game library and a 
 - **Games in Packages**: Each game lives in `packages/games/*` and is loaded by the app.
 - **Portfolio Ready**: Projects link directly to GitHub repositories.
 - **Resume + Blog**: Public pages backed by Supabase content tables.
-- **Admin Dashboard**: Create, edit, and publish resume sections and blog posts with a rich text editor.
+- **Admin Dashboard**: Content, feature-flag operations, and leaderboard moderation controls.
 - **Responsive UI**: Mobile-first layouts with Tailwind CSS v4 and `@gamehub/ui`.
 
 ## 🧱 Tech Stack
@@ -41,7 +41,11 @@ KV_REST_API_URL="https://YOUR_UPSTASH_INSTANCE.upstash.io"
 KV_REST_API_TOKEN="YOUR_UPSTASH_TOKEN"
 ```
 
-Run the rollout SQL in `scripts/001_resume_blog_content.rollout.sql` to create the content tables and seed the resume data.
+Run rollout SQL scripts in order:
+
+1. `scripts/001_resume_blog_content.rollout.sql`
+2. `scripts/002_flags_leaderboard_roles.rollout.sql`
+3. `scripts/003_leaderboard_moderation_and_flags_audit.rollout.sql`
 
 ## 🔐 Admin Access
 
@@ -53,6 +57,9 @@ The admin dashboard lets you:
 
 - Add, edit, reorder, and hide resume sections
 - Draft, edit, and publish blog posts
+- Upload blog cover images to Supabase Storage
+- Manage server-persisted feature flags with audit timeline/export
+- Moderate leaderboard scores and lock/activate seasons
 
 ## 📁 Project Structure
 

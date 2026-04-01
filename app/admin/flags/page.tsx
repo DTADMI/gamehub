@@ -18,8 +18,8 @@ import {
 } from "@gamehub/ui";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { type AdminRole,adminRoleMatrix, canWriteFeatureFlags } from "@/lib/admin/roles";
-import { type FeatureFlags,flattenFlags } from "@/lib/feature-flags";
+import { type AdminRole, adminRoleMatrix, canWriteFeatureFlags } from "@/lib/admin/roles";
+import { type FeatureFlags, flattenFlags } from "@/lib/feature-flags";
 
 type AdminFlagsResponse = {
   flags: FeatureFlags;
@@ -34,6 +34,18 @@ type AdminFlagsResponse = {
   }>;
 };
 
+type AuditEntry = {
+  id: string;
+  flag_path: string;
+  old_value: unknown;
+  new_value: unknown;
+  actor_user_id: string | null;
+  actor_role: string;
+  request_ip: string | null;
+  user_agent: string | null;
+  created_at: string;
+};
+
 const stringOptions = {
   "auth.postGameCTAFrequency": ["always", "occasional", "rare", "never"],
 } satisfies Record<string, string[]>;
@@ -46,6 +58,8 @@ export default function AdminFlagsPage() {
   const [role, setRole] = useState<AdminRole>("analyst");
   const [flags, setFlags] = useState<FeatureFlags | null>(null);
   const [definitions, setDefinitions] = useState<AdminFlagsResponse["definitions"]>([]);
+  const [audit, setAudit] = useState<AuditEntry[]>([]);
+
   const e2eHeaders = useMemo(() => {
     if (typeof window === "undefined") {
       return undefined;
@@ -57,6 +71,7 @@ export default function AdminFlagsPage() {
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
+
     try {
       const response = await fetch("/api/admin/feature-flags", {
         cache: "no-store",
@@ -69,8 +84,20 @@ export default function AdminFlagsPage() {
       setRole(payload.role);
       setFlags(payload.flags);
       setDefinitions(payload.definitions);
+
+      const auditResponse = await fetch("/api/admin/feature-flags/audit?limit=20", {
+        cache: "no-store",
+        headers: e2eHeaders,
+      });
+      if (auditResponse.ok) {
+        const auditPayload = (await auditResponse.json()) as { audit?: AuditEntry[] };
+        setAudit(auditPayload.audit ?? []);
+      } else {
+        setAudit([]);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to load flags");
+      setAudit([]);
     } finally {
       setLoading(false);
     }
@@ -91,6 +118,7 @@ export default function AdminFlagsPage() {
   const updateFlag = async (path: string, value: unknown) => {
     setSavingPath(path);
     setError(null);
+
     try {
       const response = await fetch("/api/admin/feature-flags", {
         method: "PATCH",
@@ -233,17 +261,31 @@ export default function AdminFlagsPage() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Audit Preview</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between gap-3">
+          <CardTitle>Audit Timeline</CardTitle>
+          <Button asChild size="sm" variant="outline">
+            <a href="/api/admin/feature-flags/audit?format=csv&limit=500">Export CSV</a>
+          </Button>
         </CardHeader>
         <CardContent className="space-y-2">
-          {definitions.slice(0, 8).map((row) => (
-            <p key={row.path} className="text-muted-foreground text-xs">
-              {row.path} = {String(row.value)}
-            </p>
+          {audit.slice(0, 12).map((row) => (
+            <div key={row.id} className="rounded-md border p-2 text-xs">
+              <p className="font-medium">{row.flag_path}</p>
+              <p className="text-muted-foreground">
+                {new Date(row.created_at).toLocaleString()} - {row.actor_role}
+              </p>
+              <p className="text-muted-foreground">
+                {JSON.stringify(row.old_value)}
+                {" -> "}
+                {JSON.stringify(row.new_value)}
+              </p>
+            </div>
           ))}
-          {definitions.length > 8 ? (
-            <p className="text-muted-foreground text-xs">+{definitions.length - 8} more flags</p>
+          {audit.length === 0 ? (
+            <p className="text-muted-foreground text-xs">No audit events found.</p>
+          ) : null}
+          {definitions.length > 0 ? (
+            <p className="text-muted-foreground text-xs">Tracked flags: {definitions.length}</p>
           ) : null}
         </CardContent>
       </Card>

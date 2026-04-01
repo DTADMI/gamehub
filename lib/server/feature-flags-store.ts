@@ -18,6 +18,18 @@ type PersistedFlagRow = {
   is_sensitive: boolean;
 };
 
+export type FeatureFlagAuditEntry = {
+  id: string;
+  flag_path: string;
+  old_value: Json | null;
+  new_value: Json | null;
+  actor_user_id: string | null;
+  actor_role: string;
+  request_ip: string | null;
+  user_agent: string | null;
+  created_at: string;
+};
+
 export async function readPersistedFlags(): Promise<FeatureFlags> {
   const supabase = await createServerClient();
   const { data, error } = await supabase
@@ -39,7 +51,7 @@ export async function readPersistedFlags(): Promise<FeatureFlags> {
 export async function upsertFlag(params: {
   path: string;
   value: unknown;
-  actorUserId: string;
+  actorUserId: string | null;
   actorRole: string;
   requestIp: string;
   userAgent: string;
@@ -84,4 +96,21 @@ export async function upsertFlag(params: {
   setByPath(snapshot as unknown as Record<string, unknown>, path, value);
   await redis.set(REDIS_KEY, snapshot);
   return { persisted: false, fallback: "redis" as const };
+}
+
+export async function readFlagAudit(limit = 50): Promise<FeatureFlagAuditEntry[]> {
+  const safeLimit = Math.min(200, Math.max(1, Math.trunc(limit)));
+  const supabase = await createServerClient();
+  const { data, error } = await supabase
+    .from("feature_flag_audit")
+    .select(
+      "id,flag_path,old_value,new_value,actor_user_id,actor_role,request_ip,user_agent,created_at",
+    )
+    .order("created_at", { ascending: false })
+    .limit(safeLimit);
+
+  if (error || !data) {
+    return [];
+  }
+  return data as FeatureFlagAuditEntry[];
 }

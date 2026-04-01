@@ -179,6 +179,9 @@ export type Database = {
           starts_at: string;
           ends_at: string | null;
           is_active: boolean;
+          is_locked: boolean;
+          locked_at: string | null;
+          locked_by: string | null;
           created_by: string | null;
           created_at: string;
         };
@@ -189,6 +192,9 @@ export type Database = {
           starts_at: string;
           ends_at?: string | null;
           is_active?: boolean;
+          is_locked?: boolean;
+          locked_at?: string | null;
+          locked_by?: string | null;
           created_by?: string | null;
           created_at?: string;
         };
@@ -199,6 +205,9 @@ export type Database = {
           starts_at?: string;
           ends_at?: string | null;
           is_active?: boolean;
+          is_locked?: boolean;
+          locked_at?: string | null;
+          locked_by?: string | null;
           created_by?: string | null;
           created_at?: string;
         };
@@ -214,6 +223,11 @@ export type Database = {
           season_id: string | null;
           metadata: Json;
           client_hash: string | null;
+          status: string;
+          moderated_at: string | null;
+          moderated_by: string | null;
+          moderation_reason: string | null;
+          moderation_note: string | null;
           created_at: string;
         };
         Insert: {
@@ -225,6 +239,11 @@ export type Database = {
           season_id?: string | null;
           metadata?: Json;
           client_hash?: string | null;
+          status?: string;
+          moderated_at?: string | null;
+          moderated_by?: string | null;
+          moderation_reason?: string | null;
+          moderation_note?: string | null;
           created_at?: string;
         };
         Update: {
@@ -236,6 +255,53 @@ export type Database = {
           season_id?: string | null;
           metadata?: Json;
           client_hash?: string | null;
+          status?: string;
+          moderated_at?: string | null;
+          moderated_by?: string | null;
+          moderation_reason?: string | null;
+          moderation_note?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      leaderboard_score_moderation_audit: {
+        Row: {
+          id: string;
+          score_id: string;
+          old_status: string | null;
+          new_status: string;
+          reason: string | null;
+          note: string | null;
+          actor_user_id: string | null;
+          actor_role: string;
+          request_ip: string | null;
+          user_agent: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          score_id: string;
+          old_status?: string | null;
+          new_status: string;
+          reason?: string | null;
+          note?: string | null;
+          actor_user_id?: string | null;
+          actor_role: string;
+          request_ip?: string | null;
+          user_agent?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          score_id?: string;
+          old_status?: string | null;
+          new_status?: string;
+          reason?: string | null;
+          note?: string | null;
+          actor_user_id?: string | null;
+          actor_role?: string;
+          request_ip?: string | null;
+          user_agent?: string | null;
           created_at?: string;
         };
         Relationships: [];

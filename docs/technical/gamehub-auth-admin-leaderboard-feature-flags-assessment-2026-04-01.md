@@ -16,10 +16,10 @@ It also documents regressions fixed in this pass and recommendations with pros/c
 
 | Area | Planned | Current (after this pass) | Gap |
 | --- | --- | --- | --- |
-| Leaderboard access | Signed-in user value surface | `/leaderboard` gates guest access and uses server-backed entries | Moderation workflows still basic |
+| Leaderboard access | Signed-in user value surface | `/leaderboard` gates guest access and uses server-backed entries | Moderation controls now available in `/admin/leaderboard` |
 | Games account CTA | Invite account creation for progression features | Games page now includes account CTA with clear benefits | CTA copy is static and not A/B tested |
 | Admin account model | Admin users controlled from Supabase (`app_admins`) | Role matrix (`owner/admin/editor/analyst`) enforced in admin surfaces | Needs richer delegated policy UI |
-| Feature-flag piloting | Admin-manageable flags (future expansion) | `/admin/flags` reads/writes via audited server API | Add diff/history visualization in dashboard |
+| Feature-flag piloting | Admin-manageable flags (future expansion) | `/admin/flags` reads/writes via audited server API | Audit timeline + CSV export added |
 | CI reliability | Pre-merge confidence gates | Local + CI checks improved; integration regression fixed | Need periodic CI runtime version audit |
 
 ## Regressions Identified and Fixed
@@ -58,6 +58,6 @@ It also documents regressions fixed in this pass and recommendations with pros/c
 
 ## Next Implementation Backlog
 
-1. Add leaderboard moderation tooling (remove score, flag suspect clients, season lock).
-2. Add richer audit timeline for flags in admin dashboard (diffs + filters).
-3. Extend post-game completion contracts so all games share one CTA/telemetry hook.
+1. Extend post-game completion contracts so all games share one CTA/telemetry hook.
+2. Add fine-grained moderation queue filters (per IP hash, velocity spikes, repeated duplicates).
+3. Add delegated admin policy UI for owner approval workflows.
