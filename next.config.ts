@@ -116,10 +116,15 @@ const nextConfig: NextConfig = {
 
   // Security headers with CSP tuned for Next.js 16, next/font, and optional Google Fonts
   async headers() {
+    const scriptSrc =
+      process.env.NODE_ENV === "development"
+        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+        : "script-src 'self' 'unsafe-inline'";
+
     // Allow Google Fonts when used by older pages; next/font is self-hosted and works with 'self'
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline'",
+      scriptSrc,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
