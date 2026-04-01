@@ -41,6 +41,7 @@ pnpm start
 - Vercel deployment path:
   - Native Vercel Git integration (no GitHub `vercel` CLI deploy workflow).
   - Vercel build behavior is configured in `vercel.json`.
+  - Preview deploys can be skipped for docs/metadata-only changes via `scripts/vercel-ignore-build.mjs`.
 - Vercel dashboard settings (recommended):
   - Framework Preset: `Next.js`
   - Root Directory: `/`

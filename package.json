@@ -4,7 +4,7 @@
   "private": true,
   "description": "GameHub - Next.js portfolio + game platform",
   "engines": {
-    "node": "^20.20.0 || ^22.22.0 || ^24.13.0 || ^25.3.0",
+    "node": "24.x",
     "pnpm": ">=9.0.0"
   },
   "packageManager": "pnpm@10.26.0",
