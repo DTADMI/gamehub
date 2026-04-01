@@ -1,7 +1,6 @@
 "use client";
 
 import { ThemeProvider } from "@gamehub/ui";
-import { SessionProvider } from "next-auth/react";
 
 import { AuthProvider } from "../contexts/AuthContext";
 import { FlagsProvider } from "../contexts/FlagsContext";
@@ -32,19 +31,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <SessionProvider>
-      <AuthProvider>
-        <SubscriptionProvider>
-          <FlagsProvider>
-            <ProfileProvider>
-              <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                {children}
-              </ThemeProvider>
-            </ProfileProvider>
-          </FlagsProvider>
-        </SubscriptionProvider>
-      </AuthProvider>
-    </SessionProvider>
+    <AuthProvider>
+      <SubscriptionProvider>
+        <FlagsProvider>
+          <ProfileProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </ProfileProvider>
+        </FlagsProvider>
+      </SubscriptionProvider>
+    </AuthProvider>
   );
 }
 
