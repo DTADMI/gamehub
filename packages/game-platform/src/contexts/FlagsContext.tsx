@@ -1,98 +1,56 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-type Flags = {
-  sdBodEnabled: boolean;
-  sdBodBreath: boolean;
-  sdBodFuel: boolean;
-  sdBodMove: boolean;
-  sdBodSignal: boolean;
-  sdBodGrow: boolean;
-  ui: {
-    // Admin/UI seam: allow upcoming games to be playable locally without rebuilds
-    allowPlayUpcomingLocal: boolean;
-    enhancedGameCards: boolean;
-    enhancedCarousel: boolean;
-    shimmerSkeletons: boolean;
-    animatedHero: boolean;
-    postGameAuthCTA: boolean;
-  };
-  auth: {
-    leaderboardGuestTeaser: boolean;
-    postGameCTAFrequency: "always" | "occasional" | "rare" | "never";
-  };
-  games: {
-    socialShare: boolean;
-  };
-};
+import {
+  DEFAULT_FEATURE_FLAGS,
+  type FeatureFlags,
+  mergeFeatureFlags,
+  setByPath,
+} from "@/lib/feature-flags";
 
-const DEFAULT_FLAGS: Flags = {
-  sdBodEnabled: true,
-  sdBodBreath: true,
-  sdBodFuel: true,
-  sdBodMove: true,
-  sdBodSignal: true,
-  sdBodGrow: true,
-  ui: {
-    allowPlayUpcomingLocal: false,
-    enhancedGameCards: true,
-    enhancedCarousel: true,
-    shimmerSkeletons: true,
-    animatedHero: true,
-    postGameAuthCTA: true,
-  },
-  auth: {
-    leaderboardGuestTeaser: true,
-    postGameCTAFrequency: "occasional",
-  },
-  games: {
-    socialShare: false,
-  },
-};
-
-const STORAGE_KEY = "gh:flags:v1";
+const STORAGE_KEY = "gh:flags:v2";
 
 type FlagsContextValue = {
-  flags: Flags;
-  setFlag: <K extends keyof Flags>(key: K, value: Flags[K]) => void;
+  flags: FeatureFlags;
+  setFlag: <K extends keyof FeatureFlags>(key: K, value: FeatureFlags[K]) => void;
+  setFlagPath: (path: string, value: unknown) => void;
   reset: () => void;
+  refreshFromServer: () => Promise<void>;
 };
 
 const FlagsContext = createContext<FlagsContextValue | null>(null);
 
 export function FlagsProvider({ children }: { children: React.ReactNode }) {
-  const [flags, setFlags] = useState<Flags>(DEFAULT_FLAGS);
+  const [flags, setFlags] = useState<FeatureFlags>(DEFAULT_FEATURE_FLAGS);
 
-  const mergeWithDefaults = (next: Partial<Flags>): Flags => ({
-    ...DEFAULT_FLAGS,
-    ...next,
-    ui: {
-      ...DEFAULT_FLAGS.ui,
-      ...(next.ui ?? {}),
-    },
-    auth: {
-      ...DEFAULT_FLAGS.auth,
-      ...(next.auth ?? {}),
-    },
-    games: {
-      ...DEFAULT_FLAGS.games,
-      ...(next.games ?? {}),
-    },
-  });
+  const refreshFromServer = async () => {
+    try {
+      const response = await fetch("/api/feature-flags", { cache: "no-store" });
+      if (!response.ok) {
+        return;
+      }
+      const payload = (await response.json()) as { flags?: Partial<FeatureFlags> };
+      if (payload.flags) {
+        setFlags((prev) => mergeFeatureFlags({ ...prev, ...payload.flags }));
+      }
+    } catch {
+      // Keep local flags when server fetch fails.
+    }
+  };
 
-  // load
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw) as Partial<Flags>;
-        setFlags(mergeWithDefaults(parsed));
+        const parsed = JSON.parse(raw) as Partial<FeatureFlags>;
+        setFlags(mergeFeatureFlags(parsed));
       }
     } catch {}
+
+    void refreshFromServer();
   }, []);
 
-  // persist
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(flags));
@@ -102,8 +60,18 @@ export function FlagsProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<FlagsContextValue>(
     () => ({
       flags,
-      setFlag: (key, value) => setFlags((prev) => ({ ...prev, [key]: value }) as Flags),
-      reset: () => setFlags(DEFAULT_FLAGS),
+      setFlag: (key, value) => {
+        setFlags((prev) => mergeFeatureFlags({ ...prev, [key]: value }));
+      },
+      setFlagPath: (path, value) => {
+        setFlags((prev) => {
+          const next = structuredClone(prev) as FeatureFlags;
+          setByPath(next as Record<string, any>, path, value);
+          return mergeFeatureFlags(next);
+        });
+      },
+      reset: () => setFlags(DEFAULT_FEATURE_FLAGS),
+      refreshFromServer,
     }),
     [flags],
   );

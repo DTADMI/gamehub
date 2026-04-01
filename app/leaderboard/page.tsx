@@ -2,24 +2,52 @@
 
 import { useAuth } from "@gamehub/game-platform";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@gamehub/ui";
 import { Crown, LogIn, Trophy } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
-type LeaderboardEntry = {
+const GAME_OPTIONS = [
+  "SNAKE",
+  "BREAKOUT",
+  "TETRIS",
+  "BUBBLE_POP",
+  "MEMORY",
+  "CHESS",
+  "CHECKERS",
+] as const;
+
+type Entry = {
   rank: number;
-  player: string;
   score: number;
-  trend?: "up" | "down" | "same";
+  submittedAt: string;
+  user: {
+    id: string;
+    username: string;
+  };
 };
 
-const previewEntries: LeaderboardEntry[] = [
-  { rank: 1, player: "Player One", score: 12400, trend: "same" },
-  { rank: 2, player: "Player Two", score: 11150, trend: "up" },
-  { rank: 3, player: "Player Three", score: 9800, trend: "down" },
-  { rank: 4, player: "Player Four", score: 8750, trend: "up" },
-  { rank: 5, player: "Player Five", score: 8200, trend: "same" },
-];
+type LeaderboardResponse = {
+  gameType: string;
+  season: {
+    id: string;
+    name: string;
+    slug: string;
+  } | null;
+  entries: Entry[];
+};
 
 function rankVariant(rank: number): "default" | "secondary" | "outline" {
   if (rank === 1) {
@@ -41,13 +69,15 @@ function GuestTeaser() {
               <CardTitle>Top Players</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {previewEntries.slice(0, 3).map((entry) => (
-                <div key={entry.rank} className="bg-muted/40 flex items-center justify-between rounded-md p-3">
+              {[1, 2, 3].map((rank) => (
+                <div key={rank} className="bg-muted/40 flex items-center justify-between rounded-md p-3">
                   <div className="flex items-center gap-3">
-                    <Badge variant={rankVariant(entry.rank)}>{entry.rank}</Badge>
-                    <span className="font-medium">{entry.player}</span>
+                    <Badge variant={rankVariant(rank)}>{rank}</Badge>
+                    <span className="font-medium">Player {rank}</span>
                   </div>
-                  <span className="text-muted-foreground text-sm">{entry.score.toLocaleString()} pts</span>
+                  <span className="text-muted-foreground text-sm">
+                    {(10_000 - rank * 250).toLocaleString()} pts
+                  </span>
                 </div>
               ))}
             </CardContent>
@@ -65,7 +95,7 @@ function GuestTeaser() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground text-center text-sm">
-                Sign in to save scores, track progress, and compete in ranking ladders.
+                Sign in to save scores, track seasonal rankings, and compete globally.
               </p>
               <div className="space-y-2">
                 <Button asChild className="w-full">
@@ -89,6 +119,55 @@ function GuestTeaser() {
 export default function LeaderboardPage() {
   const { user, isLoading } = useAuth();
   const { flags } = useFlags();
+  const [gameType, setGameType] = useState<(typeof GAME_OPTIONS)[number]>("SNAKE");
+  const [data, setData] = useState<LeaderboardResponse | null>(null);
+  const [loadingBoard, setLoadingBoard] = useState(false);
+  const [boardError, setBoardError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      if (!user) {
+        setData(null);
+        return;
+      }
+
+      setLoadingBoard(true);
+      setBoardError(null);
+      try {
+        const response = await fetch(`/api/leaderboard?gameType=${gameType}&limit=25`, {
+          cache: "no-store",
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to load leaderboard (${response.status})`);
+        }
+        const payload = (await response.json()) as LeaderboardResponse;
+        if (!cancelled) {
+          setData(payload);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setBoardError(err instanceof Error ? err.message : "Failed to load leaderboard");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingBoard(false);
+        }
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [gameType, user]);
+
+  const me = useMemo(
+    () => data?.entries.find((entry) => entry.user.id === user?.id) ?? null,
+    [data?.entries, user?.id],
+  );
 
   if (isLoading) {
     return (
@@ -114,8 +193,7 @@ export default function LeaderboardPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground text-sm">
-              Leaderboards are available to signed-in users only. Create an account to track scores
-              and progression.
+              Leaderboards are available to signed-in users only.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild>
@@ -136,31 +214,74 @@ export default function LeaderboardPage() {
       <section className="animate-fade-in-up space-y-2">
         <h1 className="text-4xl font-bold tracking-tight">Leaderboard</h1>
         <p className="text-muted-foreground">
-          Global rankings are in preview for signed-in users while backend ingestion is finalized.
+          Seasonal ranking backed by server scores and anti-spam validation.
         </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Select
+            value={gameType}
+            onValueChange={(nextValue) => setGameType(nextValue as (typeof GAME_OPTIONS)[number])}
+          >
+            <SelectTrigger className="w-44">
+              <SelectValue placeholder="Select game" />
+            </SelectTrigger>
+            <SelectContent>
+              {GAME_OPTIONS.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option.replace(/_/g, " ")}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {data?.season ? <Badge variant="secondary">{data.season.name}</Badge> : null}
+        </div>
       </section>
+
       <Card className="animate-fade-in-up animation-delay-100">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Top Players</CardTitle>
-          <Badge variant="secondary">Preview</Badge>
+          <Badge variant="secondary">{gameType}</Badge>
         </CardHeader>
         <CardContent className="space-y-2">
-          {previewEntries.map((entry) => (
-            <div key={entry.rank} className="bg-muted/40 flex items-center justify-between rounded-md p-3">
+          {loadingBoard ? (
+            <p className="text-muted-foreground text-sm">Loading leaderboard...</p>
+          ) : null}
+          {boardError ? <p className="text-destructive text-sm">{boardError}</p> : null}
+          {!loadingBoard && !boardError && (data?.entries.length ?? 0) === 0 ? (
+            <p className="text-muted-foreground text-sm">No scores yet. Be the first to submit.</p>
+          ) : null}
+
+          {(data?.entries ?? []).map((entry) => (
+            <div
+              key={`${entry.user.id}-${entry.rank}`}
+              className="bg-muted/40 flex items-center justify-between rounded-md p-3"
+            >
               <div className="flex items-center gap-3">
                 <Badge variant={rankVariant(entry.rank)} className="min-w-[3rem] justify-center gap-1">
                   {entry.rank <= 3 ? <Crown className="h-3.5 w-3.5" /> : null}
                   {entry.rank}
                 </Badge>
-                <span className="font-medium">{entry.player}</span>
-                {entry.trend === "up" ? <span className="text-xs text-emerald-600">up</span> : null}
-                {entry.trend === "down" ? <span className="text-xs text-amber-600">down</span> : null}
+                <span className="font-medium">{entry.user.username}</span>
+                {entry.user.id === user.id ? <Badge variant="outline">You</Badge> : null}
               </div>
-              <span className="text-muted-foreground text-sm">{entry.score.toLocaleString()} pts</span>
+              <span className="text-muted-foreground text-sm tabular-nums">
+                {entry.score.toLocaleString()} pts
+              </span>
             </div>
           ))}
         </CardContent>
       </Card>
+
+      {me ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Position</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm">
+            Rank <span className="font-semibold">#{me.rank}</span> with{" "}
+            <span className="font-semibold">{me.score.toLocaleString()}</span> points.
+          </CardContent>
+        </Card>
+      ) : null}
     </div>
   );
 }

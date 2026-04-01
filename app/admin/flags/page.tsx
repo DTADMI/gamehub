@@ -1,193 +1,250 @@
 "use client";
 
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Switch } from "@gamehub/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Switch,
+} from "@gamehub/ui";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-const flagDefinitions = [
-  {
-    key: "sdBodEnabled",
-    label: "Systems Discovery - Body Systems bundle",
-    description: "Master switch for Body Systems content visibility in the games catalog.",
-  },
-  {
-    key: "sdBodBreath",
-    label: "Body Systems: Breath",
-    description: "Enable the Breath sub-pack.",
-  },
-  {
-    key: "sdBodFuel",
-    label: "Body Systems: Fuel",
-    description: "Enable the Fuel sub-pack.",
-  },
-  {
-    key: "sdBodMove",
-    label: "Body Systems: Move",
-    description: "Enable the Move sub-pack.",
-  },
-  {
-    key: "sdBodSignal",
-    label: "Body Systems: Signal",
-    description: "Enable the Signal sub-pack.",
-  },
-  {
-    key: "sdBodGrow",
-    label: "Body Systems: Grow",
-    description: "Enable the Grow sub-pack.",
-  },
-] as const;
+import { type AdminRole,adminRoleMatrix, canWriteFeatureFlags } from "@/lib/admin/roles";
+import { type FeatureFlags,flattenFlags } from "@/lib/feature-flags";
+
+type AdminFlagsResponse = {
+  flags: FeatureFlags;
+  role: AdminRole;
+  definitions: Array<{
+    path: string;
+    label: string;
+    description: string;
+    type: "boolean" | "string";
+    sensitive: boolean;
+    value: unknown;
+  }>;
+};
+
+const stringOptions = {
+  "auth.postGameCTAFrequency": ["always", "occasional", "rare", "never"],
+} satisfies Record<string, string[]>;
 
 export default function AdminFlagsPage() {
-  const { flags, setFlag, reset } = useFlags();
+  const { setFlagPath, refreshFromServer } = useFlags();
+  const [loading, setLoading] = useState(true);
+  const [savingPath, setSavingPath] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [role, setRole] = useState<AdminRole>("analyst");
+  const [flags, setFlags] = useState<FeatureFlags | null>(null);
+  const [definitions, setDefinitions] = useState<AdminFlagsResponse["definitions"]>([]);
+  const e2eHeaders = useMemo(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+    const params = new URLSearchParams(window.location.search);
+    return params.get("e2e_admin") === "1" ? ({ "x-e2e-admin": "1" } as const) : undefined;
+  }, []);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/admin/feature-flags", {
+        cache: "no-store",
+        headers: e2eHeaders,
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to load flags (${response.status})`);
+      }
+      const payload = (await response.json()) as AdminFlagsResponse;
+      setRole(payload.role);
+      setFlags(payload.flags);
+      setDefinitions(payload.definitions);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to load flags");
+    } finally {
+      setLoading(false);
+    }
+  }, [e2eHeaders]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const matrix = useMemo(() => adminRoleMatrix(), []);
+  const runtimeRows = useMemo(() => {
+    if (!flags) {
+      return [];
+    }
+    return flattenFlags(flags);
+  }, [flags]);
+
+  const updateFlag = async (path: string, value: unknown) => {
+    setSavingPath(path);
+    setError(null);
+    try {
+      const response = await fetch("/api/admin/feature-flags", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          ...(e2eHeaders ?? {}),
+        },
+        body: JSON.stringify({ path, value }),
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => ({}))) as { error?: string };
+        throw new Error(payload.error ?? `Failed to update ${path}`);
+      }
+
+      setFlagPath(path, value);
+      await refreshFromServer();
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Update failed");
+    } finally {
+      setSavingPath(null);
+    }
+  };
 
   return (
     <div className="space-y-6">
       <section className="space-y-2">
         <h1 className="text-3xl font-semibold">Feature Flags</h1>
         <p className="text-muted-foreground max-w-3xl text-sm">
-          Pilot gameplay visibility and rollout behavior from this panel. These toggles are currently
-          local/browser-scoped and are intended for controlled QA and admin experimentation.
+          Flags are persisted server-side in Supabase and audited on change. Sensitive flags require
+          elevated roles.
         </p>
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary">Role: {role}</Badge>
+          <Badge variant="outline">Audit enabled</Badge>
+        </div>
       </section>
+
+      {error ? (
+        <Card className="border-destructive/40">
+          <CardContent className="text-destructive py-4 text-sm">{error}</CardContent>
+        </Card>
+      ) : null}
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Flag Controls</CardTitle>
-          <Badge variant="secondary">Local Scope</Badge>
+          <Button variant="outline" size="sm" onClick={() => void load()} disabled={loading}>
+            Refresh
+          </Button>
         </CardHeader>
         <CardContent className="space-y-4">
-          {flagDefinitions.map((flagDef) => (
-            <div key={flagDef.key} className="flex items-start justify-between gap-4 rounded-md border p-3">
-              <div className="space-y-1">
-                <p className="font-medium">{flagDef.label}</p>
-                <p className="text-muted-foreground text-xs">{flagDef.description}</p>
-              </div>
-              <Switch
-                checked={Boolean(flags[flagDef.key])}
-                onCheckedChange={(nextValue) => setFlag(flagDef.key, Boolean(nextValue))}
-                aria-label={flagDef.label}
-              />
-            </div>
+          {loading ? (
+            <p className="text-muted-foreground text-sm">Loading flags...</p>
+          ) : (
+            runtimeRows.map((row) => {
+              const canWrite = canWriteFeatureFlags(role, row.path);
+              const isSaving = savingPath === row.path;
+              return (
+                <div key={row.path} className="flex items-start justify-between gap-4 rounded-md border p-3">
+                  <div className="space-y-1">
+                    <p className="font-medium">{row.label}</p>
+                    <p className="text-muted-foreground text-xs">{row.description}</p>
+                    <div className="flex items-center gap-2">
+                      <code className="bg-muted rounded px-1.5 py-0.5 text-[11px]">{row.path}</code>
+                      {row.sensitive ? <Badge variant="destructive">Sensitive</Badge> : null}
+                    </div>
+                  </div>
+
+                  {row.type === "boolean" ? (
+                    <Switch
+                      checked={Boolean(row.value)}
+                      disabled={!canWrite || isSaving}
+                      onCheckedChange={(nextValue) => void updateFlag(row.path, Boolean(nextValue))}
+                      aria-label={row.label}
+                    />
+                  ) : (
+                    <div className="w-44">
+                      <Label htmlFor={`flag-${row.path}`} className="sr-only">
+                        {row.label}
+                      </Label>
+                      <Select
+                        value={String(row.value)}
+                        disabled={!canWrite || isSaving}
+                        onValueChange={(nextValue) => void updateFlag(row.path, nextValue)}
+                      >
+                        <SelectTrigger id={`flag-${row.path}`}>
+                          <SelectValue placeholder="Select value" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {((row.path in stringOptions
+                            ? stringOptions[row.path as keyof typeof stringOptions]
+                            : [String(row.value)]) as string[]).map((option: string) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Role Matrix</CardTitle>
+        </CardHeader>
+        <CardContent className="overflow-x-auto">
+          <table className="w-full min-w-[720px] text-sm">
+            <thead>
+              <tr className="text-left">
+                <th className="py-2 pr-4">Role</th>
+                <th className="py-2 pr-4">Admin Access</th>
+                <th className="py-2 pr-4">Edit Content</th>
+                <th className="py-2 pr-4">Manage Flags</th>
+                <th className="py-2 pr-4">Sensitive Flags</th>
+                <th className="py-2 pr-4">Leaderboard Moderation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {matrix.map((row) => (
+                <tr key={row.role} className="border-t align-top">
+                  <td className="py-2 pr-4 font-medium uppercase">{row.role}</td>
+                  <td className="py-2 pr-4">{row.canAccessAdmin ? "Yes" : "No"}</td>
+                  <td className="py-2 pr-4">{row.canEditContent ? "Yes" : "No"}</td>
+                  <td className="py-2 pr-4">{row.canManageFlags ? "Yes" : "No"}</td>
+                  <td className="py-2 pr-4">{row.canManageSensitiveFlags ? "Yes" : "No"}</td>
+                  <td className="py-2 pr-4">{row.canModerateLeaderboard ? "Yes" : "No"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Audit Preview</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          {definitions.slice(0, 8).map((row) => (
+            <p key={row.path} className="text-muted-foreground text-xs">
+              {row.path} = {String(row.value)}
+            </p>
           ))}
-
-          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
-            <div className="space-y-1">
-              <p className="font-medium">Allow local play for upcoming games</p>
-              <p className="text-muted-foreground text-xs">
-                Lets admins/testers launch upcoming-but-implemented games locally without production rollout.
-              </p>
-            </div>
-            <Switch
-              checked={Boolean(flags.ui?.allowPlayUpcomingLocal)}
-              onCheckedChange={(nextValue) =>
-                setFlag("ui", {
-                  ...(flags.ui ?? {}),
-                  allowPlayUpcomingLocal: Boolean(nextValue),
-                })
-              }
-              aria-label="Allow local play for upcoming games"
-            />
-          </div>
-
-          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
-            <div className="space-y-1">
-              <p className="font-medium">Enhanced game cards</p>
-              <p className="text-muted-foreground text-xs">
-                Enables animated card visuals and richer card metadata on home and explore pages.
-              </p>
-            </div>
-            <Switch
-              checked={Boolean(flags.ui?.enhancedGameCards)}
-              onCheckedChange={(nextValue) =>
-                setFlag("ui", {
-                  ...flags.ui,
-                  enhancedGameCards: Boolean(nextValue),
-                })
-              }
-              aria-label="Enhanced game cards"
-            />
-          </div>
-
-          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
-            <div className="space-y-1">
-              <p className="font-medium">Enhanced carousel</p>
-              <p className="text-muted-foreground text-xs">
-                Enables carousel dots, keyboard navigation, and optional autoplay behavior.
-              </p>
-            </div>
-            <Switch
-              checked={Boolean(flags.ui?.enhancedCarousel)}
-              onCheckedChange={(nextValue) =>
-                setFlag("ui", {
-                  ...flags.ui,
-                  enhancedCarousel: Boolean(nextValue),
-                })
-              }
-              aria-label="Enhanced carousel"
-            />
-          </div>
-
-          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
-            <div className="space-y-1">
-              <p className="font-medium">Hero animation</p>
-              <p className="text-muted-foreground text-xs">
-                Enables progressive entry animations for homepage hero and related call-to-action blocks.
-              </p>
-            </div>
-            <Switch
-              checked={Boolean(flags.ui?.animatedHero)}
-              onCheckedChange={(nextValue) =>
-                setFlag("ui", {
-                  ...flags.ui,
-                  animatedHero: Boolean(nextValue),
-                })
-              }
-              aria-label="Hero animation"
-            />
-          </div>
-
-          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
-            <div className="space-y-1">
-              <p className="font-medium">Shimmer loading states</p>
-              <p className="text-muted-foreground text-xs">
-                Uses shimmer skeletons for game and project loading placeholders.
-              </p>
-            </div>
-            <Switch
-              checked={Boolean(flags.ui?.shimmerSkeletons)}
-              onCheckedChange={(nextValue) =>
-                setFlag("ui", {
-                  ...flags.ui,
-                  shimmerSkeletons: Boolean(nextValue),
-                })
-              }
-              aria-label="Shimmer loading states"
-            />
-          </div>
-
-          <div className="flex items-start justify-between gap-4 rounded-md border p-3">
-            <div className="space-y-1">
-              <p className="font-medium">Leaderboard guest teaser</p>
-              <p className="text-muted-foreground text-xs">
-                Shows a blurred leaderboard preview with contextual sign-in call-to-action to guests.
-              </p>
-            </div>
-            <Switch
-              checked={Boolean(flags.auth?.leaderboardGuestTeaser)}
-              onCheckedChange={(nextValue) =>
-                setFlag("auth", {
-                  ...flags.auth,
-                  leaderboardGuestTeaser: Boolean(nextValue),
-                })
-              }
-              aria-label="Leaderboard guest teaser"
-            />
-          </div>
-
-          <div className="pt-2">
-            <Button variant="outline" onClick={reset}>
-              Reset to defaults
-            </Button>
-          </div>
+          {definitions.length > 8 ? (
+            <p className="text-muted-foreground text-xs">+{definitions.length - 8} more flags</p>
+          ) : null}
         </CardContent>
       </Card>
     </div>

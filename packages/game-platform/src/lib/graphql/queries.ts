@@ -1,6 +1,3 @@
-import { gqlFetch } from "./client";
-
-// Types aligned with current backend schema shared by the user
 export type LeaderboardUser = {
   id: string;
   username: string;
@@ -8,14 +5,6 @@ export type LeaderboardUser = {
   avatar?: string | null;
 };
 
-export type LeaderboardEntry = {
-  rank: number;
-  user: LeaderboardUser;
-  score: number;
-  gameType: GameType;
-};
-
-// GraphQL enum mirrors (keep in sync with backend schema)
 export type GameType =
   | "SNAKE"
   | "BUBBLE_POP"
@@ -31,7 +20,35 @@ export type GameType =
 export type LeaderboardScope = "PERSONAL" | "FRIENDS" | "GLOBAL";
 export type TimeWindow = "ALL_TIME" | "YEAR" | "MONTH" | "WEEK" | "DAY";
 
-// Deprecated simple fetch kept for backward compatibility by adapting to paged form
+export type LeaderboardEntry = {
+  rank: number;
+  user: LeaderboardUser;
+  score: number;
+  gameType: GameType;
+};
+
+type LeaderboardApiResponse = {
+  gameType: GameType;
+  entries: Array<{
+    rank: number;
+    score: number;
+    user: { id: string; username: string };
+  }>;
+};
+
+function getApiBase(): string {
+  const configured = process.env.NEXT_PUBLIC_API_URL;
+  if (!configured) {
+    return "";
+  }
+  return configured.replace(/\/api\/?$/, "");
+}
+
+function endpoint(path: string) {
+  const base = getApiBase();
+  return base ? `${base}${path}` : path;
+}
+
 export async function fetchLeaderboard(params: {
   gameType: GameType;
   limit?: number;
@@ -40,16 +57,14 @@ export async function fetchLeaderboard(params: {
     gameType: params.gameType,
     first: params.limit ?? 25,
   });
-  const entries = data.leaderboard.edges.map((e) => e.node);
-  return { leaderboard: entries };
+  return { leaderboard: data.leaderboard.edges.map((e) => e.node) };
 }
 
-// New paginated leaderboard aligned with backend schema
 export async function fetchLeaderboardPaged(params: {
   gameType: GameType;
-  scope?: LeaderboardScope; // default GLOBAL on server
-  window?: TimeWindow; // default WEEK on server
-  first?: number; // default 25
+  scope?: LeaderboardScope;
+  window?: TimeWindow;
+  first?: number;
   after?: string | null;
 }): Promise<{
   leaderboard: {
@@ -57,35 +72,32 @@ export async function fetchLeaderboardPaged(params: {
     pageInfo: { hasNextPage: boolean; endCursor?: string | null };
   };
 }> {
-  const query = `
-    query Leaderboard(
-      $gameType: GameType!,
-      $scope: LeaderboardScope,
-      $window: TimeWindow,
-      $first: Int,
-      $after: String
-    ) {
-      leaderboard(
-        gameType: $gameType,
-        scope: $scope,
-        window: $window,
-        first: $first,
-        after: $after
-      ) {
-        edges {
-          cursor
-          node {
-            rank
-            score
-            gameType
-            user { id username avatar }
-          }
-        }
-        pageInfo { hasNextPage endCursor }
-      }
-    }
-  `;
-  return gqlFetch({ query, variables: params });
+  const search = new URLSearchParams({
+    gameType: params.gameType,
+    limit: String(params.first ?? 25),
+  });
+  const response = await fetch(endpoint(`/api/leaderboard?${search.toString()}`), {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error(`Leaderboard fetch failed (${response.status})`);
+  }
+  const payload = (await response.json()) as LeaderboardApiResponse;
+  const edges = payload.entries.map((entry, index) => ({
+    cursor: `${entry.rank}:${index}`,
+    node: {
+      rank: entry.rank,
+      score: entry.score,
+      gameType: payload.gameType,
+      user: entry.user,
+    },
+  }));
+  return {
+    leaderboard: {
+      edges,
+      pageInfo: { hasNextPage: false, endCursor: edges.at(-1)?.cursor ?? null },
+    },
+  };
 }
 
 export type SubmitScoreResult = {
@@ -101,27 +113,37 @@ export type SubmitScoreResult = {
 export async function submitScore(params: {
   gameType: GameType;
   score: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }): Promise<SubmitScoreResult> {
-  const mutation = `
-    mutation SubmitScore($input: ScoreInput!) {
-      submitScore(input: $input) {
-        id
-        score
-        createdAt
-        gameType
-        user { id username }
-      }
-    }
-  `;
-  return gqlFetch<SubmitScoreResult>({
-    query: mutation,
-    variables: { input: params },
+  const response = await fetch(endpoint("/api/leaderboard/submit"), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(params),
   });
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(`submitScore failed (${response.status}): ${details}`);
+  }
+  const payload = (await response.json()) as {
+    id: string;
+    score: number;
+    createdAt: string;
+    gameType: GameType;
+  };
+  return {
+    submitScore: {
+      ...payload,
+      user: {
+        id: "self",
+        username: "You",
+      },
+    },
+  };
 }
 
-// Payments: create checkout session (Stripe, test mode initially)
-// Plan enum mirrors backend (Plan { FREE PRO })
 export type Plan = "FREE" | "PRO";
 
 export type CreateCheckoutInput = {
@@ -137,19 +159,10 @@ export type CreateCheckoutResult = {
   };
 };
 
-export async function createCheckout(input: CreateCheckoutInput): Promise<CreateCheckoutResult> {
-  const mutation = `
-      mutation CreateCheckout($input: CreateCheckoutInput!) {
-        createCheckout(input: $input) { id url }
-      }
-    `;
-  return gqlFetch<CreateCheckoutResult>({
-    query: mutation,
-    variables: { input },
-  });
+export async function createCheckout(_input: CreateCheckoutInput): Promise<CreateCheckoutResult> {
+  throw new Error("Checkout integration is not configured in this app.");
 }
 
-// Viewer / subscription info (for premium gating)
 export type PremiumFeatures = {
   advancedLeaderboards: boolean;
   cosmetics: boolean;
@@ -173,16 +186,5 @@ export type Viewer = {
 } | null;
 
 export async function fetchViewer(): Promise<{ viewer: Viewer }> {
-  const query = `
-      query Viewer {
-        viewer {
-          id
-          username
-          avatar
-          subscription { id userId plan status currentPeriodEnd }
-          premium { advancedLeaderboards cosmetics earlyAccess }
-        }
-      }
-    `;
-  return gqlFetch({ query });
+  return { viewer: null };
 }

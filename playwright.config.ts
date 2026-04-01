@@ -33,6 +33,7 @@ export default defineConfig({
             NEXT_PUBLIC_E2E: "true",
             // Allow upcoming games to be playable locally during E2E
             NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL: "true",
+            E2E_ADMIN_BYPASS_TOKEN: "local-e2e-admin-token",
             PORT: "3000",
         },
     },

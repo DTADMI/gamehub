@@ -16,10 +16,10 @@ It also documents regressions fixed in this pass and recommendations with pros/c
 
 | Area | Planned | Current (after this pass) | Gap |
 | --- | --- | --- | --- |
-| Leaderboard access | Signed-in user value surface | `/leaderboard` now gates content behind auth CTA | No server-backed ranking data yet (preview content only) |
+| Leaderboard access | Signed-in user value surface | `/leaderboard` gates guest access and uses server-backed entries | Moderation workflows still basic |
 | Games account CTA | Invite account creation for progression features | Games page now includes account CTA with clear benefits | CTA copy is static and not A/B tested |
-| Admin account model | Admin users controlled from Supabase (`app_admins`) | Enforced by `/admin` layout + sign-in flow | No role granularity beyond admin/non-admin |
-| Feature-flag piloting | Admin-manageable flags (future expansion) | New `/admin/flags` panel controls local rollout toggles | Flags are local/browser-scoped, not server-persisted |
+| Admin account model | Admin users controlled from Supabase (`app_admins`) | Role matrix (`owner/admin/editor/analyst`) enforced in admin surfaces | Needs richer delegated policy UI |
+| Feature-flag piloting | Admin-manageable flags (future expansion) | `/admin/flags` reads/writes via audited server API | Add diff/history visualization in dashboard |
 | CI reliability | Pre-merge confidence gates | Local + CI checks improved; integration regression fixed | Need periodic CI runtime version audit |
 
 ## Regressions Identified and Fixed
@@ -44,9 +44,9 @@ It also documents regressions fixed in this pass and recommendations with pros/c
 
 | Recommendation | Pros | Cons | Decision |
 | --- | --- | --- | --- |
-| Move feature flags from local storage to Supabase table + audited admin API | Real environment control, role-aware auditing, multi-admin consistency | Requires migration + API surface + RLS policies | Recommended next |
-| Add role tiers in `app_admins` (`owner`, `admin`, `editor`) | Safer delegation, reduced blast radius | Additional permission checks across admin routes | Recommended next |
-| Replace leaderboard preview with server-backed scoring API | Actual product value, better retention loops | Requires anti-cheat and moderation safeguards | Recommended next |
+| Move feature flags from local storage to Supabase table + audited admin API | Real environment control, role-aware auditing, multi-admin consistency | Adds schema + API complexity | Implemented |
+| Add role tiers in `app_admins` (`owner`, `admin`, `editor`, `analyst`) | Safer delegation, reduced blast radius | Additional permission checks across admin routes | Implemented |
+| Replace leaderboard preview with server-backed scoring API | Actual product value, better retention loops | Requires anti-cheat and moderation safeguards | Implemented (baseline) |
 | Add explicit auth-gated CTA telemetry (click-through, conversion) | Data-driven UX improvements | Additional analytics implementation | Recommended next |
 | Keep pre-push local CI mirror (`pnpm ci:local`) | Prevents obvious CI breakage before push | Longer local push cycle | Adopted |
 
@@ -58,7 +58,6 @@ It also documents regressions fixed in this pass and recommendations with pros/c
 
 ## Next Implementation Backlog
 
-1. Persist feature flags in Supabase with audit trail and environment scoping.
-2. Add server-side leaderboard model (scores, seasons, anti-spam/rate-limit guardrails).
-3. Add admin role matrix and restricted controls for sensitive toggles.
-4. Add end-to-end tests for leaderboard auth gating and flags admin toggles.
+1. Add leaderboard moderation tooling (remove score, flag suspect clients, season lock).
+2. Add richer audit timeline for flags in admin dashboard (diffs + filters).
+3. Extend post-game completion contracts so all games share one CTA/telemetry hook.

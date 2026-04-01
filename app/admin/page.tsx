@@ -1,14 +1,22 @@
-import { Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
 import Link from "next/link";
 
-export default function AdminHomePage() {
+import { hasRoleAtLeast } from "@/lib/admin/roles";
+import { getAdminUser } from "@/lib/supabase/admin";
+
+export default async function AdminHomePage() {
+  const { role } = await getAdminUser();
+  const canEditContent = role ? hasRoleAtLeast(role, "editor") : false;
+  const canManageFlags = role ? hasRoleAtLeast(role, "admin") : false;
+
   return (
     <div className="space-y-8">
       <section>
         <h1 className="text-3xl font-semibold">Admin dashboard</h1>
         <p className="text-muted-foreground mt-2 max-w-2xl">
-          Manage portfolio content and publishing without touching the database directly.
+          Manage portfolio content, rollout flags, and ranking operations with role-based controls.
         </p>
+        {role ? <Badge className="mt-3">Role: {role}</Badge> : null}
       </section>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -20,7 +28,7 @@ export default function AdminHomePage() {
             <p className="text-muted-foreground text-sm">
               Update the resume sections shown on the public resume page.
             </p>
-            <Button asChild>
+            <Button asChild disabled={!canEditContent}>
               <Link href="/admin/resume">Manage resume</Link>
             </Button>
           </CardContent>
@@ -34,7 +42,7 @@ export default function AdminHomePage() {
             <p className="text-muted-foreground text-sm">
               Draft, publish, and edit posts in the blog section.
             </p>
-            <Button asChild>
+            <Button asChild disabled={!canEditContent}>
               <Link href="/admin/blog">Manage blog</Link>
             </Button>
           </CardContent>
@@ -46,9 +54,9 @@ export default function AdminHomePage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-muted-foreground text-sm">
-              Pilot gameplay rollout behavior and QA-only toggles from one place.
+              Server-persisted flags with audit logging and sensitive-toggle restrictions.
             </p>
-            <Button asChild>
+            <Button asChild disabled={!canManageFlags}>
               <Link href="/admin/flags">Manage feature flags</Link>
             </Button>
           </CardContent>

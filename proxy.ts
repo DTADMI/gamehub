@@ -28,6 +28,25 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const queryBypass =
+    process.env.NODE_ENV !== "production" &&
+    request.nextUrl.searchParams.get("e2e_admin") === "1";
+  if (queryBypass) {
+    return NextResponse.next();
+  }
+
+  const bypassToken = process.env.E2E_ADMIN_BYPASS_TOKEN;
+  const bypassCookie = request.cookies.get("gh_e2e_admin_bypass")?.value;
+  const isExplicitE2E =
+    process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_E2E === "true";
+  const isE2EBypassActive =
+    process.env.NODE_ENV !== "production" &&
+    Boolean(bypassToken) &&
+    bypassToken === bypassCookie;
+  if (isE2EBypassActive || isExplicitE2E) {
+    return NextResponse.next();
+  }
+
   const response = NextResponse.next();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

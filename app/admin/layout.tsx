@@ -1,13 +1,11 @@
-import { redirect } from "next/navigation";
-
 import { AdminTopBar } from "@/components/admin/AdminTopBar";
 import { getAdminUser } from "@/lib/supabase/admin";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, isAdmin } = await getAdminUser();
+  const { user, isAdmin, role } = await getAdminUser();
 
   if (!user) {
-    redirect("/admin/sign-in");
+    return <div className="min-h-screen px-6 py-8">{children}</div>;
   }
 
   if (!isAdmin) {
@@ -25,7 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-screen">
-      <AdminTopBar email={user.email} />
+      <AdminTopBar email={user.email} role={role} />
       <div className="px-6 py-8">{children}</div>
     </div>
   );

@@ -12,7 +12,7 @@ import { platformQueryClient } from "./query-client";
 export function useFeature(flag: string, defaultValue = false, opts?: { preferBackend?: boolean }) {
   const preferBackend = opts?.preferBackend ?? false;
   const fallbackValue = readEnv(flag, defaultValue);
-  const api = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:8080/api";
+  const api = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "/api";
 
   const { data } = useQuery<Record<string, unknown> | null>(
     {

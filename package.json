@@ -22,7 +22,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
-    "test:e2e:smoke": "playwright test tests-e2e/smoke.spec.ts --project=chromium",
+    "test:e2e:smoke": "playwright test tests-e2e/smoke.spec.ts tests-e2e/leaderboard-auth-gating.spec.ts tests-e2e/admin-flags-toggle.spec.ts --project=chromium",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "check:deps": "knip --include dependencies,unlisted,binaries",

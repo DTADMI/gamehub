@@ -27,10 +27,10 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | --- | --- | --- | --- | --- |
 | P1 | Full legacy Vitest suite triage (non-unit folders) | Some older tests are still outside new staged gates | Incrementally migrate/repair old tests and fold into staged pipelines | IN_PROGRESS |
 | P2 | Portfolio/blog media upload workflow | Admin UX still uses URL-only cover image input | Add Supabase Storage upload flow in admin | NEXT |
-| P1 | Server-backed feature flag persistence | Flags are currently browser-local | Move flags to Supabase table + audited admin API + RLS policy | NEXT |
-| P2 | Real leaderboard backend | Current leaderboard is signed-in preview UI | Implement score ingestion + ranking retrieval with anti-abuse controls | NEXT |
-| P3 | Feature flag management UI | Operational toggles still code/env driven | Expand `/admin/flags` to environment-scoped persistent controls | IN_PROGRESS |
-| P1 | Post-game completion CTA modal integration | Auth CTA exists on game pages but not yet on completion events | Add shared completion contract in games and wire modal display | NEXT |
+| P1 | Server-backed feature flag persistence | Flags are now persisted via Supabase + audited admin API with Redis fallback | Continue with dashboard analytics and staged rollout tooling | DONE |
+| P2 | Real leaderboard backend | Scores and seasons are now server-backed with validation and rate limits | Add moderation workflows and per-window segmentation | IN_PROGRESS |
+| P3 | Feature flag management UI | Admin matrix + sensitive toggle restrictions now enforced | Add historical diff viewer and export | IN_PROGRESS |
+| P1 | Post-game completion CTA modal integration | Auth CTA is available in launcher and ranking flows | Expand to unified modal contracts in all games | IN_PROGRESS |
 
 ## Recommendations
 
@@ -58,6 +58,9 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | Added admin flags management page | DONE |
 | Fixed integration test crash on `/api/health` optional request handling | DONE |
 | Upgraded CI workflow actions and switched to Corepack-managed pnpm | DONE |
+| Added Supabase-backed feature flags + audit API + role-gated admin controls | DONE |
+| Added Supabase-backed leaderboard seasons/scores with anti-spam and rate-limit guardrails | DONE |
+| Added e2e coverage for leaderboard auth gating and admin flags toggles | DONE |
 
 ## Next Execution Steps
 
