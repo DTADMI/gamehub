@@ -12,7 +12,7 @@ export function useGamesManifest() {
     {
       queryKey: ["manifest", "games"],
       queryFn: async () => listGames(),
-      initialData: [],
+      initialData: () => listGames(),
       staleTime: Number.POSITIVE_INFINITY,
       gcTime: Number.POSITIVE_INFINITY,
     },
@@ -25,7 +25,7 @@ export function useProjectsManifest() {
     {
       queryKey: ["manifest", "projects"],
       queryFn: async () => listProjects(),
-      initialData: [],
+      initialData: () => listProjects(),
       staleTime: Number.POSITIVE_INFINITY,
       gcTime: Number.POSITIVE_INFINITY,
     },

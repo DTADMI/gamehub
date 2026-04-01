@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { startTransition, useCallback, useDeferredValue, useMemo, useState } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -44,6 +45,35 @@ const defaultCopy: GamesListCopy = {
 
 export default function GamesList({ games, copy = defaultCopy }: GamesListProps) {
   const { user } = useAuth();
+  const [query, setQuery] = useState("");
+  const [scope, setScope] = useState<"all" | "playable" | "upcoming">("all");
+  const deferredQuery = useDeferredValue(query.trim().toLowerCase());
+
+  const filteredGames = useMemo(
+    () =>
+      games
+        .filter((game) => {
+          if (scope === "playable") {
+            return !!game.playable;
+          }
+          if (scope === "upcoming") {
+            return !game.playable;
+          }
+          return true;
+        })
+        .filter((game) => {
+          if (!deferredQuery) {
+            return true;
+          }
+          const haystack = `${game.title} ${game.description} ${game.tags.join(" ")}`.toLowerCase();
+          return haystack.includes(deferredQuery);
+        }),
+    [games, deferredQuery, scope],
+  );
+
+  const onScopeChange = useCallback((nextScope: "all" | "playable" | "upcoming") => {
+    startTransition(() => setScope(nextScope));
+  }, []);
 
   return (
     <div className="min-h-screen px-4 py-12 sm:px-6 lg:px-8">
@@ -61,8 +91,41 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
           </div>
         )}
 
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search games..."
+            className="bg-background ring-border placeholder:text-muted-foreground min-h-11 w-full rounded-md border px-3 text-sm focus:ring-2 focus:outline-none sm:max-w-sm"
+          />
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => onScopeChange("all")}
+              className={`min-h-11 rounded-md border px-3 text-sm ${scope === "all" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+            >
+              All
+            </button>
+            <button
+              type="button"
+              onClick={() => onScopeChange("playable")}
+              className={`min-h-11 rounded-md border px-3 text-sm ${scope === "playable" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+            >
+              Playable
+            </button>
+            <button
+              type="button"
+              onClick={() => onScopeChange("upcoming")}
+              className={`min-h-11 rounded-md border px-3 text-sm ${scope === "upcoming" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+            >
+              Coming soon
+            </button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {games.map((game, index) => (
+          {filteredGames.map((game, index) => (
             <div key={game.id}>
               {game.playable ? (
                 <Link
@@ -156,6 +219,11 @@ export default function GamesList({ games, copy = defaultCopy }: GamesListProps)
             </div>
           ))}
         </div>
+        {filteredGames.length === 0 ? (
+          <div className="text-muted-foreground mt-8 rounded-md border border-dashed p-6 text-center text-sm">
+            No games match your filters right now.
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -1,20 +1,26 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { startTransition, useState } from "react";
 
 import { setSiteLocale, useSiteLocale } from "../lib/site-locale";
 
 export function LanguageToggle({ className = "" }: { className?: string }) {
   const router = useRouter();
   const { locale } = useSiteLocale();
+  const [isPending, setIsPending] = useState(false);
 
   const switchTo = (nextLocale: "en" | "fr") => {
-    if (nextLocale === locale) {
+    if (nextLocale === locale || isPending) {
       return;
     }
 
-    setSiteLocale(nextLocale);
-    router.refresh();
+    setIsPending(true);
+    startTransition(() => {
+      setSiteLocale(nextLocale);
+      router.refresh();
+      setTimeout(() => setIsPending(false), 200);
+    });
   };
 
   return (
@@ -26,7 +32,8 @@ export function LanguageToggle({ className = "" }: { className?: string }) {
       <button
         type="button"
         onClick={() => switchTo("en")}
-        className={`min-h-11 rounded border px-3 text-sm ${locale === "en" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+        disabled={isPending}
+        className={`min-h-11 rounded border px-3 text-sm ${locale === "en" ? "bg-primary text-primary-foreground" : "bg-muted"} ${isPending ? "opacity-60" : ""}`}
         aria-pressed={locale === "en"}
         aria-label="Switch language to English"
         data-testid="lang-en"
@@ -36,7 +43,8 @@ export function LanguageToggle({ className = "" }: { className?: string }) {
       <button
         type="button"
         onClick={() => switchTo("fr")}
-        className={`min-h-11 rounded border px-3 text-sm ${locale === "fr" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+        disabled={isPending}
+        className={`min-h-11 rounded border px-3 text-sm ${locale === "fr" ? "bg-primary text-primary-foreground" : "bg-muted"} ${isPending ? "opacity-60" : ""}`}
         aria-pressed={locale === "fr"}
         aria-label="Changer la langue en français"
         data-testid="lang-fr"

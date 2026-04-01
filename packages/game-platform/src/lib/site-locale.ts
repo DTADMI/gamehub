@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 
 export type SiteLocale = "en" | "fr";
 
@@ -37,30 +37,27 @@ export function setSiteLocale(locale: SiteLocale) {
 
 export function useSiteLocale() {
   const [locale, setLocale] = useState<SiteLocale>("en");
+  const onLocaleChangeEvent = useEffectEvent((event: Event) => {
+    const customEvent = event as CustomEvent<SiteLocale>;
+    if (isLocale(customEvent.detail)) {
+      setLocale(customEvent.detail);
+    }
+  });
+  const onStorageEvent = useEffectEvent((event: StorageEvent) => {
+    if (event.key === LOCALE_KEY && isLocale(event.newValue)) {
+      setLocale(event.newValue);
+    }
+  });
 
   useEffect(() => {
     setLocale(getSiteLocale());
-
-    const onLocaleChange = (event: Event) => {
-      const customEvent = event as CustomEvent<SiteLocale>;
-      if (isLocale(customEvent.detail)) {
-        setLocale(customEvent.detail);
-      }
-    };
-
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === LOCALE_KEY && isLocale(event.newValue)) {
-        setLocale(event.newValue);
-      }
-    };
-
-    window.addEventListener(LOCALE_EVENT, onLocaleChange as EventListener);
-    window.addEventListener("storage", onStorage);
+    window.addEventListener(LOCALE_EVENT, onLocaleChangeEvent as EventListener);
+    window.addEventListener("storage", onStorageEvent);
     return () => {
-      window.removeEventListener(LOCALE_EVENT, onLocaleChange as EventListener);
-      window.removeEventListener("storage", onStorage);
+      window.removeEventListener(LOCALE_EVENT, onLocaleChangeEvent as EventListener);
+      window.removeEventListener("storage", onStorageEvent);
     };
-  }, []);
+  }, [onLocaleChangeEvent, onStorageEvent]);
 
   return { locale, setLocale: setSiteLocale };
 }
