@@ -25,6 +25,12 @@ pnpm install
 pnpm dev
 ```
 
+If you add/update/remove dependencies, always sync lockfiles before commit:
+
+```bash
+pnpm lockfile:sync
+```
+
 Create a Supabase project and copy the env vars into `.env.local`:
 
 ```bash
@@ -77,7 +83,10 @@ scripts/              # Supabase SQL rollouts/rollbacks
 
 Guardrail:
 
-- A repo pre-commit hook runs `pnpm build` and blocks commits on build failure.
+- A repo pre-commit hook runs `pnpm guard:precommit` and blocks commits unless:
+  - `pnpm install --frozen-lockfile` passes
+  - `pnpm build` passes
+- CI also verifies lockfiles do not drift after frozen install.
 
 ## 📚 Documentation
 

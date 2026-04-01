@@ -33,6 +33,9 @@
     "audit:module-replacements": "node scripts/module-replacements-audit.mjs",
     "audit:e18e": "node scripts/run-e18e-audit.mjs",
     "audit:all": "pnpm audit:outdated && pnpm audit:deps:graph && pnpm audit:module-replacements && pnpm audit:e18e && pnpm check:deps",
+    "guard:lockfile": "pnpm install --frozen-lockfile --ignore-scripts",
+    "guard:precommit": "pnpm guard:lockfile && pnpm build",
+    "lockfile:sync": "pnpm install",
     "smoke": "node scripts/smoke-test.mjs",
     "clean": "rimraf .next out coverage test-results playwright-report"
   },

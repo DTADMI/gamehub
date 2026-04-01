@@ -28,6 +28,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Assert lockfiles did not drift
+        run: |
+          if git status --porcelain | grep -E "pnpm-lock.yaml"; then
+            echo "Lockfile drift detected. Run 'pnpm lockfile:sync' and commit updated lockfiles."
+            exit 1
+          fi
       - run: pnpm lint
       - run: pnpm type-check
 
