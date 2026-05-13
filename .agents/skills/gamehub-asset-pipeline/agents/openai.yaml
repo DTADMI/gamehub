@@ -1,0 +1,8 @@
+interface:
+  display_name: "GameHub Asset Pipeline"
+  short_description: "Handle game assets, WebGPU, WASM, and shaders."
+  brand_color: "#2563eb"
+  default_prompt: "Use $gamehub-asset-pipeline to handle game asset and rendering pipeline work."
+
+policy:
+  allow_implicit_invocation: true

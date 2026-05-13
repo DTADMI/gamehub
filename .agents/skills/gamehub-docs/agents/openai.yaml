@@ -1,0 +1,8 @@
+interface:
+  display_name: "GameHub Docs"
+  short_description: "Maintain GameHub canonical docs and indexes."
+  brand_color: "#2563eb"
+  default_prompt: "Use $gamehub-docs to maintain GameHub documentation."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,8 @@
+interface:
+  display_name: "Game Integration"
+  short_description: "Add, update, or debug GameHub games."
+  brand_color: "#2563eb"
+  default_prompt: "Use $game-integration to handle GameHub game development and integration."
+
+policy:
+  allow_implicit_invocation: true

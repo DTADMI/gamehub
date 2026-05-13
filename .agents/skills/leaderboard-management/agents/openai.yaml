@@ -1,0 +1,8 @@
+interface:
+  display_name: "Leaderboard Management"
+  short_description: "Manage leaderboard schema, anti-cheat, and ranking."
+  brand_color: "#2563eb"
+  default_prompt: "Use $leaderboard-management to handle leaderboard and scoring work."
+
+policy:
+  allow_implicit_invocation: true
