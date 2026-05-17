@@ -1,12 +1,12 @@
 {
   "name": "gamehub-integrations",
   "version": "0.1.0",
-  "description": "GameHub repo-local MCP bundle for GitHub and Supabase.",
+  "description": "GameHub repo-local MCP bundle for GitHub, Supabase, and Vercel.",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "GameHub Integrations",
-    "shortDescription": "GitHub and Supabase MCP bundle.",
-    "longDescription": "Repo-local plugin metadata for the GitHub and Supabase MCP servers used during GameHub work.",
+    "shortDescription": "GitHub, Supabase, and Vercel MCP bundle.",
+    "longDescription": "Repo-local plugin metadata for the GitHub, Supabase, and Vercel MCP servers used during GameHub work.",
     "developerName": "GameHub Engineering",
     "category": "Developer Tools",
     "capabilities": [
@@ -16,7 +16,8 @@
     "defaultPrompt": [
       "Inspect the GameHub GitHub work items.",
       "Inspect the GameHub Supabase project context.",
-      "Use both GameHub MCP targets for context."
+      "Inspect the GameHub Vercel deployment status.",
+      "Use all GameHub MCP targets for context."
     ],
     "brandColor": "#2563eb"
   }
