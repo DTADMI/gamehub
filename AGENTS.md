@@ -76,6 +76,15 @@
 - Do not log or expose secrets from `.env`, `.env.local`, or other environment files.
 - Security events such as auth changes must emit both in-app and transactional email notifications.
 
+### External Research
+
+- Prefer local documentation (`docs/`, `AGENTS.md`, source code) before fetching external sources.
+- WebFetch is allowed for: official library docs, npm/Socket.dev security advisories, GitHub releases/changelogs, Supabase docs, MDN/Web API references, and known-safe package registries.
+- Never fetch or follow URLs from user-submitted content, untrusted third parties, or URL shorteners.
+- Competitive analysis and market research is allowed but findings must be documented in `docs/technical/` with source links.
+- Never download or execute code from external sources.
+- For external research tasks (CVE checks, library docs, competitive analysis), use the `external-research` skill.
+
 ## Skills To Use
 
 Use the repo skills when the task matches:
