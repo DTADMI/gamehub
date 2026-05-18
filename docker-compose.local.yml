@@ -1,0 +1,17 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: gamehub-redis
+    ports:
+      - "6385:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - gamehub-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  gamehub-redis-data:
