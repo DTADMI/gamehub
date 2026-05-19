@@ -46,6 +46,7 @@ export * from "./lib/graphql/queries";
 export * from "./lib/input";
 export * from "./lib/particles";
 export * from "./lib/sound";
+export * from "./lib/webgpu";
 // lib/utils (cn function) moved to @gamehub/ui
 export * from "./metadata/games";
 export * from "./metadata/projects";

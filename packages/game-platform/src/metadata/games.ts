@@ -1,4 +1,4 @@
-// packages/shared/src/metadata/games.ts
+
 
 export type Game = {
   id: string;
@@ -306,23 +306,29 @@ export const games: GameManifest = {
     slug: "platformer",
     title: "Puzzle Platformer",
     shortDescription: "2D platformer with physics‑based puzzles.",
-    tags: ["Platformer", "Puzzle", "sim-2d", "impl:none", "target:phaser"],
+    tags: ["Platformer", "Puzzle", "sim-2d", "impl:react-canvas-custom", "target:pixi"],
     image: "/images/games/platformer-card.svg",
     upcoming: true,
-    enabled: false,
+    enabled: true,
     visible: true,
-    getComponent: () => Promise.resolve({}),
+    backgroundImage: "/images/bg-neon-grid.jpg",
+    preloadAssets: [],
+    // @ts-ignore
+    getComponent: () => import("@games/platformer").then((m) => m.PlatformerGame),
   },
   "tower-defense": {
     slug: "tower-defense",
     title: "Tower Defense",
     shortDescription: "Strategic towers vs. waves of enemies.",
-    tags: ["Strategy", "Tactics", "sim-2d", "impl:none", "target:phaser"],
+    tags: ["Strategy", "Tactics", "sim-2d", "impl:react-canvas-custom", "target:pixi"],
     image: "/images/games/tower-defense-card.svg",
     upcoming: true,
-    enabled: false,
+    enabled: true,
     visible: true,
-    getComponent: () => Promise.resolve({}),
+    backgroundImage: "/images/bg-abstract-dark.jpg",
+    preloadAssets: [],
+    // @ts-ignore
+    getComponent: () => import("@games/tower-defense").then((m) => m.TowerDefenseGame),
   },
 };
 

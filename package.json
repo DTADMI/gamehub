@@ -16,9 +16,9 @@
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
-    "test:unit": "vitest run tests/unit",
+    "test:unit": "vitest run --exclude='tests/integration/**'",
     "test:integration": "vitest run tests/integration",
-    "test:all": "pnpm type-check && pnpm test:unit && pnpm test:integration && pnpm test:e2e:smoke",
+    "test:all": "pnpm type-check && vitest run && pnpm test:e2e:smoke",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
@@ -71,7 +71,8 @@
     "lucide-react": "^0.562.0",
     "next": "^16.2.2",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "zod": "^3.24.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

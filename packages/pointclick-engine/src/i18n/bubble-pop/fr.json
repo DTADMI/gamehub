@@ -1,0 +1,8 @@
+{
+  "bubble-pop": {
+    "title": "Bulles",
+    "hud": { "score": "Score", "lives": "Vies", "level": "Niveau", "moves": "Coups", "pairs": "Paires", "wave": "Vague", "money": "Argent" },
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
+  }
+}

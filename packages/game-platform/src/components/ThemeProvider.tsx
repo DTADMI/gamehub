@@ -1,16 +1,1 @@
-"use client";
-
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import * as React from "react";
-
-export type ThemeProviderProps = React.ComponentProps<typeof NextThemesProvider>;
-
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
-      {children}
-    </NextThemesProvider>
-  );
-}
-
-export default ThemeProvider;
+export { ThemeProvider, type ThemeProviderProps } from "@gamehub/ui/theme-provider";

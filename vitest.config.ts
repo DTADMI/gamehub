@@ -22,6 +22,8 @@ export default defineConfig({
       "__e2e__/**",
       "tests-e2e/**",
       "playwright/**",
+      "**/node_modules/**",
+      "**/*.d.ts",
     ],
   },
   resolve: {

@@ -147,6 +147,13 @@ export const FLAG_DEFINITIONS: FlagDefinition[] = [
     sensitive: false,
   },
   {
+    path: "ui.postGameAuthCTA",
+    label: "Post-game auth CTA",
+    description: "Show sign-in prompt after game completion.",
+    type: "boolean",
+    sensitive: false,
+  },
+  {
     path: "auth.leaderboardGuestTeaser",
     label: "Leaderboard guest teaser",
     description: "Show teaser + auth CTA for guests on leaderboard.",
