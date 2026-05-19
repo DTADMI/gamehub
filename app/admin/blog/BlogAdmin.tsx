@@ -16,7 +16,10 @@ import {
   SelectValue,
   Switch,
 } from "@gamehub/ui";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { createBrowserClient } from "@/lib/supabase/client";
@@ -24,26 +27,65 @@ import type { Database } from "@/lib/supabase/types";
 
 type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 
-const emptyPost = {
-  id: "",
+const blogPostSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, hyphens only"),
+  excerpt: z.string().optional(),
+  content_html: z.string().min(1, "Content is required"),
+  tags: z.string().optional(),
+  status: z.enum(["draft", "published"]),
+  featured: z.boolean(),
+  published_at: z.string().optional(),
+  cover_image_url: z.string().optional(),
+});
+
+type BlogPostForm = z.infer<typeof blogPostSchema>;
+
+const defaultFormValues: BlogPostForm = {
   title: "",
   slug: "",
   excerpt: "",
   content_html: "",
-  status: "draft",
   tags: "",
+  status: "draft",
   featured: false,
   published_at: "",
   cover_image_url: "",
 };
 
+const toFormValues = (post: BlogPost): BlogPostForm => ({
+  title: post.title,
+  slug: post.slug,
+  excerpt: post.excerpt ?? "",
+  content_html: post.content_html,
+  tags: (post.tags ?? []).join(", "),
+  status: post.status as BlogPostForm["status"],
+  featured: post.featured,
+  published_at: post.published_at ?? "",
+  cover_image_url: post.cover_image_url ?? "",
+});
+
 export function BlogAdmin() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [editing, setEditing] = useState<BlogPost | null>(null);
-  const [form, setForm] = useState(emptyPost);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<BlogPostForm>({
+    resolver: zodResolver(blogPostSchema),
+    defaultValues: defaultFormValues,
+  });
 
   const loadPosts = async () => {
     const supabase = createBrowserClient() as any;
@@ -60,43 +102,32 @@ export function BlogAdmin() {
 
   const startEdit = (post: BlogPost) => {
     setEditing(post);
-    setForm({
-      id: post.id,
-      title: post.title,
-      slug: post.slug,
-      excerpt: post.excerpt ?? "",
-      content_html: post.content_html,
-      status: post.status,
-      tags: (post.tags ?? []).join(", "),
-      featured: post.featured,
-      published_at: post.published_at ?? "",
-      cover_image_url: post.cover_image_url ?? "",
-    });
+    reset(toFormValues(post));
   };
 
   const resetForm = () => {
     setEditing(null);
-    setForm(emptyPost);
+    reset(defaultFormValues);
   };
 
-  const savePost = async () => {
+  const onSubmit = async (data: BlogPostForm) => {
     setLoading(true);
     const supabase = createBrowserClient() as any;
     const payload = {
-      title: form.title,
-      slug: form.slug,
-      excerpt: form.excerpt || null,
-      content_html: form.content_html,
-      status: form.status,
-      tags: form.tags
-        ? form.tags
+      title: data.title,
+      slug: data.slug,
+      excerpt: data.excerpt || null,
+      content_html: data.content_html,
+      status: data.status,
+      tags: data.tags
+        ? data.tags
             .split(",")
             .map((tag) => tag.trim())
             .filter(Boolean)
         : [],
-      featured: form.featured,
-      cover_image_url: form.cover_image_url || null,
-      published_at: form.published_at || null,
+      featured: data.featured,
+      cover_image_url: data.cover_image_url || null,
+      published_at: data.published_at || null,
     };
 
     if (editing) {
@@ -132,7 +163,7 @@ export function BlogAdmin() {
       }
 
       const payload = (await response.json()) as { url: string };
-      setForm((current) => ({ ...current, cover_image_url: payload.url }));
+      setValue("cover_image_url", payload.url);
       setUploadMessage("Cover uploaded.");
     } catch (err) {
       setUploadMessage(err instanceof Error ? err.message : "Upload failed");
@@ -189,107 +220,127 @@ export function BlogAdmin() {
         <CardHeader>
           <CardTitle>{editing ? "Edit post" : "New post"}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              value={form.title}
-              onChange={(event) => setForm({ ...form, title: event.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="slug">Slug</Label>
-            <Input
-              id="slug"
-              value={form.slug}
-              onChange={(event) => setForm({ ...form, slug: event.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="excerpt">Excerpt</Label>
-            <Input
-              id="excerpt"
-              value={form.excerpt}
-              onChange={(event) => setForm({ ...form, excerpt: event.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="tags">Tags (comma separated)</Label>
-            <Input
-              id="tags"
-              value={form.tags}
-              onChange={(event) => setForm({ ...form, tags: event.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="cover">Cover image URL</Label>
-            <Input
-              id="cover"
-              value={form.cover_image_url}
-              onChange={(event) => setForm({ ...form, cover_image_url: event.target.value })}
-            />
-            <Input
-              type="file"
-              accept="image/png,image/jpeg,image/webp,image/avif"
-              onChange={(event) => {
-                const file = event.target.files?.[0] ?? null;
-                void uploadCoverImage(file);
-                event.target.value = "";
-              }}
-            />
-            <p className="text-muted-foreground text-xs">
-              {uploading ? "Uploading..." : uploadMessage ?? "Upload to Supabase media bucket or paste a URL."}
-            </p>
-          </div>
-          <div className="space-y-2">
-            <Label>Status</Label>
-            <Select
-              value={form.status}
-              onValueChange={(value) => setForm({ ...form, status: value })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="published_at">Publish date (ISO)</Label>
-            <Input
-              id="published_at"
-              value={form.published_at}
-              onChange={(event) => setForm({ ...form, published_at: event.target.value })}
-              placeholder="2026-02-24T12:00:00Z"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="featured">Featured</Label>
-            <Switch
-              id="featured"
-              checked={form.featured}
-              onCheckedChange={(value) => setForm({ ...form, featured: value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Content</Label>
-            <RichTextEditor
-              value={form.content_html}
-              onChange={(value) => setForm({ ...form, content_html: value })}
-              placeholder="Write your post..."
-            />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={savePost} disabled={loading}>
-              {loading ? "Saving..." : "Save post"}
-            </Button>
-            <Button variant="ghost" onClick={resetForm}>
-              Reset
-            </Button>
-          </div>
+        <CardContent>
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                aria-invalid={!!errors.title}
+                {...register("title")}
+              />
+              {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="slug">Slug</Label>
+              <Input
+                id="slug"
+                aria-invalid={!!errors.slug}
+                {...register("slug")}
+              />
+              {errors.slug && <p className="text-sm text-red-500">{errors.slug.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="excerpt">Excerpt</Label>
+              <Input
+                id="excerpt"
+                {...register("excerpt")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tags">Tags (comma separated)</Label>
+              <Input
+                id="tags"
+                {...register("tags")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="cover">Cover image URL</Label>
+              <Input
+                id="cover"
+                {...register("cover_image_url")}
+              />
+              <Input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/avif"
+                onChange={(event) => {
+                  const file = event.target.files?.[0] ?? null;
+                  void uploadCoverImage(file);
+                  event.target.value = "";
+                }}
+              />
+              <p className="text-muted-foreground text-xs">
+                {uploading ? "Uploading..." : uploadMessage ?? "Upload to Supabase media bucket or paste a URL."}
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="published">Published</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="published_at">Publish date (ISO)</Label>
+              <Input
+                id="published_at"
+                {...register("published_at")}
+                placeholder="2026-02-24T12:00:00Z"
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="featured">Featured</Label>
+              <Controller
+                name="featured"
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    id="featured"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                )}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Content</Label>
+              <Controller
+                name="content_html"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <RichTextEditor
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Write your post..."
+                    />
+                    {errors.content_html && (
+                      <p className="text-sm text-red-500">{errors.content_html.message}</p>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button type="submit" disabled={loading}>
+                {loading ? "Saving..." : "Save post"}
+              </Button>
+              <Button type="button" variant="ghost" onClick={resetForm}>
+                Reset
+              </Button>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>

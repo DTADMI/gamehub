@@ -12,10 +12,21 @@ import {
   Input,
   Label,
 } from "@gamehub/ui";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { FormEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { siteCopy } from "@/lib/site-copy";
+
+const authSchema = z.object({
+  email: z.string().email("Valid email required"),
+  username: z.string().min(3, "Username must be at least 3 characters").optional(),
+  password: z.string().min(6, "At least 6 characters"),
+});
+
+type AuthForm = z.infer<typeof authSchema>;
 
 type AuthMode = "signin" | "signup";
 
@@ -26,42 +37,42 @@ export default function AuthPage() {
   const { signin, signup, isLoading, user } = useAuth();
 
   const [mode, setMode] = useState<AuthMode>("signin");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<AuthForm>({
+    resolver: zodResolver(authSchema),
+    shouldUnregister: true,
+  });
 
   const ctaLabel = useMemo(() => {
-    if (submitting) {
+    if (isSubmitting) {
       return mode === "signin" ? copy.signingIn : copy.creating;
     }
     return mode === "signin" ? copy.signIn : copy.signUp;
-  }, [copy.creating, copy.signIn, copy.signUp, copy.signingIn, mode, submitting]);
+  }, [copy.creating, copy.signIn, copy.signUp, copy.signingIn, mode, isSubmitting]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setError(null);
+  const onSubmit = async (data: AuthForm) => {
     setMessage(null);
-    setSubmitting(true);
 
     try {
       if (mode === "signin") {
-        await signin(email, password);
+        await signin(data.email, data.password);
         router.push("/");
         router.refresh();
       } else {
-        await signup(email, username, password);
+        await signup(data.email, data.username ?? "", data.password);
         setMode("signin");
         setMessage(copy.accountCreated);
       }
     } catch (submitError) {
       const messageText =
         submitError instanceof Error ? submitError.message : "Authentication failed.";
-      setError(messageText);
-    } finally {
-      setSubmitting(false);
+      setError("root", { message: messageText });
     }
   };
 
@@ -92,44 +103,44 @@ export default function AuthPage() {
             </Button>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
               <Label htmlFor="email">{copy.email}</Label>
               <Input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
+                aria-invalid={!!errors.email}
+                {...register("email")}
               />
+              {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
             </div>
-            {mode === "signup" ? (
+            {mode === "signup" && (
               <div className="space-y-2">
                 <Label htmlFor="username">{copy.username}</Label>
                 <Input
                   id="username"
                   type="text"
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                  required
+                  aria-invalid={!!errors.username}
+                  {...register("username")}
                 />
+                {errors.username && <p className="text-sm text-red-500">{errors.username.message}</p>}
               </div>
-            ) : null}
+            )}
             <div className="space-y-2">
               <Label htmlFor="password">{copy.password}</Label>
               <Input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
+                aria-invalid={!!errors.password}
+                {...register("password")}
               />
+              {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
             </div>
 
-            {error ? <p className="text-sm text-red-500">{error}</p> : null}
-            {message ? <p className="text-sm text-emerald-500">{message}</p> : null}
+            {errors.root && <p className="text-sm text-red-500">{errors.root.message}</p>}
+            {message && <p className="text-sm text-emerald-500">{message}</p>}
 
-            <Button type="submit" className="w-full" disabled={isLoading || submitting}>
+            <Button type="submit" className="w-full" disabled={isLoading || isSubmitting}>
               {ctaLabel}
             </Button>
           </form>

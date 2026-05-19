@@ -1,13 +1,22 @@
 "use client";
-import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
+import { enableGameKeyCapture, GameHUD, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import { LoadingShell } from "@gamehub/ui/components/shell";
-import dynamicImport from "next/dynamic";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-const PlatformerGame = dynamicImport(() => import("@games/platformer").then((m) => m.PlatformerGame), {
-  ssr: false,
-  loading: () => <LoadingShell message="Loading game..." />,
-});
+const PlatformerGame = dynamic(
+  () => {
+    const entry = getGame("platformer");
+    if (!entry || !isGameLaunchable(entry)) {
+      return Promise.reject(new Error("not_playable"));
+    }
+    if (entry.upcoming && !process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL) {
+      return Promise.reject(new Error("upcoming_gated"));
+    }
+    return entry.getComponent();
+  },
+  { loading: () => <LoadingShell variant="spinner" /> }
+);
 
 export default function PlatformerPage() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +50,6 @@ export default function PlatformerPage() {
     </div>
   );
 }
-
 
 
 

@@ -1,16 +1,22 @@
 "use client";
-import { enableGameKeyCapture } from "@gamehub/game-platform";
-import dynamicImport from "next/dynamic";
+import { enableGameKeyCapture, getGame, isGameLaunchable } from "@gamehub/game-platform";
+import { LoadingShell } from "@gamehub/ui/components/shell";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 
-const KnitzyGame = dynamicImport(() => import("@games/knitzy").then((m) => m.KnitzyGame), {
-  ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-xl">Loading game...</div>
-    </div>
-  ),
-});
+const KnitzyGame = dynamic(
+  () => {
+    const entry = getGame("knitzy");
+    if (!entry || !isGameLaunchable(entry)) {
+      return Promise.reject(new Error("not_playable"));
+    }
+    if (entry.upcoming && !process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL) {
+      return Promise.reject(new Error("upcoming_gated"));
+    }
+    return entry.getComponent();
+  },
+  { loading: () => <LoadingShell variant="spinner" /> }
+);
 
 export default function KnitzyPage() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -34,7 +40,6 @@ export default function KnitzyPage() {
     </div>
   );
 }
-
 
 
 

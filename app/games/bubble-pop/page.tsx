@@ -1,16 +1,25 @@
 "use client";
-import { GameShell } from "@gamehub/game-platform";
+import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import { LoadingShell } from "@gamehub/ui/components/shell";
-import dynamicImport from "next/dynamic";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 
-const BubblePopGame = dynamicImport(() => import("@games/bubble-pop").then((m) => m.BubblePopGame), {
-  ssr: false,
-  loading: () => <LoadingShell message="Loading game..." />,
-});
+const BubblePopGame = dynamic(
+  () => {
+    const entry = getGame("bubble-pop");
+    if (!entry || !isGameLaunchable(entry)) {
+      return Promise.reject(new Error("not_playable"));
+    }
+    if (entry.upcoming && !process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL) {
+      return Promise.reject(new Error("upcoming_gated"));
+    }
+    return entry.getComponent();
+  },
+  { loading: () => <LoadingShell variant="spinner" /> }
+);
 
 export default function BubblePopPage() {
   const { user } = useAuth();
@@ -51,7 +60,6 @@ export default function BubblePopPage() {
     </GameShell>
   );
 }
-
 
 
 

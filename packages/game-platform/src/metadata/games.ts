@@ -28,7 +28,6 @@ export type GameSlug =
   | "elemental-conflux"
   | "quantum-architect"
   | "tetris"
-  | "space-invasion"
   | "block-blast"
   | "platformer"
   | "tower-defense";
@@ -278,18 +277,8 @@ export const games: GameManifest = {
     upcoming: true,
     enabled: false,
     visible: true,
-    getComponent: () => Promise.resolve({}),
-  },
-  "space-invasion": {
-    slug: "space-invasion",
-    title: "Space Invasion",
-    shortDescription: "Blast incoming alien waves and dodge projectiles.",
-    tags: ["Arcade", "Shooter", "arcade-2d", "impl:none", "target:phaser-or-pixi"],
-    image: "/images/games/space-invasion-card.svg",
-    upcoming: true,
-    enabled: false,
-    visible: true,
-    getComponent: () => Promise.resolve({}),
+    // @ts-ignore
+    getComponent: () => import("@games/tetris").then((m) => m.TetrisGame),
   },
   "block-blast": {
     slug: "block-blast",
@@ -300,7 +289,7 @@ export const games: GameManifest = {
     upcoming: true,
     enabled: false,
     visible: true,
-    getComponent: () => Promise.resolve({}),
+    getComponent: () => Promise.resolve(null),
   },
   platformer: {
     slug: "platformer",

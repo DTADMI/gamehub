@@ -1,7 +1,10 @@
 "use client";
 
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label, Switch } from "@gamehub/ui";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { createBrowserClient } from "@/lib/supabase/client";
@@ -9,20 +12,47 @@ import type { Database } from "@/lib/supabase/types";
 
 type ResumeSection = Database["public"]["Tables"]["resume_sections"]["Row"];
 
-const emptySection = {
-  id: "",
-  slug: "",
+const resumeSectionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  slug: z.string().min(1, "Slug is required"),
+  content_html: z.string().min(1, "Content is required"),
+  sort_order: z.number().min(0, "Sort order must be non-negative"),
+  visible: z.boolean(),
+});
+
+type ResumeSectionForm = z.infer<typeof resumeSectionSchema>;
+
+const defaultFormValues: ResumeSectionForm = {
   title: "",
+  slug: "",
   content_html: "",
   sort_order: 0,
   visible: true,
 };
 
+const toFormValues = (section: ResumeSection): ResumeSectionForm => ({
+  title: section.title,
+  slug: section.slug,
+  content_html: section.content_html,
+  sort_order: section.sort_order,
+  visible: section.visible,
+});
+
 export function ResumeAdmin() {
   const [sections, setSections] = useState<ResumeSection[]>([]);
   const [editing, setEditing] = useState<ResumeSection | null>(null);
-  const [form, setForm] = useState(emptySection);
   const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<ResumeSectionForm>({
+    resolver: zodResolver(resumeSectionSchema),
+    defaultValues: defaultFormValues,
+  });
 
   const loadSections = async () => {
     const supabase = createBrowserClient() as any;
@@ -39,42 +69,35 @@ export function ResumeAdmin() {
 
   const startEdit = (section: ResumeSection) => {
     setEditing(section);
-    setForm({
-      id: section.id,
-      slug: section.slug,
-      title: section.title,
-      content_html: section.content_html,
-      sort_order: section.sort_order,
-      visible: section.visible,
-    });
+    reset(toFormValues(section));
   };
 
   const resetForm = () => {
     setEditing(null);
-    setForm(emptySection);
+    reset(defaultFormValues);
   };
 
-  const saveSection = async () => {
+  const onSubmit = async (data: ResumeSectionForm) => {
     setLoading(true);
     const supabase = createBrowserClient() as any;
     if (editing) {
       await supabase
         .from("resume_sections")
         .update({
-          slug: form.slug,
-          title: form.title,
-          content_html: form.content_html,
-          sort_order: form.sort_order,
-          visible: form.visible,
+          slug: data.slug,
+          title: data.title,
+          content_html: data.content_html,
+          sort_order: data.sort_order,
+          visible: data.visible,
         })
         .eq("id", editing.id);
     } else {
       await supabase.from("resume_sections").insert({
-        slug: form.slug,
-        title: form.title,
-        content_html: form.content_html,
-        sort_order: form.sort_order,
-        visible: form.visible,
+        slug: data.slug,
+        title: data.title,
+        content_html: data.content_html,
+        sort_order: data.sort_order,
+        visible: data.visible,
       });
     }
     setLoading(false);
@@ -119,7 +142,7 @@ export function ResumeAdmin() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">
-                  Order: {section.sort_order} • {section.visible ? "Visible" : "Hidden"}
+                  Order: {section.sort_order} &bull; {section.visible ? "Visible" : "Hidden"}
                 </p>
               </CardContent>
             </Card>
@@ -131,58 +154,78 @@ export function ResumeAdmin() {
         <CardHeader>
           <CardTitle>{editing ? "Edit section" : "Add new section"}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              value={form.title}
-              onChange={(event) => setForm({ ...form, title: event.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="slug">Slug</Label>
-            <Input
-              id="slug"
-              value={form.slug}
-              onChange={(event) => setForm({ ...form, slug: event.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="sort_order">Sort order</Label>
-            <Input
-              id="sort_order"
-              type="number"
-              value={form.sort_order}
-              onChange={(event) =>
-                setForm({ ...form, sort_order: Number(event.target.value) })
-              }
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="visible">Visible</Label>
-            <Switch
-              id="visible"
-              checked={form.visible}
-              onCheckedChange={(value) => setForm({ ...form, visible: value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Content</Label>
-            <RichTextEditor
-              value={form.content_html}
-              onChange={(value) => setForm({ ...form, content_html: value })}
-              placeholder="Write the resume section content..."
-            />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={saveSection} disabled={loading}>
-              {loading ? "Saving..." : "Save section"}
-            </Button>
-            <Button variant="ghost" onClick={resetForm}>
-              Reset
-            </Button>
-          </div>
+        <CardContent>
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                aria-invalid={!!errors.title}
+                {...register("title")}
+              />
+              {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="slug">Slug</Label>
+              <Input
+                id="slug"
+                aria-invalid={!!errors.slug}
+                {...register("slug")}
+              />
+              {errors.slug && <p className="text-sm text-red-500">{errors.slug.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="sort_order">Sort order</Label>
+              <Input
+                id="sort_order"
+                type="number"
+                aria-invalid={!!errors.sort_order}
+                {...register("sort_order", { valueAsNumber: true })}
+              />
+              {errors.sort_order && <p className="text-sm text-red-500">{errors.sort_order.message}</p>}
+            </div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="visible">Visible</Label>
+              <Controller
+                name="visible"
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    id="visible"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                )}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Content</Label>
+              <Controller
+                name="content_html"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <RichTextEditor
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Write the resume section content..."
+                    />
+                    {errors.content_html && (
+                      <p className="text-sm text-red-500">{errors.content_html.message}</p>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button type="submit" disabled={loading}>
+                {loading ? "Saving..." : "Save section"}
+              </Button>
+              <Button type="button" variant="ghost" onClick={resetForm}>
+                Reset
+              </Button>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>

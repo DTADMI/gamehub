@@ -1,15 +1,21 @@
 "use client";
-import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
+import { enableGameKeyCapture, GameHUD, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import { LoadingShell } from "@gamehub/ui/components/shell";
-import dynamicImport from "next/dynamic";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-const TowerDefenseGame = dynamicImport(
-  () => import("@games/tower-defense").then((m) => m.TowerDefenseGame),
-  {
-    ssr: false,
-    loading: () => <LoadingShell message="Loading game..." />,
+const TowerDefenseGame = dynamic(
+  () => {
+    const entry = getGame("tower-defense");
+    if (!entry || !isGameLaunchable(entry)) {
+      return Promise.reject(new Error("not_playable"));
+    }
+    if (entry.upcoming && !process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL) {
+      return Promise.reject(new Error("upcoming_gated"));
+    }
+    return entry.getComponent();
   },
+  { loading: () => <LoadingShell variant="spinner" /> }
 );
 
 export default function TowerDefensePage() {
@@ -42,7 +48,6 @@ export default function TowerDefensePage() {
     </div>
   );
 }
-
 
 
 

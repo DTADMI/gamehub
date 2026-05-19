@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "[pre-commit] Running lint..."
 pnpm lint
+
+echo "[pre-commit] Running type-check..."
 pnpm type-check
+
+echo "[pre-commit] Running unit tests..."
 pnpm test:unit
+
+echo "[pre-commit] All checks passed."

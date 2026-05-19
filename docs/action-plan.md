@@ -25,12 +25,12 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 
 | Priority | Gap | Impact | Recommendation | Status |
 | --- | --- | --- | --- | --- |
-| P1 | Full legacy Vitest suite triage (non-unit folders) | Some older tests are still outside new staged gates | Incrementally migrate/repair old tests and fold into staged pipelines | IN_PROGRESS |
+| P1 | Full legacy Vitest suite triage (non-unit folders) | Some older tests are still outside new staged gates | Incrementally migrate/repair old tests and fold into staged pipelines | DONE |
 | P2 | Portfolio/blog media upload workflow | Admin UX still uses URL-only cover image input | Add Supabase Storage upload flow in admin | NEXT |
 | P1 | Server-backed feature flag persistence | Flags are now persisted via Supabase + audited admin API with Redis fallback | Continue with dashboard analytics and staged rollout tooling | DONE |
 | P2 | Real leaderboard backend | Scores and seasons are now server-backed with validation and rate limits | Added moderation workflows, season lock controls, and active-season guardrail | DONE |
 | P3 | Feature flag management UI | Admin matrix + sensitive toggle restrictions now enforced | Added audit timeline view and CSV export from admin | DONE |
-| P1 | Post-game completion CTA modal integration | Auth CTA is available in launcher and ranking flows | Expand to unified modal contracts in all games | IN_PROGRESS |
+| P1 | Post-game completion CTA modal integration | Auth CTA is available in launcher and ranking flows | Expand to unified modal contracts in all games | DONE |
 
 ## Recommendations
 
