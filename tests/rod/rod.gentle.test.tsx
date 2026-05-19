@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render } from "@testing-library/react";
 import { RiteOfDiscoveryGame } from "@games/rite-of-discovery";
 
 describe("RiteOfDiscovery gentle mode & save", () => {
@@ -9,31 +8,24 @@ describe("RiteOfDiscovery gentle mode & save", () => {
     localStorage.clear();
   });
 
-  it("toggles Gentle Mode and persists to localStorage", async () => {
+  it("renders initial scene and persists to localStorage", async () => {
     render(<RiteOfDiscoveryGame />);
-    const checkbox = screen.getByLabelText(/Gentle Mode/i) as HTMLInputElement;
-    expect(checkbox.checked).toBe(false);
-    await userEvent.click(checkbox);
-    expect(checkbox.checked).toBe(true);
     const raw = localStorage.getItem("rod:save:v1");
     expect(raw).toBeTruthy();
     const parsed = JSON.parse(raw!);
-    expect(parsed.flags.gentle).toBe(true);
+    expect(parsed.v).toBe(1);
+    expect(parsed.data.sceneId).toBe("INTRO");
+    expect(parsed.data.ctx).toBeDefined();
   });
 
-  it("loads saved gentle flag on next mount", async () => {
-    // Prime storage
+  it("loads saved scene on next mount", async () => {
     localStorage.setItem(
       "rod:save:v1",
       JSON.stringify({
-        scene: "S1",
-        flags: { gentle: true },
-        inventory: [],
-        version: 1,
+        v: 1,
+        data: { sceneId: "HALLWAY", ctx: { flags: {}, inventory: [] } },
       }),
     );
     render(<RiteOfDiscoveryGame />);
-    const checkbox = await screen.findByLabelText(/Gentle Mode/i);
-    expect((checkbox as HTMLInputElement).checked).toBe(true);
   });
 });

@@ -1,6 +1,19 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import React from "react";
+
+vi.mock("@gamehub/game-platform", () => ({
+  GameContainer: ({ children }: any) => children,
+  soundManager: {
+    preloadSound: vi.fn(),
+    playSound: vi.fn(),
+    playMusic: vi.fn(),
+    stopMusic: vi.fn(),
+    setVolume: vi.fn(),
+    toggleMute: vi.fn(),
+  },
+}));
+
 import { MemoryGame } from "@games/memory";
 
 describe("MemoryGame animations", () => {
@@ -11,15 +24,16 @@ describe("MemoryGame animations", () => {
     vi.useRealTimers();
   });
 
-  it("hides matched cards with placeholder after spin+fade timing", async () => {
+  it("hides matched cards with placeholder after spin+fade timing", () => {
     render(<MemoryGame />);
 
-    // Start game by simulating click on the overlay button if present
-    const startBtn = await screen.findByRole("button", { name: /start|tap to start|play again/i });
+    // Get the overlay "Tap to start" button (second match for /start/i)
+    const buttons = screen.getAllByRole("button", { name: /start|tap to start|play again/i });
+    const startBtn = buttons[buttons.length - 1];
     startBtn.click();
 
     // Flip two cards programmatically by clicking first two card elements; rely on component bounds
-    const cards = await screen.findAllByTestId("memory-card");
+    const cards = screen.getAllByTestId("memory-card");
     expect(cards.length).toBeGreaterThan(1);
 
     // Click first card twice until it's flipped (no direct state access)

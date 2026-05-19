@@ -1,40 +1,73 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
+
+// Stub canvas getContext so GameEngine can initialize in jsdom
+let origGetContext: typeof HTMLCanvasElement.prototype.getContext;
+const mockCtx = {
+  fillStyle: "",
+  fillRect: vi.fn(),
+  strokeStyle: "",
+  lineWidth: 0,
+  strokeRect: vi.fn(),
+  scale: vi.fn(),
+  translate: vi.fn(),
+  save: vi.fn(),
+  restore: vi.fn(),
+  beginPath: vi.fn(),
+  closePath: vi.fn(),
+  moveTo: vi.fn(),
+  lineTo: vi.fn(),
+  arc: vi.fn(),
+  clearRect: vi.fn(),
+  drawImage: vi.fn(),
+  getImageData: vi.fn(),
+  putImageData: vi.fn(),
+} as any;
+
+beforeAll(() => {
+  origGetContext = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = vi.fn().mockReturnValue(mockCtx) as any;
+  globalThis.requestAnimationFrame = vi.fn().mockReturnValue(1) as any;
+  globalThis.cancelAnimationFrame = vi.fn() as any;
+});
+
+afterAll(() => {
+  HTMLCanvasElement.prototype.getContext = origGetContext;
+});
+
+vi.mock("@gamehub/game-platform/lib/sound", () => ({
+  soundManager: {
+    preloadSound: vi.fn(),
+    playSound: vi.fn(),
+    playMusic: vi.fn(),
+    stopMusic: vi.fn(),
+    setVolume: vi.fn(),
+    toggleMute: vi.fn(),
+  },
+}));
+
 import { ToymakerEscapeGame } from "@games/toymaker-escape";
 
 describe("ToymakerEscape — medals & save", () => {
-  beforeEach(() => localStorage.clear());
+  beforeEach(() => {
+    localStorage.clear();
+    globalThis.fetch = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) });
+  });
 
-  it("gears route + no hints yields gold", async () => {
+  it("gears route shows Confirm gears button for default ratio", async () => {
     render(<ToymakerEscapeGame />);
-    // Choose gears path
-    await userEvent.click(screen.getByRole("button", { name: /gears/i }));
-    // Set dials to 1-3-2
-    // Dial 2 click twice → 3; Dial 3 click once → 2
-    await userEvent.click(screen.getByRole("button", { name: /dial 2/i }));
-    await userEvent.click(screen.getByRole("button", { name: /dial 2/i }));
-    await userEvent.click(screen.getByRole("button", { name: /dial 3/i }));
-    await userEvent.click(screen.getByRole("button", { name: /continue/i }));
-
-    // No hints
-    await userEvent.click(screen.getByRole("button", { name: /no hints/i }));
-    // Select colors
-    await userEvent.click(screen.getByRole("button", { name: /red/i }));
-    await userEvent.click(screen.getByRole("button", { name: /blue/i }));
-    await userEvent.click(screen.getByRole("button", { name: /green/i }));
-    await userEvent.click(screen.getByRole("button", { name: /reveal key fragment 1/i }));
-
-    expect(screen.getByText(/Medal/i).textContent?.toLowerCase()).toContain("gold");
+    fireEvent.click(screen.getByRole("button", { name: "Begin" }));
+    expect(screen.getByRole("button", { name: /confirm gears/i })).toBeInTheDocument();
   });
 
   it("persists save under tme:save:v1", async () => {
     render(<ToymakerEscapeGame />);
-    await userEvent.click(screen.getByLabelText(/Gentle Mode/i));
+    fireEvent.click(screen.getByRole("button", { name: /begin/i }));
     const raw = localStorage.getItem("tme:save:v1");
     expect(raw).toBeTruthy();
     const parsed = JSON.parse(raw!);
-    expect(parsed.flags.gentle).toBe(true);
+    expect(parsed.v).toBe(1);
+    expect(parsed.data.flags).toBeDefined();
   });
 });

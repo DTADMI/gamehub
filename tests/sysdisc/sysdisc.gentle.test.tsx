@@ -18,17 +18,16 @@ describe("SystemsDiscovery gentle mode & save", () => {
     const raw = localStorage.getItem("sysdisc:save:v1");
     expect(raw).toBeTruthy();
     const parsed = JSON.parse(raw!);
-    expect(parsed.flags.gentle).toBe(true);
+    expect(parsed.ctx.flags.gentle).toBe(true);
   });
 
   it("loads saved gentle flag on next mount", async () => {
     localStorage.setItem(
       "sysdisc:save:v1",
       JSON.stringify({
-        scene: "B1",
-        flags: { gentle: true },
-        inventory: [],
-        version: 1,
+        sceneId: "B1",
+        ctx: { flags: { gentle: true }, inventory: [] },
+        v: 1,
       }),
     );
     render(<SystemsDiscoveryGame />);
