@@ -5,7 +5,7 @@ import { Button, cn } from "@gamehub/ui";
 import { Gamepad2, Github, Linkedin, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { GITHUB_URL, LINKEDIN_URL } from "../lib/env";
 import { ModeToggle } from "./ModeToggle";
@@ -20,7 +20,7 @@ const navItems = [
   { name: "Admin", href: "/admin" },
 ];
 
-export function Navbar() {
+export const Navbar = memo(function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const hasGithub = Boolean(GITHUB_URL);
@@ -174,6 +174,6 @@ export function Navbar() {
       )}
     </header>
   );
-}
+});
 
 export default Navbar;

@@ -132,10 +132,24 @@ export function anyMove(board: Board): boolean {
 // --- Component (Canvas renderer)
 export const BubblePopGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rectRef = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const [board, setBoard] = useState<Board>(() => createBoard());
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(0);
   const [selected, setSelected] = useState<Point[] | null>(null);
+
+  useEffect(() => {
+    const updateRect = () => {
+      const c = canvasRef.current;
+      if (c) {
+        const r = c.getBoundingClientRect();
+        rectRef.current = { left: r.left, top: r.top, width: r.width, height: r.height };
+      }
+    };
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    return () => window.removeEventListener("resize", updateRect);
+  }, []);
 
   // Load high score
   useEffect(() => {
@@ -239,7 +253,7 @@ export const BubblePopGame: React.FC = () => {
 
   // Coordinate map from click to cell
   function toCell(e: React.MouseEvent<HTMLCanvasElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
+    const rect = rectRef.current;
     const x = Math.floor(((e.clientX - rect.left) / rect.width) * COLS);
     const y = Math.floor(((e.clientY - rect.top) / rect.height) * ROWS);
     return { x, y };
@@ -354,6 +368,7 @@ export const BubblePopGame: React.FC = () => {
         role="img"
         aria-label={`Bubble Pop board, score ${score}, best ${best}`}
         className="rounded-lg border border-gray-700 shadow-lg"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
         onClick={onClick}
       />
       <div className="mt-3 flex items-center gap-3">
@@ -374,4 +389,4 @@ export const BubblePopGame: React.FC = () => {
   );
 };
 
-export default BubblePopGame;
+export default React.memo(BubblePopGame);

@@ -1,6 +1,5 @@
 "use client";
 
-import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
 import { getFirebaseApp } from "../lib/firebase";
@@ -8,16 +7,15 @@ import { getFirebaseApp } from "../lib/firebase";
 export default function LogoutButton() {
   const router = useRouter();
 
-  const app = getFirebaseApp();
-
   const handleLogout = async () => {
     try {
+      const app = await getFirebaseApp();
       if (!app) {
         console.error("Firebase app not initialized");
         router.push("/login");
         return;
       }
-
+      const { getAuth, signOut } = await import("firebase/auth");
       const auth = getAuth(app);
       await signOut(auth);
       router.push("/login");

@@ -654,4 +654,4 @@ export const ChessGame: React.FC = () => {
   );
 };
 
-export default ChessGame;
+export default React.memo(ChessGame);

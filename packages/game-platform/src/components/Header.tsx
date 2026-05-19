@@ -4,6 +4,7 @@ import { Button } from "@gamehub/ui";
 import { LogIn, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { memo } from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 import { useSiteLocale } from "../lib/site-locale";
@@ -33,7 +34,7 @@ const copy = {
   },
 } as const;
 
-export function Header() {
+export const Header = memo(function Header() {
   const router = useRouter();
   const { user, signout, isLoading } = useAuth();
   const { locale } = useSiteLocale();
@@ -99,6 +100,6 @@ export function Header() {
       </div>
     </header>
   );
-}
+});
 
 export default Header;

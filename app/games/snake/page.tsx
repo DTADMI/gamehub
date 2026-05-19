@@ -9,16 +9,13 @@ import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
 import { useFeature } from "@gamehub/game-platform/lib/flags";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import { useStomp } from "@gamehub/game-platform/lib/realtime/useStomp";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
 
 const SnakeGame = dynamicImport(() => import("@games/snake").then((m) => m.SnakeGame), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-xl">Loading game...</div>
-    </div>
-  ),
+  loading: () => <LoadingShell message="Loading game..." />,
 });
 
 const SnakeGame3D = SnakeGame;

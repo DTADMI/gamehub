@@ -3,7 +3,7 @@ import {
   BREAKOUT_SETTINGS_KEY,
   getBreakoutSettings,
   saveBreakoutSettings,
-} from "@games/breakout/src/settings";
+} from "@games/breakout/settings";
 
 // Provide a simple localStorage mock for the test environment
 const makeStore = () => {

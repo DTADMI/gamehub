@@ -1,14 +1,22 @@
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@gamehub/ui";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getPublishedPostBySlug } from "@/lib/content-cache";
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPublishedPostBySlug(slug);
+  return { title: post?.title ?? "Blog Post", description: post?.excerpt };
+}
+
 type BlogPostPageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPublishedPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPublishedPostBySlug(slug);
 
   if (!post) {
     notFound();

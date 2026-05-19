@@ -6,16 +6,13 @@ import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard"
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
 
 const BreakoutGame = dynamicImport(() => import("@games/breakout").then((m) => m.BreakoutGame), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-xl">Loading game...</div>
-    </div>
-  ),
+  loading: () => <LoadingShell message="Loading game..." />,
 });
 
 export default function BreakoutGamePage() {

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 
-export async function proxy(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   if (!request.nextUrl.pathname.startsWith("/admin")) {
     return NextResponse.next();
   }

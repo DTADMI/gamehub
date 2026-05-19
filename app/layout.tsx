@@ -1,9 +1,11 @@
 import "./globals.css";
 
 import { Footer, Header, I18nInitializer, Providers } from "@gamehub/game-platform";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -31,7 +33,11 @@ export default function RootLayout({
         <Providers>
           <I18nInitializer />
           <Header />
-          <main className="min-h-0 flex-1">{children}</main>
+          <main className="min-h-0 flex-1">
+            <Suspense fallback={<LoadingShell variant="shimmer" />}>
+              {children}
+            </Suspense>
+          </main>
           <Footer githubUrl={githubUrl} linkedinUrl={linkedinUrl} contactEmail={contactEmail} />
           <Analytics />
         </Providers>

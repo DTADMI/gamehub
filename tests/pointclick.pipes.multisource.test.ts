@@ -48,7 +48,7 @@ describe("pipes multi-source/sink variants", () => {
     expect(s.solved).toBe(false);
     expect(s.errors?.some((e) => /open end|leak/i.test(e))).toBe(true);
     // Rotate elbow to connect
-    s = evaluatePipes(setTileRotation(s, 0, 0, 1));
+    s = evaluatePipes(setTileRotation(s, 0, 0, 90));
     // Depending on implementation, this may or may not solve; assert no errors remain
     expect((s.errors ?? []).length).toBeGreaterThanOrEqual(0);
   });

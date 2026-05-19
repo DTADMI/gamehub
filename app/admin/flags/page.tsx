@@ -16,6 +16,7 @@ import {
   SelectValue,
   Switch,
 } from "@gamehub/ui";
+import { ShellWrapper } from "@gamehub/ui/components/shell";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { type AdminRole, adminRoleMatrix, canWriteFeatureFlags } from "@/lib/admin/roles";
@@ -172,10 +173,8 @@ export default function AdminFlagsPage() {
           </Button>
         </CardHeader>
         <CardContent className="space-y-4">
-          {loading ? (
-            <p className="text-muted-foreground text-sm">Loading flags...</p>
-          ) : (
-            runtimeRows.map((row) => {
+          <ShellWrapper isLoading={loading} loadingMessage="Loading flags...">
+            {runtimeRows.map((row) => {
               const canWrite = canWriteFeatureFlags(role, row.path);
               const isSaving = savingPath === row.path;
               return (
@@ -223,8 +222,8 @@ export default function AdminFlagsPage() {
                   )}
                 </div>
               );
-            })
-          )}
+            })}
+          </ShellWrapper>
         </CardContent>
       </Card>
 

@@ -3,6 +3,7 @@
 import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@gamehub/ui";
 import Image from "next/image";
 import Link from "next/link";
+import { memo } from "react";
 
 import { useFlags } from "../contexts/FlagsContext";
 import type { Game } from "../metadata/games";
@@ -116,12 +117,12 @@ function EnhancedGameCard({ game, featured, priorityImage = false }: GameCardPro
   );
 }
 
-export function GameCard(props: GameCardProps) {
+export const GameCard = memo(function GameCard(props: GameCardProps) {
   const { flags } = useFlags();
   if (flags.ui.enhancedGameCards) {
     return <EnhancedGameCard {...props} />;
   }
   return <BasicGameCard {...props} />;
-}
+});
 
 export default GameCard;

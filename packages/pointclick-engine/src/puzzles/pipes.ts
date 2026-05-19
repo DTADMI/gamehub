@@ -31,7 +31,7 @@ export interface PipesState {
   height: number;
   grid: Tile[]; // row-major length = width*height
   solved: boolean;
-  errors?: number[]; // indices of tiles that are leaking or misconnected
+  errors?: string[]; // descriptions of leaks or blockages on the connected network
 }
 
 export function indexOf(x: number, y: number, w: number) {
@@ -164,7 +164,7 @@ function opposite(d: Dir): Dir {
 
 export function evaluatePipes(state: PipesState): PipesState {
   const { width: w, height: h, grid } = state;
-  const errors: number[] = [];
+  const errors: string[] = [];
 
   // Collect sources and sinks
   const sources: number[] = [];
@@ -213,10 +213,19 @@ export function evaluatePipes(state: PipesState): PipesState {
   }
 
   // all sinks must be connected to a source
+  let allSinksConnected = true;
   for (const sk of sinks) {
     if (!visited.has(sk)) {
-      return { ...state, solved: false };
+      allSinksConnected = false;
     }
+  }
+  if (!allSinksConnected) {
+    for (let i = 0; i < grid.length; i++) {
+      if (grid[i].type === "valve" && !grid[i].open) {
+        errors.push("Valve is closed");
+      }
+    }
+    return { ...state, solved: false, errors };
   }
 
   // A leak occurs if ANY connected pipe has an open side that doesn't connect to another pipe's side
@@ -228,19 +237,17 @@ export function evaluatePipes(state: PipesState): PipesState {
     for (const d of sides) {
       const [nx, ny] = neighbor(x, y, d);
       if (!inBounds(nx, ny, w, h)) {
-        // Special case: if it's a source or sink, it might be allowed to point "out"
-        // but ONLY if the design allows it. Let's be strict: it's ONLY allowed
-        // if there's no neighbor. Actually, let's keep it simple for now and fix the test.
-        if (t.source || t.sink) {
+        // Only straight source/sink tiles may have an out-of-bounds side (inlet/outlet)
+        if ((t.source || t.sink) && t.type === "straight") {
           continue;
         }
-        errors.push(idx);
+        errors.push(`Open end at (${x},${y})`);
         continue;
       }
       const nIdx = indexOf(nx, ny, w);
       const nSides = sidesFor(grid[nIdx]);
       if (!nSides.includes(opposite(d))) {
-        errors.push(idx);
+        errors.push(`Open end at (${x},${y})`);
       }
     }
   }

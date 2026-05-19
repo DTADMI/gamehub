@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { canModerateLeaderboard } from "@/lib/admin/roles";
+import { validateCsrf } from "@/lib/csrf";
 import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { getAdminUser } from "@/lib/supabase/admin";
 import { createServerClient } from "@/lib/supabase/server";
@@ -54,6 +55,10 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  if (!validateCsrf(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const ip = clientIpFromHeaders(request.headers);
   const throttle = await rateLimit({
     key: `api:admin:leaderboard:seasons:patch:${ip}`,

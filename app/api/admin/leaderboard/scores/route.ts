@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { canModerateLeaderboard } from "@/lib/admin/roles";
+import { validateCsrf } from "@/lib/csrf";
 import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { type LeaderboardScoreStatus, normalizeGameType } from "@/lib/server/leaderboard";
 import { getAdminUser } from "@/lib/supabase/admin";
@@ -91,6 +92,10 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  if (!validateCsrf(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const ip = clientIpFromHeaders(request.headers);
   const throttle = await rateLimit({
     key: `api:admin:leaderboard:scores:patch:${ip}`,

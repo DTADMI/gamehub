@@ -13,8 +13,8 @@ export interface GameStats {
   // Add more stats as needed
 }
 
-function ensureDbInitialized(): Firestore {
-  const db = getFireStore();
+async function ensureDbInitialized(): Promise<Firestore> {
+  const db = await getFireStore();
   if (!db) {
     throw new Error("Firestore is not initialized");
   }
@@ -27,7 +27,7 @@ export async function saveGameProgress(
   stats: GameStats,
 ): Promise<void> {
   try {
-    const firestore = ensureDbInitialized();
+    const firestore = await ensureDbInitialized();
     const userRef = doc(firestore, "users", userId);
     const gameStatsRef = doc(userRef, "gameStats", gameId);
 
@@ -47,7 +47,7 @@ export async function saveGameProgress(
 
 export async function getGameProgress(userId: string, gameId: string): Promise<GameStats | null> {
   try {
-    const firestore = ensureDbInitialized();
+    const firestore = await ensureDbInitialized();
     const userRef = doc(firestore, "users", userId);
     const gameStatsRef = doc(userRef, "gameStats", gameId);
     const gameStatsSnap = await getDoc(gameStatsRef);

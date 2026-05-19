@@ -25,6 +25,7 @@ const SWIPE_THRESHOLD_MAX = 64; // cap threshold for larger cells
 
 export const SnakeGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rectRef = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
@@ -387,7 +388,7 @@ export const SnakeGame: React.FC = () => {
       if (!gameStarted || isPaused || gameOver) {
         return;
       }
-      const rect = canvas.getBoundingClientRect();
+      const rect = rectRef.current;
       const isLeft = clientX < rect.left + rect.width / 2;
       const target = isLeft ? turnLeft(direction) : turnRight(direction);
       // Avoid 180° reversal guards are inherent in relative turns
@@ -696,6 +697,8 @@ export const SnakeGame: React.FC = () => {
           ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
       }
+      const r = canvas.getBoundingClientRect();
+      rectRef.current = { left: r.left, top: r.top, width: r.width, height: r.height };
     };
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -954,6 +957,7 @@ export const SnakeGame: React.FC = () => {
             height={config.gridSize * CELL_SIZE}
             data-testid="snake-canvas"
             className="block rounded-lg bg-white shadow-md"
+            style={{ willChange: "transform", transform: "translateZ(0)" }}
             aria-label="Snake playfield"
             tabIndex={0}
             onClick={() => {
@@ -1044,8 +1048,21 @@ type JoystickProps = {
 
 const VirtualJoystick: React.FC<JoystickProps> = ({ onDirection }) => {
   const padRef = useRef<HTMLDivElement>(null);
+  const padRectRef = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const [active, setActive] = useState(false);
   const knobRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateRect = () => {
+      if (padRef.current) {
+        const r = padRef.current.getBoundingClientRect();
+        padRectRef.current = { left: r.left, top: r.top, width: r.width, height: r.height };
+      }
+    };
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    return () => window.removeEventListener("resize", updateRect);
+  }, []);
 
   // Convert movement vector to a cardinal direction
   const vectorToDir = useCallback((dx: number, dy: number): Direction | null => {
@@ -1068,7 +1085,7 @@ const VirtualJoystick: React.FC<JoystickProps> = ({ onDirection }) => {
       if (!pad || !knob) {
         return;
       }
-      const rect = pad.getBoundingClientRect();
+      const rect = padRectRef.current;
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
       const dx = clientX - cx;
@@ -1141,4 +1158,4 @@ const VirtualJoystick: React.FC<JoystickProps> = ({ onDirection }) => {
   );
 };
 
-export default SnakeGame;
+export default React.memo(SnakeGame);

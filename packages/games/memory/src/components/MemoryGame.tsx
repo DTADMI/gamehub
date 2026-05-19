@@ -466,4 +466,4 @@ export const MemoryGame: React.FC = () => {
   );
 };
 
-export default MemoryGame;
+export default React.memo(MemoryGame);

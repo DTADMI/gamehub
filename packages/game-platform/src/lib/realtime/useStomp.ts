@@ -1,6 +1,6 @@
 "use client";
 
-import { Client, IMessage, StompSubscription } from "@stomp/stompjs";
+import type { IMessage, StompSubscription } from "@stomp/stompjs";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export type StompMessage = {
@@ -27,7 +27,7 @@ export function useStomp(opts?: {
     opts?.url ??
     (typeof window !== "undefined" ? `${window.location.origin.replace(/^http/, "ws")}/ws` : "");
   const [connected, setConnected] = useState(false);
-  const clientRef = useRef<Client | null>(null);
+  const clientRef = useRef<InstanceType<typeof import("@stomp/stompjs").Client> | null>(null);
   const subsRef = useRef<StompSubscription[]>([]);
 
   useEffect(() => {
@@ -47,25 +47,36 @@ export function useStomp(opts?: {
       }
     }
 
-    const client = new Client({
-      brokerURL: url,
-      reconnectDelay: 1000,
-      heartbeatIncoming: 10000,
-      heartbeatOutgoing: 10000,
-      connectHeaders,
-      onConnect: () => setConnected(true),
-      onStompError: () => setConnected(false),
-      onDisconnect: () => setConnected(false),
-    });
-    client.activate();
-    clientRef.current = client;
+    let cancelled = false;
+
+    (async () => {
+      const { Client } = await import("@stomp/stompjs");
+      if (cancelled) {return;}
+
+      const client = new Client({
+        brokerURL: url,
+        reconnectDelay: 1000,
+        heartbeatIncoming: 10000,
+        heartbeatOutgoing: 10000,
+        connectHeaders,
+        onConnect: () => setConnected(true),
+        onStompError: () => setConnected(false),
+        onDisconnect: () => setConnected(false),
+      });
+      client.activate();
+      clientRef.current = client;
+    })();
+
     return () => {
+      cancelled = true;
       try {
         subsRef.current.forEach((s) => s.unsubscribe());
       } catch {}
       subsRef.current = [];
-      client.deactivate();
-      clientRef.current = null;
+      if (clientRef.current) {
+        clientRef.current.deactivate();
+        clientRef.current = null;
+      }
     };
   }, [enabled, url, opts?.headers]);
 

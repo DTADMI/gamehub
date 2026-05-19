@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 
 import { hasRoleAtLeast } from "@/lib/admin/roles";
+import { validateCsrf } from "@/lib/csrf";
 import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { getAdminUser } from "@/lib/supabase/admin";
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
@@ -11,6 +12,10 @@ const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
 
 export async function POST(request: Request) {
+  if (!validateCsrf(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const ip = clientIpFromHeaders(request.headers);
   const throttle = await rateLimit({
     key: `api:admin:uploads:blog-cover:${ip}`,

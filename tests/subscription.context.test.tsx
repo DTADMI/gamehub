@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { SubscriptionProvider, useSubscription } from "@/contexts/SubscriptionContext";
+import { SubscriptionProvider, useSubscription } from "@gamehub/game-platform/contexts/SubscriptionContext";
 
-vi.mock("@/contexts/AuthContext", () => ({
+vi.mock("@gamehub/game-platform/contexts/AuthContext", () => ({
   useAuth: () => ({ user: { uid: "u1", email: "me@example.com" } }),
 }));
 
 const fetchViewerMock = vi.fn();
-vi.mock("@/lib/graphql/queries", () => ({
+vi.mock("@gamehub/game-platform/lib/graphql/queries", () => ({
   fetchViewer: () => fetchViewerMock(),
 }));
 

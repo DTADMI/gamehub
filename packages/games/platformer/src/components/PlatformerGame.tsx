@@ -47,6 +47,10 @@ export const PlatformerGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [won, setWon] = useState(false);
+  const wonRef = useRef(won);
+  useEffect(() => {
+    wonRef.current = won;
+  });
   const keys = useRef<Record<string, boolean>>({});
 
   // player
@@ -93,7 +97,7 @@ export const PlatformerGame: React.FC = () => {
   const step = useCallback(
     (_dt: number) => {
       const p = player.current;
-      if (won) {
+        if (wonRef.current) {
         return;
       }
 
@@ -159,7 +163,7 @@ export const PlatformerGame: React.FC = () => {
         }
       }
     },
-    [won],
+    [],
   );
 
   const render = useCallback(() => {
@@ -208,10 +212,10 @@ export const PlatformerGame: React.FC = () => {
     ctx.fillStyle = "white";
     ctx.font = "14px system-ui, -apple-system";
     ctx.fillText(`Score: ${score}`, 8, 18);
-    if (won) {
+    if (wonRef.current) {
       ctx.fillText("Goal reached! Press R to restart.", 8, 36);
     }
-  }, [score, won]);
+  }, [score]);
 
   useEffect(() => {
     let last = performance.now();
@@ -235,6 +239,7 @@ export const PlatformerGame: React.FC = () => {
           h: 28,
           onGround: false,
         };
+
         setScore(0);
         setWon(false);
       }
@@ -246,7 +251,7 @@ export const PlatformerGame: React.FC = () => {
       }
       window.removeEventListener("keydown", onKey);
     };
-  }, [won, render, step]);
+  }, [render, step]);
 
   return (
     <div className="flex flex-col items-center justify-center p-2">
@@ -255,6 +260,7 @@ export const PlatformerGame: React.FC = () => {
         width={COLS * TILE}
         height={ROWS * TILE}
         className="rounded-lg border border-gray-700 shadow-lg"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
         aria-label="Platformer game"
       />
       <div className="mt-2 text-sm text-gray-300">
@@ -263,3 +269,6 @@ export const PlatformerGame: React.FC = () => {
     </div>
   );
 };
+
+export default React.memo(PlatformerGame);
+

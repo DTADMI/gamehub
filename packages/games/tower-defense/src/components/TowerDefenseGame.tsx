@@ -45,6 +45,7 @@ function dist(ax: number, ay: number, bx: number, by: number) {
 
 export const TowerDefenseGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rectRef = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const [lives, setLives] = useState(20);
   const [money, setMoney] = useState(100);
   const [wave, setWave] = useState(1);
@@ -54,6 +55,30 @@ export const TowerDefenseGame: React.FC = () => {
   const shots = useRef<Shot[]>([]);
   const spawnTimer = useRef(0);
   const raf = useRef<number | null>(null);
+
+  useEffect(() => {
+    const updateRect = () => {
+      const c = canvasRef.current;
+      if (c) {
+        const r = c.getBoundingClientRect();
+        rectRef.current = { left: r.left, top: r.top, width: r.width, height: r.height };
+      }
+    };
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    return () => window.removeEventListener("resize", updateRect);
+  }, []);
+
+  const livesRef = useRef(lives);
+  const moneyRef = useRef(money);
+  const waveRef = useRef(wave);
+  const statusRef = useRef(status);
+  useEffect(() => {
+    livesRef.current = lives;
+    moneyRef.current = money;
+    waveRef.current = wave;
+    statusRef.current = status;
+  });
 
   const startWave = useCallback(() => {
     setStatus("spawning");
@@ -98,6 +123,9 @@ export const TowerDefenseGame: React.FC = () => {
 
   const step = useCallback(
     (dt: number) => {
+      const wave = waveRef.current;
+      const status = statusRef.current;
+      const lives = livesRef.current;
       if (status === "spawning") {
         spawnTimer.current += dt;
         // spawn a creep every 0.8s for N creeps per wave
@@ -227,7 +255,7 @@ export const TowerDefenseGame: React.FC = () => {
         setStatus("lost");
       }
     },
-    [lives, status, wave],
+    [],
   );
 
   const render = useCallback(() => {
@@ -300,10 +328,11 @@ export const TowerDefenseGame: React.FC = () => {
     // HUD
     ctx.fillStyle = "white";
     ctx.font = "14px system-ui, -apple-system";
-    ctx.fillText(`Lives: ${lives}`, 8, 18);
-    ctx.fillText(`Money: $${money}`, 100, 18);
-    ctx.fillText(`Wave: ${wave} (${status})`, 210, 18);
-  }, [lives, money, status, wave]);
+    ctx.fillText(`Lives: ${livesRef.current}`, 8, 18);
+    ctx.fillText(`Money: $${moneyRef.current}`, 100, 18);
+    ctx.fillText(`Wave: ${waveRef.current} (${statusRef.current})`, 210, 18);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Animation loop and handlers
   useEffect(() => {
@@ -321,13 +350,13 @@ export const TowerDefenseGame: React.FC = () => {
       if (!c) {
         return;
       }
-      const rect = c.getBoundingClientRect();
+      const rect = rectRef.current;
       const x = Math.floor((e.clientX - rect.left) / TILE);
       const y = Math.floor((e.clientY - rect.top) / TILE);
       placeTower(x, y);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "n" && (status === "idle" || status === "won")) {
+      if (e.key.toLowerCase() === "n" && (statusRef.current === "idle" || statusRef.current === "won")) {
         startWave();
       }
       if (e.key.toLowerCase() === "r") {
@@ -350,7 +379,8 @@ export const TowerDefenseGame: React.FC = () => {
       cnv?.removeEventListener("click", onClick);
       window.removeEventListener("keydown", onKey);
     };
-  }, [status, wave, lives, money, placeTower, startWave, step, render]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placeTower, startWave]);
 
   return (
     <div className="flex flex-col items-center justify-center p-2">
@@ -359,6 +389,7 @@ export const TowerDefenseGame: React.FC = () => {
         width={COLS * TILE}
         height={ROWS * TILE}
         className="rounded-lg border border-gray-700 shadow-lg"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
         aria-label="Tower Defense prototype"
       />
       <div className="mt-2 text-sm text-gray-300">
@@ -367,3 +398,6 @@ export const TowerDefenseGame: React.FC = () => {
     </div>
   );
 };
+
+export default React.memo(TowerDefenseGame);
+

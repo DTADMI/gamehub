@@ -16,6 +16,7 @@ import {
   SelectValue,
   Switch,
 } from "@gamehub/ui";
+import { ShellWrapper } from "@gamehub/ui/components/shell";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type SeasonRow = {
@@ -197,10 +198,8 @@ export function LeaderboardModerationAdmin() {
           <CardTitle>Seasons</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {loading ? (
-            <p className="text-muted-foreground text-sm">Loading seasons...</p>
-          ) : (
-            seasons.map((season) => (
+          <ShellWrapper isLoading={loading} loadingMessage="Loading seasons...">
+            {seasons.map((season) => (
               <div key={season.id} className="flex flex-wrap items-center justify-between gap-3 rounded-md border p-3">
                 <div className="space-y-1">
                   <p className="font-medium">{season.name}</p>
@@ -232,8 +231,8 @@ export function LeaderboardModerationAdmin() {
                   ) : null}
                 </div>
               </div>
-            ))
-          )}
+            ))}
+          </ShellWrapper>
         </CardContent>
       </Card>
 
@@ -299,9 +298,7 @@ export function LeaderboardModerationAdmin() {
             </div>
           </div>
 
-          {loading ? (
-            <p className="text-muted-foreground text-sm">Loading scores...</p>
-          ) : (
+          <ShellWrapper isLoading={loading} loadingMessage="Loading scores...">
             <div className="space-y-3">
               {scores.map((row) => (
                 <div key={row.id} className="space-y-3 rounded-md border p-3">
@@ -357,7 +354,7 @@ export function LeaderboardModerationAdmin() {
                 <p className="text-muted-foreground text-sm">No scores found for this filter set.</p>
               ) : null}
             </div>
-          )}
+          </ShellWrapper>
         </CardContent>
       </Card>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import type { EmblaOptionsType } from "embla-carousel";
-import useEmblaCarousel from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react"; // TODO: Consider next/dynamic lazy-load to reduce initial JS bundle
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 

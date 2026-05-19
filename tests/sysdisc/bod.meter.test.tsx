@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { HomeostasisMeter } from "@/components/sysdisc/HomeostasisMeter";
+import { HomeostasisMeter } from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";
 
 describe("HomeostasisMeter", () => {
   it("renders aria attributes and clamps value", () => {

@@ -1,8 +1,5 @@
 // lib/firebase.ts
 "use client";
-import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -29,20 +26,29 @@ function validateConfig() {
   }
 }
 
-export function getFirebaseApp() {
+let firebaseApp: any = null;
+
+export async function getFirebaseApp() {
   if (!isBrowser) {
     return undefined;
-  } // never initialize on server
+  }
   validateConfig();
-  return getApps().length ? getApp() : initializeApp(config as any);
+  if (firebaseApp) {return firebaseApp;}
+  const { getApp, getApps, initializeApp } = await import("firebase/app");
+  firebaseApp = getApps().length ? getApp() : initializeApp(config as any);
+  return firebaseApp;
 }
 
-export function getFireStore() {
-  const app = getFirebaseApp();
-  return app ? getFirestore(app) : undefined;
+export async function getFireStore() {
+  const app = await getFirebaseApp();
+  if (!app) {return undefined;}
+  const { getFirestore } = await import("firebase/firestore");
+  return getFirestore(app);
 }
 
-export function getFirebaseAuth() {
-  const app = getFirebaseApp();
-  return app ? getAuth(app) : undefined;
+export async function getFirebaseAuth() {
+  const app = await getFirebaseApp();
+  if (!app) {return undefined;}
+  const { getAuth } = await import("firebase/auth");
+  return getAuth(app);
 }

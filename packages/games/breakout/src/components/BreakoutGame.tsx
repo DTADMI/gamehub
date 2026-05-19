@@ -229,7 +229,7 @@ function desiredSpeedFromModifier(mod: ActiveModifier, level: number, slowFactor
   return clamp(base * factor * modeScale, MIN_BALL_SPEED, MAX_BALL_SPEED);
 }
 
-export default function BreakoutGame() {
+function BreakoutGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   // Input device hint: coarse vs fine pointer
   const isCoarseRef = useRef<boolean>(false);
@@ -598,46 +598,20 @@ export default function BreakoutGame() {
   // Keep refs in sync with state (so RAF loop can read fresh values)
   useEffect(() => {
     paddleRef.current = paddle;
-  }, [paddle]);
-  useEffect(() => {
     ballRef.current = ball;
-  }, [ball]);
-  useEffect(() => {
     bricksRef.current = bricks;
-  }, [bricks]);
-  useEffect(() => {
     fallingRef.current = fallingPowerUps;
-  }, [fallingPowerUps]);
-  useEffect(() => {
     activeRef.current = activeModifier;
-  }, [activeModifier]);
-  useEffect(() => {
     gameStartedRef.current = gameStarted;
-  }, [gameStarted]);
-  useEffect(() => {
     isPausedRef.current = isPaused;
-  }, [isPaused]);
-  useEffect(() => {
     gameOverRef.current = gameOver;
-  }, [gameOver]);
-  useEffect(() => {
     levelRef.current = level;
-  }, [level]);
-  useEffect(() => {
     showLevelCompleteRef.current = showLevelComplete;
-  }, [showLevelComplete]);
-  useEffect(() => {
     awaitingNextRef.current = awaitingNext;
-  }, [awaitingNext]);
-  useEffect(() => {
     debugParticlesRef.current = debugParticles;
-  }, [debugParticles]);
-  useEffect(() => {
     scoreRef.current = score;
-  }, [score]);
-  useEffect(() => {
     livesRef.current = lives;
-  }, [lives]);
+  });
 
   // Animation loop
   useEffect(() => {
@@ -2191,6 +2165,8 @@ export default function BreakoutGame() {
     </GameContainer>
   );
 }
+
+export default React.memo(BreakoutGame);
 
 function PowerUpCard({
   title,

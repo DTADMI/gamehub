@@ -1,5 +1,6 @@
 "use client";
 import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
@@ -7,11 +8,7 @@ const TowerDefenseGame = dynamicImport(
   () => import("@games/tower-defense").then((m) => m.TowerDefenseGame),
   {
     ssr: false,
-    loading: () => (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-xl">Loading game...</div>
-      </div>
-    ),
+    loading: () => <LoadingShell message="Loading game..." />,
   },
 );
 

@@ -3,7 +3,7 @@
 import { Button } from "@gamehub/ui";
 import { Gamepad2, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 import { mailto } from "../lib/env";
 import { ModeToggle } from "./ModeToggle";
@@ -48,7 +48,7 @@ const footerSections = [
   },
 ];
 
-export function Footer({ githubUrl = "", linkedinUrl = "", contactEmail = "" }: FooterProps) {
+export const Footer = memo(function Footer({ githubUrl = "", linkedinUrl = "", contactEmail = "" }: FooterProps) {
   const [email, setEmail] = useState("");
   const [expanded, setExpanded] = useState(false);
   const socialLinks = [
@@ -170,6 +170,6 @@ export function Footer({ githubUrl = "", linkedinUrl = "", contactEmail = "" }: 
       </div>
     </footer>
   );
-}
+});
 
 export default Footer;

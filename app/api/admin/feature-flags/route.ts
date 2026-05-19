@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { canReadAdminControls, canWriteFeatureFlags } from "@/lib/admin/roles";
+import { validateCsrf } from "@/lib/csrf";
 import {
   type FeatureFlags,
   FLAG_DEFINITIONS,
@@ -67,6 +68,10 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  if (!validateCsrf(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const ip = clientIpFromHeaders(request.headers);
   const throttle = await rateLimit({
     key: `api:admin:flags:patch:${ip}`,

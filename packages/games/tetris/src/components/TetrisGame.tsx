@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   BOARD_HEIGHT,
@@ -430,4 +430,4 @@ const TetrisGame = () => {
   );
 };
 
-export default TetrisGame;
+export default React.memo(TetrisGame);

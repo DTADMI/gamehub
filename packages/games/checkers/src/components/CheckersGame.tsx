@@ -289,4 +289,4 @@ export const CheckersGame: React.FC = () => {
   );
 };
 
-export default CheckersGame;
+export default React.memo(CheckersGame);

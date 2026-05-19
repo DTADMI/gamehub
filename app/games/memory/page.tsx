@@ -4,16 +4,13 @@ import LocalLeaderboard, { submitLocalScore } from "@gamehub/game-platform/compo
 import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
 
 const MemoryGame = dynamicImport(() => import("@games/memory").then((m) => m.MemoryGame), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-xl">Loading game...</div>
-    </div>
-  ),
+  loading: () => <LoadingShell message="Loading game..." />,
 });
 
 export default function MemoryGamePage() {

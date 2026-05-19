@@ -47,6 +47,7 @@ function copy(g: Grid): Grid {
 
 export const KnitzyGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rectRef = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const [target, setTarget] = useState<Grid>(() => makeTarget());
   const [work, setWork] = useState<Grid>(() => emptyGrid());
   const [color, setColor] = useState(0);
@@ -54,6 +55,19 @@ export const KnitzyGame: React.FC = () => {
   const [startTs] = useState<number>(() => Date.now());
   const [bestMs, setBestMs] = useState<number | null>(null);
   const [mouseDown, setMouseDown] = useState(false);
+
+  useEffect(() => {
+    const updateRect = () => {
+      const c = canvasRef.current;
+      if (c) {
+        const r = c.getBoundingClientRect();
+        rectRef.current = { left: r.left, top: r.top, width: r.width, height: r.height };
+      }
+    };
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    return () => window.removeEventListener("resize", updateRect);
+  }, []);
 
   useEffect(() => {
     try {
@@ -181,7 +195,7 @@ export const KnitzyGame: React.FC = () => {
     if (!c) {
       return;
     }
-    const rect = c.getBoundingClientRect();
+    const rect = rectRef.current;
     const boardPx = SIZE * CELL;
     const gap = 20;
     const leftX = gap;
@@ -251,6 +265,7 @@ export const KnitzyGame: React.FC = () => {
         onMouseLeave={onMouseLeave}
         data-testid="knitzy-canvas"
         className="rounded-lg border border-gray-700 shadow-lg"
+        style={{ willChange: "transform", transform: "translateZ(0)" }}
         width={SIZE * CELL * 2 + 60}
         height={SIZE * CELL + 120}
         aria-label={`Knitzy. Progress ${pct} percent.`}
@@ -280,4 +295,4 @@ export const KnitzyGame: React.FC = () => {
   );
 };
 
-export default KnitzyGame;
+export default React.memo(KnitzyGame);

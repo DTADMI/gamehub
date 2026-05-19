@@ -1,15 +1,12 @@
 "use client";
 import { enableGameKeyCapture, GameHUD } from "@gamehub/game-platform";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
 const ChessGame = dynamicImport(() => import("@games/chess").then((m) => m.ChessGame), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-xl">Loading game...</div>
-    </div>
-  ),
+  loading: () => <LoadingShell message="Loading game..." />,
 });
 
 export default function ChessPage() {

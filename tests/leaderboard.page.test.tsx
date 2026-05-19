@@ -20,11 +20,11 @@ vi.mock("next/navigation", async () => {
   };
 });
 
-vi.mock("@/contexts/SubscriptionContext", () => ({
+vi.mock("@gamehub/game-platform/contexts/SubscriptionContext", () => ({
   useSubscription: () => ({ entitlements: { advancedLeaderboards: false } }),
 }));
 
-vi.mock("@/lib/graphql/queries", () => ({
+vi.mock("@gamehub/game-platform/lib/graphql/queries", () => ({
   fetchLeaderboardPaged: vi.fn().mockResolvedValue({
     leaderboard: {
       edges: [
@@ -82,7 +82,7 @@ describe("LeaderboardPage", () => {
   });
 
   it("changes game type via selector and refreshes", async () => {
-    const queries = await import("@/lib/graphql/queries");
+    const queries = await import("@gamehub/game-platform/lib/graphql/queries");
     const spy = vi.spyOn(queries, "fetchLeaderboardPaged");
     await act(async () => {
       render(<LeaderboardPage />);

@@ -3,16 +3,13 @@ import { GameShell } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect } from "react";
 
 const BubblePopGame = dynamicImport(() => import("@games/bubble-pop").then((m) => m.BubblePopGame), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-xl">Loading game...</div>
-    </div>
-  ),
+  loading: () => <LoadingShell message="Loading game..." />,
 });
 
 export default function BubblePopPage() {

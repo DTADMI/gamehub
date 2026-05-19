@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@gamehub/ui";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import { Crown, LogIn, Trophy } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -172,10 +173,7 @@ export default function LeaderboardPage() {
   if (isLoading) {
     return (
       <div className="container mx-auto space-y-6 px-4 py-10">
-        <div className="animate-pulse space-y-3">
-          <div className="bg-muted h-12 w-1/3 rounded" />
-          <div className="bg-muted h-64 rounded" />
-        </div>
+        <LoadingShell variant="shimmer" message="Loading leaderboard..." />
       </div>
     );
   }
