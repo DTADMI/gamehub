@@ -7,6 +7,9 @@ pnpm lint
 echo "[pre-commit] Running type-check..."
 pnpm type-check
 
+echo "[pre-commit] Running Supabase security checks..."
+pnpm check:supabase-security
+
 echo "[pre-commit] Running unit tests..."
 pnpm test:unit
 
