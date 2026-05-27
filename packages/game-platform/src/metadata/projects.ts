@@ -34,8 +34,8 @@ export const projects: ProjectManifest = {
     repoVisibility: "public",
     deployed: false,
     featured: true,
-    enabled: true,
-    visible: true,
+    enabled: false,
+    visible: false,
     upcoming: true,
   },
   "quest-hunt": {
@@ -50,8 +50,8 @@ export const projects: ProjectManifest = {
     repoVisibility: "private",
     deployed: true,
     featured: true,
-    enabled: true,
-    visible: true,
+    enabled: false,
+    visible: false,
     upcoming: false,
   },
   "libra-keeper": {
@@ -65,8 +65,8 @@ export const projects: ProjectManifest = {
     repoVisibility: "public",
     deployed: false,
     featured: false,
-    enabled: true,
-    visible: true,
+    enabled: false,
+    visible: false,
     upcoming: true,
   },
   "velvet-galaxy": {
@@ -80,8 +80,8 @@ export const projects: ProjectManifest = {
     repoVisibility: "public",
     deployed: false,
     featured: false,
-    enabled: true,
-    visible: true,
+    enabled: false,
+    visible: false,
     upcoming: true,
   },
 };

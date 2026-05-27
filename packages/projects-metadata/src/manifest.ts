@@ -80,7 +80,7 @@ export const projectsManifest: ProjectMetadata[] = [
     backgroundImage: "/images/projects/libra-keeper-bg.png",
     icon: "/images/projects/libra-keeper-icon.svg",
 
-    enabled: true,
+    enabled: false,
     featured: true,
     upcoming: false,
     inPreview: false,
@@ -134,7 +134,7 @@ export const projectsManifest: ProjectMetadata[] = [
     backgroundImage: "/images/projects/quest-hunt-bg.png",
     icon: "/images/projects/quest-hunt-icon.svg",
 
-    enabled: true,
+    enabled: false,
     featured: true,
     upcoming: false,
     inPreview: true,
@@ -189,7 +189,7 @@ export const projectsManifest: ProjectMetadata[] = [
     backgroundImage: "/images/projects/story-forge-bg.png",
     icon: "/images/projects/story-forge-icon.svg",
 
-    enabled: true,
+    enabled: false,
     featured: false,
     upcoming: false,
     inPreview: true,
@@ -242,7 +242,7 @@ export const projectsManifest: ProjectMetadata[] = [
     backgroundImage: "/images/projects/collectometal-bg.svg",
     icon: "/images/projects/collectometal-icon.svg",
 
-    enabled: true,
+    enabled: false,
     featured: false,
     upcoming: true,
     inPreview: true,
