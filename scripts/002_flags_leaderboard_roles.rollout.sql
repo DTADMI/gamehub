@@ -175,7 +175,8 @@ drop policy if exists "Authenticated read feature flags" on public.feature_flags
 create policy "Authenticated read feature flags"
 on public.feature_flags
 for select
-using (auth.role() = 'authenticated');
+to authenticated
+using (true);
 
 drop policy if exists "Admins manage feature flags" on public.feature_flags;
 create policy "Admins manage feature flags"
@@ -217,7 +218,8 @@ drop policy if exists "Authenticated read seasons" on public.leaderboard_seasons
 create policy "Authenticated read seasons"
 on public.leaderboard_seasons
 for select
-using (auth.role() = 'authenticated');
+to authenticated
+using (true);
 
 drop policy if exists "Owners manage seasons" on public.leaderboard_seasons;
 create policy "Owners manage seasons"
@@ -236,7 +238,8 @@ drop policy if exists "Authenticated read scores" on public.leaderboard_scores;
 create policy "Authenticated read scores"
 on public.leaderboard_scores
 for select
-using (auth.role() = 'authenticated');
+to authenticated
+using (true);
 
 drop policy if exists "Users insert own scores" on public.leaderboard_scores;
 create policy "Users insert own scores"
