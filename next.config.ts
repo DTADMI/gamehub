@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
   experimental: {
     // Allow importing files from outside the frontend/ directory using TS path aliases
     externalDir: true,
+    staleTimes: {
+      dynamic: 30,
+      static: 300,
+    },
+    optimizePackageImports: [
+      "lucide-react",
+      "date-fns",
+    ],
   },
 
   // Enable React Strict Mode

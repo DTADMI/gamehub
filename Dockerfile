@@ -1,6 +1,6 @@
 # Base stage with pnpm
-FROM node:20.20.0-alpine AS base
-RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
+FROM node:22.22.3-alpine AS base
+RUN corepack enable && corepack prepare pnpm@10.33.4 --activate
 WORKDIR /app
 
 # Dependencies stage
@@ -28,7 +28,7 @@ ENV NEXT_STANDALONE=true
 RUN pnpm build
 
 # Production stage
-FROM node:20.20.0-alpine AS production
+FROM node:22.22.3-alpine AS production
 RUN apk add --no-cache dumb-init
 WORKDIR /app
 ENV NODE_ENV=production
