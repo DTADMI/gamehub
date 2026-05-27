@@ -11,8 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "24"
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  NODE_VERSION: "22.22.3"
   NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
   NEXT_PUBLIC_SUPABASE_ANON_KEY: "public-anon-key-for-ci"
   NEXT_PUBLIC_DISABLE_PROVIDERS: "true"
@@ -32,7 +31,7 @@ jobs:
       - name: Enable Corepack
         run: |
           corepack enable
-          corepack prepare pnpm@10.26.0 --activate
+          corepack prepare pnpm@10.33.4 --activate
 
       - name: Get pnpm store directory
         shell: bash
