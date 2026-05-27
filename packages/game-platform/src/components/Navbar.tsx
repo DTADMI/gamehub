@@ -13,7 +13,6 @@ import { ModeToggle } from "./ModeToggle";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "Games", href: "/games" },
-  { name: "Projects", href: "/projects" },
   { name: "Resume", href: "/resume" },
   { name: "Blog", href: "/blog" },
   { name: "Explore", href: "/explore" },

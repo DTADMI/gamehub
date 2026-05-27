@@ -10,18 +10,6 @@ export const siteCopy = {
       viewResume: "View Resume",
       readBlog: "Read Blog",
       featuredGames: "Featured Games",
-      featuredProjects: "Featured Projects",
-    },
-    projects: {
-      title: "Projects",
-      subtitle:
-        "Product-focused builds with clear technical depth, shipping discipline, and modern UX. Every project links directly to its GitHub repository.",
-      featured: "Featured",
-      highlighted: "highlighted",
-      allProjects: "All Projects",
-      total: "total",
-      viewOnGithub: "View on GitHub",
-      viewRepository: "View repository",
     },
     blog: {
       title: "Blog",
@@ -64,18 +52,6 @@ export const siteCopy = {
       viewResume: "Voir CV",
       readBlog: "Lire le Blog",
       featuredGames: "Jeux en Vedette",
-      featuredProjects: "Projets en Vedette",
-    },
-    projects: {
-      title: "Projets",
-      subtitle:
-        "Des réalisations orientées produit avec une vraie profondeur technique, une exécution solide et une UX moderne. Chaque projet renvoie vers son dépôt GitHub.",
-      featured: "En Vedette",
-      highlighted: "mis en avant",
-      allProjects: "Tous les Projets",
-      total: "au total",
-      viewOnGithub: "Voir sur GitHub",
-      viewRepository: "Voir le dépôt",
     },
     blog: {
       title: "Blog",

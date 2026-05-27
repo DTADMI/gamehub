@@ -15,7 +15,6 @@ const copy = {
   en: {
     home: "Home",
     games: "Games",
-    projects: "Projects",
     leaderboard: "Leaderboard",
     blog: "Blog",
     admin: "Admin",
@@ -25,7 +24,6 @@ const copy = {
   fr: {
     home: "Accueil",
     games: "Jeux",
-    projects: "Projets",
     leaderboard: "Classement",
     blog: "Blog",
     admin: "Admin",
@@ -53,9 +51,6 @@ export const Header = memo(function Header() {
             </Link>
             <Link href="/games" className="hover:text-foreground">
               {t.games}
-            </Link>
-            <Link href="/projects" className="hover:text-foreground">
-              {t.projects}
             </Link>
             <Link href="/leaderboard" className="hover:text-foreground">
               {t.leaderboard}
