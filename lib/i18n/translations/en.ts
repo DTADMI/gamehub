@@ -1,0 +1,42 @@
+import type { Translations } from "./types";
+
+const en: Translations = {
+  common: {
+    save: "Save",
+    cancel: "Cancel",
+    search: "Search",
+    loading: "Loading...",
+    error: "Error",
+    signIn: "Sign In",
+    signOut: "Sign Out",
+    play: "Play",
+    leaderboard: "Leaderboard",
+    admin: "Admin",
+    settings: "Settings",
+    games: "Games",
+    blog: "Blog",
+    explore: "Explore",
+    home: "Home",
+    profile: "Profile",
+    notifications: "Notifications",
+    submit: "Submit",
+    confirm: "Confirm",
+    close: "Close",
+    back: "Back",
+    next: "Next",
+    previous: "Previous",
+    download: "Download",
+  },
+  nav: {
+    home: "Home",
+    explore: "Explore",
+    games: "Games",
+    leaderboard: "Leaderboard",
+    blog: "Blog",
+    admin: "Admin",
+    login: "Login",
+    signup: "Sign Up",
+  },
+};
+
+export default en;
