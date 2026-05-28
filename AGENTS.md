@@ -130,8 +130,8 @@ Use the repo skills when the task matches:
 
 - Active Codex lifecycle hooks live in `.codex/hooks.json`.
 - Repo Git hooks live in `.githooks/` and are installed by `node scripts/install-git-hooks.mjs` (or equivalent).
-- The pre-commit hook runs `pnpm lint`, `pnpm type-check`, and `pnpm test:unit`.
-- Use `pnpm ci:local` for the full local CI pipeline before pushing significant changes.
+- The pre-commit hook runs `pnpm lint`, `pnpm type-check`, `pnpm test:unit`, `pnpm check:supabase-security`, encoding checks, and `pnpm build`.
+- Use `pnpm run-all-checks` for the full local CI pipeline. Use `pnpm ci:local` for the extended pipeline including E2E smoke tests.
 
 ## MCP And Plugin Boundaries
 
