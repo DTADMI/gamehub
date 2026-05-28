@@ -30,6 +30,21 @@ export type FeatureFlags = {
   };
 };
 
+export type FlagType = "boolean" | "percentage" | "user_list" | "subscription_tier";
+
+export interface FeatureFlag {
+  id: string;
+  path: string;
+  label: string;
+  description: string;
+  type: FlagType;
+  enabled: boolean;
+  percentage: number;
+  userIds: string[];
+  subscriptionTiers: string[];
+  sensitive: boolean;
+}
+
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
   sdBodEnabled: true,
   sdBodBreath: true,
@@ -60,146 +75,233 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
   },
 };
 
-export type FlagDefinition = {
-  path: string;
-  label: string;
-  description: string;
-  type: "boolean" | "string";
-  sensitive: boolean;
-};
-
-export const FLAG_DEFINITIONS: FlagDefinition[] = [
+export const FLAG_DEFINITIONS: FeatureFlag[] = [
   {
+    id: "sdBodEnabled",
     path: "sdBodEnabled",
     label: "Systems Discovery bundle",
     description: "Master switch for Systems Discovery body pack visibility.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "sdBodBreath",
     path: "sdBodBreath",
     label: "Body Systems: Breath",
     description: "Enable Breath sub-pack content.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "sdBodFuel",
     path: "sdBodFuel",
     label: "Body Systems: Fuel",
     description: "Enable Fuel sub-pack content.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "sdBodMove",
     path: "sdBodMove",
     label: "Body Systems: Move",
     description: "Enable Move sub-pack content.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "sdBodSignal",
     path: "sdBodSignal",
     label: "Body Systems: Signal",
     description: "Enable Signal sub-pack content.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "sdBodGrow",
     path: "sdBodGrow",
     label: "Body Systems: Grow",
     description: "Enable Grow sub-pack content.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "ui.allowPlayUpcomingLocal",
     path: "ui.allowPlayUpcomingLocal",
     label: "Allow local play for upcoming games",
     description: "Allows launch of upcoming games in non-production environments.",
     type: "boolean",
+    enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: true,
   },
   {
+    id: "ui.enhancedGameCards",
     path: "ui.enhancedGameCards",
     label: "Enhanced game cards",
     description: "Enable richer card visuals and interactions.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "ui.enhancedCarousel",
     path: "ui.enhancedCarousel",
     label: "Enhanced carousel",
     description: "Enable advanced carousel controls and interactions.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "ui.shimmerSkeletons",
     path: "ui.shimmerSkeletons",
     label: "Shimmer loading states",
     description: "Enable shimmer skeleton loading placeholders.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "ui.animatedHero",
     path: "ui.animatedHero",
     label: "Hero animation",
     description: "Enable homepage hero transition animations.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "ui.postGameAuthCTA",
     path: "ui.postGameAuthCTA",
     label: "Post-game auth CTA",
     description: "Show sign-in prompt after game completion.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "auth.leaderboardGuestTeaser",
     path: "auth.leaderboardGuestTeaser",
     label: "Leaderboard guest teaser",
     description: "Show teaser + auth CTA for guests on leaderboard.",
     type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "auth.postGameCTAFrequency",
     path: "auth.postGameCTAFrequency",
     label: "Post-game CTA frequency",
     description: "Controls how often the post-game auth CTA appears.",
-    type: "string",
+    type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "auth.requireEmailVerification",
     path: "auth.requireEmailVerification",
     label: "Require email verification",
     description: "Require verified emails before full feature access.",
     type: "boolean",
+    enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: true,
   },
   {
+    id: "auth.magicLinkLogin",
     path: "auth.magicLinkLogin",
     label: "Magic link login",
     description: "Enable passwordless login option.",
     type: "boolean",
+    enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: true,
   },
   {
+    id: "games.socialShare",
     path: "games.socialShare",
     label: "Social sharing",
     description: "Enable social sharing controls in supported games.",
     type: "boolean",
+    enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: false,
   },
   {
+    id: "experimental.realtimeMultiplayer",
     path: "experimental.realtimeMultiplayer",
     label: "Realtime multiplayer",
     description: "Enable realtime multiplayer experiments.",
     type: "boolean",
+    enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: true,
   },
   {
+    id: "experimental.threeJsGames",
     path: "experimental.threeJsGames",
     label: "3D games mode",
     description: "Enable Three.js game experiments.",
     type: "boolean",
+    enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
     sensitive: true,
   },
 ];
@@ -253,10 +355,82 @@ export function setByPath(obj: Record<string, any>, path: string, value: unknown
   current[keys[keys.length - 1]] = value;
 }
 
+export function findFlagDefinition(path: string): FeatureFlag | undefined {
+  return FLAG_DEFINITIONS.find((def) => def.path === path);
+}
+
 export function flattenFlags(flags: FeatureFlags) {
   return FLAG_DEFINITIONS.map((def) => ({
     ...def,
     sensitive: def.sensitive || isSensitiveFlagPath(def.path),
     value: getByPath(flags, def.path),
   }));
+}
+
+export function evaluateFlag(
+  def: FeatureFlag,
+  flags: FeatureFlags,
+  userId?: string,
+  userTier?: string,
+): boolean {
+  const runtimeValue = getByPath(flags, def.path);
+  const enabled = typeof runtimeValue === "boolean" ? runtimeValue : def.enabled;
+
+  if (!enabled) {
+    return false;
+  }
+
+  switch (def.type) {
+    case "boolean":
+      return true;
+    case "percentage": {
+      const pct =
+        typeof runtimeValue === "number" ? runtimeValue : def.percentage;
+      return Math.random() * 100 < pct;
+    }
+    case "user_list": {
+      if (!userId) return false;
+      const ids =
+        Array.isArray(runtimeValue) && runtimeValue.length > 0
+          ? (runtimeValue as string[])
+          : def.userIds;
+      return ids.includes(userId);
+    }
+    case "subscription_tier": {
+      if (!userTier) return false;
+      const tiers =
+        Array.isArray(runtimeValue) && runtimeValue.length > 0
+          ? (runtimeValue as string[])
+          : def.subscriptionTiers;
+      return tiers.includes(userTier);
+    }
+    default:
+      return false;
+  }
+}
+
+export function isFeatureEnabled(
+  path: string,
+  userId?: string,
+  userTier?: string,
+): boolean {
+  const def = findFlagDefinition(path);
+  if (!def) return false;
+
+  const flags = DEFAULT_FEATURE_FLAGS;
+  return evaluateFlag(def, flags, userId, userTier);
+}
+
+export function getAllFeatureFlags(): FeatureFlag[] {
+  return [...FLAG_DEFINITIONS];
+}
+
+let flagCacheVersion = 0;
+
+export function invalidateFlagCache(): void {
+  flagCacheVersion += 1;
+}
+
+export function getFlagCacheVersion(): number {
+  return flagCacheVersion;
 }

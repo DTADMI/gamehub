@@ -4,8 +4,11 @@ import { canReadAdminControls, canWriteFeatureFlags } from "@/lib/admin/roles";
 import { validateCsrf } from "@/lib/csrf";
 import {
   type FeatureFlags,
+  type FeatureFlag,
   FLAG_DEFINITIONS,
+  findFlagDefinition,
   flattenFlags,
+  getByPath,
   mergeFeatureFlags,
   setByPath,
 } from "@/lib/feature-flags";
@@ -94,7 +97,14 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = (await request.json()) as { path?: string; value?: unknown };
+  const body = (await request.json()) as {
+    path?: string;
+    value?: unknown;
+    enabled?: boolean;
+    percentage?: number;
+    userIds?: string[];
+    subscriptionTiers?: string[];
+  };
   const path = body.path?.trim();
   if (!path) {
     return NextResponse.json({ error: "Missing flag path" }, { status: 400 });
@@ -110,7 +120,7 @@ export async function PATCH(request: Request) {
     );
   }
 
-  const value = body.value;
+  const def = findFlagDefinition(path);
   const userAgent = request.headers.get("user-agent") ?? "";
   let result: { persisted: boolean; fallback?: "redis" } = { persisted: false };
   let flags: FeatureFlags;
@@ -119,13 +129,43 @@ export async function PATCH(request: Request) {
     if (!e2eFlagsCache) {
       e2eFlagsCache = cloneFlags(await readPersistedFlags());
     }
-    setByPath(e2eFlagsCache as unknown as Record<string, unknown>, path, value);
+    if (def && def.type === "boolean") {
+      const value =
+        typeof body.enabled === "boolean"
+          ? body.enabled
+          : typeof body.value === "boolean"
+            ? body.value
+            : !getByPath(e2eFlagsCache as unknown as Record<string, unknown>, path);
+      setByPath(e2eFlagsCache as unknown as Record<string, unknown>, path, value);
+    } else {
+      setByPath(e2eFlagsCache as unknown as Record<string, unknown>, path, body.value);
+    }
     e2eFlagsCache = cloneFlags(e2eFlagsCache);
     flags = cloneFlags(e2eFlagsCache);
   } else {
+    let persistedValue: unknown;
+    if (def && def.type === "boolean") {
+      persistedValue =
+        typeof body.enabled === "boolean"
+          ? body.enabled
+          : typeof body.value === "boolean"
+            ? body.value
+            : false;
+    } else if (def && def.type === "percentage") {
+      persistedValue = typeof body.percentage === "number" ? body.percentage : body.value;
+    } else if (def && def.type === "user_list") {
+      persistedValue = Array.isArray(body.userIds) ? body.userIds : body.value;
+    } else if (def && def.type === "subscription_tier") {
+      persistedValue = Array.isArray(body.subscriptionTiers)
+        ? body.subscriptionTiers
+        : body.value;
+    } else {
+      persistedValue = body.value;
+    }
+
     result = await upsertFlag({
       path,
-      value,
+      value: persistedValue,
       actorUserId,
       actorRole: effectiveRole,
       requestIp: ip,

@@ -8,6 +8,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  Input,
   Label,
   Select,
   SelectContent,
@@ -20,19 +21,14 @@ import { ShellWrapper } from "@gamehub/ui/components/shell";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { type AdminRole, adminRoleMatrix, canWriteFeatureFlags } from "@/lib/admin/roles";
-import { type FeatureFlags, flattenFlags } from "@/lib/feature-flags";
+import { type FeatureFlags, type FlagType, flattenFlags } from "@/lib/feature-flags";
+
+type DefinitionRow = ReturnType<typeof flattenFlags>[number];
 
 type AdminFlagsResponse = {
   flags: FeatureFlags;
   role: AdminRole;
-  definitions: Array<{
-    path: string;
-    label: string;
-    description: string;
-    type: "boolean" | "string";
-    sensitive: boolean;
-    value: unknown;
-  }>;
+  definitions: DefinitionRow[];
 };
 
 type AuditEntry = {
@@ -51,6 +47,26 @@ const stringOptions = {
   "auth.postGameCTAFrequency": ["always", "occasional", "rare", "never"],
 } satisfies Record<string, string[]>;
 
+function hasStringOptions(path: string): path is keyof typeof stringOptions {
+  return path in stringOptions;
+}
+
+function FlagTypeBadge({ type }: { type: FlagType }) {
+  const variant =
+    type === "percentage"
+      ? ("default" as const)
+      : type === "user_list"
+        ? ("secondary" as const)
+        : type === "subscription_tier"
+          ? ("outline" as const)
+          : ("secondary" as const);
+  return (
+    <Badge variant={variant} className="ml-1 text-[10px]">
+      {type}
+    </Badge>
+  );
+}
+
 export default function AdminFlagsPage() {
   const { setFlagPath, refreshFromServer } = useFlags();
   const [loading, setLoading] = useState(true);
@@ -58,7 +74,7 @@ export default function AdminFlagsPage() {
   const [error, setError] = useState<string | null>(null);
   const [role, setRole] = useState<AdminRole>("analyst");
   const [flags, setFlags] = useState<FeatureFlags | null>(null);
-  const [definitions, setDefinitions] = useState<AdminFlagsResponse["definitions"]>([]);
+  const [definitions, setDefinitions] = useState<DefinitionRow[]>([]);
   const [audit, setAudit] = useState<AuditEntry[]>([]);
 
   const e2eHeaders = useMemo(() => {
@@ -109,14 +125,8 @@ export default function AdminFlagsPage() {
   }, [load]);
 
   const matrix = useMemo(() => adminRoleMatrix(), []);
-  const runtimeRows = useMemo(() => {
-    if (!flags) {
-      return [];
-    }
-    return flattenFlags(flags);
-  }, [flags]);
 
-  const updateFlag = async (path: string, value: unknown) => {
+  const updateFlag = async (path: string, body: Record<string, unknown>) => {
     setSavingPath(path);
     setError(null);
 
@@ -127,7 +137,7 @@ export default function AdminFlagsPage() {
           "Content-Type": "application/json",
           ...(e2eHeaders ?? {}),
         },
-        body: JSON.stringify({ path, value }),
+        body: JSON.stringify({ path, ...body }),
       });
 
       if (!response.ok) {
@@ -135,13 +145,159 @@ export default function AdminFlagsPage() {
         throw new Error(payload.error ?? `Failed to update ${path}`);
       }
 
-      setFlagPath(path, value);
+      if (typeof body.value !== "undefined") {
+        setFlagPath(path, body.value);
+      }
       await refreshFromServer();
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Update failed");
     } finally {
       setSavingPath(null);
+    }
+  };
+
+  const renderFlagControl = (row: DefinitionRow) => {
+    const canWrite = canWriteFeatureFlags(role, row.path);
+    const isSaving = savingPath === row.path;
+    const disabled = !canWrite || isSaving;
+
+    if (hasStringOptions(row.path)) {
+      return (
+        <div className="w-44">
+          <Label htmlFor={`flag-${row.path}`} className="sr-only">
+            {row.label}
+          </Label>
+          <Select
+            value={String(row.value)}
+            disabled={disabled}
+            onValueChange={(nextValue) =>
+              void updateFlag(row.path, { value: nextValue })
+            }
+          >
+            <SelectTrigger id={`flag-${row.path}`}>
+              <SelectValue placeholder="Select value" />
+            </SelectTrigger>
+            <SelectContent>
+              {stringOptions[row.path].map((option: string) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      );
+    }
+
+    switch (row.type) {
+      case "boolean":
+        return (
+          <Switch
+            checked={Boolean(row.value)}
+            disabled={disabled}
+            onCheckedChange={(nextValue) =>
+              void updateFlag(row.path, { value: Boolean(nextValue), enabled: Boolean(nextValue) })
+            }
+            aria-label={row.label}
+          />
+        );
+
+      case "percentage":
+        return (
+          <div className="flex items-center gap-2">
+            <Switch
+              checked={Boolean(row.value) || row.enabled}
+              disabled={disabled}
+              onCheckedChange={(nextValue) =>
+                void updateFlag(row.path, { value: nextValue ? row.percentage || 0 : 0, enabled: nextValue })
+              }
+              aria-label={`${row.label} enabled`}
+            />
+            <Input
+              type="number"
+              min={0}
+              max={100}
+              className="w-20"
+              value={typeof row.value === "number" ? row.value : row.percentage}
+              disabled={disabled}
+              onChange={(e) => {
+                const pct = Math.max(0, Math.min(100, Number(e.target.value) || 0));
+                void updateFlag(row.path, { value: pct, percentage: pct });
+              }}
+            />
+            <span className="text-muted-foreground text-xs">%</span>
+          </div>
+        );
+
+      case "user_list":
+        return (
+          <div className="flex flex-col gap-2">
+            <Switch
+              checked={Boolean(row.value) || row.enabled}
+              disabled={disabled}
+              onCheckedChange={(nextValue) =>
+                void updateFlag(row.path, { value: nextValue ? row.userIds : [], enabled: nextValue })
+              }
+              aria-label={`${row.label} enabled`}
+            />
+            <Input
+              className="w-52"
+              placeholder="user1, user2, ..."
+              value={
+                Array.isArray(row.value)
+                  ? (row.value as string[]).join(", ")
+                  : row.userIds.join(", ")
+              }
+              disabled={disabled}
+              onChange={(e) => {
+                const ids = e.target.value
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+                void updateFlag(row.path, { value: ids, userIds: ids });
+              }}
+            />
+          </div>
+        );
+
+      case "subscription_tier":
+        return (
+          <div className="flex flex-col gap-2">
+            <Switch
+              checked={Boolean(row.value) || row.enabled}
+              disabled={disabled}
+              onCheckedChange={(nextValue) =>
+                void updateFlag(row.path, { value: nextValue ? row.subscriptionTiers : [], enabled: nextValue })
+              }
+              aria-label={`${row.label} enabled`}
+            />
+            <Input
+              className="w-52"
+              placeholder="free, premium, ..."
+              value={
+                Array.isArray(row.value)
+                  ? (row.value as string[]).join(", ")
+                  : row.subscriptionTiers.join(", ")
+              }
+              disabled={disabled}
+              onChange={(e) => {
+                const tiers = e.target.value
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+                void updateFlag(row.path, { value: tiers, subscriptionTiers: tiers });
+              }}
+            />
+          </div>
+        );
+
+      default:
+        return (
+          <code className="text-muted-foreground text-xs">
+            {JSON.stringify(row.value)}
+          </code>
+        );
     }
   };
 
@@ -174,52 +330,28 @@ export default function AdminFlagsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <ShellWrapper isLoading={loading} loadingMessage="Loading flags...">
-            {runtimeRows.map((row) => {
+            {definitions.map((row) => {
               const canWrite = canWriteFeatureFlags(role, row.path);
-              const isSaving = savingPath === row.path;
               return (
                 <div key={row.path} className="flex items-start justify-between gap-4 rounded-md border p-3">
-                  <div className="space-y-1">
-                    <p className="font-medium">{row.label}</p>
+                  <div className="space-y-1 min-w-0 flex-1">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      <p className="font-medium">{row.label}</p>
+                      <FlagTypeBadge type={row.type} />
+                    </div>
                     <p className="text-muted-foreground text-xs">{row.description}</p>
                     <div className="flex items-center gap-2">
                       <code className="bg-muted rounded px-1.5 py-0.5 text-[11px]">{row.path}</code>
                       {row.sensitive ? <Badge variant="destructive">Sensitive</Badge> : null}
+                      {!canWrite ? (
+                        <Badge variant="outline" className="text-[10px]">
+                          Read-only
+                        </Badge>
+                      ) : null}
                     </div>
                   </div>
 
-                  {row.type === "boolean" ? (
-                    <Switch
-                      checked={Boolean(row.value)}
-                      disabled={!canWrite || isSaving}
-                      onCheckedChange={(nextValue) => void updateFlag(row.path, Boolean(nextValue))}
-                      aria-label={row.label}
-                    />
-                  ) : (
-                    <div className="w-44">
-                      <Label htmlFor={`flag-${row.path}`} className="sr-only">
-                        {row.label}
-                      </Label>
-                      <Select
-                        value={String(row.value)}
-                        disabled={!canWrite || isSaving}
-                        onValueChange={(nextValue) => void updateFlag(row.path, nextValue)}
-                      >
-                        <SelectTrigger id={`flag-${row.path}`}>
-                          <SelectValue placeholder="Select value" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {((row.path in stringOptions
-                            ? stringOptions[row.path as keyof typeof stringOptions]
-                            : [String(row.value)]) as string[]).map((option: string) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  )}
+                  {renderFlagControl(row)}
                 </div>
               );
             })}
