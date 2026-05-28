@@ -1,13 +1,21 @@
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
   <defs>
-    <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-      <stop offset='0%' stop-color='#0f172a'/>
-      <stop offset='100%' stop-color='#1d4ed8'/>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#422006"/>
+      <stop offset="100%" stop-color="#713f12"/>
     </linearGradient>
   </defs>
-  <rect width='1200' height='675' fill='url(#g)'/>
-  <circle cx='1020' cy='120' r='180' fill='rgba(34,197,94,0.25)'/>
-  <circle cx='180' cy='560' r='220' fill='rgba(249,115,22,0.22)'/>
-  <text x='70' y='360' fill='#ffffff' font-family='Segoe UI, Arial, sans-serif' font-size='72' font-weight='700'>TOYMAKER ESCAPE</text>
-  <text x='72' y='420' fill='#cbd5e1' font-family='Segoe UI, Arial, sans-serif' font-size='32'>GameHub Playable Card Art</text>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <rect x="380" y="140" width="120" height="160" rx="8" fill="#92400e" stroke="#d97706" stroke-width="3"/>
+  <rect x="395" y="155" width="90" height="60" rx="4" fill="#fbbf24" opacity="0.3"/>
+  <circle cx="440" cy="240" r="20" fill="#fef3c7" opacity="0.8"/>
+  <circle cx="440" cy="240" r="6" fill="#000" opacity="0.4"/>
+  <circle cx="530" cy="200" r="40" fill="#b45309" stroke="#d97706" stroke-width="2"/>
+  <circle cx="530" cy="200" r="10" fill="#fef3c7"/>
+  <rect x="330" y="310" width="60" height="80" rx="6" fill="#92400e" stroke="#d97706" stroke-width="2"/>
+  <rect x="560" y="300" width="50" height="90" rx="6" fill="#92400e" stroke="#d97706" stroke-width="2"/>
+  <circle cx="360" cy="350" r="8" fill="#f87171"/>
+  <circle cx="585" cy="345" r="8" fill="#60a5fa"/>
+  <text x="70" y="520" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="64" font-weight="700">TOYMAKER</text>
+  <text x="72" y="560" fill="#fcd34d" font-family="Segoe UI, Arial, sans-serif" font-size="28">Puzzle escape</text>
 </svg>
