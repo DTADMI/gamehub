@@ -56,7 +56,7 @@ describe("admin feature flags route", () => {
     const response = await PATCH(
       new Request("http://localhost/api/admin/feature-flags", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Origin: "http://localhost", host: "localhost" },
         body: JSON.stringify({ path: "ui.enhancedCarousel", value: false }),
       }),
     );

@@ -121,7 +121,7 @@ describe("admin leaderboard moderation routes", () => {
     const response = await PATCH(
       new Request("http://localhost/api/admin/leaderboard/scores", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Origin: "http://localhost", host: "localhost" },
         body: JSON.stringify({ scoreId: "score-1", status: "removed", reason: "suspicious" }),
       }),
     );
