@@ -288,7 +288,7 @@ export const games: GameManifest = {
     image: "/images/games/block-blast-card.svg",
     upcoming: true,
     enabled: false,
-    visible: true,
+    visible: false,
     getComponent: () => Promise.resolve(null),
   },
   platformer: {
