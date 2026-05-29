@@ -6,8 +6,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Snake Game",
-  description: "A classic Snake game built with Next.js",
+  title: "Tetris",
+  description: "Classic tile-matching puzzle game built with React",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

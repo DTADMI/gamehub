@@ -8,9 +8,14 @@ describe("games manifest", () => {
     expect(enabled.length).toBeGreaterThan(0);
   });
 
-  it("marks impl:none entries as non-launchable", () => {
-    const tetris = getGame("tetris");
-    expect(tetris).toBeDefined();
-    expect(isGameLaunchable(tetris!)).toBe(false);
+  it("all 6 upcoming games are now playable", () => {
+    const enabled = listGames().filter((g) => g.enabled !== false);
+    const upcoming = ["tetris", "knitzy", "block-blast", "chrono-shift", "elemental-conflux", "quantum-architect"];
+    for (const slug of upcoming) {
+      const game = getGame(slug);
+      expect(game, `game "${slug}" should exist`).toBeDefined();
+      expect(isGameLaunchable(game!), `game "${slug}" should be launchable`).toBe(true);
+    }
+    expect(enabled.length).toBeGreaterThanOrEqual(6);
   });
 });

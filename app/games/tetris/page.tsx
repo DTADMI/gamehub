@@ -2,33 +2,28 @@
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
-import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
 const TetrisGame = dynamic(
-  () => getGame("tetris")!.getComponent(),
-  { ssr: false },
+  () => {
+    const entry = getGame("tetris");
+    if (!entry || !isGameLaunchable(entry)) {
+      return Promise.reject(new Error("not_playable"));
+    }
+    if (entry.upcoming && !process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL) {
+      return Promise.reject(new Error("upcoming_gated"));
+    }
+    return entry.getComponent();
+  },
+  { loading: () => <LoadingShell variant="spinner" /> }
 );
 
 export default function TetrisGamePage() {
   const [seed, setSeed] = useState(0);
   const { user } = useAuth();
-  const { flags } = useFlags();
-
-  const entry = getGame("tetris")!;
-  const isNonProd =
-    typeof window !== "undefined" &&
-    (process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_E2E === "true");
-  const allowUpcomingLocal =
-    ((typeof window !== "undefined" &&
-      process.env.NEXT_PUBLIC_ENABLE_UPCOMING_PLAY_LOCAL === "true" &&
-      isNonProd) ||
-      !!flags.ui?.allowPlayUpcomingLocal) &&
-    isGameLaunchable(entry);
-
-  const isPlayable = !entry.upcoming || allowUpcomingLocal;
 
   useEffect(() => {
     const handler = async (e: Event) => {
@@ -54,18 +49,6 @@ export default function TetrisGamePage() {
     };
   }, [user]);
 
-  if (!isPlayable) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="mb-2 text-2xl font-bold">{entry.title}</h1>
-        <p className="text-muted-foreground mb-4">{entry.shortDescription}</p>
-        <div className="rounded-md border bg-amber-50 p-4 dark:bg-amber-900/20">
-          This game is marked as <b>Coming Soon</b>.
-        </div>
-      </div>
-    );
-  }
-
   return (
     <GameShell
       ariaLabel="Tetris game"
@@ -87,3 +70,6 @@ export default function TetrisGamePage() {
     </GameShell>
   );
 }
+
+
+

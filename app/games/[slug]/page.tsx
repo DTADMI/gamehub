@@ -12,13 +12,6 @@ import React from "react";
 
 type PageProps = { params: { slug: string } };
 
-const SKELETON_FLAG_MAP: Record<string, string> = {
-  "chrono-shift": "chronoShift",
-  "elemental-conflux": "elementalConflux",
-  "quantum-architect": "quantumArchitect",
-  "block-blast": "blockBlast",
-};
-
 export default function GameLauncherPage({ params }: PageProps) {
   const { flags } = useFlags();
   const { user } = useAuth();
@@ -27,12 +20,7 @@ export default function GameLauncherPage({ params }: PageProps) {
   if (!entry) {
     return notFound();
   }
-
-  const skeletonFlagKey = SKELETON_FLAG_MAP[slug] as string | undefined;
-  const skeletonFlagEnabled = skeletonFlagKey
-    ? !!(flags.games as Record<string, boolean>)[skeletonFlagKey]
-    : false;
-
+  // Allow dev/local play for upcoming when explicitly enabled via env or Admin seam
   const isNonProd =
     typeof window !== "undefined" &&
     (process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_E2E === "true");
@@ -44,8 +32,6 @@ export default function GameLauncherPage({ params }: PageProps) {
     isGameLaunchable(entry);
 
   if (entry.upcoming && !allowUpcomingLocal) {
-    const isFlagGatedSkeleton = !!skeletonFlagKey && !skeletonFlagEnabled;
-
     return (
       <div className="container mx-auto px-4 py-8">
         <h1 className="mb-2 text-2xl font-bold">{entry.title}</h1>
@@ -53,11 +39,6 @@ export default function GameLauncherPage({ params }: PageProps) {
         <div className="rounded-md border bg-amber-50 p-4 dark:bg-amber-900/20">
           This game is marked as <b>Coming Soon</b>.
         </div>
-        {isFlagGatedSkeleton ? (
-          <div className="text-muted-foreground mt-3 text-xs">
-            Feature flag <code>games.{skeletonFlagKey}</code> is off.
-          </div>
-        ) : null}
       </div>
     );
   }
@@ -89,6 +70,7 @@ export default function GameLauncherPage({ params }: PageProps) {
       preloadSounds={entry.preloadAssets}
     >
       <Game />
+      {/* Optional mini leaderboard when known */}
       {entry.slug === "breakout" ? (
         <div className="px-4">
           <MiniBoard gameType="BREAKOUT" limit={10} />

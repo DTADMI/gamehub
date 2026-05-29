@@ -23,10 +23,6 @@ export type FeatureFlags = {
   };
   games: {
     socialShare: boolean;
-    chronoShift: boolean;
-    elementalConflux: boolean;
-    quantumArchitect: boolean;
-    blockBlast: boolean;
   };
   experimental: {
     realtimeMultiplayer: boolean;
@@ -72,10 +68,6 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
   },
   games: {
     socialShare: false,
-    chronoShift: false,
-    elementalConflux: false,
-    quantumArchitect: false,
-    blockBlast: false,
   },
   experimental: {
     realtimeMultiplayer: false,
@@ -287,54 +279,6 @@ export const FLAG_DEFINITIONS: FeatureFlag[] = [
     userIds: [],
     subscriptionTiers: [],
     sensitive: false,
-  },
-  {
-    id: "games.chronoShift",
-    path: "games.chronoShift",
-    label: "ChronoShift Labyrinth",
-    description: "Enable ChronoShift Labyrinth game access.",
-    type: "boolean",
-    enabled: false,
-    percentage: 0,
-    userIds: [],
-    subscriptionTiers: [],
-    sensitive: true,
-  },
-  {
-    id: "games.elementalConflux",
-    path: "games.elementalConflux",
-    label: "Elemental Conflux",
-    description: "Enable Elemental Conflux game access.",
-    type: "boolean",
-    enabled: false,
-    percentage: 0,
-    userIds: [],
-    subscriptionTiers: [],
-    sensitive: true,
-  },
-  {
-    id: "games.quantumArchitect",
-    path: "games.quantumArchitect",
-    label: "Quantum Architect",
-    description: "Enable Quantum Architect game access.",
-    type: "boolean",
-    enabled: false,
-    percentage: 0,
-    userIds: [],
-    subscriptionTiers: [],
-    sensitive: true,
-  },
-  {
-    id: "games.blockBlast",
-    path: "games.blockBlast",
-    label: "Block Blast",
-    description: "Enable Block Blast game access.",
-    type: "boolean",
-    enabled: false,
-    percentage: 0,
-    userIds: [],
-    subscriptionTiers: [],
-    sensitive: true,
   },
   {
     id: "experimental.realtimeMultiplayer",

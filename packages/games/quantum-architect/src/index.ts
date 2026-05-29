@@ -1,6 +1,2 @@
-export const game = {
-  id: "quantum-architect",
-  title: "Quantum Architect",
-  description: "Manipulate quantum states to create/destroy matter.",
-  status: "upcoming",
-};
+export { default as QuantumArchitectGame } from "./components/QuantumArchitectGame";
+export * from "./components/QuantumArchitectGame";
