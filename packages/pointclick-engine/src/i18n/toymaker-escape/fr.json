@@ -81,6 +81,43 @@
         "continueE3": "Continuer vers l'Épisode 3",
         "restart": "Recommencer"
       }
+    },
+    "e3": {
+      "intro": {
+        "title": "Le Mystère de l'Appartement",
+        "body": "Vous arrivez à votre propre appartement. Quelque chose semble étrange. Le commissaire a laissé des indices ici — mais pourquoi VOTRE appartement?"
+      },
+      "locks": {
+        "title": "Verrous environnementaux",
+        "prompt": "Actionnez les objets dans le bon ordre : eau, lumière, terreau.",
+        "water": "Arroser",
+        "sunlight": "Lumière",
+        "soil": "Terreau",
+        "progress": "Progression",
+        "solved": "Séquence des verrous résolue!",
+        "continueToPhotos": "Continuer vers le mur de photos"
+      },
+      "photos": {
+        "title": "Mur de photos souvenir",
+        "prompt": "Trois photos sont accrochées au mur. Identifiez les deux qui sont connectées.",
+        "toymaker": "Fabricant",
+        "partner": "Partenaire",
+        "stranger": "Inconnu",
+        "found": "Vous avez trouvé la connexion! Le commissaire et le fabricant partagent un lien.",
+        "continueToAnagram": "Continuer vers le frigo"
+      },
+      "anagram": {
+        "title": "Anagramme du frigo",
+        "prompt": "Les aimants du frigo forment un mot mélangé. Réorganisez-les pour déverrouiller l'espace réfrigéré.",
+        "submit": "Valider",
+        "solved": "Anagramme résolu!",
+        "attempts": "Tentatives"
+      },
+      "wrap": {
+        "title": "Épisode 3 terminé",
+        "body": "Le mystère de l'appartement est résolu. Le commissaire ÉTAIT le fabricant de jouets — vous avez créé ce casse-tête pour vous-même.",
+        "medalEarned": "Médaille gagnée : Apprenti fabricant"
+      }
     }
   }
 }

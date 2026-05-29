@@ -208,6 +208,11 @@ export const ToymakerEscapeGame: React.FC = () => {
         },
         choices: [
           {
+            id: "continueE3",
+            text: { en: "Continue to Episode 3 — Apartment Mystery", fr: "Continuer vers l'Épisode 3 — Le Mystère de l'Appartement" },
+            target: "E3_INTRO",
+          },
+          {
             id: "restart",
             text: { en: "Restart adventure", fr: "Recommencer l'aventure" },
             target: "INTRO",
@@ -215,8 +220,55 @@ export const ToymakerEscapeGame: React.FC = () => {
           },
         ],
       },
-      E2_ANAGRAM: {
-        id: "E2_ANAGRAM",
+      E3_INTRO: {
+        id: "E3_INTRO",
+        title: { en: "Episode 3 — Apartment Mystery", fr: "Épisode 3 — Le Mystère de l'Appartement" },
+        body: {
+          en: "You arrive at your own apartment. Something feels off. Familiar objects are rearranged. The commissioner left clues here... but why YOUR apartment?",
+          fr: "Vous arrivez à votre propre appartement. Quelque chose semble étrange. Les objets familiers ont été réarrangés. Le commissaire a laissé des indices ici... mais pourquoi VOTRE appartement?",
+        },
+        choices: [
+          {
+            id: "locks",
+            text: { en: "Check the environmental locks", fr: "Vérifier les verrous environnementaux" },
+            target: "E3_LOCKS",
+          },
+        ],
+      },
+      E3_LOCKS: {
+        id: "E3_LOCKS",
+        title: { en: "Episode 3 — Environmental Locks", fr: "Épisode 3 — Verrous environnementaux" },
+        body: {
+          en: "The apartment's objects must be triggered in the right sequence. Plants need watering, blinds need adjusting, soil needs tending.",
+          fr: "Les objets de l'appartement doivent être actionnés dans le bon ordre. Les plantes ont besoin d'eau, les stores doivent être ajustés, le terreau doit être entretenu.",
+        },
+        choices: [
+          {
+            id: "solve",
+            text: { en: "Solve the sequence", fr: "Résoudre la séquence" },
+            target: "E3_PHOTOS",
+            effect: (ctx) => ({ ...ctx, locksSolved: true }),
+          },
+        ],
+      },
+      E3_PHOTOS: {
+        id: "E3_PHOTOS",
+        title: { en: "Episode 3 — Photo Memory Wall", fr: "Épisode 3 — Mur de photos souvenir" },
+        body: {
+          en: "A wall of photos. Find the two that are connected — the commissioner and the toymaker share a hidden link.",
+          fr: "Un mur de photos. Trouvez les deux qui sont liées — le commissaire et le fabricant de jouets partagent un lien caché.",
+        },
+        choices: [
+          {
+            id: "solve",
+            text: { en: "Identify the connection", fr: "Identifier la connexion" },
+            target: "E3_ANAGRAM",
+            effect: (ctx) => ({ ...ctx, photosSolved: true }),
+          },
+        ],
+      },
+      E3_ANAGRAM: {
+        id: "E3_ANAGRAM",
         title: { en: "Episode 3 — Fridge Anagram", fr: "Épisode 3 — Anagramme du frigo" },
         body: {
           en: "The fridge magnets spell a scrambled word. Rearrange them to unlock the cool storage.",
@@ -233,10 +285,10 @@ export const ToymakerEscapeGame: React.FC = () => {
       },
       E3_WRAP: {
         id: "E3_WRAP",
-        title: { en: "Wrap — Episode 3", fr: "Conclusion — Épisode 3" },
+        title: { en: "Wrap — Episode 3 Complete", fr: "Conclusion — Épisode 3 terminé" },
         body: {
-          en: "All puzzles solved. The workshop's secrets are yours. Medal earned: Toymaker's Apprentice.",
-          fr: "Tous les puzzles sont résolus. Les secrets de l'atelier sont à vous. Médaille: Apprenti fabricant.",
+          en: "The apartment mystery is solved. The commissioner WAS the toymaker — you created this puzzle for yourself. Medal earned: Toymaker's Apprentice.",
+          fr: "Le mystère de l'appartement est résolu. Le commissaire ÉTAIT le fabricant de jouets — vous avez créé ce casse-tête pour vous-même. Médaille: Apprenti fabricant.",
         },
         choices: [
           {
@@ -308,6 +360,18 @@ export const ToymakerEscapeGame: React.FC = () => {
   const [anagram, setAnagram] = useState<AnagramState>(() =>
     createAnagramState("REFRIGERATOR"),
   );
+
+  const [locksSeq, setLocksSeq] = useState<SequenceState>(() =>
+    createSequenceState(["water", "sunlight", "soil"], { lives: 3 }),
+  );
+  const [photoMatch, setPhotoMatch] = useState<{
+    selected: string | null;
+    solved: Record<string, string>;
+  }>({ selected: null, solved: {} });
+  const PHOTO_PAIRS: Record<string, string> = {
+    partner: "toymaker",
+  };
+  const photoMatchSolved = photoMatch.solved.partner === "toymaker";
 
   const [filing, setFiling] = useState<Record<string, string>>({});
   const [filingSelected, setFilingSelected] = useState<string | null>(null);
@@ -1062,7 +1126,7 @@ export const ToymakerEscapeGame: React.FC = () => {
             <div className="flex gap-2">
               <button
                 className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-                onClick={() => setSceneId("E2_ANAGRAM")}
+                onClick={() => setSceneId("E3_INTRO")}
               >
                 {lang === "fr" ? "Continuer vers l'Épisode 3" : "Continue to Episode 3"}
               </button>
@@ -1076,8 +1140,156 @@ export const ToymakerEscapeGame: React.FC = () => {
           </div>
         )}
 
+        {/* E3_INTRO */}
+        {sceneId === "E3_INTRO" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">
+              {lang === "fr" ? "Le Mystère de l'Appartement" : "Apartment Mystery"}
+            </h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? "Vous arrivez à votre propre appartement. Des objets familiers ont été réarrangés. Le commissaire a laissé des indices ici — mais pourquoi VOTRE appartement?"
+                : "You arrive at your own apartment. Familiar objects are rearranged. The commissioner left clues here — but why YOUR apartment?"}
+            </p>
+            <div className="flex gap-2">
+              <button
+                className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                onClick={() => setSceneId("E3_LOCKS")}
+              >
+                {lang === "fr" ? "Vérifier les verrous" : "Check the locks"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* E3_LOCKS — Environmental Locks Sequence Puzzle */}
+        {sceneId === "E3_LOCKS" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">
+              {lang === "fr" ? "Verrous environnementaux" : "Environmental Locks"}
+            </h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? "Actionnez les objets dans le bon ordre : eau, lumière, terreau."
+                : "Trigger the objects in the right sequence: water, sunlight, soil."}
+            </p>
+            <div className="flex gap-2">
+              {["water", "sunlight", "soil"].map((item) => (
+                <button
+                  key={item}
+                  className="bg-muted hover:bg-muted/80 min-h-[44px] min-w-[80px] rounded border px-4 py-2 capitalize"
+                  onClick={() => {
+                    const next = pressSequenceKey(locksSeq, item);
+                    setLocksSeq(next);
+                    if (next.solved) {
+                      setCtx((c) => effects.setFlag("locks.solved", true)(ensureCtx(c)));
+                    }
+                  }}
+                >
+                  {item === "water"
+                    ? lang === "fr" ? "Arroser" : "Water"
+                    : item === "sunlight"
+                      ? lang === "fr" ? "Lumière" : "Sunlight"
+                      : lang === "fr" ? "Terreau" : "Soil"}
+                </button>
+              ))}
+            </div>
+            <div className="mt-2 text-sm">
+              {lang === "fr" ? "Progression : " : "Progress: "}
+              {locksSeq.input.length} / {locksSeq.target.length}
+              {ctx.flags["locks.solved"] && (
+                <span className="ml-2 text-green-500">
+                  {lang === "fr" ? "Résolu!" : "Solved!"}
+                </span>
+              )}
+            </div>
+            {(ctx.flags["locks.solved"] || locksSeq.solved) && (
+              <div className="mt-3">
+                <button
+                  className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                  onClick={() => setSceneId("E3_PHOTOS")}
+                >
+                  {lang === "fr" ? "Continuer vers le mur de photos" : "Continue to photo wall"}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* E3_PHOTOS — Photo Memory Wall */}
+        {sceneId === "E3_PHOTOS" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">
+              {lang === "fr" ? "Mur de photos souvenir" : "Photo Memory Wall"}
+            </h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? "Trois photos sont accrochées au mur. Identifiez les deux qui sont connectées."
+                : "Three photos are pinned to the wall. Identify the two that are connected."}
+            </p>
+            <div className="grid grid-cols-3 gap-3 mb-3">
+              {[
+                { id: "toymaker", labelEn: "Toymaker", labelFr: "Fabricant", emoji: "🧸" },
+                { id: "partner", labelEn: "Partner", labelFr: "Partenaire", emoji: "💌" },
+                { id: "stranger", labelEn: "Stranger", labelFr: "Inconnu", emoji: "❓" },
+              ].map((photo) => (
+                <button
+                  key={photo.id}
+                  className={`flex flex-col items-center rounded border-2 p-3 min-h-[120px] ${
+                    Object.values(photoMatch.solved).includes(photo.id) || photoMatch.solved[photo.id]
+                      ? "border-green-400 bg-green-100"
+                      : photoMatch.selected === photo.id
+                        ? "border-blue-500 bg-blue-100"
+                        : "border-gray-300 bg-white hover:border-blue-400"
+                  }`}
+                  disabled={Object.values(photoMatch.solved).includes(photo.id) || !!photoMatch.solved[photo.id]}
+                  onClick={() => {
+                    if (photoMatch.solved[photo.id] || Object.values(photoMatch.solved).includes(photo.id)) return;
+                    if (!photoMatch.selected) {
+                      setPhotoMatch((p) => ({ ...p, selected: photo.id }));
+                    } else if (photoMatch.selected !== photo.id) {
+                      const a = photoMatch.selected;
+                      const b = photo.id;
+                      if (PHOTO_PAIRS[a] === b || PHOTO_PAIRS[b] === a) {
+                        const next = { ...photoMatch.solved, [a]: b };
+                        setPhotoMatch({ selected: null, solved: next });
+                        const allDone = !!next["partner"];
+                        if (allDone) {
+                          setCtx((c) => effects.setFlag("photos.solved", true)(ensureCtx(c)));
+                        }
+                      } else {
+                        setPhotoMatch((p) => ({ ...p, selected: null }));
+                      }
+                    }
+                  }}
+                >
+                  <span className="text-3xl mb-1">{photo.emoji}</span>
+                  <span className="text-sm font-medium">
+                    {lang === "fr" ? photo.labelFr : photo.labelEn}
+                  </span>
+                </button>
+              ))}
+            </div>
+            {(ctx.flags["photos.solved"] || photoMatchSolved) && (
+              <div>
+                <p className="mb-2 text-emerald-600 font-bold">
+                  {lang === "fr"
+                    ? "Vous avez trouvé la connexion! Le commissaire et le fabricant partagent un lien."
+                    : "You found the connection! The commissioner and the toymaker share a link."}
+                </p>
+                <button
+                  className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                  onClick={() => setSceneId("E3_ANAGRAM")}
+                >
+                  {lang === "fr" ? "Continuer vers le frigo" : "Continue to fridge"}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* E3 — Anagram puzzle */}
-        {sceneId === "E2_ANAGRAM" && (
+        {sceneId === "E3_ANAGRAM" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">{lang === "fr" ? "Anagramme du frigo" : "Fridge Anagram"}</h3>
             <p className="mb-2 text-sm">
@@ -1142,6 +1354,9 @@ export const ToymakerEscapeGame: React.FC = () => {
             }
             if (res.sceneId === "E2_WRAP") {
               setCtx((c) => effects.setFlag("medal:fileClerk", true)(ensureCtx(c)));
+            }
+            if (res.sceneId === "E3_WRAP") {
+              setCtx((c) => effects.setFlag("medal:toymakersApprentice", true)(ensureCtx(c)));
             }
           }}
         />

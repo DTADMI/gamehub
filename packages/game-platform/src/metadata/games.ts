@@ -30,7 +30,8 @@ export type GameSlug =
   | "tetris"
   | "block-blast"
   | "platformer"
-  | "tower-defense";
+  | "tower-defense"
+  | "spell-craft";
 
 export type GameEntry = {
   slug: GameSlug;
@@ -321,6 +322,19 @@ export const games: GameManifest = {
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/tower-defense").then((m) => m.TowerDefenseGame),
+  },
+  "spell-craft": {
+    slug: "spell-craft",
+    title: "Spell Craft",
+    shortDescription: "Draw magical glyphs and cast elemental spells with particle effects.",
+    tags: ["Creative", "Drawing", "Magic", "sim-2d", "impl:react-canvas-custom", "target:react-canvas"],
+    image: "/images/games/spell-craft-card.svg",
+    enabled: true,
+    visible: true,
+    backgroundImage: "/images/bg-abstract-dark.jpg",
+    preloadAssets: [],
+    // @ts-ignore
+    getComponent: () => import("@games/spell-craft").then((m) => m.SpellCraftGame),
   },
 };
 

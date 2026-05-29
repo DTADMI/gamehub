@@ -23,6 +23,9 @@
       "@games/*": [
         "packages/games/*/src"
       ],
+      "glyph-weaver/*": [
+        "../glyph-weaver/*"
+      ],
       "react": [
         "./node_modules/@types/react"
       ],

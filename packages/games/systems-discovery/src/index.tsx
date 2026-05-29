@@ -579,44 +579,231 @@ const scenes: Scene[] = [
   {
     id: "S2",
     title: t("sysdisc.space.s2.title") as string,
-    render: ({ go }) => (
-      <div>
-        <p className="mb-2">{t("sysdisc.space.s2.prompt")}</p>
-        <div className="mt-3">
-          <button
-            className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-            onClick={() => go("S3")}
-          >
-            {t("sysdisc.bod.common.continue")}
-          </button>
+    render: ({ go, setFlag, state }) => {
+      const flags = state.ctx.flags;
+      const solved = Boolean(flags["space.s2.solved"]);
+      const [selected, setSelected] = React.useState<string | null>(null);
+      const [matched, setMatched] = React.useState<Record<string, string>>({});
+      const SHADOW_TARGETS: Record<string, string> = {
+        mercury: "small",
+        earth: "medium",
+        jupiter: "large",
+      };
+      const planets = ["mercury", "earth", "jupiter"];
+      const shadows = ["small", "medium", "large"];
+      const shadowIcons: Record<string, string> = { small: "●", medium: "◉", large: "⊙" };
+      const allDone = Object.keys(matched).length === planets.length &&
+        planets.every((p) => matched[p] === SHADOW_TARGETS[p]);
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.space.s2.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">
+            {t("sysdisc.space.s2.hint")}
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s2.planets")}</p>
+              <div className="flex flex-col gap-2">
+                {planets.map((p) => (
+                  <button
+                    key={p}
+                    className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${
+                      matched[p]
+                        ? "border-green-400 bg-green-100"
+                        : selected === p
+                          ? "border-blue-500 bg-blue-100"
+                          : "border-gray-300 bg-white"
+                    }`}
+                    disabled={!!matched[p]}
+                    onClick={() => setSelected(selected === p ? null : p)}
+                  >
+                    {t(`sysdisc.space.s2.planetLabels.${p}`)}
+                    {matched[p] && (
+                      <span className="ml-2 text-green-600">→ {shadowIcons[matched[p]]} {t(`sysdisc.space.s2.shadowLabels.${matched[p]}`)}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s2.shadows")}</p>
+              <div className="flex flex-col gap-2">
+                {shadows.map((s) => (
+                  <button
+                    key={s}
+                    className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${
+                      Object.values(matched).includes(s)
+                        ? "border-green-400 bg-green-100"
+                        : "border-gray-300 bg-white hover:border-blue-400"
+                    }`}
+                    disabled={!selected || Object.values(matched).includes(s)}
+                    onClick={() => {
+                      if (selected && !matched[selected]) {
+                        const next = { ...matched, [selected]: s };
+                        setMatched(next);
+                        setSelected(null);
+                        if (
+                          Object.keys(next).length === planets.length &&
+                          planets.every((p2) => next[p2] === SHADOW_TARGETS[p2])
+                        ) {
+                          setFlag("space.s2.solved", true);
+                        }
+                      }
+                    }}
+                  >
+                    {shadowIcons[s]} {t(`sysdisc.space.s2.shadowLabels.${s}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 text-sm">
+            {t("sysdisc.space.s2.matched")}: {Object.keys(matched).length} / {planets.length}
+          </div>
+          {(solved || allDone) && (
+            <p className="mt-2 font-bold text-emerald-600">
+              {t("sysdisc.space.s2.solved")}
+            </p>
+          )}
+          <div className="mt-3">
+            <button
+              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50"
+              disabled={!solved && !allDone}
+              onClick={() => go("S3")}
+            >
+              {t("sysdisc.bod.common.continue")}
+            </button>
+          </div>
         </div>
-      </div>
-    ),
+      );
+    },
   },
   {
     id: "S3",
     title: t("sysdisc.space.s3.title") as string,
-    render: ({ go }) => (
-      <div>
-        <p className="mb-2">{t("sysdisc.space.s3.prompt")}</p>
-        <div className="mt-3">
-          <button
-            className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-            onClick={() => go("SPACE_WRAP")}
-          >
-            {t("sysdisc.bod.common.reveal")}
-          </button>
+    render: ({ go, setFlag, state }) => {
+      const flags = state.ctx.flags;
+      const solved = Boolean(flags["space.s3.solved"]);
+      const [sorted, setSorted] = React.useState<Record<string, string>>({});
+      const HABITABLE_TARGETS: Record<string, string> = {
+        earth: "habitable",
+        mars: "habitable",
+        jupiter: "notHabitable",
+        venus: "notHabitable",
+      };
+      const planets = ["earth", "mars", "jupiter", "venus"];
+      const allDone = Object.keys(sorted).length === planets.length &&
+        planets.every((p) => sorted[p] === HABITABLE_TARGETS[p]);
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.space.s3.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">{t("sysdisc.space.s3.hint")}</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s3.planets")}</p>
+              <div className="flex flex-col gap-2">
+                {planets.map((p) => (
+                  <div
+                    key={p}
+                    className={`min-h-[44px] rounded border-2 px-4 py-2 flex items-center justify-between ${
+                      sorted[p]
+                        ? "border-green-400 bg-green-100"
+                        : "border-gray-300 bg-white"
+                    }`}
+                  >
+                    <span>{t(`sysdisc.space.s3.planetLabels.${p}`)}</span>
+                    {!sorted[p] && (
+                      <div className="flex gap-1">
+                        <button
+                          className="min-h-[32px] rounded bg-emerald-500 px-3 py-1 text-xs text-white"
+                          onClick={() => {
+                            const next = { ...sorted, [p]: "habitable" };
+                            setSorted(next);
+                            if (
+                              Object.keys(next).length === planets.length &&
+                              planets.every((p2) => next[p2] === HABITABLE_TARGETS[p2])
+                            ) {
+                              setFlag("space.s3.solved", true);
+                            }
+                          }}
+                        >
+                          {t("sysdisc.space.s3.habitable")}
+                        </button>
+                        <button
+                          className="min-h-[32px] rounded bg-red-500 px-3 py-1 text-xs text-white"
+                          onClick={() => {
+                            const next = { ...sorted, [p]: "notHabitable" };
+                            setSorted(next);
+                            if (
+                              Object.keys(next).length === planets.length &&
+                              planets.every((p2) => next[p2] === HABITABLE_TARGETS[p2])
+                            ) {
+                              setFlag("space.s3.solved", true);
+                            }
+                          }}
+                        >
+                          {t("sysdisc.space.s3.notHabitable")}
+                        </button>
+                      </div>
+                    )}
+                    {sorted[p] && (
+                      <span className={`text-xs font-bold ${sorted[p] === "habitable" ? "text-emerald-600" : "text-red-600"}`}>
+                        {t(`sysdisc.space.s3.${sorted[p]}Short`)}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="hidden sm:block">
+              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s3.status")}</p>
+              <div className="text-sm opacity-70">
+                {planets.filter((p) => sorted[p] === "habitable").length > 0 && (
+                  <p className="mb-2 text-emerald-600">
+                    {t("sysdisc.space.s3.habitableLabel")}: {planets.filter((p) => sorted[p] === "habitable").map((p) => t(`sysdisc.space.s3.planetLabels.${p}`)).join(", ")}
+                  </p>
+                )}
+                {planets.filter((p) => sorted[p] === "notHabitable").length > 0 && (
+                  <p className="text-red-600">
+                    {t("sysdisc.space.s3.notHabitableLabel")}: {planets.filter((p) => sorted[p] === "notHabitable").map((p) => t(`sysdisc.space.s3.planetLabels.${p}`)).join(", ")}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          {(solved || allDone) && (
+            <p className="mt-2 font-bold text-emerald-600">
+              {t("sysdisc.space.s3.solved")}
+            </p>
+          )}
+          <div className="mt-2">
+            <button
+              className="min-h-[32px] rounded border px-2 py-1 text-sm"
+              onClick={() => setSorted({})}
+            >
+              {t("sysdisc.space.s3.reset")}
+            </button>
+          </div>
+          <div className="mt-3">
+            <button
+              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50"
+              disabled={!solved && !allDone}
+              onClick={() => go("SPACE_WRAP")}
+            >
+              {t("sysdisc.bod.common.reveal")}
+            </button>
+          </div>
         </div>
-      </div>
-    ),
+      );
+    },
   },
   {
     id: "SPACE_WRAP",
     title: t("sysdisc.space.wrap.title") as string,
     render: ({ state, setFlag, go }) => {
       const flags = state.ctx.flags;
-      if (!flags["space.badge"]) {
-        setFlag("space.badge", true);
+      if (!flags["space.badgeAstronomer"]) {
+        setFlag("space.badgeAstronomer", true);
       }
       return (
         <div>

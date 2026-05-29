@@ -81,6 +81,43 @@
         "continueE3": "Continue to Episode 3",
         "restart": "Restart"
       }
+    },
+    "e3": {
+      "intro": {
+        "title": "Apartment Mystery",
+        "body": "You arrive at your own apartment. Something feels off. The commissioner left clues here — but why YOUR apartment?"
+      },
+      "locks": {
+        "title": "Environmental Locks",
+        "prompt": "Trigger the objects in the right sequence: water, sunlight, soil.",
+        "water": "Water",
+        "sunlight": "Sunlight",
+        "soil": "Soil",
+        "progress": "Progress",
+        "solved": "Locks sequence solved!",
+        "continueToPhotos": "Continue to photo wall"
+      },
+      "photos": {
+        "title": "Photo Memory Wall",
+        "prompt": "Three photos are pinned to the wall. Identify the two that are connected.",
+        "toymaker": "Toymaker",
+        "partner": "Partner",
+        "stranger": "Stranger",
+        "found": "You found the connection! The commissioner and the toymaker share a link.",
+        "continueToAnagram": "Continue to fridge"
+      },
+      "anagram": {
+        "title": "Fridge Anagram",
+        "prompt": "The fridge magnets spell a scrambled word. Rearrange them to unlock the cool storage.",
+        "submit": "Submit",
+        "solved": "Anagram solved!",
+        "attempts": "Attempts"
+      },
+      "wrap": {
+        "title": "Episode 3 Complete",
+        "body": "The apartment mystery is solved. The commissioner WAS the toymaker — you created this puzzle for yourself.",
+        "medalEarned": "Medal earned: Toymaker's Apprentice"
+      }
     }
   }
 }

@@ -195,16 +195,48 @@
       },
       "s2": {
         "title": "Lumière et ombres",
-        "prompt": "Explorez les phases lunaires et les éclipses."
+        "prompt": "Associez chaque planète à la bonne taille et forme d'ombre.",
+        "hint": "Mercure est la plus petite, la Terre est moyenne, Jupiter est la plus grande.",
+        "planets": "Planètes",
+        "shadows": "Ombres",
+        "planetLabels": {
+          "mercury": "Mercure",
+          "earth": "Terre",
+          "jupiter": "Jupiter"
+        },
+        "shadowLabels": {
+          "small": "Petite",
+          "medium": "Moyenne",
+          "large": "Grande"
+        },
+        "matched": "Associées",
+        "solved": "Toutes les planètes associées correctement! Le puzzle d'ombres révèle un mécanisme caché."
       },
       "s3": {
         "title": "Indices habitables",
-        "prompt": "Comparez les indices atmosphériques entre les mondes."
+        "prompt": "Classez chaque planète comme habitable ou non habitable selon ses caractéristiques.",
+        "hint": "La Terre et Mars sont dans la zone habitable. Jupiter et Vénus ne le sont pas.",
+        "planets": "Planètes",
+        "planetLabels": {
+          "earth": "Terre",
+          "mars": "Mars",
+          "jupiter": "Jupiter",
+          "venus": "Vénus"
+        },
+        "habitable": "Habitable",
+        "notHabitable": "Non habitable",
+        "habitableShort": "HAB",
+        "notHabitableShort": "NON",
+        "status": "Statut",
+        "habitableLabel": "Habitable",
+        "notHabitableLabel": "Non habitable",
+        "solved": "Toutes les planètes classées correctement! Vous comprenez quels mondes pourraient soutenir la vie.",
+        "reset": "Réinitialiser"
       },
       "wrap": {
         "title": "Espace exploré",
         "done": "Vous avez cartographié le système solaire interne.",
-        "badge": "Badge Navigateur spatial gagné !"
+        "badge": "Badge Astronome gagné!"
       },
       "outro": {
         "title": "Voyage spatial terminé",

@@ -195,16 +195,48 @@
       },
       "s2": {
         "title": "Light & Shadows",
-        "prompt": "Explore lunar phases and eclipses."
+        "prompt": "Match each planet to its correct shadow size and shape.",
+        "hint": "Mercury is the smallest, Earth is medium, Jupiter is the largest.",
+        "planets": "Planets",
+        "shadows": "Shadows",
+        "planetLabels": {
+          "mercury": "Mercury",
+          "earth": "Earth",
+          "jupiter": "Jupiter"
+        },
+        "shadowLabels": {
+          "small": "Small",
+          "medium": "Medium",
+          "large": "Large"
+        },
+        "matched": "Matched",
+        "solved": "All planets matched correctly! The shadow puzzle reveals a hidden mechanism."
       },
       "s3": {
         "title": "Habitable Clues",
-        "prompt": "Compare atmospheric hints across worlds."
+        "prompt": "Sort each planet into habitable or non-habitable based on its characteristics.",
+        "hint": "Earth and Mars are in the habitable zone. Jupiter and Venus are not.",
+        "planets": "Planets",
+        "planetLabels": {
+          "earth": "Earth",
+          "mars": "Mars",
+          "jupiter": "Jupiter",
+          "venus": "Venus"
+        },
+        "habitable": "Habitable",
+        "notHabitable": "Not Habitable",
+        "habitableShort": "HAB",
+        "notHabitableShort": "NOT",
+        "status": "Status",
+        "habitableLabel": "Habitable",
+        "notHabitableLabel": "Not Habitable",
+        "solved": "All planets sorted correctly! You understand which worlds could support life.",
+        "reset": "Reset"
       },
       "wrap": {
         "title": "Space Explored",
         "done": "You've mapped the inner solar system.",
-        "badge": "Space Navigator badge earned!"
+        "badge": "Astronomer badge earned!"
       },
       "outro": {
         "title": "Space Journey Complete",

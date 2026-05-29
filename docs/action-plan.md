@@ -73,3 +73,52 @@ Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
 | 1 | Migrate additional legacy Vitest specs into staged unit/integration buckets | Agent | Next iteration |
 | 2 | Complete post-game CTA modal wiring across all game end events | Agent | Next iteration |
 | 3 | Migrate additional legacy Vitest specs into staged unit/integration buckets | Agent | Ongoing |
+ 
+---
+ 
+## 2026-05-28 Implementation Status
+
+### Architecture
+- Cross-project Context i18n system: `lib/i18n/config.ts`, `provider.tsx`, `server.ts`, `server-provider.tsx`
+- Default locale: `fr` (correct)
+- Parallel game i18n: per-game JSON dictionaries in `packages/pointclick-engine/src/i18n/<game>/`
+- Monorepo with packages: `@gamehub/game-platform`, `@games/pointclick-engine`, `@gamehub/ui`
+- Supabase SSR auth: `@supabase/ssr` for browser, server, and proxy auth guard
+- Upstash Redis adapter with memory fallback (`lib/redis.ts`)
+- Feature flags: Supabase-backed with Redis fallback, admin API + audit
+
+### Fixes Applied
+- TypeScript alias cleanup + import namespace migration off `@games/shared`
+- Removed `ignoreBuildErrors` from config
+- Migrated Supabase auth from `auth-helpers` to `@supabase/ssr`
+- Fixed integration test crash on `/api/health` optional request handling
+- CI workflow actions upgraded, Corepack-managed pnpm
+
+### Features Implemented
+- Game Platform SDK (`@gamehub/game-platform`) with leaderboard, save, auth integration
+- 13 playable games: chrono-shift, elemental-conflux, quantum-architect, rite-of-discovery, systems-discovery, toymaker-escape, breakout, bubble-pop, checkers, chess, memory, platformer, snake, tower-defense
+- Leaderboard system: server-backed scores, seasons, anti-spam, rate limits, moderation, season locks
+- Blog cover image upload API (Supabase Storage) + admin UI
+- Admin feature flags page with audit timeline + CSV export
+- Leaderboard moderation APIs/UI with audit trail
+- Games account CTA for profile/leaderboard unlock
+- Health endpoint (`/api/health`) for dependency status
+
+### Tests Added
+- Unit tests: staged pipeline (unit/integration/e2e smoke)
+- E2E: leaderboard auth gating, admin flags toggles
+- Integration: leaderboard validation, feature flag API
+- Full local validation (`pnpm test:all`) passing
+
+### Flags Enabled/Changed
+- Supabase-backed feature flags with audit API + role-gated admin controls
+- Leaderboard moderation flags + season lock controls
+
+### Documentation
+- `docs/game-strategy.md`
+- `docs/architecture.md`
+
+### i18n Note
+- Core translations (32 keys) backed by Context pattern
+- Per-game translations (864+ keys across 13 games) in parallel JSON system
+- Quebec French conventions need significant improvement (0 "courriel", 0 "mot de passe")
