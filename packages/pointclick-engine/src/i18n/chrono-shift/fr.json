@@ -1,0 +1,35 @@
+{
+  "chronoshift": {
+    "title": "Labyrinthe ChronoShift",
+    "score": "Score",
+    "rewinds": "Retours",
+    "crystals": "Cristaux",
+    "rewinding": "Retour en cours...",
+    "controls": "WASD/Fl\u00e8ches : Bouger  |  R : Retour  |  E : D\u00e9placer mur",
+    "win": "Labyrinthe termin\u00e9\u00a0!",
+    "lose": "Partie termin\u00e9e",
+    "finalScore": "Score final",
+    "playAgain": "Rejouer"
+  },
+  "timeclone": {
+    "title": "Puzzle Clone Temporel",
+    "score": "Score",
+    "level": "Niveau",
+    "phase": "Phase",
+    "explore": "Explorer",
+    "recording": "Enregistrement des d\u00e9placements",
+    "cloneActive": "Clone actif",
+    "controls": "WASD/Fl\u00e8ches : Bouger | Atteignez la porte temporelle pour enregistrer | Le clone r\u00e9p\u00e8te votre chemin",
+    "win": "Harmonie temporelle atteinte\u00a0!",
+    "finalScore": "Score final",
+    "retry": "R\u00e9essayer",
+    "nextLevel": "Prochain puzzle",
+    "playAgain": "Rejouer",
+    "you": "Vous",
+    "clone": "Clone temporel",
+    "yourExit": "Votre sortie",
+    "cloneExit": "Sortie du clone",
+    "timegate": "Porte temporelle",
+    "switch": "Dalle interrupteur"
+  }
+}

@@ -92,8 +92,21 @@
           "skip": "Skip intro"
         },
         "bf1": {
-          "title": "Digestion",
-          "prompt": "Break down complex molecules into simple fuel."
+          "title": "Nutrient Matching",
+          "prompt": "Match each food to the primary nutrient it provides.",
+          "foods": {
+            "pasta": "Pasta",
+            "chicken": "Chicken",
+            "avocado": "Avocado"
+          },
+          "nutrients": {
+            "glucose": "Glucose (Carbs)",
+            "protein": "Protein",
+            "fats": "Healthy Fats"
+          },
+          "match": "Match",
+          "matched": "Matched!",
+          "solved": "All nutrients matched!"
         },
         "bf2": {
           "title": "Absorption",
@@ -156,9 +169,53 @@
           "p1": "Communication is fast and the body is protected."
         }
       },
-      "grow": {
-        "intro": {
-          "title": "Body Systems: Grow",
+    "space": {
+      "intro": {
+        "title": "Space Pack — Solar System",
+        "p1": "Explore the orbits and connections between celestial bodies.",
+        "p2": "How do planets, moons, and stars connect across vast distances?",
+        "cta": "Launch",
+        "skip": "Skip intro"
+      },
+      "s1": {
+        "title": "Orbits & Periods",
+        "prompt": "Connect the celestial bodies in their orbital paths. Rotate tiles and open valves to complete the connections.",
+        "hint": "The Sun connects to Mercury, then Venus, then Earth, then Mars.",
+        "bodies": {
+          "sun": "Sun",
+          "mercury": "Mercury",
+          "venus": "Venus",
+          "earth": "Earth",
+          "mars": "Mars"
+        },
+        "rotate": "Rotate",
+        "openValve": "Open orbit path",
+        "solved": "Orbital paths connected! The solar system flows.",
+        "continue": "Continue"
+      },
+      "s2": {
+        "title": "Light & Shadows",
+        "prompt": "Explore lunar phases and eclipses."
+      },
+      "s3": {
+        "title": "Habitable Clues",
+        "prompt": "Compare atmospheric hints across worlds."
+      },
+      "wrap": {
+        "title": "Space Explored",
+        "done": "You've mapped the inner solar system.",
+        "badge": "Space Navigator badge earned!"
+      },
+      "outro": {
+        "title": "Space Journey Complete",
+        "p1": "The solar system's rhythms are now familiar. Each orbit tells a story of gravity and time.",
+        "replay": "Replay Space Pack",
+        "home": "Back to Hub"
+      }
+    },
+    "grow": {
+      "intro": {
+        "title": "Body Systems: Grow",
           "p1": "Cells divide and specialize over time.",
           "cta": "Start simulation",
           "skip": "Skip intro"

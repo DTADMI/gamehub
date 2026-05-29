@@ -48,6 +48,39 @@
         "silver": "argent",
         "bronze": "bronze"
       }
+    },
+    "e2": {
+      "filing": {
+        "title": "Logique de classement",
+        "prompt": "Classez chaque jouet dans le bon classeur selon les indices.",
+        "hint": "Les poupées vont dans le classeur A, les voitures dans B, les puzzles dans C.",
+        "items": {
+          "doll": "Poupée de porcelaine",
+          "car": "Voiture à remontoir",
+          "puzzle": "Casse-tête"
+        },
+        "cabinets": {
+          "a": "Classeur A (Poupées)",
+          "b": "Classeur B (Véhicules)",
+          "c": "Classeur C (Puzzles)"
+        },
+        "sorted": "Tous les jouets sont bien classés ! La clé du classeur tourne.",
+        "reset": "Réinitialiser"
+      },
+      "shadow": {
+        "title": "Coffre d'ombre",
+        "prompt": "Alignez les formes pour projeter le bon motif d'ombre sur le mur.",
+        "hint": "Faites glisser chaque forme jusqu'à ce que l'ombre combinée corresponde au motif de la serrure.",
+        "solved": "L'ombre s'aligne parfaitement. Le coffre s'ouvre.",
+        "reset": "Réinitialiser les positions"
+      },
+      "wrap": {
+        "title": "Épisode 2 terminé",
+        "body": "Les secrets du bureau sont révélés. Vous avez trouvé les notes du commissaire.",
+        "medalEarned": "Médaille gagnée : Commis aux archives",
+        "continueE3": "Continuer vers l'Épisode 3",
+        "restart": "Recommencer"
+      }
     }
   }
 }

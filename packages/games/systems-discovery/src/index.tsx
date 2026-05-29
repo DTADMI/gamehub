@@ -71,6 +71,170 @@ const BreathPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) => {
   );
 };
 
+const NUTRIENT_TARGETS: Record<string, string> = {
+  pasta: "glucose",
+  chicken: "protein",
+  avocado: "fats",
+};
+
+const FuelMatchingPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) => {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [matched, setMatched] = useState<Record<string, string>>({});
+
+  const foods = ["pasta", "chicken", "avocado"];
+  const nutrients = ["glucose", "protein", "fats"];
+
+  const handleFoodClick = (food: string) => {
+    if (matched[food]) return;
+    setSelected(food);
+  };
+
+  const handleNutrientClick = (nutrient: string) => {
+    if (!selected || matched[selected]) return;
+    if (NUTRIENT_TARGETS[selected] === nutrient) {
+      const next = { ...matched, [selected]: nutrient };
+      setMatched(next);
+      setSelected(null);
+      if (Object.keys(next).length === foods.length) {
+        onSolved();
+      }
+    } else {
+      setSelected(null);
+    }
+  };
+
+  const foodKeys = Object.keys(NUTRIENT_TARGETS);
+
+  return (
+    <div className="mb-4 rounded-lg bg-amber-50 p-4">
+      <p className="mb-2 text-sm font-medium text-amber-800">{t("sysdisc.bod.fuel.bf1.prompt")}</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <p className="mb-2 text-xs font-medium text-amber-700">{t("sysdisc.bod.fuel.bf1.title")} — Foods</p>
+          <div className="flex flex-col gap-2">
+            {foods.map((food) => (
+              <button
+                key={food}
+                className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${
+                  matched[food]
+                    ? "border-green-400 bg-green-100"
+                    : selected === food
+                      ? "border-amber-500 bg-amber-100"
+                      : "border-amber-200 bg-white"
+                }`}
+                onClick={() => handleFoodClick(food)}
+                disabled={!!matched[food]}
+              >
+                {t(`sysdisc.bod.fuel.bf1.foods.${food}`)}
+                {matched[food] && (
+                  <span className="ml-2 text-green-600">→ {t(`sysdisc.bod.fuel.bf1.nutrients.${matched[food]}`)}</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 text-xs font-medium text-amber-700">Nutrients</p>
+          <div className="flex flex-col gap-2">
+            {nutrients.map((nutrient) => (
+              <button
+                key={nutrient}
+                className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${
+                  Object.values(matched).includes(nutrient)
+                    ? "border-green-400 bg-green-100"
+                    : "border-amber-200 bg-white"
+                }`}
+                onClick={() => handleNutrientClick(nutrient)}
+                disabled={Object.values(matched).includes(nutrient)}
+              >
+                {t(`sysdisc.bod.fuel.bf1.nutrients.${nutrient}`)}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      {Object.keys(matched).length === foodKeys.length && (
+        <p className="mt-2 text-center font-bold text-green-600">{t("sysdisc.bod.fuel.bf1.solved")}</p>
+      )}
+    </div>
+  );
+};
+
+const OrbitsPuzzle: React.FC<{ onSolved: () => void; gentle?: boolean }> = ({ onSolved, gentle }) => {
+  const [orbits, setOrbits] = React.useState<PipesState>(() =>
+    createPipesState(5, 1, [
+      { type: "straight", rotation: 0, source: true },
+      { type: "valve", rotation: 0, open: false },
+      { type: "straight", rotation: 0 },
+      { type: "valve", rotation: 0, open: false },
+      { type: "straight", rotation: 0, sink: true },
+    ]),
+  );
+
+  const rotateTile = (x: number) => {
+    const nextRotation = ((orbits.grid[x].rotation + 90) % 360) as 0 | 90 | 180 | 270;
+    const next = evaluatePipes(setTileRotation(orbits, x, 0, nextRotation));
+    setOrbits(next);
+    if (next.solved) onSolved();
+  };
+  const toggleValveTile = (x: number) => {
+    const tile = orbits.grid[x];
+    if (tile.type !== "valve") return;
+    const next = evaluatePipes(toggleValve(orbits, x, 0, !tile.open));
+    setOrbits(next);
+    if (next.solved) onSolved();
+  };
+  const bodyLabels = [t("sysdisc.space.s1.bodies.sun"), t("sysdisc.space.s1.bodies.mercury"), t("sysdisc.space.s1.bodies.venus"), t("sysdisc.space.s1.bodies.earth"), t("sysdisc.space.s1.bodies.mars")];
+  const bodyIcons = ["\u2600\uFE0F", "\uD83E\uDE90", "\uD83C\uDF10", "\uD83C\uDF0D", "\uD83D\uDD34"];
+
+  return (
+    <div className="mb-4 rounded-lg bg-slate-900 p-4">
+      <p className="mb-2 text-sm font-medium text-yellow-300">{t("sysdisc.space.s1.prompt")}</p>
+      {gentle && (
+        <p className="mb-2 text-sm text-gray-400">{t("sysdisc.space.s1.hint")}</p>
+      )}
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        {orbits.grid.map((tile, i) => (
+          <div key={i} className="flex flex-col items-center gap-1">
+            <span className="text-xs text-gray-300">{bodyLabels[i]}</span>
+            <span className="text-lg">{bodyIcons[i]}</span>
+            <div className="flex gap-1">
+              <button
+                className="min-h-[36px] min-w-[36px] rounded border border-gray-600 bg-slate-800 text-xs text-white"
+                onClick={() => rotateTile(i)}
+                aria-label={`Rotate ${bodyLabels[i]} tile`}
+              >
+                {t("sysdisc.space.s1.rotate")}
+              </button>
+              {tile.type === "valve" && (
+                <button
+                  className={`min-h-[36px] min-w-[36px] rounded border text-xs text-white ${tile.open ? "bg-emerald-600 border-emerald-400" : "bg-red-700 border-red-400"}`}
+                  onClick={() => toggleValveTile(i)}
+                >
+                  {tile.open ? "ON" : "OFF"}
+                </button>
+              )}
+            </div>
+            <span className="text-xs text-gray-500">{tile.rotation * 90}°</span>
+          </div>
+        ))}
+      </div>
+      {orbits.solved && (
+        <p className="mb-2 text-center font-bold text-green-400">
+          {t("sysdisc.space.s1.solved")}
+        </p>
+      )}
+      {orbits.errors && orbits.errors.length > 0 && (
+        <ul className="mb-2 list-disc pl-5 text-sm text-amber-400">
+          {orbits.errors.map((e, i2) => (
+            <li key={i2}>{e}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
 const scenes: Scene[] = [
   {
     id: "SD_INTRO",
@@ -355,6 +519,155 @@ const scenes: Scene[] = [
       );
     },
   },
+  // --- Space Pack ---
+  {
+    id: "SD_SPACE_INTRO",
+    title: t("sysdisc.space.intro.title") as string,
+    render: ({ go, setFlag }) => (
+      <div>
+        <p className="mb-2">{t("sysdisc.space.intro.p1")}</p>
+        <p className="mb-4 opacity-80">{t("sysdisc.space.intro.p2")}</p>
+        <div className="flex gap-2">
+          <button
+            className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+            onClick={() => {
+              setFlag("space.intro.seen", true);
+              go("S1");
+            }}
+          >
+            {t("sysdisc.space.intro.cta")}
+          </button>
+          <button
+            className="min-h-[44px] rounded border px-3 py-2"
+            onClick={() => {
+              setFlag("space.intro.seen", true);
+              go("S1");
+            }}
+          >
+            {t("sysdisc.space.intro.skip")}
+          </button>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "S1",
+    title: t("sysdisc.space.s1.title") as string,
+    render: ({ go, setFlag, state }) => {
+      const flags = state.ctx.flags;
+      const gentle = Boolean(flags["gentle"]);
+      const solved = Boolean(flags["space.s1.solved"]);
+      return (
+        <div>
+          <OrbitsPuzzle
+            gentle={gentle}
+            onSolved={() => setFlag("space.s1.solved", true)}
+          />
+          <div className="mt-3">
+            <button
+              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50"
+              disabled={!solved}
+              onClick={() => go("S2")}
+            >
+              {t("sysdisc.space.s1.continue")}
+            </button>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    id: "S2",
+    title: t("sysdisc.space.s2.title") as string,
+    render: ({ go }) => (
+      <div>
+        <p className="mb-2">{t("sysdisc.space.s2.prompt")}</p>
+        <div className="mt-3">
+          <button
+            className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+            onClick={() => go("S3")}
+          >
+            {t("sysdisc.bod.common.continue")}
+          </button>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "S3",
+    title: t("sysdisc.space.s3.title") as string,
+    render: ({ go }) => (
+      <div>
+        <p className="mb-2">{t("sysdisc.space.s3.prompt")}</p>
+        <div className="mt-3">
+          <button
+            className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+            onClick={() => go("SPACE_WRAP")}
+          >
+            {t("sysdisc.bod.common.reveal")}
+          </button>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "SPACE_WRAP",
+    title: t("sysdisc.space.wrap.title") as string,
+    render: ({ state, setFlag, go }) => {
+      const flags = state.ctx.flags;
+      if (!flags["space.badge"]) {
+        setFlag("space.badge", true);
+      }
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.space.wrap.done")}</p>
+          <p className="mb-2 text-sm font-bold text-amber-600">
+            {t("sysdisc.space.wrap.badge")}
+          </p>
+          <div className="mt-3 flex gap-2">
+            <button
+              className="min-h-[44px] rounded border px-3 py-2"
+              onClick={() => go("SD_SPACE_OUTRO")}
+            >
+              {t("sysdisc.space.outro.title")}
+            </button>
+            <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => go("WRAP")}>
+              {t("sysdisc.bod.common.home")}
+            </button>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    id: "SD_SPACE_OUTRO",
+    title: t("sysdisc.space.outro.title") as string,
+    render: ({ go, setFlag }) => (
+      <div>
+        <p className="mb-2">{t("sysdisc.space.outro.p1")}</p>
+        <div className="flex gap-2">
+          <button
+            className="min-h-[44px] rounded border px-3 py-2"
+            onClick={() => {
+              setFlag("space.outro.seen", true);
+              go("S1");
+            }}
+          >
+            {t("sysdisc.space.outro.replay")}
+          </button>
+          <button
+            className="min-h-[44px] rounded border px-3 py-2"
+            onClick={() => {
+              setFlag("space.outro.seen", true);
+              go("WRAP");
+            }}
+          >
+            {t("sysdisc.space.outro.home")}
+          </button>
+        </div>
+      </div>
+    ),
+  },
   // --- Body Systems (BOD) scaffolds: Breath sub-pack ---
   {
     id: "SD_BOD_BREATH_INTRO",
@@ -574,10 +887,14 @@ const scenes: Scene[] = [
     render: ({ go, setFlag, state }) => {
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
+      const solved = Boolean(flags["bod.fuel.puzzleSolved"]);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.fuel.bf1.prompt")}</p>
+
+          <FuelMatchingPuzzle onSolved={() => setFlag("bod.fuel.puzzleSolved", true)} />
+
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
             <button
@@ -595,7 +912,8 @@ const scenes: Scene[] = [
           </div>
           <div className="mt-3">
             <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50"
+              disabled={!solved}
               onClick={() => go("BF2")}
             >
               {t("sysdisc.bod.common.continue")}

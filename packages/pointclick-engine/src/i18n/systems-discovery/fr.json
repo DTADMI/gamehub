@@ -92,8 +92,21 @@
           "skip": "Passer l'intro"
         },
         "bf1": {
-          "title": "Digestion",
-          "prompt": "Décomposez les molécules complexes en carburant simple."
+          "title": "Association de nutriments",
+          "prompt": "Associez chaque aliment au nutriment principal qu'il fournit.",
+          "foods": {
+            "pasta": "Pâtes",
+            "chicken": "Poulet",
+            "avocado": "Avocat"
+          },
+          "nutrients": {
+            "glucose": "Glucose (Glucides)",
+            "protein": "Protéines",
+            "fats": "Gras sains"
+          },
+          "match": "Associer",
+          "matched": "Associé\u00a0!",
+          "solved": "Tous les nutriments associés\u00a0!"
         },
         "bf2": {
           "title": "Absorption",
@@ -156,9 +169,53 @@
           "p1": "La communication est rapide et le corps est protégé."
         }
       },
-      "grow": {
-        "intro": {
-          "title": "Systèmes du corps : Croissance",
+    "space": {
+      "intro": {
+        "title": "Pack Espace — Système solaire",
+        "p1": "Explorez les orbites et les connexions entre les corps célestes.",
+        "p2": "Comment les planètes, les lunes et les étoiles se connectent-elles à travers de vastes distances ?",
+        "cta": "Lancer",
+        "skip": "Passer l'intro"
+      },
+      "s1": {
+        "title": "Orbites et périodes",
+        "prompt": "Reliez les corps célestes dans leurs trajectoires orbitales. Faites pivoter les tuiles et ouvrez les vannes pour compléter les connexions.",
+        "hint": "Le Soleil se connecte à Mercure, puis Vénus, puis la Terre, puis Mars.",
+        "bodies": {
+          "sun": "Soleil",
+          "mercury": "Mercure",
+          "venus": "Vénus",
+          "earth": "Terre",
+          "mars": "Mars"
+        },
+        "rotate": "Pivoter",
+        "openValve": "Ouvrir le chemin orbital",
+        "solved": "Trajectoires orbitales connectées ! Le système solaire circule.",
+        "continue": "Continuer"
+      },
+      "s2": {
+        "title": "Lumière et ombres",
+        "prompt": "Explorez les phases lunaires et les éclipses."
+      },
+      "s3": {
+        "title": "Indices habitables",
+        "prompt": "Comparez les indices atmosphériques entre les mondes."
+      },
+      "wrap": {
+        "title": "Espace exploré",
+        "done": "Vous avez cartographié le système solaire interne.",
+        "badge": "Badge Navigateur spatial gagné !"
+      },
+      "outro": {
+        "title": "Voyage spatial terminé",
+        "p1": "Les rythmes du système solaire vous sont maintenant familiers. Chaque orbite raconte une histoire de gravité et de temps.",
+        "replay": "Rejouer le Pack Espace",
+        "home": "Retour au Hub"
+      }
+    },
+    "grow": {
+      "intro": {
+        "title": "Systèmes du corps : Croissance",
           "p1": "Les cellules se divisent et se spécialisent avec le temps.",
           "cta": "Lancer simulation",
           "skip": "Passer l'intro"

@@ -1,8 +1,11 @@
 "use client";
-import { enableGameKeyCapture, GameHUD, getGame, isGameLaunchable } from "@gamehub/game-platform";
+import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
+import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
+import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
+import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const QuantumArchitectGame = dynamic(
   () => {
@@ -19,30 +22,44 @@ const QuantumArchitectGame = dynamic(
 );
 
 export default function QuantumArchitectPage() {
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const [seed, setSeed] = useState(0);
+  const [lastScore, setLastScore] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const el = rootRef.current;
-    el?.focus();
-    const cleanup = enableGameKeyCapture({ rootEl: el ?? undefined });
-    return () => cleanup();
-  }, []);
+    const handler = async (e: Event) => {
+      const detail = (e as CustomEvent).detail as { score?: number } | undefined;
+      const score = detail?.score ?? lastScore;
+      if (user && score > 0) {
+        try {
+          await submitScore({
+            gameType: "PLATFORMER",
+            score,
+            metadata: { client: "web", subgame: "quantum-architect" },
+          });
+        } catch (err) {
+          console.warn("submitScore failed (quantum-architect)", err);
+        }
+      }
+    };
+    window.addEventListener("quantum-architect:gameover", handler as EventListener);
+    window.addEventListener("game:gameover", handler as EventListener);
+    return () => {
+      window.removeEventListener("quantum-architect:gameover", handler as EventListener);
+      window.removeEventListener("game:gameover", handler as EventListener);
+    };
+  }, [user, lastScore]);
 
   return (
-    <div
-      ref={rootRef}
-      className="relative min-h-[80vh] outline-none focus:outline-none"
-      tabIndex={0}
-      role="application"
-      aria-label="Quantum Architect game"
+    <GameShell
+      ariaLabel="Quantum Architect game"
+      tips="WASD/Arrows to move | Space to observe nearest platform"
+      onRestartAction={() => setSeed((s) => s + 1)}
     >
       <QuantumArchitectGame key={seed} />
-      <GameHUD
-        onPauseToggleAction={() => {}}
-        onRestartAction={() => setSeed((s) => s + 1)}
-        tips="WASD/Arrows to move • Space to observe nearest platform"
-      />
-    </div>
+      <div className="px-4">
+        <MiniBoard gameType="PLATFORMER" limit={10} />
+      </div>
+    </GameShell>
   );
 }

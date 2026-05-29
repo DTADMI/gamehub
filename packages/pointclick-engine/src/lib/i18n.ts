@@ -20,6 +20,12 @@ import sys_en from "../i18n/systems-discovery/en.json";
 import sys_fr from "../i18n/systems-discovery/fr.json";
 import tower_defense_en from "../i18n/tower-defense/en.json";
 import tower_defense_fr from "../i18n/tower-defense/fr.json";
+import chronoshift_en from "../i18n/chrono-shift/en.json";
+import chronoshift_fr from "../i18n/chrono-shift/fr.json";
+import elementalconflux_en from "../i18n/elemental-conflux/en.json";
+import elementalconflux_fr from "../i18n/elemental-conflux/fr.json";
+import quantumarchitect_en from "../i18n/quantum-architect/en.json";
+import quantumarchitect_fr from "../i18n/quantum-architect/fr.json";
 import tme_en from "../i18n/toymaker-escape/en.json";
 import tme_fr from "../i18n/toymaker-escape/fr.json";
 
@@ -46,6 +52,7 @@ const dictionaries: Record<"en" | "fr", Dict> = {
     breakout_en, memory_en, snake_en,
     checkers_en, chess_en, bubble_pop_en,
     platformer_en, tower_defense_en,
+    chronoshift_en, elementalconflux_en, quantumarchitect_en,
   ),
   fr: merge(
     {} as any,
@@ -53,6 +60,7 @@ const dictionaries: Record<"en" | "fr", Dict> = {
     breakout_fr, memory_fr, snake_fr,
     checkers_fr, chess_fr, bubble_pop_fr,
     platformer_fr, tower_defense_fr,
+    chronoshift_fr, elementalconflux_fr, quantumarchitect_fr,
   ),
 };
 

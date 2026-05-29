@@ -32,6 +32,56 @@
       "title": "The Inner Chamber",
       "body": "The air is still here. You've passed the first trial.",
       "restart": "Restart"
+    },
+    "s1": {
+      "title": "Night Before",
+      "body": "The living room is quiet. Wrapping paper and tags are scattered on the table. One tag has torn apart — reassemble it.",
+      "prompt": "Assemble the magic tags in the correct order:",
+      "tags": {
+        "star": "Star Tag",
+        "heart": "Heart Tag",
+        "bell": "Bell Tag"
+      },
+      "hint": "Think about the order they were placed on gifts: star first, then heart, then bell.",
+      "solved": "The handwriting matches mom's note on the fridge. Interesting...",
+      "keepQuiet": "Keep this to yourself for now",
+      "askParent": "Ask a leading question at dinner",
+      "continue": "Continue"
+    },
+    "s2": {
+      "title": "Tooth Tradition",
+      "body": "In your bedroom, you find two notes — one from the 'Tooth Fairy' and one from a parent. Compare the letters.",
+      "prompt": "Match the letters that look the same across both notes:",
+      "lettersFound": "Letters matched",
+      "keepNote": "Keep the note as evidence",
+      "leaveNote": "Leave it be for now",
+      "solved": "The same handwriting appears on both notes. A pattern is emerging."
+    },
+    "s3": {
+      "title": "Proof Moment",
+      "body": "You overhear muffled voices from the kitchen. There's a receipt on the counter and a gift bag in the closet. What do you believe?",
+      "prompt": "The evidence is piling up. How do you feel about what you're discovering?",
+      "confrontNow": "Confront your parents now — you want the truth",
+      "saveLater": "Save the discovery for later — you're not in a hurry",
+      "gentleNote": "Traditions are a way families show love. The magic lives in kindness.",
+      "continue": "Continue to the Rite"
+    },
+    "epilogue": {
+      "title": "The Rite of Discovery",
+      "body": "Your parents sit down with you. They smile warmly. \"We knew this day would come,\" they say. \"Now you're part of the tradition — the helpers who keep the magic alive for younger ones.\"",
+      "proud": "You feel proud. You're in on the secret now — a rite of passage.",
+      "cozy": "You feel cozy. The magic didn't disappear — it just changed shape.",
+      "badge": "Helper Badge earned! You're now part of the circle of kindness.",
+      "restart": "Restart Adventure",
+      "viewOutro": "View Outro"
+    },
+    "outro": {
+      "title": "Discovery Complete",
+      "body": "You've completed your Rite of Discovery. Every family tradition is a choice to create wonder. Now you can be a wonder-maker too.",
+      "replay": "Play again from the start",
+      "otherBranch": "Try the other S3 branch",
+      "gentleToggle": "Toggle Gentle Mode for next run",
+      "ngPlus": "New Game+: Mentor Mini"
     }
   }
 }

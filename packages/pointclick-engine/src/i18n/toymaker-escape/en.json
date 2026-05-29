@@ -48,6 +48,39 @@
         "silver": "silver",
         "bronze": "bronze"
       }
+    },
+    "e2": {
+      "filing": {
+        "title": "Filing Logic",
+        "prompt": "Sort each toy into the correct cabinet based on the clues.",
+        "hint": "Dolls go to Cabinet A, cars to Cabinet B, puzzles to Cabinet C.",
+        "items": {
+          "doll": "Porcelain Doll",
+          "car": "Wind-up Car",
+          "puzzle": "Jigsaw Puzzle"
+        },
+        "cabinets": {
+          "a": "Cabinet A (Dolls)",
+          "b": "Cabinet B (Vehicles)",
+          "c": "Cabinet C (Puzzles)"
+        },
+        "sorted": "All toys sorted correctly! The filing-cabinet key turns.",
+        "reset": "Reset"
+      },
+      "shadow": {
+        "title": "Shadow Safe",
+        "prompt": "Align the shapes to cast the correct shadow pattern on the wall.",
+        "hint": "Drag each shape until the combined shadow matches the safe's keyhole pattern.",
+        "solved": "The shadow aligns perfectly. The safe clicks open.",
+        "reset": "Reset positions"
+      },
+      "wrap": {
+        "title": "Episode 2 Complete",
+        "body": "The office secrets are revealed. You found the commissioner's notes.",
+        "medalEarned": "Medal earned: File Clerk",
+        "continueE3": "Continue to Episode 3",
+        "restart": "Restart"
+      }
     }
   }
 }

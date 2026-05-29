@@ -32,6 +32,56 @@
       "title": "La chambre intérieure",
       "body": "L'air est immobile ici. Vous avez passé la première épreuve.",
       "restart": "Recommencer"
+    },
+    "s1": {
+      "title": "La veille au soir",
+      "body": "Le salon est calme. Du papier d'emballage et des étiquettes sont éparpillés sur la table. Une étiquette s'est déchirée — reassemblez-la.",
+      "prompt": "Assemblez les étiquettes magiques dans le bon ordre :",
+      "tags": {
+        "star": "Étiquette étoile",
+        "heart": "Étiquette cœur",
+        "bell": "Étiquette cloche"
+      },
+      "hint": "Pensez à l'ordre dans lequel elles ont été placées sur les cadeaux : étoile d'abord, puis cœur, puis cloche.",
+      "solved": "L'écriture correspond à celle de la note de maman sur le frigo. Intéressant...",
+      "keepQuiet": "Garder ça pour toi pour l'instant",
+      "askParent": "Poser une question subtile au souper",
+      "continue": "Continuer"
+    },
+    "s2": {
+      "title": "La tradition de la dent",
+      "body": "Dans ta chambre, tu trouves deux notes — une de la « Fée des dents » et une d'un parent. Compare les lettres.",
+      "prompt": "Associe les lettres qui se ressemblent sur les deux notes :",
+      "lettersFound": "Lettres associées",
+      "keepNote": "Garder la note comme preuve",
+      "leaveNote": "Laisser ça de côté pour l'instant",
+      "solved": "La même écriture apparaît sur les deux notes. Un motif se dessine."
+    },
+    "s3": {
+      "title": "Le moment de vérité",
+      "body": "Tu entends des voix étouffées depuis la cuisine. Il y a un reçu sur le comptoir et un sac-cadeau dans le placard. Que crois-tu ?",
+      "prompt": "Les preuves s'accumulent. Comment te sens-tu face à cette découverte ?",
+      "confrontNow": "Confronter tes parents maintenant — tu veux la vérité",
+      "saveLater": "Garder la découverte pour plus tard — tu n'es pas pressé",
+      "gentleNote": "Les traditions sont une façon pour les familles de montrer leur amour. La magie vit dans la bienveillance.",
+      "continue": "Continuer vers le Rite"
+    },
+    "epilogue": {
+      "title": "Le rite de découverte",
+      "body": "Tes parents s'assoient avec toi. Ils sourient chaleureusement. « Nous savions que ce jour viendrait, » disent-ils. « Maintenant tu fais partie de la tradition — les aides qui gardent la magie vivante pour les plus jeunes. »",
+      "proud": "Tu te sens fier. Tu es dans le secret maintenant — un rite de passage.",
+      "cozy": "Tu te sens bien. La magie n'a pas disparu — elle a juste changé de forme.",
+      "badge": "Badge d'Aide gagné ! Tu fais maintenant partie du cercle de la bienveillance.",
+      "restart": "Recommencer l'aventure",
+      "viewOutro": "Voir la conclusion"
+    },
+    "outro": {
+      "title": "Découverte terminée",
+      "body": "Tu as complété ton Rite de Découverte. Chaque tradition familiale est un choix de créer de l'émerveillement. Maintenant tu peux être un créateur de merveilles aussi.",
+      "replay": "Rejouer depuis le début",
+      "otherBranch": "Essayer l'autre branche de S3",
+      "gentleToggle": "Activer le mode doux pour la prochaine partie",
+      "ngPlus": "Nouvelle Partie+ : Mentor Mini"
     }
   }
 }

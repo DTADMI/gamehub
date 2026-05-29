@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { t } from "@gamehub/game-platform/lib/i18n";
 
 type CellData = {
   top: boolean;
@@ -280,7 +281,13 @@ function MazeScene({
   );
 }
 
-export default function ChronoShiftGame() {
+export default function ChronoShiftGame({
+  onScoreUpdate,
+  onGameOver,
+}: {
+  onScoreUpdate?: (score: number) => void;
+  onGameOver?: (score: number, won: boolean) => void;
+}) {
   const [score, setScore] = useState(0);
   const [rewindsRemaining, setRewindsRemaining] = useState(MAX_REWINDS);
   const [crystalsCollected, setCrystalsCollected] = useState(0);
@@ -451,6 +458,16 @@ export default function ChronoShiftGame() {
   );
 
   useEffect(() => {
+    onScoreUpdate?.(score);
+  }, [score]);
+
+  useEffect(() => {
+    if (gameOver) {
+      onGameOver?.(score, gameWon);
+    }
+  }, [gameOver]);
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
 
@@ -572,25 +589,25 @@ export default function ChronoShiftGame() {
         }}
       >
         <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>
-          ChronoShift Labyrinth
+          {t("chronoshift.title")}
         </div>
         <div>
-          Score: <span style={{ color: "#00ff88" }}>{score}</span>
+          {t("chronoshift.score")}: <span style={{ color: "#00ff88" }}>{score}</span>
         </div>
         <div>
-          Rewinds:{" "}
+          {t("chronoshift.rewinds")}:{" "}
           <span style={{ color: rewindsRemaining > 0 ? "#ffaa00" : "#ff4444" }}>
             {rewindsRemaining}
           </span>
         </div>
         <div>
-          Crystals:{" "}
+          {t("chronoshift.crystals")}:{" "}
           <span style={{ color: "#00ff88" }}>
             {crystalsCollected}/{TOTAL_CRYSTALS}
           </span>
         </div>
         {rewindActive && (
-          <div style={{ color: "#ffaa00", marginTop: 4 }}>Rewinding...</div>
+          <div style={{ color: "#ffaa00", marginTop: 4 }}>{t("chronoshift.rewinding")}</div>
         )}
       </div>
 
@@ -611,7 +628,7 @@ export default function ChronoShiftGame() {
           zIndex: 10,
         }}
       >
-        WASD/Arrows: Move &nbsp;|&nbsp; R: Rewind &nbsp;|&nbsp; E: Shift Wall
+        {t("chronoshift.controls")}
       </div>
 
       {gameOver && (
@@ -635,10 +652,10 @@ export default function ChronoShiftGame() {
               marginBottom: 16,
             }}
           >
-            {gameWon ? "Maze Complete!" : "Game Over"}
+              {gameWon ? t("chronoshift.win") : t("chronoshift.lose")}
           </div>
           <div style={{ color: "#c0d0ff", fontSize: 18, marginBottom: 24 }}>
-            Final Score: {score}
+            {t("chronoshift.finalScore")}: {score}
           </div>
           <div style={{ color: "#8899bb", fontSize: 14, marginBottom: 24 }}>
             Crystals: {crystalsCollected}/{TOTAL_CRYSTALS} &nbsp;|&nbsp;
@@ -657,7 +674,7 @@ export default function ChronoShiftGame() {
               fontFamily: "system-ui, sans-serif",
             }}
           >
-            Play Again
+            {t("chronoshift.playAgain")}
           </button>
         </div>
       )}

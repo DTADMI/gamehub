@@ -1,0 +1,21 @@
+{
+  "quantumarchitect": {
+    "title": "Architecte quantique",
+    "score": "Score",
+    "observations": "Observations",
+    "quantumProb": "Probabilit\u00e9\u00a0:",
+    "controls": "WASD/Fl\u00e8ches pour bouger | Espace pour observer | Ramassez les cl\u00e9s pour ouvrir les portes",
+    "begin": "Commencer l'exp\u00e9rience",
+    "level": "Niveau",
+    "win": "Fonction d'onde r\u00e9solue\u00a0!",
+    "finalScore": "Score final",
+    "totalObs": "Total des observations",
+    "newExperiment": "Nouvelle exp\u00e9rience",
+    "subtitle": "Manipulez les \u00e9tats quantiques, ramassez les cl\u00e9s et naviguez les plateformes intriqu\u00e9es.",
+    "keys": "Cl\u00e9s",
+    "gateLocked": "Verrouill\u00e9",
+    "gateOpen": "Ouvert",
+    "entangled": "Intriqu\u00e9",
+    "bias": "Biais"
+  }
+}

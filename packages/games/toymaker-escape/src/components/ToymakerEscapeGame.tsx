@@ -28,14 +28,26 @@ import {
   evaluatePipes,
   type PipesState,
   setTileRotation,
-  type Tile,
   toggleValve,
+  type Tile,
 } from "@games/pointclick-engine/puzzles/pipes";
 import {
   createSequenceState,
   pressSeq as pressSequenceKey,
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
+import {
+  createCipherState,
+  submitCipher,
+  updateCipherInput,
+  type CipherState,
+} from "@games/pointclick-engine/puzzles/cipher";
+import {
+  createAnagramState,
+  submitAnagram,
+  updateAnagramInput,
+  type AnagramState,
+} from "@games/pointclick-engine/puzzles/anagram";
 import {
   createWiresState,
   hasWiresCrossing,
@@ -63,6 +75,12 @@ type TmeSaveV1 = {
     };
   };
   inventory: string[];
+};
+
+const FILING_TARGETS: Record<string, string> = {
+  doll: "a",
+  car: "b",
+  puzzle: "c",
 };
 
 export const ToymakerEscapeGame: React.FC = () => {
@@ -106,8 +124,124 @@ export const ToymakerEscapeGame: React.FC = () => {
         },
         choices: [
           {
+            id: "continueE2",
+            text: { en: "Continue to Episode 2 — The Office", fr: "Continuer vers l'Épisode 2 — Le Bureau" },
+            target: "E2_INTRO",
+          },
+          {
             id: "restart",
             text: { en: "Restart", fr: "Recommencer" },
+            target: "INTRO",
+            effect: () => ({}),
+          },
+        ],
+      },
+      E2_INTRO: {
+        id: "E2_INTRO",
+        title: { en: "Episode 2 — Office & Secret Stair", fr: "Épisode 2 — Bureau & Escalier secret" },
+        body: {
+          en: "You step into the toymaker's office. Filing cabinets line the walls. A coded letter sits on the desk.",
+          fr: "Vous entrez dans le bureau du fabricant. Des classeurs tapissent les murs. Une lettre codée repose sur le bureau.",
+        },
+        choices: [
+          {
+            id: "examine",
+            text: { en: "Examine the coded letter", fr: "Examiner la lettre codée" },
+            target: "E2_CIPHER",
+          },
+        ],
+      },
+      E2_CIPHER: {
+        id: "E2_CIPHER",
+        title: { en: "Episode 2 — Correspondence Cipher", fr: "Épisode 2 — Chiffre de correspondance" },
+        body: {
+          en: "A coded message was left in the workshop files. Decode it to find the filing cabinet key.",
+          fr: "Un message codé a été laissé dans les dossiers de l'atelier. Décodez-le pour trouver la clé du classeur.",
+        },
+        choices: [
+          {
+            id: "solve",
+            text: { en: "Decode the cipher", fr: "Décoder le chiffre" },
+            target: "E2_FILING",
+            effect: (ctx) => ({ ...ctx, cipherSolved: true }),
+          },
+        ],
+      },
+      E2_FILING: {
+        id: "E2_FILING",
+        title: { en: "Episode 2 — Filing Logic", fr: "Épisode 2 — Logique de classement" },
+        body: {
+          en: "The filing cabinets need to be organized. Sort the toys into the correct cabinets.",
+          fr: "Les classeurs doivent être organisés. Triez les jouets dans les bons classeurs.",
+        },
+        choices: [
+          {
+            id: "solve",
+            text: { en: "Open the safe", fr: "Ouvrir le coffre" },
+            target: "E2_SHADOW",
+            effect: (ctx) => ({ ...ctx, filingSolved: true }),
+          },
+        ],
+      },
+      E2_SHADOW: {
+        id: "E2_SHADOW",
+        title: { en: "Episode 2 — Shadow Safe", fr: "Épisode 2 — Coffre d'ombre" },
+        body: {
+          en: "A strange safe sits in the corner. Shadows cast from objects must align to unlock it.",
+          fr: "Un coffre étrange se trouve dans le coin. Les ombres projetées par les objets doivent s'aligner pour l'ouvrir.",
+        },
+        choices: [
+          {
+            id: "solve",
+            text: { en: "Open the files", fr: "Ouvrir les dossiers" },
+            target: "E2_WRAP",
+            effect: (ctx) => ({ ...ctx, shadowSolved: true }),
+          },
+        ],
+      },
+      E2_WRAP: {
+        id: "E2_WRAP",
+        title: { en: "Wrap — Episode 2 Complete", fr: "Conclusion — Épisode 2 terminé" },
+        body: {
+          en: "The office secrets are revealed. You found the commissioner's notes.",
+          fr: "Les secrets du bureau sont révélés. Vous avez trouvé les notes du commissaire.",
+        },
+        choices: [
+          {
+            id: "restart",
+            text: { en: "Restart adventure", fr: "Recommencer l'aventure" },
+            target: "INTRO",
+            effect: () => ({}),
+          },
+        ],
+      },
+      E2_ANAGRAM: {
+        id: "E2_ANAGRAM",
+        title: { en: "Episode 3 — Fridge Anagram", fr: "Épisode 3 — Anagramme du frigo" },
+        body: {
+          en: "The fridge magnets spell a scrambled word. Rearrange them to unlock the cool storage.",
+          fr: "Les aimants du frigo forment un mot mélangé. Réorganisez-les pour déverrouiller l'espace réfrigéré.",
+        },
+        choices: [
+          {
+            id: "solve",
+            text: { en: "Solve anagram", fr: "Résoudre l'anagramme" },
+            target: "E3_WRAP",
+            effect: (ctx) => ({ ...ctx, anagramSolved: true }),
+          },
+        ],
+      },
+      E3_WRAP: {
+        id: "E3_WRAP",
+        title: { en: "Wrap — Episode 3", fr: "Conclusion — Épisode 3" },
+        body: {
+          en: "All puzzles solved. The workshop's secrets are yours. Medal earned: Toymaker's Apprentice.",
+          fr: "Tous les puzzles sont résolus. Les secrets de l'atelier sont à vous. Médaille: Apprenti fabricant.",
+        },
+        choices: [
+          {
+            id: "restart",
+            text: { en: "Restart adventure", fr: "Recommencer l'aventure" },
             target: "INTRO",
             effect: () => ({}),
           },
@@ -117,7 +251,6 @@ export const ToymakerEscapeGame: React.FC = () => {
     [],
   );
 
-  // Load v1 save (frontend-only). Fallback to minimal defaults.
   const initialSave = (() => {
     try {
       const payload = versionedLoad<TmeSaveV1>(SAVE_KEY);
@@ -135,7 +268,6 @@ export const ToymakerEscapeGame: React.FC = () => {
     }),
   );
 
-  // Wires mini state (simple 2×2 example for stub UI)
   const [wires, setWires] = useState<WiresState>(() =>
     createWiresState(["A1", "A2"], ["B1", "B2"], {
       red: [{ from: "A1", to: "B2" }],
@@ -143,7 +275,6 @@ export const ToymakerEscapeGame: React.FC = () => {
     }),
   );
 
-  // Pipes mini state — small 3×1 with a valve in middle
   const initialTiles: Tile[] = [
     { type: "straight", rotation: 0, source: true },
     { type: "valve", rotation: 0, open: false },
@@ -151,7 +282,6 @@ export const ToymakerEscapeGame: React.FC = () => {
   ];
   const [pipes, setPipes] = useState<PipesState>(() => createPipesState(3, 1, initialTiles));
   const [keypad, setKeypad] = useState(() => createKeypadState());
-  // Simple gears mini: input → idler → output, with a target ratio of 1/3
   const [gears, setGears] = useState<GearsState>(() =>
     createGearsState(
       [
@@ -168,12 +298,34 @@ export const ToymakerEscapeGame: React.FC = () => {
       1 / 3,
     ),
   );
-
   const [sorter, setSorter] = useState<SequenceState>(() =>
     createSequenceState(["red", "blue", "green"], { lives: 5 }),
   );
 
-  // Persist with a small idempotency guard to reduce redundant writes
+  const [cipher, setCipher] = useState<CipherState>(() =>
+    createCipherState("WORKSHOP", "A simple shift cipher. A becomes X, B becomes Y..."),
+  );
+  const [anagram, setAnagram] = useState<AnagramState>(() =>
+    createAnagramState("REFRIGERATOR"),
+  );
+
+  const [filing, setFiling] = useState<Record<string, string>>({});
+  const [filingSelected, setFilingSelected] = useState<string | null>(null);
+
+  const filingItems = ["doll", "car", "puzzle"];
+  const filingCabinets = ["a", "b", "c"];
+  const filingAllDone = Object.keys(filing).length === filingItems.length &&
+    filingItems.every((item) => filing[item] === FILING_TARGETS[item]);
+  const filingSolved = !!ctx.flags["filing.solved"] || filingAllDone;
+
+  const [shadowPositions, setShadowPositions] = useState({
+    circle: { x: 80, y: 80 },
+    square: { x: 200, y: 80 },
+    triangle: { x: 320, y: 80 },
+  });
+  const [shadowSolved, setShadowSolved] = useState(false);
+  const shadowCanvasRef = useRef<HTMLCanvasElement>(null);
+
   const lastSavedRef = useRef<string | null>(null);
   useEffect(() => {
     const data: TmeSaveV1 = {
@@ -188,7 +340,6 @@ export const ToymakerEscapeGame: React.FC = () => {
     }
   }, [sceneId, ctx]);
 
-  // Auto-award a simple medal for E1 once a gate is solved and the latch is revealed.
   useEffect(() => {
     const flags: any = (ctx as any).flags || {};
     const gateSolved = !!(flags["gears.solved"] || flags["wires.solved"] || flags["pipes.solved"]);
@@ -203,6 +354,89 @@ export const ToymakerEscapeGame: React.FC = () => {
     const level = hintsUsed === 0 ? "gold" : hintsUsed === 1 ? "silver" : "bronze";
     setCtx((c) => effects.setFlag(`medals.e1`, level as any)(ensureCtx(c)));
   }, [ctx]);
+
+  useEffect(() => {
+    if (sceneId !== "E2_SHADOW") return;
+    const canvas = shadowCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx2d = canvas.getContext("2d");
+    if (!ctx2d) return;
+
+    const render = () => {
+      ctx2d.clearRect(0, 0, 480, 200);
+      ctx2d.fillStyle = "#1a1a2e";
+      ctx2d.fillRect(0, 0, 480, 200);
+
+      ctx2d.fillStyle = "#ffd700";
+      ctx2d.font = "12px monospace";
+      ctx2d.fillText(
+        lang === "fr" ? "Alignez les formes pour le contour cible" : "Align shapes to match the target outline",
+        10, 15,
+      );
+
+      ctx2d.strokeStyle = "#556";
+      ctx2d.lineWidth = 2;
+      ctx2d.setLineDash([6, 4]);
+      ctx2d.beginPath();
+      ctx2d.roundRect(140, 120, 200, 50, 8);
+      ctx2d.stroke();
+      ctx2d.setLineDash([]);
+
+      const cs = shadowPositions.circle;
+      ctx2d.fillStyle = "rgba(220,100,100,0.7)";
+      ctx2d.beginPath();
+      ctx2d.arc(cs.x, cs.y, 25, 0, Math.PI * 2);
+      ctx2d.fill();
+      ctx2d.strokeStyle = "#e88";
+      ctx2d.lineWidth = 2;
+      ctx2d.stroke();
+
+      const ss = shadowPositions.square;
+      ctx2d.fillStyle = "rgba(100,220,100,0.7)";
+      ctx2d.fillRect(ss.x - 25, ss.y - 25, 50, 50);
+      ctx2d.strokeStyle = "#8e8";
+      ctx2d.lineWidth = 2;
+      ctx2d.strokeRect(ss.x - 25, ss.y - 25, 50, 50);
+
+      const ts = shadowPositions.triangle;
+      ctx2d.fillStyle = "rgba(100,100,220,0.7)";
+      ctx2d.beginPath();
+      ctx2d.moveTo(ts.x, ts.y - 30);
+      ctx2d.lineTo(ts.x + 26, ts.y + 22);
+      ctx2d.lineTo(ts.x - 26, ts.y + 22);
+      ctx2d.closePath();
+      ctx2d.fill();
+      ctx2d.strokeStyle = "#88e";
+      ctx2d.lineWidth = 2;
+      ctx2d.stroke();
+
+      if (shadowSolved || ctx.flags["shadow.solved"]) {
+        ctx2d.fillStyle = "#4f4";
+        ctx2d.font = "bold 14px monospace";
+        ctx2d.fillText(
+          lang === "fr" ? "Ombre alignée !" : "Shadow aligned!",
+          340, 15,
+        );
+      }
+    };
+
+    render();
+  }, [sceneId, shadowPositions, shadowSolved, ctx.flags, lang]);
+
+  const checkShadowSolve = () => {
+    const valid =
+      shadowPositions.circle.x >= 150 && shadowPositions.circle.x <= 170 &&
+      shadowPositions.circle.y >= 110 && shadowPositions.circle.y <= 130 &&
+      shadowPositions.square.x >= 210 && shadowPositions.square.x <= 230 &&
+      shadowPositions.square.y >= 110 && shadowPositions.square.y <= 130 &&
+      shadowPositions.triangle.x >= 270 && shadowPositions.triangle.x <= 290 &&
+      shadowPositions.triangle.y >= 110 && shadowPositions.triangle.y <= 130;
+    if (valid) {
+      setShadowSolved(true);
+      setCtx((c) => effects.setFlag("shadow.solved", true)(ensureCtx(c)));
+    }
+  };
 
   const scene = scenes[sceneId];
 
@@ -226,7 +460,7 @@ export const ToymakerEscapeGame: React.FC = () => {
           <p className="text-muted-foreground mb-4">{t("tme.e1.body")}</p>
         )}
 
-        {/* Episode 1 keypad mini (simple mobile-friendly UI) */}
+        {/* Episode 1 keypad + gears */}
         {sceneId === "E1_GEAR" && (
           <div className="mb-4 rounded-md border p-3">
             <p className="mb-2 text-sm">{t("tme.e1.keypad.hint")}</p>
@@ -268,7 +502,6 @@ export const ToymakerEscapeGame: React.FC = () => {
                 <span className="text-green-600">{t("tme.e1.keypad.unlocked")}</span>
               )}
             </div>
-            {/* Gears mini (ratio 1/3) — adjust teeth to achieve target */}
             <div className="mt-4">
               <p className="mb-2 text-sm">{t("tme.e1.gears.instruction")}</p>
               <div className="flex max-w-md flex-col gap-2">
@@ -326,7 +559,6 @@ export const ToymakerEscapeGame: React.FC = () => {
                   <button
                     className="mt-1 self-start rounded bg-emerald-600 px-4 py-2 text-white"
                     onClick={() => {
-                      // Mark mini solved and allow wrap progression
                       setCtx((c) => effects.setFlag("gears.solved", true)(ensureCtx(c)));
                     }}
                   >
@@ -338,12 +570,10 @@ export const ToymakerEscapeGame: React.FC = () => {
           </div>
         )}
 
-        {/* Cabinet panel — minimal Wires and Pipes stubs for E1 */}
+        {/* Cabinet panel — Wires and Pipes stubs for E1 */}
         {sceneId === "E1_GEAR" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">{t("tme.e1.panel.title")}</h3>
-
-            {/* Observation buttons to set seen.* flags (diegetic clues) */}
             <div className="mb-3 flex flex-wrap gap-2">
               <button
                 className="bg-muted rounded px-3 py-2"
@@ -352,7 +582,7 @@ export const ToymakerEscapeGame: React.FC = () => {
                 }
               >
                 {lang === "fr"
-                  ? "Regarder l’affiche (ordre des jouets)"
+                  ? "Regarder l'affiche (ordre des jouets)"
                   : "Examine poster (toys order)"}
               </button>
               <button
@@ -501,7 +731,7 @@ export const ToymakerEscapeGame: React.FC = () => {
               )}
             </div>
 
-            {/* Sorter — simple sequence tap/drag */}
+            {/* Sorter */}
             <div className="mt-4">
               <p className="mb-2 text-sm">{t("tme.playroom.colors.hint")}</p>
               <div className="flex gap-2">
@@ -528,10 +758,9 @@ export const ToymakerEscapeGame: React.FC = () => {
               </div>
             </div>
 
-            {/* Hidden latch — long-press then drag over scuff area (macro mimic) */}
+            {/* Hidden latch */}
             <div className="mt-4">
               <p className="mb-2 text-sm">{t("tme.e1.latch.hint")}</p>
-              {/* Canvas macro version (registers holdThenDrag) with DOM fallback for accessibility */}
               <div className="flex flex-wrap items-center gap-4">
                 <E1CabinetCanvas
                   onLatchReveal={() =>
@@ -541,7 +770,7 @@ export const ToymakerEscapeGame: React.FC = () => {
                 <div className="text-muted-foreground text-sm">
                   {lang === "fr"
                     ? "Astuce: appui long puis glisser sur la rayure."
-                    : "Tip: long‑press then drag over the scuff."}
+                    : "Tip: long-press then drag over the scuff."}
                 </div>
               </div>
               <ScuffLatch
@@ -564,6 +793,343 @@ export const ToymakerEscapeGame: React.FC = () => {
           </div>
         )}
 
+        {/* E2 — Cipher puzzle */}
+        {sceneId === "E2_CIPHER" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">{lang === "fr" ? "Chiffre de correspondance" : "Correspondence Cipher"}</h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? `Message codé : ${cipher.coded}. Entrez le mot décodé :`
+                : `Coded message: ${cipher.coded}. Enter the decoded word:`}
+            </p>
+            <div className="flex items-center gap-2">
+              <input
+                className="bg-background min-h-[44px] rounded border px-3 py-2"
+                value={cipher.userInput}
+                onChange={(e) => setCipher((s) => updateCipherInput(s, e.target.value))}
+                placeholder={lang === "fr" ? "Votre réponse..." : "Your answer..."}
+                maxLength={cipher.answer.length}
+              />
+              <button
+                className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                onClick={() => {
+                  const next = submitCipher(cipher);
+                  setCipher(next);
+                  if (next.solved) {
+                    const updated = effects.addItem("filing-key")(ctx);
+                    setCtx(effects.setFlag("cipher.solved", true)(ensureCtx(updated)));
+                  }
+                }}
+              >
+                {lang === "fr" ? "Décoder" : "Decode"}
+              </button>
+            </div>
+            {cipher.hint && (
+              <p className="mt-2 text-xs opacity-70">{cipher.hint}</p>
+            )}
+            {cipher.solved && (
+              <p className="mt-2 text-emerald-600">
+                {lang === "fr" ? "Chiffre résolu !" : "Cipher solved!"}
+              </p>
+            )}
+            {cipher.attempts > 0 && !cipher.solved && (
+              <p className="mt-2 text-amber-600 text-sm">
+                {lang === "fr" ? `Tentatives : ${cipher.attempts}` : `Attempts: ${cipher.attempts}`}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* E2 — Filing Logic sorting puzzle */}
+        {sceneId === "E2_FILING" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">
+              {lang === "fr" ? "Logique de classement" : "Filing Logic"}
+            </h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? "Classez chaque jouet dans le bon classeur selon les indices."
+                : "Sort each toy into the correct cabinet based on the clues."}
+            </p>
+            <p className="mb-2 text-xs opacity-60">
+              {lang === "fr"
+                ? "Les poupées vont dans le classeur A, les voitures dans B, les puzzles dans C."
+                : "Dolls go to Cabinet A, cars to Cabinet B, puzzles to Cabinet C."}
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="mb-2 text-xs font-bold uppercase opacity-50">
+                  {lang === "fr" ? "Jouets à classer" : "Toys to sort"}
+                </p>
+                <div className="flex flex-col gap-2">
+                  {filingItems.map((item) => (
+                    <button
+                      key={item}
+                      className={`min-h-[44px] rounded border-2 px-3 py-2 text-left ${
+                        filing[item]
+                          ? "border-green-400 bg-green-100 cursor-default"
+                          : filingSelected === item
+                            ? "border-blue-500 bg-blue-100"
+                            : "border-gray-300 bg-white"
+                      }`}
+                      disabled={!!filing[item]}
+                      onClick={() => setFilingSelected(filingSelected === item ? null : item)}
+                    >
+                      {item === "doll"
+                        ? lang === "fr" ? "Poupée de porcelaine" : "Porcelain Doll"
+                        : item === "car"
+                          ? lang === "fr" ? "Voiture à remontoir" : "Wind-up Car"
+                          : lang === "fr" ? "Casse-tête" : "Jigsaw Puzzle"}
+                      {filing[item] && (
+                        <span className="ml-2 text-xs text-green-600">
+                          → {lang === "fr" ? "Classeur " : "Cabinet "}{filing[item].toUpperCase()}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="mb-2 text-xs font-bold uppercase opacity-50">
+                  {lang === "fr" ? "Classeurs" : "Cabinets"}
+                </p>
+                <div className="flex flex-col gap-2">
+                  {filingCabinets.map((cab) => (
+                    <button
+                      key={cab}
+                      className={`min-h-[44px] rounded border-2 px-3 py-2 ${
+                        Object.values(filing).includes(cab)
+                          ? "border-green-400 bg-green-100 cursor-default"
+                          : "border-gray-300 bg-white hover:border-blue-400"
+                      }`}
+                      disabled={!filingSelected || Object.values(filing).includes(cab)}
+                      onClick={() => {
+                        if (filingSelected && !filing[filingSelected]) {
+                          const next = { ...filing, [filingSelected]: cab };
+                          setFiling(next);
+                          setFilingSelected(null);
+                          if (
+                            Object.keys(next).length === filingItems.length &&
+                            filingItems.every((item) => next[item] === FILING_TARGETS[item])
+                          ) {
+                            setCtx((c) => effects.setFlag("filing.solved", true)(ensureCtx(c)));
+                          }
+                        }
+                      }}
+                    >
+                      {lang === "fr" ? "Classeur " : "Cabinet "}{cab.toUpperCase()}
+                      {cab === "a" ? ` (${lang === "fr" ? "Poupées" : "Dolls"})` : cab === "b" ? ` (${lang === "fr" ? "Véhicules" : "Vehicles"})` : ` (${lang === "fr" ? "Puzzles" : "Puzzles"})`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 text-sm">
+              {lang === "fr" ? "Classés : " : "Sorted: "}
+              <span className="font-mono">{Object.keys(filing).length} / {filingItems.length}</span>
+            </div>
+            {filingSolved && (
+              <p className="mt-2 font-bold text-emerald-600">
+                {lang === "fr" ? "Tous les jouets sont bien classés ! La clé du classeur tourne." : "All toys sorted correctly! The filing-cabinet key turns."}
+              </p>
+            )}
+            <button
+              className="mt-2 min-h-[32px] rounded border px-3 py-1 text-sm"
+              onClick={() => {
+                setFiling({});
+                setFilingSelected(null);
+              }}
+            >
+              {lang === "fr" ? "Réinitialiser" : "Reset"}
+            </button>
+          </div>
+        )}
+
+        {/* E2 — Shadow Safe canvas puzzle */}
+        {sceneId === "E2_SHADOW" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">
+              {lang === "fr" ? "Coffre d'ombre" : "Shadow Safe"}
+            </h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? "Faites glisser chaque forme jusqu'à ce que l'ombre combinée corresponde au motif de la serrure."
+                : "Drag each shape until the combined shadow matches the safe's keyhole pattern."}
+            </p>
+            <div className="flex items-center justify-center">
+              <canvas
+                ref={shadowCanvasRef}
+                width={480}
+                height={200}
+                className="rounded border border-dashed border-gray-500"
+                aria-label="Shadow safe alignment puzzle"
+              />
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {(["circle", "square", "triangle"] as const).map((shape) => (
+                <div key={shape} className="flex items-center gap-2">
+                  <span className="w-16 text-sm capitalize">{shape}:</span>
+                  <button
+                    className="min-h-[32px] rounded border px-2 py-1 text-sm"
+                    onClick={() =>
+                      setShadowPositions((p) => ({
+                        ...p,
+                        [shape]: { x: Math.max(10, p[shape].x - 20), y: p[shape].y },
+                      }))
+                    }
+                  >
+                    ←
+                  </button>
+                  <button
+                    className="min-h-[32px] rounded border px-2 py-1 text-sm"
+                    onClick={() =>
+                      setShadowPositions((p) => ({
+                        ...p,
+                        [shape]: { x: Math.min(470, p[shape].x + 20), y: p[shape].y },
+                      }))
+                    }
+                  >
+                    →
+                  </button>
+                  <button
+                    className="min-h-[32px] rounded border px-2 py-1 text-sm"
+                    onClick={() =>
+                      setShadowPositions((p) => ({
+                        ...p,
+                        [shape]: { x: p[shape].x, y: Math.max(10, p[shape].y - 20) },
+                      }))
+                    }
+                  >
+                    ↑
+                  </button>
+                  <button
+                    className="min-h-[32px] rounded border px-2 py-1 text-sm"
+                    onClick={() =>
+                      setShadowPositions((p) => ({
+                        ...p,
+                        [shape]: { x: p[shape].x, y: Math.min(190, p[shape].y + 20) },
+                      }))
+                    }
+                  >
+                    ↓
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 flex gap-2">
+              <button
+                className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                onClick={checkShadowSolve}
+              >
+                {lang === "fr" ? "Vérifier l'alignement" : "Check Alignment"}
+              </button>
+              <button
+                className="min-h-[44px] rounded border px-3 py-2 text-sm"
+                onClick={() => {
+                  setShadowPositions({
+                    circle: { x: 80, y: 80 },
+                    square: { x: 200, y: 80 },
+                    triangle: { x: 320, y: 80 },
+                  });
+                  setShadowSolved(false);
+                }}
+              >
+                {lang === "fr" ? "Réinitialiser" : "Reset positions"}
+              </button>
+            </div>
+            {(shadowSolved || ctx.flags["shadow.solved"]) && (
+              <p className="mt-2 font-bold text-emerald-600">
+                {lang === "fr" ? "L'ombre s'aligne parfaitement. Le coffre s'ouvre." : "The shadow aligns perfectly. The safe clicks open."}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* E2 — Wrap */}
+        {sceneId === "E2_WRAP" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">
+              {lang === "fr" ? "Épisode 2 terminé" : "Episode 2 Complete"}
+            </h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? "Les secrets du bureau sont révélés. Vous avez trouvé les notes du commissaire."
+                : "The office secrets are revealed. You found the commissioner's notes."}
+            </p>
+            <p className="mb-2 text-xs font-bold text-amber-600">
+              {lang === "fr" ? "Médaille gagnée : Commis aux archives" : "Medal earned: File Clerk"}
+            </p>
+            <div className="flex gap-2">
+              <button
+                className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                onClick={() => setSceneId("E2_ANAGRAM")}
+              >
+                {lang === "fr" ? "Continuer vers l'Épisode 3" : "Continue to Episode 3"}
+              </button>
+              <button
+                className="min-h-[44px] rounded border px-3 py-2"
+                onClick={() => setSceneId("INTRO")}
+              >
+                {lang === "fr" ? "Recommencer" : "Restart"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* E3 — Anagram puzzle */}
+        {sceneId === "E2_ANAGRAM" && (
+          <div className="mb-4 rounded-md border p-3">
+            <h3 className="mb-2 font-semibold">{lang === "fr" ? "Anagramme du frigo" : "Fridge Anagram"}</h3>
+            <p className="mb-2 text-sm">
+              {lang === "fr"
+                ? `Lettres mélangées : ${anagram.scrambled}. Réorganisez pour former un mot :`
+                : `Scrambled: ${anagram.scrambled}. Rearrange to form a word:`}
+            </p>
+            <div className="flex flex-wrap gap-1 mb-3">
+              {anagram.scrambled.split("").map((letter, i) => (
+                <span
+                  key={i}
+                  className="bg-background inline-flex h-10 w-10 items-center justify-center rounded border font-mono text-lg"
+                >
+                  {letter}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                className="bg-background min-h-[44px] rounded border px-3 py-2 uppercase"
+                value={anagram.userInput}
+                onChange={(e) => setAnagram((s) => updateAnagramInput(s, e.target.value))}
+                placeholder={lang === "fr" ? "Votre mot..." : "Your word..."}
+                maxLength={anagram.word.length}
+              />
+              <button
+                className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
+                onClick={() => {
+                  const next = submitAnagram(anagram);
+                  setAnagram(next);
+                  if (next.solved) {
+                    const updated = effects.addItem("cool-key")(ctx);
+                    setCtx(effects.setFlag("anagram.solved", true)(ensureCtx(updated)));
+                  }
+                }}
+              >
+                {lang === "fr" ? "Valider" : "Submit"}
+              </button>
+            </div>
+            {anagram.solved && (
+              <p className="mt-2 text-emerald-600">
+                {lang === "fr" ? "Anagramme résolu !" : "Anagram solved!"}
+              </p>
+            )}
+            {anagram.attempts > 0 && !anagram.solved && (
+              <p className="mt-2 text-amber-600 text-sm">
+                {lang === "fr" ? `Tentatives : ${anagram.attempts}` : `Attempts: ${anagram.attempts}`}
+              </p>
+            )}
+          </div>
+        )}
+
         <DialogueBox
           scene={scene}
           lang={lang}
@@ -572,17 +1138,17 @@ export const ToymakerEscapeGame: React.FC = () => {
             setSceneId(res.sceneId);
             setCtx(res.ctx);
             if (res.sceneId === "E1_WRAP") {
-              // award a simple medal flag when reaching wrap (placeholder)
               setCtx((c) => effects.setFlag("medal:gear", true)(ensureCtx(c)));
+            }
+            if (res.sceneId === "E2_WRAP") {
+              setCtx((c) => effects.setFlag("medal:fileClerk", true)(ensureCtx(c)));
             }
           }}
         />
 
         <InventoryBar
           items={ctx.inventory}
-          onUse={() => {
-            /* future: apply items to hotspots */
-          }}
+          onUse={() => {}}
         />
       </div>
     </GameContainer>
@@ -591,7 +1157,6 @@ export const ToymakerEscapeGame: React.FC = () => {
 
 export default ToymakerEscapeGame;
 
-// --- Internal helper: scuff latch interaction (long-press then drag) ---
 function ScuffLatch({ onRevealed, onSeen }: { onRevealed: () => void; onSeen: () => void }) {
   const [longPressed, setLongPressed] = React.useState(false);
   const timeoutRef = React.useRef<number | null>(null);
@@ -601,7 +1166,7 @@ function ScuffLatch({ onRevealed, onSeen }: { onRevealed: () => void; onSeen: ()
     setLongPressed(false);
     timeoutRef.current = window.setTimeout(() => {
       setLongPressed(true);
-    }, 800); // match long-press duration from InputManager default
+    }, 800);
   };
   const onPointerUp = () => {
     if (timeoutRef.current) {
@@ -611,7 +1176,6 @@ function ScuffLatch({ onRevealed, onSeen }: { onRevealed: () => void; onSeen: ()
     setLongPressed(false);
   };
   const onPointerMove = () => {
-    // Consider this a drag following a successful long-press
     if (longPressed) {
       onRevealed();
     }

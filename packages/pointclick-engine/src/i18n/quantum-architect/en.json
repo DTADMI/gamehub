@@ -1,0 +1,21 @@
+{
+  "quantumarchitect": {
+    "title": "Quantum Architect",
+    "score": "Score",
+    "observations": "Observations",
+    "quantumProb": "Probability:",
+    "controls": "WASD/Arrows to move | Space to observe | Collect keys to open gates",
+    "begin": "Begin Experiment",
+    "level": "Level",
+    "win": "Wave Function Resolved!",
+    "finalScore": "Final Score",
+    "totalObs": "Total Observations",
+    "newExperiment": "New Experiment",
+    "subtitle": "Manipulate quantum states, collect keys, and navigate entangled platforms.",
+    "keys": "Keys",
+    "gateLocked": "Locked",
+    "gateOpen": "Open",
+    "entangled": "Entangled",
+    "bias": "Bias"
+  }
+}
