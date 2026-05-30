@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { Canvas, useFrame } from "@react-three/fiber";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 type CellData = {
   top: boolean;
@@ -81,12 +81,12 @@ function getMazeWalls(maze: CellData[][]): Wall[] {
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const cell = maze[r][c];
-      if (cell.top && r === 0) walls.push({ row: r - 1, col: c, dir: "h" });
-      if (cell.bottom && r < ROWS - 1) walls.push({ row: r, col: c, dir: "h" });
-      if (cell.bottom && r === ROWS - 1) walls.push({ row: ROWS - 1, col: c, dir: "h" });
-      if (cell.left && c === 0) walls.push({ row: r, col: c - 1, dir: "v" });
-      if (cell.right && c < COLS - 1) walls.push({ row: r, col: c, dir: "v" });
-      if (cell.right && c === COLS - 1) walls.push({ row: r, col: COLS - 1, dir: "v" });
+      if (cell.top && r === 0) { walls.push({ row: r - 1, col: c, dir: "h" }); }
+      if (cell.bottom && r < ROWS - 1) { walls.push({ row: r, col: c, dir: "h" }); }
+      if (cell.bottom && r === ROWS - 1) { walls.push({ row: ROWS - 1, col: c, dir: "h" }); }
+      if (cell.left && c === 0) { walls.push({ row: r, col: c - 1, dir: "v" }); }
+      if (cell.right && c < COLS - 1) { walls.push({ row: r, col: c, dir: "v" }); }
+      if (cell.right && c === COLS - 1) { walls.push({ row: r, col: COLS - 1, dir: "v" }); }
     }
   }
 
@@ -94,6 +94,10 @@ function getMazeWalls(maze: CellData[][]): Wall[] {
 }
 
 type Collectible = { row: number; col: number; id: number };
+
+type RotationTile = { row: number; col: number; used: boolean };
+
+const ROTATION_SECTION_SIZE = 3;
 
 function spawnCrystals(
   playerRow: number,
@@ -120,6 +124,45 @@ function spawnCrystals(
   return crystals;
 }
 
+function spawnRotationTile(): RotationTile {
+  const allCells: { row: number; col: number }[] = [];
+
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      if (!(r === 0 && c === 0) && !(r === ROWS - 1 && c === COLS - 1)) {
+        allCells.push({ row: r, col: c });
+      }
+    }
+  }
+
+  const idx = Math.floor(Math.random() * allCells.length);
+  const cell = allCells[idx];
+  return { row: cell.row, col: cell.col, used: false };
+}
+
+function rotateMazeSection(maze: CellData[][], centerRow: number, centerCol: number): CellData[][] {
+  const halfSize = Math.floor(ROTATION_SECTION_SIZE / 2);
+  const startRow = Math.max(0, centerRow - halfSize);
+  const startCol = Math.max(0, centerCol - halfSize);
+  const endRow = Math.min(ROWS - 1, centerRow + halfSize);
+  const endCol = Math.min(COLS - 1, centerCol + halfSize);
+
+  return maze.map((row, r) =>
+    row.map((cell, c) => {
+      if (r >= startRow && r <= endRow && c >= startCol && c <= endCol) {
+        const original = maze[r][c];
+        return {
+          top: original.left,
+          right: original.top,
+          bottom: original.right,
+          left: original.bottom,
+        };
+      }
+      return { ...cell };
+    }),
+  );
+}
+
 type MoveRecord = { row: number; col: number };
 
 interface RewindAnim {
@@ -138,6 +181,7 @@ function MazeScene({
   collectedCrystalIds,
   rewindAnimRef,
   onRewindComplete,
+  rotationTile,
 }: {
   playerPosRef: React.MutableRefObject<{ x: number; z: number }>;
   targetPosRef: React.MutableRefObject<{ x: number; z: number }>;
@@ -147,6 +191,7 @@ function MazeScene({
   collectedCrystalIds: Set<number>;
   rewindAnimRef: React.MutableRefObject<RewindAnim>;
   onRewindComplete: () => void;
+  rotationTile: RotationTile | null;
 }) {
   const playerRef = useRef<THREE.Object3D | null>(null);
 
@@ -203,7 +248,7 @@ function MazeScene({
         position={[0, 0.005, 0]}
       />
 
-      {visibleWalls.map((w, i) => {
+      {visibleWalls.map((w, _i) => {
         const key = wallKey(w);
         const isShifted = shiftedWalls.has(key);
         const [cx, cz] = cellToWorld(
@@ -234,7 +279,7 @@ function MazeScene({
       })}
 
       {crystals.map((c) => {
-        if (collectedCrystalIds.has(c.id)) return null;
+        if (collectedCrystalIds.has(c.id)) { return null; }
         const [x, z] = cellToWorld(c.row, c.col);
         return (
           <mesh key={`crystal-${c.id}`} position={[x, 0.6, z]}>
@@ -277,6 +322,25 @@ function MazeScene({
           side={THREE.DoubleSide}
         />
       </mesh>
+
+      {rotationTile && !rotationTile.used && (
+        <mesh
+          position={[
+            cellToWorld(rotationTile.row, rotationTile.col)[0],
+            0.06,
+            cellToWorld(rotationTile.row, rotationTile.col)[1],
+          ]}
+        >
+          <cylinderGeometry args={[0.3, 0.3, 0.06, 3]} />
+          <meshStandardMaterial
+            color="#ffd700"
+            emissive="#ffaa00"
+            emissiveIntensity={0.7}
+            roughness={0.15}
+            metalness={0.9}
+          />
+        </mesh>
+      )}
     </group>
   );
 }
@@ -296,6 +360,10 @@ export default function ChronoShiftGame({
   const [rewindActive, setRewindActive] = useState(false);
   const [lastDirection, setLastDirection] = useState("south");
   const [shiftedKeys, setShiftedKeys] = useState<Set<string>>(new Set());
+  const [rotationTile, setRotationTile] = useState<RotationTile>(() => spawnRotationTile());
+  const [paradoxCount, setParadoxCount] = useState(0);
+  const [paradoxFlash, setParadoxFlash] = useState(false);
+  const [shakeActive, setShakeActive] = useState(false);
 
   const [maze, setMaze] = useState(() => generateMaze(ROWS, COLS));
   const [crystals, setCrystals] = useState(() => spawnCrystals(0, 0, TOTAL_CRYSTALS));
@@ -320,7 +388,7 @@ export default function ChronoShiftGame({
 
   const canMoveTo = useCallback(
     (row: number, col: number, fromRow: number, fromCol: number): boolean => {
-      if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return false;
+      if (row < 0 || row >= ROWS || col < 0 || col >= COLS) { return false; }
       const cell = maze;
 
       const dr = row - fromRow;
@@ -350,13 +418,13 @@ export default function ChronoShiftGame({
 
   const tryMove = useCallback(
     (dr: number, dc: number, dirName: string) => {
-      if (rewindActive || gameOver || gameWon || isMovingRef.current) return;
+      if (rewindActive || gameOver || gameWon || isMovingRef.current) { return; }
 
       const { row, col } = gridPosRef.current;
       const newRow = row + dr;
       const newCol = col + dc;
 
-      if (!canMoveTo(newRow, newCol, row, col)) return;
+      if (!canMoveTo(newRow, newCol, row, col)) { return; }
 
       setLastDirection(dirName);
 
@@ -374,11 +442,11 @@ export default function ChronoShiftGame({
   );
 
   const handleRewind = useCallback(() => {
-    if (rewindActive || rewindsRemaining <= 0 || gameOver || gameWon) return;
-    if (moveHistoryRef.current.length === 0) return;
+    if (rewindActive || rewindsRemaining <= 0 || gameOver || gameWon) { return; }
+    if (moveHistoryRef.current.length === 0) { return; }
 
     const steps = moveHistoryRef.current.slice(-REWIND_STEPS);
-    if (steps.length === 0) return;
+    if (steps.length === 0) { return; }
 
     setRewindsRemaining((r) => r - 1);
     setRewindActive(true);
@@ -398,7 +466,7 @@ export default function ChronoShiftGame({
   }, [rewindActive, rewindsRemaining, gameOver, gameWon]);
 
   const handleWallShift = useCallback(() => {
-    if (rewindActive || rewindsRemaining <= 0 || gameOver || gameWon) return;
+    if (rewindActive || rewindsRemaining <= 0 || gameOver || gameWon) { return; }
 
     const { row, col } = gridPosRef.current;
     const dirMap: Record<string, { dr: number; dc: number }> = {
@@ -412,7 +480,7 @@ export default function ChronoShiftGame({
     const targetRow = row + delta.dr;
     const targetCol = col + delta.dc;
 
-    if (targetRow < 0 || targetRow >= ROWS || targetCol < 0 || targetCol >= COLS) return;
+    if (targetRow < 0 || targetRow >= ROWS || targetCol < 0 || targetCol >= COLS) { return; }
 
     let wallKeyStr: string | null = null;
     const cell = maze;
@@ -427,7 +495,7 @@ export default function ChronoShiftGame({
       wallKeyStr = `v-${row}-${col}`;
     }
 
-    if (!wallKeyStr || shiftedKeys.has(wallKeyStr)) return;
+    if (!wallKeyStr || shiftedKeys.has(wallKeyStr)) { return; }
 
     setRewindsRemaining((r) => r - 1);
 
@@ -440,7 +508,7 @@ export default function ChronoShiftGame({
 
   const handleCollectCrystal = useCallback(
     (id: number) => {
-      if (collectedCrystalIdsRef.current.has(id)) return;
+      if (collectedCrystalIdsRef.current.has(id)) { return; }
       collectedCrystalIdsRef.current.add(id);
 
       const newCollected = collectedCrystalIdsRef.current.size;
@@ -459,25 +527,25 @@ export default function ChronoShiftGame({
 
   useEffect(() => {
     onScoreUpdate?.(score);
-  }, [score]);
+  }, [score, onScoreUpdate]);
 
   useEffect(() => {
     if (gameOver) {
       onGameOver?.(score, gameWon);
     }
-  }, [gameOver]);
+  }, [gameOver, onGameOver, gameWon, score]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
 
-      if (key === "r") handleRewind();
-      if (key === "e") handleWallShift();
+      if (key === "r") { handleRewind(); }
+      if (key === "e") { handleWallShift(); }
 
-      if (key === "w" || key === "arrowup") tryMove(-1, 0, "north");
-      else if (key === "s" || key === "arrowdown") tryMove(1, 0, "south");
-      else if (key === "a" || key === "arrowleft") tryMove(0, -1, "west");
-      else if (key === "d" || key === "arrowright") tryMove(0, 1, "east");
+      if (key === "w" || key === "arrowup") { tryMove(-1, 0, "north"); }
+      else if (key === "s" || key === "arrowdown") { tryMove(1, 0, "south"); }
+      else if (key === "a" || key === "arrowleft") { tryMove(0, -1, "west"); }
+      else if (key === "d" || key === "arrowright") { tryMove(0, 1, "east"); }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -486,7 +554,7 @@ export default function ChronoShiftGame({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isMovingRef.current) return;
+      if (!isMovingRef.current) { return; }
 
       const { row, col } = gridPosRef.current;
       const [twx, twz] = cellToWorld(row, col);
@@ -504,11 +572,34 @@ export default function ChronoShiftGame({
             handleCollectCrystal(c.id);
           }
         }
+
+        if (
+          rotationTile &&
+          !rotationTile.used &&
+          row === rotationTile.row &&
+          col === rotationTile.col
+        ) {
+          const newMaze = rotateMazeSection(maze, rotationTile.row, rotationTile.col);
+          setMaze(newMaze);
+          setRotationTile({ ...rotationTile, used: true });
+          setShakeActive(true);
+          setTimeout(() => { setShakeActive(false); }, 300);
+        }
+
+        if (row === 0 && col === 0 && collectedCrystalIdsRef.current.size > 0 && !gameWon) {
+          const newCount = paradoxCount + 1;
+          setParadoxCount(newCount);
+          setParadoxFlash(true);
+          setTimeout(() => { setParadoxFlash(false); }, 500);
+          if (newCount >= 3) {
+            setScore((s) => s + 500);
+          }
+        }
       }
     }, 50);
 
     return () => clearInterval(interval);
-  }, [crystals, handleCollectCrystal]);
+  }, [crystals, handleCollectCrystal, rotationTile, maze, paradoxCount, gameWon]);
 
   const resetGame = useCallback(() => {
     const newMaze = generateMaze(ROWS, COLS);
@@ -534,6 +625,10 @@ export default function ChronoShiftGame({
     setRewindActive(false);
     setShiftedKeys(new Set());
     setLastDirection("south");
+    setRotationTile(spawnRotationTile());
+    setParadoxCount(0);
+    setParadoxFlash(false);
+    setShakeActive(false);
   }, []);
 
   return (
@@ -549,7 +644,14 @@ export default function ChronoShiftGame({
     >
       <Canvas
         camera={{ position: [6, 10, 10], fov: 50, near: 0.1, far: 50 }}
-        style={{ position: "absolute", inset: 0 }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          transform: shakeActive
+            ? `translate(${(Math.random() - 0.5) * 8}px, ${(Math.random() - 0.5) * 8}px)`
+            : "none",
+          transition: shakeActive ? "none" : "transform 0.15s ease-out",
+        }}
         gl={{ antialias: true }}
       >
         <MazeScene
@@ -569,6 +671,7 @@ export default function ChronoShiftGame({
             }
             setRewindActive(false);
           }}
+          rotationTile={rotationTile}
         />
       </Canvas>
 
@@ -606,6 +709,14 @@ export default function ChronoShiftGame({
             {crystalsCollected}/{TOTAL_CRYSTALS}
           </span>
         </div>
+        {paradoxCount > 0 && (
+          <div>
+            Paradoxes:{" "}
+            <span style={{ color: paradoxCount >= 3 ? "#ff00ff" : "#cc88ff" }}>
+              {paradoxCount}
+            </span>
+          </div>
+        )}
         {rewindActive && (
           <div style={{ color: "#ffaa00", marginTop: 4 }}>{t("chronoshift.rewinding")}</div>
         )}
@@ -630,6 +741,19 @@ export default function ChronoShiftGame({
       >
         {t("chronoshift.controls")}
       </div>
+
+      {paradoxFlash && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(128, 0, 255, 0.25)",
+            pointerEvents: "none",
+            zIndex: 15,
+            transition: "opacity 0.3s ease-out",
+          }}
+        />
+      )}
 
       {gameOver && (
         <div

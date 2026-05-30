@@ -1,12 +1,13 @@
 "use client";
+
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useState } from "react";
 import type { ComponentType } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type ChronoShiftProps = {
   onScoreUpdate?: (score: number) => void;

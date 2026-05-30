@@ -269,6 +269,83 @@
           "p1": "The system has developed according to its blueprint."
         }
       }
+    },
+    "ocean": {
+      "intro": {
+        "title": "Ocean Pack — Deep Blue",
+        "p1": "Dive into the ocean's layered world — from sunlit shallows to the dark depths.",
+        "p2": "How do currents, light, and life interconnect beneath the waves?",
+        "cta": "Dive In",
+        "skip": "Skip intro"
+      },
+      "o1": {
+        "title": "Ocean Layers",
+        "prompt": "Sort ocean life into the correct depth zones based on where they live.",
+        "hint": "Sunlit zone (0-200m): coral, plankton. Twilight (200-1000m): lanternfish. Midnight (1000-4000m): anglerfish. Abyss (4000m+): tube worms.",
+        "zones": {
+          "sunlit": "Sunlit (Epipelagic)",
+          "twilight": "Twilight (Mesopelagic)",
+          "midnight": "Midnight (Bathypelagic)",
+          "abyss": "Abyss (Abyssopelagic)"
+        },
+        "creatures": {
+          "coral": "Coral Reef",
+          "plankton": "Phytoplankton",
+          "lanternfish": "Lanternfish",
+          "anglerfish": "Anglerfish",
+          "tubeworm": "Tube Worm",
+          "giantsquid": "Giant Squid"
+        },
+        "sorted": "All creatures sorted correctly!",
+        "reset": "Reset",
+        "continue": "Continue"
+      },
+      "o2": {
+        "title": "Currents & Climate",
+        "prompt": "Connect the global ocean currents to complete the conveyor belt circulation.",
+        "hint": "Warm surface currents flow poleward. Cold deep currents flow back toward the equator.",
+        "currents": {
+          "gulf": "Gulf Stream (Warm)",
+          "kuroshio": "Kuroshio (Warm)",
+          "antarctic": "Antarctic Circumpolar (Cold)",
+          "california": "California Current (Cold)"
+        },
+        "rotate": "Rotate",
+        "openValve": "Open current gate",
+        "solved": "Ocean conveyor belt complete! The global circulation flows.",
+        "continue": "Continue"
+      },
+      "o3": {
+        "title": "Deep Signals",
+        "prompt": "Match each marine creature to its unique communication method.",
+        "hint": "Whales sing, dolphins click, pistol shrimp snap, bioluminescent fish flash.",
+        "signals": {
+          "whale": "Whale Song",
+          "dolphin": "Dolphin Clicks",
+          "shrimp": "Pistol Shrimp Snap",
+          "bioglow": "Bioluminescent Flash"
+        },
+        "creatureLabels": {
+          "humpback": "Humpback Whale",
+          "bottlenose": "Bottlenose Dolphin",
+          "pistol": "Pistol Shrimp",
+          "anglerfish": "Deep-sea Anglerfish"
+        },
+        "matched": "Matched",
+        "solved": "All creatures matched correctly! You understand how the deep ocean communicates.",
+        "reset": "Reset"
+      },
+      "wrap": {
+        "title": "Ocean Explored",
+        "done": "You've navigated the ocean from surface to abyss.",
+        "badge": "Oceanographer badge earned!"
+      },
+      "outro": {
+        "title": "Ocean Journey Complete",
+        "p1": "The ocean's rhythms are now familiar. From sunlit coral to hadal trenches, every depth tells a story.",
+        "replay": "Replay Ocean Pack",
+        "home": "Back to Hub"
+      }
     }
   }
 }

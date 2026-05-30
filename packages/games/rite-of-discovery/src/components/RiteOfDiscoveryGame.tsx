@@ -22,6 +22,7 @@ import {
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
 import React, { useEffect, useMemo, useState } from "react";
+import { soundManager } from "@gamehub/game-platform/lib/sound";
 
 const SAVE_KEY = SAVE_KEYS.rod;
 
@@ -179,6 +180,168 @@ export const RiteOfDiscoveryGame: React.FC = () => {
             target: "S1_NIGHT_BEFORE",
             effect: (ctx) => effects.setFlag("ngplus.mentor", true)(ensureCtx(ctx)),
           },
+          {
+            id: "thinkingTools",
+            text: { en: "Explore Thinking Tools", fr: "Explorer les Outils de Réflexion" },
+            target: "TT_INTRO",
+            effect: () => ({}),
+          },
+        ],
+      },
+      TT_INTRO: {
+        id: "TT_INTRO",
+        title: { en: "Thinking Tools — Intro", fr: "Outils de Réflexion — Intro" },
+        body: {
+          en: "Welcome to Thinking Tools. These are short exercises to sharpen your reasoning. Each one explores a different way our minds work.",
+          fr: "Bienvenue aux Outils de Réflexion. Ce sont de courts exercices pour affiner ton raisonnement. Chacun explore une façon différente dont notre esprit fonctionne.",
+        },
+        choices: [
+          { id: "tt1", text: { en: "The Mystery Coupon (Anchoring)", fr: "Le Coupon Mystère (Ancrage)" }, target: "TT1_COUPON" },
+          { id: "tt2", text: { en: "The Echo Thread (Confirmation)", fr: "Le Fil d'Écho (Confirmation)" }, target: "TT2_ECHO" },
+          { id: "tt3", text: { en: "The Coin-Flip Streak (Probability)", fr: "La Série de Pile-ou-Face (Probabilité)" }, target: "TT3_COIN" },
+          { id: "tt4", text: { en: "The Miracle Patch (Post Hoc)", fr: "Le Patch Miracle (Post Hoc)" }, target: "TT4_MIRACLE" },
+          { id: "tt5", text: { en: "The Amazing Poster (Authority)", fr: "L'Affiche Incroyable (Autorité)" }, target: "TT5_POSTER" },
+          { id: "tt6", text: { en: "The Sample Size (Base Rates)", fr: "La Taille d'Échantillon (Taux de Base)" }, target: "TT6_SAMPLE" },
+          { id: "back", text: { en: "Back to Outro", fr: "Retour à la Conclusion" }, target: "OUTRO" },
+        ],
+      },
+      TT1_COUPON: {
+        id: "TT1_COUPON",
+        title: { en: "Thinking Tool: The Mystery Coupon", fr: "Outil de Réflexion : Le Coupon Mystère" },
+        body: {
+          en: "A store offers a coupon: 'Save 30% on your next purchase!' Is this a good deal? The original price was marked up by 40% before the coupon was offered.",
+          fr: "Un magasin offre un coupon : « Économisez 30% sur votre prochain achat! » Est-ce une bonne affaire? Le prix original a été majoré de 40% avant que le coupon ne soit offert.",
+        },
+        choices: [
+          { id: "goodDeal", text: { en: "Yes, 30% off is great!", fr: "Oui, 30% de rabais c'est super!" }, target: "TT1_RESULT", effect: (ctx) => effects.setVar("tt1.choice", "goodDeal")(ensureCtx(ctx)) },
+          { id: "badDeal", text: { en: "Wait... the price was raised first", fr: "Attends... le prix a été gonflé d'abord" }, target: "TT1_RESULT", effect: (ctx) => effects.setVar("tt1.choice", "badDeal")(ensureCtx(ctx)) },
+        ],
+      },
+      TT1_RESULT: {
+        id: "TT1_RESULT",
+        title: { en: "Thinking Tool: Anchoring Revealed", fr: "Outil de Réflexion : L'Ancrage Révélé" },
+        body: {
+          en: "If a $100 item is marked up 40% to $140, then '30% off' brings it to $98. You saved $2 from the original price — not 30%! The higher 'anchor' price makes the discount seem bigger than it is. This is the anchoring bias: our brains cling to the first number we see.",
+          fr: "Si un article de 100$ est majoré de 40% à 140$, puis « 30% de rabais » le ramène à 98$. Tu as économisé 2$ par rapport au prix original — pas 30%! Le prix « ancré » plus élevé fait paraître le rabais plus grand qu'il ne l'est. C'est le biais d'ancrage : notre cerveau s'accroche au premier chiffre qu'il voit.",
+        },
+        choices: [
+          { id: "next", text: { en: "Try another tool", fr: "Essayer un autre outil" }, target: "TT_INTRO" },
+        ],
+      },
+      TT2_ECHO: {
+        id: "TT2_ECHO",
+        title: { en: "Thinking Tool: The Echo Thread", fr: "Outil de Réflexion : Le Fil d'Écho" },
+        body: {
+          en: "You read three articles that all say the same thing. Does that mean it's true? Or are they all quoting the same unreliable source?",
+          fr: "Tu lis trois articles qui disent tous la même chose. Est-ce que ça veut dire que c'est vrai? Ou est-ce qu'ils citent tous la même source peu fiable?",
+        },
+        choices: [
+          { id: "true", text: { en: "Three sources agree — must be true", fr: "Trois sources sont d'accord — ça doit être vrai" }, target: "TT2_RESULT", effect: (ctx) => effects.setVar("tt2.choice", "true")(ensureCtx(ctx)) },
+          { id: "check", text: { en: "I should check if they're independent", fr: "Je devrais vérifier si elles sont indépendantes" }, target: "TT2_RESULT", effect: (ctx) => effects.setVar("tt2.choice", "check")(ensureCtx(ctx)) },
+        ],
+      },
+      TT2_RESULT: {
+        id: "TT2_RESULT",
+        title: { en: "Thinking Tool: Confirmation Bias", fr: "Outil de Réflexion : Biais de Confirmation" },
+        body: {
+          en: "Multiple sources agreeing doesn't guarantee truth — they might all be echoing the same mistake. This is confirmation bias: we tend to seek and trust information that confirms what we already believe. Good thinking means checking if sources are truly independent.",
+          fr: "Plusieurs sources qui s'accordent ne garantissent pas la vérité — elles pourraient toutes répéter la même erreur. C'est le biais de confirmation : on a tendance à chercher et à faire confiance aux informations qui confirment ce qu'on croit déjà. Bien réfléchir signifie vérifier si les sources sont vraiment indépendantes.",
+        },
+        choices: [
+          { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
+        ],
+      },
+      TT3_COIN: {
+        id: "TT3_COIN",
+        title: { en: "Thinking Tool: The Coin-Flip Streak", fr: "Outil de Réflexion : La Série de Pile-ou-Face" },
+        body: {
+          en: "You flip a fair coin 5 times and get heads every time. What are the odds of heads on the 6th flip?",
+          fr: "Tu lances une pièce équitable 5 fois et obtiens face chaque fois. Quelles sont les chances d'avoir face au 6e lancer?",
+        },
+        choices: [
+          { id: "lessThanHalf", text: { en: "Less than 50% — tails is 'due'", fr: "Moins de 50% — pile est 'dû'" }, target: "TT3_RESULT", effect: (ctx) => effects.setVar("tt3.choice", "gambler")(ensureCtx(ctx)) },
+          { id: "half", text: { en: "Still 50% — each flip is independent", fr: "Toujours 50% — chaque lancer est indépendant" }, target: "TT3_RESULT", effect: (ctx) => effects.setVar("tt3.choice", "correct")(ensureCtx(ctx)) },
+        ],
+      },
+      TT3_RESULT: {
+        id: "TT3_RESULT",
+        title: { en: "Thinking Tool: Gambler's Fallacy", fr: "Outil de Réflexion : Le Sophisme du Joueur" },
+        body: {
+          en: "Each coin flip is independent — the coin has no memory. The odds stay 50% no matter what happened before. Believing that 'tails is due' is the gambler's fallacy: our brains look for patterns even in random events.",
+          fr: "Chaque lancer de pièce est indépendant — la pièce n'a pas de mémoire. Les chances restent 50% peu importe ce qui s'est passé avant. Croire que « pile est dû » est le sophisme du joueur : notre cerveau cherche des motifs même dans les événements aléatoires.",
+        },
+        choices: [
+          { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
+        ],
+      },
+      TT4_MIRACLE: {
+        id: "TT4_MIRACLE",
+        title: { en: "Thinking Tool: The Miracle Patch", fr: "Outil de Réflexion : Le Patch Miracle" },
+        body: {
+          en: "Your friend wears a special patch and their headache goes away. They say the patch cured them. What else could explain this?",
+          fr: "Ton ami porte un patch spécial et son mal de tête disparaît. Il dit que le patch l'a guéri. Quoi d'autre pourrait expliquer cela?",
+        },
+        choices: [
+          { id: "patch", text: { en: "The patch must work", fr: "Le patch doit fonctionner" }, target: "TT4_RESULT", effect: (ctx) => effects.setVar("tt4.choice", "posthoc")(ensureCtx(ctx)) },
+          { id: "other", text: { en: "Headaches often go away on their own", fr: "Les maux de tête disparaissent souvent d'eux-mêmes" }, target: "TT4_RESULT", effect: (ctx) => effects.setVar("tt4.choice", "correct")(ensureCtx(ctx)) },
+        ],
+      },
+      TT4_RESULT: {
+        id: "TT4_RESULT",
+        title: { en: "Thinking Tool: Post Hoc Fallacy", fr: "Outil de Réflexion : Sophisme Post Hoc" },
+        body: {
+          en: "Just because B happened after A doesn't mean A caused B. Headaches naturally resolve. This is post hoc ergo propter hoc ('after this, therefore because of this'). Correlation is not causation — look for other explanations and control groups.",
+          fr: "Ce n'est pas parce que B s'est produit après A que A a causé B. Les maux de tête se résolvent naturellement. C'est post hoc ergo propter hoc (« après cela, donc à cause de cela »). La corrélation n'est pas la causalité — cherche d'autres explications et des groupes témoins.",
+        },
+        choices: [
+          { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
+        ],
+      },
+      TT5_POSTER: {
+        id: "TT5_POSTER",
+        title: { en: "Thinking Tool: The Amazing Poster", fr: "Outil de Réflexion : L'Affiche Incroyable" },
+        body: {
+          en: "A poster claims a new diet is 'doctor-approved.' Should you trust it based on this authority?",
+          fr: "Une affiche prétend qu'un nouveau régime est « approuvé par un médecin ». Devrais-tu lui faire confiance sur la base de cette autorité?",
+        },
+        choices: [
+          { id: "trust", text: { en: "Doctors know best — trust it", fr: "Les médecins savent — fais-lui confiance" }, target: "TT5_RESULT", effect: (ctx) => effects.setVar("tt5.choice", "authority")(ensureCtx(ctx)) },
+          { id: "question", text: { en: "Which doctor? What evidence?", fr: "Quel médecin? Quelles preuves?" }, target: "TT5_RESULT", effect: (ctx) => effects.setVar("tt5.choice", "correct")(ensureCtx(ctx)) },
+        ],
+      },
+      TT5_RESULT: {
+        id: "TT5_RESULT",
+        title: { en: "Thinking Tool: Appeal to Authority", fr: "Outil de Réflexion : Appel à l'Autorité" },
+        body: {
+          en: "Even experts can be wrong, especially outside their field. A dermatologist isn't automatically a nutrition expert. Good thinking asks: is this person qualified in this specific area? What evidence do they provide? Authority is a clue, not proof.",
+          fr: "Même les experts peuvent se tromper, surtout hors de leur domaine. Un dermatologue n'est pas automatiquement un expert en nutrition. Bien réfléchir demande : cette personne est-elle qualifiée dans ce domaine précis? Quelles preuves fournit-elle? L'autorité est un indice, pas une preuve.",
+        },
+        choices: [
+          { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
+        ],
+      },
+      TT6_SAMPLE: {
+        id: "TT6_SAMPLE",
+        title: { en: "Thinking Tool: The Sample Size", fr: "Outil de Réflexion : La Taille d'Échantillon" },
+        body: {
+          en: "You try a new restaurant once and it's terrible. Your friend says 'I ate there 20 times and it was great 18 times.' Whose experience better predicts the restaurant's quality?",
+          fr: "Tu essaies un nouveau restaurant une fois et c'est terrible. Ton ami dit « J'y ai mangé 20 fois et c'était excellent 18 fois. » Quelle expérience prédit le mieux la qualité du restaurant?",
+        },
+        choices: [
+          { id: "mine", text: { en: "My experience — it was terrible!", fr: "Mon expérience — c'était terrible!" }, target: "TT6_RESULT", effect: (ctx) => effects.setVar("tt6.choice", "baseRate")(ensureCtx(ctx)) },
+          { id: "friend", text: { en: "My friend's — 20 visits is more data", fr: "Celle de mon ami — 20 visites c'est plus de données" }, target: "TT6_RESULT", effect: (ctx) => effects.setVar("tt6.choice", "correct")(ensureCtx(ctx)) },
+        ],
+      },
+      TT6_RESULT: {
+        id: "TT6_RESULT",
+        title: { en: "Thinking Tool: Base Rate Neglect", fr: "Outil de Réflexion : Négligence du Taux de Base" },
+        body: {
+          en: "A single bad experience out of one visit is a small sample. 18 good visits out of 20 gives you a much better picture (90% good). This is base rate neglect: we overweight vivid single experiences and underweight larger, more reliable data sets. Look for the bigger picture.",
+          fr: "Une seule mauvaise expérience sur une visite est un petit échantillon. 18 bonnes visites sur 20 te donnent une bien meilleure image (90% bon). C'est la négligence du taux de base : on accorde trop de poids aux expériences uniques et vives et pas assez aux ensembles de données plus larges et fiables. Cherche la vue d'ensemble.",
+        },
+        choices: [
+          { id: "next", text: { en: "Back to tools", fr: "Retour aux outils" }, target: "TT_INTRO" },
+          { id: "done", text: { en: "Return to outro", fr: "Retour à la conclusion" }, target: "OUTRO" },
         ],
       },
     }),
@@ -193,7 +356,21 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   const gentle = Boolean(ctx.flags["gentle"]);
 
   useEffect(() => {
+    if (typeof soundManager.registerSound === "function") {
+      soundManager.registerSound("rod-bg", "/sounds/rod-ambient.mp3", true);
+      soundManager.registerSound("rod-click", "/sounds/click.mp3");
+      soundManager.registerSound("rod-solved", "/sounds/level-complete.mp3");
+      soundManager.registerSound("rod-thought", "/sounds/power-up.mp3");
+    }
+  }, []);
+
+  useEffect(() => {
     versionedSave(SAVE_KEY, 1, { sceneId, ctx });
+    if (sceneId.startsWith("TT")) {
+      soundManager.playMusic("rod-thought", 0.2);
+    } else {
+      soundManager.playMusic("rod-bg", 0.25);
+    }
   }, [sceneId, ctx]);
 
   const scene = scenes[sceneId];
@@ -431,6 +608,101 @@ export const RiteOfDiscoveryGame: React.FC = () => {
                 <span>{lang === "fr" ? "Badge d'Aide" : "Helper Badge"}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Character Art (CSS gradient illustrations) */}
+        <div className="mb-6 rounded-lg border border-dashed border-gray-600 p-4" style={{
+          background: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
+        }}>
+          <p className="mb-3 text-xs font-bold uppercase text-gray-400">
+            {lang === "fr" ? "Personnages" : "Characters"}
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="flex flex-col items-center">
+              <div className="mb-2 flex h-20 w-20 items-center justify-center rounded-full border-2 border-amber-500/50" style={{
+                background: "radial-gradient(circle at 40% 40%, #f5d742, #c49b29)",
+                boxShadow: "0 0 20px rgba(245,215,66,0.3)",
+              }}>
+                <span className="text-3xl" role="img" aria-label={lang === "fr" ? "Toi" : "You"}>🧒</span>
+              </div>
+              <p className="text-sm font-medium text-amber-200">
+                {lang === "fr" ? "Toi" : "You"}
+              </p>
+              <p className="text-xs text-gray-400 text-center">
+                {lang === "fr"
+                  ? "Curieux, attentif aux détails. Sur le chemin de la découverte."
+                  : "Curious, detail-oriented. On the path of discovery."}
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="mb-2 flex h-20 w-20 items-center justify-center rounded-full border-2 border-pink-500/50" style={{
+                background: "radial-gradient(circle at 40% 40%, #f5a0c0, #c4547c)",
+                boxShadow: "0 0 20px rgba(245,160,192,0.3)",
+              }}>
+                <span className="text-3xl" role="img" aria-label={lang === "fr" ? "Maman" : "Mom"}>👩</span>
+              </div>
+              <p className="text-sm font-medium text-pink-200">
+                {lang === "fr" ? "Maman" : "Mom"}
+              </p>
+              <p className="text-xs text-gray-400 text-center">
+                {lang === "fr"
+                  ? "Chaleureuse, patiente. Son écriture se retrouve partout dans la maison."
+                  : "Warm, patient. Her handwriting appears everywhere in the house."}
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="mb-2 flex h-20 w-20 items-center justify-center rounded-full border-2 border-blue-500/50" style={{
+                background: "radial-gradient(circle at 40% 40%, #54b8e8, #2c7a9c)",
+                boxShadow: "0 0 20px rgba(84,184,232,0.3)",
+              }}>
+                <span className="text-3xl" role="img" aria-label={lang === "fr" ? "Papa" : "Dad"}>👨</span>
+              </div>
+              <p className="text-sm font-medium text-blue-200">
+                {lang === "fr" ? "Papa" : "Dad"}
+              </p>
+              <p className="text-xs text-gray-400 text-center">
+                {lang === "fr"
+                  ? "Posé et rassurant. Celui qui raconte les meilleures histoires avant le coucher."
+                  : "Calm and reassuring. The one who tells the best bedtime stories."}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Thinking Tools scenes */}
+        {sceneId === "TT_INTRO" && (
+          <div className="bg-muted mb-6 rounded-lg border-2 border-purple-500/40 p-6" style={{
+            background: "linear-gradient(135deg, #1a1025, #2d1b4e, #1a1025)",
+          }}>
+            <h3 className="mb-2 text-lg font-bold text-purple-200">
+              {lang === "fr" ? "Outils de Réflexion" : "Thinking Tools"}
+            </h3>
+            <p className="mb-3 text-sm text-purple-100">
+              {lang === "fr"
+                ? "Explore ces mini-exercices pour comprendre comment ton esprit fonctionne. Chaque outil explore un biais cognitif différent."
+                : "Explore these mini-exercises to understand how your mind works. Each tool explores a different cognitive bias."}
+            </p>
+          </div>
+        )}
+        {(sceneId === "TT1_COUPON" || sceneId === "TT2_ECHO" || sceneId === "TT3_COIN" ||
+          sceneId === "TT4_MIRACLE" || sceneId === "TT5_POSTER" || sceneId === "TT6_SAMPLE") && (
+          <div className="bg-muted mb-6 rounded-lg border-2 border-purple-500/40 p-6" style={{
+            background: "linear-gradient(135deg, #1a1025, #2d1b4e, #1a1025)",
+          }}>
+            <span className="mb-2 inline-block rounded bg-purple-800 px-2 py-1 text-xs font-bold text-purple-200">
+              {lang === "fr" ? "Outil de Réflexion" : "Thinking Tool"}
+            </span>
+          </div>
+        )}
+        {(sceneId === "TT1_RESULT" || sceneId === "TT2_RESULT" || sceneId === "TT3_RESULT" ||
+          sceneId === "TT4_RESULT" || sceneId === "TT5_RESULT" || sceneId === "TT6_RESULT") && (
+          <div className="bg-muted mb-6 rounded-lg border-2 border-emerald-500/40 p-6" style={{
+            background: "linear-gradient(135deg, #0a2a1a, #1a4a3a, #0a2a1a)",
+          }}>
+            <span className="mb-2 inline-block rounded bg-emerald-800 px-2 py-1 text-xs font-bold text-emerald-200">
+              {lang === "fr" ? "Leçon Apprise" : "Lesson Learned"}
+            </span>
           </div>
         )}
 

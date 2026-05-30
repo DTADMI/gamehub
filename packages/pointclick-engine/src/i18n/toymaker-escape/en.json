@@ -74,6 +74,31 @@
         "solved": "The shadow aligns perfectly. The safe clicks open.",
         "reset": "Reset positions"
       },
+      "gearwall": {
+        "title": "Mechanical Gear Wall",
+        "prompt": "A massive wall of interlocking gears blocks the passage. Align the outer ring to the inner ring to unlock it.",
+        "instruction": "Adjust the gear teeth so the output gear spins at exactly half the speed of the input.",
+        "inner": "Inner",
+        "idler": "Idler",
+        "outer": "Outer",
+        "confirm": "Confirm gears",
+        "solved": "The gear wall grinds to a halt! A hidden passage opens."
+      },
+      "brokentoys": {
+        "title": "Broken Toy Workbench",
+        "prompt": "The toymaker's workbench is cluttered with broken toys. Three toys need repairing to reveal the next clue.",
+        "body": "Each broken toy has a missing piece. Find the right match to restore them.",
+        "gears": "Broken Gear Bear",
+        "musicbox": "Silent Music Box",
+        "puppet": "Tangled Marionette",
+        "pieces": {
+          "cog": "Brass Cog",
+          "cylinder": "Music Cylinder",
+          "strings": "Replacement Strings"
+        },
+        "solved": "All toys repaired! A hidden drawer slides open revealing a brass key.",
+        "reset": "Reset"
+      },
       "wrap": {
         "title": "Episode 2 Complete",
         "body": "The office secrets are revealed. You found the commissioner's notes.",
@@ -113,10 +138,35 @@
         "solved": "Anagram solved!",
         "attempts": "Attempts"
       },
+      "toymakerReveal": {
+        "title": "The Toymaker's Studio",
+        "body": "Behind the fridge, a hidden door slides open. You step into the toymaker's secret studio. The toymaker sits at a bench, smiling.",
+        "dialogue": "The toymaker looks up. \"I was wondering when you'd figure it out. You built this puzzle for yourself, you know. The question is: do you remember why?\"",
+        "remember": "I remember everything now.",
+        "confused": "I don't understand... tell me.",
+        "continue": "Continue"
+      },
+      "finalEscape": {
+        "title": "The Final Lock",
+        "prompt": "One last puzzle stands between you and freedom. A complex locking mechanism requires the correct sequence of turns.",
+        "instruction": "Turn the dials in the correct order. The toymaker's voice guides you: \"Left... more left... now right...\"",
+        "turnLeft": "Turn Left",
+        "turnRight": "Turn Right",
+        "pull": "Pull Handle",
+        "solved": "The final lock clicks open. The front door swings wide. You step out into the morning light, the puzzle complete.",
+        "progress": "Step"
+      },
       "wrap": {
         "title": "Episode 3 Complete",
         "body": "The apartment mystery is solved. The commissioner WAS the toymaker — you created this puzzle for yourself.",
         "medalEarned": "Medal earned: Toymaker's Apprentice"
+      }
+    },
+    "sound": {
+      "bg": {
+        "workshop": "/sounds/tme-workshop-ambient.mp3",
+        "office": "/sounds/tme-office-ambient.mp3",
+        "apartment": "/sounds/tme-apartment-ambient.mp3"
       }
     }
   }

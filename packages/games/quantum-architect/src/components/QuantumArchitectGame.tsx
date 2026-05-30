@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Box, Sphere } from "@react-three/drei";
+import { Box, Sphere, Html } from "@react-three/drei";
 import * as THREE from "three";
 import { t } from "@gamehub/game-platform/lib/i18n";
 
@@ -16,6 +16,7 @@ interface PlatformDef {
   color: string;
   solidBias?: number;
   entangledWith?: number;
+  entangledGroup?: number;
 }
 
 interface GateDef {
@@ -31,11 +32,17 @@ interface KeyDef {
   color: KeyColor;
 }
 
+interface CrystalDef {
+  id: number;
+  position: [number, number, number];
+}
+
 interface LevelDef {
   name: string;
   platforms: PlatformDef[];
   gates: GateDef[];
   keys: KeyDef[];
+  crystals: CrystalDef[];
   start: [number, number, number];
   goal: [number, number, number];
 }
@@ -60,6 +67,7 @@ const LEVELS: LevelDef[] = [
     keys: [
       { id: 1, position: [8.5, 2.9, 3.5], color: "red" },
     ],
+    crystals: [],
     start: [0, 2.0, -3],
     goal: [0, 3.0, 10],
   },
@@ -90,6 +98,7 @@ const LEVELS: LevelDef[] = [
       { id: 1, position: [-5, 1.9, -4], color: "blue" },
       { id: 2, position: [6, 3.9, -4], color: "green" },
     ],
+    crystals: [],
     start: [-6, 2.0, -6],
     goal: [8, 4.0, -1],
   },
@@ -125,8 +134,168 @@ const LEVELS: LevelDef[] = [
       { id: 2, position: [8, 2.9, -1], color: "blue" },
       { id: 3, position: [5, 2.9, -3], color: "green" },
     ],
+    crystals: [],
     start: [-8, 2.0, -8],
     goal: [9, 4.0, 9],
+  },
+  {
+    name: "Certainty Principle",
+    platforms: [
+      { id: 1, position: [0, 1.5, 0], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 2, position: [3, 2.0, 0], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.3 },
+      { id: 3, position: [6, 2.0, 0], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.7, entangledWith: 2 },
+      { id: 4, position: [9, 2.5, 0], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 5, position: [6, 2.5, 3], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 6, position: [3, 2.5, 3], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 7, position: [0, 2.0, 3], size: [3, 0.3, 3], color: "#81c784" },
+      { id: 8, position: [0, 2.5, 6], size: [3, 0.3, 3], color: "#ce93d8" },
+    ],
+    gates: [
+      { id: 1, position: [3, 2.7, 3], size: [0.3, 1.5, 2], color: "red" },
+    ],
+    keys: [
+      { id: 1, position: [6, 2.9, 3], color: "red" },
+    ],
+    crystals: [
+      { id: 1, position: [3, 2.5, 0] },
+      { id: 2, position: [0, 2.5, 3] },
+    ],
+    start: [0, 2.0, -3],
+    goal: [0, 3.0, 8],
+  },
+  {
+    name: "Chain Reaction",
+    platforms: [
+      { id: 1, position: [-3, 1.5, -4], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 2, position: [0, 2.0, -3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.5, entangledGroup: 1 },
+      { id: 3, position: [3, 2.0, -3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.5, entangledGroup: 1 },
+      { id: 4, position: [6, 2.0, -3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.5, entangledGroup: 1 },
+      { id: 5, position: [6, 2.5, 0], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 6, position: [3, 2.5, 1], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 7, position: [0, 2.5, 2], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 2 },
+      { id: 8, position: [-3, 2.5, 2], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 2 },
+      { id: 9, position: [-3, 3.0, 4], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 2 },
+      { id: 10, position: [0, 3.0, 5], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 2 },
+      { id: 11, position: [0, 3.5, 7], size: [3, 0.3, 3], color: "#81c784" },
+    ],
+    gates: [],
+    keys: [],
+    crystals: [
+      { id: 1, position: [6, 2.9, 0] },
+    ],
+    start: [-4, 2.0, -6],
+    goal: [0, 4.0, 9],
+  },
+  {
+    name: "The Observer's Dilemma",
+    platforms: [
+      { id: 1, position: [-3, 1.5, -5], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 2, position: [0, 2.0, -4], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 3, position: [3, 2.0, -3], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.3 },
+      { id: 4, position: [6, 2.0, -3], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.7, entangledWith: 3 },
+      { id: 5, position: [6, 2.5, 0], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 6, position: [3, 2.5, 1], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 7, position: [0, 2.5, 2], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 8, position: [-3, 2.5, 2], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 9, position: [-3, 3.0, 4], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 10, position: [0, 3.0, 5], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 11, position: [3, 3.0, 6], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 12, position: [5, 3.5, 7], size: [3, 0.3, 3], color: "#ce93d8" },
+    ],
+    gates: [
+      { id: 1, position: [6, 2.7, 0], size: [0.3, 1.5, 2], color: "red" },
+      { id: 2, position: [-3, 2.7, 2], size: [0.3, 1.5, 2], color: "blue" },
+      { id: 3, position: [0, 3.2, 5], size: [0.3, 1.5, 2], color: "green" },
+    ],
+    keys: [
+      { id: 1, position: [3, 2.5, -3], color: "red" },
+      { id: 2, position: [0, 2.9, 2], color: "blue" },
+      { id: 3, position: [-3, 3.4, 4], color: "green" },
+    ],
+    crystals: [
+      { id: 1, position: [3, 2.5, 1] },
+      { id: 2, position: [0, 3.5, 5] },
+    ],
+    start: [-4, 2.0, -7],
+    goal: [5, 4.0, 9],
+  },
+  {
+    name: "Entanglement Web",
+    platforms: [
+      { id: 1, position: [-6, 1.5, -5], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 2, position: [-3, 2.0, -4], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 1 },
+      { id: 3, position: [0, 2.0, -4], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 1 },
+      { id: 4, position: [3, 2.0, -3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 1 },
+      { id: 5, position: [6, 2.0, -3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.4, entangledGroup: 1 },
+      { id: 6, position: [6, 2.5, 0], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 7, position: [3, 2.5, 1], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 8, position: [0, 2.5, 2], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 9, position: [-3, 2.5, 2], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 10, position: [-3, 3.0, 4], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 11, position: [0, 3.0, 5], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 12, position: [3, 3.0, 6], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 13, position: [5, 3.5, 7], size: [3, 0.3, 3], color: "#ce93d8" },
+      { id: 14, position: [8, 3.5, 5], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.3, entangledWith: 15 },
+      { id: 15, position: [8, 3.0, 2], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.3, entangledWith: 14 },
+    ],
+    gates: [
+      { id: 1, position: [3, 2.7, 1], size: [0.3, 1.5, 2], color: "red" },
+      { id: 2, position: [0, 3.2, 5], size: [0.3, 1.5, 2], color: "blue" },
+    ],
+    keys: [
+      { id: 1, position: [6, 2.9, 0], color: "red" },
+      { id: 2, position: [3, 3.4, 6], color: "blue" },
+    ],
+    crystals: [
+      { id: 1, position: [-3, 2.5, -4] },
+      { id: 2, position: [0, 2.5, 2] },
+      { id: 3, position: [8, 3.0, 5] },
+    ],
+    start: [-7, 2.0, -7],
+    goal: [7, 4.0, 8],
+  },
+  {
+    name: "Final Observation",
+    platforms: [
+      { id: 1, position: [-6, 1.5, -7], size: [3, 0.3, 3], color: "#4fc3f7" },
+      { id: 2, position: [-3, 2.0, -6], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 3, position: [0, 2.0, -5], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.3, entangledWith: 4 },
+      { id: 4, position: [3, 2.0, -5], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.3, entangledWith: 3 },
+      { id: 5, position: [6, 2.0, -4], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.5, entangledGroup: 1 },
+      { id: 6, position: [6, 2.5, -1], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.5, entangledGroup: 1 },
+      { id: 7, position: [6, 3.0, 2], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.5, entangledGroup: 1 },
+      { id: 8, position: [3, 2.5, 3], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 9, position: [0, 2.5, 3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 10, position: [-3, 2.5, 3], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 11, position: [-3, 3.0, 5], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 12, position: [0, 3.0, 6], size: [2, 0.3, 2], color: "#9966ff", solidBias: 0.6, entangledGroup: 2 },
+      { id: 13, position: [3, 3.0, 7], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 14, position: [6, 3.5, 8], size: [2, 0.3, 2], color: "#81c784" },
+      { id: 15, position: [3, 3.5, 6], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.8, entangledWith: 14 },
+      { id: 16, position: [0, 3.5, 4], size: [2, 0.3, 2], color: "#ff8a65", solidBias: 0.8, entangledWith: 15 },
+      { id: 17, position: [3, 3.0, 4], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 18, position: [6, 3.0, 5], size: [2, 0.3, 2], color: "#4fc3f7" },
+      { id: 19, position: [9, 3.5, 5], size: [3, 0.3, 3], color: "#81c784" },
+      { id: 20, position: [9, 4.0, 8], size: [3, 0.3, 3], color: "#ce93d8" },
+    ],
+    gates: [
+      { id: 1, position: [3, 2.7, 3], size: [0.3, 1.5, 2], color: "red" },
+      { id: 2, position: [0, 3.2, 4], size: [2, 1.5, 0.3], color: "blue" },
+      { id: 3, position: [6, 3.2, 8], size: [0.3, 1.5, 2], color: "green" },
+    ],
+    keys: [
+      { id: 1, position: [6, 2.5, -4], color: "red" },
+      { id: 2, position: [-3, 3.4, 5], color: "blue" },
+      { id: 3, position: [3, 3.4, 7], color: "green" },
+    ],
+    crystals: [
+      { id: 1, position: [0, 2.5, -5] },
+      { id: 2, position: [6, 3.4, 2] },
+      { id: 3, position: [0, 3.5, 6] },
+      { id: 4, position: [9, 3.9, 5] },
+    ],
+    start: [-7, 2.0, -9],
+    goal: [9, 4.5, 10],
   },
 ];
 
@@ -154,6 +323,12 @@ interface KeyRuntime {
   id: number;
   position: [number, number, number];
   color: KeyColor;
+  collected: boolean;
+}
+
+interface CrystalRuntime {
+  id: number;
+  position: [number, number, number];
   collected: boolean;
 }
 
@@ -300,6 +475,57 @@ function EntanglementLine({ p1, p2, color }: { p1: [number, number, number]; p2:
   );
 }
 
+function CrystalMesh({ crystal, collected }: { crystal: CrystalRuntime; collected: boolean }) {
+  const ref = useRef<THREE.Mesh>(null!);
+  const glowRef = useRef<THREE.Mesh>(null!);
+  useFrame((_, delta) => {
+    if (!ref.current || collected) return;
+    ref.current.rotation.y += delta * 1.5;
+    ref.current.rotation.x += delta * 0.3;
+    ref.current.position.y = crystal.position[1] + Math.sin(performance.now() * 0.003 + crystal.id) * 0.15;
+    if (glowRef.current) {
+      glowRef.current.rotation.y -= delta * 0.5;
+      glowRef.current.scale.setScalar(1 + Math.sin(performance.now() * 0.004 + crystal.id) * 0.1);
+    }
+  });
+  if (collected) return null;
+  return (
+    <group>
+      <mesh ref={ref} position={crystal.position}>
+        <tetrahedronGeometry args={[0.25, 0]} />
+        <meshStandardMaterial color="#ffd700" emissive="#ffa000" emissiveIntensity={0.8} roughness={0.1} metalness={0.9} />
+      </mesh>
+      <mesh ref={glowRef} position={crystal.position}>
+        <tetrahedronGeometry args={[0.35, 0]} />
+        <meshBasicMaterial color="#ffd700" transparent opacity={0.2} />
+      </mesh>
+    </group>
+  );
+}
+
+function CatenaryChain({ positions, color }: { positions: [number, number, number][]; color: string }) {
+  const { vecPoints, posArray } = useMemo(() => {
+    if (positions.length < 2) return { vecPoints: [] as THREE.Vector3[], posArray: null as Float32Array | null };
+    const vecs = positions.map((p) => new THREE.Vector3(...p));
+    const curve = new THREE.CatmullRomCurve3(vecs);
+    const pts = curve.getPoints(50);
+    const arr = new Float32Array(pts.length * 3);
+    pts.forEach((p, i) => { arr[i * 3] = p.x; arr[i * 3 + 1] = p.y; arr[i * 3 + 2] = p.z; });
+    return { vecPoints: pts, posArray: arr };
+  }, [positions]);
+  const points = vecPoints;
+  if (points.length < 2 || posArray === null) return null;
+  const positionsArray = posArray;
+  return (
+    <line>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positionsArray, 3]} />
+      </bufferGeometry>
+      <lineBasicMaterial color={color} transparent opacity={0.5} />
+    </line>
+  );
+}
+
 function GameScene({
   level,
   onScoreUpdate,
@@ -307,6 +533,7 @@ function GameScene({
   onLevelComplete,
   onReset,
   onGameComplete,
+  onCrystalsUpdate,
 }: {
   level: number;
   onScoreUpdate: (delta: number) => void;
@@ -314,6 +541,7 @@ function GameScene({
   onLevelComplete: (lvl: number) => void;
   onReset: () => void;
   onGameComplete: () => void;
+  onCrystalsUpdate: (count: number) => void;
 }) {
   const levelDef = LEVELS[level];
   const [platforms, setPlatforms] = useState<PlatformRuntime[]>(() =>
@@ -326,6 +554,11 @@ function GameScene({
     levelDef.keys.map((k) => ({ ...k, collected: false })),
   );
   const [collectedKeys, setCollectedKeys] = useState<Set<KeyColor>>(new Set());
+  const [crystals, setCrystals] = useState<CrystalRuntime[]>(() =>
+    (levelDef.crystals ?? []).map((c) => ({ ...c, collected: false })),
+  );
+  const [crystalsAvail, setCrystalsAvail] = useState(0);
+  const [observationUI, setObservationUI] = useState<{ platformId: number; selected: "solid" | "void" } | null>(null);
 
   const playerPos = useRef(new THREE.Vector3(...levelDef.start));
   const playerVel = useRef(new THREE.Vector3(0, 0, 0));
@@ -335,50 +568,76 @@ function GameScene({
   const gatesRef = useRef(gates);
   const keysStateRef = useRef(keys);
   const collectedKeysRef = useRef(collectedKeys);
+  const crystalsRef = useRef(crystals);
   const levelRef = useRef(level);
   const goalPos = useMemo(() => new THREE.Vector3(...levelDef.goal), [level]);
   const [, forceRender] = useState(0);
+  const isObservingRef = useRef(false);
+  const crystalsAvailRef = useRef(0);
+  const observationDataRef = useRef<{ platformId: number; selected: "solid" | "void" } | null>(null);
 
   useEffect(() => { platformsRef.current = platforms; }, [platforms]);
   useEffect(() => { gatesRef.current = gates; }, [gates]);
   useEffect(() => { keysStateRef.current = keys; }, [keys]);
   useEffect(() => { collectedKeysRef.current = collectedKeys; }, [collectedKeys]);
+  useEffect(() => { crystalsRef.current = crystals; }, [crystals]);
   useEffect(() => { levelRef.current = level; }, [level]);
+  useEffect(() => { crystalsAvailRef.current = crystalsAvail; }, [crystalsAvail]);
+  useEffect(() => { isObservingRef.current = observationUI !== null; observationDataRef.current = observationUI; }, [observationUI]);
 
   useEffect(() => {
     const def = LEVELS[level];
     setPlatforms(def.platforms.map((p) => ({ ...p, state: "superposed" as PlatformState, observeFlash: 0 })));
     setGates(def.gates.map((g) => ({ ...g, locked: true })));
     setKeys(def.keys.map((k) => ({ ...k, collected: false })));
+    setCrystals((def.crystals ?? []).map((c) => ({ ...c, collected: false })));
+    setCrystalsAvail(0);
     setCollectedKeys(new Set());
+    setObservationUI(null);
     playerPos.current.set(...def.start);
     playerVel.current.set(0, 0, 0);
     observeCooldown.current = 0;
   }, [level]);
 
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => keysRef.current.add(e.key.toLowerCase());
-    const onKeyUp = (e: KeyboardEvent) => keysRef.current.delete(e.key.toLowerCase());
-    const onSpace = (e: KeyboardEvent) => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+
+      if (isObservingRef.current) {
+        e.preventDefault();
+        const data = observationDataRef.current;
+        if (key === "e") { handleObservationChoiceFn(data, "solid"); return; }
+        if (key === "q") { handleObservationChoiceFn(data, "void"); return; }
+        if (key === "arrowleft") { setObservationUI(data ? { ...data, selected: "solid" } : null); return; }
+        if (key === "arrowright") { setObservationUI(data ? { ...data, selected: "void" } : null); return; }
+        if (e.key === " " || e.code === "Space") { if (data) handleObservationChoiceFn(data, data.selected); return; }
+        if (key === "escape") { setObservationUI(null); return; }
+        return;
+      }
+
+      keysRef.current.add(key);
+
       if (e.key === " " || e.code === "Space") {
         e.preventDefault();
         if (observeCooldown.current <= 0) {
-          handleObserve();
-          observeCooldown.current = OBSERVE_COOLDOWN;
+          startObservingFn();
         }
       }
     };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      keysRef.current.delete(e.key.toLowerCase());
+    };
+
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
-    window.addEventListener("keydown", onSpace);
     return () => {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
-      window.removeEventListener("keydown", onSpace);
     };
   }, []);
 
-  const handleObserve = useCallback(() => {
+  const startObservingFn = useCallback(() => {
     const p = playerPos.current;
     const plats = platformsRef.current;
 
@@ -399,25 +658,52 @@ function GameScene({
 
     if (!nearest) return;
 
-    const bias = nearest.solidBias ?? 0.5;
-    const collapsed = Math.random() < bias ? "solid" : "void";
-    const newState = collapsed as PlatformState;
+    keysRef.current.clear();
+    setObservationUI({ platformId: nearest.id, selected: "solid" });
+  }, []);
+
+  const handleObservationChoiceFn = useCallback((data: { platformId: number; selected: "solid" | "void" } | null, chosenOutcome: "solid" | "void") => {
+    if (!data) return;
+
+    const platform = platformsRef.current.find((p) => p.id === data.platformId);
+    if (!platform) { setObservationUI(null); return; }
+
+    let actualOutcome: PlatformState;
+
+    if (crystalsAvailRef.current > 0) {
+      actualOutcome = chosenOutcome;
+      setCrystalsAvail((prev) => prev - 1);
+    } else {
+      const bias = platform.solidBias ?? 0.5;
+      actualOutcome = Math.random() < bias ? "solid" : "void";
+    }
 
     setPlatforms((prev) => {
-      let updated = prev.map((plat) => {
-        if (plat.id === nearest!.id) {
-          return { ...plat, state: newState, observeFlash: 1.0 };
+      return prev.map((plat) => {
+        if (plat.id === platform.id) {
+          return { ...plat, state: actualOutcome, observeFlash: 1.0 };
         }
-        if (nearest!.entangledWith !== undefined && plat.id === nearest!.entangledWith) {
-          return { ...plat, state: newState, observeFlash: 0.8 };
+        if (plat.entangledWith === platform.id) {
+          return { ...plat, state: actualOutcome, observeFlash: 0.8 };
+        }
+        if (platform.entangledWith !== undefined && plat.id === platform.entangledWith) {
+          return { ...plat, state: actualOutcome, observeFlash: 0.8 };
+        }
+        if (platform.entangledGroup !== undefined && plat.entangledGroup === platform.entangledGroup && plat.id !== platform.id) {
+          return { ...plat, state: actualOutcome, observeFlash: 0.8 };
         }
         return plat;
       });
-      return updated;
     });
 
+    setObservationUI(null);
+    observeCooldown.current = OBSERVE_COOLDOWN;
     onObservationsUpdate();
   }, [onObservationsUpdate]);
+
+  const handleObservationChoice = useCallback((chosenOutcome: "solid" | "void") => {
+    handleObservationChoiceFn(observationDataRef.current, chosenOutcome);
+  }, []);
 
   const collectKey = useCallback((keyId: number, color: KeyColor) => {
     setKeys((prev) =>
@@ -511,6 +797,19 @@ function GameScene({
       }
     }
 
+    const crst = crystalsRef.current;
+    for (const crystal of crst) {
+      if (crystal.collected) continue;
+      const dx = p.x - crystal.position[0];
+      const dy = p.y - crystal.position[1];
+      const dz = p.z - crystal.position[2];
+      if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 1.0) {
+        setCrystals((prev) => prev.map((c) => c.id === crystal.id ? { ...c, collected: true } : c));
+        setCrystalsAvail((prev) => prev + 1);
+        onScoreUpdate(500);
+      }
+    }
+
     const speed = grounded ? MOVE_SPEED : MOVE_SPEED * 0.6;
     v.x = inputX * speed;
     v.z = inputZ * speed;
@@ -548,6 +847,18 @@ function GameScene({
     })
     .filter((pair): pair is [PlatformDef, PlatformDef] => pair !== null && pair[0].id < pair[1].id);
 
+  const chainGroups = useMemo(() => {
+    const groups = new Map<number, [number, number, number][]>();
+    for (const p of levelDef.platforms) {
+      if (p.entangledGroup !== undefined) {
+        const existing = groups.get(p.entangledGroup) || [];
+        existing.push(p.position);
+        groups.set(p.entangledGroup, existing);
+      }
+    }
+    return groups;
+  }, [levelDef]);
+
   return (
     <>
       <ambientLight intensity={0.3} />
@@ -563,12 +874,74 @@ function GameScene({
       {keys.map((k) => (
         <KeyOrb key={`key-${k.id}`} keyDef={k} />
       ))}
+      {crystals.map((c) => (
+        <CrystalMesh key={`crystal-${c.id}`} crystal={c} collected={c.collected} />
+      ))}
       {entangledPairs.map(([a, b]) => (
         <EntanglementLine key={`el-${a.id}-${b.id}`} p1={a.position} p2={b.position} color="#ff8888" />
+      ))}
+      {Array.from(chainGroups.entries()).map(([groupId, positions]) => (
+        <CatenaryChain key={`chain-${groupId}`} positions={positions} color="#9966ff" />
       ))}
       <PlayerSphere position={playerPos} />
       <GoalSphere position={levelDef.goal} />
       <CameraFollower target={playerPos} />
+      {observationUI && (
+        <Html center position={[0, 3, 0]}>
+          <div style={{
+            background: "rgba(10, 10, 30, 0.95)",
+            border: "1px solid #4fc3f7",
+            borderRadius: 12,
+            padding: "24px 32px",
+            minWidth: 320,
+            textAlign: "center",
+            fontFamily: "system-ui, sans-serif",
+            color: "white",
+          }}>
+            <div style={{ fontSize: 18, fontWeight: "bold", color: "#4fc3f7", marginBottom: 8 }}>
+              ⚛ OBSERVING P{observationUI.platformId}
+            </div>
+            <div style={{ fontSize: 13, color: "#ffd700", marginBottom: 12 }}>
+              ✦ Certainty Crystals: {crystalsAvail} {crystalsAvail > 0 ? "(guaranteed)" : "(bias applies)"}
+            </div>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", marginBottom: 12 }}>
+              <button
+                onClick={() => handleObservationChoice("solid")}
+                style={{
+                  padding: "10px 24px",
+                  borderRadius: 8,
+                  border: observationUI.selected === "solid" ? "2px solid #4fc3f7" : "2px solid #444",
+                  background: observationUI.selected === "solid" ? "rgba(79, 195, 247, 0.2)" : "rgba(255,255,255,0.05)",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: observationUI.selected === "solid" ? "bold" : "normal",
+                  cursor: "pointer",
+                }}
+              >
+                [E] Solid
+              </button>
+              <button
+                onClick={() => handleObservationChoice("void")}
+                style={{
+                  padding: "10px 24px",
+                  borderRadius: 8,
+                  border: observationUI.selected === "void" ? "2px solid #4fc3f7" : "2px solid #444",
+                  background: observationUI.selected === "void" ? "rgba(79, 195, 247, 0.2)" : "rgba(255,255,255,0.05)",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: observationUI.selected === "void" ? "bold" : "normal",
+                  cursor: "pointer",
+                }}
+              >
+                [Q] Void
+              </button>
+            </div>
+            <div style={{ fontSize: 11, color: "#888" }}>
+              ←/→ select • Space confirm • Esc cancel
+            </div>
+          </div>
+        </Html>
+      )}
     </>
   );
 }
@@ -579,10 +952,12 @@ export default function QuantumArchitectGame() {
   const [observations, setObservations] = useState(0);
   const [gamePhase, setGamePhase] = useState<"title" | "playing" | "win">("title");
   const [nearPlatformBias, setNearPlatformBias] = useState<string>("-");
+  const [crystalsCollected, setCrystalsCollected] = useState(0);
 
   const handleStart = useCallback(() => {
     setLevel(0); setScore(0); setObservations(0); setGamePhase("playing");
     setNearPlatformBias("-");
+    setCrystalsCollected(0);
   }, []);
 
   const handleScoreUpdate = useCallback((delta: number) => {
@@ -593,6 +968,10 @@ export default function QuantumArchitectGame() {
     setObservations((o) => o + 1);
   }, []);
 
+  const handleCrystalsUpdate = useCallback((count: number) => {
+    setCrystalsCollected(count);
+  }, []);
+
   const handleLevelComplete = useCallback(
     (completedLevel: number) => {
       const levelBonus = (completedLevel + 1) * 1200;
@@ -601,6 +980,7 @@ export default function QuantumArchitectGame() {
       setLevel((l) => l + 1);
       setObservations(0);
       setNearPlatformBias("-");
+      setCrystalsCollected(0);
     },
     [observations],
   );
@@ -631,6 +1011,7 @@ export default function QuantumArchitectGame() {
             onLevelComplete={handleLevelComplete}
             onReset={handleReset}
             onGameComplete={handleGameComplete}
+            onCrystalsUpdate={handleCrystalsUpdate}
           />
         ) : (
           <>
@@ -657,6 +1038,7 @@ export default function QuantumArchitectGame() {
         {gamePhase === "playing" && (
           <div className="rounded-lg bg-black/60 px-4 py-2 text-white backdrop-blur-sm">
             <div className="text-sm font-bold text-yellow-300">{t("quantumarchitect.keys")}: {levelDef.gates.filter((g) => levelDef.keys.every((k) => true)).length}</div>
+            <div className="text-xs text-yellow-400">✦ {crystalsCollected}</div>
           </div>
         )}
       </div>
@@ -669,9 +1051,11 @@ export default function QuantumArchitectGame() {
           </p>
           <div className="mb-4 text-sm text-gray-400">
             <div>WASD / Arrows — Move</div>
-            <div>Space — Observe (collapse nearest platform)</div>
+            <div>Space — Observe (E/Q or arrows to choose outcome)</div>
+            <div>✦ Certainty Crystals — Guarantee one observation</div>
             <div>Collect colored keys to unlock matching gates</div>
-            <div>Entangled platforms: observing one affects both</div>
+            <div>Entangled platforms (pink): observing one affects both</div>
+            <div>Entanglement chains (purple): linked in groups of 3+</div>
           </div>
           <button
             onClick={handleStart}
@@ -706,6 +1090,7 @@ export default function QuantumArchitectGame() {
               <div key={p.id} className="text-gray-400">
                 <span style={{ color: p.color }}>P{p.id}</span> {t("quantumarchitect.bias")}: {((p.solidBias ?? 0.5) * 100).toFixed(0)}%
                 {p.entangledWith !== undefined && <span className="text-red-400"> ({t("quantumarchitect.entangled")}: P{p.entangledWith})</span>}
+                {p.entangledGroup !== undefined && <span className="text-purple-400"> (Chain {p.entangledGroup})</span>}
               </div>
             ))}
             {levelDef.gates.map((g) => (

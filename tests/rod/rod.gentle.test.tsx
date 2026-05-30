@@ -1,6 +1,19 @@
-import { beforeEach, describe, expect, it } from "vitest";
+﻿import { beforeEach, describe, it, vi } from "vitest";
 import React from "react";
 import { render } from "@testing-library/react";
+
+vi.mock("@gamehub/game-platform/lib/sound", () => ({
+  soundManager: {
+    preloadSound: vi.fn(),
+    playSound: vi.fn(),
+    playMusic: vi.fn(),
+    stopMusic: vi.fn(),
+    setVolume: vi.fn(),
+    toggleMute: vi.fn(),
+    registerSound: vi.fn(),
+  },
+}));
+
 import { RiteOfDiscoveryGame } from "@games/rite-of-discovery";
 
 describe("RiteOfDiscovery gentle mode & save", () => {
@@ -10,6 +23,7 @@ describe("RiteOfDiscovery gentle mode & save", () => {
 
   it("renders initial scene and persists to localStorage", async () => {
     render(<RiteOfDiscoveryGame />);
+    await new Promise((r) => setTimeout(r, 50));
     const raw = localStorage.getItem("rod:save:v1");
     expect(raw).toBeTruthy();
     const parsed = JSON.parse(raw!);

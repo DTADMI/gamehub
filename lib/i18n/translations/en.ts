@@ -26,6 +26,11 @@ const en: Translations = {
     next: "Next",
     previous: "Previous",
     download: "Download",
+    email: "Email",
+    password: "Password",
+    forgotPassword: "Forgot Password",
+    resetPassword: "Reset Password",
+    username: "Username",
   },
   nav: {
     home: "Home",

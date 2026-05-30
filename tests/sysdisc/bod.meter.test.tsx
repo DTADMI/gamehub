@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, it } from "vitest";
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { HomeostasisMeter } from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";

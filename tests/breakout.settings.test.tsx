@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+﻿import { beforeEach, describe, it } from "vitest";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { GameSettingsProvider, useGameSettings } from "@gamehub/game-platform";
@@ -78,7 +78,7 @@ function SettingsConsumer() {
   );
 }
 
-describe("GameSettingsProvider — particles & mode gating", () => {
+describe("GameSettingsProvider â€” particles & mode gating", () => {
   beforeEach(() => {
     // Reset localStorage state between tests
     (globalThis as any).localStorage?.clear?.();

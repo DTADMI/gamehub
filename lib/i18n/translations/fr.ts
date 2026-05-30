@@ -26,6 +26,11 @@ const fr: Translations = {
     next: "Suivant",
     previous: "Pr\u00e9c\u00e9dent",
     download: "T\u00e9l\u00e9charger",
+    email: "Courriel",
+    password: "Mot de passe",
+    forgotPassword: "Mot de passe oubli\u00e9",
+    resetPassword: "R\u00e9initialiser le mot de passe",
+    username: "Nom d\u2019utilisateur",
   },
   nav: {
     home: "Accueil",

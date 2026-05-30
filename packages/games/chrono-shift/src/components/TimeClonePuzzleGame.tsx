@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { Canvas, useFrame } from "@react-three/fiber";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 
 const GRID_ROWS = 6;
 const GRID_COLS = 6;
@@ -12,7 +12,6 @@ const RECORD_MAX = 12;
 const CLONE_LOOP_DELAY = 2.0;
 
 type TileType = "floor" | "wall" | "timegate" | "switch" | "bridge" | "playerExit" | "cloneExit";
-type Direction = "north" | "south" | "east" | "west";
 
 interface Tile {
   row: number;
@@ -289,7 +288,7 @@ export default function TimeClonePuzzleGame({
   const [tiles, setTiles] = useState<Tile[][]>(() => puzzleGridToTiles(level));
   const [score, setScore] = useState(0);
   const [gameWon, setGameWon] = useState(false);
-  const [recordingActive, setRecordingActive] = useState(false);
+  const [_recordingActive, setRecordingActive] = useState(false);
   const [clonePhase, setClonePhase] = useState<"none" | "recording" | "playing">("none");
   const [cloneGhostAlpha, setCloneGhostAlpha] = useState(0.5);
   const [currentStepLabel, setCurrentStepLabel] = useState("");
@@ -321,10 +320,10 @@ export default function TimeClonePuzzleGame({
 
   const isWalkable = useCallback(
     (row: number, col: number): boolean => {
-      if (row < 0 || row >= GRID_ROWS || col < 0 || col >= GRID_COLS) return false;
+      if (row < 0 || row >= GRID_ROWS || col < 0 || col >= GRID_COLS) { return false; }
       const tile = tiles[row][col];
-      if (tile.type === "wall") return false;
-      if (tile.type === "bridge" && !tile.active) return false;
+      if (tile.type === "wall") { return false; }
+      if (tile.type === "bridge" && !tile.active) { return false; }
       return true;
     },
     [tiles],
@@ -355,13 +354,13 @@ export default function TimeClonePuzzleGame({
     setGameWon(false);
     setCloneGhostAlpha(0.5);
     setCurrentStepLabel("");
-  }, [levelIdx]);
+  }, [levelIdx, level]);
 
   const handleSwitchToggle = useCallback(
     (tile: Tile) => {
-      if (tile.type !== "switch" || tile.switchId === undefined) return;
+      if (tile.type !== "switch" || tile.switchId === undefined) { return; }
       const swDef = level.switches.find((s) => s.id === tile.switchId);
-      if (!swDef) return;
+      if (!swDef) { return; }
 
       setTiles((prev) => {
         const next = prev.map((r) => r.map((t) => ({ ...t })));
@@ -388,7 +387,7 @@ export default function TimeClonePuzzleGame({
     (playerRow: number, playerCol: number, cloneRow: number, cloneCol: number) => {
       const pExit = tiles[playExR]?.[playExC];
       const cExit = tiles[cloneExR]?.[cloneExC];
-      if (!pExit || !cExit) return;
+      if (!pExit || !cExit) { return; }
       const pOnExit = playerRow === pExit.row && playerCol === pExit.col;
       const cOnExit = cloneRow === cExit.row && cloneCol === cExit.col;
 
@@ -399,18 +398,18 @@ export default function TimeClonePuzzleGame({
         onGameOver?.(score + levelBonus + recordingCountRef.current * 50, true);
       }
     },
-    [tiles, gameWon, levelIdx, score, playExR, playExC, cloneExR, cloneExC],
+    [tiles, gameWon, levelIdx, score, playExR, playExC, cloneExR, cloneExC, onGameOver],
   );
 
   const tryMove = useCallback(
     (dr: number, dc: number) => {
-      if (gameWon || isMovingRef.current) return;
+      if (gameWon || isMovingRef.current) { return; }
 
       const { row, col } = gridPosRef.current;
       const newRow = row + dr;
       const newCol = col + dc;
 
-      if (!isWalkable(newRow, newCol)) return;
+      if (!isWalkable(newRow, newCol)) { return; }
 
       gridPosRef.current = { row: newRow, col: newCol };
       const [tx, tz] = cellToWorld(newRow, newCol);
@@ -459,7 +458,7 @@ export default function TimeClonePuzzleGame({
 
       playerAtExitRef.current = newRow === playExR && newCol === playExC;
     },
-    [isWalkable, clonePhase, gameWon, handleSwitchToggle, score, playExR, playExC],
+    [isWalkable, clonePhase, gameWon, handleSwitchToggle, score, playExR, playExC, onScoreUpdate, tiles],
   );
 
   const resetLevel = useCallback(() => {
@@ -497,7 +496,7 @@ export default function TimeClonePuzzleGame({
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (gameWon) return;
+      if (gameWon) { return; }
       const key = e.key.toLowerCase();
       if (key === "w" || key === "arrowup") { e.preventDefault(); tryMove(-1, 0); }
       else if (key === "s" || key === "arrowdown") { e.preventDefault(); tryMove(1, 0); }
@@ -510,7 +509,7 @@ export default function TimeClonePuzzleGame({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isMovingRef.current) return;
+      if (!isMovingRef.current) { return; }
 
       const { row, col } = gridPosRef.current;
       const [twx, twz] = cellToWorld(row, col);
@@ -541,8 +540,8 @@ export default function TimeClonePuzzleGame({
   useEffect(() => {
     const cloneInterval = setInterval(() => {
       const cd = cloneRef.current;
-      if (clonePhase !== "playing") return;
-      if (cd.paused) return;
+      if (clonePhase !== "playing") { return; }
+      if (cd.paused) { return; }
 
       if (cd.loopTimer > 0) {
         cd.loopTimer -= 0.05;
@@ -550,7 +549,7 @@ export default function TimeClonePuzzleGame({
         return;
       }
 
-      if (cd.recordedMoves.length === 0) return;
+      if (cd.recordedMoves.length === 0) { return; }
 
       const move = cd.recordedMoves[cd.currentMoveIdx];
       cd.position = move;
@@ -577,8 +576,8 @@ export default function TimeClonePuzzleGame({
 
   const [, forceRender] = useState(0);
 
-  const [pExitWX, pExitWZ] = cellToWorld(playExR, playExC);
-  const [cExitWX, cExitWZ] = cellToWorld(cloneExR, cloneExC);
+  const [_pExitWX, _pExitWZ] = cellToWorld(playExR, playExC);
+  const [_cExitWX, _cExitWZ] = cellToWorld(cloneExR, cloneExC);
 
   return (
     <div

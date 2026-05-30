@@ -85,6 +85,7 @@
     "packages/**/node_modules",
     "packages/**/dist",
     "packages/games/breakout/src/app",
+    "vitest.config.ts",
     "**/*.md",
     "**/*.mdx",
     "**/*.test.ts",

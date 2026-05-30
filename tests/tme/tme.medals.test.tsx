@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+﻿import { afterAll, beforeAll, beforeEach, describe, it, vi } from "vitest";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 
@@ -49,7 +49,7 @@ vi.mock("@gamehub/game-platform/lib/sound", () => ({
 
 import { ToymakerEscapeGame } from "@games/toymaker-escape";
 
-describe("ToymakerEscape — medals & save", () => {
+describe("ToymakerEscape â€” medals & save", () => {
   beforeEach(() => {
     localStorage.clear();
     globalThis.fetch = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) });

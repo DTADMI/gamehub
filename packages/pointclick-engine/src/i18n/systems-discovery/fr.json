@@ -269,6 +269,83 @@
           "p1": "Le système s'est développé selon son plan."
         }
       }
+    },
+    "ocean": {
+      "intro": {
+        "title": "Pack Océan — Bleu profond",
+        "p1": "Plongez dans le monde stratifié de l'océan — des hauts-fonds ensoleillés aux profondeurs obscures.",
+        "p2": "Comment les courants, la lumière et la vie s'interconnectent-ils sous les vagues ?",
+        "cta": "Plonger",
+        "skip": "Passer l'intro"
+      },
+      "o1": {
+        "title": "Couches océaniques",
+        "prompt": "Classez la vie océanique dans les bonnes zones de profondeur selon leur habitat.",
+        "hint": "Zone ensoleillée (0-200m) : corail, plancton. Crépusculaire (200-1000m) : poisson-lanterne. Minuit (1000-4000m) : baudroie. Abysses (4000m+) : vers tubicoles.",
+        "zones": {
+          "sunlit": "Ensoleillée (Épipélagique)",
+          "twilight": "Crépusculaire (Mésopélagique)",
+          "midnight": "Minuit (Bathypélagique)",
+          "abyss": "Abysses (Abyssopélagique)"
+        },
+        "creatures": {
+          "coral": "Récif corallien",
+          "plankton": "Phytoplancton",
+          "lanternfish": "Poisson-lanterne",
+          "anglerfish": "Baudroie abyssale",
+          "tubeworm": "Ver tubicole",
+          "giantsquid": "Calmar géant"
+        },
+        "sorted": "Toutes les créatures classées correctement!",
+        "reset": "Réinitialiser",
+        "continue": "Continuer"
+      },
+      "o2": {
+        "title": "Courants et climat",
+        "prompt": "Reliez les courants océaniques mondiaux pour compléter la circulation du tapis roulant.",
+        "hint": "Les courants chauds de surface vont vers les pôles. Les courants froids profonds retournent vers l'équateur.",
+        "currents": {
+          "gulf": "Gulf Stream (Chaud)",
+          "kuroshio": "Kuroshio (Chaud)",
+          "antarctic": "Circumpolaire antarctique (Froid)",
+          "california": "Courant de Californie (Froid)"
+        },
+        "rotate": "Pivoter",
+        "openValve": "Ouvrir la porte du courant",
+        "solved": "Tapis roulant océanique complet! La circulation mondiale fonctionne.",
+        "continue": "Continuer"
+      },
+      "o3": {
+        "title": "Signaux des profondeurs",
+        "prompt": "Associez chaque créature marine à sa méthode de communication unique.",
+        "hint": "Les baleines chantent, les dauphins cliquent, les crevettes-pistolets claquent, les poissons bioluminescents clignotent.",
+        "signals": {
+          "whale": "Chant de baleine",
+          "dolphin": "Clics de dauphin",
+          "shrimp": "Claquement de crevette-pistolet",
+          "bioglow": "Éclat bioluminescent"
+        },
+        "creatureLabels": {
+          "humpback": "Baleine à bosse",
+          "bottlenose": "Grand dauphin",
+          "pistol": "Crevette-pistolet",
+          "anglerfish": "Baudroie des abysses"
+        },
+        "matched": "Associées",
+        "solved": "Toutes les créatures associées correctement! Vous comprenez comment l'océan profond communique.",
+        "reset": "Réinitialiser"
+      },
+      "wrap": {
+        "title": "Océan exploré",
+        "done": "Vous avez navigué de la surface aux abysses.",
+        "badge": "Badge Océanographe gagné!"
+      },
+      "outro": {
+        "title": "Voyage océanique terminé",
+        "p1": "Les rythmes de l'océan vous sont désormais familiers. Du corail ensoleillé aux fosses hadales, chaque profondeur raconte une histoire.",
+        "replay": "Rejouer le Pack Océan",
+        "home": "Retour au Hub"
+      }
     }
   }
 }

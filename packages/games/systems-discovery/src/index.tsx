@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/rules-of-hooks */
 import HomeostasisMeter from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";
 import { t } from "@gamehub/game-platform/lib/i18n";
 import { Scene, SceneController } from "@games/pointclick-engine";
@@ -9,7 +10,13 @@ import {
   setTileRotation,
   toggleValve,
 } from "@games/pointclick-engine/puzzles/pipes";
+import {
+  createSequenceState,
+  pressSeq as pressSequenceKey,
+  type SequenceState,
+} from "@games/pointclick-engine/puzzles/sequence";
 import React, { useState } from "react";
+import { soundManager } from "@gamehub/game-platform/lib/sound";
 
 const BreathPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) => {
   const [state, setState] = useState<PipesState>(() =>
@@ -584,27 +591,32 @@ const scenes: Scene[] = [
       const solved = Boolean(flags["space.s2.solved"]);
       const [selected, setSelected] = React.useState<string | null>(null);
       const [matched, setMatched] = React.useState<Record<string, string>>({});
-      const SHADOW_TARGETS: Record<string, string> = {
-        mercury: "small",
-        earth: "medium",
-        jupiter: "large",
+      const SAT_TARGETS: Record<string, string> = {
+        geo: "stationary",
+        polar: "scan",
+        leo: "low",
       };
-      const planets = ["mercury", "earth", "jupiter"];
-      const shadows = ["small", "medium", "large"];
-      const shadowIcons: Record<string, string> = { small: "●", medium: "◉", large: "⊙" };
-      const allDone = Object.keys(matched).length === planets.length &&
-        planets.every((p) => matched[p] === SHADOW_TARGETS[p]);
+      const sats = ["geo", "polar", "leo"];
+      const orbits = ["stationary", "scan", "low"];
+      const satLabels: Record<string, string> = {
+        geo: "Geostationary (GEO)", polar: "Polar Orbiter", leo: "LEO Constellation",
+      };
+      const orbitLabels: Record<string, string> = {
+        stationary: "Fixed above equator", scan: "Covers entire planet", low: "Fast, low-altitude path",
+      };
+      const allDone = Object.keys(matched).length === sats.length &&
+        sats.every((p) => matched[p] === SAT_TARGETS[p]);
       return (
         <div>
           <p className="mb-2">{t("sysdisc.space.s2.prompt")}</p>
           <p className="mb-2 text-xs opacity-60">
-            {t("sysdisc.space.s2.hint")}
+            Match each satellite type to its orbital characteristic.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s2.planets")}</p>
+              <p className="mb-2 text-xs font-medium opacity-70">Satellite Types</p>
               <div className="flex flex-col gap-2">
-                {planets.map((p) => (
+                {sats.map((p) => (
                   <button
                     key={p}
                     className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${
@@ -617,18 +629,18 @@ const scenes: Scene[] = [
                     disabled={!!matched[p]}
                     onClick={() => setSelected(selected === p ? null : p)}
                   >
-                    {t(`sysdisc.space.s2.planetLabels.${p}`)}
+                    {satLabels[p]}
                     {matched[p] && (
-                      <span className="ml-2 text-green-600">→ {shadowIcons[matched[p]]} {t(`sysdisc.space.s2.shadowLabels.${matched[p]}`)}</span>
+                      <span className="ml-2 text-green-600">→ {orbitLabels[matched[p]]}</span>
                     )}
                   </button>
                 ))}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s2.shadows")}</p>
+              <p className="mb-2 text-xs font-medium opacity-70">Orbital Characteristic</p>
               <div className="flex flex-col gap-2">
-                {shadows.map((s) => (
+                {orbits.map((s) => (
                   <button
                     key={s}
                     className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${
@@ -643,26 +655,26 @@ const scenes: Scene[] = [
                         setMatched(next);
                         setSelected(null);
                         if (
-                          Object.keys(next).length === planets.length &&
-                          planets.every((p2) => next[p2] === SHADOW_TARGETS[p2])
+                          Object.keys(next).length === sats.length &&
+                          sats.every((p2) => next[p2] === SAT_TARGETS[p2])
                         ) {
                           setFlag("space.s2.solved", true);
                         }
                       }
                     }}
                   >
-                    {shadowIcons[s]} {t(`sysdisc.space.s2.shadowLabels.${s}`)}
+                    {orbitLabels[s]}
                   </button>
                 ))}
               </div>
             </div>
           </div>
           <div className="mt-3 text-sm">
-            {t("sysdisc.space.s2.matched")}: {Object.keys(matched).length} / {planets.length}
+            Matched: {Object.keys(matched).length} / {sats.length}
           </div>
           {(solved || allDone) && (
             <p className="mt-2 font-bold text-emerald-600">
-              {t("sysdisc.space.s2.solved")}
+              All satellites matched! Understanding orbital mechanics unlocks navigation.
             </p>
           )}
           <div className="mt-3">
@@ -685,111 +697,70 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const solved = Boolean(flags["space.s3.solved"]);
       const [sorted, setSorted] = React.useState<Record<string, string>>({});
-      const HABITABLE_TARGETS: Record<string, string> = {
-        earth: "habitable",
-        mars: "habitable",
-        jupiter: "notHabitable",
-        venus: "notHabitable",
+      const DEEP_TARGETS: Record<string, string> = {
+        proxima: "exoplanet",
+        andromeda: "galaxy",
+        orion: "nebula",
+        sagittarius: "blackhole",
       };
-      const planets = ["earth", "mars", "jupiter", "venus"];
-      const allDone = Object.keys(sorted).length === planets.length &&
-        planets.every((p) => sorted[p] === HABITABLE_TARGETS[p]);
+      const objects = ["proxima", "andromeda", "orion", "sagittarius"];
+      const objLabels: Record<string, string> = {
+        proxima: "Proxima Centauri b", andromeda: "Andromeda Galaxy",
+        orion: "Orion Nebula", sagittarius: "Sagittarius A*",
+      };
+      const catLabels: Record<string, string> = {
+        exoplanet: "Exoplanet", galaxy: "Galaxy", nebula: "Nebula", blackhole: "Black Hole",
+      };
+      const allDone = Object.keys(sorted).length === objects.length &&
+        objects.every((p) => sorted[p] === DEEP_TARGETS[p]);
       return (
         <div>
           <p className="mb-2">{t("sysdisc.space.s3.prompt")}</p>
-          <p className="mb-2 text-xs opacity-60">{t("sysdisc.space.s3.hint")}</p>
+          <p className="mb-2 text-xs opacity-60">
+            Classify each deep-space object by type.
+          </p>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s3.planets")}</p>
+              <p className="mb-2 text-xs font-medium opacity-70">Deep-Space Objects</p>
               <div className="flex flex-col gap-2">
-                {planets.map((p) => (
-                  <div
-                    key={p}
-                    className={`min-h-[44px] rounded border-2 px-4 py-2 flex items-center justify-between ${
-                      sorted[p]
-                        ? "border-green-400 bg-green-100"
-                        : "border-gray-300 bg-white"
-                    }`}
-                  >
-                    <span>{t(`sysdisc.space.s3.planetLabels.${p}`)}</span>
+                {objects.map((p) => (
+                  <div key={p} className={`min-h-[44px] rounded border-2 px-4 py-2 flex items-center justify-between ${sorted[p] ? "border-green-400 bg-green-100" : "border-gray-300 bg-white"}`}>
+                    <span>{objLabels[p]}</span>
                     {!sorted[p] && (
                       <div className="flex gap-1">
-                        <button
-                          className="min-h-[32px] rounded bg-emerald-500 px-3 py-1 text-xs text-white"
-                          onClick={() => {
-                            const next = { ...sorted, [p]: "habitable" };
-                            setSorted(next);
-                            if (
-                              Object.keys(next).length === planets.length &&
-                              planets.every((p2) => next[p2] === HABITABLE_TARGETS[p2])
-                            ) {
-                              setFlag("space.s3.solved", true);
-                            }
-                          }}
-                        >
-                          {t("sysdisc.space.s3.habitable")}
-                        </button>
-                        <button
-                          className="min-h-[32px] rounded bg-red-500 px-3 py-1 text-xs text-white"
-                          onClick={() => {
-                            const next = { ...sorted, [p]: "notHabitable" };
-                            setSorted(next);
-                            if (
-                              Object.keys(next).length === planets.length &&
-                              planets.every((p2) => next[p2] === HABITABLE_TARGETS[p2])
-                            ) {
-                              setFlag("space.s3.solved", true);
-                            }
-                          }}
-                        >
-                          {t("sysdisc.space.s3.notHabitable")}
-                        </button>
+                        {["exoplanet", "galaxy", "nebula", "blackhole"].map((cat) => (
+                          <button key={cat} className="min-h-[32px] rounded bg-indigo-500 px-2 py-1 text-xs text-white"
+                            onClick={() => {
+                              const next = { ...sorted, [p]: cat };
+                              setSorted(next);
+                              if (Object.keys(next).length === objects.length && objects.every((p2) => next[p2] === DEEP_TARGETS[p2])) {
+                                setFlag("space.s3.solved", true);
+                              }
+                            }}>
+                            {catLabels[cat]}
+                          </button>
+                        ))}
                       </div>
                     )}
                     {sorted[p] && (
-                      <span className={`text-xs font-bold ${sorted[p] === "habitable" ? "text-emerald-600" : "text-red-600"}`}>
-                        {t(`sysdisc.space.s3.${sorted[p]}Short`)}
-                      </span>
+                      <span className="text-xs font-bold text-emerald-600">{catLabels[sorted[p]]}</span>
                     )}
                   </div>
                 ))}
               </div>
             </div>
-            <div className="hidden sm:block">
-              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.space.s3.status")}</p>
-              <div className="text-sm opacity-70">
-                {planets.filter((p) => sorted[p] === "habitable").length > 0 && (
-                  <p className="mb-2 text-emerald-600">
-                    {t("sysdisc.space.s3.habitableLabel")}: {planets.filter((p) => sorted[p] === "habitable").map((p) => t(`sysdisc.space.s3.planetLabels.${p}`)).join(", ")}
-                  </p>
-                )}
-                {planets.filter((p) => sorted[p] === "notHabitable").length > 0 && (
-                  <p className="text-red-600">
-                    {t("sysdisc.space.s3.notHabitableLabel")}: {planets.filter((p) => sorted[p] === "notHabitable").map((p) => t(`sysdisc.space.s3.planetLabels.${p}`)).join(", ")}
-                  </p>
-                )}
-              </div>
-            </div>
           </div>
           {(solved || allDone) && (
             <p className="mt-2 font-bold text-emerald-600">
-              {t("sysdisc.space.s3.solved")}
+              All objects classified! You understand the types of bodies in deep space.
             </p>
           )}
           <div className="mt-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setSorted({})}
-            >
-              {t("sysdisc.space.s3.reset")}
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setSorted({})}>Reset</button>
           </div>
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50"
-              disabled={!solved && !allDone}
-              onClick={() => go("SPACE_WRAP")}
-            >
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50"
+              disabled={!solved && !allDone} onClick={() => go("SPACE_WRAP")}>
               {t("sysdisc.bod.common.reveal")}
             </button>
           </div>
@@ -1440,31 +1411,43 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const [seq, setSeq] = React.useState<SequenceState>(() =>
+        createSequenceState(["sight", "smell", "touch"], { lives: 5 }),
+      );
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.signal.bsd1.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">Activate senses in order: sight, smell, touch.</p>
+          <div className="flex gap-2 mb-3">
+            {[
+              { key: "sight", label: "Sight", emoji: "👁" },
+              { key: "smell", label: "Smell", emoji: "👃" },
+              { key: "touch", label: "Touch", emoji: "✋" },
+            ].map(({ key, label, emoji }) => (
+              <button
+                key={key}
+                className="bg-muted hover:bg-muted/80 min-h-[44px] min-w-[80px] rounded border px-4 py-2"
+                onClick={() => {
+                  const next = pressSequenceKey(seq, key);
+                  setSeq(next);
+                  if (next.solved) setFlag("bod.signal.bsd1.solved", true);
+                }}
+              >
+                {emoji} {label}
+              </button>
+            ))}
+          </div>
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter + 2))}
-            >
-              Nudge +
-            </button>
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter - 2))}
-            >
-              Nudge -
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter + 2))}>Nudge +</button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter - 2))}>Nudge -</button>
+          </div>
+          <div className="mt-2 text-sm">
+            Progress: {seq.input.length} / {seq.target.length}
+            {flags["bod.signal.bsd1.solved"] && <span className="ml-2 text-green-500">✓</span>}
           </div>
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-              onClick={() => go("BSD2")}
-            >
-              {t("sysdisc.bod.common.continue")}
-            </button>
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!flags["bod.signal.bsd1.solved"]} onClick={() => go("BSD2")}>{t("sysdisc.bod.common.continue")}</button>
           </div>
         </div>
       );
@@ -1477,31 +1460,49 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const THREAT_TARGETS: Record<string, string> = { bacteria: "antibody", virus: "tcell", toxin: "liver" };
+      const threats = ["bacteria", "virus", "toxin"];
+      const defenses = ["antibody", "tcell", "liver"];
+      const [selected, setSelected] = React.useState<string | null>(null);
+      const [matched, setMatched] = React.useState<Record<string, string>>({});
+      const allDone = Object.keys(matched).length === threats.length && threats.every((t) => matched[t] === THREAT_TARGETS[t]);
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.signal.bsd2.prompt")}</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Threats</p>
+              <div className="flex flex-col gap-2">
+                {threats.map((t) => (
+                  <button key={t} className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${matched[t] ? "border-green-400 bg-green-100" : selected === t ? "border-red-400 bg-red-100" : "border-gray-300 bg-white"}`}
+                    disabled={!!matched[t]} onClick={() => setSelected(selected === t ? null : t)}>
+                    {t}
+                    {matched[t] && <span className="ml-2 text-green-600">→ {matched[t]}</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Defenses</p>
+              <div className="flex flex-col gap-2">
+                {defenses.map((d) => (
+                  <button key={d} className={`min-h-[44px] rounded border-2 px-4 py-2 text-left ${Object.values(matched).includes(d) ? "border-green-400 bg-green-100" : "border-gray-300 bg-white hover:border-blue-400"}`}
+                    disabled={!selected || Object.values(matched).includes(d)}
+                    onClick={() => { if (selected && THREAT_TARGETS[selected] === d) { const next = { ...matched, [selected]: d }; setMatched(next); setSelected(null); if (Object.keys(next).length === threats.length && threats.every((t2) => next[t2] === THREAT_TARGETS[t2])) { setFlag("bod.signal.bsd2.solved", true); } } else { setSelected(null); } }}>
+                    {d}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter + 2))}
-            >
-              Nudge +
-            </button>
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter - 2))}
-            >
-              Nudge -
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter + 2))}>Nudge +</button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter - 2))}>Nudge -</button>
           </div>
+          {(allDone || flags["bod.signal.bsd2.solved"]) && <p className="mt-2 font-bold text-emerald-600">Defenses activated!</p>}
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-              onClick={() => go("BSD3")}
-            >
-              {t("sysdisc.bod.common.continue")}
-            </button>
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!allDone && !flags["bod.signal.bsd2.solved"]} onClick={() => go("BSD3")}>{t("sysdisc.bod.common.continue")}</button>
           </div>
         </div>
       );
@@ -1514,31 +1515,35 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const [pipes, setPipes] = React.useState<PipesState>(() =>
+        createPipesState(3, 1, [
+          { type: "straight", rotation: 0, source: true },
+          { type: "valve", rotation: 0, open: false },
+          { type: "straight", rotation: 0, sink: true },
+        ]),
+      );
+      const rotateTile = (x: number) => {
+        const nr = ((pipes.grid[x].rotation + 90) % 360) as 0|90|180|270;
+        const next = evaluatePipes(setTileRotation(pipes, x, 0, nr));
+        setPipes(next);
+        if (next.solved) setFlag("bod.signal.bsd3.solved", true);
+      };
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.signal.bsd3.prompt")}</p>
+          <div className="flex items-center justify-center gap-4 mb-3">
+            <button className="flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 bg-white" onClick={() => rotateTile(0)}>{pipes.grid[0].rotation * 90}°</button>
+            <button className={`flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 ${pipes.grid[1].open ? "bg-amber-200" : "bg-white"}`} onClick={() => { const next = evaluatePipes(toggleValve(pipes, 1, 0, !pipes.grid[1].open)); setPipes(next); if (next.solved) setFlag("bod.signal.bsd3.solved", true); }}>{pipes.grid[1].open ? "OPEN" : "CLOSED"}</button>
+            <button className="flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 bg-white" onClick={() => rotateTile(2)}>{pipes.grid[2].rotation * 90}°</button>
+          </div>
+          {pipes.solved && <p className="mb-2 text-center font-bold text-green-600">Signal connected!</p>}
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter + 2))}
-            >
-              Nudge +
-            </button>
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter - 2))}
-            >
-              Nudge -
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter + 2))}>Nudge +</button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter - 2))}>Nudge -</button>
           </div>
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-              onClick={() => go("BOD_SIGNAL_WRAP")}
-            >
-              {t("sysdisc.bod.common.reveal")}
-            </button>
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!flags["bod.signal.bsd3.solved"]} onClick={() => go("BOD_SIGNAL_WRAP")}>{t("sysdisc.bod.common.reveal")}</button>
           </div>
         </div>
       );
@@ -1620,31 +1625,38 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const STAGES = ["interphase", "prophase", "metaphase", "anaphase", "telophase"];
+      const [stageIdx, setStageIdx] = React.useState(0);
+      const [completed, setCompleted] = React.useState(false);
+      const advance = () => {
+        const next = stageIdx + 1;
+        if (next >= STAGES.length) {
+          setCompleted(true);
+          setFlag("bod.grow.bg1.solved", true);
+        } else {
+          setStageIdx(next);
+        }
+      };
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.grow.bg1.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">Click through the stages of cell division in order.</p>
+          <div className="mb-3 rounded border p-3">
+            <p className="mb-2 text-center text-lg font-mono">{STAGES[stageIdx]}</p>
+            <div className="flex justify-center">
+              <button className="bg-emerald-600 text-white min-h-[44px] rounded px-4 py-2" onClick={advance}>
+                {completed ? "Complete!" : stageIdx < STAGES.length - 1 ? "Next Stage" : "Complete Mitosis"}
+              </button>
+            </div>
+          </div>
+          {completed && <p className="mb-2 font-bold text-green-600">Cell division complete!</p>}
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter + 2))}
-            >
-              Nudge +
-            </button>
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter - 2))}
-            >
-              Nudge -
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter + 2))}>Nudge +</button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter - 2))}>Nudge -</button>
           </div>
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-              onClick={() => go("BG2")}
-            >
-              {t("sysdisc.bod.common.continue")}
-            </button>
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!flags["bod.grow.bg1.solved"]} onClick={() => go("BG2")}>{t("sysdisc.bod.common.continue")}</button>
           </div>
         </div>
       );
@@ -1657,31 +1669,44 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const CELL_TARGETS: Record<string, string> = { neuron: "signal", muscle: "contract", skin: "protect" };
+      const cells = ["neuron", "muscle", "skin"];
+      const functions = ["signal", "contract", "protect"];
+      const [sel, setSel] = React.useState<string | null>(null);
+      const [m, setM] = React.useState<Record<string, string>>({});
+      const allDone = Object.keys(m).length === cells.length && cells.every((c) => m[c] === CELL_TARGETS[c]);
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.grow.bg2.prompt")}</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Cell Types</p>
+              <div className="flex flex-col gap-2">
+                {cells.map((c) => (
+                  <button key={c} className={`min-h-[44px] rounded border-2 px-4 py-2 ${m[c] ? "border-green-400 bg-green-100" : sel === c ? "border-blue-400 bg-blue-100" : "border-gray-300 bg-white"}`}
+                    disabled={!!m[c]} onClick={() => setSel(sel === c ? null : c)}>{c}{m[c] && <span className="ml-2 text-green-600">→ {m[c]}</span>}</button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Functions</p>
+              <div className="flex flex-col gap-2">
+                {functions.map((f) => (
+                  <button key={f} className={`min-h-[44px] rounded border-2 px-4 py-2 ${Object.values(m).includes(f) ? "border-green-400 bg-green-100" : "border-gray-300 bg-white hover:border-blue-400"}`}
+                    disabled={!sel || Object.values(m).includes(f)}
+                    onClick={() => { if (sel && CELL_TARGETS[sel] === f) { const next = { ...m, [sel]: f }; setM(next); setSel(null); if (Object.keys(next).length === cells.length && cells.every((c2) => next[c2] === CELL_TARGETS[c2])) { setFlag("bod.grow.bg2.solved", true); } } else { setSel(null); } }}>{f}</button>
+                ))}
+              </div>
+            </div>
+          </div>
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter + 2))}
-            >
-              Nudge +
-            </button>
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter - 2))}
-            >
-              Nudge -
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter + 2))}>Nudge +</button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter - 2))}>Nudge -</button>
           </div>
+          {allDone && <p className="mt-2 font-bold text-green-600">All cells differentiated!</p>}
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-              onClick={() => go("BG3")}
-            >
-              {t("sysdisc.bod.common.continue")}
-            </button>
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!allDone && !flags["bod.grow.bg2.solved"]} onClick={() => go("BG3")}>{t("sysdisc.bod.common.continue")}</button>
           </div>
         </div>
       );
@@ -1694,31 +1719,32 @@ const scenes: Scene[] = [
       const flags = state.ctx.flags;
       const meter = Number(flags["bod.meter"] ?? 60);
       const clamp = (v: number) => Math.max(0, Math.min(100, v));
+      const [seq, setSeq] = React.useState<SequenceState>(() =>
+        createSequenceState(["infant", "child", "teen", "adult"], { lives: 5 }),
+      );
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.grow.bg3.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">Arrange the life stages in order: infant, child, teen, adult.</p>
+          <div className="flex gap-2 mb-3">
+            {[
+              { key: "infant", label: "Infant" },
+              { key: "child", label: "Child" },
+              { key: "teen", label: "Teen" },
+              { key: "adult", label: "Adult" },
+            ].map(({ key, label }) => (
+              <button key={key} className="bg-muted hover:bg-muted/80 min-h-[44px] rounded border px-4 py-2"
+                onClick={() => { const next = pressSequenceKey(seq, key); setSeq(next); if (next.solved) setFlag("bod.grow.bg3.solved", true); }}>{label}</button>
+            ))}
+          </div>
           <HomeostasisMeter value={meter} />
           <div className="mt-2 flex gap-2">
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter + 2))}
-            >
-              Nudge +
-            </button>
-            <button
-              className="min-h-[32px] rounded border px-2 py-1 text-sm"
-              onClick={() => setFlag("bod.meter", clamp(meter - 2))}
-            >
-              Nudge -
-            </button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter + 2))}>Nudge +</button>
+            <button className="min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => setFlag("bod.meter", clamp(meter - 2))}>Nudge -</button>
           </div>
+          <div className="mt-2 text-sm">Progress: {seq.input.length} / {seq.target.length}</div>
           <div className="mt-3">
-            <button
-              className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
-              onClick={() => go("BOD_GROW_WRAP")}
-            >
-              {t("sysdisc.bod.common.reveal")}
-            </button>
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!flags["bod.grow.bg3.solved"]} onClick={() => go("BOD_GROW_WRAP")}>{t("sysdisc.bod.common.reveal")}</button>
           </div>
         </div>
       );
@@ -1763,11 +1789,220 @@ const scenes: Scene[] = [
       );
     },
   },
+  // --- Ocean Pack ---
+  {
+    id: "SD_OCEAN_INTRO",
+    title: t("sysdisc.ocean.intro.title") as string,
+    render: ({ go, setFlag }) => (
+      <div>
+        <p className="mb-2">{t("sysdisc.ocean.intro.p1")}</p>
+        <p className="mb-4 opacity-80">{t("sysdisc.ocean.intro.p2")}</p>
+        <div className="flex gap-2">
+          <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2" onClick={() => { setFlag("ocean.intro.seen", true); go("O1"); }}>{t("sysdisc.ocean.intro.cta")}</button>
+          <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => { setFlag("ocean.intro.seen", true); go("O1"); }}>{t("sysdisc.ocean.intro.skip")}</button>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "O1",
+    title: t("sysdisc.ocean.o1.title") as string,
+    render: ({ go, setFlag, state }) => {
+      const flags = state.ctx.flags;
+      const ZONE_TARGETS: Record<string, string> = {
+        coral: "sunlit", plankton: "sunlit", lanternfish: "twilight",
+        anglerfish: "midnight", tubeworm: "abyss", giantsquid: "midnight",
+      };
+      const creatures = ["coral", "plankton", "lanternfish", "anglerfish", "tubeworm", "giantsquid"];
+      const zones = ["sunlit", "twilight", "midnight", "abyss"];
+      const [sel, setSel] = React.useState<string | null>(null);
+      const [m, setM] = React.useState<Record<string, string>>({});
+      const allDone = Object.keys(m).length === creatures.length && creatures.every((c) => m[c] === ZONE_TARGETS[c]);
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.ocean.o1.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">{t("sysdisc.ocean.o1.hint")}</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.ocean.o1.title")} — Creatures</p>
+              <div className="flex flex-col gap-2">
+                {creatures.map((c) => (
+                  <button key={c} className={`min-h-[44px] rounded border-2 px-3 py-2 text-left ${m[c] ? "border-green-400 bg-green-100" : sel === c ? "border-blue-400 bg-blue-100" : "border-gray-300 bg-white"}`}
+                    disabled={!!m[c]} onClick={() => setSel(sel === c ? null : c)}>
+                    {t(`sysdisc.ocean.o1.creatures.${c}`)}{m[c] && <span className="ml-2 text-green-600">→ {t(`sysdisc.ocean.o1.zones.${m[c]}`)}</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Zones</p>
+              <div className="flex flex-col gap-2">
+                {zones.map((z) => (
+                  <button key={z} className={`min-h-[44px] rounded border-2 px-3 py-2 text-left ${Object.values(m).includes(z) ? "border-green-400 bg-green-100" : "border-gray-300 bg-white hover:border-blue-400"}`}
+                    disabled={!sel || Object.values(m).includes(z)}
+                    onClick={() => { if (sel && ZONE_TARGETS[sel] === z) { const next = { ...m, [sel]: z }; setM(next); setSel(null); if (Object.keys(next).length === creatures.length && creatures.every((c2) => next[c2] === ZONE_TARGETS[c2])) { setFlag("ocean.o1.solved", true); } } else { setSel(null); } }}>
+                    {t(`sysdisc.ocean.o1.zones.${z}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 text-sm">Sorted: {Object.keys(m).length} / {creatures.length}</div>
+          {allDone && <p className="mt-2 font-bold text-emerald-600">{t("sysdisc.ocean.o1.sorted")}</p>}
+          <button className="mt-2 min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => { setM({}); setSel(null); }}>{t("sysdisc.ocean.o1.reset")}</button>
+          <div className="mt-3">
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!allDone && !flags["ocean.o1.solved"]} onClick={() => go("O2")}>{t("sysdisc.ocean.o1.continue")}</button>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    id: "O2",
+    title: t("sysdisc.ocean.o2.title") as string,
+    render: ({ go, setFlag, state }) => {
+      const flags = state.ctx.flags;
+      const solved = Boolean(flags["ocean.o2.solved"]);
+      const [pipes, setPipes] = React.useState<PipesState>(() =>
+        createPipesState(5, 1, [
+          { type: "straight", rotation: 0, source: true },
+          { type: "valve", rotation: 0, open: false },
+          { type: "straight", rotation: 0 },
+          { type: "valve", rotation: 0, open: false },
+          { type: "straight", rotation: 0, sink: true },
+        ]),
+      );
+      const rotateTile = (x: number) => {
+        const nr = ((pipes.grid[x].rotation + 90) % 360) as 0|90|180|270;
+        const next = evaluatePipes(setTileRotation(pipes, x, 0, nr));
+        setPipes(next);
+        if (next.solved) setFlag("ocean.o2.solved", true);
+      };
+      const currentLabels = ["Gulf Stream", "Kuroshio", "Antarctic", "California", "North Atlantic"];
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.ocean.o2.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">{t("sysdisc.ocean.o2.hint")}</p>
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {pipes.grid.map((tile, i) => (
+              <div key={i} className="flex flex-col items-center gap-1">
+                <span className="text-xs text-gray-300">{currentLabels[i]}</span>
+                <div className="flex gap-1">
+                  <button className="min-h-[36px] min-w-[36px] rounded border border-blue-800 bg-slate-800 text-xs text-white" onClick={() => rotateTile(i)}>{t("sysdisc.ocean.o2.rotate")}</button>
+                  {tile.type === "valve" && (
+                    <button className={`min-h-[36px] min-w-[36px] rounded border text-xs text-white ${tile.open ? "bg-emerald-600 border-emerald-400" : "bg-red-700 border-red-400"}`}
+                      onClick={() => { const next = evaluatePipes(toggleValve(pipes, i, 0, !tile.open)); setPipes(next); if (next.solved) setFlag("ocean.o2.solved", true); }}>
+                      {tile.open ? "ON" : "OFF"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          {(solved || pipes.solved) && <p className="mb-2 text-center font-bold text-green-400">{t("sysdisc.ocean.o2.solved")}</p>}
+          <div className="mt-3">
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!solved && !pipes.solved} onClick={() => go("O3")}>{t("sysdisc.ocean.o2.continue")}</button>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    id: "O3",
+    title: t("sysdisc.ocean.o3.title") as string,
+    render: ({ go, setFlag, state }) => {
+      const flags = state.ctx.flags;
+      const SIGNAL_TARGETS: Record<string, string> = {
+        humpback: "whale", bottlenose: "dolphin", pistol: "shrimp", anglerfish: "bioglow",
+      };
+      const creatures = ["humpback", "bottlenose", "pistol", "anglerfish"];
+      const signals = ["whale", "dolphin", "shrimp", "bioglow"];
+      const [sel, setSel] = React.useState<string | null>(null);
+      const [m, setM] = React.useState<Record<string, string>>({});
+      const allDone = Object.keys(m).length === creatures.length && creatures.every((c) => m[c] === SIGNAL_TARGETS[c]);
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.ocean.o3.prompt")}</p>
+          <p className="mb-2 text-xs opacity-60">{t("sysdisc.ocean.o3.hint")}</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Creatures</p>
+              <div className="flex flex-col gap-2">
+                {creatures.map((c) => (
+                  <button key={c} className={`min-h-[44px] rounded border-2 px-3 py-2 ${m[c] ? "border-green-400 bg-green-100" : sel === c ? "border-blue-400 bg-blue-100" : "border-gray-300 bg-white"}`}
+                    disabled={!!m[c]} onClick={() => setSel(sel === c ? null : c)}>
+                    {t(`sysdisc.ocean.o3.creatureLabels.${c}`)}{m[c] && <span className="ml-2 text-green-600">→ {t(`sysdisc.ocean.o3.signals.${m[c]}`)}</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-2 text-xs font-medium opacity-70">Signals</p>
+              <div className="flex flex-col gap-2">
+                {signals.map((s) => (
+                  <button key={s} className={`min-h-[44px] rounded border-2 px-3 py-2 ${Object.values(m).includes(s) ? "border-green-400 bg-green-100" : "border-gray-300 bg-white hover:border-blue-400"}`}
+                    disabled={!sel || Object.values(m).includes(s)}
+                    onClick={() => { if (sel && SIGNAL_TARGETS[sel] === s) { const next = { ...m, [sel]: s }; setM(next); setSel(null); if (Object.keys(next).length === creatures.length && creatures.every((c2) => next[c2] === SIGNAL_TARGETS[c2])) { setFlag("ocean.o3.solved", true); } } else { setSel(null); } }}>
+                    {t(`sysdisc.ocean.o3.signals.${s}`)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 text-sm">{t("sysdisc.ocean.o3.matched")}: {Object.keys(m).length} / {creatures.length}</div>
+          {allDone && <p className="mt-2 font-bold text-emerald-600">{t("sysdisc.ocean.o3.solved")}</p>}
+          <button className="mt-2 min-h-[32px] rounded border px-2 py-1 text-sm" onClick={() => { setM({}); setSel(null); }}>{t("sysdisc.ocean.o3.reset")}</button>
+          <div className="mt-3">
+            <button className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2 disabled:opacity-50" disabled={!allDone && !flags["ocean.o3.solved"]} onClick={() => go("OCEAN_WRAP")}>{t("sysdisc.bod.common.reveal")}</button>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    id: "OCEAN_WRAP",
+    title: t("sysdisc.ocean.wrap.title") as string,
+    render: ({ state, setFlag, go }) => {
+      const flags = state.ctx.flags;
+      if (!flags["ocean.badgeOceanographer"]) { setFlag("ocean.badgeOceanographer", true); }
+      return (
+        <div>
+          <p className="mb-2">{t("sysdisc.ocean.wrap.done")}</p>
+          <p className="mb-2 text-sm font-bold text-amber-600">{t("sysdisc.ocean.wrap.badge")}</p>
+          <div className="mt-3 flex gap-2">
+            <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => go("SD_OCEAN_OUTRO")}>{t("sysdisc.ocean.outro.title")}</button>
+            <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => go("WRAP")}>{t("sysdisc.bod.common.home")}</button>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    id: "SD_OCEAN_OUTRO",
+    title: t("sysdisc.ocean.outro.title") as string,
+    render: ({ go, setFlag }) => (
+      <div>
+        <p className="mb-2">{t("sysdisc.ocean.outro.p1")}</p>
+        <div className="flex gap-2">
+          <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => { setFlag("ocean.outro.seen", true); go("O1"); }}>{t("sysdisc.ocean.outro.replay")}</button>
+          <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => { setFlag("ocean.outro.seen", true); go("WRAP"); }}>{t("sysdisc.ocean.outro.home")}</button>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 export function SystemsDiscoveryGame() {
-  // Extend initial save model with BOD defaults; existing saves remain compatible
-  // Support deep-links from catalog: /games/systems-discovery?pack=<sub>
+  React.useEffect(() => {
+    if (typeof soundManager.registerSound === "function") {
+      soundManager.registerSound("sysdisc-bg", "/sounds/sysdisc-ambient.mp3", true);
+      soundManager.registerSound("sysdisc-click", "/sounds/click.mp3");
+      soundManager.registerSound("sysdisc-solved", "/sounds/level-complete.mp3");
+      soundManager.registerSound("sysdisc-ocean", "/sounds/sysdisc-ocean-ambient.mp3", true);
+      soundManager.registerSound("sysdisc-space", "/sounds/sysdisc-space-ambient.mp3", true);
+    }
+  }, []);
+
   let initialScene: string = "SD_INTRO";
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
@@ -1787,6 +2022,12 @@ export function SystemsDiscoveryGame() {
         break;
       case "grow":
         initialScene = "SD_BOD_GROW_INTRO";
+        break;
+      case "space":
+        initialScene = "SD_SPACE_INTRO";
+        break;
+      case "ocean":
+        initialScene = "SD_OCEAN_INTRO";
         break;
     }
   }

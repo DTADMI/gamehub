@@ -7,6 +7,9 @@ export type FeatureFlags = {
   sdBodMove: boolean;
   sdBodSignal: boolean;
   sdBodGrow: boolean;
+  sdSpaceSatellite: boolean;
+  sdSpaceDeepSpace: boolean;
+  sdOceanEnabled: boolean;
   ui: {
     allowPlayUpcomingLocal: boolean;
     enhancedGameCards: boolean;
@@ -52,6 +55,9 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
   sdBodMove: true,
   sdBodSignal: true,
   sdBodGrow: true,
+  sdSpaceSatellite: true,
+  sdSpaceDeepSpace: true,
+  sdOceanEnabled: true,
   ui: {
     allowPlayUpcomingLocal: false,
     enhancedGameCards: true,
@@ -141,6 +147,42 @@ export const FLAG_DEFINITIONS: FeatureFlag[] = [
     path: "sdBodGrow",
     label: "Body Systems: Grow",
     description: "Enable Grow sub-pack content.",
+    type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
+    sensitive: false,
+  },
+  {
+    id: "sdSpaceSatellite",
+    path: "sdSpaceSatellite",
+    label: "Systems Discovery: Space Satellite Systems",
+    description: "Enable Satellite Systems sub-pack content in Space pack.",
+    type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
+    sensitive: false,
+  },
+  {
+    id: "sdSpaceDeepSpace",
+    path: "sdSpaceDeepSpace",
+    label: "Systems Discovery: Space Deep Space",
+    description: "Enable Deep Space sub-pack content in Space pack.",
+    type: "boolean",
+    enabled: true,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
+    sensitive: false,
+  },
+  {
+    id: "sdOceanEnabled",
+    path: "sdOceanEnabled",
+    label: "Systems Discovery: Ocean Pack",
+    description: "Enable Ocean pack (marine biology, currents, ecosystems).",
     type: "boolean",
     enabled: true,
     percentage: 0,
