@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import HomeostasisMeter from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { Scene, SceneController } from "@games/pointclick-engine";
 import {
   createPipesState,
@@ -16,7 +17,6 @@ import {
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
 import React, { useState } from "react";
-import { soundManager } from "@gamehub/game-platform/lib/sound";
 
 const BreathPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) => {
   const [state, setState] = useState<PipesState>(() =>
@@ -92,12 +92,12 @@ const FuelMatchingPuzzle: React.FC<{ onSolved: () => void }> = ({ onSolved }) =>
   const nutrients = ["glucose", "protein", "fats"];
 
   const handleFoodClick = (food: string) => {
-    if (matched[food]) return;
+    if (matched[food]) {return;}
     setSelected(food);
   };
 
   const handleNutrientClick = (nutrient: string) => {
-    if (!selected || matched[selected]) return;
+    if (!selected || matched[selected]) {return;}
     if (NUTRIENT_TARGETS[selected] === nutrient) {
       const next = { ...matched, [selected]: nutrient };
       setMatched(next);
@@ -182,14 +182,14 @@ const OrbitsPuzzle: React.FC<{ onSolved: () => void; gentle?: boolean }> = ({ on
     const nextRotation = ((orbits.grid[x].rotation + 90) % 360) as 0 | 90 | 180 | 270;
     const next = evaluatePipes(setTileRotation(orbits, x, 0, nextRotation));
     setOrbits(next);
-    if (next.solved) onSolved();
+    if (next.solved) {onSolved();}
   };
   const toggleValveTile = (x: number) => {
     const tile = orbits.grid[x];
-    if (tile.type !== "valve") return;
+    if (tile.type !== "valve") {return;}
     const next = evaluatePipes(toggleValve(orbits, x, 0, !tile.open));
     setOrbits(next);
-    if (next.solved) onSolved();
+    if (next.solved) {onSolved();}
   };
   const bodyLabels = [t("sysdisc.space.s1.bodies.sun"), t("sysdisc.space.s1.bodies.mercury"), t("sysdisc.space.s1.bodies.venus"), t("sysdisc.space.s1.bodies.earth"), t("sysdisc.space.s1.bodies.mars")];
   const bodyIcons = ["\u2600\uFE0F", "\uD83E\uDE90", "\uD83C\uDF10", "\uD83C\uDF0D", "\uD83D\uDD34"];
@@ -1430,7 +1430,7 @@ const scenes: Scene[] = [
                 onClick={() => {
                   const next = pressSequenceKey(seq, key);
                   setSeq(next);
-                  if (next.solved) setFlag("bod.signal.bsd1.solved", true);
+                  if (next.solved) {setFlag("bod.signal.bsd1.solved", true);}
                 }}
               >
                 {emoji} {label}
@@ -1526,14 +1526,14 @@ const scenes: Scene[] = [
         const nr = ((pipes.grid[x].rotation + 90) % 360) as 0|90|180|270;
         const next = evaluatePipes(setTileRotation(pipes, x, 0, nr));
         setPipes(next);
-        if (next.solved) setFlag("bod.signal.bsd3.solved", true);
+        if (next.solved) {setFlag("bod.signal.bsd3.solved", true);}
       };
       return (
         <div>
           <p className="mb-2">{t("sysdisc.bod.signal.bsd3.prompt")}</p>
           <div className="flex items-center justify-center gap-4 mb-3">
             <button className="flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 bg-white" onClick={() => rotateTile(0)}>{pipes.grid[0].rotation * 90}°</button>
-            <button className={`flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 ${pipes.grid[1].open ? "bg-amber-200" : "bg-white"}`} onClick={() => { const next = evaluatePipes(toggleValve(pipes, 1, 0, !pipes.grid[1].open)); setPipes(next); if (next.solved) setFlag("bod.signal.bsd3.solved", true); }}>{pipes.grid[1].open ? "OPEN" : "CLOSED"}</button>
+            <button className={`flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 ${pipes.grid[1].open ? "bg-amber-200" : "bg-white"}`} onClick={() => { const next = evaluatePipes(toggleValve(pipes, 1, 0, !pipes.grid[1].open)); setPipes(next); if (next.solved) {setFlag("bod.signal.bsd3.solved", true);} }}>{pipes.grid[1].open ? "OPEN" : "CLOSED"}</button>
             <button className="flex h-16 w-16 items-center justify-center rounded border-2 border-amber-300 bg-white" onClick={() => rotateTile(2)}>{pipes.grid[2].rotation * 90}°</button>
           </div>
           {pipes.solved && <p className="mb-2 text-center font-bold text-green-600">Signal connected!</p>}
@@ -1734,7 +1734,7 @@ const scenes: Scene[] = [
               { key: "adult", label: "Adult" },
             ].map(({ key, label }) => (
               <button key={key} className="bg-muted hover:bg-muted/80 min-h-[44px] rounded border px-4 py-2"
-                onClick={() => { const next = pressSequenceKey(seq, key); setSeq(next); if (next.solved) setFlag("bod.grow.bg3.solved", true); }}>{label}</button>
+                onClick={() => { const next = pressSequenceKey(seq, key); setSeq(next); if (next.solved) {setFlag("bod.grow.bg3.solved", true);} }}>{label}</button>
             ))}
           </div>
           <HomeostasisMeter value={meter} />
@@ -1876,7 +1876,7 @@ const scenes: Scene[] = [
         const nr = ((pipes.grid[x].rotation + 90) % 360) as 0|90|180|270;
         const next = evaluatePipes(setTileRotation(pipes, x, 0, nr));
         setPipes(next);
-        if (next.solved) setFlag("ocean.o2.solved", true);
+        if (next.solved) {setFlag("ocean.o2.solved", true);}
       };
       const currentLabels = ["Gulf Stream", "Kuroshio", "Antarctic", "California", "North Atlantic"];
       return (
@@ -1891,7 +1891,7 @@ const scenes: Scene[] = [
                   <button className="min-h-[36px] min-w-[36px] rounded border border-blue-800 bg-slate-800 text-xs text-white" onClick={() => rotateTile(i)}>{t("sysdisc.ocean.o2.rotate")}</button>
                   {tile.type === "valve" && (
                     <button className={`min-h-[36px] min-w-[36px] rounded border text-xs text-white ${tile.open ? "bg-emerald-600 border-emerald-400" : "bg-red-700 border-red-400"}`}
-                      onClick={() => { const next = evaluatePipes(toggleValve(pipes, i, 0, !tile.open)); setPipes(next); if (next.solved) setFlag("ocean.o2.solved", true); }}>
+                      onClick={() => { const next = evaluatePipes(toggleValve(pipes, i, 0, !tile.open)); setPipes(next); if (next.solved) {setFlag("ocean.o2.solved", true);} }}>
                       {tile.open ? "ON" : "OFF"}
                     </button>
                   )}

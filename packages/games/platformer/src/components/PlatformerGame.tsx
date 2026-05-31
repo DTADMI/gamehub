@@ -92,10 +92,10 @@ const LEVELS: LevelData[] = [
       const m: TileType[][] = Array.from({ length: ROWS }, () =>
         Array(COLS).fill(0) as TileType[],
       );
-      for (let x = 0; x < COLS; x++) m[ROWS - 1][x] = 1;
-      for (let x = 2; x < 5; x++) m[ROWS - 3][x] = 1;
-      for (let x = 7; x < 10; x++) m[ROWS - 5][x] = 1;
-      for (let x = 13; x < 17; x++) m[ROWS - 4][x] = 1;
+      for (let x = 0; x < COLS; x++) {m[ROWS - 1][x] = 1;}
+      for (let x = 2; x < 5; x++) {m[ROWS - 3][x] = 1;}
+      for (let x = 7; x < 10; x++) {m[ROWS - 5][x] = 1;}
+      for (let x = 13; x < 17; x++) {m[ROWS - 4][x] = 1;}
       m[ROWS - 7][9] = 2; m[ROWS - 4][15] = 2; m[ROWS - 5][8] = 2;
       m[ROWS - 3][3] = 2; m[ROWS - 2][5] = 2; m[ROWS - 6][7] = 2;
       m[ROWS - 6][14] = 2; m[ROWS - 3][14] = 2;
@@ -115,11 +115,11 @@ const LEVELS: LevelData[] = [
       const m: TileType[][] = Array.from({ length: ROWS }, () =>
         Array(COLS).fill(0) as TileType[],
       );
-      for (let x = 0; x < COLS; x++) m[ROWS - 1][x] = 1;
-      for (let x = 4; x < 8; x++) m[ROWS - 3][x] = 1;
-      for (let x = 11; x < 15; x++) m[ROWS - 5][x] = 1;
-      for (let x = 1; x < 4; x++) m[ROWS - 7][x] = 1;
-      for (let x = 7; x < 10; x++) m[ROWS - 8][x] = 1;
+      for (let x = 0; x < COLS; x++) {m[ROWS - 1][x] = 1;}
+      for (let x = 4; x < 8; x++) {m[ROWS - 3][x] = 1;}
+      for (let x = 11; x < 15; x++) {m[ROWS - 5][x] = 1;}
+      for (let x = 1; x < 4; x++) {m[ROWS - 7][x] = 1;}
+      for (let x = 7; x < 10; x++) {m[ROWS - 8][x] = 1;}
       m[ROWS - 4][3] = 4; m[ROWS - 4][4] = 4; m[ROWS - 4][5] = 4;
       m[ROWS - 6][13] = 4; m[ROWS - 6][14] = 4;
       m[ROWS - 3][6] = 2; m[ROWS - 5][13] = 2; m[ROWS - 7][2] = 2;
@@ -140,14 +140,14 @@ const LEVELS: LevelData[] = [
       const m: TileType[][] = Array.from({ length: ROWS }, () =>
         Array(COLS).fill(0) as TileType[],
       );
-      for (let x = 0; x < COLS; x++) m[ROWS - 1][x] = 1;
-      for (let x = 0; x < 4; x++) m[ROWS - 4][x] = 1;
-      for (let x = 6; x < 9; x++) m[ROWS - 3][x] = 1;
-      for (let x = 10; x < 13; x++) m[ROWS - 6][x] = 1;
-      for (let x = 15; x < 20; x++) m[ROWS - 5][x] = 1;
-      for (let x = 2; x < 5; x++) m[ROWS - 8][x] = 1;
-      for (let x = 8; x < 11; x++) m[ROWS - 9][x] = 1;
-      for (let x = 14; x < 17; x++) m[ROWS - 10][x] = 1;
+      for (let x = 0; x < COLS; x++) {m[ROWS - 1][x] = 1;}
+      for (let x = 0; x < 4; x++) {m[ROWS - 4][x] = 1;}
+      for (let x = 6; x < 9; x++) {m[ROWS - 3][x] = 1;}
+      for (let x = 10; x < 13; x++) {m[ROWS - 6][x] = 1;}
+      for (let x = 15; x < 20; x++) {m[ROWS - 5][x] = 1;}
+      for (let x = 2; x < 5; x++) {m[ROWS - 8][x] = 1;}
+      for (let x = 8; x < 11; x++) {m[ROWS - 9][x] = 1;}
+      for (let x = 14; x < 17; x++) {m[ROWS - 10][x] = 1;}
       m[ROWS - 5][3] = 4; m[ROWS - 5][4] = 4;
       m[ROWS - 4][10] = 4; m[ROWS - 4][11] = 4;
       m[ROWS - 3][7] = 2; m[ROWS - 6][11] = 2; m[ROWS - 8][3] = 2;
@@ -222,12 +222,12 @@ export const PlatformerGame: React.FC = () => {
   }
 
   function solidAt(tx: number, ty: number, map: TileType[][]): boolean {
-    if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return true;
+    if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) {return true;}
     return map[ty][tx] === 1;
   }
 
   function spikeAt(tx: number, ty: number, map: TileType[][]): boolean {
-    if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return false;
+    if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) {return false;}
     return map[ty][tx] === 4;
   }
 
@@ -323,7 +323,7 @@ export const PlatformerGame: React.FC = () => {
     const bottom = Math.floor((py + h - 1) / TILE);
     for (let ty = top; ty <= bottom; ty++) {
       for (let tx = left; tx <= right; tx++) {
-        if (solidAt(tx, ty, map)) return true;
+        if (solidAt(tx, ty, map)) {return true;}
       }
     }
     return false;
@@ -383,7 +383,7 @@ export const PlatformerGame: React.FC = () => {
   }
 
   const step = useCallback((_dt: number) => {
-    if (wonRef.current || gameOverRef.current || isPausedRef.current) return;
+    if (wonRef.current || gameOverRef.current || isPausedRef.current) {return;}
     const p = player.current;
     const map = levelMapRef.current;
 
@@ -403,7 +403,7 @@ export const PlatformerGame: React.FC = () => {
 
     if (!p.onGround) {
       p.vy += GRAVITY;
-      if (p.vy > MAX_FALL_SPEED) p.vy = MAX_FALL_SPEED;
+      if (p.vy > MAX_FALL_SPEED) {p.vy = MAX_FALL_SPEED;}
     }
 
     const onPlat = isOnMovingPlatform(p);
@@ -417,7 +417,7 @@ export const PlatformerGame: React.FC = () => {
       for (let i = 0; i < Math.abs(p.vx); i++) {
         if (!aabbTileCollision(p.x + stepDir, p.y, p.w, p.h, map)) {
           p.x += stepDir;
-        } else break;
+        } else {break;}
       }
       p.vx = 0;
     } else {
@@ -430,9 +430,9 @@ export const PlatformerGame: React.FC = () => {
       for (let i = 0; i < Math.abs(p.vy); i++) {
         if (!aabbTileCollision(p.x, p.y + stepDirY, p.w, p.h, map)) {
           p.y += stepDirY;
-        } else break;
+        } else {break;}
       }
-      if (stepDirY > 0) p.onGround = true;
+      if (stepDirY > 0) {p.onGround = true;}
       p.vy = 0;
     } else {
       p.y = ny;
@@ -479,9 +479,9 @@ export const PlatformerGame: React.FC = () => {
     }
 
     for (const e of enemiesRef.current) {
-      if (!e.alive) continue;
+      if (!e.alive) {continue;}
       e.x += e.vx;
-      if (e.x <= e.minX || e.x + e.w >= e.maxX) e.vx *= -1;
+      if (e.x <= e.minX || e.x + e.w >= e.maxX) {e.vx *= -1;}
 
       if (aabbCollision(p.x, p.y, p.w, p.h, e.x, e.y, e.w, e.h)) {
         if (p.vy > 0 && p.y + p.h - e.y < 20) {
@@ -501,8 +501,8 @@ export const PlatformerGame: React.FC = () => {
 
     for (const mp of movingPlatformsRef.current) {
       mp.x += mp.speed * mp.dir;
-      if (mp.dir > 0 && mp.x >= mp.endX) mp.dir = -1;
-      if (mp.dir < 0 && mp.x <= mp.startX) mp.dir = 1;
+      if (mp.dir > 0 && mp.x >= mp.endX) {mp.dir = -1;}
+      if (mp.dir < 0 && mp.x <= mp.startX) {mp.dir = 1;}
       mp.y += (mp.startY === mp.endY ? 0 : mp.speed * mp.dir * 0.5);
     }
 
@@ -534,7 +534,7 @@ export const PlatformerGame: React.FC = () => {
         pt.x += pt.vx; pt.y += pt.vy;
         pt.vy += 0.1;
         pt.life -= _dt * 1000;
-        if (pt.life <= 0) collectParticlesRef.current.splice(i, 1);
+        if (pt.life <= 0) {collectParticlesRef.current.splice(i, 1);}
       }
     }
     if (deathParticlesRef.current.length > 0) {
@@ -543,16 +543,16 @@ export const PlatformerGame: React.FC = () => {
         pt.x += pt.vx; pt.y += pt.vy;
         pt.vy += 0.15;
         pt.life -= _dt * 1000;
-        if (pt.life <= 0) deathParticlesRef.current.splice(i, 1);
+        if (pt.life <= 0) {deathParticlesRef.current.splice(i, 1);}
       }
     }
   }, []);
 
   const render = useCallback(() => {
     const c = canvasRef.current;
-    if (!c) return;
+    if (!c) {return;}
     const ctx = c.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {return;}
 
     const level = LEVELS[currentLevelRef.current] || LEVELS[0];
 
@@ -628,7 +628,7 @@ export const PlatformerGame: React.FC = () => {
     }
 
     for (const e of enemiesRef.current) {
-      if (!e.alive) continue;
+      if (!e.alive) {continue;}
       const bounce = Math.sin(animFrameRef.current * 0.08) * 2;
       if (e.vx > 0) {
         ctx.fillStyle = "#dc2626";
@@ -653,7 +653,7 @@ export const PlatformerGame: React.FC = () => {
     if (!diedRef.current) {
       ctx.save();
       ctx.translate(Math.floor(p.x + p.w / 2), Math.floor(p.y + p.h / 2));
-      if (!p.facingRight) ctx.scale(-1, 1);
+      if (!p.facingRight) {ctx.scale(-1, 1);}
       const headBobY = Math.abs(p.vx) > 0.5 ? Math.sin(animFrameRef.current * 0.15) * 1 : 0;
       ctx.fillStyle = "#60a5fa";
       ctx.fillRect(-p.w / 2, -p.h / 2 + headBobY, p.w, 8);
@@ -768,15 +768,15 @@ export const PlatformerGame: React.FC = () => {
   const swipeStartRef = useRef<{ x: number; y: number } | null>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
     const SWIPE_THRESHOLD = 30;
     const onTouchStart = (e: TouchEvent) => {
-      if (isPausedRef.current || wonRef.current || diedRef.current) return;
+      if (isPausedRef.current || wonRef.current || diedRef.current) {return;}
       const t = e.touches[0];
       swipeStartRef.current = { x: t.clientX, y: t.clientY };
     };
     const onTouchEnd = (e: TouchEvent) => {
-      if (!swipeStartRef.current) return;
+      if (!swipeStartRef.current) {return;}
       const t = e.changedTouches[0];
       const dx = t.clientX - swipeStartRef.current.x;
       const dy = t.clientY - swipeStartRef.current.y;
@@ -793,10 +793,10 @@ export const PlatformerGame: React.FC = () => {
         return;
       }
       if (ax > ay) {
-        if (dx < -SWIPE_THRESHOLD) touchKeys.current["ArrowLeft"] = true;
-        else if (dx > SWIPE_THRESHOLD) touchKeys.current["ArrowRight"] = true;
+        if (dx < -SWIPE_THRESHOLD) {touchKeys.current["ArrowLeft"] = true;}
+        else if (dx > SWIPE_THRESHOLD) {touchKeys.current["ArrowRight"] = true;}
       } else {
-        if (dy < -SWIPE_THRESHOLD) touchKeys.current["ArrowUp"] = true;
+        if (dy < -SWIPE_THRESHOLD) {touchKeys.current["ArrowUp"] = true;}
       }
       swipeStartRef.current = null;
       setTimeout(() => {
@@ -825,7 +825,7 @@ export const PlatformerGame: React.FC = () => {
     const lastTimeRef = { current: 0 };
     rafId.current = requestAnimationFrame(loop);
     return () => {
-      if (rafId.current) cancelAnimationFrame(rafId.current);
+      if (rafId.current) {cancelAnimationFrame(rafId.current);}
     };
   }, [step, render]);
 
@@ -846,7 +846,7 @@ export const PlatformerGame: React.FC = () => {
   useEffect(() => {
     const onGlobalKey = (e: KeyboardEvent) => {
       if (e.code === "Space" || e.key === " ") {
-        if (wonRef.current || diedRef.current || gameOverRef.current) return;
+        if (wonRef.current || diedRef.current || gameOverRef.current) {return;}
         if (!gameStartedRef.current) {
           e.preventDefault();
           setGameStarted(true);

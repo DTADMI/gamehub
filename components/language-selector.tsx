@@ -3,8 +3,9 @@
 import { Globe } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
-import { useI18n } from "@/lib/i18n";
+
 import type { LocaleCode } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 
 export default function LanguageSelector({ className = "" }: { className?: string }) {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function LanguageSelector({ className = "" }: { className?: strin
   const [isPending, setIsPending] = useState(false);
 
   const switchTo = (nextLocale: LocaleCode) => {
-    if (nextLocale === locale || isPending) return;
+    if (nextLocale === locale || isPending) {return;}
 
     setIsPending(true);
     startTransition(() => {

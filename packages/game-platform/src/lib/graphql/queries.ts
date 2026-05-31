@@ -15,7 +15,11 @@ export type GameType =
   | "CHECKERS"
   | "CHESS"
   | "PLATFORMER"
-  | "TOWER_DEFENSE";
+  | "TOWER_DEFENSE"
+  | "BLOCK_BLAST"
+  | "CHRONO_SHIFT"
+  | "ELEMENTAL_CONFLUX"
+  | "QUANTUM_ARCHITECT";
 
 export type LeaderboardScope = "PERSONAL" | "FRIENDS" | "GLOBAL";
 export type TimeWindow = "ALL_TIME" | "YEAR" | "MONTH" | "WEEK" | "DAY";

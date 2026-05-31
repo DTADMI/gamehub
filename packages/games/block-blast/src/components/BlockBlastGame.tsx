@@ -69,10 +69,10 @@ function createRocketPiece(): PieceDef {
 }
 
 function getComboMultiplier(count: number): number {
-  if (count >= 8) return 5;
-  if (count >= 5) return 4;
-  if (count >= 3) return 3;
-  if (count >= 2) return 2;
+  if (count >= 8) {return 5;}
+  if (count >= 5) {return 4;}
+  if (count >= 3) {return 3;}
+  if (count >= 2) {return 2;}
   return 1;
 }
 
@@ -99,8 +99,8 @@ function canPlace(
   for (const [r, c] of piece.shape) {
     const gr = anchorRow + r;
     const gc = anchorCol + c;
-    if (gr < 0 || gr >= GRID_SIZE || gc < 0 || gc >= GRID_SIZE) return false;
-    if (grid[gr][gc] !== null) return false;
+    if (gr < 0 || gr >= GRID_SIZE || gc < 0 || gc >= GRID_SIZE) {return false;}
+    if (grid[gr][gc] !== null) {return false;}
   }
   return true;
 }
@@ -122,10 +122,10 @@ function getClearedLines(grid: Cell[][]): { rows: number[]; cols: number[] } {
   const rows: number[] = [];
   const cols: number[] = [];
   for (let r = 0; r < GRID_SIZE; r++) {
-    if (grid[r].every((cell) => cell !== null)) rows.push(r);
+    if (grid[r].every((cell) => cell !== null)) {rows.push(r);}
   }
   for (let c = 0; c < GRID_SIZE; c++) {
-    if (grid.every((row) => row[c] !== null)) cols.push(c);
+    if (grid.every((row) => row[c] !== null)) {cols.push(c);}
   }
   return { rows, cols };
 }
@@ -182,7 +182,7 @@ function hasAnyValidPlacement(grid: Cell[][], pieces: PieceDef[]): boolean {
   for (const piece of pieces) {
     for (let r = 0; r < GRID_SIZE; r++) {
       for (let c = 0; c < GRID_SIZE; c++) {
-        if (canPlace(grid, piece, r, c)) return true;
+        if (canPlace(grid, piece, r, c)) {return true;}
       }
     }
   }
@@ -194,8 +194,8 @@ function isPieceNormal(piece: PieceDef): boolean {
 }
 
 function getPieceLabel(piece: PieceDef): string {
-  if (piece.powerUp === "bomb") return "Bomb";
-  if (piece.powerUp === "rocket") return "Rocket";
+  if (piece.powerUp === "bomb") {return "Bomb";}
+  if (piece.powerUp === "rocket") {return "Rocket";}
   return piece.name;
 }
 
@@ -312,7 +312,7 @@ export const BlockBlastGame: React.FC = () => {
       const stored = localStorage.getItem(HIGH_SCORE_KEY);
       if (stored) {
         const val = parseInt(stored, 10);
-        if (!Number.isNaN(val) && val > 0) setHighScore(val);
+        if (!Number.isNaN(val) && val > 0) {setHighScore(val);}
       }
     } catch {
       /* localStorage unavailable */
@@ -372,7 +372,7 @@ export const BlockBlastGame: React.FC = () => {
   }, [clearTimeouts]);
 
   const handleUndo = useCallback(() => {
-    if (history.length === 0 || clearing || gameOver) return;
+    if (history.length === 0 || clearing || gameOver) {return;}
     clearTimeouts();
     const entry = history[history.length - 1];
     setHistory((h) => h.slice(0, -1));
@@ -408,7 +408,7 @@ export const BlockBlastGame: React.FC = () => {
 
   const selectPiece = useCallback(
     (idx: number) => {
-      if (clearing || gameOver) return;
+      if (clearing || gameOver) {return;}
       setSelectedIdx((prev) => (prev === idx ? null : idx));
     },
     [clearing, gameOver],
@@ -417,7 +417,7 @@ export const BlockBlastGame: React.FC = () => {
   const showScoreAnimation = useCallback((value: number) => {
     setScoreAnimValue(value);
     setScoreAnimVisible(true);
-    if (scoreAnimTimeoutRef.current) clearTimeout(scoreAnimTimeoutRef.current);
+    if (scoreAnimTimeoutRef.current) {clearTimeout(scoreAnimTimeoutRef.current);}
     scoreAnimTimeoutRef.current = setTimeout(() => {
       setScoreAnimVisible(false);
     }, 1000);
@@ -425,8 +425,8 @@ export const BlockBlastGame: React.FC = () => {
 
   const onCellClick = useCallback(
     (row: number, col: number) => {
-      if (gameOver || clearing || selectedIdx === null || !selectedPiece) return;
-      if (!canPlace(grid, selectedPiece, row, col)) return;
+      if (gameOver || clearing || selectedIdx === null || !selectedPiece) {return;}
+      if (!canPlace(grid, selectedPiece, row, col)) {return;}
 
       const histEntry: HistoryEntry = {
         grid: grid.map((r) => [...r]),
@@ -519,7 +519,7 @@ export const BlockBlastGame: React.FC = () => {
           justClearedTimeoutRef.current = setTimeout(() => setJustCleared(false), 1200);
 
           setComboAnim("up");
-          if (comboAnimTimeoutRef.current) clearTimeout(comboAnimTimeoutRef.current);
+          if (comboAnimTimeoutRef.current) {clearTimeout(comboAnimTimeoutRef.current);}
           comboAnimTimeoutRef.current = setTimeout(() => setComboAnim("none"), 600);
 
           showScoreAnimation(gainedPoints);
@@ -567,7 +567,7 @@ export const BlockBlastGame: React.FC = () => {
         setClearedLinesCount(0);
 
         setComboAnim("reset");
-        if (comboAnimTimeoutRef.current) clearTimeout(comboAnimTimeoutRef.current);
+        if (comboAnimTimeoutRef.current) {clearTimeout(comboAnimTimeoutRef.current);}
         comboAnimTimeoutRef.current = setTimeout(() => setComboAnim("none"), 600);
 
         const wasNormal = isPieceNormal(selectedPiece);
@@ -635,7 +635,7 @@ export const BlockBlastGame: React.FC = () => {
   }, []);
 
   const previewCells = useMemo(() => {
-    if (!selectedPiece || !hoverPos) return new Set<string>();
+    if (!selectedPiece || !hoverPos) {return new Set<string>();}
     const set = new Set<string>();
     for (const [r, c] of selectedPiece.shape) {
       const gr = hoverPos.r + r;
@@ -648,7 +648,7 @@ export const BlockBlastGame: React.FC = () => {
   }, [selectedPiece, hoverPos]);
 
   const validPreview = useMemo(() => {
-    if (!selectedPiece || !hoverPos) return false;
+    if (!selectedPiece || !hoverPos) {return false;}
     return canPlace(grid, selectedPiece, hoverPos.r, hoverPos.c);
   }, [grid, selectedPiece, hoverPos]);
 

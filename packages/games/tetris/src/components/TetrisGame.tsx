@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { soundManager } from "@gamehub/game-platform";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   BOARD_HEIGHT,
@@ -19,7 +19,7 @@ interface TetrisGameProps {
 }
 
 function detectTSpin(tetromino: any, board: string[][]): boolean {
-  if (!tetromino || tetromino.color !== "purple") return false;
+  if (!tetromino || tetromino.color !== "purple") {return false;}
   const corners = [
     { x: tetromino.position.x, y: tetromino.position.y },
     { x: tetromino.position.x + 2, y: tetromino.position.y },
@@ -306,7 +306,7 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
   );
 
   const hardDrop = useCallback(() => {
-    if (gameState.gameOver || gameState.isPaused || !gameState.gameStarted) return;
+    if (gameState.gameOver || gameState.isPaused || !gameState.gameStarted) {return;}
     while (
       !checkCollision(gameState.tetromino, gameState.board, {
         ...gameState.tetromino.position,
@@ -478,14 +478,14 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
   const ghostCells = useMemo(() => {
     const cells = new Set<string>();
     const { tetromino, board, gameStarted, gameOver } = gameState;
-    if (!gameStarted || gameOver || !tetromino) return cells;
+    if (!gameStarted || gameOver || !tetromino) {return cells;}
 
     let ghostY = tetromino.position.y;
     while (!checkCollision(tetromino, board, { x: tetromino.position.x, y: ghostY + 1 })) {
       ghostY++;
     }
 
-    if (ghostY === tetromino.position.y) return cells;
+    if (ghostY === tetromino.position.y) {return cells;}
 
     for (let y = 0; y < tetromino.shape.length; y++) {
       for (let x = 0; x < tetromino.shape[y].length; x++) {

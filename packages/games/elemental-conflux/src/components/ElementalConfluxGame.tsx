@@ -1,7 +1,7 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Text } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
@@ -94,7 +94,7 @@ function emptyGrid(size: number): TileData[][] {
 
 function buildPuzzle1(): TileData[][] {
   const grid = emptyGrid(PUZZLE_GRID_SIZE);
-  for (let x = 0; x < PUZZLE_GRID_SIZE; x++) grid[2][x].height = 1;
+  for (let x = 0; x < PUZZLE_GRID_SIZE; x++) {grid[2][x].height = 1;}
   grid[3][2].hasPushBlock = true;
   grid[3][4].hasFireBarrier = true;
   grid[1][3].hasIceBlock = true;
@@ -119,9 +119,9 @@ function buildPuzzle2(): TileData[][] {
 
 function buildPuzzle3(): TileData[][] {
   const grid = emptyGrid(PUZZLE_GRID_SIZE);
-  for (let x = 0; x < PUZZLE_GRID_SIZE; x++) { if (x !== 2) grid[x][2].height = 1; }
+  for (let x = 0; x < PUZZLE_GRID_SIZE; x++) { if (x !== 2) {grid[x][2].height = 1;} }
   grid[5][2].height = 1;
-  for (let z = 0; z < PUZZLE_GRID_SIZE; z++) { if (z !== 2) grid[2][z].height = 1; }
+  for (let z = 0; z < PUZZLE_GRID_SIZE; z++) { if (z !== 2) {grid[2][z].height = 1;} }
   grid[0][3].hasPushBlock = true; grid[3][0].hasPushBlock = true; grid[4][5].hasPushBlock = true;
   grid[1][1].hasFireBarrier = true; grid[1][3].hasIceBlock = true;
   grid[3][1].hasIceBlock = true; grid[4][4].hasFireBarrier = true;
@@ -133,7 +133,7 @@ function buildPuzzle3(): TileData[][] {
 
 function buildBossGrid(): TileData[][] {
   const grid = emptyGrid(BOSS_GRID_SIZE);
-  for (let x = 3; x <= 4; x++) for (let z = 3; z <= 4; z++) grid[x][z].height = 1;
+  for (let x = 3; x <= 4; x++) {for (let z = 3; z <= 4; z++) {grid[x][z].height = 1;}}
   return grid;
 }
 
@@ -187,7 +187,7 @@ function FireBarrier({ tile, gridCenter }: { tile: TileData; gridCenter: number 
   const y = tile.height * TILE_HEIGHT + 0.4;
   const ref = useRef<THREE.Mesh>(null);
   useFrame(() => {
-    if (ref.current) ref.current.scale.y = 1 + Math.sin(Date.now() * 0.005) * 0.05;
+    if (ref.current) {ref.current.scale.y = 1 + Math.sin(Date.now() * 0.005) * 0.05;}
   });
   return (
     <mesh ref={ref} position={[posX, y, posZ]} castShadow>
@@ -222,7 +222,7 @@ function PushBlock({ tile, gridCenter }: { tile: TileData; gridCenter: number })
 }
 
 function HiddenPlatform({ tile, gridCenter }: { tile: TileData; gridCenter: number }) {
-  if (!tile.hiddenRevealed) return null;
+  if (!tile.hiddenRevealed) {return null;}
   const posX = tile.x - gridCenter;
   const posZ = tile.z - gridCenter;
   const y = tile.height * TILE_HEIGHT + 0.02;
@@ -352,9 +352,9 @@ function ActivationCrystal({ x, z, element, gridCenter, activated }: { x: number
   const { main, emissive } = ELEMENT_COLORS[element];
   const ref = useRef<THREE.Mesh>(null);
   useFrame(() => {
-    if (ref.current) ref.current.position.y = y + Math.sin(Date.now() * 0.003) * 0.08;
+    if (ref.current) {ref.current.position.y = y + Math.sin(Date.now() * 0.003) * 0.08;}
   });
-  if (activated) return null;
+  if (activated) {return null;}
   return (
     <mesh ref={ref} position={[posX, y, posZ]} castShadow>
       <dodecahedronGeometry args={[0.35, 0]} />
@@ -384,7 +384,7 @@ function GlowingTile({ x, z, gridCenter }: { x: number; z: number; gridCenter: n
 function BossAttackBeam({ gridCenter }: { gridCenter: number }) {
   const ref = useRef<THREE.Mesh>(null);
   useFrame(() => {
-    if (ref.current) ref.current.position.x = Math.sin(Date.now() * 0.002) * 4;
+    if (ref.current) {ref.current.position.x = Math.sin(Date.now() * 0.002) * 4;}
   });
   return (
     <mesh ref={ref} position={[0, 0.3, 0]}>
@@ -436,20 +436,20 @@ function PuzzleScene({ grid, chars, activeChar, effects, gridCenter, showNameTag
         <PlatformTile key={`tile-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />
       ))}
       {grid.flat().map((tile) => {
-        if (tile.hasHiddenPlatform) return <HiddenPlatform key={`hp-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;
+        if (tile.hasHiddenPlatform) {return <HiddenPlatform key={`hp-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;}
         return null;
       })}
       {grid.flat().map((tile) => {
-        if (tile.hasFireBarrier) return <FireBarrier key={`fb-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;
-        if (tile.hasIceBlock) return <IceBlock key={`ib-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;
-        if (tile.hasPushBlock) return <PushBlock key={`pb-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;
+        if (tile.hasFireBarrier) {return <FireBarrier key={`fb-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;}
+        if (tile.hasIceBlock) {return <IceBlock key={`ib-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;}
+        if (tile.hasPushBlock) {return <PushBlock key={`pb-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} />;}
         return null;
       })}
       {grid.flat().map((tile) => {
-        if (tile.isFireGoal) return <GoalRing key={`fg-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="fire" />;
-        if (tile.isWaterGoal) return <GoalRing key={`wg-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="water" />;
-        if (tile.isEarthGoal) return <GoalRing key={`eg-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="earth" />;
-        if (tile.isAirGoal) return <GoalRing key={`ag-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="air" />;
+        if (tile.isFireGoal) {return <GoalRing key={`fg-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="fire" />;}
+        if (tile.isWaterGoal) {return <GoalRing key={`wg-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="water" />;}
+        if (tile.isEarthGoal) {return <GoalRing key={`eg-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="earth" />;}
+        if (tile.isAirGoal) {return <GoalRing key={`ag-${tile.x}-${tile.z}`} tile={tile} gridCenter={gridCenter} type="air" />;}
         return null;
       })}
       {isBoss && bossState && (
@@ -694,13 +694,13 @@ export function ElementalConfluxGame({
 
   useEffect(() => {
     const iv = setInterval(() => {
-      if (!isComplete && screen === "playing") setElapsedSec(Math.floor((Date.now() - startTime) / 1000));
+      if (!isComplete && screen === "playing") {setElapsedSec(Math.floor((Date.now() - startTime) / 1000));}
     }, 500);
     return () => clearInterval(iv);
   }, [startTime, isComplete, screen]);
 
   useEffect(() => {
-    if (screen !== "boss") return;
+    if (screen !== "boss") {return;}
     const iv = setInterval(() => {
       setBossState((prev) => ({ ...prev, elapsedBossTime: prev.elapsedBossTime + 1 }));
     }, 1000);
@@ -712,7 +712,7 @@ export function ElementalConfluxGame({
 
   const checkGoalReached = useCallback((x: number, z: number, type: ElementType, g: TileData[][]) => {
     const tile = g[x]?.[z];
-    if (!tile) return false;
+    if (!tile) {return false;}
     switch (type) {
       case "fire": return tile.isFireGoal;
       case "water": return tile.isWaterGoal;
@@ -723,19 +723,19 @@ export function ElementalConfluxGame({
 
   const isBlocked = useCallback((x: number, z: number, movingChar: ElementType, g: TileData[][]) => {
     const tile = g[x]?.[z];
-    if (!tile) return true;
-    if (tile.isMud) return true;
-    if (tile.hasPushBlock) return true;
-    if (tile.hasHiddenPlatform && !tile.hiddenRevealed && tile.height === 0) return true;
-    if (movingChar === "water" && tile.hasFireBarrier) return true;
-    if (movingChar === "fire" && tile.hasIceBlock) return true;
+    if (!tile) {return true;}
+    if (tile.isMud) {return true;}
+    if (tile.hasPushBlock) {return true;}
+    if (tile.hasHiddenPlatform && !tile.hiddenRevealed && tile.height === 0) {return true;}
+    if (movingChar === "water" && tile.hasFireBarrier) {return true;}
+    if (movingChar === "fire" && tile.hasIceBlock) {return true;}
     return false;
   }, []);
 
   const canStepHeight = useCallback((fromX: number, fromZ: number, toX: number, toZ: number, g: TileData[][]) => {
     const fromH = g[fromX]?.[fromZ]?.height ?? 0;
     const toH = g[toX]?.[toZ]?.height ?? 0;
-    if (g[toX]?.[toZ]?.hasHiddenPlatform && !g[toX]?.[toZ]?.hiddenRevealed) return true;
+    if (g[toX]?.[toZ]?.hasHiddenPlatform && !g[toX]?.[toZ]?.hiddenRevealed) {return true;}
     return Math.abs(toH - fromH) <= 1;
   }, []);
 
@@ -747,7 +747,7 @@ export function ElementalConfluxGame({
     const cp = crystalPositions[charType];
     if (newX === cp.x && newZ === cp.z) {
       setBossState((prev) => {
-        if (prev.activatedCrystals.includes(charType) || !prev.shieldActive) return prev;
+        if (prev.activatedCrystals.includes(charType) || !prev.shieldActive) {return prev;}
         const next = { ...prev, activatedCrystals: [...prev.activatedCrystals, charType] };
         if (next.activatedCrystals.length >= 4) {
           next.shieldActive = false;
@@ -760,13 +760,13 @@ export function ElementalConfluxGame({
 
   const handleBossGlowingTileDamage = useCallback((_charType: ElementType, newX: number, newZ: number) => {
     setBossState((prev) => {
-      if (prev.shieldActive) return prev;
+      if (prev.shieldActive) {return prev;}
       const isGlowing = prev.glowingTiles.some((gt) => gt.x === newX && gt.z === newZ);
-      if (!isGlowing) return prev;
+      if (!isGlowing) {return prev;}
       const dmg = prev.phase === 3 ? 3 : 5;
       const newHp = Math.max(0, prev.hp - dmg);
       let newPhase: BossPhase = prev.phase;
-      if (newHp <= BOSS_PHASE3_HP && prev.phase < 3) newPhase = 3;
+      if (newHp <= BOSS_PHASE3_HP && prev.phase < 3) {newPhase = 3;}
       return { ...prev, hp: newHp, phase: newPhase };
     });
   }, []);
@@ -776,16 +776,16 @@ export function ElementalConfluxGame({
       const char = c[charType];
       const nx = char.x + dx;
       const nz = char.z + dz;
-      if (nx < 0 || nx >= size || nz < 0 || nz >= size) return { chars: c, goals: null as Record<ElementType, boolean> | null };
-      if (!canStepHeight(char.x, char.z, nx, nz, g)) return { chars: c, goals: null };
-      if (isBlocked(nx, nz, charType, g)) return { chars: c, goals: null };
-      if (isBoss && bossState.barrierTiles.some((bt) => bt.x === nx && bt.z === nz)) return { chars: c, goals: null };
+      if (nx < 0 || nx >= size || nz < 0 || nz >= size) {return { chars: c, goals: null as Record<ElementType, boolean> | null };}
+      if (!canStepHeight(char.x, char.z, nx, nz, g)) {return { chars: c, goals: null };}
+      if (isBlocked(nx, nz, charType, g)) {return { chars: c, goals: null };}
+      if (isBoss && bossState.barrierTiles.some((bt) => bt.x === nx && bt.z === nz)) {return { chars: c, goals: null };}
       const others = (Object.keys(c) as ElementType[]).filter((k) => k !== charType);
-      if (others.some((k) => c[k].x === nx && c[k].z === nz)) return { chars: c, goals: null };
+      if (others.some((k) => c[k].x === nx && c[k].z === nz)) {return { chars: c, goals: null };}
       const nextChars = { ...c };
       nextChars[charType] = { ...nextChars[charType], x: nx, z: nz };
       const goalsHit = checkGoalReached(nx, nz, charType, g);
-      if (goalsHit) return { chars: nextChars, goals: { ...goalsReached, [charType]: true } };
+      if (goalsHit) {return { chars: nextChars, goals: { ...goalsReached, [charType]: true } };}
       return { chars: nextChars, goals: null };
     },
     [canStepHeight, isBlocked, bossState.barrierTiles, checkGoalReached, goalsReached],
@@ -799,7 +799,7 @@ export function ElementalConfluxGame({
       if (result.chars !== chars) {
         setMoves((m) => m + 1);
         setChars(result.chars);
-        if (result.goals) setGoalsReached(result.goals);
+        if (result.goals) {setGoalsReached(result.goals);}
         if (isBoss) {
           handleBossCrystalActivation(charType, result.chars[charType].x, result.chars[charType].z);
           handleBossGlowingTileDamage(charType, result.chars[charType].x, result.chars[charType].z);
@@ -814,12 +814,12 @@ export function ElementalConfluxGame({
       const char = chars[activeChar];
       const nx = char.x + dx;
       const nz = char.z + dz;
-      if (nx < 0 || nx >= currentGridSize || nz < 0 || nz >= currentGridSize) return;
-      if (!canStepHeight(char.x, char.z, nx, nz, grid)) return;
-      if (isBlocked(nx, nz, activeChar, grid)) return;
-      if (screen === "boss" && bossState.barrierTiles.some((bt) => bt.x === nx && bt.z === nz)) return;
+      if (nx < 0 || nx >= currentGridSize || nz < 0 || nz >= currentGridSize) {return;}
+      if (!canStepHeight(char.x, char.z, nx, nz, grid)) {return;}
+      if (isBlocked(nx, nz, activeChar, grid)) {return;}
+      if (screen === "boss" && bossState.barrierTiles.some((bt) => bt.x === nx && bt.z === nz)) {return;}
       const others = (Object.keys(chars) as ElementType[]).filter((k) => k !== activeChar);
-      if (others.some((k) => chars[k].x === nx && chars[k].z === nz)) return;
+      if (others.some((k) => chars[k].x === nx && chars[k].z === nz)) {return;}
       setMoves((m) => m + 1);
       setChars((prev) => {
         const next = { ...prev };
@@ -850,7 +850,7 @@ export function ElementalConfluxGame({
       const next = prev.map((r) => r.map((t) => ({ ...t })));
       let changed = false;
       for (const [ax, az] of adj) {
-        if (ax < 0 || ax >= gs || az < 0 || az >= gs) continue;
+        if (ax < 0 || ax >= gs || az < 0 || az >= gs) {continue;}
         const tile = next[ax][az];
         if (tile.height < tile.maxHeight) { tile.height = Math.min(tile.height + 1, tile.maxHeight); changed = true; }
         else if (tile.height > 0) { tile.height = Math.max(0, tile.height - 1); changed = true; }
@@ -872,13 +872,13 @@ export function ElementalConfluxGame({
       const next = prev.map((r) => r.map((t) => ({ ...t })));
       for (const [dx, dz] of dirs) {
         const tx = char.x + dx; const tz = char.z + dz;
-        if (tx < 0 || tx >= gs || tz < 0 || tz >= gs) continue;
-        if (!next[tx][tz].hasPushBlock) continue;
+        if (tx < 0 || tx >= gs || tz < 0 || tz >= gs) {continue;}
+        if (!next[tx][tz].hasPushBlock) {continue;}
         const destX = tx + dx; const destZ = tz + dz;
-        if (destX < 0 || destX >= gs || destZ < 0 || destZ >= gs) continue;
+        if (destX < 0 || destX >= gs || destZ < 0 || destZ >= gs) {continue;}
         const dt = next[destX][destZ];
-        if (dt.hasFireBarrier || dt.hasIceBlock || dt.hasPushBlock) continue;
-        if ((Object.keys(chars) as ElementType[]).some((k) => chars[k].x === destX && chars[k].z === destZ)) continue;
+        if (dt.hasFireBarrier || dt.hasIceBlock || dt.hasPushBlock) {continue;}
+        if ((Object.keys(chars) as ElementType[]).some((k) => chars[k].x === destX && chars[k].z === destZ)) {continue;}
         next[tx][tz].hasPushBlock = false;
         next[destX][destZ].hasPushBlock = true;
         pushed = true;
@@ -900,7 +900,7 @@ export function ElementalConfluxGame({
     setGrid((prev) => {
       const next = prev.map((r) => r.map((t) => ({ ...t })));
       for (const [px, pz] of pos) {
-        if (px < 0 || px >= gs || pz < 0 || pz >= gs) continue;
+        if (px < 0 || px >= gs || pz < 0 || pz >= gs) {continue;}
         if (next[px][pz].hasIceBlock) { next[px][pz].hasIceBlock = false; melted = true; }
       }
       if (melted) { setMoves((m) => m + 1); addEffect("steam", "#aaddff", [gx, effectY, gz]); }
@@ -919,7 +919,7 @@ export function ElementalConfluxGame({
     setGrid((prev) => {
       const next = prev.map((r) => r.map((t) => ({ ...t })));
       for (const [px, pz] of pos) {
-        if (px < 0 || px >= gs || pz < 0 || pz >= gs) continue;
+        if (px < 0 || px >= gs || pz < 0 || pz >= gs) {continue;}
         if (next[px][pz].hasFireBarrier) { next[px][pz].hasFireBarrier = false; doused = true; }
       }
       if (doused) { setMoves((m) => m + 1); addEffect("spark", "#ff8844", [gx, effectY, gz]); }
@@ -933,7 +933,7 @@ export function ElementalConfluxGame({
       const nearby: Set<ElementType> = new Set();
       for (const k of Object.keys(chars) as ElementType[]) {
         const c = chars[k];
-        if (Math.abs(c.x - atX) + Math.abs(c.z - atZ) <= 1) nearby.add(k);
+        if (Math.abs(c.x - atX) + Math.abs(c.z - atZ) <= 1) {nearby.add(k);}
       }
       const gx = atX - gridCenter;
       const gz = atZ - gridCenter;
@@ -959,7 +959,7 @@ export function ElementalConfluxGame({
           for (let dx = -1; dx <= 1; dx++) {
             for (let dz = -1; dz <= 1; dz++) {
               const tx = atX + dx; const tz = atZ + dz;
-              if (tx < 0 || tx >= gs || tz < 0 || tz >= gs) continue;
+              if (tx < 0 || tx >= gs || tz < 0 || tz >= gs) {continue;}
               next[tx][tz].isMud = true;
             }
           }
@@ -974,7 +974,7 @@ export function ElementalConfluxGame({
           for (let dx = -2; dx <= 2; dx++) {
             for (let dz = -2; dz <= 2; dz++) {
               const tx = atX + dx; const tz = atZ + dz;
-              if (tx < 0 || tx >= gs || tz < 0 || tz >= gs) continue;
+              if (tx < 0 || tx >= gs || tz < 0 || tz >= gs) {continue;}
               if (next[tx][tz].hasHiddenPlatform) {
                 next[tx][tz].hiddenRevealed = true;
                 next[tx][tz].height = 1;
@@ -1104,7 +1104,7 @@ export function ElementalConfluxGame({
   }, [level, startBoss]);
 
   const score = useMemo(() => {
-    if (screen === "boss") return bossScore;
+    if (screen === "boss") {return bossScore;}
     const timeScore = Math.max(0, 300 - elapsedSec) * 10;
     const moveScore = Math.max(0, 300 - moves) * 5;
     const goals = Object.values(goalsReached).filter(Boolean).length;
@@ -1116,8 +1116,8 @@ export function ElementalConfluxGame({
   const onGameOverRef = useRef(onGameOver);
   onGameOverRef.current = onGameOver;
 
-  useEffect(() => { if (screen !== "boss") onScoreUpdateRef.current?.(score); }, [score, screen]);
-  useEffect(() => { if (isComplete && screen === "playing") onGameOverRef.current?.(score); }, [isComplete, screen]);
+  useEffect(() => { if (screen !== "boss") {onScoreUpdateRef.current?.(score);} }, [score, screen]);
+  useEffect(() => { if (isComplete && screen === "playing") {onGameOverRef.current?.(score);} }, [isComplete, screen]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (screen === "menu") {
@@ -1137,8 +1137,8 @@ export function ElementalConfluxGame({
       return;
     }
 
-    if (screen === "boss" && (isBossDefeated || isBossTimedOut)) return;
-    if (screen === "playing" && isComplete) return;
+    if (screen === "boss" && (isBossDefeated || isBossTimedOut)) {return;}
+    if (screen === "playing" && isComplete) {return;}
 
     if (gameMode === "single") {
       switch (e.key) {
@@ -1150,10 +1150,10 @@ export function ElementalConfluxGame({
         case "s": case "S": case "ArrowDown": e.preventDefault(); moveCharacter(0, 1); break;
         case "a": case "A": case "ArrowLeft": e.preventDefault(); moveCharacter(-1, 0); break;
         case "d": case "D": case "ArrowRight": e.preventDefault(); moveCharacter(1, 0); break;
-        case "f": case "F": e.preventDefault(); if (activeChar === "fire") activateAbility(); break;
-        case "q": case "Q": e.preventDefault(); if (activeChar === "water") activateAbility(); break;
-        case "g": case "G": e.preventDefault(); if (activeChar === "earth") activateAbility(); break;
-        case " ": e.preventDefault(); if (activeChar === "air") activateAbility(); break;
+        case "f": case "F": e.preventDefault(); if (activeChar === "fire") {activateAbility();} break;
+        case "q": case "Q": e.preventDefault(); if (activeChar === "water") {activateAbility();} break;
+        case "g": case "G": e.preventDefault(); if (activeChar === "earth") {activateAbility();} break;
+        case " ": e.preventDefault(); if (activeChar === "air") {activateAbility();} break;
       }
     } else {
       switch (e.key) {
@@ -1187,11 +1187,11 @@ export function ElementalConfluxGame({
   }, [handleKeyDown]);
 
   useEffect(() => {
-    if (screen !== "boss" || isBossDefeated || isBossTimedOut) return;
+    if (screen !== "boss" || isBossDefeated || isBossTimedOut) {return;}
     const iv = setInterval(() => {
       bossFrameCount.current += 1;
       setBossState((prev) => {
-        if (prev.hp <= 0 || prev.elapsedBossTime >= prev.timeLimit) return prev;
+        if (prev.hp <= 0 || prev.elapsedBossTime >= prev.timeLimit) {return prev;}
         let attack = prev.activeAttack;
         let cooldown = prev.attackCooldown;
         let glowing = [...prev.glowingTiles];
@@ -1209,26 +1209,26 @@ export function ElementalConfluxGame({
           switch (atkType) {
             case "fireBeam": {
               const row = Math.floor(Math.random() * BOSS_GRID_SIZE);
-              for (let x = 0; x < BOSS_GRID_SIZE; x++) atkTiles.push({ x, z: row });
+              for (let x = 0; x < BOSS_GRID_SIZE; x++) {atkTiles.push({ x, z: row });}
               break;
             }
             case "iceShards": {
               const count = prev.phase === 3 ? 6 : 4;
-              for (let i = 0; i < count; i++) atkTiles.push({ x: Math.floor(Math.random() * BOSS_GRID_SIZE), z: Math.floor(Math.random() * BOSS_GRID_SIZE) });
+              for (let i = 0; i < count; i++) {atkTiles.push({ x: Math.floor(Math.random() * BOSS_GRID_SIZE), z: Math.floor(Math.random() * BOSS_GRID_SIZE) });}
               break;
             }
             case "earthTremor": {
               const area = prev.phase === 3 ? 4 : 2;
-              for (let i = 0; i < area; i++) atkTiles.push({ x: Math.floor(Math.random() * BOSS_GRID_SIZE), z: Math.floor(Math.random() * BOSS_GRID_SIZE) });
+              for (let i = 0; i < area; i++) {atkTiles.push({ x: Math.floor(Math.random() * BOSS_GRID_SIZE), z: Math.floor(Math.random() * BOSS_GRID_SIZE) });}
               break;
             }
             case "airVortex": {
               const cx = 3 + Math.floor(Math.random() * 2);
               const cz = 3 + Math.floor(Math.random() * 2);
-              for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
+              for (let dx = -1; dx <= 1; dx++) {for (let dz = -1; dz <= 1; dz++) {
                 const tx = cx + dx; const tz = cz + dz;
-                if (tx >= 0 && tx < BOSS_GRID_SIZE && tz >= 0 && tz < BOSS_GRID_SIZE && !(dx === 0 && dz === 0)) atkTiles.push({ x: tx, z: tz });
-              }
+                if (tx >= 0 && tx < BOSS_GRID_SIZE && tz >= 0 && tz < BOSS_GRID_SIZE && !(dx === 0 && dz === 0)) {atkTiles.push({ x: tx, z: tz });}
+              }}
               break;
             }
           }
@@ -1245,7 +1245,7 @@ export function ElementalConfluxGame({
                 gz = Math.floor(Math.random() * BOSS_GRID_SIZE);
                 attempts++;
               } while ((Math.abs(gx - 3.5) + Math.abs(gz - 3.5) <= 2 || newGlow.some((g) => g.x === gx && g.z === gz)) && attempts < 20);
-              if (attempts < 20) newGlow.push({ x: gx, z: gz });
+              if (attempts < 20) {newGlow.push({ x: gx, z: gz });}
             }
             glowing = newGlow;
           }
@@ -1260,7 +1260,7 @@ export function ElementalConfluxGame({
                 bz = Math.floor(Math.random() * BOSS_GRID_SIZE);
                 att++;
               } while ((Math.abs(bx - 3.5) + Math.abs(bz - 3.5) <= 2 || barriers.some((b) => b.x === bx && b.z === bz) || newBarriers.some((b) => b.x === bx && b.z === bz)) && att < 20);
-              if (att < 20) newBarriers.push({ x: bx, z: bz });
+              if (att < 20) {newBarriers.push({ x: bx, z: bz });}
             }
             barriers = [...barriers, ...newBarriers];
           }
@@ -1272,7 +1272,7 @@ export function ElementalConfluxGame({
   }, [screen, isBossDefeated, isBossTimedOut]);
 
   useEffect(() => {
-    if (screen !== "boss") return;
+    if (screen !== "boss") {return;}
     if (isBossDefeated) {
       const timeBonus = Math.max(0, bossState.timeLimit - bossState.elapsedBossTime) * 20;
       const hpBonus = bossState.hp * 5;
@@ -1302,7 +1302,7 @@ export function ElementalConfluxGame({
       if (cur >= 0) {
         (tile as any)[order[cur]] = false;
         const nxt = (cur + 1) % (order.length + 1);
-        if (nxt < order.length) (tile as any)[order[nxt]] = true;
+        if (nxt < order.length) {(tile as any)[order[nxt]] = true;}
       } else {
         tile.hasFireBarrier = true;
       }
@@ -1338,7 +1338,7 @@ export function ElementalConfluxGame({
   const handleLoadEditor = useCallback(() => {
     try {
       const data = localStorage.getItem(STORAGE_KEY_PREFIX + "custom");
-      if (data) setEditorGrid(JSON.parse(data) as TileData[][]);
+      if (data) {setEditorGrid(JSON.parse(data) as TileData[][]);}
     } catch { /* ignore */ }
   }, []);
 
@@ -1352,7 +1352,7 @@ export function ElementalConfluxGame({
 
   const handleImportEditor = useCallback(() => {
     const raw = prompt("Paste puzzle string:");
-    if (!raw) return;
+    if (!raw) {return;}
     try {
       const json = decodeURIComponent(Array.from(atob(raw), (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)).join(""));
       setEditorGrid(JSON.parse(json) as TileData[][]);
@@ -1378,7 +1378,7 @@ export function ElementalConfluxGame({
     return (
       <div style={{ width: "100%", height: "100%", position: "relative", background: "#1a1a2e" }}
         onWheel={(e) => {
-          if (editorSelected) handleEditorWheel(editorSelected.x, editorSelected.z, e.deltaY > 0 ? -1 : 1);
+          if (editorSelected) {handleEditorWheel(editorSelected.x, editorSelected.z, e.deltaY > 0 ? -1 : 1);}
         }}
       >
         <Canvas shadows camera={{ position: [8, 9, 8], fov: 45, near: 0.1, far: 50 }} style={{ width: "100%", height: "100%" }}>

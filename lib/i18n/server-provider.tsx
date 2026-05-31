@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { getServerTranslations } from "./server";
+
 import { I18nProvider } from "./provider";
+import { getServerTranslations } from "./server";
 
 export default async function I18nServerProvider({ children }: { children: ReactNode }) {
   const { locale, translations } = await getServerTranslations();

@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
+
 import I18nServerProvider from "@/lib/i18n/server-provider";
 
 const _geist = Geist({ subsets: ["latin"] });

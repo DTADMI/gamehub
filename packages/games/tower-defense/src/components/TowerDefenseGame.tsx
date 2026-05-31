@@ -258,12 +258,12 @@ export const TowerDefenseGame: React.FC = () => {
   });
 
   const startWave = useCallback(() => {
-    if (statusRef.current !== "idle") return;
+    if (statusRef.current !== "idle") {return;}
     const w = waveRef.current;
     const comp = getWaveComposition(w);
     const queue: CreepTypeId[] = [];
     for (const g of comp) {
-      for (let i = 0; i < g.count; i++) queue.push(g.type);
+      for (let i = 0; i < g.count; i++) {queue.push(g.type);}
     }
     spawnQueue.current = queue;
     spawnTimer.current = 0;
@@ -294,8 +294,8 @@ export const TowerDefenseGame: React.FC = () => {
 
   const placeTower = useCallback(
     (tx: number, ty: number) => {
-      if (tx < 0 || ty < 0 || tx >= COLS || ty >= ROWS) return;
-      if (hasTowerAt(towers.current, tx, ty)) return;
+      if (tx < 0 || ty < 0 || tx >= COLS || ty >= ROWS) {return;}
+      if (hasTowerAt(towers.current, tx, ty)) {return;}
       const mapData = MAPS[mapIdxRef.current];
       const path = mapData.path;
       for (let i = 0; i < path.length - 1; i++) {
@@ -310,11 +310,11 @@ export const TowerDefenseGame: React.FC = () => {
         const t = Math.max(0, Math.min(1, (wx * vx + wy * vy) / (vx * vx + vy * vy || 1)));
         const px = a.x + t * vx;
         const py = a.y + t * vy;
-        if (dist(cx, cy, px, py) < 0.9) return;
+        if (dist(cx, cy, px, py) < 0.9) {return;}
       }
       const cfg = TOWER_TYPES.find((t) => t.id === selectedTowerType);
-      if (!cfg) return;
-      if (moneyRef.current < cfg.cost) return;
+      if (!cfg) {return;}
+      if (moneyRef.current < cfg.cost) {return;}
       towers.current.push({
         x: tx + 0.5,
         y: ty + 0.5,
@@ -339,11 +339,11 @@ export const TowerDefenseGame: React.FC = () => {
 
   const upgradeTower = useCallback(() => {
     const idx = selectedTowerIdxRef.current;
-    if (idx < 0 || idx >= towers.current.length) return;
+    if (idx < 0 || idx >= towers.current.length) {return;}
     const t = towers.current[idx];
-    if (t.level >= 3) return;
+    if (t.level >= 3) {return;}
     const cost = t.upgradeCost;
-    if (moneyRef.current < cost) return;
+    if (moneyRef.current < cost) {return;}
     t.level++;
     t.damage = Math.round(t.damage * 1.2);
     t.range = Math.round(t.range * 1.15 * 10) / 10;
@@ -419,7 +419,7 @@ export const TowerDefenseGame: React.FC = () => {
     }
 
     for (const c of creeps.current) {
-      if (!c.alive) continue;
+      if (!c.alive) {continue;}
       if (c.slowTimer > 0) {
         c.slowTimer -= dt;
         if (c.slowTimer <= 0) {
@@ -428,7 +428,7 @@ export const TowerDefenseGame: React.FC = () => {
         }
       }
       const target = mapPath[c.wp];
-      if (!target) continue;
+      if (!target) {continue;}
       const dx = target.x + 0.5 - c.x;
       const dy = target.y + 0.5 - c.y;
       const d = Math.sqrt(dx * dx + dy * dy);
@@ -447,19 +447,19 @@ export const TowerDefenseGame: React.FC = () => {
 
     for (const t of towers.current) {
       t.cd -= dt;
-      if (t.flashTimer > 0) t.flashTimer -= dt;
-      if (t.cd > 0) continue;
+      if (t.flashTimer > 0) {t.flashTimer -= dt;}
+      if (t.cd > 0) {continue;}
       let best: Creep | null = null;
       let bestD = Infinity;
       for (const c of creeps.current) {
-        if (!c.alive) continue;
+        if (!c.alive) {continue;}
         const d = dist(t.x, t.y, c.x, c.y);
         if (d <= t.range && d < bestD) {
           best = c;
           bestD = d;
         }
       }
-      if (!best) continue;
+      if (!best) {continue;}
       const speed = 10;
       const px = best.x - t.x;
       const py = best.y - t.y;
@@ -484,7 +484,7 @@ export const TowerDefenseGame: React.FC = () => {
 
     const deadEnemies: number[] = [];
     for (const s of shots.current) {
-      if (!s.alive) continue;
+      if (!s.alive) {continue;}
       s.x += s.vx * dt;
       s.y += s.vy * dt;
       s.age += dt;
@@ -494,12 +494,12 @@ export const TowerDefenseGame: React.FC = () => {
       }
       for (let ci = 0; ci < creeps.current.length; ci++) {
         const c = creeps.current[ci];
-        if (!c.alive) continue;
+        if (!c.alive) {continue;}
         if (dist(s.x, s.y, c.x, c.y) < 0.35) {
           s.alive = false;
           if (s.splash > 0) {
             for (const c2 of creeps.current) {
-              if (!c2.alive) continue;
+              if (!c2.alive) {continue;}
               if (dist(c.x, c.y, c2.x, c2.y) <= s.splash) {
                 c2.hp -= Math.round(s.damage * 0.6);
                 if (c2.hp <= 0 && c2.alive) {
@@ -556,9 +556,9 @@ export const TowerDefenseGame: React.FC = () => {
 
   const render = useCallback(() => {
     const cnv = canvasRef.current;
-    if (!cnv) return;
+    if (!cnv) {return;}
     const ctx = cnv.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {return;}
     const w = COLS * TILE;
     const h = ROWS * TILE;
     const z = zoomRef.current;
@@ -580,8 +580,8 @@ export const TowerDefenseGame: React.FC = () => {
     for (let i = 0; i < path.length; i++) {
       const px = path[i].x * TILE + TILE / 2;
       const py = path[i].y * TILE + TILE / 2;
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+      if (i === 0) {ctx.moveTo(px, py);}
+      else {ctx.lineTo(px, py);}
     }
     ctx.stroke();
 
@@ -614,12 +614,12 @@ export const TowerDefenseGame: React.FC = () => {
     }
 
     const hoveredTowerIdx = (() => {
-      if (!hoverPos.current) return -1;
+      if (!hoverPos.current) {return -1;}
       const hx = hoverPos.current.x;
       const hy = hoverPos.current.y;
       for (let i = 0; i < towers.current.length; i++) {
         const t = towers.current[i];
-        if (dist(t.x * TILE, t.y * TILE, hx, hy) < 24) return i;
+        if (dist(t.x * TILE, t.y * TILE, hx, hy) < 24) {return i;}
       }
       return -1;
     })();
@@ -668,8 +668,8 @@ export const TowerDefenseGame: React.FC = () => {
           const a = (j / 4) * Math.PI * 2 - Math.PI / 2;
           const px2 = px + Math.cos(a) * s;
           const py2 = py + Math.sin(a) * s;
-          if (j === 0) ctx.moveTo(px2, py2);
-          else ctx.lineTo(px2, py2);
+          if (j === 0) {ctx.moveTo(px2, py2);}
+          else {ctx.lineTo(px2, py2);}
         }
         ctx.closePath();
         ctx.fill();
@@ -821,12 +821,12 @@ export const TowerDefenseGame: React.FC = () => {
 
     const onClick = (e: MouseEvent) => {
       const c = canvasRef.current;
-      if (!c) return;
+      if (!c) {return;}
       handleCanvasClick(e.clientX, e.clientY);
     };
     const onMouseMove = (e: MouseEvent) => {
       const c = canvasRef.current;
-      if (!c) return;
+      if (!c) {return;}
       const rect = c.getBoundingClientRect();
       const z = zoomRef.current;
       hoverPos.current = {
@@ -887,7 +887,7 @@ export const TowerDefenseGame: React.FC = () => {
     window.addEventListener("keydown", onKey);
 
     return () => {
-      if (raf.current) cancelAnimationFrame(raf.current);
+      if (raf.current) {cancelAnimationFrame(raf.current);}
       cnv?.removeEventListener("click", onClick);
       cnv?.removeEventListener("mousemove", onMouseMove);
       cnv?.removeEventListener("mouseleave", onMouseLeave);

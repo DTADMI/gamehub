@@ -32,7 +32,7 @@ function distance(a: Point, b: Point): number {
 }
 
 function normalizePoints(points: Point[]): Point[] {
-  if (points.length === 0) return [];
+  if (points.length === 0) {return [];}
   const minX = Math.min(...points.map((p) => p.x));
   const minY = Math.min(...points.map((p) => p.y));
   const maxX = Math.max(...points.map((p) => p.x));
@@ -54,17 +54,17 @@ function computeCentroid(points: Point[]): Point {
 }
 
 function isClosedLoop(points: Point[], threshold: number): boolean {
-  if (points.length < 3) return false;
+  if (points.length < 3) {return false;}
   const first = points[0];
   const last = points[points.length - 1];
   return distance(first, last) < threshold;
 }
 
 export function detectRing(points: Point[]): RingResult | null {
-  if (points.length < 6) return null;
+  if (points.length < 6) {return null;}
 
   const closed = isClosedLoop(points, 30);
-  if (!closed) return null;
+  if (!closed) {return null;}
 
   const centroid = computeCentroid(points);
   const distances = points.map((p) => distance(p, centroid));
@@ -73,13 +73,13 @@ export function detectRing(points: Point[]): RingResult | null {
     distances.reduce((a, d) => a + (d - avgRadius) ** 2, 0) / distances.length;
   const stdDev = Math.sqrt(variance);
 
-  if (stdDev > avgRadius * 0.35) return null;
+  if (stdDev > avgRadius * 0.35) {return null;}
 
   return { center: centroid, radius: avgRadius, points };
 }
 
 function resamplePoints(points: Point[], targetCount: number): Point[] {
-  if (points.length < 2) return points;
+  if (points.length < 2) {return points;}
 
   let totalLen = 0;
   const segLengths: number[] = [];
@@ -100,7 +100,7 @@ function resamplePoints(points: Point[], targetCount: number): Point[] {
       accumulated += segLengths[segIdx];
       segIdx++;
     }
-    if (segIdx >= segLengths.length) break;
+    if (segIdx >= segLengths.length) {break;}
 
     const remaining = targetDist - accumulated;
     const t = remaining / (segLengths[segIdx] || 1);
@@ -121,10 +121,10 @@ function compareStrokes(
   template: Stroke[],
   tolerance: number,
 ): number {
-  if (input.length === 0 || template.length === 0) return 0;
+  if (input.length === 0 || template.length === 0) {return 0;}
   if (input.length !== template.length) {
     const ratio = Math.min(input.length, template.length) / Math.max(input.length, template.length);
-    if (ratio < 0.5) return 0;
+    if (ratio < 0.5) {return 0;}
   }
 
   let totalScore = 0;
@@ -146,7 +146,7 @@ function compareStrokes(
     const maxPts = Math.min(inNorm.length, tmNorm.length);
     for (let p = 0; p < maxPts; p++) {
       const d = distance(inNorm[p], tmNorm[p]);
-      if (d < tolerance) matchCount++;
+      if (d < tolerance) {matchCount++;}
     }
     totalScore += matchCount / maxPts;
     comparisons++;

@@ -5,8 +5,8 @@ import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard"
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useState } from "react";
 import type { ComponentType } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type ElementalConfluxProps = {
   onScoreUpdate?: (score: number) => void;

@@ -65,7 +65,7 @@ function angleBetweenSegments(a: Point, b: Point, c: Point): number {
   const v2: Point = { x: c.x - b.x, y: c.y - b.y };
   const dot = v1.x * v2.x + v1.y * v2.y;
   const mag = Math.hypot(v1.x, v1.y) * Math.hypot(v2.x, v2.y);
-  if (mag === 0) return 0;
+  if (mag === 0) {return 0;}
   return Math.acos(Math.max(-1, Math.min(1, dot / mag)));
 }
 
@@ -84,10 +84,10 @@ function analyzeStrokes(strokes: Stroke[], w: number, h: number): SpellResult {
   let minX = Infinity; let minY = Infinity;
   let maxX = -Infinity; let maxY = -Infinity;
   for (const p of allPoints) {
-    if (p.x < minX) minX = p.x;
-    if (p.y < minY) minY = p.y;
-    if (p.x > maxX) maxX = p.x;
-    if (p.y > maxY) maxY = p.y;
+    if (p.x < minX) {minX = p.x;}
+    if (p.y < minY) {minY = p.y;}
+    if (p.x > maxX) {maxX = p.x;}
+    if (p.y > maxY) {maxY = p.y;}
   }
   const bboxW = maxX - minX;
   const bboxH = maxY - minY;
@@ -103,8 +103,8 @@ function analyzeStrokes(strokes: Stroke[], w: number, h: number): SpellResult {
 
   let ringCount = 0;
   for (const stroke of strokes) {
-    if (stroke.length < 5) continue;
-    if (pointDist(stroke[0], stroke[stroke.length - 1]) < 25) ringCount++;
+    if (stroke.length < 5) {continue;}
+    if (pointDist(stroke[0], stroke[stroke.length - 1]) < 25) {ringCount++;}
   }
 
   let sharpAngleCount = 0;
@@ -112,7 +112,7 @@ function analyzeStrokes(strokes: Stroke[], w: number, h: number): SpellResult {
   for (const stroke of strokes) {
     for (let i = 1; i < stroke.length - 1; i++) {
       const angle = angleBetweenSegments(stroke[i - 1], stroke[i], stroke[i + 1]);
-      if (angle > (110 * Math.PI) / 180) sharpAngleCount++;
+      if (angle > (110 * Math.PI) / 180) {sharpAngleCount++;}
       totalSegments++;
     }
   }
@@ -124,7 +124,7 @@ function analyzeStrokes(strokes: Stroke[], w: number, h: number): SpellResult {
   let maxDistFromCentroid = 0;
   for (const p of allPoints) {
     const d = pointDist(p, centroid);
-    if (d > maxDistFromCentroid) maxDistFromCentroid = d;
+    if (d > maxDistFromCentroid) {maxDistFromCentroid = d;}
   }
   const outwardRatio = Math.sqrt(bboxArea) > 1
     ? maxDistFromCentroid / (Math.sqrt(bboxArea) / 2)
@@ -199,7 +199,7 @@ export function SpellCraftGame() {
   const runAnalysis = useCallback(() => {
     const strokes = strokesRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
 
     const result = analyzeStrokes(strokes, canvas.width, canvas.height);
     setSpellResult(result);
@@ -269,7 +269,7 @@ export function SpellCraftGame() {
     ctx.restore();
 
     for (const stroke of strokesRef.current) {
-      if (stroke.length < 2) continue;
+      if (stroke.length < 2) {continue;}
       ctx.save();
       ctx.strokeStyle = "#1f2937";
       ctx.lineWidth = 3;
@@ -302,7 +302,7 @@ export function SpellCraftGame() {
 
     if (spellResult && spellResult.ringCount > 0) {
       for (const stroke of strokesRef.current) {
-        if (stroke.length < 5) continue;
+        if (stroke.length < 5) {continue;}
         if (pointDist(stroke[0], stroke[stroke.length - 1]) < 25) {
           const el = spellResult.element;
           const color = el ? ELEMENT_COLORS[el] : "#3b82f6";
@@ -385,7 +385,7 @@ export function SpellCraftGame() {
     e.preventDefault();
     isDrawingRef.current = true;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -394,10 +394,10 @@ export function SpellCraftGame() {
   }, []);
 
   const handlePointerMove = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!isDrawingRef.current) return;
+    if (!isDrawingRef.current) {return;}
     e.preventDefault();
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -406,7 +406,7 @@ export function SpellCraftGame() {
   }, []);
 
   const handlePointerUp = useCallback(() => {
-    if (!isDrawingRef.current) return;
+    if (!isDrawingRef.current) {return;}
     isDrawingRef.current = false;
     const cur = currentStrokeRef.current;
     if (cur.length > 1) {

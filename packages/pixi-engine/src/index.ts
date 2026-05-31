@@ -88,7 +88,7 @@ export function createPixiGame(
   }
 
   function gameLoop(timestamp: number) {
-    if (!running) return;
+    if (!running) {return;}
     const deltaMs = lastTime ? timestamp - lastTime : 1000 / resolvedOptions.targetFPS;
     lastTime = timestamp;
     const delta = deltaMs / (1000 / resolvedOptions.targetFPS);
@@ -131,7 +131,7 @@ export function createPixiGame(
     },
 
     start() {
-      if (running) return;
+      if (running) {return;}
       running = true;
       if (app?.ticker) {
         app.ticker.start();
@@ -152,7 +152,7 @@ export function createPixiGame(
     },
 
     resume() {
-      if (running) return;
+      if (running) {return;}
       running = true;
       if (app?.ticker) {
         app.ticker.start();

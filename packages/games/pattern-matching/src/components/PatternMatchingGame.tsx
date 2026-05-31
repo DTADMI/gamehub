@@ -263,7 +263,7 @@ export const PatternMatchingGame: React.FC = () => {
   }, [difficulty, mode, advancePattern]);
 
   useEffect(() => {
-    if (phase !== "playing" || mode !== "timed") return;
+    if (phase !== "playing" || mode !== "timed") {return;}
     if (timeLeft <= 0) {
       setPhase("over");
       updateHighScore(score);
@@ -278,20 +278,20 @@ export const PatternMatchingGame: React.FC = () => {
       setTimeLeft((t) => Math.max(0, t - 1));
     }, 1000);
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {clearInterval(timerRef.current);}
     };
   }, [phase, mode, timeLeft, score, updateHighScore]);
 
   useEffect(() => {
     return () => {
       soundManager.stopMusic();
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {clearInterval(timerRef.current);}
     };
   }, []);
 
   const handleOptionSelect = useCallback(
     (index: number) => {
-      if (phase !== "playing" || !pattern || feedback) return;
+      if (phase !== "playing" || !pattern || feedback) {return;}
       setSelectedIndex(index);
 
       if (index === pattern.correctIndex) {
@@ -301,10 +301,10 @@ export const PatternMatchingGame: React.FC = () => {
         setScore((s) => s + points);
         setStreak((s) => s + 1);
         const newLevel = Math.floor(streak / 5) + 1;
-        if (newLevel > level) setLevel(newLevel);
+        if (newLevel > level) {setLevel(newLevel);}
 
         if (streak + 1 > 0 && (streak + 1) % 5 === 0) {
-          if (mode === "timed") setTimeLeft((t) => t + 5);
+          if (mode === "timed") {setTimeLeft((t) => t + 5);}
         }
 
         feedbackTimerRef.current = setTimeout(() => {
@@ -349,7 +349,7 @@ export const PatternMatchingGame: React.FC = () => {
   };
 
   const renderTarget = () => {
-    if (!pattern) return null;
+    if (!pattern) {return null;}
     const { target, type } = pattern;
 
     if (type === "color" && target.colors) {
@@ -430,7 +430,7 @@ export const PatternMatchingGame: React.FC = () => {
   };
 
   const renderOption = (option: PatternOption, index: number) => {
-    if (!pattern) return null;
+    if (!pattern) {return null;}
 
     const isSelected = selectedIndex === index;
     const isCorrect = feedback === "correct" && isSelected;

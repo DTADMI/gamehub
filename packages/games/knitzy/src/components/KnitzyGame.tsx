@@ -57,12 +57,12 @@ function emptyGrid(conf: GridConfig): Grid {
 function progress(target: Grid, work: Grid): number {
   let ok = 0;
   const rows = target.length;
-  if (rows === 0) return 100;
+  if (rows === 0) {return 100;}
   const cols = target[0].length;
   const total = rows * cols;
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
-      if (work[y]?.[x] >= 0 && work[y][x] === target[y][x]) ok++;
+      if (work[y]?.[x] >= 0 && work[y][x] === target[y][x]) {ok++;}
     }
   }
   return total > 0 ? Math.round((ok / total) * 100) : 100;
@@ -73,7 +73,7 @@ function copyGrid(g: Grid): Grid {
 }
 
 function computeCellSize(conf: GridConfig): number {
-  if (typeof window === "undefined") return BASE_CELL;
+  if (typeof window === "undefined") {return BASE_CELL;}
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const maxBoardW = Math.floor((vw - GAP * 4) / 2);
@@ -99,7 +99,7 @@ export const KnitzyGame: React.FC = () => {
       const saved = localStorage.getItem(LS_DIFFICULTY);
       if (saved !== null) {
         const n = parseInt(saved, 10);
-        if (!isNaN(n) && n >= 0 && n < GRID_CONFIGS.length) return n;
+        if (!isNaN(n) && n >= 0 && n < GRID_CONFIGS.length) {return n;}
       }
     } catch {}
     return 1;
@@ -127,7 +127,7 @@ export const KnitzyGame: React.FC = () => {
       const saved = localStorage.getItem(LS_UNLOCKED);
       if (saved !== null) {
         const n = parseInt(saved, 10);
-        if (!isNaN(n) && n >= 0) return n;
+        if (!isNaN(n) && n >= 0) {return n;}
       }
     } catch {}
     return 0;
@@ -141,8 +141,8 @@ export const KnitzyGame: React.FC = () => {
     try {
       const key = LS_BEST_PREFIX + difficultyIdx;
       const ms = parseInt(localStorage.getItem(key) || "0", 10);
-      if (!isNaN(ms) && ms > 0) setBestMs(ms);
-      else setBestMs(null);
+      if (!isNaN(ms) && ms > 0) {setBestMs(ms);}
+      else {setBestMs(null);}
     } catch {}
   }, [difficultyIdx]);
 
@@ -154,7 +154,7 @@ export const KnitzyGame: React.FC = () => {
       setElapsedMs(Date.now() - startTsRef.current);
     }, 500);
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [target]);
 
   useEffect(() => {
@@ -173,9 +173,9 @@ export const KnitzyGame: React.FC = () => {
 
   const draw = useCallback(() => {
     const c = canvasRef.current;
-    if (!c) return;
+    if (!c) {return;}
     const ctx = c.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {return;}
     const dpr = Math.max(1, window.devicePixelRatio || 1);
     dprRef.current = dpr;
     const cellSize = computeCellSize(conf);
@@ -306,7 +306,7 @@ export const KnitzyGame: React.FC = () => {
 
   const getGridCell = (clientX: number, clientY: number): { x: number; y: number } | null => {
     const c = canvasRef.current;
-    if (!c) return null;
+    if (!c) {return null;}
     const rect = rectRef.current;
     const { cols, rows } = conf;
     const cellSize = cellSizeRef.current;
@@ -317,7 +317,7 @@ export const KnitzyGame: React.FC = () => {
     const workY = topY;
     const x = Math.floor((clientX - rect.left - workX) / cellSize);
     const y = Math.floor((clientY - rect.top - workY) / cellSize);
-    if (x < 0 || y < 0 || x >= cols || y >= rows) return null;
+    if (x < 0 || y < 0 || x >= cols || y >= rows) {return null;}
     return { x, y };
   };
 
@@ -410,7 +410,7 @@ export const KnitzyGame: React.FC = () => {
 
   const handleDifficultyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const idx = parseInt(e.target.value, 10);
-    if (idx > unlocked) return;
+    if (idx > unlocked) {return;}
     setDifficultyIdx(idx);
     try { localStorage.setItem(LS_DIFFICULTY, String(idx)); } catch {}
     const c = GRID_CONFIGS[idx];

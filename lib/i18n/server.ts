@@ -1,4 +1,5 @@
 import { cookies, headers } from "next/headers";
+
 import { defaultLocale, getSupportedLocale, type LocaleCode } from "./config";
 import enTranslations from "./translations/en";
 import translationsMap from "./translations/map";

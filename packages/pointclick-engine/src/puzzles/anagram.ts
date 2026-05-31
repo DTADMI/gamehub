@@ -30,13 +30,13 @@ export function createAnagramState(word: string): AnagramState {
 }
 
 export function updateAnagramInput(state: AnagramState, value: string): AnagramState {
-  if (state.solved) return state;
+  if (state.solved) {return state;}
   const sanitized = value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, state.word.length);
   return { ...state, userInput: sanitized };
 }
 
 export function submitAnagram(state: AnagramState): AnagramState {
-  if (state.solved) return state;
+  if (state.solved) {return state;}
   const solved = state.userInput === state.word;
   return {
     ...state,

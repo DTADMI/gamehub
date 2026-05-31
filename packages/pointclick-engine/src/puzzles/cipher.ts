@@ -36,13 +36,13 @@ export function createCipherState(answer: string, hint?: string): CipherState {
 }
 
 export function updateCipherInput(state: CipherState, value: string): CipherState {
-  if (state.solved) return state;
+  if (state.solved) {return state;}
   const sanitized = value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, state.answer.length);
   return { ...state, userInput: sanitized };
 }
 
 export function submitCipher(state: CipherState): CipherState {
-  if (state.solved) return state;
+  if (state.solved) {return state;}
   const solved = state.userInput === state.answer;
   return {
     ...state,

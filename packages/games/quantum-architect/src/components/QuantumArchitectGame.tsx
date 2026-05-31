@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Box, Sphere, Html } from "@react-three/drei";
-import * as THREE from "three";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { Box, Html,Sphere } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 type PlatformState = "superposed" | "solid" | "void";
 type KeyColor = "red" | "blue" | "green";
@@ -344,7 +344,7 @@ function Starfield() {
     return pos;
   }, []);
   useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += delta * 0.015;
+    if (ref.current) {ref.current.rotation.y += delta * 0.015;}
   });
   return (
     <points ref={ref}>
@@ -361,12 +361,12 @@ function PlatformMesh({ platform }: { platform: PlatformRuntime }) {
   const matRef = useRef<THREE.MeshStandardMaterial>(null!);
 
   useFrame((_, delta) => {
-    if (!matRef.current) return;
+    if (!matRef.current) {return;}
     if (platform.observeFlash > 0) {
       platform.observeFlash -= delta * 3;
       matRef.current.emissive.set("#ffffff");
       matRef.current.emissiveIntensity = platform.observeFlash * 2;
-      if (platform.observeFlash <= 0) platform.observeFlash = 0;
+      if (platform.observeFlash <= 0) {platform.observeFlash = 0;}
     }
     if (platform.state === "superposed") {
       const t = performance.now() * 0.001;
@@ -394,7 +394,7 @@ function PlatformMesh({ platform }: { platform: PlatformRuntime }) {
 }
 
 function GateWall({ gate }: { gate: GateRuntime }) {
-  if (!gate.locked) return null;
+  if (!gate.locked) {return null;}
   const colorMap: Record<KeyColor, string> = { red: "#ff4444", blue: "#4488ff", green: "#44cc44" };
   return (
     <Box position={gate.position} args={gate.size}>
@@ -412,7 +412,7 @@ function KeyOrb({ keyDef }: { keyDef: KeyRuntime }) {
       ref.current.position.y = keyDef.position[1] + Math.sin(Date.now() * 0.004) * 0.2;
     }
   });
-  if (keyDef.collected) return null;
+  if (keyDef.collected) {return null;}
   return (
     <Sphere ref={ref} args={[0.3, 32, 32]} position={keyDef.position}>
       <meshStandardMaterial color={colorMap[keyDef.color]} emissive={colorMap[keyDef.color]} emissiveIntensity={0.8} roughness={0.2} metalness={0.3} />
@@ -422,7 +422,7 @@ function KeyOrb({ keyDef }: { keyDef: KeyRuntime }) {
 
 function PlayerSphere({ position }: { position: React.MutableRefObject<THREE.Vector3> }) {
   const ref = useRef<THREE.Mesh>(null!);
-  useFrame(() => { if (ref.current) ref.current.position.copy(position.current); });
+  useFrame(() => { if (ref.current) {ref.current.position.copy(position.current);} });
   return (
     <Sphere ref={ref} args={[0.35, 32, 32]}>
       <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.8} roughness={0.1} metalness={0.0} />
@@ -434,7 +434,7 @@ function GoalSphere({ position }: { position: [number, number, number] }) {
   const ref = useRef<THREE.Mesh>(null!);
   const glowRef = useRef<THREE.Mesh>(null!);
   useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += delta * 1.5;
+    if (ref.current) {ref.current.rotation.y += delta * 1.5;}
     if (glowRef.current) {
       glowRef.current.rotation.y -= delta * 0.7;
       glowRef.current.scale.setScalar(1 + Math.sin(performance.now() * 0.003) * 0.15);
@@ -479,7 +479,7 @@ function CrystalMesh({ crystal, collected }: { crystal: CrystalRuntime; collecte
   const ref = useRef<THREE.Mesh>(null!);
   const glowRef = useRef<THREE.Mesh>(null!);
   useFrame((_, delta) => {
-    if (!ref.current || collected) return;
+    if (!ref.current || collected) {return;}
     ref.current.rotation.y += delta * 1.5;
     ref.current.rotation.x += delta * 0.3;
     ref.current.position.y = crystal.position[1] + Math.sin(performance.now() * 0.003 + crystal.id) * 0.15;
@@ -488,7 +488,7 @@ function CrystalMesh({ crystal, collected }: { crystal: CrystalRuntime; collecte
       glowRef.current.scale.setScalar(1 + Math.sin(performance.now() * 0.004 + crystal.id) * 0.1);
     }
   });
-  if (collected) return null;
+  if (collected) {return null;}
   return (
     <group>
       <mesh ref={ref} position={crystal.position}>
@@ -505,7 +505,7 @@ function CrystalMesh({ crystal, collected }: { crystal: CrystalRuntime; collecte
 
 function CatenaryChain({ positions, color }: { positions: [number, number, number][]; color: string }) {
   const { vecPoints, posArray } = useMemo(() => {
-    if (positions.length < 2) return { vecPoints: [] as THREE.Vector3[], posArray: null as Float32Array | null };
+    if (positions.length < 2) {return { vecPoints: [] as THREE.Vector3[], posArray: null as Float32Array | null };}
     const vecs = positions.map((p) => new THREE.Vector3(...p));
     const curve = new THREE.CatmullRomCurve3(vecs);
     const pts = curve.getPoints(50);
@@ -514,7 +514,7 @@ function CatenaryChain({ positions, color }: { positions: [number, number, numbe
     return { vecPoints: pts, posArray: arr };
   }, [positions]);
   const points = vecPoints;
-  if (points.length < 2 || posArray === null) return null;
+  if (points.length < 2 || posArray === null) {return null;}
   const positionsArray = posArray;
   return (
     <line>
@@ -610,7 +610,7 @@ function GameScene({
         if (key === "q") { handleObservationChoiceFn(data, "void"); return; }
         if (key === "arrowleft") { setObservationUI(data ? { ...data, selected: "solid" } : null); return; }
         if (key === "arrowright") { setObservationUI(data ? { ...data, selected: "void" } : null); return; }
-        if (e.key === " " || e.code === "Space") { if (data) handleObservationChoiceFn(data, data.selected); return; }
+        if (e.key === " " || e.code === "Space") { if (data) {handleObservationChoiceFn(data, data.selected);} return; }
         if (key === "escape") { setObservationUI(null); return; }
         return;
       }
@@ -645,7 +645,7 @@ function GameScene({
     let minDist = Infinity;
 
     for (const plat of plats) {
-      if (plat.state !== "superposed") continue;
+      if (plat.state !== "superposed") {continue;}
       const dx = p.x - plat.position[0];
       const dy = p.y - plat.position[1];
       const dz = p.z - plat.position[2];
@@ -656,14 +656,14 @@ function GameScene({
       }
     }
 
-    if (!nearest) return;
+    if (!nearest) {return;}
 
     keysRef.current.clear();
     setObservationUI({ platformId: nearest.id, selected: "solid" });
   }, []);
 
   const handleObservationChoiceFn = useCallback((data: { platformId: number; selected: "solid" | "void" } | null, chosenOutcome: "solid" | "void") => {
-    if (!data) return;
+    if (!data) {return;}
 
     const platform = platformsRef.current.find((p) => p.id === data.platformId);
     if (!platform) { setObservationUI(null); return; }
@@ -733,10 +733,10 @@ function GameScene({
     const k = keysRef.current;
     let inputX = 0;
     let inputZ = 0;
-    if (k.has("w") || k.has("arrowup")) inputZ -= 1;
-    if (k.has("s") || k.has("arrowdown")) inputZ += 1;
-    if (k.has("a") || k.has("arrowleft")) inputX -= 1;
-    if (k.has("d") || k.has("arrowright")) inputX += 1;
+    if (k.has("w") || k.has("arrowup")) {inputZ -= 1;}
+    if (k.has("s") || k.has("arrowdown")) {inputZ += 1;}
+    if (k.has("a") || k.has("arrowleft")) {inputX -= 1;}
+    if (k.has("d") || k.has("arrowright")) {inputX += 1;}
 
     if (inputX !== 0 && inputZ !== 0) {
       const mag = 1 / Math.SQRT2;
@@ -747,7 +747,7 @@ function GameScene({
     let grounded = false;
 
     for (const plat of plats) {
-      if (plat.state !== "solid") continue;
+      if (plat.state !== "solid") {continue;}
       const [px, py, pz] = plat.position;
       const [sx, , sz] = plat.size;
       const top = py + plat.size[1] / 2;
@@ -767,7 +767,7 @@ function GameScene({
     }
 
     for (const g of gts) {
-      if (!g.locked) continue;
+      if (!g.locked) {continue;}
       const [gx, gy, gz] = g.position;
       const [gsx, gsy, gsz] = g.size;
       const halfW = gsx / 2 + 0.35;
@@ -778,17 +778,17 @@ function GameScene({
         p.y >= gy - halfH && p.y <= gy + halfH &&
         p.z >= gz - halfD && p.z <= gz + halfD
       ) {
-        if (inputX > 0) p.x = gx - halfW;
-        else if (inputX < 0) p.x = gx + halfW;
-        if (inputZ > 0) p.z = gz - halfD;
-        else if (inputZ < 0) p.z = gz + halfD;
+        if (inputX > 0) {p.x = gx - halfW;}
+        else if (inputX < 0) {p.x = gx + halfW;}
+        if (inputZ > 0) {p.z = gz - halfD;}
+        else if (inputZ < 0) {p.z = gz + halfD;}
         v.x = 0;
         v.z = 0;
       }
     }
 
     for (const key of kst) {
-      if (key.collected) continue;
+      if (key.collected) {continue;}
       const dx = p.x - key.position[0];
       const dy = p.y - key.position[1];
       const dz = p.z - key.position[2];
@@ -799,7 +799,7 @@ function GameScene({
 
     const crst = crystalsRef.current;
     for (const crystal of crst) {
-      if (crystal.collected) continue;
+      if (crystal.collected) {continue;}
       const dx = p.x - crystal.position[0];
       const dy = p.y - crystal.position[1];
       const dz = p.z - crystal.position[2];
@@ -813,7 +813,7 @@ function GameScene({
     const speed = grounded ? MOVE_SPEED : MOVE_SPEED * 0.6;
     v.x = inputX * speed;
     v.z = inputZ * speed;
-    if (!grounded) v.y -= GRAVITY * dt;
+    if (!grounded) {v.y -= GRAVITY * dt;}
 
     p.x += v.x * dt;
     p.y += v.y * dt;

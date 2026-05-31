@@ -134,22 +134,22 @@ export async function getWebGPUStatus(): Promise<WebGPUStatus> {
 
 export async function getOptimalRenderer(): Promise<"webgpu" | "webgl2" | "webgl" | "canvas2d"> {
   const status = await getWebGPUStatus();
-  if (status.supported) return "webgpu";
+  if (status.supported) {return "webgpu";}
   return status.fallback;
 }
 
 export async function initWebGPU(
   canvas: HTMLCanvasElement,
 ): Promise<GPUCanvasContext | null> {
-  if (typeof navigator === "undefined") return null;
+  if (typeof navigator === "undefined") {return null;}
 
   try {
     const adapter = await (navigator as any).gpu.requestAdapter();
-    if (!adapter) return null;
+    if (!adapter) {return null;}
 
     const device = await adapter.requestDevice();
     const context = canvas.getContext("webgpu");
-    if (!context) return null;
+    if (!context) {return null;}
 
     const format = navigator?.gpu?.getPreferredCanvasFormat?.() ?? "bgra8unorm";
     context.configure({

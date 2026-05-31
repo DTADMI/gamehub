@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 import { canReadAdminControls, canWriteFeatureFlags } from "@/lib/admin/roles";
 import { validateCsrf } from "@/lib/csrf";
 import {
-  type FeatureFlags,
   type FeatureFlag,
-  FLAG_DEFINITIONS,
+  type FeatureFlags,
   findFlagDefinition,
+  FLAG_DEFINITIONS,
   flattenFlags,
   getByPath,
   mergeFeatureFlags,

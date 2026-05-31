@@ -70,13 +70,13 @@ function pipeConnectsInDirection(
 
   for (const base of baseDirs) {
     const effective = (base + rotation) % 360;
-    if (effective === neededAngle) return true;
+    if (effective === neededAngle) {return true;}
   }
   return false;
 }
 
 export function evaluatePipeNetwork(pipeConnections: PipeConnection[]): boolean {
-  if (pipeConnections.length === 0) return false;
+  if (pipeConnections.length === 0) {return false;}
 
   const grid = new Map<string, PipeConnection>();
   for (const pipe of pipeConnections) {
@@ -84,7 +84,7 @@ export function evaluatePipeNetwork(pipeConnections: PipeConnection[]): boolean 
   }
 
   const starts = pipeConnections.filter((p) => p.type === "end");
-  if (starts.length < 2) return false;
+  if (starts.length < 2) {return false;}
 
   const visited = new Set<string>();
   const queue: PipeConnection[] = [starts[0]];
@@ -95,16 +95,16 @@ export function evaluatePipeNetwork(pipeConnections: PipeConnection[]): boolean 
     const dirs: ("top" | "right" | "bottom" | "left")[] = ["top", "right", "bottom", "left"];
 
     for (const dir of dirs) {
-      if (!pipeConnectsInDirection(current, dir)) continue;
+      if (!pipeConnectsInDirection(current, dir)) {continue;}
       const { dr, dc } = getDirectionOffset(dir);
       const nr = current.row + dr;
       const nc = current.col + dc;
       const key = `${nr},${nc}`;
 
-      if (visited.has(key)) continue;
+      if (visited.has(key)) {continue;}
       const neighbor = grid.get(key);
-      if (!neighbor) continue;
-      if (!pipeConnectsInDirection(neighbor, getOpposite(dir))) continue;
+      if (!neighbor) {continue;}
+      if (!pipeConnectsInDirection(neighbor, getOpposite(dir))) {continue;}
 
       visited.add(key);
       queue.push(neighbor);
@@ -112,14 +112,14 @@ export function evaluatePipeNetwork(pipeConnections: PipeConnection[]): boolean 
   }
 
   for (const pipe of pipeConnections) {
-    if (!visited.has(`${pipe.row},${pipe.col}`)) return false;
+    if (!visited.has(`${pipe.row},${pipe.col}`)) {return false;}
   }
   return true;
 }
 
 export function checkPatternMatch(grid: Grid, target: Grid): number {
-  if (grid.length === 0 || target.length === 0) return 0;
-  if (grid.length !== target.length || grid[0].length !== target[0].length) return 0;
+  if (grid.length === 0 || target.length === 0) {return 0;}
+  if (grid.length !== target.length || grid[0].length !== target[0].length) {return 0;}
 
   let matches = 0;
   let total = 0;
@@ -127,7 +127,7 @@ export function checkPatternMatch(grid: Grid, target: Grid): number {
   for (let r = 0; r < grid.length; r++) {
     for (let c = 0; c < grid[r].length; c++) {
       total++;
-      if (grid[r][c] === target[r][c]) matches++;
+      if (grid[r][c] === target[r][c]) {matches++;}
     }
   }
 
@@ -176,8 +176,8 @@ export function generateMaze(rows: number, cols: number): MazeCell[][] {
       const nr = current.row + dr;
       const nc = current.col + dc;
 
-      if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
-      if (visited[nr][nc]) continue;
+      if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) {continue;}
+      if (visited[nr][nc]) {continue;}
 
       visited[nr][nc] = true;
       maze[current.row][current.col][dir] = false;
@@ -187,14 +187,14 @@ export function generateMaze(rows: number, cols: number): MazeCell[][] {
       break;
     }
 
-    if (!moved) stack.pop();
+    if (!moved) {stack.pop();}
   }
 
   return maze;
 }
 
 export function checkWordMatch(word: string, target: string): boolean {
-  if (!word || !target) return false;
+  if (!word || !target) {return false;}
   return word.toLowerCase().trim() === target.toLowerCase().trim();
 }
 

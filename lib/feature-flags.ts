@@ -431,7 +431,7 @@ export function evaluateFlag(
       return Math.random() * 100 < pct;
     }
     case "user_list": {
-      if (!userId) return false;
+      if (!userId) {return false;}
       const ids =
         Array.isArray(runtimeValue) && runtimeValue.length > 0
           ? (runtimeValue as string[])
@@ -439,7 +439,7 @@ export function evaluateFlag(
       return ids.includes(userId);
     }
     case "subscription_tier": {
-      if (!userTier) return false;
+      if (!userTier) {return false;}
       const tiers =
         Array.isArray(runtimeValue) && runtimeValue.length > 0
           ? (runtimeValue as string[])
@@ -457,7 +457,7 @@ export function isFeatureEnabled(
   userTier?: string,
 ): boolean {
   const def = findFlagDefinition(path);
-  if (!def) return false;
+  if (!def) {return false;}
 
   const flags = DEFAULT_FEATURE_FLAGS;
   return evaluateFlag(def, flags, userId, userTier);

@@ -2,6 +2,7 @@
 
 import { GameContainer } from "@gamehub/game-platform";
 import { t } from "@gamehub/game-platform/lib/i18n";
+import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { DialogueBox, InventoryBar, versionedLoad, versionedSave } from "@games/pointclick-engine";
 import {
   detectLang,
@@ -11,6 +12,18 @@ import {
   nextScene,
   type Scene,
 } from "@games/pointclick-engine/engine";
+import {
+  type AnagramState,
+  createAnagramState,
+  submitAnagram,
+  updateAnagramInput,
+} from "@games/pointclick-engine/puzzles/anagram";
+import {
+  type CipherState,
+  createCipherState,
+  submitCipher,
+  updateCipherInput,
+} from "@games/pointclick-engine/puzzles/cipher";
 import {
   createGearsState,
   evaluateGears,
@@ -28,8 +41,8 @@ import {
   evaluatePipes,
   type PipesState,
   setTileRotation,
-  toggleValve,
   type Tile,
+  toggleValve,
 } from "@games/pointclick-engine/puzzles/pipes";
 import {
   createSequenceState,
@@ -37,25 +50,12 @@ import {
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
 import {
-  createCipherState,
-  submitCipher,
-  updateCipherInput,
-  type CipherState,
-} from "@games/pointclick-engine/puzzles/cipher";
-import {
-  createAnagramState,
-  submitAnagram,
-  updateAnagramInput,
-  type AnagramState,
-} from "@games/pointclick-engine/puzzles/anagram";
-import {
   createWiresState,
   hasWiresCrossing,
   setWiresConnection,
   type WiresState,
 } from "@games/pointclick-engine/puzzles/wires";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { soundManager } from "@gamehub/game-platform/lib/sound";
 
 import { E1CabinetCanvas } from "./E1CabinetCanvas";
 
@@ -556,12 +556,12 @@ export const ToymakerEscapeGame: React.FC = () => {
   }, [sceneId]);
 
   useEffect(() => {
-    if (sceneId !== "E2_SHADOW") return;
+    if (sceneId !== "E2_SHADOW") {return;}
     const canvas = shadowCanvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
 
     const ctx2d = canvas.getContext("2d");
-    if (!ctx2d) return;
+    if (!ctx2d) {return;}
 
     const render = () => {
       ctx2d.clearRect(0, 0, 480, 200);
@@ -1380,7 +1380,7 @@ export const ToymakerEscapeGame: React.FC = () => {
                   }`}
                   disabled={Object.values(photoMatch.solved).includes(photo.id) || !!photoMatch.solved[photo.id]}
                   onClick={() => {
-                    if (photoMatch.solved[photo.id] || Object.values(photoMatch.solved).includes(photo.id)) return;
+                    if (photoMatch.solved[photo.id] || Object.values(photoMatch.solved).includes(photo.id)) {return;}
                     if (!photoMatch.selected) {
                       setPhotoMatch((p) => ({ ...p, selected: photo.id }));
                     } else if (photoMatch.selected !== photo.id) {

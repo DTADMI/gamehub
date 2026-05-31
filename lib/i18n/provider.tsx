@@ -1,10 +1,11 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+
 import { defaultLocale, getSupportedLocale, isRTL, type LocaleCode } from "./config";
-import type { Translations } from "./translations/types";
 import enTranslations from "./translations/en";
 import translationsMap from "./translations/map";
+import type { Translations } from "./translations/types";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -40,7 +41,7 @@ export function I18nProvider({
   }, []);
 
   useEffect(() => {
-    if (!isBrowser) return;
+    if (!isBrowser) {return;}
 
     const storedLocale = localStorage.getItem("gamehub-locale") as LocaleCode | null;
     const browserCandidates =
@@ -49,10 +50,10 @@ export function I18nProvider({
         : [navigator.language];
 
     const normalizedStoredLocale = (() => {
-      if (!storedLocale) return null;
-      if (getSupportedLocale(storedLocale)) return storedLocale;
+      if (!storedLocale) {return null;}
+      if (getSupportedLocale(storedLocale)) {return storedLocale;}
       const base = storedLocale.split("-")[0] as LocaleCode;
-      if (getSupportedLocale(base)) return base;
+      if (getSupportedLocale(base)) {return base;}
       return null;
     })();
 
@@ -62,10 +63,10 @@ export function I18nProvider({
         .map((candidate) => candidate.trim())
         .filter(Boolean)
         .reduce<LocaleCode | null>((resolved, candidate) => {
-          if (resolved) return resolved;
-          if (getSupportedLocale(candidate)) return candidate as LocaleCode;
+          if (resolved) {return resolved;}
+          if (getSupportedLocale(candidate)) {return candidate as LocaleCode;}
           const base = candidate.split("-")[0];
-          if (getSupportedLocale(base)) return base as LocaleCode;
+          if (getSupportedLocale(base)) {return base as LocaleCode;}
           return null;
         }, null) ||
       defaultLocale;
@@ -96,7 +97,7 @@ export function I18nProvider({
 
   const t = useCallback(
     (key: string, params?: Record<string, string | number>): string => {
-      if (!translations) return key;
+      if (!translations) {return key;}
 
       const keys = key.split(".");
       let value: unknown = translations;
@@ -168,8 +169,8 @@ const defaultI18nContext: I18nContextType = {
         return key;
       }
     }
-    if (typeof value !== "string") return key;
-    if (!params) return value;
+    if (typeof value !== "string") {return key;}
+    if (!params) {return value;}
     return value.replace(/\{\{(\w+)\}\}/g, (_, paramKey) =>
       String(params[paramKey] ?? `{{${paramKey}}}`)
     );
