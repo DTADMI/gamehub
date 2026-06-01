@@ -2,7 +2,19 @@
 CREATE INDEX IF NOT EXISTS idx_rate_limits_lookup ON rate_limits (identifier, route, window_start);
 
 CREATE TABLE IF NOT EXISTS feature_flags (name TEXT PRIMARY KEY, enabled BOOLEAN NOT NULL DEFAULT false, type TEXT NOT NULL DEFAULT 'boolean', value JSONB, rules JSONB, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_by TEXT);
-INSERT INTO feature_flags (name, enabled, type, value) VALUES ('pg_rate_limit', true, 'boolean', 'true'), ('pg_cache', false, 'boolean', 'false'), ('pg_flags', false, 'boolean', 'false'), ('pg_pubsub', false, 'boolean', 'false'), ('pg_session', false, 'boolean', 'false'), ('pg_lockout', false, 'boolean', 'false') ON CONFLICT (name) DO NOTHING;
+INSERT INTO feature_flags (name, enabled, type, value) VALUES
+  ('pg_rate_limit', true, 'boolean', 'true'),
+  ('pg_cache', false, 'boolean', 'false'),
+  ('pg_flags', false, 'boolean', 'false'),
+  ('pg_pubsub', false, 'boolean', 'false'),
+  ('pg_session', false, 'boolean', 'false'),
+  ('pg_lockout', false, 'boolean', 'false'),
+  ('redis_feature_flags', false, 'boolean', 'false'),
+  ('redis_cache', false, 'boolean', 'false'),
+  ('redis_sessions', false, 'boolean', 'false'),
+  ('redis_pubsub', false, 'boolean', 'false'),
+  ('redis_leaderboard', false, 'boolean', 'false')
+ON CONFLICT (name) DO NOTHING;
 CREATE INDEX IF NOT EXISTS idx_feature_flags_enabled ON feature_flags (enabled) WHERE enabled = true;
 
 CREATE TABLE IF NOT EXISTS app_cache (key TEXT PRIMARY KEY, value JSONB NOT NULL, expires_at TIMESTAMPTZ NOT NULL DEFAULT NOW() + INTERVAL '5 minutes', created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
@@ -93,3 +105,21 @@ BEGIN v_hash := encode(digest(p_email, 'sha256'), 'hex'); DELETE FROM account_lo
 $$;
 REVOKE EXECUTE ON FUNCTION public.reset_account_lockout(text) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.reset_account_lockout(text) TO service_role;
+
+-- Feature flag change notification trigger
+CREATE OR REPLACE FUNCTION notify_feature_flag_change()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER SET search_path = ''
+AS $$
+BEGIN
+  NOTIFY feature_flags_changed;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_feature_flags_changed ON feature_flags;
+CREATE TRIGGER trg_feature_flags_changed
+  AFTER INSERT OR UPDATE OR DELETE ON feature_flags
+  FOR EACH STATEMENT
+  EXECUTE FUNCTION notify_feature_flag_change();
