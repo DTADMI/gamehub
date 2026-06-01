@@ -3,7 +3,7 @@ CREATE INDEX IF NOT EXISTS idx_rate_limits_lookup ON rate_limits (identifier, ro
 
 CREATE TABLE IF NOT EXISTS feature_flags (name TEXT PRIMARY KEY, enabled BOOLEAN NOT NULL DEFAULT false, type TEXT NOT NULL DEFAULT 'boolean', value JSONB, rules JSONB, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_by TEXT);
 INSERT INTO feature_flags (name, enabled, type, value) VALUES
-  ('pg_rate_limit', true, 'boolean', 'true'),
+  ('redis_rate_limit', false, 'boolean', 'false'),
   ('pg_cache', false, 'boolean', 'false'),
   ('pg_flags', false, 'boolean', 'false'),
   ('pg_pubsub', false, 'boolean', 'false'),

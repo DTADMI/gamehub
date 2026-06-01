@@ -1,17 +1,17 @@
 import { redis } from "@/lib/redis";
 import { checkPgRateLimit } from "@/lib/pg-rate-limit";
 
-let _pgRateLimit: boolean | null = null;
-async function shouldUsePgRateLimit(): Promise<boolean> {
-  if (_pgRateLimit !== null) return _pgRateLimit;
-  if (process.env.PG_RATE_LIMIT === "true") { _pgRateLimit = true; return true; }
+let _redisRateLimit: boolean | null = null;
+async function shouldUseRedisRateLimit(): Promise<boolean> {
+  if (_redisRateLimit !== null) return _redisRateLimit;
+  if (process.env.REDIS_RATE_LIMIT === "true") { _redisRateLimit = true; return true; }
   try {
     const { createServerClient } = await import("@/lib/supabase/server");
     const supabase = await createServerClient();
-    const { data } = await (supabase as any).from("feature_flags").select("enabled").eq("name", "pg_rate_limit").maybeSingle();
-    _pgRateLimit = data?.enabled === true;
-  } catch { _pgRateLimit = false; }
-  return _pgRateLimit;
+    const { data } = await (supabase as any).from("feature_flags").select("enabled").eq("name", "redis_rate_limit").maybeSingle();
+    _redisRateLimit = data?.enabled === true;
+  } catch { _redisRateLimit = false; }
+  return _redisRateLimit;
 }
 
 type RateLimitOptions = {
@@ -31,11 +31,13 @@ export async function rateLimit({
   windowMs,
   limit,
 }: RateLimitOptions): Promise<RateLimitResult> {
-  if (await shouldUsePgRateLimit()) {
+  // PG is the default
+  if (!(await shouldUseRedisRateLimit())) {
     const windowSeconds = Math.max(1, Math.ceil(windowMs / 1000));
     return checkPgRateLimit(key, limit, windowSeconds);
   }
 
+  // Redis path
   const now = Date.now();
   const bucket = Math.floor(now / windowMs);
   const resetAt = (bucket + 1) * windowMs;
