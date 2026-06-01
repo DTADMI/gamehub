@@ -1,4 +1,7 @@
 import { redis } from "@/lib/redis";
+import { checkPgRateLimit } from "@/lib/pg-rate-limit";
+
+const USE_PG = process.env.PG_RATE_LIMIT === "true";
 
 type RateLimitOptions = {
   key: string;
@@ -17,6 +20,11 @@ export async function rateLimit({
   windowMs,
   limit,
 }: RateLimitOptions): Promise<RateLimitResult> {
+  if (USE_PG) {
+    const windowSeconds = Math.max(1, Math.ceil(windowMs / 1000));
+    return checkPgRateLimit(key, limit, windowSeconds);
+  }
+
   const now = Date.now();
   const bucket = Math.floor(now / windowMs);
   const resetAt = (bucket + 1) * windowMs;
