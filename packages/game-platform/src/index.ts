@@ -35,6 +35,10 @@ export type { GameContainerProps } from "./components/GameContainer";
 export { default as GameContainer } from "./components/GameContainer";
 export { GameHUD } from "./components/GameHUD";
 export { GameShell } from "./components/GameShell";
+export { PostGameCTA } from "./components/PostGameCTA";
+
+// Hooks
+export { usePostGameCTA } from "./hooks/usePostGameCTA";
 
 // Note: UI components have been moved to @gamehub/ui package
 // Import from '@gamehub/ui' instead of '@games/shared' for UI components

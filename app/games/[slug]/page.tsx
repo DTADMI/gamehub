@@ -68,6 +68,7 @@ export default function GameLauncherPage({ params }: PageProps) {
       ariaLabel={`${entry.title} game`}
       tips={undefined}
       preloadSounds={entry.preloadAssets}
+      gameSlug={entry.slug}
     >
       <Game />
       {/* Optional mini leaderboard when known */}

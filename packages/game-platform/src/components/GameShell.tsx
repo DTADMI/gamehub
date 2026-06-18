@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { enableGameKeyCapture, GameHUD, soundManager } from "../";
+import { PostGameCTA } from "./PostGameCTA";
 
 type PreloadSound = {
   key: string;
@@ -33,6 +34,11 @@ export type GameShellProps = {
    * Default: emits a custom 'game:restart' event.
    */
   onRestartAction?: () => void;
+  /**
+   * Game slug for post‑game CTA tracking. When provided, the GameShell listens
+   * for `game:complete` custom events and shows a sign‑up CTA modal for guests.
+   */
+  gameSlug?: string;
 };
 
 function MobileTouchControls({ onKey }: { onKey: (key: string) => void }) {
@@ -110,9 +116,12 @@ export function GameShell({
   mobileControls = true,
   onPauseToggleAction,
   onRestartAction,
+  gameSlug,
 }: GameShellProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [muted, setMuted] = useState<boolean>(false);
+  const [completionScore, setCompletionScore] = useState<number | undefined>(undefined);
+  const [showPostGameCTA, setShowPostGameCTA] = useState(false);
 
   useEffect(() => {
     const el = rootRef.current;
@@ -165,6 +174,24 @@ export function GameShell({
     }
   }, [muted]);
 
+  // Listen for game:complete events dispatched by game components
+  useEffect(() => {
+    if (!gameSlug) return;
+
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ score?: number }>).detail;
+      setCompletionScore(detail?.score);
+      setShowPostGameCTA(true);
+    };
+
+    window.addEventListener("game:complete", handler);
+    return () => window.removeEventListener("game:complete", handler);
+  }, [gameSlug]);
+
+  const handlePostGameCTAClose = useCallback(() => {
+    setShowPostGameCTA(false);
+  }, []);
+
   const sendKey = useCallback((key: string) => {
     // Try dispatching a keyboard event by default
     window.dispatchEvent(new KeyboardEvent("keydown", { key }));
@@ -207,6 +234,9 @@ export function GameShell({
       {children}
       {mobileControls && <MobileTouchControls onKey={sendKey} />}
       <GameHUD onPauseToggleAction={handlePause} onRestartAction={handleRestart} tips={tips} />
+      {gameSlug && showPostGameCTA && (
+        <PostGameCTA slug={gameSlug} onClose={handlePostGameCTAClose} score={completionScore} />
+      )}
     </div>
   );
 }
