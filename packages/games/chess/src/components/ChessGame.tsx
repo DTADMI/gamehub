@@ -468,8 +468,14 @@ export const ChessGame: React.FC = () => {
     if (mate) {
       setStatus(`${state.turn === "w" ? "White" : "Black"} is checkmated`);
       soundManager.playSound("mate", 0.9);
+      try {
+        window.dispatchEvent(new CustomEvent("game:complete", { detail: { result: "checkmate", winner: state.turn === "w" ? "b" : "w" } }));
+      } catch {}
     } else if (gameOver) {
       setStatus("Stalemate");
+      try {
+        window.dispatchEvent(new CustomEvent("game:complete", { detail: { result: "stalemate" } }));
+      } catch {}
     } else if (inCheck) {
       setStatus("Check");
       soundManager.playSound("check", 0.7);

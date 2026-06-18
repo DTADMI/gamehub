@@ -213,6 +213,11 @@ export const MemoryGame: React.FC = () => {
           detail: { score: moves },
         }),
       );
+      window.dispatchEvent(
+        new CustomEvent("game:complete", {
+          detail: { score: moves },
+        }),
+      );
     }
   }, [cards, moves, playSound]);
 

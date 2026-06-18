@@ -558,6 +558,7 @@ export const BlockBlastGame: React.FC = () => {
 
           if (!hasAnyValidPlacement(clearedGrid, newPieces)) {
             setGameOver(true);
+            try { window.dispatchEvent(new CustomEvent("game:complete", { detail: { score } })); } catch {}
           }
         }, 350);
       } else {
@@ -604,6 +605,7 @@ export const BlockBlastGame: React.FC = () => {
 
         if (!hasAnyValidPlacement(newGrid, newPieces)) {
           setGameOver(true);
+          try { window.dispatchEvent(new CustomEvent("game:complete", { detail: { score } })); } catch {}
         }
       }
 

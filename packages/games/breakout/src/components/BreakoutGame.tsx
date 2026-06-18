@@ -1757,6 +1757,7 @@ function BreakoutGame() {
     try {
       window.dispatchEvent(new CustomEvent("breakout:gameover", { detail }));
       window.dispatchEvent(new CustomEvent("game:gameover", { detail }));
+      window.dispatchEvent(new CustomEvent("game:complete", { detail }));
     } catch {
       // no-op
     }

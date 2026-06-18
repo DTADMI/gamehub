@@ -717,6 +717,10 @@ export const SnakeGame: React.FC = () => {
       try {
         window.dispatchEvent(new CustomEvent("snake:gameover", { detail: { score } }));
       } catch {}
+      // Dispatch universal game:complete event for post-game CTA system
+      try {
+        window.dispatchEvent(new CustomEvent("game:complete", { detail: { score } }));
+      } catch {}
       // Submit score to backend (best-effort)
       (async () => {
         try {

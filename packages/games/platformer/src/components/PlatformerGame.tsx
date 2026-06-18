@@ -185,6 +185,16 @@ export const PlatformerGame: React.FC = () => {
 
   useEffect(() => { wonRef.current = won; }, [won]);
   useEffect(() => { diedRef.current = died; }, [died]);
+
+  // Dispatch game:complete event when player dies
+  useEffect(() => {
+    if (died) {
+      try {
+        window.dispatchEvent(new CustomEvent("game:complete", { detail: { score: scoreRef.current } }));
+      } catch {}
+    }
+  }, [died]);
+
   useEffect(() => { gameOverRef.current = gameOver; }, [gameOver]);
   useEffect(() => { isPausedRef.current = isPaused; }, [isPaused]);
   useEffect(() => { gameStartedRef.current = gameStarted; }, [gameStarted]);

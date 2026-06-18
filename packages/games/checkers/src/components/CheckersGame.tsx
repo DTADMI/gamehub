@@ -218,8 +218,12 @@ export const CheckersGame: React.FC = () => {
       }
     }
     if (!any) {
-      setWinner(color === "w" ? "b" : "w");
+      const winningColor = color === "w" ? "b" : "w";
+      setWinner(winningColor);
       soundManager.playSound("gameOver", 0.9);
+      try {
+        window.dispatchEvent(new CustomEvent("game:complete", { detail: { winner: winningColor } }));
+      } catch {}
     } else {
       setWinner(null);
     }

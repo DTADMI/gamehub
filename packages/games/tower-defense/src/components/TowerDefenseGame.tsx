@@ -551,6 +551,9 @@ export const TowerDefenseGame: React.FC = () => {
     if (livesRef.current <= 0 && statusRef.current !== "lost") {
       setStatus("lost");
       soundManager.playSound("gameOver", 0.6);
+      try {
+        window.dispatchEvent(new CustomEvent("game:complete", { detail: { gold: goldEarnedRef.current, waves: wavesCompletedRef.current } }));
+      } catch {}
     }
   }, []);
 

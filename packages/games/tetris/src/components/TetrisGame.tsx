@@ -245,6 +245,9 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
       window.dispatchEvent(
         new CustomEvent("game:gameOver", { detail: { game: "tetris", score: totalScore, lines: newLines, level: newLevel } }),
       );
+      window.dispatchEvent(
+        new CustomEvent("game:complete", { detail: { score: totalScore, lines: newLines, level: newLevel } }),
+      );
       onGameOver?.(totalScore, newLines, newLevel);
     }
   }, [gameState, checkCollision, soundEnabled, onScoreUpdate, onGameOver]);
