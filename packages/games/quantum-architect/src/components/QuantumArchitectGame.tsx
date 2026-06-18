@@ -387,7 +387,7 @@ function PlatformMesh({ platform }: { platform: PlatformRuntime }) {
   });
 
   return (
-    <Box ref={meshRef} args={platform.size} position={platform.position} castShadow receiveShadow>
+    <Box ref={meshRef as any} args={platform.size} position={platform.position} castShadow receiveShadow>
       <meshStandardMaterial ref={matRef} color={platform.color} roughness={0.4} metalness={0.3} transparent opacity={0.3} />
     </Box>
   );
@@ -414,7 +414,7 @@ function KeyOrb({ keyDef }: { keyDef: KeyRuntime }) {
   });
   if (keyDef.collected) {return null;}
   return (
-    <Sphere ref={ref} args={[0.3, 32, 32]} position={keyDef.position}>
+    <Sphere ref={ref as any} args={[0.3, 32, 32]} position={keyDef.position}>
       <meshStandardMaterial color={colorMap[keyDef.color]} emissive={colorMap[keyDef.color]} emissiveIntensity={0.8} roughness={0.2} metalness={0.3} />
     </Sphere>
   );
@@ -424,7 +424,7 @@ function PlayerSphere({ position }: { position: React.MutableRefObject<THREE.Vec
   const ref = useRef<THREE.Mesh>(null!);
   useFrame(() => { if (ref.current) {ref.current.position.copy(position.current);} });
   return (
-    <Sphere ref={ref} args={[0.35, 32, 32]}>
+    <Sphere ref={ref as any} args={[0.35, 32, 32]}>
       <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.8} roughness={0.1} metalness={0.0} />
     </Sphere>
   );
@@ -442,10 +442,10 @@ function GoalSphere({ position }: { position: [number, number, number] }) {
   });
   return (
     <group position={position}>
-      <Sphere ref={ref} args={[0.4, 32, 32]}>
+      <Sphere ref={ref as any} args={[0.4, 32, 32]}>
         <meshStandardMaterial color="#ffd700" emissive="#ffa000" emissiveIntensity={1.0} roughness={0.2} metalness={0.8} />
       </Sphere>
-      <Sphere ref={glowRef} args={[0.55, 32, 32]}>
+      <Sphere ref={glowRef as any} args={[0.55, 32, 32]}>
         <meshBasicMaterial color="#ffd700" transparent opacity={0.18} />
       </Sphere>
     </group>
