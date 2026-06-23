@@ -56,18 +56,27 @@ vi.mock("@/lib/supabase/server", () => ({
         }),
       };
     },
-    rpc: async () => ({
-      data: [
-        {
-          rank: 1,
-          user_id: "user-1",
-          player_name: "player-one",
-          score: 123,
-          submitted_at: new Date().toISOString(),
-        },
-      ],
-      error: null,
-    }),
+    rpc: async (functionName: string) => {
+      if (functionName === "check_rate_limit") {
+        return {
+          data: { allowed: true, remaining: 99, resetAt: Math.floor(Date.now() / 1000) + 60 },
+          error: null,
+        };
+      }
+
+      return {
+        data: [
+          {
+            rank: 1,
+            user_id: "user-1",
+            player_name: "player-one",
+            score: 123,
+            submitted_at: new Date().toISOString(),
+          },
+        ],
+        error: null,
+      };
+    },
   }),
 }));
 

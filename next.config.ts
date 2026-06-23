@@ -26,9 +26,9 @@ const nextConfig: NextConfig = {
   // the warning/error: "using Turbopack with a webpack config and no turbopack config".
   // If you need to force webpack instead, invoke `next build --webpack` in CI.
   turbopack: {},
+  cacheComponents: true,
 
   experimental: {
-    ppr: 'incremental',
     // Allow importing files from outside the frontend/ directory using TS path aliases
     externalDir: true,
     staleTimes: {

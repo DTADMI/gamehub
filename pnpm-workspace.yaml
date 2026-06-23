@@ -2,6 +2,12 @@ packages:
   - packages/*
   - packages/games/*
 
+allowBuilds:
+  '@firebase/util': true
+  esbuild: true
+  protobufjs: true
+  sharp: true
+
 ignoredBuiltDependencies:
   - "@parcel/watcher"
   - "@prisma/engines"

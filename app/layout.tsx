@@ -32,19 +32,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`flex min-h-[100svh] flex-col font-sans antialiased`}>
-        <I18nServerProvider>
-          <Providers>
-            <I18nInitializer />
-            <Header />
-            <main className="min-h-0 flex-1">
-              <Suspense fallback={<LoadingShell variant="shimmer" />}>
+        <Suspense fallback={<LoadingShell variant="shimmer" />}>
+          <I18nServerProvider>
+            <Providers>
+              <I18nInitializer />
+              <Header />
+              <main className="min-h-0 flex-1">
                 {children}
-              </Suspense>
-            </main>
-            <Footer githubUrl={githubUrl} linkedinUrl={linkedinUrl} contactEmail={contactEmail} />
-            <Analytics />
-          </Providers>
-        </I18nServerProvider>
+              </main>
+              <Footer githubUrl={githubUrl} linkedinUrl={linkedinUrl} contactEmail={contactEmail} />
+              <Analytics />
+            </Providers>
+          </I18nServerProvider>
+        </Suspense>
       </body>
     </html>
   );

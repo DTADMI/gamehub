@@ -1,4 +1,4 @@
-﻿name: E2E
+name: E2E
 
 on:
   pull_request:
@@ -10,14 +10,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "22.22.3"
+  NODE_VERSION: "26.3.0"
   NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
   NEXT_PUBLIC_SUPABASE_ANON_KEY: "public-anon-key-for-ci"
   NEXT_PUBLIC_DISABLE_PROVIDERS: "true"
 
 jobs:
   smoke:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v6
@@ -28,7 +28,7 @@ jobs:
       - name: Enable Corepack
         run: |
           corepack enable
-          corepack prepare pnpm@10.33.4 --activate
+          corepack prepare pnpm@11.5.0 --activate
       - name: Get pnpm store directory
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
