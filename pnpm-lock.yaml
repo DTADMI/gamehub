@@ -439,6 +439,31 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
+  packages/games/glyph-weaver:
+    dependencies:
+      '@gamehub/game-platform':
+        specifier: workspace:*
+        version: link:../../game-platform
+      react:
+        specifier: '>=18 <20'
+        version: 19.2.8
+      react-dom:
+        specifier: '>=18 <20'
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/react':
+        specifier: 19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      next:
+        specifier: ^16.2.2
+        version: 16.3.1(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@25.9.5)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
   packages/games/knitzy:
     dependencies:
       '@gamehub/game-platform':
@@ -8164,8 +8189,8 @@ snapshots:
 
   browserslist@4.28.7:
     dependencies:
-      baseline-browser-mapping: 2.11.1
-      caniuse-lite: 1.0.30001806
+      baseline-browser-mapping: 2.11.16
+      caniuse-lite: 1.0.30001809
       electron-to-chromium: 1.5.396
       node-releases: 2.0.51
       update-browserslist-db: 1.2.3(browserslist@4.28.7)

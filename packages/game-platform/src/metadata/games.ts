@@ -31,7 +31,8 @@ export type GameSlug =
   | "block-blast"
   | "platformer"
   | "tower-defense"
-  | "spell-craft";
+  | "spell-craft"
+  | "glyph-weaver";
 
 export type GameEntry = {
   slug: GameSlug;
@@ -343,6 +344,20 @@ export const games: GameManifest = {
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/spell-craft").then((m) => m.SpellCraftGame),
+  },
+  "glyph-weaver": {
+    slug: "glyph-weaver",
+    title: "Glyph Weaver",
+    shortDescription: "Full spell-crafting studio — draw glyphs, weave sigils, compile spells with WebGL particle effects.",
+    tags: ["Creative", "Drawing", "Magic", "WebGL", "sim-2d", "impl:react-canvas-custom", "target:webgl"],
+    image: "/images/games/glyph-weaver-card.svg",
+    enabled: true,
+    visible: true,
+    upcoming: false,
+    backgroundImage: "/images/bg-abstract-dark.svg",
+    preloadAssets: [],
+    // @ts-ignore
+    getComponent: () => import("@games/glyph-weaver").then((m) => m.GlyphWeaverGame),
   },
 };
 
