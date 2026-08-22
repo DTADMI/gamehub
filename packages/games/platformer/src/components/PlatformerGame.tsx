@@ -6,8 +6,9 @@ import {
   soundManager,
   useGameSettings,
 } from "@gamehub/game-platform";
-import { submitScore } from "@/lib/score-submit";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { submitScore } from "@/lib/score-submit";
 
 const TILE = 32;
 const COLS = 20;

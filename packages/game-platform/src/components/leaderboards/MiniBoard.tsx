@@ -51,7 +51,7 @@ export default function MiniBoard({ gameType, limit = 10, className }: MiniBoard
         const res = await fetch(
           `/api/leaderboard?gameType=${encodeURIComponent(gameType)}&limit=${limit}`
         );
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) {throw new Error(`HTTP ${res.status}`);}
         const data = await res.json();
         if (!cancelled) {
           setEntries(
@@ -66,9 +66,9 @@ export default function MiniBoard({ gameType, limit = 10, className }: MiniBoard
         }
       } catch (e) {
         console.warn("MiniBoard fetch error", e);
-        if (!cancelled) setError("Failed to load leaderboard");
+        if (!cancelled) {setError("Failed to load leaderboard");}
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {setLoading(false);}
       }
     }
 

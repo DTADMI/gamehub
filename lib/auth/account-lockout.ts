@@ -9,10 +9,10 @@ const GLOBAL_TTL_SECONDS = 60;
 let _redis: Redis | null = null;
 
 function getRedis(): Redis | null {
-  if (_redis) return _redis;
+  if (_redis) {return _redis;}
   const url = process.env.UPSTASH_REDIS_URL || process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
+  if (!url || !token) {return null;}
   _redis = new Redis({ url, token });
   return _redis;
 }
@@ -23,7 +23,7 @@ let _redisLockout: boolean | null = null;
 let _lockoutPgModule: any = null;
 
 async function shouldUseRedisLockout(): Promise<boolean> {
-  if (_redisLockout !== null) return _redisLockout;
+  if (_redisLockout !== null) {return _redisLockout;}
   if (process.env.REDIS_LOCKOUT === "true") { _redisLockout = true; return true; }
   try {
     const { createServerClient } = await import("@/lib/supabase/server");
@@ -36,7 +36,7 @@ async function shouldUseRedisLockout(): Promise<boolean> {
 }
 
 async function getPgLockoutModule() {
-  if (!_lockoutPgModule) _lockoutPgModule = await import("@/lib/auth/account-lockout-pg");
+  if (!_lockoutPgModule) {_lockoutPgModule = await import("@/lib/auth/account-lockout-pg");}
   return _lockoutPgModule;
 }
 
@@ -46,7 +46,7 @@ function getGlobalRedis(): Redis | null { return _globalRedis || (_globalRedis =
 
 async function checkGlobalLockout(ip: string): Promise<boolean> {
   const r = getGlobalRedis();
-  if (!r) return false;
+  if (!r) {return false;}
   const key = `lockout:global:${ip}`;
   const count = ((await r.get<number>(key)) || 0) + 1;
   if (count > MAX_ATTEMPTS_GLOBAL) {
@@ -65,7 +65,7 @@ export async function checkLockout(email: string, ip?: string): Promise<{
 }> {
   if (ip) {
     const globalLocked = await checkGlobalLockout(ip);
-    if (globalLocked) return { locked: true, remainingAttempts: 0, globalLocked: true };
+    if (globalLocked) {return { locked: true, remainingAttempts: 0, globalLocked: true };}
   }
 
   // L1: Redis (if enabled)
@@ -87,7 +87,7 @@ export async function checkLockout(email: string, ip?: string): Promise<{
 }
 
 export async function recordFailedAttempt(email: string, ip?: string): Promise<void> {
-  if (ip) await checkGlobalLockout(ip);
+  if (ip) {await checkGlobalLockout(ip);}
 
   // Always write to PG (source of truth)
   const mod = await getPgLockoutModule();
@@ -110,13 +110,13 @@ export async function resetLockout(email: string): Promise<void> {
 
   if (await shouldUseRedisLockout()) {
     const r = getRedis();
-    if (r) await r.del(`lockout:${normalizeEmail(email)}`);
+    if (r) {await r.del(`lockout:${normalizeEmail(email)}`);}
   }
 }
 
 export async function getLockoutTTL(email: string): Promise<number | null> {
   const r = getRedis();
-  if (!r) return null;
+  if (!r) {return null;}
   const key = `lockout:${normalizeEmail(email)}`;
   const ttl = await r.ttl(key);
   return ttl && ttl > 0 ? ttl : null;

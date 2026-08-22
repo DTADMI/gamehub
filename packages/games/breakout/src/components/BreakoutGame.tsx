@@ -1,8 +1,9 @@
 "use client";
 
 import { GameContainer, ParticlePool, soundManager, useGameSettings } from "@gamehub/game-platform";
-import { submitScore } from "@/lib/score-submit";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { submitScore } from "@/lib/score-submit";
 
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
 

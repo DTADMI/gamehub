@@ -62,9 +62,9 @@ export function useGameLoop(
   const runningRef = useRef(false);
 
   const loop = useCallback((timestamp: number) => {
-    if (!runningRef.current) return;
+    if (!runningRef.current) {return;}
 
-    if (lastTimeRef.current === 0) lastTimeRef.current = timestamp;
+    if (lastTimeRef.current === 0) {lastTimeRef.current = timestamp;}
     const rawDelta = timestamp - lastTimeRef.current;
 
     // Frame capping
@@ -101,7 +101,7 @@ export function useGameLoop(
   }, [frameInterval, paused]);
 
   const start = useCallback(() => {
-    if (runningRef.current) return;
+    if (runningRef.current) {return;}
     runningRef.current = true;
     lastTimeRef.current = 0;
     rafRef.current = requestAnimationFrame(loop);
@@ -118,7 +118,7 @@ export function useGameLoop(
 
   // Handle tab visibility
   useEffect(() => {
-    if (!pauseOnHidden) return;
+    if (!pauseOnHidden) {return;}
     const onVisibility = () => {
       if (document.hidden) { setPaused(true); }
       else { setPaused(false); lastTimeRef.current = 0; }
@@ -157,7 +157,7 @@ export function useCanvasSize(containerRef: React.RefObject<HTMLElement | null>)
 
   useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el) {return;}
 
     const update = () => {
       const rect = el.getBoundingClientRect();

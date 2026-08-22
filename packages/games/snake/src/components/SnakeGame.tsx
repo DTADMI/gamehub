@@ -2,8 +2,9 @@
 
 // games/snake/src/components/SnakeGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import { submitScore } from "@/lib/score-submit";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { submitScore } from "@/lib/score-submit";
 
 import {
   CELL_SIZE,

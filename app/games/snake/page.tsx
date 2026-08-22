@@ -6,10 +6,11 @@ import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
-import { submitScore } from "@/lib/score-submit";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
+
+import { submitScore } from "@/lib/score-submit";
 
 const SnakeGame = dynamicImport(() => import("@games/snake").then((mod) => mod.SnakeGame), {
   ssr: false,

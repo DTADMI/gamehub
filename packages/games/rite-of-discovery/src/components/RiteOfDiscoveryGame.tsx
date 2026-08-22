@@ -1,7 +1,6 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { t } from "@/lib/i18n";
 import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { DialogueBox, InventoryBar } from "@games/pointclick-engine";
 import {
@@ -23,6 +22,8 @@ import {
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { t } from "@/lib/i18n";
 
 const SAVE_KEY = SAVE_KEYS.rod;
 

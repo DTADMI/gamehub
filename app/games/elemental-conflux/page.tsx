@@ -3,10 +3,11 @@
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
-import { submitScore } from "@/lib/score-submit";
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { useCallback, useEffect, useState } from "react";
+
+import { submitScore } from "@/lib/score-submit";
 
 type ElementalConfluxProps = {
   onScoreUpdate?: (score: number) => void;

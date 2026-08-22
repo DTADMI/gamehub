@@ -1,4 +1,5 @@
 import "server-only";
+
 import { createServerClient } from "@/lib/supabase/server";
 
 export async function pgUpdateScore(leaderboardKey: string, userId: string, score: number): Promise<void> {

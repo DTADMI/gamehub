@@ -31,7 +31,7 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 function loadStatsFromStorage(userId: string, gameId: string): GameStats | null {
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (!raw) return null;
+    if (!raw) {return null;}
     const all = JSON.parse(raw) as Record<string, Record<string, GameStats>>;
     return all[userId]?.[gameId] ?? null;
   } catch {
@@ -43,7 +43,7 @@ function saveStatsToStorage(userId: string, gameId: string, stats: GameStats) {
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
     const all: Record<string, Record<string, GameStats>> = raw ? JSON.parse(raw) : {};
-    if (!all[userId]) all[userId] = {};
+    if (!all[userId]) {all[userId] = {};}
     all[userId][gameId] = stats;
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(all));
   } catch {
@@ -99,7 +99,7 @@ export function GameProvider({ children, gameId }: { children: React.ReactNode; 
 
   const updateStats = (updates: Partial<GameStats>) => {
     setStats((prev) => {
-      if (!prev) return null;
+      if (!prev) {return null;}
       const newStats = { ...prev, ...updates, lastPlayed: new Date().toISOString() };
       if (updates.highScore !== undefined && updates.highScore > (prev.highScore || 0)) {
         playSound("achievement");
@@ -109,7 +109,7 @@ export function GameProvider({ children, gameId }: { children: React.ReactNode; 
   };
 
   const saveProgress = useCallback(async () => {
-    if (!user || !stats) return;
+    if (!user || !stats) {return;}
     const userId = (user as any).uid ?? (user as any).id ?? "guest";
     saveStatsToStorage(userId, gameId, stats);
   }, [user, stats, gameId]);

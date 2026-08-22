@@ -2,10 +2,11 @@
 
 import GamesList from "@gamehub/game-platform/components/games/GamesList";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
-import { useI18n } from "@/lib/i18n";
 import type { GameEntry } from "@gamehub/game-platform/metadata/games";
 import { isGameLaunchable, listGames } from "@gamehub/game-platform/metadata/games";
 import { useMemo } from "react";
+
+import { useI18n } from "@/lib/i18n";
 // siteCopy migrated to @/lib/i18n
 
 export default function GamesPage() {

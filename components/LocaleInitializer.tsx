@@ -1,7 +1,8 @@
 "use client";
 
-import { initI18n } from "@/lib/i18n";
 import { useEffect } from "react";
+
+import { initI18n } from "@/lib/i18n";
 
 /** Initializes the standalone i18n module-level locale for non-React usage (game packages). */
 export function LocaleInitializer() {

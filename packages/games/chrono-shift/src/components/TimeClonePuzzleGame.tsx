@@ -1,9 +1,10 @@
 "use client";
 
-import { t } from "@/lib/i18n";
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+
+import { t } from "@/lib/i18n";
 
 const GRID_ROWS = 6;
 const GRID_COLS = 6;

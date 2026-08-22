@@ -1,7 +1,6 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { t } from "@/lib/i18n";
 import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { DialogueBox, InventoryBar, versionedLoad, versionedSave } from "@games/pointclick-engine";
 import {
@@ -56,6 +55,8 @@ import {
   type WiresState,
 } from "@games/pointclick-engine/puzzles/wires";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+
+import { t } from "@/lib/i18n";
 
 import { E1CabinetCanvas } from "./E1CabinetCanvas";
 

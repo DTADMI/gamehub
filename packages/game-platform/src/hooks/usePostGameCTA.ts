@@ -10,7 +10,7 @@ const STORAGE_KEY = "gh:completions";
 function getCompletionCount(gameSlug: string): number {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return 0;
+    if (!raw) {return 0;}
     const data = JSON.parse(raw) as Record<string, number>;
     return data[gameSlug] ?? 0;
   } catch {
@@ -38,9 +38,9 @@ export function usePostGameCTA(slug: string) {
   const frequency = flags.auth?.postGameCTAFrequency ?? "occasional";
 
   const shouldShow = useCallback((): boolean => {
-    if (!flags.ui?.postGameAuthCTA) return false;
-    if (user) return false;
-    if (frequency === "never") return false;
+    if (!flags.ui?.postGameAuthCTA) {return false;}
+    if (user) {return false;}
+    if (frequency === "never") {return false;}
 
     const count = incrementCompletionCount(slug);
 

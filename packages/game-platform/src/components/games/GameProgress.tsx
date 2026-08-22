@@ -2,6 +2,7 @@
 "use client";
 
 import { Progress } from "@gamehub/ui";
+
 import type { GameStats } from "../../contexts/GameContext";
 
 interface GameProgressProps {

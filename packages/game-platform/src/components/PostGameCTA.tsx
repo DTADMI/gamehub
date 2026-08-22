@@ -18,7 +18,7 @@ export function PostGameCTA({ slug, onClose, score }: PostGameCTAProps) {
   const [dismissed, setDismissed] = useState(false);
 
   const check = useCallback(() => {
-    if (dismissed) return;
+    if (dismissed) {return;}
     if (shouldShow()) {
       setVisible(true);
     }
@@ -54,7 +54,7 @@ export function PostGameCTA({ slug, onClose, score }: PostGameCTAProps) {
     [handleDismiss],
   );
 
-  if (!visible) return null;
+  if (!visible) {return null;}
 
   return (
     <div

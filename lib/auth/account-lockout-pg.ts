@@ -8,7 +8,7 @@ export async function checkPgLockout(email: string): Promise<{
     const { data, error } = await (supabase as any).rpc("check_account_lockout", {
       p_email: email.toLowerCase().trim(),
     });
-    if (error || !data) return { locked: false, remainingAttempts: 5 };
+    if (error || !data) {return { locked: false, remainingAttempts: 5 };}
     return {
       locked: (data as { locked: boolean }).locked,
       remainingAttempts: (data as { remainingAttempts: number }).remainingAttempts,

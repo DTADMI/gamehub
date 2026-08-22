@@ -1,9 +1,9 @@
-import { redis } from "@/lib/redis";
 import { checkPgRateLimit } from "@/lib/pg-rate-limit";
+import { redis } from "@/lib/redis";
 
 let _redisRateLimit: boolean | null = null;
 async function shouldUseRedisRateLimit(): Promise<boolean> {
-  if (_redisRateLimit !== null) return _redisRateLimit;
+  if (_redisRateLimit !== null) {return _redisRateLimit;}
   if (process.env.REDIS_RATE_LIMIT === "true") { _redisRateLimit = true; return true; }
   try {
     const { createServerClient } = await import("@/lib/supabase/server");

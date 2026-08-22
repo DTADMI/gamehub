@@ -176,7 +176,7 @@ export function GameShell({
 
   // Listen for game:complete events dispatched by game components
   useEffect(() => {
-    if (!gameSlug) return;
+    if (!gameSlug) {return;}
 
     const handler = (e: Event) => {
       const detail = (e as CustomEvent<{ score?: number }>).detail;

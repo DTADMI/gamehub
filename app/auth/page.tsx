@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@gamehub/game-platform";
-import { useI18n } from "@/lib/i18n";
 import {
   Button,
   Card,
@@ -17,6 +16,8 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { useI18n } from "@/lib/i18n";
 
 
 const authSchema = z.object({

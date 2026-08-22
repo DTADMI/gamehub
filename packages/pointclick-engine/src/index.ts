@@ -21,6 +21,8 @@ export * from "./puzzles/wires";
 // React components
 export { DialogueBox } from "./react/DialogueBox";
 export { InventoryBar } from "./react/InventoryBar";
+export type { MatchingPuzzleProps, MatchPair } from "./react/MatchingPuzzle";
+export { MatchingPuzzle } from "./react/MatchingPuzzle";
 export { SceneController } from "./react/SceneController";
 
 // UI components

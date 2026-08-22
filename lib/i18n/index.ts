@@ -9,10 +9,11 @@ export type { Translations } from "./translations/types";
 
 // ── Standalone t() for non-React contexts (game packages, helpers) ──────────
 
+import { detectLang as pointclickDetect,getLocale as pointclickGetLocale, initI18n as pointclickInit, setLocale as pointclickSetLocale, t as pointclickT } from "@gamehub/game-platform/lib/i18n";
+
+import { defaultLocale } from "./config";
 import enTranslations from "./translations/en";
 import translationsMap from "./translations/map";
-import { defaultLocale } from "./config";
-import { t as pointclickT, setLocale as pointclickSetLocale, getLocale as pointclickGetLocale, initI18n as pointclickInit, detectLang as pointclickDetect } from "@gamehub/game-platform/lib/i18n";
 
 let _locale: string = defaultLocale;
 
@@ -63,7 +64,7 @@ export function t(key: string, params?: Record<string, string | number>): string
     }
   }
 
-  if (typeof value !== "string") return key;
+  if (typeof value !== "string") {return key;}
 
   if (params) {
     return value.replace(/\{\{(\w+)\}\}/g, (_, paramKey) =>

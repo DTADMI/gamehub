@@ -1,10 +1,11 @@
 "use client";
 
-import { t } from "@/lib/i18n";
 import { Box, Html,Sphere } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+
+import { t } from "@/lib/i18n";
 
 type PlatformState = "superposed" | "solid" | "void";
 type KeyColor = "red" | "blue" | "green";

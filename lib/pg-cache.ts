@@ -1,12 +1,12 @@
-import { createServerClient } from "@/lib/supabase/server";
 import { redis } from "@/lib/redis";
+import { createServerClient } from "@/lib/supabase/server";
 
 const CACHE_DEFAULT_TTL = 300;
 
 let _redisCacheEnabled: boolean | null = null;
 
 async function shouldUseRedisCache(): Promise<boolean> {
-  if (_redisCacheEnabled !== null) return _redisCacheEnabled;
+  if (_redisCacheEnabled !== null) {return _redisCacheEnabled;}
   if (process.env.REDIS_CACHE === "true") { _redisCacheEnabled = true; return true; }
   try {
     const supabase = await createServerClient();
@@ -22,7 +22,7 @@ export async function pgGetCached<T>(key: string): Promise<T | null> {
     // L1: Redis (if enabled)
     if (await shouldUseRedisCache() && redis) {
       const cached = await redis.get<T>(`cache:${key}`);
-      if (cached !== null) return cached;
+      if (cached !== null) {return cached;}
     }
 
     // L2: PostgreSQL (source of truth)
@@ -30,7 +30,7 @@ export async function pgGetCached<T>(key: string): Promise<T | null> {
     const { data } = await (supabase as any).from("app_cache")
       .select("value").eq("key", key)
       .gt("expires_at", new Date().toISOString()).maybeSingle();
-    if (!data) return null;
+    if (!data) {return null;}
     const result = data.value as T;
 
     // Warm L1
