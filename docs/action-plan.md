@@ -35,12 +35,12 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 | # | Task | Priority | Status |
 |---|---|---|---|
 | 2.1 | Refactor `systems-discovery` (2045-line monolith) → modules | 🔴 CRITICAL | ✅ DONE — extracted 3 puzzle components, created shared MatchingPuzzle, file is now 1826 lines (scene data only) |
-| 2.2 | Refactor `toymaker-escape` (1854-line monolith) → extract puzzle blocks into components | 🔴 CRITICAL | 📋 NEXT — 4 large puzzle blocks (shadow, broken toys, final escape, filing) ready for extraction |
+| 2.2 | Refactor `toymaker-escape` (1854-line monolith) → extract puzzle blocks into components | 🔴 CRITICAL | 📋 NEXT — 6 puzzle blocks identified, extraction deferred to Phase 4 |
 | 2.3 | Complete `rite-of-discovery` (761 lines, partially built) | 🟡 HIGH | ✅ DONE — complete narrative arc (7 scenes + 6 Thinking Tools), 2 puzzle types, bilingual, save/load, gentle mode |
-| 2.4 | Enhance `pointclick-engine` — add missing puzzle types | 🟡 HIGH | ✅ DONE — added MatchingPuzzle shared component |
+| 2.4 | Enhance `pointclick-engine` — add missing puzzle types + audio + backgrounds | 🟡 HIGH | ✅ DONE — MatchingPuzzle, ProceduralAudio (8 ambient types + 5 SFX), SceneBackground (12 scene types with CSS animations), useSceneAudio, useSoundEffects |
 | 2.5 | Add pointclick-specific PostGameCTA integration | 🟢 MEDIUM | 📋 |
-| 2.6 | Add save/load for pointclick games (per-scene persistence) | 🟢 MEDIUM | 📋 |
-| 2.7 | Add achievement system to pointclick engine | 🟢 MEDIUM | 📋 |
+| 2.6 | Add save/load for pointclick games (per-scene persistence) | 🟢 MEDIUM | ✅ DONE — all 3 games have versioned save/load with localStorage persistence |
+| 2.7 | Add achievement system to pointclick engine | 🟢 MEDIUM | ✅ DONE — toymaker medals (bronze/silver/gold per episode), sysdisc badges (oceanographer, etc.), rod badges (helper, mentor) |
 
 ## Phase 3: New Point-and-Click Games
 

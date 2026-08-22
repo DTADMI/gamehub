@@ -182,11 +182,12 @@ export const games: GameManifest = {
   "rite-of-discovery": {
     slug: "rite-of-discovery",
     title: "Rite of Discovery",
-    shortDescription: "Gentle point‑and‑click about family‑made magic (Alpha MVP).",
+    shortDescription: "A heartwarming point-and-click journey through family traditions and the magic of growing up.",
     tags: [
       "Adventure",
       "Point & Click",
       "Story",
+      "Family",
       "narrative",
       "impl:narrative-engine",
       "target:keep",
@@ -194,8 +195,10 @@ export const games: GameManifest = {
     image: "/images/games/rite-of-discovery-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-pastel-pattern.jpg",
-    preloadAssets: [],
+    backgroundImage: "/images/bg-pastel-pattern.svg",
+    preloadAssets: [
+      { key: "rod-bg", url: "", loop: true },
+    ],
     getComponent: () =>
       // @ts-ignore
       import("@games/rite-of-discovery").then((m) => m.RiteOfDiscoveryGame),
@@ -203,11 +206,12 @@ export const games: GameManifest = {
   "systems-discovery": {
     slug: "systems-discovery",
     title: "Systems Discovery",
-    shortDescription: "Explore everyday systems with extendable packs (Alpha MVP).",
+    shortDescription: "Explore how systems work — from the human body to the cosmos — through interactive puzzle packs.",
     tags: [
       "Adventure",
       "Point & Click",
       "Educational",
+      "Science",
       "narrative",
       "impl:narrative-engine",
       "target:keep",
@@ -216,7 +220,9 @@ export const games: GameManifest = {
     enabled: true,
     visible: true,
     backgroundImage: "/images/bg-systems-discovery.svg",
-    preloadAssets: [],
+    preloadAssets: [
+      { key: "sys-bg", url: "", loop: true },
+    ],
     getComponent: () =>
       // @ts-ignore
       import("@games/systems-discovery").then((m) => m.SystemsDiscoveryGame),
@@ -224,13 +230,15 @@ export const games: GameManifest = {
   "toymaker-escape": {
     slug: "toymaker-escape",
     title: "Toymaker Escape",
-    shortDescription: "Episodic escape game with a twisty mystery (Alpha MVP).",
-    tags: ["Escape", "Puzzles", "Story", "narrative", "impl:narrative-engine", "target:keep"],
+    shortDescription: "A 3-episode escape-room mystery set in a toymaker's workshop. Puzzles, secrets, and a twist ending.",
+    tags: ["Escape", "Puzzles", "Story", "Mystery", "narrative", "impl:narrative-engine", "target:keep"],
     image: "/images/games/toymaker-escape-card.svg",
     enabled: true,
     visible: true,
     backgroundImage: "/images/bg-toymaker-escape.svg",
-    preloadAssets: [],
+    preloadAssets: [
+      { key: "tme-bg", url: "", loop: true },
+    ],
     getComponent: () =>
       // @ts-ignore
       import("@games/toymaker-escape").then((m) => m.ToymakerEscapeGame),

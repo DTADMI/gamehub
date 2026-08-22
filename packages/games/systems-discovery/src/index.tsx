@@ -1,8 +1,9 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
 import HomeostasisMeter from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";
-import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { Scene, SceneController } from "@games/pointclick-engine";
+import { type SceneBgType, SceneBackground } from "@games/pointclick-engine";
+import { useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
   createPipesState,
   evaluatePipes,
@@ -1774,15 +1775,28 @@ const scenes: Scene[] = [
 ];
 
 export function SystemsDiscoveryGame() {
-  React.useEffect(() => {
-    if (typeof soundManager.registerSound === "function") {
-      soundManager.registerSound("sysdisc-bg", "/sounds/sysdisc-ambient.mp3", true);
-      soundManager.registerSound("sysdisc-click", "/sounds/click.mp3");
-      soundManager.registerSound("sysdisc-solved", "/sounds/level-complete.mp3");
-      soundManager.registerSound("sysdisc-ocean", "/sounds/sysdisc-ocean-ambient.mp3", true);
-      soundManager.registerSound("sysdisc-space", "/sounds/sysdisc-space-ambient.mp3", true);
-    }
-  }, []);
+  const sfx = useSoundEffects();
+
+  // Scene ID to ambient audio mapping
+  const ambientMap: Record<string, "body" | "space" | "ocean" | "thinking"> = {
+    B: "body",
+    BB: "body",
+    BF: "body",
+    BM: "body",
+    BSD: "body",
+    BG: "body",
+    BOD: "body",
+    SD_BOD: "body",
+    S: "space",
+    SD_SPACE: "space",
+    SPACE: "space",
+    O: "ocean",
+    SD_OCEAN: "ocean",
+    OCEAN: "ocean",
+    WRAP: "thinking",
+    SD_INTRO: "thinking",
+    SD_OUTRO: "thinking",
+  };
 
   let initialScene: string = "SD_INTRO";
   if (typeof window !== "undefined") {
@@ -1812,6 +1826,16 @@ export function SystemsDiscoveryGame() {
         break;
     }
   }
+
+  // Determine background type from initial scene
+  const bgType: SceneBgType = initialScene.startsWith("SD_SPACE") || initialScene.startsWith("S")
+    ? "space"
+    : initialScene.startsWith("SD_OCEAN") || initialScene.startsWith("O")
+      ? "ocean"
+      : initialScene.startsWith("SD_BOD") || initialScene.startsWith("B")
+        ? "body"
+        : "default";
+
   const initial = {
     scene: initialScene,
     flags: {
@@ -1820,7 +1844,11 @@ export function SystemsDiscoveryGame() {
     },
     inventory: [] as string[],
   };
-  return <SceneController scenes={scenes} initial={initial} saveKey="sysdisc:save:v1" />;
+  return (
+    <SceneBackground type={bgType} animate>
+      <SceneController scenes={scenes} initial={initial} saveKey="sysdisc:save:v1" />
+    </SceneBackground>
+  );
 }
 
 export default SystemsDiscoveryGame;

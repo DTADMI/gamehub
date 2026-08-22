@@ -21,9 +21,15 @@ export * from "./puzzles/wires";
 // React components
 export { DialogueBox } from "./react/DialogueBox";
 export { InventoryBar } from "./react/InventoryBar";
-export type { MatchingPuzzleProps, MatchPair } from "./react/MatchingPuzzle";
 export { MatchingPuzzle } from "./react/MatchingPuzzle";
+export type { MatchingPuzzleProps, MatchPair } from "./react/MatchingPuzzle";
+export { SceneBackground, SceneCard } from "./react/SceneBackground";
+export type { SceneBackgroundProps, SceneBgType } from "./react/SceneBackground";
 export { SceneController } from "./react/SceneController";
+
+// Audio
+export { ProceduralAudio, proceduralAudio } from "./audio/ProceduralAudio";
+export { useSceneAudio, useSoundEffects } from "./audio/useSceneAudio";
 
 // UI components
 export * from "./ui/InputSequenceDetector";

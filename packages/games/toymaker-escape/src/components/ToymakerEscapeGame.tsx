@@ -1,8 +1,8 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { DialogueBox, InventoryBar, versionedLoad, versionedSave } from "@games/pointclick-engine";
+import { SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
   detectLang,
   effects,
@@ -390,6 +390,16 @@ export const ToymakerEscapeGame: React.FC = () => {
   })();
 
   const [sceneId, setSceneId] = useState<string>(() => initialSave?.sceneId || "INTRO");
+  const sfx = useSoundEffects();
+
+  // Procedural ambient audio per episode
+  useSceneAudio(sceneId, {
+    E1: "workshop",
+    INTRO: "workshop",
+    E2: "office",
+    E3: "apartment",
+  });
+
   const [ctx, setCtx] = useState(() =>
     ensureCtx({
       inventory: initialSave?.inventory ?? [],
@@ -528,35 +538,6 @@ export const ToymakerEscapeGame: React.FC = () => {
   }, [ctx]);
 
   useEffect(() => {
-    if (typeof soundManager.registerSound === "function") {
-      soundManager.registerSound("tme-click", "/sounds/click.mp3");
-      soundManager.registerSound("tme-complete", "/sounds/level-complete.mp3");
-      soundManager.registerSound("tme-error", "/sounds/brick-hit.mp3");
-      soundManager.registerSound("tme-workshop", "/sounds/tme-workshop-ambient.mp3", true);
-      soundManager.registerSound("tme-office", "/sounds/tme-office-ambient.mp3", true);
-      soundManager.registerSound("tme-apartment", "/sounds/tme-apartment-ambient.mp3", true);
-      soundManager.registerSound("tme-reveal", "/sounds/power-up.mp3");
-    }
-  }, []);
-
-  useEffect(() => {
-    const currentEpisode = sceneId.startsWith("E1") || sceneId === "INTRO"
-      ? "workshop"
-      : sceneId.startsWith("E2")
-        ? "office"
-        : sceneId.startsWith("E3")
-          ? "apartment"
-          : null;
-    if (currentEpisode === "workshop") {
-      soundManager.playMusic("tme-workshop", 0.3);
-    } else if (currentEpisode === "office") {
-      soundManager.playMusic("tme-office", 0.3);
-    } else if (currentEpisode === "apartment") {
-      soundManager.playMusic("tme-apartment", 0.3);
-    }
-  }, [sceneId]);
-
-  useEffect(() => {
     if (sceneId !== "E2_SHADOW") {return;}
     const canvas = shadowCanvasRef.current;
     if (!canvas) {return;}
@@ -644,7 +625,17 @@ export const ToymakerEscapeGame: React.FC = () => {
   const title =
     typeof scene?.title === "string" ? scene.title : scene?.title?.[lang] || "Toymaker Escape";
   const description = typeof scene?.body === "string" ? scene.body : scene?.body?.[lang] || "";
+
+  const bgType = sceneId.startsWith("E1") || sceneId === "INTRO"
+    ? "workshop" as const
+    : sceneId.startsWith("E2")
+      ? "office" as const
+      : sceneId.startsWith("E3")
+        ? "apartment" as const
+        : "default" as const;
+
   return (
+    <SceneBackground type={bgType} animate>
     <GameContainer
       title={title}
       description={description}
@@ -1805,6 +1796,7 @@ export const ToymakerEscapeGame: React.FC = () => {
         />
       </div>
     </GameContainer>
+    </SceneBackground>
   );
 };
 

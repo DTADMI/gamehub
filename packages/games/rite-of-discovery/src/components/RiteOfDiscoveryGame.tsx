@@ -1,8 +1,8 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { DialogueBox, InventoryBar } from "@games/pointclick-engine";
+import { SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
   loadWithMigrations,
   SAVE_KEYS,
@@ -352,26 +352,25 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   const [sceneId, setSceneId] = useState<string>(
     () => loadWithMigrations<any>(SAVE_KEY, 1)?.sceneId || "INTRO",
   );
+  const sfx = useSoundEffects();
+
+  // Procedural ambient audio
+  useSceneAudio(sceneId, {
+    TT: "thinking",
+    INTRO: "home",
+    S1: "home",
+    S2: "home",
+    S3: "home",
+    EPILOGUE: "home",
+    OUTRO: "home",
+  });
+
   const [ctx, setCtx] = useState(() => ensureCtx(loadWithMigrations<any>(SAVE_KEY, 1)?.ctx || {}));
 
   const gentle = Boolean(ctx.flags["gentle"]);
 
   useEffect(() => {
-    if (typeof soundManager.registerSound === "function") {
-      soundManager.registerSound("rod-bg", "/sounds/rod-ambient.mp3", true);
-      soundManager.registerSound("rod-click", "/sounds/click.mp3");
-      soundManager.registerSound("rod-solved", "/sounds/level-complete.mp3");
-      soundManager.registerSound("rod-thought", "/sounds/power-up.mp3");
-    }
-  }, []);
-
-  useEffect(() => {
     versionedSave(SAVE_KEY, 1, { sceneId, ctx });
-    if (sceneId.startsWith("TT")) {
-      soundManager.playMusic("rod-thought", 0.2);
-    } else {
-      soundManager.playMusic("rod-bg", 0.25);
-    }
   }, [sceneId, ctx]);
 
   const scene = scenes[sceneId];
@@ -382,7 +381,10 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   const letterMatchCount = Object.values(letterMatches).filter(Boolean).length;
   const letterTotal = LETTER_PAIRS.length;
 
+  const bgType = sceneId.startsWith("TT") ? "thinking" as const : "home" as const;
+
   return (
+    <SceneBackground type={bgType} animate>
     <GameContainer title={title} description={bodyText}>
       <div className="mx-auto max-w-2xl p-4">
         <h2 className="mb-4 text-2xl font-bold">{title}</h2>
@@ -720,6 +722,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         <InventoryBar items={ctx.inventory} onUse={(item) => console.log("Using", item)} />
       </div>
     </GameContainer>
+    </SceneBackground>
   );
 };
 
