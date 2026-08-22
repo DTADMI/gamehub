@@ -27,12 +27,14 @@ GameHub is ~88% production-ready. 20 games in roster. Three point-and-click game
 
 **Effort**: 1h
 
-### QW-2: Wire PostGameCTA to game endings 🟡
+### QW-2: Wire PostGameCTA to game endings ✅ DONE
 
 PostGameCTA component exists. Needs to be added to:
 - Systems Discovery `SD_OUTRO`, `SD_SPACE_OUTRO`, `SD_OCEAN_OUTRO`
 - Toymaker Escape `E3_WRAP`
 - Rite of Discovery `OUTRO`
+
+**Fixed** (2026-08-22): PostGameCTA added to all 5 ending scenes across all 3 point-and-click games.
 
 **Effort**: 30min
 
@@ -75,13 +77,18 @@ Covered by QW-1 fix (same root cause).
 
 **Effort**: 2h
 
-### M-2: i18n consolidation 🟡
+### M-2: i18n consolidation ✅ DONE
 
 Two i18n systems exist:
 1. `lib/i18n/` (Context-based, 87 keys) — used by gamehub shell
 2. `pointclick-engine/src/lib/i18n.ts` (JSON merge, 15 game namespaces) — used by engine
 
-**Fix**: Merge pointclick-engine's i18n into the main Context-based system, removing the engine-level i18n module.
+**Fixed** (2026-08-22):
+- Copied 28 game translation JSON files into `lib/i18n/translations/games/`
+- Generated `games-map.ts` merged dictionary
+- Rewrote `standalone.ts` with local lookup (NF → game → raw key)
+- Eliminated runtime dependency on pointclick-engine i18n module
+- `@gamehub/game-platform/lib/i18n` deprecated (kept for backward compat)
 
 **Effort**: 2h
 
@@ -111,7 +118,7 @@ Check for remaining Firebase/GraphQL/STOMP artifacts after Phase 1 cleanup:
 
 **Effort**: 1h
 
-### M-5: Game metadata standardization 🟢
+### M-5: Game metadata standardization ✅ DONE
 
 Add to `GameEntry` or as a separate manifest:
 - `genre`: "arcade" | "puzzle" | "adventure" | "board" | "creative"
@@ -119,6 +126,8 @@ Add to `GameEntry` or as a separate manifest:
 - `playTime`: string (e.g., "5-10 min")
 - `playerCount`: "single" | "multi"
 - `ageRating`: string
+
+**Fixed** (2026-08-22): All 5 optional metadata fields added to `GameEntry` type and populated for all 20 games.
 
 **Effort**: 1h
 
