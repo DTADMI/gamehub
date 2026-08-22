@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <radialGradient id="nebula1" cx="30%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#1a0a3e" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#050510" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="nebula2" cx="70%" cy="60%" r="40%">
+      <stop offset="0%" stop-color="#0a1a3e" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#050510" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="starGlow"><feGaussianBlur stdDeviation="1.5"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#050510"/>
+  <!-- Nebulae -->
+  <rect width="1200" height="800" fill="url(#nebula1)"/>
+  <rect width="1200" height="800" fill="url(#nebula2)"/>
+  <!-- Stars -->
+  <g fill="white">
+    <circle cx="100" cy="80" r="1.5" opacity="0.9" filter="url(#starGlow)"/>
+    <circle cx="250" cy="150" r="1" opacity="0.6"/><circle cx="380" cy="60" r="2" opacity="0.8" filter="url(#starGlow)"/>
+    <circle cx="520" cy="200" r="1" opacity="0.5"/><circle cx="680" cy="90" r="1.5" opacity="0.7"/>
+    <circle cx="800" cy="180" r="1" opacity="0.4"/><circle cx="920" cy="70" r="2" opacity="0.9" filter="url(#starGlow)"/>
+    <circle cx="1050" cy="140" r="1" opacity="0.6"/><circle cx="1150" cy="50" r="1.5" opacity="0.8"/>
+    <circle cx="50" cy="300" r="1" opacity="0.5"/><circle cx="180" cy="400" r="1.5" opacity="0.7"/>
+    <circle cx="350" cy="350" r="1" opacity="0.4"/><circle cx="500" cy="450" r="2" opacity="0.6" filter="url(#starGlow)"/>
+    <circle cx="700" cy="380" r="1" opacity="0.5"/><circle cx="850" cy="500" r="1.5" opacity="0.7"/>
+    <circle cx="1000" cy="420" r="1" opacity="0.4"/><circle cx="1100" cy="350" r="1" opacity="0.6"/>
+    <circle cx="150" cy="550" r="1" opacity="0.5"/><circle cx="300" cy="650" r="1" opacity="0.3"/>
+    <circle cx="450" cy="600" r="1.5" opacity="0.6"/><circle cx="600" cy="700" r="1" opacity="0.4"/>
+    <circle cx="750" cy="620" r="1" opacity="0.5"/><circle cx="900" cy="680" r="1.5" opacity="0.6"/>
+  </g>
+  <!-- Planet -->
+  <circle cx="300" cy="500" r="80" fill="url(#nebula1)" stroke="#4a3070" stroke-width="1.5" opacity="0.7"/>
+  <ellipse cx="300" cy="500" rx="80" ry="15" fill="none" stroke="#6a5090" stroke-width="0.5" opacity="0.4" transform="rotate(-15 300 500)"/>
+  <ellipse cx="300" cy="500" rx="80" ry="15" fill="none" stroke="#6a5090" stroke-width="0.5" opacity="0.3" transform="rotate(10 300 500)"/>
+  <!-- Orbital paths -->
+  <circle cx="600" cy="400" r="250" fill="none" stroke="#4a3080" stroke-width="0.5" opacity="0.2" stroke-dasharray="8 8"/>
+  <circle cx="600" cy="400" r="180" fill="none" stroke="#3a2060" stroke-width="0.5" opacity="0.15" stroke-dasharray="4 12"/>
+  <circle cx="600" cy="400" r="320" fill="none" stroke="#4a3080" stroke-width="0.5" opacity="0.1" stroke-dasharray="2 18"/>
+  <!-- Small planets on orbits -->
+  <circle cx="350" cy="400" r="12" fill="#6a4080" opacity="0.5"/>
+  <circle cx="780" cy="550" r="20" fill="#804060" opacity="0.5"/>
+  <circle cx="280" cy="350" r="8" fill="#408060" opacity="0.4"/>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <linearGradient id="oceanBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#001a33"/><stop offset="50%" stop-color="#003366"/><stop offset="100%" stop-color="#001a44"/>
+    </linearGradient>
+    <filter id="caustics"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.04" numOctaves="2"/><feColorMatrix type="saturate" values="0.3"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#oceanBg)"/>
+  <!-- Light rays from surface -->
+  <g opacity="0.08">
+    <polygon points="300,0 400,0 500,400 250,400" fill="#4af"/>
+    <polygon points="500,0 600,0 650,500 450,500" fill="#4af"/>
+    <polygon points="700,0 850,0 900,350 750,350" fill="#4af"/>
+    <polygon points="100,0 200,0 150,300 50,300" fill="#4af"/>
+  </g>
+  <!-- Floating particles -->
+  <g opacity="0.3">
+    <circle cx="150" cy="200" r="2" fill="#6af"/>
+    <circle cx="350" cy="350" r="1.5" fill="#8cf"/>
+    <circle cx="550" cy="250" r="2.5" fill="#6af"/>
+    <circle cx="750" cy="400" r="1.5" fill="#8cf"/>
+    <circle cx="900" cy="300" r="2" fill="#6af"/>
+    <circle cx="1050" cy="450" r="1" fill="#8cf"/>
+    <circle cx="200" cy="500" r="2" fill="#6af"/>
+    <circle cx="450" cy="550" r="1.5" fill="#8cf"/>
+    <circle cx="650" cy="600" r="2" fill="#6af"/>
+  </g>
+  <!-- Coral silhouette -->
+  <g opacity="0.15" fill="#0a3a5a">
+    <path d="M100 800 Q120 700 110 650 Q130 680 140 620 Q125 670 150 700 Q160 750 150 800"/>
+    <path d="M900 800 Q920 720 910 680 Q930 700 940 650 Q925 690 950 730 Q940 770 950 800"/>
+    <path d="M500 800 Q510 760 505 730 Q520 750 525 720 Q515 760 535 780"/>
+  </g>
+  <!-- Sea creatures silhouettes -->
+  <g opacity="0.2">
+    <!-- Anglerfish -->
+    <ellipse cx="800" cy="350" rx="25" ry="15" fill="#0a3a5a"/>
+    <circle cx="780" cy="345" r="3" fill="#3af" opacity="0.5"/>
+    <path d="M820 340 L840 320 L825 355" fill="#0a3a5a"/>
+    <!-- Jellyfish -->
+    <ellipse cx="300" cy="200" rx="15" ry="12" fill="#0a4a6a"/>
+    <path d="M290 210 Q295 240 285 260 M300 210 Q305 245 300 265 M310 210 Q308 240 315 255" stroke="#0a4a6a" stroke-width="1.5" fill="none"/>
+    <!-- School of fish -->
+    <g fill="#0a3a5a">
+      <ellipse cx="600" cy="450" rx="8" ry="4"/>
+      <ellipse cx="620" cy="445" rx="7" ry="3.5"/>
+      <ellipse cx="610" cy="458" rx="6" ry="3"/>
+      <ellipse cx="635" cy="452" rx="7" ry="3.5"/>
+      <ellipse cx="590" cy="455" rx="6" ry="3"/>
+    </g>
+  </g>
+</svg>

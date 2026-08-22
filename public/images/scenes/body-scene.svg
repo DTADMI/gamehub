@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <linearGradient id="bodyBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a0808"/><stop offset="100%" stop-color="#2d1010"/>
+    </linearGradient>
+    <radialGradient id="cell" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#801515" stop-opacity="0.4"/><stop offset="100%" stop-color="#400808" stop-opacity="0.1"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bodyBg)"/>
+  <!-- Blood vessel network -->
+  <g opacity="0.12" stroke="#ff3333" fill="none" stroke-width="1.5">
+    <path d="M600 0 Q580 200 550 400 Q520 600 500 800"/>
+    <path d="M600 0 Q620 200 650 400 Q680 600 700 800"/>
+    <path d="M550 400 Q480 420 400 450 Q300 470 200 500"/>
+    <path d="M650 400 Q720 420 800 450 Q900 470 1000 500"/>
+    <path d="M200 500 Q250 580 300 650 Q350 720 400 800"/>
+    <path d="M1000 500 Q950 580 900 650 Q850 720 800 800"/>
+    <path d="M500 800 Q480 720 450 650 Q420 580 400 800"/>
+    <path d="M700 800 Q720 720 750 650 Q780 580 800 800"/>
+  </g>
+  <!-- Cells -->
+  <g>
+    <circle cx="300" cy="300" r="40" fill="url(#cell)" stroke="#ff5555" stroke-width="0.5" opacity="0.5"/>
+    <circle cx="310" cy="295" r="12" fill="#ff3333" opacity="0.3"/>
+    
+    <circle cx="700" cy="500" r="55" fill="url(#cell)" stroke="#ff5555" stroke-width="0.5" opacity="0.5"/>
+    <circle cx="715" cy="495" r="15" fill="#ff3333" opacity="0.3"/>
+    
+    <circle cx="500" cy="650" r="35" fill="url(#cell)" stroke="#ff5555" stroke-width="0.5" opacity="0.4"/>
+    
+    <circle cx="850" cy="250" r="30" fill="url(#cell)" stroke="#ff5555" stroke-width="0.5" opacity="0.35"/>
+    
+    <circle cx="200" cy="550" r="25" fill="url(#cell)" stroke="#ff5555" stroke-width="0.5" opacity="0.3"/>
+    
+    <circle cx="950" cy="600" r="45" fill="url(#cell)" stroke="#ff5555" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="960" cy="590" r="14" fill="#ff3333" opacity="0.25"/>
+  </g>
+  <!-- Mitochondria shapes -->
+  <g opacity="0.15" fill="#ff6666">
+    <ellipse cx="450" cy="350" rx="20" ry="10" transform="rotate(30 450 350)"/>
+    <ellipse cx="800" cy="400" rx="18" ry="9" transform="rotate(-20 800 400)"/>
+    <ellipse cx="350" cy="600" rx="22" ry="11" transform="rotate(15 350 600)"/>
+  </g>
+</svg>
