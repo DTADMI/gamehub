@@ -1,0 +1,35 @@
+{
+  "chronoshift": {
+    "title": "ChronoShift Labyrinth",
+    "score": "Score",
+    "rewinds": "Rewinds",
+    "crystals": "Crystals",
+    "rewinding": "Rewinding...",
+    "controls": "WASD/Arrows: Move  |  R: Rewind  |  E: Shift Wall",
+    "win": "Maze Complete!",
+    "lose": "Game Over",
+    "finalScore": "Final Score",
+    "playAgain": "Play Again"
+  },
+  "timeclone": {
+    "title": "Time Clone Puzzle",
+    "score": "Score",
+    "level": "Level",
+    "phase": "Phase",
+    "explore": "Explore",
+    "recording": "Recording moves",
+    "cloneActive": "Clone active",
+    "controls": "WASD/Arrows: Move | Reach time-gate to record | Clone repeats your path",
+    "win": "Temporal Harmony Achieved!",
+    "finalScore": "Final Score",
+    "retry": "Retry",
+    "nextLevel": "Next Puzzle",
+    "playAgain": "Play Again",
+    "you": "You",
+    "clone": "Time Clone",
+    "yourExit": "Your Exit",
+    "cloneExit": "Clone Exit",
+    "timegate": "Time Gate",
+    "switch": "Switch Tile"
+  }
+}

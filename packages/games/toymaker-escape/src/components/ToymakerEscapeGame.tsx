@@ -1,7 +1,7 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { DialogueBox, InventoryBar, versionedLoad, versionedSave } from "@games/pointclick-engine";
+import { DialogueBox, InventoryBar, PostGameCTA, versionedLoad, versionedSave } from "@games/pointclick-engine";
 import { SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
   detectLang,
@@ -1363,6 +1363,21 @@ export const ToymakerEscapeGame: React.FC = () => {
             }
           }}
         />
+
+        {sceneId === "E3_WRAP" && (
+          <PostGameCTA
+            gameSlug="toymaker-escape"
+            completed
+            achievements={ctx.flags["medal:toymakersApprentice"] ? ["Toymaker's Apprentice"] : []}
+            onReplay={() => {
+              setSceneId("INTRO");
+              setCtx(ensureCtx({ inventory: [], flags: {} }));
+            }}
+            nextGameSlug="rite-of-discovery"
+            nextGameTitle={lang === "fr" ? "Rite de Découverte" : "Rite of Discovery"}
+            lang={lang}
+          />
+        )}
 
         <InventoryBar
           items={ctx.inventory}

@@ -4,6 +4,7 @@ import HomeostasisMeter from "@gamehub/game-platform/components/sysdisc/Homeosta
 import { Scene, SceneController } from "@games/pointclick-engine";
 import { type SceneBgType, SceneBackground } from "@games/pointclick-engine";
 import { useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
+import { PostGameCTA } from "@games/pointclick-engine";
 import {
   createPipesState,
   evaluatePipes,
@@ -18,7 +19,7 @@ import {
 } from "@games/pointclick-engine/puzzles/sequence";
 import React from "react";
 
-import { t, useI18n } from "@/lib/i18n";
+import { t, useI18n, getLocale } from "@/lib/i18n";
 
 import { BreathPuzzle } from "./puzzles/BreathPuzzle";
 import { FuelMatchingPuzzle } from "./puzzles/FuelMatchingPuzzle";
@@ -303,6 +304,16 @@ const buildScenes = (): Scene[] => [
             >
               {t("sysdisc.outro.toggleHints")}
             </button>
+          </div>
+          <div className="mt-4">
+            <PostGameCTA
+              gameSlug="systems-discovery"
+              completed
+              onReplay={() => go("SD_INTRO")}
+              nextGameSlug="toymaker-escape"
+              nextGameTitle={t("sysdisc.outro.nextGame")}
+              lang={getLocale() as "en" | "fr"}
+            />
           </div>
         </div>
       );
@@ -604,6 +615,16 @@ const buildScenes = (): Scene[] => [
           >
             {t("sysdisc.space.outro.home")}
           </button>
+        </div>
+        <div className="mt-4">
+          <PostGameCTA
+            gameSlug="systems-discovery"
+            completed
+            onReplay={() => go("SD_SPACE_INTRO")}
+            nextGameSlug="toymaker-escape"
+            nextGameTitle={getLocale() === "fr" ? "Évasion du Fabricant" : "Toymaker Escape"}
+            lang={getLocale() as "en" | "fr"}
+          />
         </div>
       </div>
     ),
@@ -1768,6 +1789,16 @@ const buildScenes = (): Scene[] => [
         <div className="flex gap-2">
           <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => { setFlag("ocean.outro.seen", true); go("O1"); }}>{t("sysdisc.ocean.outro.replay")}</button>
           <button className="min-h-[44px] rounded border px-3 py-2" onClick={() => { setFlag("ocean.outro.seen", true); go("WRAP"); }}>{t("sysdisc.ocean.outro.home")}</button>
+        </div>
+        <div className="mt-4">
+          <PostGameCTA
+            gameSlug="systems-discovery"
+            completed
+            onReplay={() => go("SD_OCEAN_INTRO")}
+            nextGameSlug="toymaker-escape"
+            nextGameTitle={getLocale() === "fr" ? "Évasion du Fabricant" : "Toymaker Escape"}
+            lang={getLocale() as "en" | "fr"}
+          />
         </div>
       </div>
     ),

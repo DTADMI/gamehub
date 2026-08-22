@@ -1,0 +1,25 @@
+{
+  "elementalconflux": {
+    "title": "Confluence \u00e9l\u00e9mentaire",
+    "fire": "Feu",
+    "water": "Eau",
+    "earth": "Terre",
+    "air": "Air",
+    "fAbility": "Fondre glace",
+    "qAbility": "\u00c9teindre feu",
+    "gAbility": "Pilier",
+    "spaceAbility": "Pousser",
+    "active": "actif",
+    "controls": "WASD/Fl\u00e8ches : Bouger | Tab/1-4 : Changer | F : Feu | Q : Eau | G : Terre | Espace : Air",
+    "level": "Niveau",
+    "moves": "Coups",
+    "time": "Temps",
+    "complete": "Tous les \u00e9l\u00e9ments unis\u00a0!",
+    "reached": "Atteint",
+    "pending": "En attente",
+    "finalScore": "Score",
+    "restart": "Recommencer",
+    "nextLevel": "Niveau suivant",
+    "playAgain": "Rejouer"
+  }
+}

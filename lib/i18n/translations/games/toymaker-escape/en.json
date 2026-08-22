@@ -1,0 +1,173 @@
+{
+  "tme": {
+    "intro": {
+      "title": "Toymaker Escape",
+      "prompt": "Choose your approach.",
+      "gears": "Gears",
+      "music": "Music"
+    },
+    "intro2": {
+      "title": "Toymaker Escape",
+      "p1": "A late evening at the atelier.",
+      "p2": "Something is amiss…",
+      "cta": "Begin",
+      "skip": "Skip intro"
+    },
+    "e1": {
+      "title": "Toymaker Escape — Episode 1",
+      "body": "A quiet workshop. Clues hide in plain sight.",
+      "keypad": {
+        "hint": "A clue in the room seems to suggest the order... study the toys on the shelf.",
+        "clear": "Clear",
+        "submit": "Submit",
+        "input": "Input:",
+        "unlocked": "Unlocked"
+      },
+      "gears": {
+        "instruction": "Adjust the gears to achieve a 1:3 ratio (output = 1/3 of input speed)."
+      },
+      "panel": {
+        "title": "Panel (wires & pipes)",
+        "wiresHint": "Connect without crossings.",
+        "wiresSolved": "Wires: Solved",
+        "wiresAvoid": "Avoid crossings.",
+        "pipesHint": "Rotate tiles; valve must be open.",
+        "pipesSolved": "Pipes: Solved",
+        "pipesNotSolved": "Pipes: Not solved",
+        "rotate00": "Rotate (0,0)",
+        "rotate20": "Rotate (2,0)",
+        "openValve": "Open valve"
+      },
+      "latch": {
+        "hint": "Hint: long‑press then drag on the scuff to reveal a latch.",
+        "revealed": "Latch revealed."
+      },
+      "medal": {
+        "label": "Medal:",
+        "gold": "gold",
+        "silver": "silver",
+        "bronze": "bronze"
+      }
+    },
+    "e2": {
+      "filing": {
+        "title": "Filing Logic",
+        "prompt": "Sort each toy into the correct cabinet based on the clues.",
+        "hint": "Dolls go to Cabinet A, cars to Cabinet B, puzzles to Cabinet C.",
+        "items": {
+          "doll": "Porcelain Doll",
+          "car": "Wind-up Car",
+          "puzzle": "Jigsaw Puzzle"
+        },
+        "cabinets": {
+          "a": "Cabinet A (Dolls)",
+          "b": "Cabinet B (Vehicles)",
+          "c": "Cabinet C (Puzzles)"
+        },
+        "sorted": "All toys sorted correctly! The filing-cabinet key turns.",
+        "reset": "Reset"
+      },
+      "shadow": {
+        "title": "Shadow Safe",
+        "prompt": "Align the shapes to cast the correct shadow pattern on the wall.",
+        "hint": "Drag each shape until the combined shadow matches the safe's keyhole pattern.",
+        "solved": "The shadow aligns perfectly. The safe clicks open.",
+        "reset": "Reset positions"
+      },
+      "gearwall": {
+        "title": "Mechanical Gear Wall",
+        "prompt": "A massive wall of interlocking gears blocks the passage. Align the outer ring to the inner ring to unlock it.",
+        "instruction": "Adjust the gear teeth so the output gear spins at exactly half the speed of the input.",
+        "inner": "Inner",
+        "idler": "Idler",
+        "outer": "Outer",
+        "confirm": "Confirm gears",
+        "solved": "The gear wall grinds to a halt! A hidden passage opens."
+      },
+      "brokentoys": {
+        "title": "Broken Toy Workbench",
+        "prompt": "The toymaker's workbench is cluttered with broken toys. Three toys need repairing to reveal the next clue.",
+        "body": "Each broken toy has a missing piece. Find the right match to restore them.",
+        "gears": "Broken Gear Bear",
+        "musicbox": "Silent Music Box",
+        "puppet": "Tangled Marionette",
+        "pieces": {
+          "cog": "Brass Cog",
+          "cylinder": "Music Cylinder",
+          "strings": "Replacement Strings"
+        },
+        "solved": "All toys repaired! A hidden drawer slides open revealing a brass key.",
+        "reset": "Reset"
+      },
+      "wrap": {
+        "title": "Episode 2 Complete",
+        "body": "The office secrets are revealed. You found the commissioner's notes.",
+        "medalEarned": "Medal earned: File Clerk",
+        "continueE3": "Continue to Episode 3",
+        "restart": "Restart"
+      }
+    },
+    "e3": {
+      "intro": {
+        "title": "Apartment Mystery",
+        "body": "You arrive at your own apartment. Something feels off. The commissioner left clues here — but why YOUR apartment?"
+      },
+      "locks": {
+        "title": "Environmental Locks",
+        "prompt": "Trigger the objects in the right sequence: water, sunlight, soil.",
+        "water": "Water",
+        "sunlight": "Sunlight",
+        "soil": "Soil",
+        "progress": "Progress",
+        "solved": "Locks sequence solved!",
+        "continueToPhotos": "Continue to photo wall"
+      },
+      "photos": {
+        "title": "Photo Memory Wall",
+        "prompt": "Three photos are pinned to the wall. Identify the two that are connected.",
+        "toymaker": "Toymaker",
+        "partner": "Partner",
+        "stranger": "Stranger",
+        "found": "You found the connection! The commissioner and the toymaker share a link.",
+        "continueToAnagram": "Continue to fridge"
+      },
+      "anagram": {
+        "title": "Fridge Anagram",
+        "prompt": "The fridge magnets spell a scrambled word. Rearrange them to unlock the cool storage.",
+        "submit": "Submit",
+        "solved": "Anagram solved!",
+        "attempts": "Attempts"
+      },
+      "toymakerReveal": {
+        "title": "The Toymaker's Studio",
+        "body": "Behind the fridge, a hidden door slides open. You step into the toymaker's secret studio. The toymaker sits at a bench, smiling.",
+        "dialogue": "The toymaker looks up. \"I was wondering when you'd figure it out. You built this puzzle for yourself, you know. The question is: do you remember why?\"",
+        "remember": "I remember everything now.",
+        "confused": "I don't understand... tell me.",
+        "continue": "Continue"
+      },
+      "finalEscape": {
+        "title": "The Final Lock",
+        "prompt": "One last puzzle stands between you and freedom. A complex locking mechanism requires the correct sequence of turns.",
+        "instruction": "Turn the dials in the correct order. The toymaker's voice guides you: \"Left... more left... now right...\"",
+        "turnLeft": "Turn Left",
+        "turnRight": "Turn Right",
+        "pull": "Pull Handle",
+        "solved": "The final lock clicks open. The front door swings wide. You step out into the morning light, the puzzle complete.",
+        "progress": "Step"
+      },
+      "wrap": {
+        "title": "Episode 3 Complete",
+        "body": "The apartment mystery is solved. The commissioner WAS the toymaker — you created this puzzle for yourself.",
+        "medalEarned": "Medal earned: Toymaker's Apprentice"
+      }
+    },
+    "sound": {
+      "bg": {
+        "workshop": "/sounds/tme-workshop-ambient.mp3",
+        "office": "/sounds/tme-office-ambient.mp3",
+        "apartment": "/sounds/tme-apartment-ambient.mp3"
+      }
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "tme": {
+    "intro": {
+      "title": "Toymaker Escape",
+      "prompt": "Choisissez votre approche.",
+      "gears": "Engrenages",
+      "music": "Musique"
+    },
+    "intro2": {
+      "title": "Toymaker Escape",
+      "p1": "Un soir tard dans l'atelier.",
+      "p2": "Quelque chose cloche…",
+      "cta": "Commencer",
+      "skip": "Passer l'intro"
+    },
+    "e1": {
+      "title": "Toymaker Escape — Épisode 1",
+      "body": "Un atelier silencieux. Les indices se cachent à vue d'œil.",
+      "keypad": {
+        "hint": "Un indice dans la pièce semble suggérer l'ordre... observez les jouets sur l'étagère.",
+        "clear": "Effacer",
+        "submit": "Valider",
+        "input": "Entrée :",
+        "unlocked": "Déverrouillé"
+      },
+      "gears": {
+        "instruction": "Réglez les engrenages pour obtenir un rapport 1:3 (sortie = 1/3 de la vitesse d'entrée)."
+      },
+      "panel": {
+        "title": "Panneau (fils & tuyaux)",
+        "wiresHint": "Reliez sans croisements.",
+        "wiresSolved": "Fils : Résolu",
+        "wiresAvoid": "Évitez les croisements.",
+        "pipesHint": "Faites pivoter les tuiles ; la vanne doit être ouverte.",
+        "pipesSolved": "Tuyaux : Résolu",
+        "pipesNotSolved": "Tuyaux : Non résolu",
+        "rotate00": "Pivoter (0,0)",
+        "rotate20": "Pivoter (2,0)",
+        "openValve": "Ouvrir la vanne"
+      },
+      "latch": {
+        "hint": "Astuce : appui long puis glisser sur la rayure pour révéler un loquet.",
+        "revealed": "Loquet révélé."
+      },
+      "medal": {
+        "label": "Médaille :",
+        "gold": "or",
+        "silver": "argent",
+        "bronze": "bronze"
+      }
+    },
+    "e2": {
+      "filing": {
+        "title": "Logique de classement",
+        "prompt": "Classez chaque jouet dans le bon classeur selon les indices.",
+        "hint": "Les poupées vont dans le classeur A, les voitures dans B, les puzzles dans C.",
+        "items": {
+          "doll": "Poupée de porcelaine",
+          "car": "Voiture à remontoir",
+          "puzzle": "Casse-tête"
+        },
+        "cabinets": {
+          "a": "Classeur A (Poupées)",
+          "b": "Classeur B (Véhicules)",
+          "c": "Classeur C (Puzzles)"
+        },
+        "sorted": "Tous les jouets sont bien classés ! La clé du classeur tourne.",
+        "reset": "Réinitialiser"
+      },
+      "shadow": {
+        "title": "Coffre d'ombre",
+        "prompt": "Alignez les formes pour projeter le bon motif d'ombre sur le mur.",
+        "hint": "Faites glisser chaque forme jusqu'à ce que l'ombre combinée corresponde au motif de la serrure.",
+        "solved": "L'ombre s'aligne parfaitement. Le coffre s'ouvre.",
+        "reset": "Réinitialiser les positions"
+      },
+      "gearwall": {
+        "title": "Mur d'engrenages mécaniques",
+        "prompt": "Un mur massif d'engrenages imbriqués bloque le passage. Alignez l'anneau extérieur sur l'anneau intérieur pour le déverrouiller.",
+        "instruction": "Ajustez les dents de l'engrenage pour que l'engrenage de sortie tourne exactement à la moitié de la vitesse d'entrée.",
+        "inner": "Intérieur",
+        "idler": "Intermédiaire",
+        "outer": "Extérieur",
+        "confirm": "Valider les engrenages",
+        "solved": "Le mur d'engrenages s'immobilise ! Un passage caché s'ouvre."
+      },
+      "brokentoys": {
+        "title": "Établi des jouets cassés",
+        "prompt": "L'établi du fabricant est encombré de jouets brisés. Trois jouets doivent être réparés pour révéler le prochain indice.",
+        "body": "Chaque jouet cassé a une pièce manquante. Trouvez la bonne correspondance pour les restaurer.",
+        "gears": "Ours à engrenage cassé",
+        "musicbox": "Boîte à musique silencieuse",
+        "puppet": "Marionnette emmêlée",
+        "pieces": {
+          "cog": "Rouage en laiton",
+          "cylinder": "Cylindre musical",
+          "strings": "Fils de remplacement"
+        },
+        "solved": "Tous les jouets réparés ! Un tiroir caché coulisse révélant une clé en laiton.",
+        "reset": "Réinitialiser"
+      },
+      "wrap": {
+        "title": "Épisode 2 terminé",
+        "body": "Les secrets du bureau sont révélés. Vous avez trouvé les notes du commissaire.",
+        "medalEarned": "Médaille gagnée : Commis aux archives",
+        "continueE3": "Continuer vers l'Épisode 3",
+        "restart": "Recommencer"
+      }
+    },
+    "e3": {
+      "intro": {
+        "title": "Le Mystère de l'Appartement",
+        "body": "Vous arrivez à votre propre appartement. Quelque chose semble étrange. Le commissaire a laissé des indices ici — mais pourquoi VOTRE appartement?"
+      },
+      "locks": {
+        "title": "Verrous environnementaux",
+        "prompt": "Actionnez les objets dans le bon ordre : eau, lumière, terreau.",
+        "water": "Arroser",
+        "sunlight": "Lumière",
+        "soil": "Terreau",
+        "progress": "Progression",
+        "solved": "Séquence des verrous résolue!",
+        "continueToPhotos": "Continuer vers le mur de photos"
+      },
+      "photos": {
+        "title": "Mur de photos souvenir",
+        "prompt": "Trois photos sont accrochées au mur. Identifiez les deux qui sont connectées.",
+        "toymaker": "Fabricant",
+        "partner": "Partenaire",
+        "stranger": "Inconnu",
+        "found": "Vous avez trouvé la connexion! Le commissaire et le fabricant partagent un lien.",
+        "continueToAnagram": "Continuer vers le frigo"
+      },
+      "anagram": {
+        "title": "Anagramme du frigo",
+        "prompt": "Les aimants du frigo forment un mot mélangé. Réorganisez-les pour déverrouiller l'espace réfrigéré.",
+        "submit": "Valider",
+        "solved": "Anagramme résolu!",
+        "attempts": "Tentatives"
+      },
+      "toymakerReveal": {
+        "title": "Le Studio du fabricant",
+        "body": "Derrière le frigo, une porte cachée s'ouvre. Vous entrez dans le studio secret du fabricant de jouets. Il est assis à un établi, souriant.",
+        "dialogue": "Le fabricant lève les yeux. « Je me demandais quand tu comprendrais. Tu as construit ce puzzle pour toi-même, tu sais. La question est : te souviens-tu pourquoi ? »",
+        "remember": "Je me souviens de tout maintenant.",
+        "confused": "Je ne comprends pas... dites-moi.",
+        "continue": "Continuer"
+      },
+      "finalEscape": {
+        "title": "Le Verrou final",
+        "prompt": "Un dernier puzzle se dresse entre vous et la liberté. Un mécanisme de verrouillage complexe nécessite la bonne séquence de rotations.",
+        "instruction": "Tournez les molettes dans le bon ordre. La voix du fabricant vous guide : « Gauche... plus à gauche... maintenant droite... »",
+        "turnLeft": "Tourner à gauche",
+        "turnRight": "Tourner à droite",
+        "pull": "Tirer la poignée",
+        "solved": "Le verrou final s'ouvre. La porte d'entrée s'ouvre grand. Vous sortez dans la lumière du matin, le puzzle terminé.",
+        "progress": "Étape"
+      },
+      "wrap": {
+        "title": "Épisode 3 terminé",
+        "body": "Le mystère de l'appartement est résolu. Le commissaire ÉTAIT le fabricant de jouets — vous avez créé ce casse-tête pour vous-même.",
+        "medalEarned": "Médaille gagnée : Apprenti fabricant"
+      }
+    },
+    "sound": {
+      "bg": {
+        "workshop": "/sounds/tme-workshop-ambient.mp3",
+        "office": "/sounds/tme-office-ambient.mp3",
+        "apartment": "/sounds/tme-apartment-ambient.mp3"
+      }
+    }
+  }
+}

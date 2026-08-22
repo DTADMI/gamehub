@@ -1,0 +1,8 @@
+{
+  "tower-defense": {
+    "title": "Tower Defense",
+    "hud": { "score": "Score", "lives": "Lives", "level": "Level", "moves": "Moves", "pairs": "Pairs", "wave": "Wave", "money": "Money" },
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
+  }
+}

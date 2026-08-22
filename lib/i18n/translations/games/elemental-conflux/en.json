@@ -1,0 +1,25 @@
+{
+  "elementalconflux": {
+    "title": "Elemental Conflux",
+    "fire": "Fire",
+    "water": "Water",
+    "earth": "Earth",
+    "air": "Air",
+    "fAbility": "Melt Ice",
+    "qAbility": "Douse Fire",
+    "gAbility": "Pillar",
+    "spaceAbility": "Push",
+    "active": "active",
+    "controls": "WASD/Arrows: Move | Tab/1-4: Switch | F: Fire | Q: Water | G: Earth | Space: Air",
+    "level": "Level",
+    "moves": "Moves",
+    "time": "Time",
+    "complete": "All Elements United!",
+    "reached": "Reached",
+    "pending": "Pending",
+    "finalScore": "Score",
+    "restart": "Restart",
+    "nextLevel": "Next Level",
+    "playAgain": "Play Again"
+  }
+}

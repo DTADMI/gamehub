@@ -1,7 +1,7 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { DialogueBox, InventoryBar } from "@games/pointclick-engine";
+import { DialogueBox, InventoryBar, PostGameCTA } from "@games/pointclick-engine";
 import { SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
   loadWithMigrations,
@@ -612,6 +612,18 @@ export const RiteOfDiscoveryGame: React.FC = () => {
                 <span>{lang === "fr" ? "Badge d'Aide" : "Helper Badge"}</span>
               </div>
             )}
+            <PostGameCTA
+              gameSlug="rite-of-discovery"
+              completed
+              achievements={ctx.flags["ep.badgeHelper"] ? [lang === "fr" ? "Badge d'Aide" : "Helper Badge"] : []}
+              onReplay={() => {
+                setSceneId("INTRO");
+                setCtx(ensureCtx({ inventory: [], flags: {} }));
+              }}
+              nextGameSlug="systems-discovery"
+              nextGameTitle={lang === "fr" ? "Découverte des Systèmes" : "Systems Discovery"}
+              lang={lang}
+            />
           </div>
         )}
 
