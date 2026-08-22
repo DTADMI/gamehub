@@ -133,6 +133,8 @@ export default [
 
             // TS
             "@typescript-eslint/no-explicit-any": "warn",
+            // NF-TYPE-001: exported functions must have explicit return types
+            "@typescript-eslint/explicit-module-boundary-types": "warn",
             "@typescript-eslint/no-unused-vars": [
                 "warn",
                 {
