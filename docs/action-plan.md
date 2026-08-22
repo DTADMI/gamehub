@@ -11,24 +11,24 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 0.1 | Fix 2 critical CVEs (websocket-driver, next-auth) | 🔴 CRITICAL | 📋 |
-| 0.2 | Fix 9 high CVEs (@grpc/grpc-js, ws, protobufjs, postcss, nanoid, sharp) | 🔴 CRITICAL | 📋 |
-| 0.3 | Update all outdated packages (pnpm outdated — 14 packages) | 🟡 HIGH | 📋 |
-| 0.4 | Pin all deps to latest stable, run full ci:local | 🟡 HIGH | 📋 |
+| 0.1 | Fix 2 critical CVEs (websocket-driver, next-auth) | 🔴 CRITICAL | ✅ DONE — next-auth 4.24.15, firebase removed (killed websocket-driver CVE) |
+| 0.2 | Fix 9 high CVEs (@grpc/grpc-js, ws, protobufjs, postcss, nanoid, sharp) | 🔴 CRITICAL | ✅ DONE — firebase removal killed @grpc/grpc-js, postcss 8.5.26. 7 remain (Next.js transitive) |
+| 0.3 | Update all outdated packages (pnpm outdated — 14 packages) | 🟡 HIGH | ✅ DONE — all non-conflicting deps updated |
+| 0.4 | Pin all deps to latest stable, run full ci:local | 🟡 HIGH | ✅ DONE — type-check + unit tests pass (27/28 test files) |
 
 ## Phase 1: Platform Purity — Remove Portfolio
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 1.1 | Remove `app/blog/` (all pages, layouts, components) | 🟡 HIGH | 📋 |
-| 1.2 | Remove `app/resume/` (all pages, components) | 🟡 HIGH | 📋 |
-| 1.3 | Remove `lib/portfolio-queries.ts` | 🟡 HIGH | 📋 |
-| 1.4 | Remove blog admin (`app/admin/blog/`) | 🟡 HIGH | 📋 |
-| 1.5 | Remove resume admin (`app/admin/resume/`) | 🟡 HIGH | 📋 |
-| 1.6 | Remove Supabase `blog_posts`, `resume_*` tables + migrations | 🟡 HIGH | 📋 |
-| 1.7 | Remove blog/resume i18n keys from translation files | 🟢 MEDIUM | 📋 |
-| 1.8 | Remove portfolio references from nav, footer, routes | 🟢 MEDIUM | 📋 |
-| 1.9 | Remove portfolio-related scripts | 🟢 MEDIUM | 📋 |
+| 1.1 | Remove `app/blog/` (all pages, layouts, components) | 🟡 HIGH | ✅ DONE |
+| 1.2 | Remove `app/resume/` (all pages, components) | 🟡 HIGH | ✅ DONE |
+| 1.3 | Remove `lib/portfolio-queries.ts` | 🟡 HIGH | ✅ DONE |
+| 1.4 | Remove blog admin (`app/admin/blog/`) | 🟡 HIGH | ✅ DONE |
+| 1.5 | Remove resume admin (`app/admin/resume/`) | 🟡 HIGH | ✅ DONE |
+| 1.6 | Remove Supabase `blog_posts`, `resume_*` tables + migrations | 🟡 HIGH | ✅ DONE — migration 001 removed |
+| 1.7 | Remove blog/resume i18n keys from translation files | 🟢 MEDIUM | ✅ DONE |
+| 1.8 | Remove portfolio references from nav, footer, routes | 🟢 MEDIUM | ✅ DONE |
+| 1.9 | Remove portfolio-related scripts | 🟢 MEDIUM | ✅ DONE — 001 blog/resume rollout/rollback removed |
 
 ## Phase 2: Point-and-Click — Refactor & Complete
 
