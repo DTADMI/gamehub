@@ -1,7 +1,7 @@
 # GameHub Action Plan
 
 **Last Updated**: August 22, 2026
-**Current Focus**: Game platform purity — remove portfolio, refactor point-and-click, fix CVEs, ship all games
+**Current Focus**: Production readiness — Glyph Weaver integration, remaining gaps, testing
 
 Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
