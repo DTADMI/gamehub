@@ -13,15 +13,17 @@ GameHub is ~88% production-ready. 20 games in roster. Three point-and-click game
 
 ## Quick Wins (< 1 Day Total)
 
-### QW-1: Fix t() at module scope — i18n staleness 🔴
+### QW-1: Fix t() at module scope — i18n staleness ✅ DONE
 
-**Systems Discovery**: `t()` called at module level in `const scenes: Scene[] = [...]`. Titles/descriptions are baked at module-load time and never update when locale changes.
+**Systems Discovery**: `t()` called at module level. Fixed.
 
-**Rite of Discovery**: `scenes` useMemo has `[tags.solved, letterSolved]` deps — missing `lang`. Locale changes don't trigger re-evaluation.
+**Rite of Discovery**: `scenes` useMemo missing `lang` dep. Fixed.
 
-**Fix**:
-- Sysdisc: Move scene definitions inside `SystemsDiscoveryGame` component, wrap in `useMemo` with locale dependency
-- RiteOfDiscovery: Add `lang` to useMemo deps
+**Fix applied** (2026-08-22):
+- Sysdisc: converted `const scenes` to `buildScenes()` + `useMemo(() => buildScenes(), [locale])`
+- RiteOfDiscovery: `lang` now derived from `useI18n().locale`, added to scenes useMemo deps
+- Created `lib/i18n/standalone.ts` to avoid circular import
+- Provider syncs standalone locale via `setStandaloneLocale()`
 
 **Effort**: 1h
 
@@ -40,17 +42,15 @@ Metadata references `/images/bg-abstract-dark.jpg` — should be `.svg`
 
 **Effort**: 5min
 
-### QW-4: ShadowPuzzle touch support 🟡
+### QW-4: ShadowPuzzle touch support ✅ DONE
 
-Toymaker `E2_SHADOW` canvas uses pointer events but no touch-optimized drag handles on mobile.
+Toymaker `E2_SHADOW` canvas uses pointer events. Now extracted as `ShadowPuzzle.tsx` with `onPointerDown/Move/Up` + `touch-none` + `setPointerCapture` for cross-device support.
 
 **Effort**: 1h
 
-### QW-5: t() at module scope — sysdisc scene data as const 🟡
+### QW-5: t() at module scope — sysdisc scene data as const ✅ DONE
 
-The `const scenes: Scene[]` in systems-discovery calls `t()` at module scope. Since `t()` reads from a module-level `currentLocale`, titles won't update on language switch. Either:
-- Wrap scenes in useMemo with locale dep
-- Or use lazy evaluation with getter functions
+Covered by QW-1 fix (same root cause).
 
 **Effort**: 30min
 
@@ -58,7 +58,7 @@ The `const scenes: Scene[]` in systems-discovery calls `t()` at module scope. Si
 
 ## Medium Effort (1–3 Days Total)
 
-### M-1: Extract toymaker puzzle blocks 🔴
+### M-1: Extract toymaker puzzle blocks ✅ DONE
 
 6 puzzle blocks are inline in `ToymakerEscapeGame.tsx` (439 lines total):
 
@@ -71,7 +71,7 @@ The `const scenes: Scene[]` in systems-discovery calls `t()` at module scope. Si
 | ToymakerReveal | 24 | Story reveal panel |
 | FinalEscapePuzzle | 59 | Final escape dial sequence |
 
-**Fix**: Extract each into `packages/games/toymaker-escape/src/puzzles/<Name>.tsx`
+**Fixed** (2026-08-22): All 6 extracted into `packages/games/toymaker-escape/src/puzzles/`. Parent component: 1847 → 1422 lines (-23%). TYPE-CHECK: PASSING.
 
 **Effort**: 2h
 
