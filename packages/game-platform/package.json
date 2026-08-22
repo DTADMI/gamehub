@@ -2,7 +2,7 @@
   "name": "@gamehub/game-platform",
   "version": "0.0.1",
   "private": true,
-  "description": "Game hosting platform with Firebase integration, contexts, and game infrastructure",
+  "description": "Game hosting platform with Supabase, contexts, and game infrastructure",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
@@ -21,7 +21,6 @@
   "dependencies": {
     "@gamehub/ui": "workspace:*",
     "@games/pointclick-engine": "workspace:*",
-    "@stomp/stompjs": "^7.3.0",
     "@supabase/supabase-js": "^2.101.1",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
