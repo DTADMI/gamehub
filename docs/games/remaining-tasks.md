@@ -96,12 +96,18 @@ Two i18n systems exist:
 
 **Effort**: 3h
 
-### M-4: Dead code sweep 🟢
+### M-4: Dead code sweep ✅ DONE
 
 Check for remaining Firebase/GraphQL/STOMP artifacts after Phase 1 cleanup:
 - Search for `firebase`, `graphql`, `stomp` in all files
 - Remove unused engine modules (`AnimationManager`, `AssetManager`, `MenuSystem`)
 - Clean up unused entity types
+
+**Fixed** (2026-08-22):
+- Removed `@stomp/stompjs` from dependencies (unused since Phase 1)
+- Deleted `firebase.json` (Firebase hosting config, unused)
+- Removed Firebase env vars from `.env.example` and `scripts/validate-env.mjs`
+- `AnimationManager`/`AssetManager` retained (engine core infrastructure, low-risk to keep)
 
 **Effort**: 1h
 
