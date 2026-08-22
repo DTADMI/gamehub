@@ -6,6 +6,7 @@ import { defaultLocale, getSupportedLocale, isRTL, type LocaleCode } from "./con
 import enTranslations from "./translations/en";
 import translationsMap from "./translations/map";
 import type { Translations } from "./translations/types";
+import { setStandaloneLocale } from "./standalone";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -84,6 +85,7 @@ export function I18nProvider({
   const setLocale = useCallback(
     (newLocale: LocaleCode) => {
       setLocaleState(newLocale);
+      setStandaloneLocale(newLocale); // keep standalone t() in sync
       if (isBrowser) {
         localStorage.setItem("gamehub-locale", newLocale);
         document.cookie = `gamehub-locale=${newLocale}; path=/; max-age=31536000; samesite=lax`;

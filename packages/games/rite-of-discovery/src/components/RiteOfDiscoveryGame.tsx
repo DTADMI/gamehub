@@ -9,7 +9,6 @@ import {
   versionedSave,
 } from "@games/pointclick-engine/core/Persistence";
 import {
-  detectLang,
   effects,
   ensureCtx,
   type Lang,
@@ -23,7 +22,7 @@ import {
 } from "@games/pointclick-engine/puzzles/sequence";
 import React, { useEffect, useMemo, useState } from "react";
 
-import { t } from "@/lib/i18n";
+import { t, useI18n } from "@/lib/i18n";
 
 const SAVE_KEY = SAVE_KEYS.rod;
 
@@ -41,7 +40,8 @@ const LETTER_PAIRS: { id: string; left: string; right: string }[] = [
 ];
 
 export const RiteOfDiscoveryGame: React.FC = () => {
-  const lang = useMemo<Lang>(() => detectLang(), []);
+  const { locale } = useI18n();
+  const lang: Lang = locale === "fr" ? "fr" : "en";
 
   const [tags, setTags] = useState<SequenceState>(() =>
     createSequenceState(["star", "heart", "bell"], { lives: 5 }),
@@ -51,6 +51,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
   const [letterSolved, setLetterSolved] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const scenes = useMemo<Record<string, Scene>>(
     () => ({
       INTRO: {
@@ -346,7 +347,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         ],
       },
     }),
-    [tags.solved, letterSolved],
+    [tags.solved, letterSolved, lang],
   );
 
   const [sceneId, setSceneId] = useState<string>(

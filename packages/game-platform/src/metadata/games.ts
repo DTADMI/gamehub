@@ -59,7 +59,7 @@ export const games: GameManifest = {
     image: "/images/games/breakout-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-neon-grid.jpg",
+    backgroundImage: "/images/bg-neon-grid.svg",
     preloadAssets: [
       { key: "paddle", url: "/sounds/paddle.mp3" },
       { key: "brickHit", url: "/sounds/brick-hit.mp3" },
@@ -82,7 +82,7 @@ export const games: GameManifest = {
     image: "/images/games/memory-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-pastel-pattern.jpg",
+    backgroundImage: "/images/bg-pastel-pattern.svg",
     preloadAssets: [
       { key: "cardFlip", url: "/sounds/card-flip.mp3" },
       { key: "match", url: "/sounds/match.mp3" },
@@ -113,7 +113,7 @@ export const games: GameManifest = {
     image: "/images/games/pattern-matching-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-pastel-pattern.jpg",
+    backgroundImage: "/images/bg-pastel-pattern.svg",
     preloadAssets: [
       { key: "click", url: "/sounds/click.mp3" },
       { key: "background", url: "/sounds/memory-bg.mp3", loop: true },
@@ -129,7 +129,7 @@ export const games: GameManifest = {
     image: "/images/games/knitzy-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-pastel-pattern.jpg",
+    backgroundImage: "/images/bg-pastel-pattern.svg",
     preloadAssets: [
       { key: "click", url: "/sounds/click.mp3" },
       { key: "background", url: "/sounds/memory-bg.mp3", loop: true },
@@ -145,7 +145,7 @@ export const games: GameManifest = {
     image: "/images/games/bubble-pop-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-abstract-dark.jpg",
+    backgroundImage: "/images/bg-abstract-dark.svg",
     preloadAssets: [
       { key: "pop", url: "/sounds/brick-hit.mp3" },
       { key: "background", url: "/sounds/breakout-bg.mp3", loop: true },
@@ -263,7 +263,7 @@ export const games: GameManifest = {
     image: "/images/games/elemental-conflux-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-abstract-dark.jpg",
+    backgroundImage: "/images/bg-abstract-dark.svg",
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/elemental-conflux").then((m) => m.ElementalConfluxGame),
@@ -276,7 +276,7 @@ export const games: GameManifest = {
     image: "/images/games/quantum-architect-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-abstract-dark.jpg",
+    backgroundImage: "/images/bg-abstract-dark.svg",
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/quantum-architect").then((m) => m.QuantumArchitectGame),
@@ -313,7 +313,7 @@ export const games: GameManifest = {
     upcoming: true,
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-neon-grid.jpg",
+    backgroundImage: "/images/bg-neon-grid.svg",
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/platformer").then((m) => m.PlatformerGame),
@@ -327,7 +327,7 @@ export const games: GameManifest = {
     upcoming: true,
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-abstract-dark.jpg",
+    backgroundImage: "/images/bg-abstract-dark.svg",
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/tower-defense").then((m) => m.TowerDefenseGame),
@@ -340,7 +340,7 @@ export const games: GameManifest = {
     image: "/images/games/spell-craft-card.svg",
     enabled: true,
     visible: true,
-    backgroundImage: "/images/bg-abstract-dark.jpg",
+    backgroundImage: "/images/bg-abstract-dark.svg",
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/spell-craft").then((m) => m.SpellCraftGame),

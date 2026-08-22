@@ -18,13 +18,13 @@ import {
 } from "@games/pointclick-engine/puzzles/sequence";
 import React from "react";
 
-import { t } from "@/lib/i18n";
+import { t, useI18n } from "@/lib/i18n";
 
 import { BreathPuzzle } from "./puzzles/BreathPuzzle";
 import { FuelMatchingPuzzle } from "./puzzles/FuelMatchingPuzzle";
 import { OrbitsPuzzle } from "./puzzles/OrbitsPuzzle";
 
-const scenes: Scene[] = [
+const buildScenes = (): Scene[] => [
   {
     id: "SD_INTRO",
     title: t("sysdisc.intro.title") as string,
@@ -1776,6 +1776,10 @@ const scenes: Scene[] = [
 
 export function SystemsDiscoveryGame() {
   const sfx = useSoundEffects();
+  const { locale } = useI18n();
+
+  // Re-evaluate scenes when locale changes (avoids stale t() at module scope)
+  const scenes = React.useMemo(() => buildScenes(), [locale]);
 
   // Scene ID to ambient audio mapping
   const ambientMap: Record<string, "body" | "space" | "ocean" | "thinking"> = {
