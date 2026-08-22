@@ -4,7 +4,7 @@ import { useEffect, useEffectEvent, useState } from "react";
 
 export type SiteLocale = "en" | "fr";
 
-const LOCALE_KEY = "lang";
+const LOCALE_KEY = "gamehub-locale";
 const LOCALE_EVENT = "gamehub:locale-change";
 
 function isLocale(value: string | null | undefined): value is SiteLocale {
@@ -13,7 +13,7 @@ function isLocale(value: string | null | undefined): value is SiteLocale {
 
 export function getSiteLocale(): SiteLocale {
   if (typeof window === "undefined") {
-    return "en";
+    return "fr";
   }
 
   const stored = window.localStorage.getItem(LOCALE_KEY);
@@ -31,12 +31,12 @@ export function setSiteLocale(locale: SiteLocale) {
   }
 
   window.localStorage.setItem(LOCALE_KEY, locale);
-  document.cookie = `lang=${locale}; path=/; max-age=31536000; samesite=lax`;
+  document.cookie = `gamehub-locale=${locale}; path=/; max-age=31536000; samesite=lax`;
   window.dispatchEvent(new CustomEvent<SiteLocale>(LOCALE_EVENT, { detail: locale }));
 }
 
 export function useSiteLocale() {
-  const [locale, setLocale] = useState<SiteLocale>("en");
+  const [locale, setLocale] = useState<SiteLocale>("fr");
   const onLocaleChangeEvent = useEffectEvent((event: Event) => {
     const customEvent = event as CustomEvent<SiteLocale>;
     if (isLocale(customEvent.detail)) {

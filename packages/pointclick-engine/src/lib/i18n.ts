@@ -64,13 +64,13 @@ const dictionaries: Record<"en" | "fr", Dict> = {
   ),
 };
 
-let currentLocale: keyof typeof dictionaries = "en";
+let currentLocale: keyof typeof dictionaries = "fr";
 
 export function detectLang(): "en" | "fr" {
   if (typeof window === "undefined") {
     return currentLocale;
   }
-  const stored = window.localStorage.getItem("lang");
+  const stored = window.localStorage.getItem("gamehub-locale");
   if (stored === "en" || stored === "fr") {
     return stored;
   }
@@ -84,7 +84,7 @@ export function detectLang(): "en" | "fr" {
 export function setLocale(locale: keyof typeof dictionaries) {
   currentLocale = locale;
   if (typeof window !== "undefined") {
-    window.localStorage.setItem("lang", locale);
+    window.localStorage.setItem("gamehub-locale", locale);
   }
 }
 

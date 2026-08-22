@@ -1,7 +1,7 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { t } from "@gamehub/game-platform/lib/i18n";
+import { t } from "@/lib/i18n";
 import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { DialogueBox, InventoryBar } from "@games/pointclick-engine";
 import {

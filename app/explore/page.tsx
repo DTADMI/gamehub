@@ -1,20 +1,19 @@
 "use client";
 
 import { GameCard } from "@gamehub/game-platform";
-import type { Game, GameEntry } from "@gamehub/game-platform/metadata/games";
+import { isGameLaunchable, listGames } from "@gamehub/game-platform/metadata/games";
 import { Badge, Button } from "@gamehub/ui";
 import { Gamepad2 } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 
-import { useGamesManifest } from "@/lib/portfolio-queries";
-
 export default function ExplorePage() {
-  const { data: gameManifestData, isError: gamesError } = useGamesManifest();
+  const gameManifestData = useMemo(() => listGames(), []);
+  const gamesError = null;
 
-  const allGames: Game[] = useMemo(
+  const allGames = useMemo(
     () =>
-      ((gameManifestData ?? []) as GameEntry[])
+      (gameManifestData ?? [])
         .filter((game) => game.visible !== false)
         .map((game) => ({
           id: game.slug,
@@ -29,7 +28,7 @@ export default function ExplorePage() {
     [gameManifestData],
   );
 
-  const playableGames = useMemo(() => allGames.filter((game) => game.featured), [allGames]);
+  const playableGames = useMemo(() => allGames.filter((game) => !game.upcoming), [allGames]);
   const upcomingGames = useMemo(() => allGames.filter((game) => game.upcoming), [allGames]);
 
   return (
@@ -58,12 +57,6 @@ export default function ExplorePage() {
             <GameCard key={game.id} game={game} />
           ))}
         </div>
-
-        {gamesError ? (
-          <div className="text-destructive rounded-md border border-current/30 p-4 text-sm">
-            Unable to load game data right now.
-          </div>
-        ) : null}
 
         <Button asChild variant="outline">
           <Link href="/games">Open Games page</Link>

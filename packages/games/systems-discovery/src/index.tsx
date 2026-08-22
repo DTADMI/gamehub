@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
 import HomeostasisMeter from "@gamehub/game-platform/components/sysdisc/HomeostasisMeter";
-import { t } from "@gamehub/game-platform/lib/i18n";
+import { t } from "@/lib/i18n";
 import { soundManager } from "@gamehub/game-platform/lib/sound";
 import { Scene, SceneController } from "@games/pointclick-engine";
 import {

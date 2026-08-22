@@ -6,7 +6,7 @@ import {
   soundManager,
   useGameSettings,
 } from "@gamehub/game-platform";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const TILE = 32;
@@ -471,7 +471,7 @@ export const PlatformerGame: React.FC = () => {
           setWon(true);
           const finalScore = scoreRef.current + 1000;
           setScore((s) => s + 1000);
-          submitScore({ gameType: "PLATFORMER", score: finalScore }).catch(() => {});
+          submitScore("PLATFORMER", finalScore).catch(() => {});
           soundManager.stopMusic();
         }
         return;
@@ -896,7 +896,7 @@ export const PlatformerGame: React.FC = () => {
   const scoreForSubmit = score;
   useEffect(() => {
     if (gameOver && scoreForSubmit > 0) {
-      submitScore({ gameType: "PLATFORMER", score: scoreForSubmit }).catch(() => {});
+      submitScore("PLATFORMER", scoreForSubmit).catch(() => {});
     }
   }, [gameOver, scoreForSubmit]);
 

@@ -1,7 +1,10 @@
 "use client";
 
 import type { EmblaOptionsType } from "embla-carousel";
-import useEmblaCarousel from "embla-carousel-react"; // TODO: Consider next/dynamic lazy-load to reduce initial JS bundle
+import useEmblaCarousel from "embla-carousel-react";
+// Perf note: Call sites should use next/dynamic to lazy-load this component.
+// Dynamic import pattern: const Carousel = dynamic(() => import('@gamehub/game-platform/components/Carousel'), { ssr: false })
+// This defers ~15 KB gzipped (Embla + plugins) until the carousel is actually needed.
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 

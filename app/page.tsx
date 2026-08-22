@@ -2,16 +2,14 @@
 
 import { Carousel, GameCard } from "@gamehub/game-platform";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
-import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
 import type { GameEntry } from "@gamehub/game-platform/metadata/games";
-import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
+import { isGameLaunchable, listGames } from "@gamehub/game-platform/metadata/games";
 import { Badge, Button, Skeleton } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 
-import { useGamesManifest } from "@/lib/portfolio-queries";
-import { siteCopy } from "@/lib/site-copy";
+import { useI18n } from "@/lib/i18n";
 
 type HomeGame = {
   id: string;
@@ -25,12 +23,11 @@ type HomeGame = {
 
 export default function HomePage() {
   const { flags } = useFlags();
-  const { locale } = useSiteLocale();
-  const copy = siteCopy[locale].home;
-  const { data: gamesData, isError: gamesError } = useGamesManifest();
+  const { t } = useI18n();
+  const gamesData = useMemo(() => listGames(), []);
 
   const featured = useMemo(() => {
-    const games = (gamesData ?? []) as GameEntry[];
+    const games = gamesData ?? [];
     const entries = games.filter((e) => e.visible !== false);
     const allGames: HomeGame[] = entries.map((e) => ({
       id: e.slug,
@@ -51,23 +48,23 @@ export default function HomePage() {
           <section className={`surface rounded-xl p-6 ${flags.ui.animatedHero ? "animate-fade-in-up" : ""}`}>
             <div className="max-w-4xl">
               <h1 className={`text-foreground mb-4 text-4xl font-bold text-balance ${flags.ui.animatedHero ? "animate-fade-in-up" : ""}`}>
-                {copy.title}
+                {t("site.home.title")}
               </h1>
               <p className={`text-muted-foreground mb-6 text-lg text-pretty ${flags.ui.animatedHero ? "animate-fade-in-up animation-delay-100" : ""}`}>
-                {copy.subtitle}
+                {t("site.home.subtitle")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild size="lg" className="gap-2">
                   <Link href="/explore">
                     <ExternalLink className="h-4 w-4" />
-                    {copy.exploreAll}
+                    {t("site.home.exploreAll")}
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="/resume">{copy.viewResume}</Link>
+                  <Link href="/resume">{t("site.home.viewResume")}</Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="/blog">{copy.readBlog}</Link>
+                  <Link href="/blog">{t("site.home.readBlog")}</Link>
                 </Button>
               </div>
             </div>
@@ -75,14 +72,10 @@ export default function HomePage() {
 
           <section className="rounded-xl p-0">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-foreground text-2xl font-semibold">{copy.featuredGames}</h2>
+              <h2 className="text-foreground text-2xl font-semibold">{t("site.home.featuredGames")}</h2>
               <Badge variant="secondary">{featured.length}</Badge>
             </div>
-            {gamesError ? (
-              <div className="text-destructive rounded-md border border-current/30 p-4 text-sm">
-                Unable to load games right now.
-              </div>
-            ) : featured.length > 0 ? (
+            {featured.length > 0 ? (
               <Carousel>
                 {featured.map((game, index) => (
                   <GameCard key={game.id} game={game} featured priorityImage={index === 0} />

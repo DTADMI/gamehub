@@ -3,10 +3,17 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
-import { fetchLeaderboard, type GameType, type LeaderboardEntry } from "../../lib/graphql/queries";
+
+export type LeaderboardEntry = {
+  rank: number;
+  score: number;
+  gameType: string;
+  user: { id: string; username: string };
+  playedAt?: string;
+};
 
 type MiniBoardProps = {
-  gameType: GameType;
+  gameType: string;
   limit?: number;
   className?: string;
 };
@@ -41,32 +48,37 @@ export default function MiniBoard({ gameType, limit = 10, className }: MiniBoard
       setLoading(true);
       setError("");
       try {
-        const res = await fetchLeaderboard({ gameType, limit });
+        const res = await fetch(
+          `/api/leaderboard?gameType=${encodeURIComponent(gameType)}&limit=${limit}`
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
         if (!cancelled) {
-          setEntries(res.leaderboard);
+          setEntries(
+            (data.entries || data.leaderboard || []).map((e: any, i: number) => ({
+              rank: e.rank ?? i + 1,
+              score: e.score,
+              gameType: e.gameType ?? gameType,
+              user: { id: e.userId ?? e.user_id ?? "", username: e.username ?? e.displayName ?? "Player" },
+              playedAt: e.playedAt ?? e.played_at,
+            }))
+          );
         }
       } catch (e) {
         console.warn("MiniBoard fetch error", e);
-        if (!cancelled) {
-          setError("Failed to load leaderboard");
-        }
+        if (!cancelled) setError("Failed to load leaderboard");
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     }
 
     run();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [user, gameType, limit]);
 
   const currentIdentifier = useMemo(() => {
-    // We only have Firebase user here; use email or uid to try to match username if same.
-    return (user?.email || user?.displayName || user?.uid || "").toLowerCase();
-  }, [user?.email, user?.displayName, user?.uid]);
+    return (user?.email || (user as any)?.displayName || (user as any)?.uid || "").toLowerCase();
+  }, [user]);
 
   if (!user) {
     return (

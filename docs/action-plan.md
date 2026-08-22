@@ -1,116 +1,140 @@
-﻿# GameHub Action Plan
+# GameHub Action Plan
 
-**Last Updated**: June 18, 2026
-**Current Focus**: Feature completeness — post‑game CTA, build config, test organization
+**Last Updated**: August 22, 2026
+**Current Focus**: Game platform purity — remove portfolio, refactor point-and-click, fix CVEs, ship all games
 
-Legend: `DONE` · `IN_PROGRESS` · `NEXT` · `BACKLOG`
+Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
-## Current Status
-
-| Area | Status | Notes |
-| --- | --- | --- |
-| Type checking | DONE | `pnpm type-check` passing (pre‑existing Three.js type errors in quantum-architect only) |
-| Architecture migration | DONE | App/tests migrated to `@gamehub/game-platform` and `@games/pointclick-engine` imports |
-| Test reliability | DONE | Tests organized by domain (pointclick/, breakout/, checkers/, chess/, memory/, unit/, integration/) |
-| Game launcher gating | DONE | Local upcoming-play behavior aligned with launchable game check |
-| Supabase SSR auth clients | DONE | `@supabase/ssr` used in browser, server, and proxy auth guard |
-| CI/CD deployment path | DONE | GitHub Actions + Vercel deployment workflow configured |
-| Redis provider | DONE | Upstash Redis adapter with safe in-memory fallback for local/CI |
-| Leaderboard auth gating | DONE | `/leaderboard` now requires signed-in session to access ranking preview content |
-| Admin feature-flag pilot UI | DONE | `/admin/flags` now controls local rollout toggles |
-| Local CI parity gate | DONE | Pre-push now runs `pnpm ci:local` to mirror pipeline checks |
-| UI/UX recommendation integration pass | DONE | Enhanced cards/carousel + hero/loading feedback + leaderboard teaser integrated in active runtime files |
-| Post‑game CTA modal | DONE | PostGameCTA component + usePostGameCTA hook + game:complete events wired across 9 games |
-| Build config completeness | DONE | `radix-ui` in optimizePackageImports, block‑blast/spell‑craft/pattern‑matching in transpilePackages + aliases |
-
-## Remaining Gaps and Tasks
-
-| Priority | Gap | Impact | Recommendation | Status |
-| --- | --- | --- | --- | --- |
-| P1 | Full legacy Vitest suite triage (non-unit folders) | Some older tests are still outside new staged gates | Incrementally migrate/repair old tests and fold into staged pipelines | DONE |
-| P2 | Portfolio/blog media upload workflow | Admin UX still uses URL-only cover image input | Add Supabase Storage upload flow in admin | NEXT |
-| P1 | Server-backed feature flag persistence | Flags are now persisted via Supabase + audited admin API with Redis fallback | Continue with dashboard analytics and staged rollout tooling | DONE |
-| P2 | Real leaderboard backend | Scores and seasons are now server-backed with validation and rate limits | Added moderation workflows, season lock controls, and active-season guardrail | DONE |
-| P3 | Feature flag management UI | Admin matrix + sensitive toggle restrictions now enforced | Added audit timeline view and CSV export from admin | DONE |
-| P1 | Post-game completion CTA modal integration | PostGameCTA component + hook created, game:complete events wired to 9 games | Expand to point‑and‑click narrative games, add telemetry | DONE |
-| P2 | Game monolith refactoring | Breakout (81 KB), Systems Discovery (80 KB), Toymaker Escape (77 KB) are single‑file | Split into renderer/logic/UI/state modules per modularity assessment | BACKLOG |
-| P3 | i18n system consolidation | Three parallel i18n systems: Context lib/i18n/, pointclick‑engine static t(), game JSONs | Unify under Context pattern, eliminate localStorage key conflict (gamehub‑locale vs lang) | BACKLOG |
-
-## Recommendations
-
-| Recommendation | Pros | Cons | Decision |
-| --- | --- | --- | --- |
-| Keep staged test pipeline (`unit` / `integration` / `e2e smoke`) in CI | Fast, deterministic checks on every PR | Legacy tests need separate migration plan | Adopted |
-| Use `@supabase/ssr` as default auth client layer | Future-proof for Next.js and server/client parity | Requires strict env discipline | Adopted |
-| Use Upstash Redis with memory fallback in non-configured environments | Vercel-friendly + local developer resilience | Fallback path is not production-equivalent | Adopted |
-
-## Implemented This Pass (June 2026)
-
-| Item | Result |
-| --- | --- |
-| Added `radix-ui` to `optimizePackageImports` in next.config.ts | DONE |
-| Added block-blast, spell-craft, pattern-matching to transpilePackages + webpack aliases; de-duplicated knitzy | DONE |
-| Created PostGameCTA modal component (`packages/game-platform/src/components/PostGameCTA.tsx`) | DONE |
-| Created usePostGameCTA hook with frequency management (always/occasional/rare/never) | DONE |
-| Extended GameShell with gameSlug prop + game:complete event listener | DONE |
-| Wired post‑game CTA into game launcher page (`app/games/[slug]/page.tsx`) | DONE |
-| Dispatched `game:complete` custom events from 9 game components (snake, breakout, memory, tetris, checkers, chess, tower‑defense, platformer, block‑blast) | DONE |
-| Reorganized tests: flat tests moved into pointclick/, breakout/, checkers/, chess/, memory/, unit/, integration/ subdirectories | DONE |
-
-## Next Execution Steps
-
-| Order | Step | Owner | Target |
-| --- | --- | --- | --- |
-| 1 | Add post‑game CTA telemetry (click‑through, conversion rates) | Agent | Next iteration |
-| 2 | Refactor game monoliths (Breakout, Systems Discovery, Toymaker Escape) into renderer/logic/UI/state modules | Agent | Backlog |
-| 3 | Consolidate three i18n systems under single Context pattern | Agent | Backlog |
- 
 ---
- 
-## 2026-05-28 Implementation Status
 
-### Architecture
-- Cross-project Context i18n system: `lib/i18n/config.ts`, `provider.tsx`, `server.ts`, `server-provider.tsx`
-- Default locale: `fr` (correct)
-- Parallel game i18n: per-game JSON dictionaries in `packages/pointclick-engine/src/i18n/<game>/`
-- Monorepo with packages: `@gamehub/game-platform`, `@games/pointclick-engine`, `@gamehub/ui`
-- Supabase SSR auth: `@supabase/ssr` for browser, server, and proxy auth guard
-- Upstash Redis adapter with memory fallback (`lib/redis.ts`)
-- Feature flags: Supabase-backed with Redis fallback, admin API + audit
+## Phase 0: Foundation — Security + Dependencies
 
-### Fixes Applied
-- TypeScript alias cleanup + import namespace migration off `@games/shared`
-- Removed `ignoreBuildErrors` from config
-- Migrated Supabase auth from `auth-helpers` to `@supabase/ssr`
-- Fixed integration test crash on `/api/health` optional request handling
-- CI workflow actions upgraded, Corepack-managed pnpm
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 0.1 | Fix 2 critical CVEs (websocket-driver, next-auth) | 🔴 CRITICAL | 📋 |
+| 0.2 | Fix 9 high CVEs (@grpc/grpc-js, ws, protobufjs, postcss, nanoid, sharp) | 🔴 CRITICAL | 📋 |
+| 0.3 | Update all outdated packages (pnpm outdated — 14 packages) | 🟡 HIGH | 📋 |
+| 0.4 | Pin all deps to latest stable, run full ci:local | 🟡 HIGH | 📋 |
 
-### Features Implemented
-- Game Platform SDK (`@gamehub/game-platform`) with leaderboard, save, auth integration
-- 13 playable games: chrono-shift, elemental-conflux, quantum-architect, rite-of-discovery, systems-discovery, toymaker-escape, breakout, bubble-pop, checkers, chess, memory, platformer, snake, tower-defense
-- Leaderboard system: server-backed scores, seasons, anti-spam, rate limits, moderation, season locks
-- Blog cover image upload API (Supabase Storage) + admin UI
-- Admin feature flags page with audit timeline + CSV export
-- Leaderboard moderation APIs/UI with audit trail
-- Games account CTA for profile/leaderboard unlock
-- Health endpoint (`/api/health`) for dependency status
+## Phase 1: Platform Purity — Remove Portfolio
 
-### Tests Added
-- Unit tests: staged pipeline (unit/integration/e2e smoke)
-- E2E: leaderboard auth gating, admin flags toggles
-- Integration: leaderboard validation, feature flag API
-- Full local validation (`pnpm test:all`) passing
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 1.1 | Remove `app/blog/` (all pages, layouts, components) | 🟡 HIGH | 📋 |
+| 1.2 | Remove `app/resume/` (all pages, components) | 🟡 HIGH | 📋 |
+| 1.3 | Remove `lib/portfolio-queries.ts` | 🟡 HIGH | 📋 |
+| 1.4 | Remove blog admin (`app/admin/blog/`) | 🟡 HIGH | 📋 |
+| 1.5 | Remove resume admin (`app/admin/resume/`) | 🟡 HIGH | 📋 |
+| 1.6 | Remove Supabase `blog_posts`, `resume_*` tables + migrations | 🟡 HIGH | 📋 |
+| 1.7 | Remove blog/resume i18n keys from translation files | 🟢 MEDIUM | 📋 |
+| 1.8 | Remove portfolio references from nav, footer, routes | 🟢 MEDIUM | 📋 |
+| 1.9 | Remove portfolio-related scripts | 🟢 MEDIUM | 📋 |
 
-### Flags Enabled/Changed
-- Supabase-backed feature flags with audit API + role-gated admin controls
-- Leaderboard moderation flags + season lock controls
+## Phase 2: Point-and-Click — Refactor & Complete
 
-### Documentation
-- `docs/game-strategy.md`
-- `docs/architecture.md`
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 2.1 | Refactor `systems-discovery` (2045-line monolith) → modules | 🔴 CRITICAL | 📋 |
+| 2.2 | Refactor `toymaker-escape` (1971-line monolith) → modules | 🔴 CRITICAL | 📋 |
+| 2.3 | Complete `rite-of-discovery` (761 lines, partially built) | 🟡 HIGH | 📋 |
+| 2.4 | Enhance `pointclick-engine` — add missing puzzle types | 🟡 HIGH | 📋 |
+| 2.5 | Add pointclick-specific PostGameCTA integration | 🟢 MEDIUM | 📋 |
+| 2.6 | Add save/load for pointclick games (per-scene persistence) | 🟢 MEDIUM | 📋 |
+| 2.7 | Add achievement system to pointclick engine | 🟢 MEDIUM | 📋 |
 
-### i18n Note
-- Core translations (32 keys) backed by Context pattern
-- Per-game translations (864+ keys across 13 games) in parallel JSON system
-- Core FR translations correctly use Quebec French: "Courriel", "Mot de passe", "Connexion", "Inscription"
-- Game-level FR translations are minimal HUD/game‑over labels only; Quebec conventions do not apply
+## Phase 3: New Point-and-Click Games
+
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 3.1 | Design & implement `escape-room` point-and-click game | 🟡 HIGH | 📋 |
+| 3.2 | Design & implement `mystery-manor` point-and-click game | 🟡 HIGH | 📋 |
+| 3.3 | Design & implement `artifact-hunter` point-and-click game | 🟢 MEDIUM | 📋 |
+| 3.4 | Design & implement `clockwork-conspiracy` point-and-click game | 🟢 MEDIUM | 📋 |
+
+## Phase 4: Architecture — Consolidation & Optimization
+
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 4.1 | Consolidate i18n — unify Context + pointclick + game JSONs | 🟡 HIGH | 📋 |
+| 4.2 | Refactor `breakout` monolith (2306 lines) → modules | 🟢 MEDIUM | 📋 |
+| 4.3 | Clean up unused Firebase/GraphQL/STOMP artifacts | 🟢 MEDIUM | 📋 |
+| 4.4 | Simplify `packages/game-platform` — remove portfolio+unused code | 🟢 MEDIUM | 📋 |
+| 4.5 | Optimize game loading (lazy, chunked, preload hints) | 🟢 MEDIUM | 📋 |
+| 4.6 | Standardize game metadata — add genres, difficulty, play time | 🟢 MEDIUM | 📋 |
+| 4.7 | Add game analytics telemetry (play count, completion rate) | 🟢 MEDIUM | 📋 |
+
+## Phase 5: Testing & Polish
+
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 5.1 | Add unit tests for all pointclick puzzle types | 🟡 HIGH | 📋 |
+| 5.2 | Add integration tests for pointclick save/load | 🟢 MEDIUM | 📋 |
+| 5.3 | Add per-game smoke tests for all 19 games | 🟢 MEDIUM | 📋 |
+| 5.4 | Mobile-responsive testing pass on all games | 🟢 MEDIUM | 📋 |
+| 5.5 | Accessibility pass — keyboard nav, ARIA labels | 🟢 MEDIUM | 📋 |
+
+---
+
+## Current Architecture
+
+```
+gamehub/
+├── app/                     # Next.js App Router
+│   ├── admin/               # Admin dashboard (flags, leaderboard)
+│   ├── api/                 # REST API (scores, health, feature-flags)
+│   ├── explore/             # Game discovery/browse
+│   ├── games/[slug]/        # Game launcher
+│   ├── leaderboard/         # Global leaderboard
+│   └── login/               # Auth
+├── packages/
+│   ├── game-platform/       # Shared game infrastructure (components, contexts, hooks)
+│   ├── pointclick-engine/   # Point-and-click game engine (scenes, puzzles, inventory)
+│   ├── pixi-engine/         # PixiJS renderer adapter
+│   ├── glyph-engine/        # Glyph/letter puzzle engine
+│   ├── puzzle-core/         # Core puzzle primitives
+│   ├── games/               # 19 game packages
+│   │   ├── systems-discovery/  # Point & click (2045 lines, needs split)
+│   │   ├── toymaker-escape/    # Point & click (1971 lines, needs split)
+│   │   ├── rite-of-discovery/  # Point & click (761 lines, needs completion)
+│   │   ├── chrono-shift/       # Puzzle
+│   │   ├── elemental-conflux/  # Puzzle
+│   │   ├── quantum-architect/  # Puzzle
+│   │   └── ... (13 more arcade/board/strategy)
+│   └── ui/                  # shadcn/ui shared components
+├── lib/                     # Server utilities (Supabase, Redis, rate-limit, leaderboard)
+├── scripts/                 # DB migrations, audits, smoke tests
+├── tests/                   # Vitest unit + integration
+├── tests-e2e/               # Playwright e2e
+└── docs/                    # Architecture, strategy, narrative
+```
+
+## Game Inventory
+
+| Game | Type | Engine | Lines | Status |
+|---|---|---|---|---|
+| systems-discovery | Point & Click | pointclick-engine | 2045 | Needs refactor |
+| toymaker-escape | Point & Click | pointclick-engine | 1971 | Needs refactor |
+| rite-of-discovery | Point & Click | pointclick-engine | 761 | Needs completion |
+| breakout | Arcade | Canvas/PixiJS | 2306 | Needs refactor |
+| chrono-shift | Puzzle | Canvas | 1556 | Stable |
+| elemental-conflux | Puzzle | Canvas | 1547 | Stable |
+| snake | Arcade | Canvas | 1339 | Stable |
+| quantum-architect | Puzzle/3D | Three.js | 1108 | Stable |
+| chess | Board | React | 1094 | Stable |
+| tower-defense | Strategy | Canvas | 1065 | Stable |
+| platformer | Arcade | Canvas | 982 | Stable |
+| block-blast | Puzzle | Canvas | 908 | Stable |
+| tetris | Arcade | Canvas | 866 | Stable |
+| pattern-matching | Puzzle | React | 603 | Stable |
+| spell-craft | Puzzle | React | 557 | Stable |
+| memory | Casual | React | 519 | Stable |
+| knitzy | Puzzle | React | 512 | Stable |
+| bubble-pop | Arcade | Canvas | 395 | Stable |
+| checkers | Board | React | 299 | Stable |
+
+## Execution Order
+
+```
+Phase 0 (Security) → Phase 1 (Remove portfolio) → Phase 2 (Point-and-click refactor)
+→ Phase 3 (New games) → Phase 4 (Architecture) → Phase 5 (Testing)
+```

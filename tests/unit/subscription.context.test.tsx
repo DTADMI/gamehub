@@ -1,15 +1,10 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { SubscriptionProvider, useSubscription } from "@gamehub/game-platform/contexts/SubscriptionContext";
 
 vi.mock("@gamehub/game-platform/contexts/AuthContext", () => ({
   useAuth: () => ({ user: { uid: "u1", email: "me@example.com" } }),
-}));
-
-const fetchViewerMock = vi.fn();
-vi.mock("@gamehub/game-platform/lib/graphql/queries", () => ({
-  fetchViewer: () => fetchViewerMock(),
 }));
 
 function Probe() {
@@ -24,60 +19,18 @@ function Probe() {
 }
 
 describe("SubscriptionContext", () => {
-  beforeEach(() => {
-    fetchViewerMock.mockReset();
-  });
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it("derives entitlements from viewer.premium", async () => {
-    fetchViewerMock.mockResolvedValue({
-      viewer: {
-        subscription: {
-          id: "s1",
-          userId: "u1",
-          plan: "PRO",
-          status: "active",
-          currentPeriodEnd: "2099-01-01",
-        },
-        premium: {
-          advancedLeaderboards: true,
-          cosmetics: true,
-          earlyAccess: true,
-        },
-      },
-    });
-
+  it("defaults to FREE tier without premium entitlements", () => {
     render(
       <SubscriptionProvider>
         <Probe />
       </SubscriptionProvider>,
     );
 
-    await waitFor(() => expect(screen.getByTestId("plan").textContent).toBe("PRO"));
-    expect(screen.getByTestId("adv").textContent).toBe("true");
-  });
+    // Since we're not fetching from any backend, it defaults to FREE
+    const planEl = document.querySelector("[data-testid='plan']");
+    expect(planEl?.textContent).toBe("FREE");
 
-  it("resets to defaults when viewer has no subscription", async () => {
-    fetchViewerMock.mockResolvedValue({
-      viewer: {
-        subscription: null,
-        premium: {
-          advancedLeaderboards: false,
-          cosmetics: false,
-          earlyAccess: false,
-        },
-      },
-    });
-
-    render(
-      <SubscriptionProvider>
-        <Probe />
-      </SubscriptionProvider>,
-    );
-
-    await waitFor(() => expect(screen.getByTestId("plan").textContent).toBe("NONE"));
-    expect(screen.getByTestId("adv").textContent).toBe("false");
+    const advEl = document.querySelector("[data-testid='adv']");
+    expect(advEl?.textContent).toBe("false");
   });
 });

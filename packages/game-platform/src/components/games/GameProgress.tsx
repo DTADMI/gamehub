@@ -1,9 +1,8 @@
-// frontend/components/games/GameProgress.tsx
+// frontendfile:///components/games/GameProgress.tsx
 "use client";
 
 import { Progress } from "@gamehub/ui";
-
-import { GameStats } from "../../lib/gameProgress";
+import type { GameStats } from "../../contexts/GameContext";
 
 interface GameProgressProps {
   stats: GameStats;
@@ -14,12 +13,16 @@ export function GameProgress({ stats }: GameProgressProps) {
   const progress = Math.min(100, (stats.achievements.length / 10) * 100);
 
   return (
-    <div className="mt-1">
-      <div className="mb-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
-        <span>Progress</span>
-        <span>{progress}%</span>
+    <div className="space-y-2">
+      <div className="flex items-center justify-between text-sm">
+        <span className="text-muted-foreground">Progress</span>
+        <span className="font-medium">{stats.achievements.length} / 10</span>
       </div>
       <Progress value={progress} className="h-2" />
+      <div className="flex justify-between text-xs text-muted-foreground">
+        <span>{stats.totalPlays} games played</span>
+        <span>{stats.highScore} pts</span>
+      </div>
     </div>
   );
 }

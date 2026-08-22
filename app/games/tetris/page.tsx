@@ -2,7 +2,7 @@
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -31,11 +31,7 @@ export default function TetrisGamePage() {
       const score = detail?.score ?? 0;
       if (user && score > 0) {
         try {
-          await submitScore({
-            gameType: "TETRIS",
-            score,
-            metadata: { client: "web" },
-          });
+          await submitScore("TETRIS", score, { client: "web" });
         } catch (err) {
           console.warn("submitScore failed (TETRIS)", err);
         }

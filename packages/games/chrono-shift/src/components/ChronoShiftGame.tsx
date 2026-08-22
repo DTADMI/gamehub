@@ -1,6 +1,6 @@
 "use client";
 
-import { t } from "@gamehub/game-platform/lib/i18n";
+import { t } from "@/lib/i18n";
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";

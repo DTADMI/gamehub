@@ -2,7 +2,7 @@
 
 // games/snake/src/components/SnakeGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import {
@@ -725,7 +725,7 @@ export const SnakeGame: React.FC = () => {
       (async () => {
         try {
           if (score > 0) {
-            await submitScore({ gameType: "SNAKE", score });
+            await submitScore("SNAKE", score);
           }
         } catch {
           // ignore network/auth errors in game flow

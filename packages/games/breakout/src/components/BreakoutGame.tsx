@@ -1,7 +1,7 @@
 "use client";
 
 import { GameContainer, ParticlePool, soundManager, useGameSettings } from "@gamehub/game-platform";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
@@ -1765,7 +1765,7 @@ function BreakoutGame() {
     (async () => {
       try {
         if (score > 0) {
-          await submitScore({ gameType: "BREAKOUT", score });
+          await submitScore("BREAKOUT", score);
         }
       } catch {
         // ignore network/auth errors in game flow

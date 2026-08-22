@@ -3,7 +3,7 @@
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -45,11 +45,7 @@ export default function ElementalConfluxPage() {
       const score = detail?.score ?? lastScore;
       if (user && score > 0) {
         try {
-          await submitScore({
-            gameType: "PLATFORMER",
-            score,
-            metadata: { client: "web", subgame: "elemental-conflux" },
-          });
+          await submitScore("PLATFORMER", score, { client: "web", subgame: "elemental-conflux" });
         } catch (err) {
           console.warn("submitScore failed (elemental-conflux)", err);
         }

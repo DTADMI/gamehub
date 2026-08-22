@@ -42,6 +42,46 @@ const fr: Translations = {
     login: "Connexion",
     signup: "Inscription",
   },
+  site: {
+    home: {
+      title: "Ingénierie Ludique, Résultats Concrets",
+      subtitle: "Explorez un portfolio de jeux interactifs et de projets full-stack. Chaque expérience met en valeur la réflexion produit, la performance et une UI soignée.",
+      exploreAll: "Tout Explorer",
+      viewResume: "Voir CV",
+      readBlog: "Lire le Blog",
+      featuredGames: "Jeux en Vedette",
+    },
+    blog: {
+      title: "Blog",
+      subtitle: "Notes produit, ingénierie et développement de jeux.",
+      fallback: "Aucun article publié pour le moment. Revenez bientôt.",
+      readArticle: "Lire l'article",
+    },
+    auth: {
+      title: "Bon retour",
+      subtitle: "Utilisez votre compte Supabase pour vous connecter ou en créer un.",
+      signIn: "Connexion",
+      signUp: "Inscription",
+      email: "Courriel",
+      username: "Nom d'utilisateur",
+      password: "Mot de passe",
+      signingIn: "Connexion...",
+      creating: "Création du compte...",
+      needAccount: "Besoin d'un compte ?",
+      haveAccount: "Déjà un compte ?",
+      accountCreated: "Compte créé. Vérifiez votre courriel pour la confirmation si nécessaire, puis connectez-vous.",
+    },
+    games: {
+      title: "Notre Collection de Jeux",
+      subtitle: "Découvrez et jouez à notre sélection de jeux fun et captivants",
+      signInHint: "Connectez-vous pour suivre votre progression et monter au classement !",
+      featured: "Vedette",
+      upcoming: "À venir",
+      comingSoon: "Bientôt Disponible",
+      playNow: "Jouer",
+      devPlayable: "Jouable en Dev",
+    },
+  },
 };
 
 export default fr;

@@ -2,7 +2,7 @@
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -32,11 +32,7 @@ export default function QuantumArchitectPage() {
       const score = detail?.score ?? lastScore;
       if (user && score > 0) {
         try {
-          await submitScore({
-            gameType: "PLATFORMER",
-            score,
-            metadata: { client: "web", subgame: "quantum-architect" },
-          });
+          await submitScore("PLATFORMER", score, { client: "web", subgame: "quantum-architect" });
         } catch (err) {
           console.warn("submitScore failed (quantum-architect)", err);
         }

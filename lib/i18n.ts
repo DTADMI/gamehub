@@ -6,7 +6,11 @@ export {
   type Translations,
   useI18n,
   useTranslation,
+  getServerTranslations,
+  I18nServerProvider,
+  // Standalone exports for game packages
+  t,
+  setLocale,
+  getLocale,
+  initI18n,
 } from "./i18n/index";
-export { getServerTranslations } from "./i18n/server";
-export { default as I18nServerProvider } from "./i18n/server-provider";
-export { detectLang, getLocale, i18n, initI18n, setLocale, t } from "@gamehub/game-platform/lib/i18n";

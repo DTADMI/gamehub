@@ -6,29 +6,24 @@ import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
-import { useFeature } from "@gamehub/game-platform/lib/flags";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
-import { useStomp } from "@gamehub/game-platform/lib/realtime/useStomp";
+import { submitScore } from "@/lib/score-submit";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const SnakeGame = dynamicImport(() => import("@games/snake").then((m) => m.SnakeGame), {
+const SnakeGame = dynamicImport(() => import("@games/snake").then((mod) => mod.SnakeGame), {
   ssr: false,
-  loading: () => <LoadingShell message="Loading game..." />,
+  loading: () => <LoadingShell message="Loading Snake..." />,
 });
 
-const SnakeGame3D = SnakeGame;
-
 function DifficultySelector() {
-  const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(() => {
-    if (typeof window === "undefined") {
-      return "normal";
-    }
-    return (
-      (localStorage.getItem("snakeDifficulty") as "easy" | "normal" | "hard" | null) ?? "normal"
-    );
-  });
+  const [difficulty, setDifficulty] = useState(
+    () => typeof window !== "undefined" && localStorage.getItem("snakeDifficulty") || "normal"
+  );
+
+  useEffect(() => {
+    try { localStorage.setItem("snakeDifficulty", difficulty); } catch {}
+  }, [difficulty]);
 
   useEffect(() => {
     window.dispatchEvent(new CustomEvent("snake:setDifficulty", { detail: { difficulty } }));
@@ -54,73 +49,34 @@ function DifficultySelector() {
   );
 }
 
-// Local SoundControls were moved to a global widget in the app shell.
-
 export default function SnakeGamePage() {
   const { profile, updateStat } = useProfile();
-  const realtimeEnabled = useFeature("realtime_enabled", true, {
-    preferBackend: true,
-  });
-  const threeDEnabled = useFeature("snake_3d_mode", false, {
-    preferBackend: true,
-  });
-  const [use3D, setUse3D] = useState(
-    () => typeof window !== "undefined" && localStorage.getItem("snake:3d") === "1",
-  );
-  const { publish, connected } = useStomp({ enabled: realtimeEnabled });
   const { user } = useAuth();
 
   useEffect(() => {
-    // When the game ends, publish the score (WS if enabled) and submit to backend if signed in
     const onGameOver = async (e: Event) => {
       const detail = (e as CustomEvent).detail as { score?: number } | undefined;
       const score = detail?.score ?? 0;
 
-      // Local stats update
-      updateStat("snake", {
-        lastScore: score,
-        sessions: 1,
-      });
+      updateStat("snake", { lastScore: score, sessions: 1 });
       submitLocalScore("snake", profile.nickname, score);
 
-      const env = {
-        type: "score",
-        room: { id: "snake:global", game: "snake", visibility: "public" },
-        user: { id: undefined, role: "guest", nickname: profile.nickname, subscription: "free" },
-        payload: { value: score },
-      };
-      try {
-        if (realtimeEnabled) {
-          publish("/app/snake/score", env);
-        }
-      } catch {}
-
-      // Auth-only leaderboards: submit score to backend GraphQL when user is signed in
-      try {
-        if (user && score > 0) {
-          await submitScore({
-            gameType: "SNAKE",
-            score,
-            metadata: {
-              difficulty: (localStorage.getItem("snakeDifficulty") || "normal").toString(),
-              client: "web",
-              version: process.env.NEXT_PUBLIC_APP_VERSION || "0.1.0",
-            },
+      if (user && score > 0) {
+        try {
+          await submitScore("SNAKE", score, {
+            difficulty: (localStorage.getItem("snakeDifficulty") || "normal").toString(),
           });
-          // Optionally trigger a UI refresh elsewhere
           window.dispatchEvent(new Event("snake:leaderboardUpdated"));
+        } catch (err) {
+          console.warn("submitScore failed:", err);
         }
-      } catch (err) {
-        // Non-blocking: log and proceed
-        console.warn("submitScore failed:", err);
       }
     };
     window.addEventListener("snake:gameover", onGameOver as EventListener);
-
     return () => {
       window.removeEventListener("snake:gameover", onGameOver as EventListener);
     };
-  }, [publish, realtimeEnabled, user, profile.nickname, updateStat]);
+  }, [user, profile.nickname, updateStat]);
 
   return (
     <GameShell
@@ -132,46 +88,15 @@ export default function SnakeGamePage() {
         { key: "background", url: "/sounds/snake-bg.mp3", loop: true },
       ]}
     >
-      <div className="pt-4">
-        <DifficultySelector />
-      </div>
-      <div className="flex items-center justify-between px-4">
-        {realtimeEnabled ? (
-          <PresenceBadge status={connected ? "online" : "offline"} />
-        ) : (
-          <span className="text-xs text-amber-700">Realtime disabled — using snapshot</span>
-        )}
-        {realtimeEnabled && connected && <span className="text-xs text-gray-500">Realtime on</span>}
-      </div>
-      {threeDEnabled && (
-        <div className="mb-3 flex items-center justify-center">
-          <button
-            onClick={() => {
-              const n = !use3D;
-              setUse3D(n);
-              try {
-                localStorage.setItem("snake:3d", n ? "1" : "0");
-              } catch {}
-            }}
-            className={`rounded-md px-3 py-1 text-sm ${use3D ? "bg-primary text-primary-foreground" : "bg-gray-200 dark:bg-gray-700 dark:text-gray-100"}`}
-          >
-            {use3D ? "3D Mode On" : "Enable 3D Mode"}
-          </button>
-        </div>
-      )}
-      {use3D && threeDEnabled ? <SnakeGame3D /> : <SnakeGame />}
-
+      <div className="pt-4"><DifficultySelector /></div>
+      <SnakeGame />
       <div className="text-foreground mt-6 grid grid-cols-1 gap-4 px-4 pb-8 md:grid-cols-2">
         <StatsPanel gameSlug="snake" />
         <div className="flex flex-col gap-4">
-          <LocalLeaderboard gameSlug="snake" localStorageKey="snakeLeaderboard" />
           <MiniBoard gameType="SNAKE" limit={10} />
+          <LocalLeaderboard gameSlug="snake" />
         </div>
       </div>
     </GameShell>
   );
 }
-
-
-
-

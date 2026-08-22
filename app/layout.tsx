@@ -8,6 +8,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 
 import I18nServerProvider from "@/lib/i18n/server-provider";
+import LocaleInitializer from "@/components/LocaleInitializer";
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -36,6 +37,7 @@ export default function RootLayout({
           <I18nServerProvider>
             <Providers>
               <I18nInitializer />
+              <LocaleInitializer />
               <Header />
               <main className="min-h-0 flex-1">
                 {children}

@@ -2,18 +2,17 @@
 
 import GamesList from "@gamehub/game-platform/components/games/GamesList";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
-import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
+import { useI18n } from "@/lib/i18n";
 import type { GameEntry } from "@gamehub/game-platform/metadata/games";
-import { isGameLaunchable } from "@gamehub/game-platform/metadata/games";
-
-import { useGamesManifest } from "@/lib/portfolio-queries";
-import { siteCopy } from "@/lib/site-copy";
+import { isGameLaunchable, listGames } from "@gamehub/game-platform/metadata/games";
+import { useMemo } from "react";
+// siteCopy migrated to @/lib/i18n
 
 export default function GamesPage() {
   const { flags } = useFlags();
-  const { locale } = useSiteLocale();
-  const { data: manifestData } = useGamesManifest();
-  const manifest = (manifestData ?? []) as GameEntry[];
+  const { t } = useI18n();
+  const gamesData = useMemo(() => listGames(), []);
+  const manifest = gamesData as GameEntry[];
 
   const entries = manifest.filter((entry) => entry.visible !== false);
   const isNonProd =
@@ -64,5 +63,15 @@ export default function GamesPage() {
     });
   }
 
-  return <GamesList games={games} copy={siteCopy[locale].games} />;
+  const copy = {
+    title: t("site.games.title"),
+    subtitle: t("site.games.subtitle"),
+    signInHint: t("site.games.signInHint"),
+    featured: t("site.games.featured"),
+    upcoming: t("site.games.upcoming"),
+    comingSoon: t("site.games.comingSoon"),
+    playNow: t("site.games.playNow"),
+    devPlayable: t("site.games.devPlayable"),
+  };
+  return <GamesList games={games} copy={copy} />;
 }

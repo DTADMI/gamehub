@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@gamehub/game-platform";
-import { useSiteLocale } from "@gamehub/game-platform/lib/site-locale";
+import { useI18n } from "@/lib/i18n";
 import {
   Button,
   Card,
@@ -18,7 +18,6 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { siteCopy } from "@/lib/site-copy";
 
 const authSchema = z.object({
   email: z.string().email("Valid email required"),
@@ -32,8 +31,8 @@ type AuthMode = "signin" | "signup";
 
 export default function AuthPage() {
   const router = useRouter();
-  const { locale } = useSiteLocale();
-  const copy = siteCopy[locale].auth;
+  const { t } = useI18n();
+  
   const { signin, signup, isLoading, user } = useAuth();
 
   const [mode, setMode] = useState<AuthMode>("signin");
@@ -51,10 +50,10 @@ export default function AuthPage() {
 
   const ctaLabel = useMemo(() => {
     if (isSubmitting) {
-      return mode === "signin" ? copy.signingIn : copy.creating;
+      return mode === "signin" ? t("site.auth.signingIn") : t("site.auth.creating");
     }
-    return mode === "signin" ? copy.signIn : copy.signUp;
-  }, [copy.creating, copy.signIn, copy.signUp, copy.signingIn, mode, isSubmitting]);
+    return mode === "signin" ? t("site.auth.signIn") : t("site.auth.signUp");
+  }, [t("site.auth.creating"), t("site.auth.signIn"), t("site.auth.signUp"), t("site.auth.signingIn"), mode, isSubmitting]);
 
   const onSubmit = async (data: AuthForm) => {
     setMessage(null);
@@ -67,7 +66,7 @@ export default function AuthPage() {
       } else {
         await signup(data.email, data.username ?? "", data.password);
         setMode("signin");
-        setMessage(copy.accountCreated);
+        setMessage(t("site.auth.accountCreated"));
       }
     } catch (submitError) {
       const messageText =
@@ -80,8 +79,8 @@ export default function AuthPage() {
     <div className="flex min-h-screen items-center justify-center px-6 py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-2">
-          <CardTitle>{user ? copy.signIn : copy.title}</CardTitle>
-          <CardDescription>{copy.subtitle}</CardDescription>
+          <CardTitle>{user ? t("site.auth.signIn") : t("site.auth.title")}</CardTitle>
+          <CardDescription>{t("site.auth.subtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="inline-flex w-full rounded-md border p-1">
@@ -91,7 +90,7 @@ export default function AuthPage() {
               className="w-1/2"
               onClick={() => setMode("signin")}
             >
-              {copy.signIn}
+              {t("site.auth.signIn")}
             </Button>
             <Button
               type="button"
@@ -99,13 +98,13 @@ export default function AuthPage() {
               className="w-1/2"
               onClick={() => setMode("signup")}
             >
-              {copy.signUp}
+              {t("site.auth.signUp")}
             </Button>
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
-              <Label htmlFor="email">{copy.email}</Label>
+              <Label htmlFor="email">{t("site.auth.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -116,7 +115,7 @@ export default function AuthPage() {
             </div>
             {mode === "signup" && (
               <div className="space-y-2">
-                <Label htmlFor="username">{copy.username}</Label>
+                <Label htmlFor="username">{t("site.auth.username")}</Label>
                 <Input
                   id="username"
                   type="text"
@@ -127,7 +126,7 @@ export default function AuthPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="password">{copy.password}</Label>
+              <Label htmlFor="password">{t("site.auth.password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -146,13 +145,13 @@ export default function AuthPage() {
           </form>
 
           <p className="text-muted-foreground text-center text-sm">
-            {mode === "signin" ? copy.needAccount : copy.haveAccount}{" "}
+            {mode === "signin" ? t("site.auth.needAccount") : t("site.auth.haveAccount")}{" "}
             <button
               type="button"
               className="text-primary hover:underline"
               onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
             >
-              {mode === "signin" ? copy.signUp : copy.signIn}
+              {mode === "signin" ? t("site.auth.signUp") : t("site.auth.signIn")}
             </button>
           </p>
         </CardContent>

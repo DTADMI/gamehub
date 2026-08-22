@@ -42,6 +42,46 @@ const en: Translations = {
     login: "Login",
     signup: "Sign Up",
   },
+  site: {
+    home: {
+      title: "Playful Engineering, Practical Results",
+      subtitle: "Explore a portfolio of interactive games and full-stack projects. Each experience highlights product thinking, performance work, and polished UI craft.",
+      exploreAll: "Explore All",
+      viewResume: "View Resume",
+      readBlog: "Read Blog",
+      featuredGames: "Featured Games",
+    },
+    blog: {
+      title: "Blog",
+      subtitle: "Product, engineering, and game development notes.",
+      fallback: "No posts published yet. Check back soon.",
+      readArticle: "Read article",
+    },
+    auth: {
+      title: "Welcome back",
+      subtitle: "Use your Supabase account to sign in or create one.",
+      signIn: "Sign In",
+      signUp: "Sign Up",
+      email: "Email",
+      username: "Username",
+      password: "Password",
+      signingIn: "Signing in...",
+      creating: "Creating account...",
+      needAccount: "Need an account?",
+      haveAccount: "Already have an account?",
+      accountCreated: "Account created. Check your email for confirmation if required, then sign in.",
+    },
+    games: {
+      title: "Our Games Collection",
+      subtitle: "Discover and play our selection of fun and engaging games",
+      signInHint: "Sign in to track your progress and compete on the leaderboards!",
+      featured: "Featured",
+      upcoming: "Upcoming",
+      comingSoon: "Coming Soon",
+      playNow: "Play Now",
+      devPlayable: "Dev-Playable",
+    },
+  },
 };
 
 export default en;

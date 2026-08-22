@@ -5,7 +5,7 @@ import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { useProfile } from "@gamehub/game-platform/contexts/ProfileContext";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -34,11 +34,7 @@ export default function BreakoutGamePage() {
 
       if (user && score > 0) {
         try {
-          await submitScore({
-            gameType: "BREAKOUT",
-            score,
-            metadata: { client: "web" },
-          });
+          await submitScore("BREAKOUT", score, { client: "web" });
         } catch (err) {
           console.warn("submitScore failed (BREAKOUT)", err);
         }

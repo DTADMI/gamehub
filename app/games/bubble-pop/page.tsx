@@ -2,7 +2,7 @@
 import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
-import { submitScore } from "@gamehub/game-platform/lib/graphql/queries";
+import { submitScore } from "@/lib/score-submit";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
@@ -30,11 +30,7 @@ export default function BubblePopPage() {
       const score = detail?.score ?? 0;
       if (user && score > 0) {
         try {
-          await submitScore({
-            gameType: "BUBBLE_POP",
-            score,
-            metadata: { client: "web" },
-          });
+          await submitScore("BUBBLE_POP", score, { client: "web" });
         } catch (err) {
           console.warn("submitScore failed (BUBBLE_POP)", err);
         }

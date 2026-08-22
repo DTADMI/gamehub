@@ -1,13 +1,21 @@
-// frontend/contexts/GameContext.tsx
+// frontendfile:///contexts/GameContext.tsx
 "use client";
 
 import { useRouter } from "next/navigation";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-import { GameStats, getGameProgress, saveGameProgress } from "../lib/gameProgress";
 import { GameEntry, getGame as getGameById } from "../metadata/games";
 import { useAuth } from "./AuthContext";
 import { useSound } from "./SoundContext";
+
+export interface GameStats {
+  highScore: number;
+  totalPlays: number;
+  achievements: string[];
+  lastPlayed: string;
+}
+
+const LOCAL_STORAGE_KEY = "gamehub:gameProgress";
 
 interface GameContextType {
   game: GameEntry | null;
@@ -20,6 +28,38 @@ interface GameContextType {
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
+function loadStatsFromStorage(userId: string, gameId: string): GameStats | null {
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!raw) return null;
+    const all = JSON.parse(raw) as Record<string, Record<string, GameStats>>;
+    return all[userId]?.[gameId] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function saveStatsToStorage(userId: string, gameId: string, stats: GameStats) {
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const all: Record<string, Record<string, GameStats>> = raw ? JSON.parse(raw) : {};
+    if (!all[userId]) all[userId] = {};
+    all[userId][gameId] = stats;
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(all));
+  } catch {
+    // localStorage may be full or unavailable
+  }
+}
+
+function defaultStats(): GameStats {
+  return {
+    highScore: 0,
+    totalPlays: 0,
+    achievements: [],
+    lastPlayed: new Date().toISOString(),
+  };
+}
+
 export function GameProvider({ children, gameId }: { children: React.ReactNode; gameId: string }) {
   const [game, setGame] = useState<GameEntry | null>(null);
   const [stats, setStats] = useState<GameStats | null>(null);
@@ -30,123 +70,60 @@ export function GameProvider({ children, gameId }: { children: React.ReactNode; 
   const { playSound } = useSound();
   const router = useRouter();
 
-  // Load game data and progress
   useEffect(() => {
-    const loadGame = async () => {
-      try {
-        setIsLoading(true);
-
-        // Load game data
-        const gameData = getGameById(gameId);
-        if (!gameData) {
-          throw new Error(`Game with ID ${gameId} not found`);
-        }
-        setGame(gameData);
-
-        // Load game progress if user is authenticated
-        if (user) {
-          try {
-            const userId = user.uid ?? user.id;
-            const progress = await getGameProgress(userId, gameId);
-            if (progress) {
-              setStats(progress);
-            } else {
-              // Initialize new game stats
-              setStats({
-                highScore: 0,
-                totalPlays: 0,
-                achievements: [],
-                lastPlayed: new Date().toISOString(),
-              });
-            }
-          } catch (err) {
-            console.error("Failed to load game progress:", err);
-            // Continue with default stats
-            setStats({
-              highScore: 0,
-              totalPlays: 0,
-              achievements: [],
-              lastPlayed: new Date().toISOString(),
-            });
-          }
-        } else {
-          // Guest user - initialize with default stats
-          setStats({
-            highScore: 0,
-            totalPlays: 0,
-            achievements: [],
-            lastPlayed: new Date().toISOString(),
-          });
-        }
-      } catch (err) {
-        console.error("Error loading game:", err);
-        setError(err instanceof Error ? err : new Error("Failed to load game"));
-        // Redirect to games list if game not found
-        if (err instanceof Error && err.message.includes("not found")) {
-          router.push("/games");
-        }
-      } finally {
-        setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const gameData = getGameById(gameId);
+      if (!gameData) {
+        throw new Error(`Game with ID ${gameId} not found`);
       }
-    };
+      setGame(gameData);
 
-    loadGame();
+      if (user) {
+        const userId = (user as any).uid ?? (user as any).id ?? "guest";
+        const saved = loadStatsFromStorage(userId, gameId);
+        setStats(saved ?? defaultStats());
+      } else {
+        setStats(defaultStats());
+      }
+    } catch (err) {
+      console.error("Error loading game:", err);
+      setError(err instanceof Error ? err : new Error("Failed to load game"));
+      if (err instanceof Error && err.message.includes("not found")) {
+        router.push("/games");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }, [gameId, user, router]);
 
-  // Update game stats
   const updateStats = (updates: Partial<GameStats>) => {
     setStats((prev) => {
-      if (!prev) {
-        return null;
-      }
-
-      const newStats = {
-        ...prev,
-        ...updates,
-        lastPlayed: new Date().toISOString(),
-      };
-
-      // Play sound for high score
+      if (!prev) return null;
+      const newStats = { ...prev, ...updates, lastPlayed: new Date().toISOString() };
       if (updates.highScore !== undefined && updates.highScore > (prev.highScore || 0)) {
         playSound("achievement");
       }
-
       return newStats;
     });
   };
 
-  // Save game progress
   const saveProgress = useCallback(async () => {
-    if (!user || !stats) {
-      return;
-    }
-
-    try {
-      const userId = user.uid ?? user.id;
-      await saveGameProgress(userId, gameId, stats);
-    } catch (err) {
-      console.error("Failed to save game progress:", err);
-      throw err;
-    }
+    if (!user || !stats) return;
+    const userId = (user as any).uid ?? (user as any).id ?? "guest";
+    saveStatsToStorage(userId, gameId, stats);
   }, [user, stats, gameId]);
 
-  // Save progress when component unmounts or stats change
   useEffect(() => {
     return () => {
       if (user && stats) {
         saveProgress().catch(console.error);
       }
     };
-  }, [user, stats, saveProgress]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const value = {
-    game,
-    stats,
-    updateStats,
-    saveProgress,
-    isLoading,
-    error,
-  };
+  const value = { game, stats, updateStats, saveProgress, isLoading, error };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }
@@ -158,3 +135,5 @@ export function useGame() {
   }
   return context;
 }
+
+export { GameContext };
