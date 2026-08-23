@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-GameHub is ~88% production-ready. 20 games in roster. Three point-and-click games are feature-complete with procedural audio, atmospheric backgrounds, and bilingual support. Glyph Weaver is integrated via launchpad mode. Remaining work is split into Quick Wins (<1 day), Medium (1-3 days), and Deferred (next sprint).
+GameHub is ~95% production-ready. 20 games in roster. Three point-and-click games are feature-complete with procedural audio, atmospheric backgrounds, and bilingual support. Glyph Weaver is integrated via launchpad mode. Remaining work is split into Quick Wins (<1 day), Medium (1-3 days), and Deferred (next sprint).
 
 ---
 
