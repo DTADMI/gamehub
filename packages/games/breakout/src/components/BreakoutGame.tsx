@@ -6,6 +6,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { submitScore } from "@/lib/score-submit";
 
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
+import { Brick, BrickLayout, buildBricks, computeBrickLayout } from "./BreakoutBoard";
+import { ActiveModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE, desiredSpeedFromModifier, pickWeightedPowerUp } from "./BreakoutPowerUps";
 
 // Minimal, stable MVP implementation for Breakout
 // Constants (logical canvas size; we apply DPR scaling in a resize handler)
@@ -35,21 +37,6 @@ const NUDGE_EPS = 0.35; // if |dx| falls below this, consider nudging
 const NUDGE_AMOUNT = 0.6; // horizontal nudge amount when trapped
 const NUDGE_COOLDOWN_MS = 320; // minimal delay between nudges
 
-const BRICK_ROW_COUNT = 5;
-// Responsive brick layout: compute columns/width/offset from canvas width
-const BRICK_HEIGHT = 18;
-const BRICK_PADDING = 8;
-const BRICK_OFFSET_TOP = 40;
-
-type Brick = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  color: string;
-  points: number;
-  health: number;
-};
 
 type Ball = {
   x: number;
@@ -66,169 +53,8 @@ type Paddle = {
   height: number;
 };
 
-const COLORS = ["#ef4444", "#f59e0b", "#10b981", "#3b82f6", "#a855f7"];
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
-
-type BrickLayout = {
-  cols: number;
-  brickWidth: number;
-  offsetLeft: number;
-  padding: number;
-};
-
-// Compute a centered, responsive brick layout based on logical canvas width
-function computeBrickLayout(canvasW: number): BrickLayout {
-  const minCols = 8;
-  const maxCols = 12;
-  const margin = 24; // left/right margin inside canvas
-  const padding = BRICK_PADDING;
-  // Try higher column counts first while keeping a decent min width
-  let best: BrickLayout | null = null;
-  for (let cols = maxCols; cols >= minCols; cols--) {
-    const totalPadding = (cols - 1) * padding;
-    const available = canvasW - 2 * margin - totalPadding;
-    const brickWidth = Math.floor(available / cols);
-    if (brickWidth >= 36) {
-      // ensure decent hitbox/tap target
-      const gridW = cols * brickWidth + totalPadding;
-      const offsetLeft = Math.floor((canvasW - gridW) / 2);
-      best = { cols, brickWidth, offsetLeft, padding };
-      break;
-    }
-  }
-  if (!best) {
-    // Fallback: use minCols with whatever width fits, still centered
-    const cols = minCols;
-    const totalPadding = (cols - 1) * padding;
-    const available = canvasW - 2 * 16 - totalPadding;
-    const brickWidth = Math.max(28, Math.floor(available / cols));
-    const gridW = cols * brickWidth + totalPadding;
-    const offsetLeft = Math.floor((canvasW - gridW) / 2);
-    best = { cols, brickWidth, offsetLeft, padding };
-  }
-  return best;
-}
-
-// Top-level brick factory (pure) to avoid effect dependencies in the game loop
-function buildBricks(
-  lvl: number,
-  layout: BrickLayout = computeBrickLayout(CANVAS_WIDTH),
-): Brick[][] {
-  const newBricks: Brick[][] = [];
-  for (let c = 0; c < layout.cols; c++) {
-    newBricks[c] = [] as Brick[];
-    for (let r = 0; r < BRICK_ROW_COUNT; r++) {
-      const brickX = c * (layout.brickWidth + layout.padding) + layout.offsetLeft;
-      const brickY = r * (BRICK_HEIGHT + BRICK_PADDING) + BRICK_OFFSET_TOP;
-      const colorIndex = Math.floor(Math.random() * COLORS.length);
-      const basePoints = (BRICK_ROW_COUNT - r) * 10 * Math.max(1, lvl);
-      const toughChance = Math.min(0.1 + (Math.max(1, lvl) - 2) * 0.04, 0.28);
-      const isTough = lvl >= 2 && Math.random() < toughChance;
-      const health = isTough ? 2 : 1;
-      const points = isTough ? basePoints * 2 : basePoints;
-      newBricks[c][r] = {
-        x: brickX,
-        y: brickY,
-        width: layout.brickWidth,
-        height: BRICK_HEIGHT,
-        color: isTough ? "#ea580c" : COLORS[colorIndex],
-        points,
-        health,
-      } as Brick;
-    }
-  }
-  return newBricks;
-}
-
-// Power-ups
-// Existing: slow/fast/sticky
-// New: thru (pierce bricks), bomb (AoE), fireball (one-hit), laser (paddle shots), extraLife
-// Restored: expand (wider paddle), shrink (narrow paddle)
-type PowerUpType =
-  | "slow"
-  | "fast"
-  | "sticky"
-  | "thru"
-  | "bomb"
-  | "fireball"
-  | "laser"
-  | "extraLife"
-  | "expand"
-  | "shrink"
-  | "multiball";
-type FallingPowerUp = {
-  x: number;
-  y: number;
-  dy: number;
-  type: PowerUpType;
-  size: number;
-};
-type ActiveModifier = { type: PowerUpType; endTime: number } | null;
-
-const POWERUP_DROP_CHANCE = 0.1; // 10% per brick break (desktop baseline)
-const POWERUP_MAX_FALLING = 2;
-const POWERUP_DURATION_MS = 7000; // 7s timed effect (default)
-const POWERUP_DURATION_LONG_MS = 9500; // for premium ones
-const FAST_FACTOR = 1.25;
-const SLOW_FACTOR_DESKTOP = 0.75;
-const SLOW_FACTOR_MOBILE = 0.9; // make slow less harsh on mobile to avoid sluggish feel
-const PADDLE_EXPAND_FACTOR = 1.5;
-const PADDLE_SHRINK_FACTOR = 0.7;
-
-function pickWeightedPowerUp(
-  current: ActiveModifier,
-  entitled: { auth: boolean; sub: boolean },
-): PowerUpType {
-  // Availability by entitlement
-  const available: Array<{ t: PowerUpType; w: number }> = [];
-  // Public
-  if (!(current && current.type === "fast")) {
-    available.push({ t: "fast", w: 0.32 });
-  }
-  if (!(current && current.type === "slow")) {
-    available.push({ t: "slow", w: 0.18 });
-  }
-  available.push({ t: "expand", w: 0.18 });
-  available.push({ t: "shrink", w: 0.12 });
-  available.push({ t: "multiball", w: 0.12 });
-  // Auth-only
-  if (entitled.auth && !(current && current.type === "sticky")) {
-    available.push({ t: "sticky", w: 0.15 });
-  }
-  // Subscriber-only (heavier features)
-  if (entitled.sub) {
-    available.push({ t: "thru", w: 0.1 });
-    available.push({ t: "bomb", w: 0.06 });
-    available.push({ t: "fireball", w: 0.06 });
-    available.push({ t: "laser", w: 0.05 });
-    available.push({ t: "extraLife", w: 0.06 });
-  }
-  const sum = available.reduce((a, b) => a + b.w, 0) || 1;
-  let r = Math.random() * sum;
-  for (const item of available) {
-    if (r < item.w) {
-      return item.t;
-    }
-    r -= item.w;
-  }
-  return available[0]?.t ?? "fast";
-}
-
-function desiredSpeedFromModifier(mod: ActiveModifier, level: number, slowFactor: number): number {
-  // Gentle level-based ramp: +5% per level, capped at +30%
-  const levelRamp = 1 + Math.min(Math.max(0, level - 1) * 0.05, 0.3);
-  const base = BASE_BALL_SPEED * levelRamp;
-  const factor = mod?.type === "fast" ? FAST_FACTOR : mod?.type === "slow" ? slowFactor : 1;
-  // Mode scaling: Hard slightly faster; Chaos fastest
-  const mode = (typeof window !== "undefined" && (window as any).__gh_mode) as
-    | "classic"
-    | "hard"
-    | "chaos"
-    | undefined;
-  const modeScale = mode === "hard" ? 1.1 : mode === "chaos" ? 1.25 : 1;
-  return clamp(base * factor * modeScale, MIN_BALL_SPEED, MAX_BALL_SPEED);
-}
 
 function BreakoutGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -2170,39 +1996,3 @@ function BreakoutGame() {
 
 export default React.memo(BreakoutGame);
 
-function PowerUpCard({
-  title,
-  desc,
-  className,
-  gated,
-}: {
-  title: string;
-  desc: string;
-  className: string;
-  gated?: "auth" | "sub";
-}) {
-  const { isAuthenticated, isSubscriber } = useGameSettings();
-  const locked = (gated === "auth" && !isAuthenticated) || (gated === "sub" && !isSubscriber);
-  return (
-    <div className={`relative rounded-md px-3 py-2 ${className}`}>
-      <div className="flex items-center gap-2 font-semibold">
-        {title}
-        {locked && (
-          <span className="rounded bg-gray-900/70 px-1.5 py-0.5 text-[10px] text-white">
-            🔒 {gated === "auth" ? "Sign in" : "Subscriber"}
-          </span>
-        )}
-      </div>
-      <div className="opacity-80">{desc}</div>
-    </div>
-  );
-}
-
-function PowerUpCardMobile(props: {
-  title: string;
-  desc: string;
-  className: string;
-  gated?: "auth" | "sub";
-}) {
-  return <PowerUpCard {...props} />;
-}

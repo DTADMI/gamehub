@@ -10,6 +10,8 @@ export interface LoadingShellProps {
   message?: string;
   size?: "sm" | "md" | "lg";
   variant?: "spinner" | "shimmer" | "progress";
+  /** When variant="progress", show indeterminate animation instead of static 66% */
+  indeterminate?: boolean;
 }
 
 const sizeMap = {
@@ -22,7 +24,8 @@ export function LoadingShell({
   className,
   message = "Loading...",
   size = "md",
-  variant = "spinner",
+  variant = "progress",
+  indeterminate = true,
 }: LoadingShellProps) {
   return (
     <div
@@ -46,8 +49,13 @@ export function LoadingShell({
       {variant === "progress" && (
         <div className="w-full max-w-xs overflow-hidden rounded-full bg-muted">
           <div
-            className="h-2 animate-progress rounded-full bg-primary"
-            style={{ width: "66%" }}
+            className={cn(
+              "h-2 rounded-full bg-primary",
+              indeterminate
+                ? "animate-[progress-indeterminate_1.5s_ease-in-out_infinite]"
+                : "animate-progress",
+            )}
+            style={indeterminate ? undefined : { width: "66%" }}
           />
         </div>
       )}

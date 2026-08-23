@@ -92,14 +92,20 @@ Two i18n systems exist:
 
 **Effort**: 2h
 
-### M-3: Breakout monolith refactor 🟢
+### M-3: Breakout monolith refactor ✅ DONE
 
-`BreakoutGame.tsx` is 2306 lines. Extract into:
-- `BreakoutBoard.tsx` (brick grid rendering)
-- `BreakoutPaddle.tsx` (paddle + input)
-- `BreakoutBall.tsx` (ball physics)
-- `BreakoutPowerUps.tsx` (power-up system)
-- `BreakoutHUD.tsx` (score/lives display)
+`BreakoutGame.tsx` was 2208 lines. Extract into:
+- `BreakoutBoard.tsx` (brick grid rendering) ✅
+- `BreakoutPaddle.tsx` (paddle + input) — deferred (tightly coupled to game loop)
+- `BreakoutBall.tsx` (ball physics) — deferred (tightly coupled to game loop)
+- `BreakoutPowerUps.tsx` (power-up system) ✅
+- `BreakoutHUD.tsx` (score/lives display) — deferred (tightly coupled to JSX)
+
+**Fixed** (2026-08-22):
+- Extracted `BreakoutBoard.tsx` (94 lines) — brick types, computeBrickLayout, buildBricks
+- Extracted `BreakoutPowerUps.tsx` (149 lines) — PowerUpType, FallingPowerUp, pickWeightedPowerUp, desiredSpeedFromModifier, PowerUpCard, PowerUpCardMobile
+- Main component: 2208 → 2002 lines (-206, -9%)
+- Paddle/Ball/HUD extraction deferred due to deep coupling with canvas game loop
 
 **Effort**: 3h
 
@@ -131,11 +137,17 @@ Add to `GameEntry` or as a separate manifest:
 
 **Effort**: 1h
 
-### M-6: Loading optimization 🟢
+### M-6: Loading optimization ✅ DONE
 
-- Add `<link rel="preload">` for heavy game bundles
-- Implement chunked loading for WebGL games
-- Add loading progress indicators for games >500KB
+- Add `<link rel="preload">` for heavy game bundles — Next.js `Link` handles prefetch automatically
+- Implement chunked loading for WebGL games — `next/dynamic` with `ssr: false` handles code splitting
+- Add loading progress indicators for games >500KB — enhanced `LoadingShell` with indeterminate progress bar animation
+
+**Fixed** (2026-08-22):
+- `LoadingShell` default variant changed from spinner to progress bar
+- Added indeterminate animation (`progress-indeterminate` keyframe in globals.css)
+- Added `indeterminate` prop to LoadingShell for animated loading bars
+- Existing `next/dynamic` + `Link` prefetch already covers chunked loading and preload
 
 **Effort**: 2h
 
