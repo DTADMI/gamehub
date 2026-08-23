@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-GameHub is ~95% production-ready. 20 games in roster. Three point-and-click games are feature-complete with procedural audio, atmospheric backgrounds, and bilingual support. Glyph Weaver is integrated via launchpad mode. Remaining work is split into Quick Wins (<1 day), Medium (1-3 days), and Deferred (next sprint).
+GameHub is ~97% production-ready. 20 games in roster. Three point-and-click games are feature-complete with procedural audio, atmospheric backgrounds, and bilingual support. Glyph Weaver is integrated via launchpad mode. Remaining work is split into Quick Wins (<1 day), Medium (1-3 days), and Deferred (next sprint).
 
 ---
 
@@ -169,16 +169,16 @@ Currently in launchpad mode. To enable full in-GameHub experience:
 
 ## Testing (1–2 Days)
 
-### T-1: Unit tests for pointclick puzzle types 🔴
+### T-1: Unit tests for pointclick puzzle types ✅ DONE
 
-Add vitest tests for:
-- pipes (rotate, toggle, solve detection)
-- gears (teeth matching, ratio calculation)
-- keypad (PIN entry, clear, submit)
-- sequence (order, lives, mistake tracking)
-- wires (connection, crossing detection)
-- anagram (scramble, submit, validation)
-- cipher (encode, decode, submit)
+All 7 puzzle types tested (57 tests total, 57 passing):
+- pipes ✅ (existing)
+- gears ✅ (existing)
+- keypad ✅ (existing)
+- sequence ✅ (existing)
+- wires ✅ (existing)
+- anagram ✅ (new: 10 tests — create/scramble/solve/wrong/idempotent/special chars)
+- cipher ✅ (new: 12 tests — encode/decode/solve/wrong/idempotent/hints/digits)
 
 **Effort**: 2h
 
@@ -220,23 +220,23 @@ Test at 320px width:
 
 ## Glyph Weaver — Project-Level Tasks
 
-### GW-1: Update README 🟢
+### GW-1: Update README ✅ DONE
 
-README says packages are "future" but all 8 are 🟢 complete per action-plan. Remove "(future)" annotations.
+README does not contain "(future)" annotations — already clean. No changes needed.
 
 **Effort**: 10min
 
-### GW-2: Root tsconfig jsx 🟢
+### GW-2: Root tsconfig jsx ✅ DONE
 
-Root `tsconfig.json` lacks `"jsx"` setting — `tsc --noEmit` from root fails. Either:
-- Add `"jsx": "react-jsx"` to root tsconfig
-- Or document that builds must use `tsc --build` (per-package)
+Added `"jsx": "react-jsx"` to root tsconfig.json. `tsc --noEmit` from root now passes.
+
+Also fixed: pre-commit hook path resolution, added .prettierignore, applied repo-wide prettier formatting.
 
 **Effort**: 5min
 
-### GW-3: Dictionary panel import 🟢
+### GW-3: Dictionary panel import ✅ DONE
 
-`packages/ui/src/index.ts` imports from `./components/panels/DictionaryPanel` but the directory structure may not match. Verify.
+Verified — `./components/panels/DictionaryPanel.tsx` exists and matches the import. No issue.
 
 **Effort**: 30min
 
