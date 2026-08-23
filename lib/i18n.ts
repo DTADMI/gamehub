@@ -1,9 +1,7 @@
 export {
   defaultLocale,
   getLocale,
-  getServerTranslations,
   I18nProvider,
-  I18nServerProvider,
   initI18n,
   type LocaleCode,
   setLocale,
@@ -14,3 +12,7 @@ export {
   useI18n,
   useTranslation,
 } from "./i18n/index";
+
+// Server-only exports — import directly from "@/lib/i18n/server" and "@/lib/i18n/server-provider"
+// DO NOT re-export server-only modules here: they use next/headers (server-only) and
+// would break the client bundle when this barrel is imported from a client component.
