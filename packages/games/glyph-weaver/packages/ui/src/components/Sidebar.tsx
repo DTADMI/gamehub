@@ -1,7 +1,7 @@
 'use client'
 
 import { ToolPalette } from './ToolPalette.js'
-import { BrushSettings } from './BrushSettings.js'
+import { BrushSettingsPanel } from './BrushSettings.js'
 import { FeatureFlagGate } from './FeatureFlagGate.js'
 import { useI18n } from '../i18n/index.js'
 import { useStore } from '../state/store.js'
@@ -60,7 +60,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
         <div className="mx-2 border-t" style={{ borderColor: 'var(--gw-border)' }} />
 
-        <BrushSettings settings={brushSettings} onChange={setBrush} />
+        <BrushSettingsPanel settings={brushSettings} onChange={setBrush} />
 
         <FeatureFlagGate flag="enableExperimentalEffects" fallback={null}>
           <div className="mx-2 border-t" style={{ borderColor: 'var(--gw-border)' }} />

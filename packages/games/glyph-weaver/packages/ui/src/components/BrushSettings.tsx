@@ -8,7 +8,7 @@ interface BrushSettingsProps {
   onChange: (settings: Partial<BrushSettings>) => void
 }
 
-export function BrushSettings({ settings, onChange }: BrushSettingsProps) {
+export function BrushSettingsPanel({ settings, onChange }: BrushSettingsProps) {
   const { t } = useI18n()
 
   return (
