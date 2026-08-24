@@ -33,7 +33,10 @@ export type GameSlug =
   | "platformer"
   | "tower-defense"
   | "spell-craft"
-  | "glyph-weaver";
+  | "glyph-weaver"
+  | "mystery-manor"
+  | "artifact-hunter"
+  | "clockwork-conspiracy";
 
 export type GameEntry = {
   slug: GameSlug;
@@ -488,6 +491,51 @@ export const games: GameManifest = {
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/glyph-weaver").then((m) => m.GlyphWeaverGame),
+  },
+  "mystery-manor": {
+    slug: "mystery-manor",
+    title: "Mystery Manor",
+    shortDescription: "Solve a Victorian murder mystery! Deduce the killer with logic grids, ciphers, and clues.",
+    tags: ["Adventure", "Puzzle", "target:dom"],
+    image: "/images/games/mystery-manor-card.svg",
+    genre: "adventure",
+    difficulty: "medium",
+    playTime: "15-20 min",
+    playerCount: "single",
+    ageRating: "13+",
+    enabled: true,
+    visible: true,
+    getComponent: () => import("@games/mystery-manor").then((m) => ({ default: m.MysteryManorGame })),
+  },
+  "artifact-hunter": {
+    slug: "artifact-hunter",
+    title: "Artifact Hunter",
+    shortDescription: "Explore an ancient Egyptian temple! Decode hieroglyphs and recover lost treasures.",
+    tags: ["Adventure", "Puzzle", "target:dom"],
+    image: "/images/games/artifact-hunter-card.svg",
+    genre: "adventure",
+    difficulty: "medium",
+    playTime: "15-20 min",
+    playerCount: "single",
+    ageRating: "10+",
+    enabled: true,
+    visible: true,
+    getComponent: () => import("@games/artifact-hunter").then((m) => ({ default: m.ArtifactHunterGame })),
+  },
+  "clockwork-conspiracy": {
+    slug: "clockwork-conspiracy",
+    title: "Clockwork Conspiracy",
+    shortDescription: "Save the city from a steampunk catastrophe! Align gears, crack ciphers, beat the clock.",
+    tags: ["Adventure", "Puzzle", "target:dom"],
+    image: "/images/games/clockwork-conspiracy-card.svg",
+    genre: "adventure",
+    difficulty: "hard",
+    playTime: "20-30 min",
+    playerCount: "single",
+    ageRating: "13+",
+    enabled: true,
+    visible: true,
+    getComponent: () => import("@games/clockwork-conspiracy").then((m) => ({ default: m.ClockworkConspiracyGame })),
   },
 };
 

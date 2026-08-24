@@ -261,6 +261,15 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
+  packages/games/artifact-hunter:
+    dependencies:
+      '@gamehub/game-platform':
+        specifier: workspace:*
+        version: link:../../game-platform
+      '@games/pointclick-engine':
+        specifier: workspace:*
+        version: link:../../pointclick-engine
+
   packages/games/block-blast:
     dependencies:
       '@gamehub/game-platform':
@@ -408,6 +417,15 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
+  packages/games/clockwork-conspiracy:
+    dependencies:
+      '@gamehub/game-platform':
+        specifier: workspace:*
+        version: link:../../game-platform
+      '@games/pointclick-engine':
+        specifier: workspace:*
+        version: link:../../pointclick-engine
+
   packages/games/elemental-conflux:
     dependencies:
       '@react-three/drei':
@@ -538,6 +556,15 @@ importers:
       typescript:
         specifier: 5.9.3
         version: 5.9.3
+
+  packages/games/mystery-manor:
+    dependencies:
+      '@gamehub/game-platform':
+        specifier: workspace:*
+        version: link:../../game-platform
+      '@games/pointclick-engine':
+        specifier: workspace:*
+        version: link:../../pointclick-engine
 
   packages/games/pattern-matching:
     dependencies:
