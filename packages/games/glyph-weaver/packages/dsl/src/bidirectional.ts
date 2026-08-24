@@ -5,7 +5,7 @@ import type {
   SigilSemantic,
   SignSemantic,
 } from '../../core/src'
-import { compileDSL } from './compiler.js'
+import { compileDSL } from './compiler'
 
 function semanticToParams(semantic: SigilSemantic | SignSemantic): string {
   const parts: string[] = []

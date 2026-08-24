@@ -1,14 +1,14 @@
-export { GlyphWeaverShell } from './components/Shell.js'
-export { Header } from './components/Header.js'
-export { Sidebar } from './components/Sidebar.js'
-export { CanvasArea } from './components/CanvasArea.js'
-export { ToolPalette } from './components/ToolPalette.js'
-export { BrushSettingsPanel } from './components/BrushSettings.js'
-export { DictionaryPanel } from './components/panels/DictionaryPanel.js'
-export { DiagnosticsPanel } from './components/panels/DiagnosticsPanel.js'
-export { SpellStateDisplay } from './components/panels/SpellStateDisplay.js'
-export { SettingsPanel } from './components/panels/SettingsPanel.js'
-export { FeatureFlagGate } from './components/FeatureFlagGate.js'
+export { GlyphWeaverShell } from './components/Shell'
+export { Header } from './components/Header'
+export { Sidebar } from './components/Sidebar'
+export { CanvasArea } from './components/CanvasArea'
+export { ToolPalette } from './components/ToolPalette'
+export { BrushSettingsPanel } from './components/BrushSettings'
+export { DictionaryPanel } from './components/panels/DictionaryPanel'
+export { DiagnosticsPanel } from './components/panels/DiagnosticsPanel'
+export { SpellStateDisplay } from './components/panels/SpellStateDisplay'
+export { SettingsPanel } from './components/panels/SettingsPanel'
+export { FeatureFlagGate } from './components/FeatureFlagGate'
 
 export {
   DrawingCanvas,
@@ -17,7 +17,7 @@ export {
   HistoryManager,
   getCursorStyle,
   clearCursorCache,
-} from './canvas/index.js'
+} from './canvas/index'
 
 export {
   I18nProvider,
@@ -25,21 +25,21 @@ export {
   resolveLocale,
   getServerTranslations,
   parseAcceptLanguage,
-} from './i18n/index.js'
-export type { Locale, TranslationMap, I18nContextValue } from './i18n/index.js'
+} from './i18n/index'
+export type { Locale, TranslationMap, I18nContextValue } from './i18n/index'
 
-export { ThemeProvider, useTheme } from './theme/index.js'
-export type { Theme } from './theme/index.js'
+export { ThemeProvider, useTheme } from './theme/index'
+export type { Theme } from './theme/index'
 
-export { useKeyboardShortcuts, getShortcutLabel, DEFAULT_SHORTCUTS } from './shortcuts/index.js'
-export type { ShortcutAction, ActionHandler } from './shortcuts/index.js'
+export { useKeyboardShortcuts, getShortcutLabel, DEFAULT_SHORTCUTS } from './shortcuts/index'
+export type { ShortcutAction, ActionHandler } from './shortcuts/index'
 
-export { useStore } from './state/index.js'
-export type { ToolType, PanelState, AppStoreState, PipelineStatus } from './state/index.js'
-export type { BrushSettings as BrushSettingsConfig } from './state/index.js'
+export { useStore } from './state/index'
+export type { ToolType, PanelState, AppStoreState, PipelineStatus } from './state/index'
+export type { BrushSettings as BrushSettingsConfig } from './state/index'
 
-export { pipelineManager } from './pipeline/index.js'
-export type { PipelineManager, RingStatus, PipelineResult } from './pipeline/index.js'
+export { pipelineManager } from './pipeline/index'
+export type { PipelineManager, RingStatus, PipelineResult } from './pipeline/index'
 
 export { GLYPH_WEAVER_VERSION, GLYPH_WEAVER_NAME } from '../../core/src'
 

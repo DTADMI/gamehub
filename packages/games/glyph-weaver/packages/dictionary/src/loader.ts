@@ -1,6 +1,6 @@
 import type { Dictionary } from '../../core/src'
-import { assertValidDictionary } from './validate.js'
-import { DEFAULT_DICTIONARY } from './index.js'
+import { assertValidDictionary } from './validate'
+import { DEFAULT_DICTIONARY } from './index'
 
 export function loadDictionary(): Dictionary {
   const dict = DEFAULT_DICTIONARY

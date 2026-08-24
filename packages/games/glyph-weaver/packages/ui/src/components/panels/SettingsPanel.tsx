@@ -1,9 +1,9 @@
 'use client'
 
-import { useI18n } from '../../i18n/index.js'
-import { useTheme, type Theme } from '../../theme/index.js'
-import { useStore } from '../../state/store.js'
-import { FeatureFlagGate } from '../FeatureFlagGate.js'
+import { useI18n } from '../../i18n/index'
+import { useTheme, type Theme } from '../../theme/index'
+import { useStore } from '../../state/store'
+import { FeatureFlagGate } from '../FeatureFlagGate'
 
 export function SettingsPanel() {
   const { t, locale, setLocale } = useI18n()

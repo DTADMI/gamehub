@@ -46,7 +46,7 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 3.1 | Design & implement `escape-room` point-and-click game | 🟡 HIGH | 📋 |
+| 3.1 | Design & implement `escape-room` point-and-click game | 🟡 HIGH | ✅ DONE — 7 scenes (study → bookshelf → desk → globe → painting → safe → escape), 5 puzzles (sequence, ATBASH cipher, wires, keypad), bilingual EN/FR, save/load, registered in metadata |
 | 3.2 | Design & implement `mystery-manor` point-and-click game | 🟡 HIGH | 📋 |
 | 3.3 | Design & implement `artifact-hunter` point-and-click game | 🟢 MEDIUM | 📋 |
 | 3.4 | Design & implement `clockwork-conspiracy` point-and-click game | 🟢 MEDIUM | 📋 |

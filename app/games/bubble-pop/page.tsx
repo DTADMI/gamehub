@@ -36,6 +36,8 @@ export default function BubblePopPage() {
           console.warn("submitScore failed (BUBBLE_POP)", err);
         }
       }
+      // Bridge to GameShell PostGameCTA
+      window.dispatchEvent(new CustomEvent("game:complete", { detail }));
     };
     window.addEventListener("bubble-pop:gameover", handler as EventListener);
     window.addEventListener("game:gameover", handler as EventListener);
@@ -47,6 +49,7 @@ export default function BubblePopPage() {
 
   return (
     <GameShell
+      gameSlug="bubble-pop"
       ariaLabel="Bubble Pop game"
       tips="Click or tap to pop bubbles — chain pops for higher scores"
     >
@@ -57,6 +60,3 @@ export default function BubblePopPage() {
     </GameShell>
   );
 }
-
-
-

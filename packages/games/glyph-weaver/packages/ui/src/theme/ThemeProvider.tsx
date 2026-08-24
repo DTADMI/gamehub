@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
 
 export type Theme = 'dark' | 'light'
 
@@ -31,19 +31,30 @@ function resolveStoredTheme(): Theme {
   return 'dark'
 }
 
+/**
+ * ThemeProvider scoped to a container div — does NOT touch documentElement.
+ * When GW is embedded in GameHub, it must not interfere with GH's own theme.
+ */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const [theme, setThemeState] = useState<Theme>('dark')
 
   useEffect(() => {
     const initial = resolveStoredTheme()
     setThemeState(initial)
-    document.documentElement.setAttribute('data-theme', initial)
+    if (containerRef.current) {
+      containerRef.current.setAttribute('data-theme', initial)
+    }
   }, [])
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
+    if (containerRef.current) {
+      containerRef.current.setAttribute('data-theme', theme)
+    }
     try {
       localStorage.setItem(STORAGE_KEY, theme)
+      // Sync to GH's theme storage for cross-game consistency
+      localStorage.setItem('gamehub-theme', theme)
     } catch {
       // localStorage unavailable
     }
@@ -60,7 +71,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return React.createElement(
     ThemeContext.Provider,
     { value: { theme, setTheme, toggleTheme } },
-    children,
+    React.createElement('div', {
+      ref: containerRef,
+      'data-theme': theme,
+      style: { minHeight: '100%' },
+    }, children),
   )
 }
 

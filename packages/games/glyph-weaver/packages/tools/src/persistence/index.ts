@@ -4,4 +4,4 @@ export {
   MemoryStorageAdapter,
   type PersistenceOptions,
   PersistenceManager,
-} from './storage.js'
+} from './storage'

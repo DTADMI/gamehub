@@ -3,8 +3,8 @@
 import { useState, useMemo } from 'react'
 import { loadDictionary } from '../../../../dictionary/src'
 import type { SigilEntry, SignEntry, SampleSpellEntry } from '../../../../core/src'
-import { useI18n } from '../../i18n/index.js'
-import { FeatureFlagGate } from '../FeatureFlagGate.js'
+import { useI18n } from '../../i18n/index'
+import { FeatureFlagGate } from '../FeatureFlagGate'
 
 type DictionaryTab = 'sigils' | 'signs' | 'samples'
 

@@ -1,20 +1,34 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { Header } from './Header.js'
-import { Sidebar } from './Sidebar.js'
-import { CanvasArea } from './CanvasArea.js'
-import { DictionaryPanel } from './panels/DictionaryPanel.js'
-import { DiagnosticsPanel } from './panels/DiagnosticsPanel.js'
-import { SpellStateDisplay } from './panels/SpellStateDisplay.js'
-import { SettingsPanel } from './panels/SettingsPanel.js'
-import { FeatureFlagGate } from './FeatureFlagGate.js'
-import { ErrorBoundary } from './ErrorBoundary.js'
-import { LoadingSpinner } from './LoadingSpinner.js'
-import { useStore } from '../state/store.js'
-import { useKeyboardShortcuts } from '../shortcuts/keyboard-shortcuts.js'
-import { useI18n } from '../i18n/index.js'
-import { PipelineManager } from '../pipeline/pipeline-manager.js'
+import { Header } from './Header'
+import { Sidebar } from './Sidebar'
+import { CanvasArea } from './CanvasArea'
+import { DictionaryPanel } from './panels/DictionaryPanel'
+import { DiagnosticsPanel } from './panels/DiagnosticsPanel'
+import { SpellStateDisplay } from './panels/SpellStateDisplay'
+import { SettingsPanel } from './panels/SettingsPanel'
+import { FeatureFlagGate } from './FeatureFlagGate'
+import { ErrorBoundary } from './ErrorBoundary'
+import { LoadingSpinner } from './LoadingSpinner'
+import { useStore } from '../state/store'
+import { useKeyboardShortcuts } from '../shortcuts/keyboard-shortcuts'
+import { useI18n } from '../i18n/index'
+import { PipelineManager } from '../pipeline/pipeline-manager'
+import { exportToSVG } from '../../../tools/src/export/svg-export'
+import { LocalStorageAdapter, PersistenceManager } from '../../../tools/src/persistence/storage'
+
+function downloadBlob(content: string, filename: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
 
 export function GlyphWeaverShell() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -29,6 +43,8 @@ export function GlyphWeaverShell() {
   const togglePanel = useStore((s) => s.togglePanel)
   const setPipelineManager = useStore((s) => s.setPipelineManager)
   const config = useStore((s) => s.config)
+  const strokes = useStore((s) => s.strokes)
+  const spellState = useStore((s) => s.spellState)
   const { t } = useI18n()
 
   useEffect(() => {
@@ -36,6 +52,34 @@ export function GlyphWeaverShell() {
     setPipelineManager(pm)
     setInitializing(false)
   }, [config, setPipelineManager])
+
+  const handleSave = useCallback(() => {
+    try {
+      const adapter = new LocalStorageAdapter('gw')
+      const pm = new PersistenceManager({ adapter })
+      pm.saveSlot('current', {
+        strokes,
+        config,
+        spellName: spellState?.element ? `${spellState.element}-spell` : 'untitled',
+        version: 1,
+        timestamp: Date.now(),
+      })
+    } catch (err) {
+      console.error('Save failed:', err)
+    }
+  }, [strokes, config, spellState])
+
+  const handleExport = useCallback(() => {
+    try {
+      const svg = exportToSVG(strokes, 800, 800, Boolean(spellState?.status === 'active'))
+      const name = spellState?.element
+        ? `${spellState.element}-glyph-${Date.now()}.svg`
+        : `glyph-${Date.now()}.svg`
+      downloadBlob(svg, name, 'image/svg+xml')
+    } catch (err) {
+      console.error('Export failed:', err)
+    }
+  }, [strokes, spellState])
 
   const handleAction = useCallback(
     (action: string) => {
@@ -47,10 +91,10 @@ export function GlyphWeaverShell() {
           redo()
           break
         case 'save':
-          console.log('save not yet implemented')
+          handleSave()
           break
         case 'export':
-          console.log('export not yet implemented')
+          handleExport()
           break
         case 'clear':
           clear()
@@ -78,7 +122,7 @@ export function GlyphWeaverShell() {
           break
       }
     },
-    [undo, redo, clear, setTool, togglePanel],
+    [undo, redo, clear, setTool, togglePanel, handleSave, handleExport],
   )
 
   useKeyboardShortcuts(handleAction)

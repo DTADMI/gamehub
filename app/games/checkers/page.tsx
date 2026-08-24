@@ -1,8 +1,8 @@
 "use client";
-import { enableGameKeyCapture, GameHUD, getGame, isGameLaunchable } from "@gamehub/game-platform";
+import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const CheckersGame = dynamic(
   () => {
@@ -19,36 +19,16 @@ const CheckersGame = dynamic(
 );
 
 export default function CheckersPage() {
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const [seed, setSeed] = useState(0);
 
-  useEffect(() => {
-    const el = rootRef.current;
-    el?.focus();
-    const cleanup = enableGameKeyCapture({ rootEl: el ?? undefined });
-    return () => cleanup();
-  }, []);
-
   return (
-    <div
-      ref={rootRef}
-      className="relative min-h-[80vh] outline-none focus:outline-none"
-      tabIndex={0}
-      role="application"
-      aria-label="Checkers game"
+    <GameShell
+      ariaLabel="Checkers game"
+      tips="Click a piece then a target tile • Follow legal moves to capture"
+      gameSlug="checkers"
+      onRestartAction={() => setSeed((s) => s + 1)}
     >
       <CheckersGame key={seed} />
-      <GameHUD
-        onPauseToggleAction={() => {
-          // Some board UIs toggle hints with Space; we dispatch it here if the game listens to keyboard
-          window.dispatchEvent(new KeyboardEvent("keydown", { key: " ", code: "Space" }));
-        }}
-        onRestartAction={() => setSeed((s) => s + 1)}
-        tips="Click a piece then a target tile • Follow legal moves to capture"
-      />
-    </div>
+    </GameShell>
   );
 }
-
-
-

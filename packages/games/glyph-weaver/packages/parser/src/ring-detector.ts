@@ -1,6 +1,6 @@
 import type { Point, RingCandidate } from '../../core/src'
-import type { CleanedStroke } from './stroke-capture.js'
-import { roundness, smoothness, computeNeatness } from './ring-metrics.js'
+import type { CleanedStroke } from './stroke-capture'
+import { roundness, smoothness, computeNeatness } from './ring-metrics'
 
 interface CircleFit {
   center: Point

@@ -1,4 +1,4 @@
-import type { TranslationMap } from '../config.js'
+import type { TranslationMap } from '../config'
 
 const fr: TranslationMap = {
   app: {

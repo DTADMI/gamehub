@@ -1,8 +1,8 @@
 "use client";
-import { enableGameKeyCapture, getGame, isGameLaunchable } from "@gamehub/game-platform";
+import { GameShell, getGame, isGameLaunchable } from "@gamehub/game-platform";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 const KnitzyGame = dynamic(
   () => {
@@ -19,27 +19,30 @@ const KnitzyGame = dynamic(
 );
 
 export default function KnitzyPage() {
-  const rootRef = useRef<HTMLDivElement | null>(null);
-
+  
+  // Bridge game-specific completion events to GameShell's game:complete
   useEffect(() => {
-    const el = rootRef.current;
-    el?.focus();
-    const cleanup = enableGameKeyCapture({ rootEl: el ?? undefined });
-    return () => cleanup();
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ score?: number; won?: boolean }>).detail ?? {};
+      window.dispatchEvent(new CustomEvent('game:complete', { detail }));
+    };
+    // Listen for both game-specific and generic game:over events
+    window.addEventListener('knitzy:gameover', handler);
+    window.addEventListener('game:gameover', handler);
+    return () => {
+      window.removeEventListener('knitzy:gameover', handler);
+      window.removeEventListener('game:gameover', handler);
+    };
   }, []);
 
+
   return (
-    <div
-      ref={rootRef}
-      className="relative min-h-[80vh] outline-none focus:outline-none"
-      tabIndex={0}
-      role="application"
-      aria-label="Knitzy game"
+    <GameShell
+      ariaLabel="Knitzy game"
+      tips="Swap adjacent tiles to match patterns and clear the board"
+      gameSlug="knitzy"
     >
       <KnitzyGame />
-    </div>
+    </GameShell>
   );
 }
-
-
-

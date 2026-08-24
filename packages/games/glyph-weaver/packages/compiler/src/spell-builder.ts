@@ -1,9 +1,9 @@
 import type { SpellIR, ElementId, ManifestationId, ParserWarning } from '../../core/src'
 import type { CompilerWarning } from '../../core/src/types'
-import type { ComputedParameters } from './parameter-computer.js'
-import type { DirectionResult } from './direction-computer.js'
-import type { QualityResult } from './quality-scorer.js'
-import type { SignAggregationResult } from './sign-aggregator.js'
+import type { ComputedParameters } from './parameter-computer'
+import type { DirectionResult } from './direction-computer'
+import type { QualityResult } from './quality-scorer'
+import type { SignAggregationResult } from './sign-aggregator'
 
 export interface SpellBuilderInput {
   sigilElement: ElementId | null

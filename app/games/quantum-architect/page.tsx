@@ -4,7 +4,7 @@ import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard"
 import { useAuth } from "@gamehub/game-platform/contexts/AuthContext";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { submitScore } from "@/lib/score-submit";
 
@@ -38,6 +38,8 @@ export default function QuantumArchitectPage() {
           console.warn("submitScore failed (quantum-architect)", err);
         }
       }
+      // Bridge to GameShell PostGameCTA
+      window.dispatchEvent(new CustomEvent("game:complete", { detail }));
     };
     window.addEventListener("quantum-architect:gameover", handler as EventListener);
     window.addEventListener("game:gameover", handler as EventListener);
@@ -49,6 +51,7 @@ export default function QuantumArchitectPage() {
 
   return (
     <GameShell
+      gameSlug="quantum-architect"
       ariaLabel="Quantum Architect game"
       tips="WASD/Arrows to move | Space to observe nearest platform"
       onRestartAction={() => setSeed((s) => s + 1)}

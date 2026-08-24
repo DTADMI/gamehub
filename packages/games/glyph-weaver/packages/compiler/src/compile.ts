@@ -1,13 +1,13 @@
 import type { GlyphAST, SpellIR, CompilerConfig, CompilerWarning } from '../../core/src'
 import { DEFAULT_CONFIG } from '../../core/src'
-import { extractPrimarySigil } from './sigil-extractor.js'
-import { aggregateSigns } from './sign-aggregator.js'
-import { computeParameters } from './parameter-computer.js'
-import { computeDirection } from './direction-computer.js'
-import { computeQuality, computeStability, computeDuration } from './quality-scorer.js'
-import { validateSpellInput } from './validate.js'
-import { buildSpellIR, buildInvalidSpell } from './spell-builder.js'
-import { mergeWarnings } from './warnings.js'
+import { extractPrimarySigil } from './sigil-extractor'
+import { aggregateSigns } from './sign-aggregator'
+import { computeParameters } from './parameter-computer'
+import { computeDirection } from './direction-computer'
+import { computeQuality, computeStability, computeDuration } from './quality-scorer'
+import { validateSpellInput } from './validate'
+import { buildSpellIR, buildInvalidSpell } from './spell-builder'
+import { mergeWarnings } from './warnings'
 
 export function compileSpell(ast: GlyphAST, config?: CompilerConfig): SpellIR {
   const validation = validateSpellInput(ast)

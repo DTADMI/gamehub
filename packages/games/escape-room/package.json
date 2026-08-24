@@ -1,0 +1,24 @@
+{
+  "name": "@games/escape-room",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "srcfile:///index.ts",
+  "types": "srcfile:///index.ts",
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
+  },
+  "dependencies": {
+    "@gamehub/game-platform": "workspace:*",
+    "@games/pointclick-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}

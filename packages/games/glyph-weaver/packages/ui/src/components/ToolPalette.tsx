@@ -1,7 +1,7 @@
 'use client'
 
-import type { ToolType } from '../state/types.js'
-import { useI18n } from '../i18n/index.js'
+import type { ToolType } from '../state/types'
+import { useI18n } from '../i18n/index'
 
 interface ToolPaletteProps {
   currentTool: ToolType

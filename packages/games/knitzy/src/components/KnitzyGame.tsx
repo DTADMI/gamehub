@@ -386,6 +386,16 @@ export const KnitzyGame: React.FC = () => {
         }
       } catch {}
       soundManager.playSound("levelComplete", 0.8);
+      // Dispatch game:complete for GameShell PostGameCTA
+      window.dispatchEvent(
+        new CustomEvent("game:complete", { detail: { score: ms } })
+      );
+      window.dispatchEvent(
+        new CustomEvent("knitzy:gameover", { detail: { score: ms } })
+      );
+      window.dispatchEvent(
+        new CustomEvent("game:gameover", { detail: { score: ms } })
+      );
       if (difficultyIdx + 1 < GRID_CONFIGS.length && unlocked < difficultyIdx + 1) {
         const nextUnlocked = difficultyIdx + 1;
         setUnlocked(nextUnlocked);

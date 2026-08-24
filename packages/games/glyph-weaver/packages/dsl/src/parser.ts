@@ -1,4 +1,4 @@
-import { TokenType, type Token } from './grammar.js'
+import { TokenType, type Token } from './grammar'
 import type {
   ProgramNode,
   StatementNode,
@@ -9,8 +9,8 @@ import type {
   SignNode,
   BlockNode,
   ParamNode,
-} from './ast-nodes.js'
-import { DslError } from './errors.js'
+} from './ast-nodes'
+import { DslError } from './errors'
 
 export class Parser {
   private tokens: Token[] = []

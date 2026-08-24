@@ -4,7 +4,7 @@ import {
   ManifestationIdSchema,
   DirectionModeSchema,
   LayerLabelSchema,
-} from './primitives.js'
+} from './primitives'
 
 export const StrokeTemplatePointSchema = z.object({
   x: z.number(),

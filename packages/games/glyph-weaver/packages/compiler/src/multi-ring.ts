@@ -1,6 +1,6 @@
 import type { GlyphAST, SpellIR, CompilerConfig, CompilerWarning } from '../../core/src'
 import { DEFAULT_CONFIG } from '../../core/src'
-import { compileSpell } from './compile.js'
+import { compileSpell } from './compile'
 
 export function compileMultiRing(asts: GlyphAST[], config?: CompilerConfig): SpellIR {
   if (asts.length === 0) {

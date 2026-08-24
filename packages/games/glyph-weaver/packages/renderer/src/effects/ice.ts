@@ -1,7 +1,7 @@
-import type { Effect, EffectConfig } from '../effect-types.js'
-import { ParticleSystem } from '../webgl/particle-system.js'
-import { VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_ICE } from '../webgl/shaders.js'
-import { createShaderProgram } from '../webgl/context.js'
+import type { Effect, EffectConfig } from '../effect-types'
+import { ParticleSystem } from '../webgl/particle-system'
+import { VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_ICE } from '../webgl/shaders'
+import { createShaderProgram } from '../webgl/context'
 
 export class IceEffect implements Effect {
   private config: EffectConfig | null = null

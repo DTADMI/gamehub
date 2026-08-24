@@ -208,6 +208,12 @@ export function SpellCraftGame() {
 
     if (result.active && result.element) {
       castTimeRef.current = performance.now();
+      // Dispatch game:complete for GameShell PostGameCTA
+      window.dispatchEvent(
+        new CustomEvent("game:complete", {
+          detail: { score: Math.round(result.quality * 100), element: result.element },
+        })
+      );
       const color = ELEMENT_COLORS[result.element];
       const { width, height } = canvas;
       const cx = width / 2;

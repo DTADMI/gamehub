@@ -15,12 +15,12 @@ import type {
   SignSemantic,
   Point,
 } from '../../core/src'
-import type { BlockNode, SigilNode, SignNode, SpellDefNode } from './ast-nodes.js'
-import { Lexer } from './lexer.js'
-import { Parser } from './parser.js'
-import { resolveImports } from './importer.js'
-import { DslError } from './errors.js'
-import { TokenType } from './grammar.js'
+import type { BlockNode, SigilNode, SignNode, SpellDefNode } from './ast-nodes'
+import { Lexer } from './lexer'
+import { Parser } from './parser'
+import { resolveImports } from './importer'
+import { DslError } from './errors'
+import { TokenType } from './grammar'
 
 export interface CompileResult {
   ast: GlyphAST

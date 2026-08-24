@@ -1,5 +1,5 @@
 import type { Point } from '../../core/src'
-import type { CleanedStroke } from './stroke-capture.js'
+import type { CleanedStroke } from './stroke-capture'
 
 class UnionFind {
   parent: number[]

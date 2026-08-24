@@ -1,4 +1,4 @@
-import { TokenType, type Token } from './grammar.js'
+import { TokenType, type Token } from './grammar'
 
 export class Lexer {
   private source: string = ''

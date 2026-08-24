@@ -23,6 +23,7 @@ export default function PlatformerPage() {
 
   return (
     <GameShell
+      gameSlug="platformer"
       ariaLabel="Platformer game"
       tips="Arrows/WASD to move • Space to jump"
       onRestartAction={() => setSeed((s) => s + 1)}

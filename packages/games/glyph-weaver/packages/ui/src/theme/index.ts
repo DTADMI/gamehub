@@ -1,2 +1,2 @@
-export { ThemeProvider, useTheme } from './ThemeProvider.js'
-export type { Theme } from './ThemeProvider.js'
+export { ThemeProvider, useTheme } from './ThemeProvider'
+export type { Theme } from './ThemeProvider'

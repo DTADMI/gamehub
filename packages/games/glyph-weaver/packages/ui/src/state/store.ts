@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import type { Stroke, SpellIR, AppConfig } from '../../../core/src'
 import { DEFAULT_CONFIG } from '../../../core/src'
-import { PipelineManager } from '../pipeline/pipeline-manager.js'
-import type { ToolType, BrushSettings, PanelState, AppStoreState } from './types.js'
+import { PipelineManager } from '../pipeline/pipeline-manager'
+import type { ToolType, BrushSettings, PanelState, AppStoreState } from './types'
 
 const DEFAULT_BRUSH: BrushSettings = {
   size: 4,

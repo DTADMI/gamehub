@@ -1,6 +1,6 @@
 import type { RingCandidate } from '../../../core/src'
 import type { Direction3D } from '../../../core/src'
-import { applyTilt } from '../direction.js'
+import { applyTilt } from '../direction'
 
 export interface PortalProjection {
   centerX: number

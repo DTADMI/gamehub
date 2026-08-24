@@ -71,10 +71,14 @@ export default function ElementalConfluxPage() {
     window.dispatchEvent(
       new CustomEvent("game:gameover", { detail: { score } })
     );
+    window.dispatchEvent(
+      new CustomEvent("game:complete", { detail: { score } })
+    );
   }, []);
 
   return (
     <GameShell
+      gameSlug="elemental-conflux"
       ariaLabel="Elemental Conflux game"
       tips="WASD/Arrows to move | Tab/1/2 to switch characters | F = Fire ability | Q = Water ability"
       onRestartAction={() => setSeed((s) => s + 1)}

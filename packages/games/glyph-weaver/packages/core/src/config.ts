@@ -1,4 +1,4 @@
-import type { AppConfig } from './types/config.js'
+import type { AppConfig } from './types/config'
 
 export const DEFAULT_CONFIG: AppConfig = {
   appVersion: '0.1.0',

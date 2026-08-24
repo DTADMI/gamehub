@@ -24,6 +24,7 @@ export type GameSlug =
   | "rite-of-discovery"
   | "systems-discovery"
   | "toymaker-escape"
+  | "escape-room"
   | "chrono-shift"
   | "elemental-conflux"
   | "quantum-architect"
@@ -125,7 +126,7 @@ export const games: GameManifest = {
     ageRating: "All Ages",
     enabled: true,
     visible: true,
-    backgroundImage: undefined,
+    backgroundImage: "/images/bg-snake.svg",
     preloadAssets: [],
     // @ts-ignore
     getComponent: () => import("@games/snake").then((m) => m.SnakeGame),
@@ -308,6 +309,25 @@ export const games: GameManifest = {
     getComponent: () =>
       // @ts-ignore
       import("@games/toymaker-escape").then((m) => m.ToymakerEscapeGame),
+  },
+  "escape-room": {
+    slug: "escape-room",
+    title: "Escape Room",
+    shortDescription: "You're locked in Professor Aldric's study. Solve puzzles, find clues, and escape. 5 interconnected puzzles.",
+    tags: ["Escape", "Puzzles", "Story", "Mystery", "narrative", "impl:narrative-engine", "target:keep"],
+    image: "/imagesfile:///games/escape-room-card.svg",
+    genre: "adventure",
+    difficulty: "medium",
+    playTime: "10-15 min",
+    playerCount: "single",
+    ageRating: "10+",
+    enabled: true,
+    visible: true,
+    backgroundImage: "/imagesfile:///bg-abstract-dark.svg",
+    preloadAssets: [],
+    getComponent: () =>
+      // @ts-ignore
+      import("@games/escape-room").then((m) => m.EscapeRoomGame),
   },
   "chrono-shift": {
     slug: "chrono-shift",

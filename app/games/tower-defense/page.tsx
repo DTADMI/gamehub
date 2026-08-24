@@ -23,6 +23,7 @@ export default function TowerDefensePage() {
 
   return (
     <GameShell
+      gameSlug="tower-defense"
       ariaLabel="Tower Defense game"
       tips="Click to place towers • Defend the path against waves"
       onRestartAction={() => setSeed((s) => s + 1)}

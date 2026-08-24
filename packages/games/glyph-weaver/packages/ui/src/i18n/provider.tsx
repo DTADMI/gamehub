@@ -1,9 +1,9 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import type { Locale, TranslationMap, I18nContextValue } from './config.js'
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, COOKIE_KEY, STORAGE_KEY } from './config.js'
-import { en, fr } from './translations/index.js'
+import type { Locale, TranslationMap, I18nContextValue } from './config'
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from './config'
+import { en, fr } from './translations/index'
 
 const translations: Record<Locale, TranslationMap> = { en, fr }
 
@@ -32,13 +32,21 @@ function setCookie(name: string, value: string, days = 365): void {
 }
 
 function resolveClientLocale(): Locale {
-  const fromCookie = readCookie(COOKIE_KEY)
-  if (fromCookie && SUPPORTED_LOCALES.includes(fromCookie as Locale)) {
-    return fromCookie as Locale
+  // ── Priority 1: GameHub's shared locale cookie (GW is embedded in GH) ──
+  const ghCookie = readCookie('gamehub-locale')
+  if (ghCookie && SUPPORTED_LOCALES.includes(ghCookie as Locale)) {
+    return ghCookie as Locale
   }
 
+  // ── Priority 2: GW's own cookie (standalone fallback) ──
+  const gwCookie = readCookie('glyph-weaver-locale')
+  if (gwCookie && SUPPORTED_LOCALES.includes(gwCookie as Locale)) {
+    return gwCookie as Locale
+  }
+
+  // ── Priority 3: localStorage ──
   try {
-    const fromStorage = localStorage.getItem(STORAGE_KEY)
+    const fromStorage = localStorage.getItem('gamehub-locale') ?? localStorage.getItem('glyph-weaver-locale')
     if (fromStorage && SUPPORTED_LOCALES.includes(fromStorage as Locale)) {
       return fromStorage as Locale
     }
@@ -46,6 +54,7 @@ function resolveClientLocale(): Locale {
     // localStorage unavailable
   }
 
+  // ── Priority 4: browser language ──
   if (typeof navigator !== 'undefined' && navigator.languages) {
     for (const lang of navigator.languages) {
       const base = lang.split('-')[0]!
@@ -67,15 +76,30 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     setLocaleState(resolveClientLocale())
   }, [])
 
+  // ── Listen for GameHub locale changes via custom event ──
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ locale: string }>).detail
+      if (detail?.locale && SUPPORTED_LOCALES.includes(detail.locale as Locale)) {
+        setLocaleState(detail.locale as Locale)
+      }
+    }
+    window.addEventListener('gamehub:localeChange', handler)
+    return () => window.removeEventListener('gamehub:localeChange', handler)
+  }, [])
+
   const setLocale = useCallback((next: Locale) => {
     if (!SUPPORTED_LOCALES.includes(next)) return
     setLocaleState(next)
     try {
-      localStorage.setItem(STORAGE_KEY, next)
+      localStorage.setItem('glyph-weaver-locale', next)
+      // Also sync to GameHub's locale storage so GH and GW stay in sync
+      localStorage.setItem('gamehub-locale', next)
     } catch {
       // localStorage unavailable
     }
-    setCookie(COOKIE_KEY, next)
+    setCookie('glyph-weaver-locale', next)
+    setCookie('gamehub-locale', next)
   }, [])
 
   const t = useCallback(
@@ -97,4 +121,4 @@ export function useI18n(): I18nContextValue {
   return ctx
 }
 
-export type { Locale, I18nContextValue } from './config.js'
+export type { Locale, I18nContextValue } from './config'

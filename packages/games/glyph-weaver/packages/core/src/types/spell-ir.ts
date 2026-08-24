@@ -1,5 +1,5 @@
-import type { ElementId, ManifestationId } from './primitives.js'
-import type { ParserWarning } from './glyph-ast.js'
+import type { ElementId, ManifestationId } from './primitives'
+import type { ParserWarning } from './glyph-ast'
 
 export interface Direction3D {
   x: number

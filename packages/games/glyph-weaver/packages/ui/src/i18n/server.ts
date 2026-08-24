@@ -1,6 +1,6 @@
-import type { Locale, TranslationMap } from './config.js'
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, COOKIE_KEY } from './config.js'
-import { en, fr } from './translations/index.js'
+import type { Locale, TranslationMap } from './config'
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, COOKIE_KEY } from './config'
+import { en, fr } from './translations/index'
 
 const translations: Record<Locale, TranslationMap> = { en, fr }
 
@@ -57,5 +57,5 @@ export function getServerTranslations(locale: Locale): {
   }
 }
 
-export { SUPPORTED_LOCALES, DEFAULT_LOCALE, COOKIE_KEY } from './config.js'
-export type { Locale, TranslationMap } from './config.js'
+export { SUPPORTED_LOCALES, DEFAULT_LOCALE, COOKIE_KEY } from './config'
+export type { Locale, TranslationMap } from './config'

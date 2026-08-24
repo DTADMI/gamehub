@@ -15,38 +15,38 @@ import {
   smoothStroke,
   simplifyStroke,
   computeCenterAndBounds,
-} from './stroke-capture.js'
-import type { CleanedStroke } from './stroke-capture.js'
-export type { CleanedStroke } from './stroke-capture.js'
+} from './stroke-capture'
+import type { CleanedStroke } from './stroke-capture'
+export type { CleanedStroke } from './stroke-capture'
 
-import { connectedComponents, segmentStrokes } from './stroke-analysis.js'
+import { connectedComponents, segmentStrokes } from './stroke-analysis'
 import {
   detectRing,
   detectCompleteness,
   computeRingQuality,
   detectMultipleRings,
   detectActivation,
-} from './ring-detector.js'
-import { roundness, smoothness as ringSmoothness, computeNeatness } from './ring-metrics.js'
+} from './ring-detector'
+import { roundness, smoothness as ringSmoothness, computeNeatness } from './ring-metrics'
 import {
   templateMatch,
   rotationInvariantMatch,
   computeStructuralScore,
   computeCompositionalScore,
-} from './template-matcher.js'
+} from './template-matcher'
 import {
   detectLayer,
   computeRadiusNorm,
   computeAngleDeg,
   computeOrientationDeg,
-} from './layer-detector.js'
+} from './layer-detector'
 import {
   computeConfidence,
   detectAmbiguity,
   detectContamination,
   computePositionScore,
   computeSizeScore,
-} from './confidence-scorer.js'
+} from './confidence-scorer'
 
 import {
   buildGlyphAST,
@@ -57,7 +57,7 @@ import {
   computeGlobalMetrics,
   determineRadialFacing,
   computeClosedness,
-} from './ast-builder.js'
+} from './ast-builder'
 
 export const PARSER_VERSION = '0.1.0'
 

@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { useI18n } from '../../i18n/index.js'
-import { useStore } from '../../state/store.js'
+import { useI18n } from '../../i18n/index'
+import { useStore } from '../../state/store'
 
 type DiagSection = 'parser' | 'ast' | 'ir' | 'warnings'
 

@@ -6,7 +6,7 @@ import {
   ElementIdSchema,
   ManifestationIdSchema,
   DirectionModeSchema,
-} from './primitives.js'
+} from './primitives'
 
 const SymbolShapeSchema = z.object({
   elongation: z.number(),

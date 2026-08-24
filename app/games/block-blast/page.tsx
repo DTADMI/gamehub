@@ -24,6 +24,7 @@ export default function BlockBlastPage() {
 
   return (
     <GameShell
+      gameSlug="block-blast"
       ariaLabel="Block Blast game"
       tips="Drag pieces onto the grid • Clear rows and columns to score"
       onRestartAction={() => setSeed((s) => s + 1)}

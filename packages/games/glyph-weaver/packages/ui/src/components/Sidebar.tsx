@@ -1,10 +1,10 @@
 'use client'
 
-import { ToolPalette } from './ToolPalette.js'
-import { BrushSettingsPanel } from './BrushSettings.js'
-import { FeatureFlagGate } from './FeatureFlagGate.js'
-import { useI18n } from '../i18n/index.js'
-import { useStore } from '../state/store.js'
+import { ToolPalette } from './ToolPalette'
+import { BrushSettingsPanel } from './BrushSettings'
+import { FeatureFlagGate } from './FeatureFlagGate'
+import { useI18n } from '../i18n/index'
+import { useStore } from '../state/store'
 
 interface SidebarProps {
   open: boolean

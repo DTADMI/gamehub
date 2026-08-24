@@ -1,4 +1,4 @@
-import type { ToolType } from '../state/types.js'
+import type { ToolType } from '../state/types'
 
 const CURSOR_CACHE = new Map<string, string>()
 

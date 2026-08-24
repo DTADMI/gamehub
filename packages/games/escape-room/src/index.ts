@@ -1,0 +1,1 @@
+export { EscapeRoomGame as default, EscapeRoomGame } from "./components/EscapeRoomGame";

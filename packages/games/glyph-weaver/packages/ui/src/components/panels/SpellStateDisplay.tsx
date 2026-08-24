@@ -1,7 +1,7 @@
 'use client'
 
-import { useI18n } from '../../i18n/index.js'
-import { useStore } from '../../state/store.js'
+import { useI18n } from '../../i18n/index'
+import { useStore } from '../../state/store'
 
 export function SpellStateDisplay() {
   const { t } = useI18n()

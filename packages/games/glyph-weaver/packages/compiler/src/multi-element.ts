@@ -6,7 +6,7 @@ import type {
   CompilerWarning,
 } from '../../core/src'
 import { DEFAULT_CONFIG } from '../../core/src'
-import { compileSpell } from './compile.js'
+import { compileSpell } from './compile'
 
 export const ELEMENT_COMBINATION_RULES: Record<string, { [key: string]: ElementId }> = {
   fire: {

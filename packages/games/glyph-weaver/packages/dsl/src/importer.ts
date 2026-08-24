@@ -1,5 +1,5 @@
-import type { StatementNode } from './ast-nodes.js'
-import { STDLIB_SPELLS } from './stdlib.js'
+import type { StatementNode } from './ast-nodes'
+import { STDLIB_SPELLS } from './stdlib'
 
 export interface ImportResult {
   name: string

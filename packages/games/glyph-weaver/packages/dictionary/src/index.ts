@@ -1,13 +1,13 @@
 import type { Dictionary } from '../../core/src'
-import { sigils } from './sigils.js'
-import { signs } from './signs.js'
-import { sampleSpells } from './sample-spells.js'
+import { sigils } from './sigils'
+import { signs } from './signs'
+import { sampleSpells } from './sample-spells'
 
-export { sigils } from './sigils.js'
-export { signs } from './signs.js'
-export { sampleSpells } from './sample-spells.js'
-export { validateDictionary, assertValidDictionary } from './validate.js'
-export { DictionaryWatcher, watchDictionary } from './loader.js'
+export { sigils } from './sigils'
+export { signs } from './signs'
+export { sampleSpells } from './sample-spells'
+export { validateDictionary, assertValidDictionary } from './validate'
+export { DictionaryWatcher, watchDictionary } from './loader'
 
 export const DEFAULT_DICTIONARY: Dictionary = {
   sigils,

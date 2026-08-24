@@ -1,8 +1,8 @@
 'use client'
 
-import { useI18n } from '../i18n/index.js'
-import { useTheme } from '../theme/index.js'
-import { useStore } from '../state/store.js'
+import { useI18n } from '../i18n/index'
+import { useTheme } from '../theme/index'
+import { useStore } from '../state/store'
 
 interface HeaderProps {
   onToggleSidebar: () => void

@@ -2,9 +2,9 @@
 
 import { useRef, useEffect, useCallback } from 'react'
 import type { Point, Stroke } from '../../../core/src'
-import { useStore } from '../state/store.js'
-import { getCursorStyle } from './cursor.js'
-import { pipelineManager } from '../pipeline/index.js'
+import { useStore } from '../state/store'
+import { getCursorStyle } from './cursor'
+import { pipelineManager } from '../pipeline/index'
 
 function drawStroke(ctx: CanvasRenderingContext2D, stroke: Stroke): void {
   if (stroke.points.length < 2) return

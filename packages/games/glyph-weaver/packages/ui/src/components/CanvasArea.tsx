@@ -1,8 +1,8 @@
 'use client'
 
-import { DrawingCanvas } from '../canvas/DrawingCanvas.js'
-import { EffectsOverlay } from '../canvas/EffectsOverlay.js'
-import { useStore } from '../state/store.js'
+import { DrawingCanvas } from '../canvas/DrawingCanvas'
+import { EffectsOverlay } from '../canvas/EffectsOverlay'
+import { useStore } from '../state/store'
 
 export function CanvasArea() {
   const spellState = useStore((s) => s.spellState)

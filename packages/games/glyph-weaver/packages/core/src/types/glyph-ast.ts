@@ -6,7 +6,7 @@ import type {
   DirectionMode,
   ManifestationId,
   ElementId,
-} from './primitives.js'
+} from './primitives'
 
 export interface RingCandidate {
   found: boolean

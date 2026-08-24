@@ -1,9 +1,9 @@
-export { compileDSL } from './compiler.js'
-export { glyphASTtoDSL, DSLtoGlyphAST } from './bidirectional.js'
-export { Lexer } from './lexer.js'
-export { Parser } from './parser.js'
-export { TokenType } from './grammar.js'
-export type { Token } from './grammar.js'
+export { compileDSL } from './compiler'
+export { glyphASTtoDSL, DSLtoGlyphAST } from './bidirectional'
+export { Lexer } from './lexer'
+export { Parser } from './parser'
+export { TokenType } from './grammar'
+export type { Token } from './grammar'
 export type {
   ProgramNode,
   SpellDefNode,
@@ -14,10 +14,10 @@ export type {
   ParamNode,
   ImportNode,
   StatementNode,
-} from './ast-nodes.js'
-export { DslError, formatError, formatErrors } from './errors.js'
-export type { DslSeverity } from './errors.js'
-export { STDLIB_SPELLS } from './stdlib.js'
-export { resolveImport, resolveImports } from './importer.js'
-export type { ImportResult } from './importer.js'
-export type { CompileResult } from './compiler.js'
+} from './ast-nodes'
+export { DslError, formatError, formatErrors } from './errors'
+export type { DslSeverity } from './errors'
+export { STDLIB_SPELLS } from './stdlib'
+export { resolveImport, resolveImports } from './importer'
+export type { ImportResult } from './importer'
+export type { CompileResult } from './compiler'

@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
-import { useI18n } from '../i18n/index.js'
+import { useI18n } from '../i18n/index'
 
 interface ErrorBoundaryProps {
   children: ReactNode

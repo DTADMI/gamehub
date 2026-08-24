@@ -954,6 +954,8 @@ export default function QuantumArchitectGame() {
   const [gamePhase, setGamePhase] = useState<"title" | "playing" | "win">("title");
   const [nearPlatformBias, setNearPlatformBias] = useState<string>("-");
   const [crystalsCollected, setCrystalsCollected] = useState(0);
+  const scoreRef = useRef(score);
+  scoreRef.current = score;
 
   const handleStart = useCallback(() => {
     setLevel(0); setScore(0); setObservations(0); setGamePhase("playing");
@@ -987,8 +989,19 @@ export default function QuantumArchitectGame() {
   );
 
   const handleGameComplete = useCallback(() => {
-    setScore((s) => s + 2500);
+    const finalScore = scoreRef.current + 2500;
+    setScore(finalScore);
     setGamePhase("win");
+    // Dispatch game:complete for GameShell PostGameCTA
+    window.dispatchEvent(
+      new CustomEvent("game:complete", { detail: { score: finalScore, won: true } })
+    );
+    window.dispatchEvent(
+      new CustomEvent("quantum-architect:gameover", { detail: { score: finalScore, won: true } })
+    );
+    window.dispatchEvent(
+      new CustomEvent("game:gameover", { detail: { score: finalScore } })
+    );
   }, []);
 
   const handleReset = useCallback(() => {}, [] as never[]);

@@ -91,6 +91,8 @@ export function I18nProvider({
         document.cookie = `gamehub-locale=${newLocale}; path=/; max-age=31536000; samesite=lax`;
         document.documentElement.dir = isRTL(newLocale) ? "rtl" : "ltr";
         document.documentElement.lang = newLocale;
+        // Notify embedded games (GW, etc.) to sync their locale
+        window.dispatchEvent(new CustomEvent("gamehub:localeChange", { detail: { locale: newLocale } }));
       }
       loadTranslations(newLocale);
     },

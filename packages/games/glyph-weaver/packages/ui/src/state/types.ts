@@ -1,5 +1,5 @@
 import type { Stroke, SpellIR, AppConfig, GlyphAST } from '../../../core/src'
-import type { PipelineManager } from '../pipeline/index.js'
+import type { PipelineManager } from '../pipeline/index'
 
 export type ToolType = 'pen' | 'eraser' | 'select' | 'hand'
 

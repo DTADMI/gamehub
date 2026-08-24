@@ -48,6 +48,7 @@ export default function TetrisGamePage() {
 
   return (
     <GameShell
+      gameSlug="tetris"
       ariaLabel="Tetris game"
       tips="Arrows to move • Up to rotate • Space to drop/pause"
       onRestartAction={() => setSeed((s) => s + 1)}

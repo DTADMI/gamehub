@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ElementIdSchema, ManifestationIdSchema } from './primitives.js'
+import { ElementIdSchema, ManifestationIdSchema } from './primitives'
 
 export const Direction3DSchema = z.object({
   x: z.number(),

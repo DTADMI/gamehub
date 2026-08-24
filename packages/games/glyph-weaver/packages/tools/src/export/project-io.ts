@@ -1,7 +1,7 @@
 import type { Stroke } from '../../../core/src'
-import { ProjectDataSchema, type ProjectData } from './project-schema.js'
+import { ProjectDataSchema, type ProjectData } from './project-schema'
 
-export type { ProjectData } from './project-schema.js'
+export type { ProjectData } from './project-schema'
 
 export function exportProject(
   strokes: Stroke[],

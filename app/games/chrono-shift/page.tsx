@@ -67,6 +67,9 @@ export default function ChronoShiftPage() {
     window.dispatchEvent(
       new CustomEvent("game:gameover", { detail: { score } })
     );
+    window.dispatchEvent(
+      new CustomEvent("game:complete", { detail: { score, won } })
+    );
     try {
       localStorage.removeItem(SAVE_KEY);
     } catch {}
@@ -74,6 +77,7 @@ export default function ChronoShiftPage() {
 
   return (
     <GameShell
+      gameSlug="chrono-shift"
       ariaLabel="Chrono Shift game"
       tips="WASD/Arrows to move | R to Rewind | E to Shift Wall"
       onRestartAction={() => setSeed((s) => s + 1)}

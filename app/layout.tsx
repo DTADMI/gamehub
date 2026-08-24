@@ -14,10 +14,39 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GameHub",
-  description: "GameHub — Play my web games and explore my projects in one place.",
+  title: {
+    default: "GameHub",
+    template: "%s | GameHub",
+  },
+  description: "GameHub — 20 web games including point & click adventures, arcade classics, and creative spell-crafting tools.",
   icons: {
     icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
+  openGraph: {
+    title: "GameHub — Play My Web Games",
+    description: "20 games in one place: point & click adventures, arcade classics, puzzle games, and creative spell-crafting tools.",
+    url: "https://gamehub.vercel.app",
+    siteName: "GameHub",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "GameHub — 20 Games",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GameHub — Play My Web Games",
+    description: "20 games in one place: point & click adventures, arcade classics, puzzle games, and creative spell-crafting tools.",
+    images: ["/og-image.svg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
