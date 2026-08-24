@@ -3,7 +3,12 @@
 "use client";
 
 import { useGameLoop, useKeyboardInput } from "@games/_engine";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ddAudio } from "../audio";
+import { ParticleSystem } from "../particles";
+import { buildCharacter, calcMaxHp, calcMaxMp, calcMeleeDamage, calcMagicDamage, calcXpToNext } from "../decorators";
+import type { RaceId, ClassId, Rarity, GameScreen, ElementId, Stats, Resistances, Race, ClassDef, Monster, FloorMonster, Item, Title, RunStats, EquippedItems, PlayerState, DungeonState, SaveData, Toast } from "../types";
+import "../dungeon-delver.css";
 
 // ─── Game Constants ───────────────────────────────────────────
 const CANVAS_W = 640;
@@ -12,149 +17,40 @@ const CELL = 32;
 const COLS = Math.floor(CANVAS_W / CELL); // 20
 const ROWS = Math.floor((CANVAS_H - 64) / CELL); // 13 (top 64px for HUD)
 const HUD_H = 64;
+const BOSS_EVERY = 5;
 
-// ─── Types ────────────────────────────────────────────────────
-
-type RaceId = "human" | "elf" | "dwarf" | "vampire" | "demon" | "golem" | "celestial";
-type ClassId = "warrior" | "mage" | "rogue" | "paladin" | "necromancer";
-
-interface Stats {
-  str: number; // melee damage
-  sta: number; // max health
-  wil: number; // healing boost, resist
-  int: number; // magic damage
-}
-
-interface Resistances {
-  fire: number;
-  ice: number;
-  poison: number;
-  lightning: number;
-}
-
-interface Race {
-  id: RaceId;
-  nameEn: string;
-  nameFr: string;
-  descEn: string;
-  descFr: string;
-  stats: Partial<Stats>;
-  resists: Partial<Resistances>;
-  abilityEn: string;
-  abilityFr: string;
-}
-
-interface ClassDef {
-  id: ClassId;
-  nameEn: string;
-  nameFr: string;
-  descEn: string;
-  descFr: string;
-  stats: Partial<Stats>;
-  attackType: "melee" | "ranged" | "hybrid";
-  skillEn: string;
-  skillFr: string;
-}
-
-interface Monster {
-  id: string;
-  nameEn: string;
-  nameFr: string;
-  emoji: string;
-  hp: number;
-  damage: number;
-  xp: number;
-  element?: keyof Resistances;
-  minFloor: number;
-}
-
-interface FloorMonster {
-  monster: Monster;
-  x: number;
-  y: number;
-  hp: number;
-}
-
-interface Item {
-  id: string;
-  nameEn: string;
-  nameFr: string;
-  type: "weapon" | "armor" | "accessory" | "consumable";
-  slot?: "head" | "body" | "hands" | "feet" | "mainhand" | "offhand" | "ring" | "amulet";
-  statBonus: Partial<Stats>;
-  resistBonus: Partial<Resistances>;
-  healAmount?: number;
-  emoji: string;
-  floorRange: [number, number];
-}
-
-interface Title {
-  id: string;
-  nameEn: string;
-  nameFr: string;
-  descEn: string;
-  descFr: string;
-  bonus: Partial<Stats>;
-  condition: (run: RunStats) => boolean;
-}
-
-interface RunStats {
-  deepestFloor: number;
-  totalKills: number;
-  totalItems: number;
-  bossKills: string[];
-  diedOnFloor1: boolean;
-}
-
-type GameScreen = "title" | "char-create" | "dungeon" | "death" | "inventory";
-
-interface EquippedItems {
-  head: Item | null;
-  body: Item | null;
-  hands: Item | null;
-  feet: Item | null;
-  mainhand: Item | null;
-  offhand: Item | null;
-  ring: Item | null;
-  amulet: Item | null;
-}
-
-interface PlayerState {
-  x: number;
-  y: number;
-  hp: number;
-  maxHp: number;
-  mp: number;
-  maxMp: number;
-  level: number;
-  xp: number;
-  xpToNext: number;
-  race: RaceId;
-  class: ClassId;
-  baseStats: Stats;
-  equipped: EquippedItems;
-  inventory: Item[];
-  gold: number;
-}
+// ─── Types imported from ../types.ts ─────────────────────────
 
 // ─── Races ─────────────────────────────────────────────────────
 
 const RACES: Race[] = [
-  { id: "human", nameEn: "Human", nameFr: "Humain", descEn: "Versatile and adaptable. No weaknesses.", descFr: "Polyvalent et adaptable. Aucune faiblesse.", stats: { str: 1, sta: 1, wil: 1, int: 1 }, resists: {}, abilityEn: "Perseverance: +10% XP gain", abilityFr: "Persévérance : +10% gain XP" },
-  { id: "elf", nameEn: "Elf", nameFr: "Elfe", descEn: "Ancient and wise. High intellect.", descFr: "Ancien et sage. Intellect élevé.", stats: { int: 3, wil: 2, sta: -1 }, resists: { ice: 15 }, abilityEn: "Arcane Affinity: +15% magic damage", abilityFr: "Affinité arcanique : +15% dégâts magiques" },
-  { id: "dwarf", nameEn: "Dwarf", nameFr: "Nain", descEn: "Sturdy mountain folk. Fire-resistant.", descFr: "Robuste peuple des montagnes. Résistant au feu.", stats: { sta: 3, str: 1, int: -1 }, resists: { fire: 25 }, abilityEn: "Forgeborn: +20% armor effectiveness", abilityFr: "Forge-né : +20% efficacité d'armure" },
-  { id: "vampire", nameEn: "Vampire", nameFr: "Vampire", descEn: "Cursed with immortality. Lifesteal on melee.", descFr: "Maudit d'immortalité. Vol de vie en mêlée.", stats: { str: 1, int: 2, wil: 1 }, resists: { poison: 30 }, abilityEn: "Blood Drain: Heal 20% of melee damage dealt", abilityFr: "Drain de sang : Soigne 20% des dégâts de mêlée" },
-  { id: "demon", nameEn: "Demon", nameFr: "Démon", descEn: "Fiery bloodline. High strength.", descFr: "Lignée ardente. Force élevée.", stats: { str: 3, sta: 1, wil: -1 }, resists: { fire: 40, lightning: 15 }, abilityEn: "Hellfire: +25% fire damage, take 10% less fire damage", abilityFr: "Feu infernal : +25% dégâts de feu, -10% subis" },
-  { id: "golem", nameEn: "Golem", nameFr: "Golem", descEn: "Living stone. Immense stamina.", descFr: "Pierre vivante. Endurance immense.", stats: { sta: 4, str: 2, int: -2 }, resists: { poison: 50, ice: 20 }, abilityEn: "Stoneform: +30 max HP, immune to poison ticks", abilityFr: "Forme de pierre : +30 PV max, immunisé au poison" },
-  { id: "celestial", nameEn: "Celestial", nameFr: "Céleste", descEn: "Touched by starlight. High willpower.", descFr: "Touché par la lumière stellaire. Volonté élevée.", stats: { wil: 4, int: 2, str: -1 }, resists: { lightning: 40, ice: 20 }, abilityEn: "Divine Grace: 15% chance to negate all damage", abilityFr: "Grâce divine : 15% de chance d'annuler tous les dégâts" },
+  { id: "human", nameEn: "Human", nameFr: "Humain", descEn: "Versatile and adaptable. No weaknesses.", descFr: "Polyvalent et adaptable. Aucune faiblesse.", stats: { str: 1, sta: 1, wil: 1, int: 1 }, resists: {}, abilityEn: "Perseverance: +10% XP gain", abilityFr: "Persévérance : +10% gain XP",
+    icon: "👤" },
+  { id: "elf", nameEn: "Elf", nameFr: "Elfe", descEn: "Ancient and wise. High intellect.", descFr: "Ancien et sage. Intellect élevé.", stats: { int: 3, wil: 2, sta: -1 }, resists: { ice: 15 }, abilityEn: "Arcane Affinity: +15% magic damage", abilityFr: "Affinité arcanique : +15% dégâts magiques",
+    icon: "🧝" },
+  { id: "dwarf", nameEn: "Dwarf", nameFr: "Nain", descEn: "Sturdy mountain folk. Fire-resistant.", descFr: "Robuste peuple des montagnes. Résistant au feu.", stats: { sta: 3, str: 1, int: -1 }, resists: { fire: 25 }, abilityEn: "Forgeborn: +20% armor effectiveness", abilityFr: "Forge-né : +20% efficacité d'armure",
+    icon: "⛏️" },
+  { id: "vampire", nameEn: "Vampire", nameFr: "Vampire", descEn: "Cursed with immortality. Lifesteal on melee.", descFr: "Maudit d'immortalité. Vol de vie en mêlée.", stats: { str: 1, int: 2, wil: 1 }, resists: { poison: 30 }, abilityEn: "Blood Drain: Heal 20% of melee damage dealt", abilityFr: "Drain de sang : Soigne 20% des dégâts de mêlée",
+    icon: "🧛" },
+  { id: "demon", nameEn: "Demon", nameFr: "Démon", descEn: "Fiery bloodline. High strength.", descFr: "Lignée ardente. Force élevée.", stats: { str: 3, sta: 1, wil: -1 }, resists: { fire: 40, lightning: 15 }, abilityEn: "Hellfire: +25% fire damage, take 10% less fire damage", abilityFr: "Feu infernal : +25% dégâts de feu, -10% subis",
+    icon: "😈" },
+  { id: "golem", nameEn: "Golem", nameFr: "Golem", descEn: "Living stone. Immense stamina.", descFr: "Pierre vivante. Endurance immense.", stats: { sta: 4, str: 2, int: -2 }, resists: { poison: 50, ice: 20 }, abilityEn: "Stoneform: +30 max HP, immune to poison ticks", abilityFr: "Forme de pierre : +30 PV max, immunisé au poison",
+    icon: "🗿" },
+  { id: "celestial", nameEn: "Celestial", nameFr: "Céleste", descEn: "Touched by starlight. High willpower.", descFr: "Touché par la lumière stellaire. Volonté élevée.", stats: { wil: 4, int: 2, str: -1 }, resists: { lightning: 40, ice: 20 }, abilityEn: "Divine Grace: 15% chance to negate all damage", abilityFr: "Grâce divine : 15% de chance d'annuler tous les dégâts",
+    icon: "👼" },
 ];
 
 const CLASSES: ClassDef[] = [
-  { id: "warrior", nameEn: "Warrior", nameFr: "Guerrier", descEn: "Frontline fighter. Master of weapons.", descFr: "Combattant de première ligne. Maître des armes.", stats: { str: 3, sta: 2 }, attackType: "melee", skillEn: "Cleave: Attack up to 3 adjacent enemies", skillFr: "Fendoir : Attaque jusqu'à 3 ennemis adjacents" },
-  { id: "mage", nameEn: "Mage", nameFr: "Mage", descEn: "Arcane spellcaster. Devastating magic.", descFr: "Lanceur de sorts arcaniques. Magie dévastatrice.", stats: { int: 4, wil: 2, str: -2 }, attackType: "ranged", skillEn: "Arcane Barrage: Hit all enemies in a 3-tile radius", skillFr: "Barrage arcanique : Frappe tous les ennemis dans un rayon de 3 cases" },
-  { id: "rogue", nameEn: "Rogue", nameFr: "Voleur", descEn: "Quick and deadly. Strikes from shadows.", descFr: "Rapide et mortel. Frappe depuis l'ombre.", stats: { str: 2, int: 1, sta: 1 }, attackType: "hybrid", skillEn: "Backstab: 2x damage when attacking from behind", skillFr: "Attaque sournoise : Dégâts x2 en attaquant par derrière" },
-  { id: "paladin", nameEn: "Paladin", nameFr: "Paladin", descEn: "Holy knight. Heals and smites.", descFr: "Chevalier sacré. Soigne et châtie.", stats: { str: 2, sta: 2, wil: 2 }, attackType: "melee", skillEn: "Holy Light: Heal 25% HP every 5 turns", skillFr: "Lumière sacrée : Soigne 25% PV tous les 5 tours" },
-  { id: "necromancer", nameEn: "Necromancer", nameFr: "Nécromancien", descEn: "Death mage. Drains life and raises the fallen.", descFr: "Mage de la mort. Drain de vie et résurrection.", stats: { int: 3, wil: 2, str: -1 }, attackType: "ranged", skillEn: "Soul Drain: Heal 40% of spell damage dealt", skillFr: "Drain d'âme : Soigne 40% des dégâts de sort" },
+  { id: "warrior", nameEn: "Warrior", nameFr: "Guerrier", descEn: "Frontline fighter. Master of weapons.", descFr: "Combattant de première ligne. Maître des armes.", stats: { str: 3, sta: 2 }, attackType: "melee", skillEn: "Cleave: Attack up to 3 adjacent enemies", skillFr: "Fendoir : Attaque jusqu'à 3 ennemis adjacents",
+    icon: "⚔️" },
+  { id: "mage", nameEn: "Mage", nameFr: "Mage", descEn: "Arcane spellcaster. Devastating magic.", descFr: "Lanceur de sorts arcaniques. Magie dévastatrice.", stats: { int: 4, wil: 2, str: -2 }, attackType: "ranged", skillEn: "Arcane Barrage: Hit all enemies in a 3-tile radius", skillFr: "Barrage arcanique : Frappe tous les ennemis dans un rayon de 3 cases",
+    icon: "🧙" },
+  { id: "rogue", nameEn: "Rogue", nameFr: "Voleur", descEn: "Quick and deadly. Strikes from shadows.", descFr: "Rapide et mortel. Frappe depuis l'ombre.", stats: { str: 2, int: 1, sta: 1 }, attackType: "hybrid", skillEn: "Backstab: 2x damage when attacking from behind", skillFr: "Attaque sournoise : Dégâts x2 en attaquant par derrière",
+    icon: "🗡️" },
+  { id: "paladin", nameEn: "Paladin", nameFr: "Paladin", descEn: "Holy knight. Heals and smites.", descFr: "Chevalier sacré. Soigne et châtie.", stats: { str: 2, sta: 2, wil: 2 }, attackType: "melee", skillEn: "Holy Light: Heal 25% HP every 5 turns", skillFr: "Lumière sacrée : Soigne 25% PV tous les 5 tours",
+    icon: "🛡️" },
+  { id: "necromancer", nameEn: "Necromancer", nameFr: "Nécromancien", descEn: "Death mage. Drains life and raises the fallen.", descFr: "Mage de la mort. Drain de vie et résurrection.", stats: { int: 3, wil: 2, str: -1 }, attackType: "ranged", skillEn: "Soul Drain: Heal 40% of spell damage dealt", skillFr: "Drain d'âme : Soigne 40% des dégâts de sort",
+    icon: "💀" },
 ];
 
 // ─── Monsters ──────────────────────────────────────────────────
@@ -208,125 +104,90 @@ const TITLES: Title[] = [
 ];
 
 // ─── Helper Functions ──────────────────────────────────────────
+const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const pick = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+const weightedPick = <T extends { rarity?: Rarity }>(items: T[]): T => {
+  const weights: Record<Rarity, number> = { common: 50, uncommon: 28, rare: 14, epic: 6, legendary: 2 };
+  const total = items.reduce((s, i) => s + weights[i.rarity || 'common'], 0);
+  let roll = Math.random() * total;
+  for (const item of items) { roll -= weights[item.rarity || 'common']; if (roll <= 0) return item; }
+  return items[0]!;
+};
 
-function clamp(v: number, min: number, max: number): number { return Math.max(min, Math.min(max, v)); }
-function rand(min: number, max: number): number { return Math.floor(Math.random() * (max - min + 1)) + min; }
-function pick<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
-
-function calcStats(race: Race, cls: ClassDef, equipped: EquippedItems, titles: Title[]): Stats {
-  const base: Stats = { str: 5, sta: 20, wil: 3, int: 3 };
-  for (const [k, v] of Object.entries(race.stats)) { base[k as keyof Stats] += (v as number) ?? 0; }
-  for (const [k, v] of Object.entries(cls.stats)) { base[k as keyof Stats] += (v as number) ?? 0; }
-  for (const title of titles) {
-    for (const [k, v] of Object.entries(title.bonus)) { base[k as keyof Stats] += (v as number) ?? 0; }
-  }
-  // Equipment bonuses
-  for (const slot of Object.values(equipped)) {
-    if (!slot) continue;
-    for (const [k, v] of Object.entries(slot.statBonus)) { base[k as keyof Stats] += (v as number) ?? 0; }
-  }
-  return base;
+/** Build stats using decorator pattern */
+function computePlayerStats(race: Race, cls: ClassDef, equipped: EquippedItems, titles: Title[]): Stats {
+  return buildCharacter(race, cls, equipped, titles).getStats();
 }
 
-function calcResists(race: Race, equipped: EquippedItems): Resistances {
-  const res: Resistances = { fire: 0, ice: 0, poison: 0, lightning: 0 };
-  for (const [k, v] of Object.entries(race.resists)) { res[k as keyof Resistances] += (v as number) ?? 0; }
-  for (const slot of Object.values(equipped)) {
-    if (!slot) continue;
-    for (const [k, v] of Object.entries(slot.resistBonus)) { res[k as keyof Resistances] += (v as number) ?? 0; }
-  }
-  return res;
-}
+const getMonstersForFloor = (floor: number, includeBoss: boolean) => {
+  let ms = MONSTERS.filter((m) => m.minFloor <= floor);
+  if (!includeBoss) ms = ms.filter((m) => !m.isBoss);
+  return ms;
+};
+const getItemsForFloor = (floor: number) => ITEMS.filter((i) => i.floorRange[0] <= floor && i.floorRange[1] >= floor);
 
-function calcMaxHp(stats: Stats): number { return 20 + stats.sta * 8; }
-function calcMaxMp(stats: Stats): number { return 10 + stats.int * 5 + stats.wil * 3; }
-function calcMeleeDamage(stats: Stats): number { return 4 + stats.str * 2; }
-function calcMagicDamage(stats: Stats): number { return 4 + stats.int * 3; }
-function calcXpToNext(level: number): number { return 30 + level * 20; }
-
-function getMonstersForFloor(floor: number): Monster[] {
-  return MONSTERS.filter((m) => m.minFloor <= floor);
-}
-
-function getItemsForFloor(floor: number): Item[] {
-  return ITEMS.filter((i) => i.floorRange[0] <= floor && i.floorRange[1] >= floor);
-}
-
-function generateFloor(floor: number): { grid: number[][]; monsters: FloorMonster[]; items: { item: Item; x: number; y: number }[] } {
-  // 0 = empty, 1 = wall, 2 = stairs
+function generateFloor(floorNb: number): { grid: number[][]; monsters: FloorMonster[]; items: { item: Item; x: number; y: number }[]; isBossFloor: boolean } {
+  const isBossFloor = floorNb % BOSS_EVERY === 0;
   const grid: number[][] = [];
-  for (let y = 0; y < ROWS; y++) {
-    grid[y] = [];
-    for (let x = 0; x < COLS; x++) {
-      // Border walls
-      if (x === 0 || y === 0 || x === COLS - 1 || y === ROWS - 1) {
-        grid[y][x] = 1;
-      } else {
-        grid[y][x] = 0;
-      }
-    }
+  for (let y = 0; y < ROWS; y++) { grid[y] = Array(COLS).fill(1); }
+
+  const rooms: { x: number; y: number; w: number; h: number }[] = [];
+  const roomCount = 4 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < roomCount; i++) {
+    const rw = rand(3, 6), rh = rand(3, 5);
+    const rx = rand(1, COLS - rw - 2), ry = rand(1, ROWS - rh - 2);
+    let overlaps = false;
+    for (const r of rooms) { if (rx < r.x + r.w + 1 && rx + rw + 1 > r.x && ry < r.y + r.h + 1 && ry + rh + 1 > r.y) { overlaps = true; break; } }
+    if (!overlaps) { rooms.push({ x: rx, y: ry, w: rw, h: rh }); for (let y = ry; y < ry + rh; y++) for (let x = rx; x < rx + rw; x++) grid[y][x] = 0; }
   }
 
-  // Random pillars
-  const pillarCount = 3 + Math.floor(floor / 3);
-  for (let i = 0; i < pillarCount; i++) {
-    const px = rand(2, COLS - 3);
-    const py = rand(2, ROWS - 3);
-    grid[py][px] = 1;
+  for (let i = 1; i < rooms.length; i++) {
+    const a = rooms[i - 1], b = rooms[i];
+    const ax = Math.floor(a.x + a.w / 2), ay = Math.floor(a.y + a.h / 2);
+    const bx = Math.floor(b.x + b.w / 2), by = Math.floor(b.y + b.h / 2);
+    if (Math.random() > 0.5) { for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) grid[ay][x] = 0; for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) grid[y][bx] = 0; }
+    else { for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) grid[ay][y] = 0; for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) grid[by][x] = 0; }
   }
 
-  // Stairs (bottom-right area)
-  const stairsX = COLS - 3;
-  const stairsY = ROWS - 3;
+  const lastRoom = rooms[rooms.length - 1];
+  const stairsX = Math.floor(lastRoom.x + lastRoom.w / 2), stairsY = Math.floor(lastRoom.y + lastRoom.h / 2);
   grid[stairsY][stairsX] = 2;
 
-  // Monsters
-  const availableMonsters = getMonstersForFloor(floor);
-  const monsterCount = 3 + Math.floor(floor / 2);
+  const availableMonsters = getMonstersForFloor(floorNb, isBossFloor);
+  const monsterCount = isBossFloor ? 2 : (3 + Math.floor(floorNb / 2));
   const monsters: FloorMonster[] = [];
   const occupied = new Set<string>();
-  occupied.add(`${stairsX},${stairsY}`);
+  occupied.add(stairsX + ',' + stairsY);
 
   for (let i = 0; i < monsterCount; i++) {
-    let mx: number, my: number;
-    let attempts = 0;
-    do {
-      mx = rand(1, COLS - 2);
-      my = rand(1, ROWS - 2);
-      attempts++;
-    } while ((occupied.has(`${mx},${my}`) || grid[my][mx] !== 0) && attempts < 50);
-
-    if (attempts < 50) {
-      occupied.add(`${mx},${my}`);
-      const template = pick(availableMonsters);
-      monsters.push({
-        monster: template,
-        x: mx,
-        y: my,
-        hp: template.hp + Math.floor(floor * 2),
-      });
+    let mx = 0, my = 0, attempts = 0;
+    do { mx = rand(1, COLS - 2); my = rand(1, ROWS - 2); attempts++; }
+    while ((occupied.has(mx + ',' + my) || grid[my][mx] !== 0) && attempts < 100);
+    if (attempts < 100) {
+      occupied.add(mx + ',' + my);
+      let template: Monster;
+      if (isBossFloor && i === 0) { const bosses = MONSTERS.filter((m) => m.isBoss && m.minFloor <= floorNb); template = pick(bosses.length > 0 ? bosses : availableMonsters); }
+      else { template = isBossFloor ? pick(availableMonsters.filter((m) => !m.isBoss)) : pick(availableMonsters); }
+      monsters.push({ monster: template, x: mx, y: my, hp: template.hp + Math.floor(floorNb * 2) });
     }
   }
 
-  // Items
-  const availableItems = getItemsForFloor(floor);
-  const itemCount = 1 + Math.floor(Math.random() * 3);
+  const availableItems = getItemsForFloor(floorNb);
+  const itemCount = 2 + Math.floor(Math.random() * 4);
   const floorItems: { item: Item; x: number; y: number }[] = [];
   for (let i = 0; i < itemCount; i++) {
-    let ix: number, iy: number;
-    let attempts = 0;
-    do {
-      ix = rand(1, COLS - 2);
-      iy = rand(1, ROWS - 2);
-      attempts++;
-    } while ((occupied.has(`${ix},${iy}`) || grid[iy][ix] !== 0) && attempts < 50);
-    if (attempts < 50) {
-      occupied.add(`${ix},${iy}`);
-      floorItems.push({ item: pick(availableItems), x: ix, y: iy });
-    }
+    let ix = 0, iy = 0, attempts = 0;
+    do { ix = rand(1, COLS - 2); iy = rand(1, ROWS - 2); attempts++; }
+    while ((occupied.has(ix + ',' + iy) || grid[iy][ix] !== 0) && attempts < 100);
+    if (attempts < 100) { occupied.add(ix + ',' + iy); floorItems.push({ item: weightedPick(availableItems), x: ix, y: iy }); }
   }
 
-  return { grid, monsters, items: floorItems };
+  if (isBossFloor) {
+    const bossItems = ITEMS.filter((it) => (it.rarity === 'epic' || it.rarity === 'legendary'));
+    if (bossItems.length > 0) { floorItems.push({ item: pick(bossItems), x: stairsX, y: stairsY }); }
+  }
+
+  return { grid, monsters, items: floorItems, isBossFloor };
 }
 
 // ─── Translation Maps ──────────────────────────────────────────
@@ -418,6 +279,8 @@ const TX = {
 
 // ─── Main Component ────────────────────────────────────────────
 
+
+// ─── Main Component ────────────────────────────────────────────
 export function DungeonDelverGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -460,7 +323,7 @@ export function DungeonDelverGame() {
     tickRef.current++;
     if (screen === "dungeon" && tickRef.current % 2 === 0) {
       // Monster AI: move toward player
-      setDungeon((prev) => {
+      setDungeon((prev: DungeonState) => {
         const ms = prev.monsters.map((m) => {
           const dx = player.x - m.x;
           const dy = player.y - m.y;
@@ -492,7 +355,7 @@ export function DungeonDelverGame() {
   }, [isPressed, screen, locale]);
 
   const addLog = useCallback((msg: string) => {
-    setLogMessages((prev) => [...prev.slice(-4), msg]);
+    setLogMessages((prev: string[]) => [...prev.slice(-4), msg]);
   }, []);
 
   const race = RACES.find((r) => r.id === selectedRace)!;
@@ -503,7 +366,7 @@ export function DungeonDelverGame() {
     if (!selectedRace || !selectedClass) return;
     const r = RACES.find((r) => r.id === selectedRace)!;
     const c = CLASSES.find((c) => c.id === selectedClass)!;
-    const stats = calcStats(r, c, { head: null, body: null, hands: null, feet: null, mainhand: null, offhand: null, ring: null, amulet: null }, titlesRef.current);
+    const stats = computePlayerStats(r, c, { head: null, body: null, hands: null, feet: null, mainhand: null, offhand: null, ring: null, amulet: null }, titlesRef.current);
     const maxHp = calcMaxHp(stats);
     const maxMp = calcMaxMp(stats);
 
@@ -560,11 +423,11 @@ export function DungeonDelverGame() {
     if (monster.monster.id === "dragon") {
       runStatsRef.current.bossKills.push("dragon");
     }
-    setDungeon((prev) => ({
+    setDungeon((prev: DungeonState) => ({
       ...prev,
       monsters: prev.monsters.filter((m) => m !== monster),
     }));
-    setPlayer((prev) => {
+    setPlayer((prev: PlayerState) => {
       const newXp = prev.xp + monster.monster.xp;
       if (newXp >= prev.xpToNext) {
         addLog("Level Up! " + t("levelUp"));
@@ -596,7 +459,8 @@ export function DungeonDelverGame() {
 
     // Element resistance
     if (monster.monster.element) {
-      const playerResists = calcResists(RACES.find((r) => r.id === player.race)!, player.equipped);
+      const char = buildCharacter(RACES.find((r) => r.id === player.race)!, CLASSES.find((c) => c.id === player.class)!, player.equipped, titlesRef.current);
+      const playerResists = char.getResists();
       // Monsters with elements deal bonus damage based on player's low resistance
     }
 
@@ -607,7 +471,7 @@ export function DungeonDelverGame() {
       killMonster(monster);
       addLog(`${monster.monster.nameEn} is slain!`);
     } else {
-      setDungeon((prev) => ({
+      setDungeon((prev: DungeonState) => ({
         ...prev,
         monsters: prev.monsters.map((m) => m === monster ? { ...m, hp: newHp } : m),
       }));
@@ -615,14 +479,14 @@ export function DungeonDelverGame() {
 
     // Counter-attack
     const counterDmg = monster.monster.damage + Math.floor(Math.random() * 3);
-    setPlayer((prev) => {
+    setPlayer((prev: PlayerState) => {
       const newHp = prev.hp - counterDmg;
       addLog(`${monster.monster.nameEn} hits you for ${counterDmg} damage!`);
       return { ...prev, hp: Math.max(0, newHp) };
     });
 
     // Check if player died
-    setPlayer((prev) => {
+    setPlayer((prev: PlayerState) => {
       if (prev.hp <= 2) {
         setTimeout(() => handleDeath(), 100);
       }
@@ -633,7 +497,7 @@ export function DungeonDelverGame() {
   // Pick up item
   const pickUpItem = useCallback((item: Item) => {
     runStatsRef.current.totalItems++;
-    setDungeon((prev) => ({
+    setDungeon((prev: DungeonState) => ({
       ...prev,
       items: prev.items.filter((i) => i.item !== item),
     }));
@@ -650,7 +514,7 @@ export function DungeonDelverGame() {
         addLog(`Used Scroll of Power! +3 STR, +3 INT`);
       }
     } else {
-      setPlayer((prev) => ({
+      setPlayer((prev: PlayerState) => ({
         ...prev,
         inventory: [...prev.inventory, item].slice(0, 20),
       }));
@@ -661,17 +525,17 @@ export function DungeonDelverGame() {
   // Equip item
   const equipItem = useCallback((item: Item) => {
     if (!item.slot) return;
-    setPlayer((prev) => {
+    setPlayer((prev: PlayerState) => {
       const newEquipped = { ...prev.equipped };
       // Unequip current item in same slot
       const old = newEquipped[item.slot!];
-      const newInv = prev.inventory.filter((i) => i !== item);
+      const newInv = prev.inventory.filter((i: Item) => i !== item);
       if (old) newInv.push(old);
 
       newEquipped[item.slot!] = item;
       const r = RACES.find((r) => r.id === prev.race)!;
       const c = CLASSES.find((c) => c.id === prev.class)!;
-      const newStats = calcStats(r, c, newEquipped, titlesRef.current);
+      const newStats = computePlayerStats(r, c, newEquipped, titlesRef.current);
       const newMaxHp = calcMaxHp(newStats);
       const newMaxMp = calcMaxMp(newStats);
 
@@ -691,13 +555,13 @@ export function DungeonDelverGame() {
 
   // Unequip item
   const unequipItem = useCallback((slot: keyof EquippedItems) => {
-    setPlayer((prev) => {
+    setPlayer((prev: PlayerState) => {
       const item = prev.equipped[slot];
       if (!item) return prev;
       const newEquipped = { ...prev.equipped, [slot]: null };
       const r = RACES.find((r) => r.id === prev.race)!;
       const c = CLASSES.find((c) => c.id === prev.class)!;
-      const newStats = calcStats(r, c, newEquipped, titlesRef.current);
+      const newStats = computePlayerStats(r, c, newEquipped, titlesRef.current);
       const newMaxHp = calcMaxHp(newStats);
       const newMaxMp = calcMaxMp(newStats);
 
@@ -717,10 +581,10 @@ export function DungeonDelverGame() {
   // Use item from inventory
   const consumeItem = useCallback((item: Item) => {
     if (item.type === "consumable" && item.healAmount) {
-      setPlayer((prev) => ({
+      setPlayer((prev: PlayerState) => ({
         ...prev,
         hp: Math.min(prev.hp + item.healAmount!, prev.maxHp),
-        inventory: prev.inventory.filter((i) => i !== item),
+        inventory: prev.inventory.filter((i: Item) => i !== item),
       }));
       addLog(`Used ${item.nameEn}! +${item.healAmount} HP`);
     }
@@ -749,7 +613,7 @@ export function DungeonDelverGame() {
     }
 
     // Check if clicked on monster
-    const clickedMonster = dungeon.monsters.find((m) => m.x === mx && m.y === gridY);
+    const clickedMonster = dungeon.monsters.find((m: { x: number; y: number }) => m.x === mx && m.y === gridY);
     if (clickedMonster) {
       const dist = Math.abs(mx - player.x) + Math.abs(gridY - player.y);
       if (dist <= 1) {
@@ -763,7 +627,7 @@ export function DungeonDelverGame() {
     }
 
     // Check if clicked on item
-    const clickedItem = dungeon.items.find((i) => i.x === mx && i.y === gridY);
+    const clickedItem = dungeon.items.find((i: { x: number; y: number }) => i.x === mx && i.y === gridY);
     if (clickedItem && mx === player.x && gridY === player.y) {
       pickUpItem(clickedItem.item);
       return;
@@ -772,16 +636,16 @@ export function DungeonDelverGame() {
     // Move player
     if (dungeon.grid[gridY]?.[mx] === 0 || dungeon.grid[gridY]?.[mx] === 2) {
       // Check no monster in target
-      const monsterAtTarget = dungeon.monsters.find((m) => m.x === mx && m.y === gridY);
+      const monsterAtTarget = dungeon.monsters.find((m: { x: number; y: number }) => m.x === mx && m.y === gridY);
       if (!monsterAtTarget) {
         setPlayerAnim({ x: player.x, y: player.y, progress: 0 });
-        setPlayer((prev) => ({ ...prev, x: mx, y: gridY }));
+        setPlayer((prev: PlayerState) => ({ ...prev, x: mx, y: gridY }));
         // Check if standing on stairs -> prompt
         if (dungeon.grid[gridY]?.[mx] === 2) {
           addLog(t("stairsFound"));
         }
         // Check if standing on item
-        const itemAtPos = dungeon.items.find((i) => i.x === mx && i.y === gridY);
+        const itemAtPos = dungeon.items.find((i: { x: number; y: number }) => i.x === mx && i.y === gridY);
         if (itemAtPos) {
           pickUpItem(itemAtPos.item);
         }

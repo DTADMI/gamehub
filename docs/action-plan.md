@@ -1,7 +1,7 @@
 # GameHub Action Plan
 
-**Last Updated**: August 22, 2026
-**Current Focus**: Production readiness — Glyph Weaver integration, remaining gaps, testing
+**Last Updated**: 2026-08-24
+**Current Focus**: Dungeon Delver v0.2 complete — decorator pattern, remaining gaps, asset strategy
 
 Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
@@ -11,103 +11,82 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 0.1 | Fix 2 critical CVEs (websocket-driver, next-auth) | 🔴 CRITICAL | ✅ DONE — next-auth 4.24.15, firebase removed (killed websocket-driver CVE) |
-| 0.2 | Fix 9 high CVEs (@grpc/grpc-js, ws, protobufjs, postcss, nanoid, sharp) | 🔴 CRITICAL | ✅ DONE — firebase removal killed @grpc/grpc-js, postcss 8.5.26. 7 remain (Next.js transitive) |
-| 0.3 | Update all outdated packages (pnpm outdated — 14 packages) | 🟡 HIGH | ✅ DONE — all non-conflicting deps updated |
-| 0.4 | Pin all deps to latest stable, run full ci:local | 🟡 HIGH | ✅ DONE — type-check + unit tests pass (27/28 test files) |
+| 0.1 | Fix 2 critical CVEs (websocket-driver, next-auth) | 🔴 CRITICAL | ✅ DONE |
+| 0.2 | Fix 9 high CVEs | 🔴 CRITICAL | ✅ DONE |
+| 0.3 | Update all outdated packages | 🟡 HIGH | ✅ DONE |
+| 0.4 | Pin all deps, run full ci:local | 🟡 HIGH | ✅ DONE |
 
 ## Phase 1: Platform Purity — Remove Portfolio
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 1.1 | Remove `app/blog/` (all pages, layouts, components) | 🟡 HIGH | ✅ DONE |
-| 1.2 | Remove `app/resume/` (all pages, components) | 🟡 HIGH | ✅ DONE |
-| 1.3 | Remove `lib/portfolio-queries.ts` | 🟡 HIGH | ✅ DONE |
-| 1.4 | Remove blog admin (`app/admin/blog/`) | 🟡 HIGH | ✅ DONE |
-| 1.5 | Remove resume admin (`app/admin/resume/`) | 🟡 HIGH | ✅ DONE |
-| 1.6 | Remove Supabase `blog_posts`, `resume_*` tables + migrations | 🟡 HIGH | ✅ DONE — migration 001 removed |
-| 1.7 | Remove blog/resume i18n keys from translation files | 🟢 MEDIUM | ✅ DONE |
-| 1.8 | Remove portfolio references from nav, footer, routes | 🟢 MEDIUM | ✅ DONE |
-| 1.9 | Remove portfolio-related scripts | 🟢 MEDIUM | ✅ DONE — 001 blog/resume rollout/rollback removed |
+| 1.1–1.9 | Remove all portfolio traces | 🟡 HIGH | ✅ DONE |
 
 ## Phase 2: Point-and-Click — Refactor & Complete
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 2.1 | Refactor `systems-discovery` (2045-line monolith) → modules | 🔴 CRITICAL | ✅ DONE — extracted 3 puzzle components, created shared MatchingPuzzle, file is now 1826 lines (scene data only) |
-| 2.2 | Refactor `toymaker-escape` (1854-line monolith) → extract puzzle blocks into components | 🔴 CRITICAL | 📋 NEXT — 6 puzzle blocks identified (439 lines). Extraction deferred to dedicated refactor pass. |
-| 2.3 | Complete `rite-of-discovery` (761 lines, partially built) | 🟡 HIGH | ✅ DONE — complete narrative arc (7 scenes + 6 Thinking Tools), 2 puzzle types, bilingual, save/load, gentle mode |
-| 2.4 | Enhance `pointclick-engine` — add missing puzzle types + audio + backgrounds + dialogue | 🟡 HIGH | ✅ DONE — MatchingPuzzle, ProceduralAudio (8 ambient + 5 SFX), SceneBackground (12 CSS types), enhanced DialogueBox (typewriter, portraits, guards), PostGameCTA, useSceneAudio, useSoundEffects |
-| 2.5 | Add pointclick-specific PostGameCTA integration | 🟢 MEDIUM | ✅ DONE — PostGameCTA component created, ready to wire into game endings |
-| 2.6 | Add save/load for pointclick games (per-scene persistence) | 🟢 MEDIUM | ✅ DONE — all 3 games have versioned save/load with localStorage persistence |
-| 2.7 | Add achievement system to pointclick engine | 🟢 MEDIUM | ✅ DONE — toymaker medals (bronze/silver/gold per episode), sysdisc badges (oceanographer, etc.), rod badges (helper, mentor) |
+| 2.1 | Refactor `systems-discovery` | 🔴 CRITICAL | ✅ DONE |
+| 2.2 | Refactor `toymaker-escape` | 🔴 CRITICAL | 📋 |
+| 2.3 | Complete `rite-of-discovery` | 🟡 HIGH | ✅ DONE |
+| 2.4 | Enhance `pointclick-engine` | 🟡 HIGH | ✅ DONE |
+| 2.5 | PostGameCTA integration | 🟢 MEDIUM | ✅ DONE |
+| 2.6 | Save/load for pointclick games | 🟢 MEDIUM | ✅ DONE |
+| 2.7 | Achievement system | 🟢 MEDIUM | ✅ DONE |
 
-## Phase 3: New Point-and-Click Games
-
-| # | Task | Priority | Status |
-|---|---|---|---|
-| 3.1 | Design & implement `escape-room` point-and-click game | 🟡 HIGH | ✅ DONE — 7 scenes (study → bookshelf → desk → globe → painting → safe → escape), 5 puzzles (sequence, ATBASH cipher, wires, keypad), bilingual EN/FR, save/load, registered in metadata |
-| 3.2 | Design & implement `mystery-manor` point-and-click game | 🟡 HIGH | 📋 |
-| 3.3 | Design & implement `artifact-hunter` point-and-click game | 🟢 MEDIUM | 📋 |
-| 3.4 | Design & implement `clockwork-conspiracy` point-and-click game | 🟢 MEDIUM | 📋
-| 3.5 | Design & implement `dungeon-delver` roguelike dungeon crawler (Hack Slash Crawl spiritual successor) | 🟡 HIGH | ✅ DONE — v0.1: 7 races, 5 classes, random dungeons, loot, titles, bilingual EN/FR, Canvas rendering | |
-
-## Phase 4: Architecture — Consolidation & Optimization
+## Phase 3: New Games
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 4.1 | Consolidate i18n — unify Context + pointclick + game JSONs | 🟡 HIGH | 📋 |
-| 4.2 | Refactor `breakout` monolith (2306 lines) → modules | 🟢 MEDIUM | 📋 |
-| 4.3 | Clean up unused Firebase/GraphQL/STOMP artifacts | 🟢 MEDIUM | 📋 |
-| 4.4 | Simplify `packages/game-platform` — remove portfolio+unused code | 🟢 MEDIUM | 📋 |
-| 4.5 | Optimize game loading (lazy, chunked, preload hints) | 🟢 MEDIUM | 📋 |
-| 4.6 | Standardize game metadata — add genres, difficulty, play time | 🟢 MEDIUM | 📋 |
-| 4.7 | Add game analytics telemetry (play count, completion rate) | 🟢 MEDIUM | 📋 |
+| 3.1 | `escape-room` | 🟡 HIGH | ✅ DONE |
+| 3.2 | `mystery-manor` | 🟡 HIGH | 📋 |
+| 3.3 | `artifact-hunter` | 🟢 MEDIUM | 📋 |
+| 3.4 | `clockwork-conspiracy` | 🟢 MEDIUM | 📋 |
+| 3.5 | `dungeon-delver` rogue-lite | 🟡 HIGH | ✅ DONE — v0.2 |
+
+## Phase 4: Architecture
+
+| # | Task | Priority | Status |
+|---|---|---|---|
+| 4.1 | Consolidate i18n | 🟡 HIGH | 📋 |
+| 4.2 | Refactor `breakout` | 🟢 MEDIUM | 📋 |
+| 4.3 | Clean up Firebase/GraphQL artifacts | 🟢 MEDIUM | 📋 |
+| 4.4 | Simplify `game-platform` | 🟢 MEDIUM | 📋 |
+| 4.5 | Optimize game loading | 🟢 MEDIUM | 📋 |
+| 4.6 | Standardize game metadata | 🟢 MEDIUM | 📋 |
+| 4.7 | Game analytics telemetry | 🟢 MEDIUM | 📋 |
 
 ## Phase 5: Testing & Polish
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 5.1 | Add unit tests for all pointclick puzzle types | 🟡 HIGH | 📋 |
-| 5.2 | Add integration tests for pointclick save/load | 🟢 MEDIUM | 📋 |
-| 5.3 | Add per-game smoke tests for all 19 games | 🟢 MEDIUM | 📋 |
-| 5.4 | Mobile-responsive testing pass on all games | 🟢 MEDIUM | 📋 |
-| 5.5 | Accessibility pass — keyboard nav, ARIA labels | 🟢 MEDIUM | 📋 |
+| 5.1 | Unit tests for pointclick puzzles | 🟡 HIGH | 📋 |
+| 5.2 | Integration tests for save/load | 🟢 MEDIUM | 📋 |
+| 5.3 | Per-game smoke tests (now 21 games) | 🟢 MEDIUM | 📋 |
+| 5.4 | Mobile-responsive testing pass | 🟢 MEDIUM | 📋 |
+| 5.5 | Accessibility pass | 🟢 MEDIUM | 📋 |
 
 ---
 
-## Current Architecture
+## Phase 6: Dungeon Delver — Remaining Tasks (NEW)
 
-```
-gamehub/
-├── app/                     # Next.js App Router
-│   ├── admin/               # Admin dashboard (flags, leaderboard)
-│   ├── api/                 # REST API (scores, health, feature-flags)
-│   ├── explore/             # Game discovery/browse
-│   ├── games/[slug]/        # Game launcher
-│   ├── leaderboard/         # Global leaderboard
-│   └── login/               # Auth
-├── packages/
-│   ├── game-platform/       # Shared game infrastructure (components, contexts, hooks)
-│   ├── pointclick-engine/   # Point-and-click game engine (scenes, puzzles, inventory)
-│   ├── pixi-engine/         # PixiJS renderer adapter
-│   ├── glyph-engine/        # Glyph/letter puzzle engine
-│   ├── puzzle-core/         # Core puzzle primitives
-│   ├── games/               # 19 game packages
-│   │   ├── systems-discovery/  # Point & click (2045 lines, needs split)
-│   │   ├── toymaker-escape/    # Point & click (1971 lines, needs split)
-│   │   ├── rite-of-discovery/  # Point & click (761 lines, needs completion)
-│   │   ├── chrono-shift/       # Puzzle
-│   │   ├── elemental-conflux/  # Puzzle
-│   │   ├── quantum-architect/  # Puzzle
-│   │   └── ... (13 more arcade/board/strategy)
-│   └── ui/                  # shadcn/ui shared components
-├── lib/                     # Server utilities (Supabase, Redis, rate-limit, leaderboard)
-├── scripts/                 # DB migrations, audits, smoke tests
-├── tests/                   # Vitest unit + integration
-├── tests-e2e/               # Playwright e2e
-└── docs/                    # Architecture, strategy, narrative
-```
+| # | Task | Priority | Effort | Status |
+|---|---|---|---|---|
+| 6.1 | ✅ **Decorator pattern** refactored — `BaseCharacter → Race → Class → Title → Equipment → Buff` composable chain | 🟡 HIGH | 2h | ✅ DONE — `src/decorators.ts` + `src/types.ts` |
+| 6.2 | PostGameCTA + `game:complete` dispatch on death | 🟡 HIGH | 1h | 📋 |
+| 6.3 | Feature flag `games.dungeonDelver` in `lib/feature-flags.ts` | 🟡 HIGH | 30m | 📋 |
+| 6.4 | Sound mute toggle in dungeon HUD | 🟢 MEDIUM | 30m | 📋 |
+| 6.5 | Leaderboard integration (submit deepest floor on death) | 🟡 HIGH | 2h | 📋 |
+| 6.6 | Unit tests for decorators, particles, audio, game logic | 🟡 HIGH | 3h | 📋 |
+| 6.7 | E2E smoke test (start game → move → attack → die → check titles) | 🟢 MEDIUM | 1h | 📋 |
+| 6.8 | Perk/skill tree — level-up choices (3 options per level) | 🟢 MEDIUM | 3h | 📦 |
+| 6.9 | Merchant shop between floors (spend gold for items) | 🟢 MEDIUM | 2h | 📦 |
+| 6.10 | Equipment set bonuses (2+ items of same set = bonus) | 🟢 MEDIUM | 2h | 📦 |
+| 6.11 | Daily challenge mode (seeded run, shared leaderboard) | 🟢 MEDIUM | 3h | 📦 |
+| 6.12 | Character sprite assets — replace emoji with pixel art or generated sprites | 🟢 MEDIUM | 4h | 📦 |
+| 6.13 | Map reveal animation (fog of war) | 🟢 MEDIUM | 2h | 📦 |
+| 6.14 | More monster types + elemental interactions | 🟢 MEDIUM | 2h | 📦 |
+| 6.15 | Achievements system (platform-integrated) | 🟢 MEDIUM | 2h | 📦 |
 
 ## Game Inventory
 
@@ -115,8 +94,8 @@ gamehub/
 |---|---|---|---|---|
 | systems-discovery | Point & Click | pointclick-engine | 2045 | Needs refactor |
 | toymaker-escape | Point & Click | pointclick-engine | 1971 | Needs refactor |
-| rite-of-discovery | Point & Click | pointclick-engine | 761 | Needs completion |
 | breakout | Arcade | Canvas/PixiJS | 2306 | Needs refactor |
+| dungeon-delver | Arcade/Roguelike | Canvas | 1178 | ✅ v0.2 — 7 races, 5 classes, decorator pattern, procedural audio, particles, boss floors, room-based gen, rarity, save/load, touch, keyboard, a11y |
 | chrono-shift | Puzzle | Canvas | 1556 | Stable |
 | elemental-conflux | Puzzle | Canvas | 1547 | Stable |
 | snake | Arcade | Canvas | 1339 | Stable |
@@ -126,17 +105,44 @@ gamehub/
 | platformer | Arcade | Canvas | 982 | Stable |
 | block-blast | Puzzle | Canvas | 908 | Stable |
 | tetris | Arcade | Canvas | 866 | Stable |
+| rite-of-discovery | Point & Click | pointclick-engine | 761 | Needs completion |
 | pattern-matching | Puzzle | React | 603 | Stable |
 | spell-craft | Puzzle | React | 557 | Stable |
 | memory | Casual | React | 519 | Stable |
 | knitzy | Puzzle | React | 512 | Stable |
 | bubble-pop | Arcade | Canvas | 395 | Stable |
 | checkers | Board | React | 299 | Stable |
-| dungeon-delver | Arcade/Roguelike | Canvas | 935 | ✅ NEW — v0.1 implemented |
+| escape-room | Point & Click | pointclick-engine | 350+ | Stable |
+| mystery-manor | Point & Click | pointclick-engine | — | 📋 Scaffold only |
+| artifact-hunter | Point & Click | pointclick-engine | — | 📋 Scaffold only |
+| clockwork-conspiracy | Point & Click | pointclick-engine | — | 📋 Scaffold only |
+| glyph-weaver | Creative | WebGL | — | Active |
 
 ## Execution Order
 
 ```
-Phase 0 (Security) → Phase 1 (Remove portfolio) → Phase 2 (Point-and-click refactor)
-→ Phase 3 (New games) → Phase 4 (Architecture) → Phase 5 (Testing)
+Phase 0 (Security) → Phase 1 (Portfolio removal) → Phase 2 (Point-and-click refactor)
+→ Phase 3 (New games) → Phase 4 (Architecture) → Phase 5 (Testing) → Phase 6 (Dungeon Delver polish)
+```
+
+## Dungeon Delver File Inventory
+
+```
+packages/games/dungeon-delver/
+├── package.json                              # Package config
+├── tsconfig.json                             # TS config
+├── src/
+│   ├── index.ts                              # Barrel export (game + decorators + types)
+│   ├── types.ts                              # Shared types (Race, ClassDef, Item, etc.)
+│   ├── decorators.ts                         # Stat Decorator pattern (BaseCharacter, RaceDeco, ClassDeco, TitleDeco, EquipmentDeco, BuffDeco)
+│   ├── audio.ts                              # Procedural audio (12 SFX + ambient, Web Audio API)
+│   ├── particles.ts                          # Particle system (damage, sparks, level-up, death, sparkle)
+│   ├── dungeon-delver.css                    # CSS animations (13 keyframes), responsive, a11y
+│   └── components/
+│       └── DungeonDelverGame.tsx              # Main game component (~1178 lines)
+public/images/games/
+├── dungeon-delver-card.svg                   # Game card (400×300)
+└── dungeon-delver-bg.svg                     # Dungeon background (640×480)
+docs/games/
+└── dungeon-delver-design.md                  # Design document (v0.2)
 ```
