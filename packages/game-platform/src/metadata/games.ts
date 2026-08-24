@@ -36,7 +36,8 @@ export type GameSlug =
   | "glyph-weaver"
   | "mystery-manor"
   | "artifact-hunter"
-  | "clockwork-conspiracy";
+  | "clockwork-conspiracy"
+  | "dungeon-delver";
 
 export type GameEntry = {
   slug: GameSlug;
@@ -536,6 +537,23 @@ export const games: GameManifest = {
     enabled: true,
     visible: true,
     getComponent: () => import("@games/clockwork-conspiracy").then((m) => ({ default: m.ClockworkConspiracyGame })),
+  },
+  "dungeon-delver": {
+    slug: "dungeon-delver",
+    title: "Dungeon Delver",
+    shortDescription: "Choose your race and class, then descend into randomly generated dungeons. Battle monsters, collect loot, and earn legendary Titles across multiple lives.",
+    tags: ["Arcade", "Roguelike", "Dungeon", "RPG", "arcade-2d", "impl:react-canvas-custom", "target:react-canvas"],
+    image: "/images/games/dungeon-delver-card.svg",
+    genre: "arcade",
+    difficulty: "medium",
+    playTime: "15-25 min",
+    playerCount: "single",
+    ageRating: "10+",
+    enabled: true,
+    visible: true,
+    backgroundImage: "/images/bg-abstract-dark.svg",
+    preloadAssets: [],
+    getComponent: () => import("@games/dungeon-delver").then((m) => ({ default: m.DungeonDelverGame })),
   },
 };
 

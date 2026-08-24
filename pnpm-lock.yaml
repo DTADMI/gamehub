@@ -426,6 +426,28 @@ importers:
         specifier: workspace:*
         version: link:../../pointclick-engine
 
+  packages/games/dungeon-delver:
+    dependencies:
+      '@gamehub/game-platform':
+        specifier: workspace:*
+        version: link:../../game-platform
+      react:
+        specifier: '>=18 <20'
+        version: 19.2.8
+      react-dom:
+        specifier: '>=18 <20'
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/react':
+        specifier: 19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
   packages/games/elemental-conflux:
     dependencies:
       '@react-three/drei':

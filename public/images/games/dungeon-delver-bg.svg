@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" fill="none">
+  <defs>
+    <radialGradient id="torch1" cx="15%" cy="20%" r="40%">
+      <stop offset="0%" stop-color="#1a1a3e" />
+      <stop offset="100%" stop-color="#0a0a15" />
+    </radialGradient>
+    <radialGradient id="torch2" cx="85%" cy="75%" r="35%">
+      <stop offset="0%" stop-color="#1a1a3e" />
+      <stop offset="100%" stop-color="#0a0a15" />
+    </radialGradient>
+    <pattern id="brick" width="32" height="32" patternUnits="userSpaceOnUse">
+      <rect width="32" height="32" fill="#111122"/>
+      <rect x="0" y="0" width="15" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="16" y="0" width="16" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="8" y="8" width="14" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="24" y="8" width="8" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="0" y="16" width="15" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="16" y="16" width="16" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="8" y="24" width="14" height="7" rx="1" fill="#1a1a30"/>
+      <rect x="24" y="24" width="8" height="7" rx="1" fill="#1a1a30"/>
+    </pattern>
+  </defs>
+  <!-- Background -->
+  <rect width="640" height="480" fill="#0a0a15"/>
+  <rect width="640" height="480" fill="url(#torch1)" opacity="0.3"/>
+  <rect width="640" height="480" fill="url(#torch2)" opacity="0.2"/>
+  <!-- Brick pattern over everything -->
+  <rect width="640" height="480" fill="url(#brick)" opacity="0.15"/>
+  <!-- Vignette -->
+  <rect width="640" height="480" fill="url(#vignette-grad)" opacity="0.6"/>
+  <radialGradient id="vignette-grad" cx="50%" cy="50%" r="70%">
+    <stop offset="60%" stop-color="transparent"/>
+    <stop offset="100%" stop-color="#0a0a15"/>
+  </radialGradient>
+</svg>

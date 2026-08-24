@@ -49,7 +49,8 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 | 3.1 | Design & implement `escape-room` point-and-click game | 🟡 HIGH | ✅ DONE — 7 scenes (study → bookshelf → desk → globe → painting → safe → escape), 5 puzzles (sequence, ATBASH cipher, wires, keypad), bilingual EN/FR, save/load, registered in metadata |
 | 3.2 | Design & implement `mystery-manor` point-and-click game | 🟡 HIGH | 📋 |
 | 3.3 | Design & implement `artifact-hunter` point-and-click game | 🟢 MEDIUM | 📋 |
-| 3.4 | Design & implement `clockwork-conspiracy` point-and-click game | 🟢 MEDIUM | 📋 |
+| 3.4 | Design & implement `clockwork-conspiracy` point-and-click game | 🟢 MEDIUM | 📋
+| 3.5 | Design & implement `dungeon-delver` roguelike dungeon crawler (Hack Slash Crawl spiritual successor) | 🟡 HIGH | ✅ DONE — v0.1: 7 races, 5 classes, random dungeons, loot, titles, bilingual EN/FR, Canvas rendering | |
 
 ## Phase 4: Architecture — Consolidation & Optimization
 
@@ -131,6 +132,7 @@ gamehub/
 | knitzy | Puzzle | React | 512 | Stable |
 | bubble-pop | Arcade | Canvas | 395 | Stable |
 | checkers | Board | React | 299 | Stable |
+| dungeon-delver | Arcade/Roguelike | Canvas | 935 | ✅ NEW — v0.1 implemented |
 
 ## Execution Order
 

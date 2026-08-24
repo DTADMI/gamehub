@@ -1,6 +1,10 @@
 "use client";
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 
+// Re-export game loop utilities for canvas/arcade games
+export { useGameLoop, useCanvasSize, useKeyboardInput, Vec2 } from "./game-loop";
+export type { GameLoopOptions, GameLoopState } from "./game-loop";
+
 export type SceneId = string;
 export type Choice = { id: string; label: string; next: SceneId };
 export type Scene = {
