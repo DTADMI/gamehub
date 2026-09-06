@@ -8,6 +8,10 @@ allowBuilds:
   protobufjs: true
   sharp: true
 
+overrides:
+  vite: 7.3.5
+  ws: '>=8.21.0'
+
 ignoredBuiltDependencies:
   - "@parcel/watcher"
   - "@prisma/engines"
