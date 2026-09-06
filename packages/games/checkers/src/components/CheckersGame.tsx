@@ -3,6 +3,8 @@
 
 import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createI18n } from "@games/i18n";
+import { CHECKERS_TX } from "../i18n";
 
 type Color = "w" | "b";
 type Piece = { color: Color; king: boolean } | null;
@@ -66,6 +68,8 @@ function legalMoves(board: Piece[][], from: Pos): Move[] {
   // if any capture exists, only return captures (common checkers rule)
   return hasCapture ? moves.filter((m) => m.capture) : moves;
 }
+
+const { t } = createI18n(CHECKERS_TX);
 
 export const CheckersGame: React.FC = () => {
   const [board, setBoard] = useState<Piece[][]>(() => initialBoard());
@@ -134,7 +138,7 @@ export const CheckersGame: React.FC = () => {
         setMoves([]);
         soundManager.playSound("invalid", 0.5);
         if (liveRef.current) {
-          liveRef.current.textContent = "Illegal selection";
+          liveRef.current.textContent = t("wrong");
         }
         return;
       }
@@ -153,7 +157,7 @@ export const CheckersGame: React.FC = () => {
         } else {
           soundManager.playSound("invalid", 0.5);
           if (liveRef.current) {
-            liveRef.current.textContent = "No legal moves for selected piece";
+            liveRef.current.textContent = t("wrong");
           }
         }
       }
@@ -233,11 +237,11 @@ export const CheckersGame: React.FC = () => {
     <div className="flex flex-col items-center gap-3">
       <div ref={liveRef} className="sr-only" aria-live="polite">
         {winner
-          ? `${winner === "w" ? "White" : "Black"} wins`
-          : `Turn: ${turn === "w" ? "White" : "Black"}`}
+          ? `${winner === "w" ? t("white") : t("black")} ${t("victory")}`
+          : `${t("turn")}: ${turn === "w" ? t("white") : t("black")}`}
       </div>
       <div className="text-lg font-semibold">
-        Checkers — Turn: {turn === "w" ? "White" : "Black"}
+        {t("title")} — {t("turn")}: {turn === "w" ? t("white") : t("black")}
       </div>
       <div
         ref={boardRef}
@@ -282,11 +286,11 @@ export const CheckersGame: React.FC = () => {
       </div>
       {winner ? (
         <div className="text-accent text-sm">
-          Game over — {winner === "w" ? "White" : "Black"} wins.
+          {t("gameOver")} — {winner === "w" ? t("white") : t("black")} {t("victory")}
         </div>
       ) : (
         <div className="text-xs opacity-70">
-          Basic American checkers rules (captures forced, simple multi-jumps).
+          {t("rules")}
         </div>
       )}
     </div>

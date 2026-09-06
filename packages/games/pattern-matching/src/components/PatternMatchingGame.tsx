@@ -2,6 +2,8 @@
 
 import { GameContainer, soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { createI18n } from "@games/i18n";
+import { PATTERN_MATCHING_TX } from "../i18n";
 
 interface Pattern {
   id: number;
@@ -200,6 +202,8 @@ function getShapePath(shape: string, size: number): React.ReactNode {
   }
 }
 
+const { t } = createI18n(PATTERN_MATCHING_TX);
+
 export const PatternMatchingGame: React.FC = () => {
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
   const [mode, setMode] = useState<"timed" | "survival">("survival");
@@ -340,11 +344,11 @@ export const PatternMatchingGame: React.FC = () => {
 
   const patternTypeLabel = (type: string) => {
     switch (type) {
-      case "color": return "Color Pattern";
-      case "shape": return "Shape Pattern";
-      case "sequence": return "Number Sequence";
-      case "grid": return "Grid Puzzle";
-      default: return "Pattern";
+      case "color": return t("colorPattern");
+      case "shape": return t("shapePattern");
+      case "sequence": return t("numberPattern");
+      case "grid": return t("title");
+      default: return t("title");
     }
   };
 
@@ -466,7 +470,7 @@ export const PatternMatchingGame: React.FC = () => {
 
   return (
     <GameContainer
-      title="Pattern Matching"
+      title={t("title")}
       description={`Match the missing pattern piece! ${pattern ? patternTypeLabel(pattern.type) : ""}`}
       lockTouch={false}
       backgroundImage="/images/bg-pastel-pattern.jpg"
@@ -476,28 +480,28 @@ export const PatternMatchingGame: React.FC = () => {
         {/* Controls */}
         <div className="mb-4 flex flex-wrap items-center justify-center gap-3 text-center">
           <div>
-            <label className="mr-2 text-gray-700 dark:text-gray-300 text-sm">Difficulty:</label>
+            <label className="mr-2 text-gray-700 dark:text-gray-300 text-sm">{t("difficulty")}:</label>
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value as Difficulty)}
               className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
               disabled={phase === "playing"}
             >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
+              <option value="easy">{t("easy")}</option>
+              <option value="medium">{t("medium")}</option>
+              <option value="hard">{t("hard")}</option>
             </select>
           </div>
           <div>
-            <label className="mr-2 text-gray-700 dark:text-gray-300 text-sm">Mode:</label>
+            <label className="mr-2 text-gray-700 dark:text-gray-300 text-sm">{t("mode")}:</label>
             <select
               value={mode}
               onChange={(e) => setMode(e.target.value as "timed" | "survival")}
               className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
               disabled={phase === "playing"}
             >
-              <option value="survival">Survival</option>
-              <option value="timed">Timed</option>
+              <option value="survival">{t("survival")}</option>
+              <option value="timed">{t("timed")}</option>
             </select>
           </div>
           <div className="flex items-center gap-2">
@@ -506,14 +510,14 @@ export const PatternMatchingGame: React.FC = () => {
                 onClick={startGame}
                 className="min-h-11 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 text-sm font-medium"
               >
-                {phase === "over" ? "Play Again" : "Start"}
+                {phase === "over" ? t("newGame") : t("pressStart")}
               </button>
             ) : (
               <button
                 onClick={() => setPhase((p) => (p === "paused" ? "playing" : "paused"))}
                 className="min-h-11 rounded-md bg-gray-600 px-4 py-2 text-white hover:bg-gray-700 text-sm font-medium"
               >
-                {phase === "paused" ? "Resume" : "Pause"}
+                {phase === "paused" ? t("resume") : t("pause")}
               </button>
             )}
           </div>
@@ -521,8 +525,8 @@ export const PatternMatchingGame: React.FC = () => {
 
         {/* HUD */}
         <div className="mb-4 flex flex-wrap justify-center gap-4 text-center text-sm text-gray-700 dark:text-gray-300">
-          <span className="font-semibold">Score: {score}</span>
-          <span>Streak: {streak}</span>
+          <span className="font-semibold">{t("score")}: {score}</span>
+          <span>{t("streak")}: {streak}</span>
           <span>Level: {level}</span>
           {mode === "survival" && (
             <span className={lives <= 1 ? "text-red-500 font-bold" : ""}>

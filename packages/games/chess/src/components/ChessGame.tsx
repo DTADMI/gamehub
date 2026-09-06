@@ -4,6 +4,8 @@
 import { soundManager } from "@gamehub/game-platform";
 import { Board, Color, GameState, Move, Piece, PieceType, Pos, SIZE, Square } from "@games/chess";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createI18n } from "@games/i18n";
+import { CHESS_TX } from "../i18n";
 
 function inBounds(r: number, c: number) {
   return r >= 0 && r < SIZE && c >= 0 && c < SIZE;
@@ -418,6 +420,8 @@ function pieceToChar(p: Piece): string {
       )[ch] || ch;
 }
 
+const { t } = createI18n(CHESS_TX);
+
 export const ChessGame: React.FC = () => {
   const [state, setState] = useState<GameState>(() => initialState());
   const [selected, setSelected] = useState<Pos | null>(null);
@@ -466,18 +470,18 @@ export const ChessGame: React.FC = () => {
 
   useEffect(() => {
     if (mate) {
-      setStatus(`${state.turn === "w" ? "White" : "Black"} is checkmated`);
+      setStatus(`${state.turn === "w" ? t("white") : t("black")} ${t("isCheckmated")}`);
       soundManager.playSound("mate", 0.9);
       try {
         window.dispatchEvent(new CustomEvent("game:complete", { detail: { result: "checkmate", winner: state.turn === "w" ? "b" : "w" } }));
       } catch {}
     } else if (gameOver) {
-      setStatus("Stalemate");
+      setStatus(t("stalemate"));
       try {
         window.dispatchEvent(new CustomEvent("game:complete", { detail: { result: "stalemate" } }));
       } catch {}
     } else if (inCheck) {
-      setStatus("Check");
+      setStatus(t("check"));
       soundManager.playSound("check", 0.7);
     } else {
       setStatus("");
@@ -591,15 +595,15 @@ export const ChessGame: React.FC = () => {
         {status}
       </div>
       <div className="text-lg font-semibold">
-        Chess — Turn: {state.turn === "w" ? "White" : "Black"}
+        Chess — Turn: {state.turn === "w" ? t("white") : t("black")}
       </div>
-      {inCheck && !mate && <div className="text-sm text-yellow-300">Check!</div>}
+      {inCheck && !mate && <div className="text-sm text-yellow-300">{t("check")}!</div>}
       {mate && (
         <div className="text-sm text-red-400">
-          Checkmate. {state.turn === "w" ? "Black" : "White"} wins.
+          {t("checkmate")} {state.turn === "w" ? t("black") : t("white")} {t("victory")}!
         </div>
       )}
-      {gameOver && !mate && <div className="text-sm text-gray-400">Stalemate.</div>}
+      {gameOver && !mate && <div className="text-sm text-gray-400">{t("stalemate")}.</div>}
       <div
         ref={boardRef}
         className="grid"

@@ -20,6 +20,9 @@ export const MEMORY_TX = {
     easy: "Easy (12)",
     medium: "Medium (20)",
     hard: "Hard (30)",
+    resume: "Resume",
+    pause: "Pause",
+    hiddenCard: "Hidden card",
   },
   fr: {
     title: "Mémoire",
@@ -39,5 +42,8 @@ export const MEMORY_TX = {
     easy: "Facile (12)",
     medium: "Moyen (20)",
     hard: "Difficile (30)",
+    resume: "Reprendre",
+    pause: "Pause",
+    hiddenCard: "Carte cachée",
   },
 } as const;

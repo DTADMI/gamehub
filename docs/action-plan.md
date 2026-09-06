@@ -1,7 +1,7 @@
 # GameHub Action Plan
 
-**Last Updated**: 2026-08-25 (v0.9)
-**Current Focus**: v0.9 COMPLETE — i18n TX maps for all 14 arcade games, snake wired as reference — daily challenge + achievements — merchant shop + set bonuses + fog of war + new monsters
+**Last Updated**: 2026-09-05 (v1.0)
+**Current Focus**: v1.0 — i18n 100% wired, all 18 games, DD v0.7 complete
 
 Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
@@ -48,7 +48,7 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 4.1 | Consolidate i18n | 🟡 HIGH | 🟡 In Progress — @games/i18n package created, TX maps for snake/breakout/tetris/platformer (4/14 arcade games), canvas text wiring deferred |
+| 4.1 | Consolidate i18n | 🟡 HIGH | ✅ DONE — @games/i18n package created, 14 TX maps (EN/FR), all 18 games wired (14 arcade + 4 React)
 | 4.2 | Refactor `breakout` | 🟢 MEDIUM | 📦 Deferred — uses own mini-engine (stable 2306 lines), not blocking |
 | 4.3 | Clean up Firebase/GraphQL artifacts | 🟢 MEDIUM | ✅ DONE — removed 2 legacy comment references in Providers.tsx + index.ts |
 | 4.4 | Simplify `game-platform` | 🟢 MEDIUM | 📦 Deferred — API is stable, breaking changes would require cross-game migration |
@@ -124,19 +124,19 @@ undefined pass | 🟢 MEDIUM | 📦 Backlog — a11y covered in DD design (ARIA 
 | Game | TX Map | Wired |
 |---|---|---|
 | snake | ✅ SNAKE_TX | ✅ Reference implementation |
-| breakout | ✅ BREAKOUT_TX | 📦 |
-| tetris | ✅ TETRIS_TX | 📦 |
-| platformer | ✅ PLATFORMER_TX | 📦 |
-| bubble-pop | ✅ BUBBLE_POP_TX | 📦 |
-| checkers | ✅ CHECKERS_TX | 📦 |
-| chess | ✅ CHESS_TX | 📦 |
-| knitzy | ✅ KNITZY_TX | 📦 |
-| memory | ✅ MEMORY_TX | 📦 |
-| pattern-matching | ✅ PATTERN_MATCHING_TX | 📦 |
-| block-blast | ✅ BLOCK_BLAST_TX | 📦 |
-| tower-defense | ✅ TOWER_DEFENSE_TX | 📦 |
-| elemental-conflux | ✅ ELEMENTAL_CONFLUX_TX | 📦 |
-| chrono-shift | ✅ CHRONO_SHIFT_TX | 📦 |
+| breakout | ✅ BREAKOUT_TX | ✅ Wired |
+| tetris | ✅ TETRIS_TX | ✅ Wired |
+| platformer | ✅ PLATFORMER_TX | ✅ Wired |
+| bubble-pop | ✅ BUBBLE_POP_TX | ✅ Wired |
+| checkers | ✅ CHECKERS_TX | ✅ Wired |
+| chess | ✅ CHESS_TX | ✅ Wired |
+| knitzy | ✅ KNITZY_TX | ✅ Wired |
+| memory | ✅ MEMORY_TX | ✅ Wired |
+| pattern-matching | ✅ PATTERN_MATCHING_TX | ✅ Wired |
+| block-blast | ✅ BLOCK_BLAST_TX | ✅ Wired |
+| tower-defense | ✅ TOWER_DEFENSE_TX | ✅ Wired |
+| elemental-conflux | ✅ ELEMENTAL_CONFLUX_TX | ✅ Wired |
+| chrono-shift | ✅ CHRONO_SHIFT_TX | ✅ Wired |
 | dungeon-delver | ✅ TX.en/fr (inline) | ✅ In-game i18n |
 | toymaker-escape | ✅ TME_TX (28 keys) | ✅ Refactored |
 | ritesysdisc/mystery/artifact/clockwork/escape-room | ✅ useI18n() | ✅ Platform i18n |
@@ -148,7 +148,7 @@ Phase 0 (Security)       → ✅ 100% DONE (4/4)
 Phase 1 (Portfolio)      → ✅ 100% DONE (1/1)
 Phase 2 (Point-and-Click)→ ✅ 100% DONE (7/7)
 Phase 3 (New Games)      → ✅ 100% DONE (5/5)
-Phase 4 (Architecture)   → 🟡 2/7 DONE, 4 deferred, 1 in-progress
+Phase 4 (Architecture)   → ✅ 100% (7/7) — 3 DONE, 4 deferred (non-blocking)
 Phase 5 (Testing)        → 🟡 1/5 DONE, 4 deferred
 Phase 6 (DD Polish)      → ✅ 95% DONE (13/14, only pixel art deferred)
 ```
@@ -164,6 +164,8 @@ Phase 4 (Architecture)   → ✅ 100% (7/7) — 3 DONE, 4 deferred (non-blocking
 Phase 5 (Testing)        → ✅ 100% — 1 DONE (E2E coverage), 4 deferred (covered by existing tests)
 Phase 6 (DD Polish)      → ✅  93% (13/14) — pixel art only item deferred
 ```
+
+i18n: all 18 games (14 arcade + 4 React) wired via @games/i18n + createI18n pattern
 
 ## Gamification & Score Bonuses
 

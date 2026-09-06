@@ -3,6 +3,8 @@
 // games/memory/src/components/MemoryGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createI18n } from "@games/i18n";
+import { MEMORY_TX } from "../i18n";
 
 interface Card {
   id: number;
@@ -84,6 +86,8 @@ type ThemeKey = keyof typeof THEMES;
 
 const MAX_PAIRS = 12; // supports up to hard mode
 const CARD_VALUES = Array.from({ length: MAX_PAIRS }, (_, i) => i + 1);
+
+const { t } = createI18n(MEMORY_TX);
 
 export const MemoryGame: React.FC = () => {
   const [theme, setTheme] = useState<ThemeKey>("emojis");
@@ -298,7 +302,7 @@ export const MemoryGame: React.FC = () => {
 
   return (
     <GameContainer
-      title="Memory Card Game"
+      title={t("title")}
       description={`Match all the pairs in as few moves as possible! Matches: ${score} / ${pairsInPlay}`}
       lockTouch={false}
       backgroundImage="/images/bg-pastel-pattern.jpg"
@@ -353,7 +357,7 @@ export const MemoryGame: React.FC = () => {
                 onClick={startGame}
                 className="min-h-11 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
               >
-                {gameOver ? "Play Again" : "Start"}
+                {gameOver ? t("newGame") : t("pressStart")}
               </button>
             ) : (
               <button
@@ -370,7 +374,7 @@ export const MemoryGame: React.FC = () => {
                 }}
                 className="min-h-11 rounded-md bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
               >
-                {isPaused ? "Resume" : "Pause"}
+                {isPaused ? t("resume") : t("pause")}
               </button>
             )}
           </div>
@@ -389,7 +393,7 @@ export const MemoryGame: React.FC = () => {
           {/* Tap-to-start / pause overlay for mobile */}
           {(!gameStarted || isPaused) && !gameOver && (
             <button
-              aria-label={!gameStarted ? "Tap to start" : "Tap to resume"}
+              aria-label={!gameStarted ? t("pressStart") : t("resume")}
               className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-black/40 text-base font-semibold text-white select-none sm:text-lg"
               onClick={() => {
                 if (!gameStarted) {
@@ -400,7 +404,7 @@ export const MemoryGame: React.FC = () => {
                 }
               }}
             >
-              {!gameStarted ? "Tap to start" : "Paused — Tap to resume"}
+              {!gameStarted ? t("pressStart") : `${t("pause")} — ${t("resume")}`}
             </button>
           )}
           {cards.map((card, index) =>
@@ -420,7 +424,7 @@ export const MemoryGame: React.FC = () => {
                 onClick={() => handleCardClick(index)}
                 role="button"
                 tabIndex={card.isMatched || hiddenIds.has(card.id) ? -1 : 0}
-                aria-label={card.isFlipped ? getA11yLabel(card.value) : "Hidden card"}
+                aria-label={card.isFlipped ? getA11yLabel(card.value) : t("hiddenCard")}
                 onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleCardClick(index)}
                 className={`relative aspect-square cursor-pointer rounded-xl shadow-md transition-transform duration-200 [transform-style:preserve-3d] hover:shadow-lg ${card.isMatched ? "animate-spin transition-opacity duration-500" : ""} ${hiddenIds.has(card.id) ? "pointer-events-none opacity-0" : ""} `}
                 style={{
