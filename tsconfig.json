@@ -20,6 +20,9 @@
       "@games/_engine": [
         "packages/games/_engine"
       ],
+      "@games/i18n": [
+        "packages/games/i18n"
+      ],
       "@games/*": [
         "packages/games/*/src"
       ],

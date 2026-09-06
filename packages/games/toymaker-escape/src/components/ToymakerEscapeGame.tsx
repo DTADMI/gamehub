@@ -4,13 +4,13 @@ import { GameContainer } from "@gamehub/game-platform";
 import { DialogueBox, InventoryBar, PostGameCTA, versionedLoad, versionedSave } from "@games/pointclick-engine";
 import { SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
-  detectLang,
   effects,
   ensureCtx,
   type Lang,
   nextScene,
   type Scene,
 } from "@games/pointclick-engine/engine";
+import { TME_TX, type TmeTxKey } from "../strings";
 import {
   type AnagramState,
   createAnagramState,
@@ -94,7 +94,10 @@ const FILING_TARGETS: Record<string, string> = {
 };
 
 export const ToymakerEscapeGame: React.FC = () => {
-  const lang = useMemo<Lang>(() => detectLang(), []);
+  const lang = useMemo<Lang>(() => {
+    try { return (localStorage.getItem("gh-locale") as Lang) || "en"; } catch { return "en"; }
+  }, []);
+  const t = (key: string) => (TME_TX as Record<string,Record<string,string>>)[lang]?.[key] || key;
   // Scene data extracted to ../datafile:///scenes.ts
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const scenes = TOYMAKER_SCENES as Record<string, any>;
@@ -274,7 +277,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
       ctx2d.fillStyle = "#ffd700";
       ctx2d.font = "12px monospace";
       ctx2d.fillText(
-        lang === "fr" ? "Alignez les formes pour le contour cible" : "Align shapes to match the target outline",
+        t("shadowPrompt"),
         10, 15,
       );
 
@@ -318,7 +321,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
         ctx2d.fillStyle = "#4f4";
         ctx2d.font = "bold 14px monospace";
         ctx2d.fillText(
-          lang === "fr" ? "Ombre alignée !" : "Shadow aligned!",
+          t("shadowAligned"),
           340, 15,
         );
       }
@@ -457,15 +460,11 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                   </div>
                 ))}
                 <div className="text-sm">
-                  {lang === "fr" ? "Résultat:" : "Result:"}{" "}
+                  {t("shadowResult")}{" "}
                   <b>
                     {evaluateGears(gears).solved
-                      ? lang === "fr"
-                        ? "Correct"
-                        : "Correct"
-                      : lang === "fr"
-                        ? "Incorrect"
-                        : "Incorrect"}
+                      ? t("correct")
+                      : t("incorrect")}
                   </b>
                 </div>
                 {evaluateGears(gears).solved && (
@@ -475,7 +474,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                       setCtx((c) => effects.setFlag("gears.solved", true)(ensureCtx(c)));
                     }}
                   >
-                    {lang === "fr" ? "Valider l'engrenage" : "Confirm gears"}
+                    {t("validateGears")}
                   </button>
                 )}
               </div>
@@ -504,7 +503,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                   setCtx((c) => effects.setFlag("seen.ratioPlate", true)(ensureCtx(c)))
                 }
               >
-                {lang === "fr" ? "Observer la plaque 3:1" : "Inspect 3:1 plate"}
+                {t("inspectPlate")}
               </button>
             </div>
 
@@ -568,7 +567,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                     }
                   }}
                 >
-                  {lang === "fr" ? "Connecter" : "Connect"}
+                  {t("connect")}
                 </button>
               </div>
               {hasWiresCrossing(wires) && (
@@ -639,7 +638,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                   className="mt-2 rounded bg-emerald-600 px-3 py-2 text-white"
                   onClick={() => setCtx((c) => effects.setFlag("pipes.solved", true)(ensureCtx(c)))}
                 >
-                  {lang === "fr" ? "Valider les tuyaux" : "Confirm pipes"}
+                  {t("validatePipes")}
                 </button>
               )}
             </div>
@@ -709,7 +708,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
         {/* E2 — Cipher puzzle */}
         {sceneId === "E2_CIPHER" && (
           <div className="mb-4 rounded-md border p-3">
-            <h3 className="mb-2 font-semibold">{lang === "fr" ? "Chiffre de correspondance" : "Correspondence Cipher"}</h3>
+            <h3 className="mb-2 font-semibold">{t("cipherTitle")}</h3>
             <p className="mb-2 text-sm">
               {lang === "fr"
                 ? `Message codé : ${cipher.coded}. Entrez le mot décodé :`
@@ -720,7 +719,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                 className="bg-background min-h-[44px] rounded border px-3 py-2"
                 value={cipher.userInput}
                 onChange={(e) => setCipher((s) => updateCipherInput(s, e.target.value))}
-                placeholder={lang === "fr" ? "Votre réponse..." : "Your answer..."}
+                placeholder={t("cipherPlaceholder")}
                 maxLength={cipher.answer.length}
               />
               <button
@@ -734,7 +733,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                   }
                 }}
               >
-                {lang === "fr" ? "Décoder" : "Decode"}
+                {t("cipherDecode")}
               </button>
             </div>
             {cipher.hint && (
@@ -742,12 +741,12 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
             )}
             {cipher.solved && (
               <p className="mt-2 text-emerald-600">
-                {lang === "fr" ? "Chiffre résolu !" : "Cipher solved!"}
+                {t("cipherSolved")}
               </p>
             )}
             {cipher.attempts > 0 && !cipher.solved && (
               <p className="mt-2 text-amber-600 text-sm">
-                {lang === "fr" ? `Tentatives : ${cipher.attempts}` : `Attempts: ${cipher.attempts}`}
+                {`${lang === "fr" ? "Tentatives" : "Attempts"}: ${cipher.attempts}`}
               </p>
             )}
           </div>
@@ -763,7 +762,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
         {sceneId === "E2_WRAP" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">
-              {lang === "fr" ? "Épisode 2 terminé" : "Episode 2 Complete"}
+              {t("episode2Complete")}
             </h3>
             <p className="mb-2 text-sm">
               {lang === "fr"
@@ -771,20 +770,20 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                 : "The office secrets are revealed. You found the commissioner's notes."}
             </p>
             <p className="mb-2 text-xs font-bold text-amber-600">
-              {lang === "fr" ? "Médaille gagnée : Commis aux archives" : "Medal earned: File Clerk"}
+              {t("medalEarned")}
             </p>
             <div className="flex gap-2">
               <button
                 className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
                 onClick={() => setSceneId("E3_INTRO")}
               >
-                {lang === "fr" ? "Continuer vers l'Épisode 3" : "Continue to Episode 3"}
+                {t("continueToEpisode3")}
               </button>
               <button
                 className="min-h-[44px] rounded border px-3 py-2"
                 onClick={() => setSceneId("INTRO")}
               >
-                {lang === "fr" ? "Recommencer" : "Restart"}
+                {t("restart")}
               </button>
             </div>
           </div>
@@ -794,7 +793,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
         {sceneId === "E3_INTRO" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">
-              {lang === "fr" ? "Le Mystère de l'Appartement" : "Apartment Mystery"}
+              {t("apartmentMystery")}
             </h3>
             <p className="mb-2 text-sm">
               {lang === "fr"
@@ -806,7 +805,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                 className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
                 onClick={() => setSceneId("E3_LOCKS")}
               >
-                {lang === "fr" ? "Vérifier les verrous" : "Check the locks"}
+                {t("checkLocks")}
               </button>
             </div>
           </div>
@@ -819,7 +818,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
         {sceneId === "E3_PHOTOS" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">
-              {lang === "fr" ? "Mur de photos souvenir" : "Photo Memory Wall"}
+              {t("photoWall")}
             </h3>
             <p className="mb-2 text-sm">
               {lang === "fr"
@@ -864,7 +863,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                 >
                   <span className="text-3xl mb-1">{photo.emoji}</span>
                   <span className="text-sm font-medium">
-                    {lang === "fr" ? photo.labelFr : photo.labelEn}
+                    {photo[lang === "fr" ? "labelFr" : "labelEn"]}
                   </span>
                 </button>
               ))}
@@ -880,7 +879,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                   className="bg-primary text-primary-foreground min-h-[44px] rounded px-4 py-2"
                   onClick={() => setSceneId("E3_ANAGRAM")}
                 >
-                  {lang === "fr" ? "Continuer vers le frigo" : "Continue to fridge"}
+                  {t("continueToFridge")}
                 </button>
               </div>
             )}
@@ -890,7 +889,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
         {/* E3 — Anagram puzzle */}
         {sceneId === "E3_ANAGRAM" && (
           <div className="mb-4 rounded-md border p-3">
-            <h3 className="mb-2 font-semibold">{lang === "fr" ? "Anagramme du frigo" : "Fridge Anagram"}</h3>
+            <h3 className="mb-2 font-semibold">{t("fridgeAnagram")}</h3>
             <p className="mb-2 text-sm">
               {lang === "fr"
                 ? `Lettres mélangées : ${anagram.scrambled}. Réorganisez pour former un mot :`
@@ -911,7 +910,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                 className="bg-background min-h-[44px] rounded border px-3 py-2 uppercase"
                 value={anagram.userInput}
                 onChange={(e) => setAnagram((s) => updateAnagramInput(s, e.target.value))}
-                placeholder={lang === "fr" ? "Votre mot..." : "Your word..."}
+                placeholder={t("yourWord")}
                 maxLength={anagram.word.length}
               />
               <button
@@ -925,17 +924,17 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                   }
                 }}
               >
-                {lang === "fr" ? "Valider" : "Submit"}
+                {t("validate")}
               </button>
             </div>
             {anagram.solved && (
               <p className="mt-2 text-emerald-600">
-                {lang === "fr" ? "Anagramme résolu !" : "Anagram solved!"}
+                {t("anagramSolved")}
               </p>
             )}
             {anagram.attempts > 0 && !anagram.solved && (
               <p className="mt-2 text-amber-600 text-sm">
-                {lang === "fr" ? `Tentatives : ${anagram.attempts}` : `Attempts: ${anagram.attempts}`}
+                {`${lang === "fr" ? "Tentatives" : "Attempts"}: ${anagram.attempts}`}
               </p>
             )}
           </div>
@@ -947,7 +946,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
             background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
           }}>
             <h3 className="mb-2 font-semibold text-yellow-200">
-              {lang === "fr" ? "Mur d'engrenages mécaniques" : "Mechanical Gear Wall"}
+              {t("gearWall")}
             </h3>
             <p className="mb-2 text-sm text-gray-300">
               {lang === "fr"
@@ -994,11 +993,11 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                 </div>
               ))}
               <div className="text-sm text-gray-300">
-                {lang === "fr" ? "Résultat :" : "Result :"}{" "}
+                {t("result")}{" "}
                 <b>
                   {evaluateGears(gearWall).solved
-                    ? lang === "fr" ? "Correct" : "Correct"
-                    : lang === "fr" ? "Incorrect" : "Incorrect"}
+                    ? t("correct")
+                    : t("incorrect")}
                 </b>
               </div>
               {evaluateGears(gearWall).solved && (
@@ -1008,7 +1007,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
                     setCtx((c) => effects.setFlag("gearWall.solved", true)(ensureCtx(c)));
                   }}
                 >
-                  {lang === "fr" ? "Valider l'engrenage" : "Confirm gears"}
+                  {t("validateGears")}
                 </button>
               )}
             </div>
@@ -1088,7 +1087,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
               setCtx(ensureCtx({ inventory: [], flags: {} }));
             }}
             nextGameSlug="rite-of-discovery"
-            nextGameTitle={lang === "fr" ? "Rite de Découverte" : "Rite of Discovery"}
+            nextGameTitle={t("riteOfDiscovery")}
             lang={lang}
           />
         )}

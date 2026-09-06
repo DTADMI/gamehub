@@ -1,7 +1,7 @@
 "use client";
+import { GameShell } from "@gamehub/game-platform";
 import { LoadingShell } from "@gamehub/ui/components/shell";
 import dynamicImport from "next/dynamic";
-import React from "react";
 
 const DungeonDelver = dynamicImport(
   () => import("@games/dungeon-delver").then((m) => m.DungeonDelverGame),
@@ -9,5 +9,13 @@ const DungeonDelver = dynamicImport(
 );
 
 export default function DungeonDelverPage() {
-  return <DungeonDelver />;
+  return (
+    <GameShell
+      ariaLabel="Dungeon Delver — Fouilleur de Donjon"
+      tips="WASD/ZQSD · Space · I · > descend · touch D-pad"
+      gameSlug="dungeon-delver"
+    >
+      <DungeonDelver />
+    </GameShell>
+  );
 }

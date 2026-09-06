@@ -1,9 +1,13 @@
 // games/tower-defense/src/components/TowerDefenseGame.tsx
 "use client";
 
+import { createI18n } from "@games/i18n";
+import { TOWER_DEFENSE_TX } from "../i18n";
 import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+
+const { t } = createI18n(TOWER_DEFENSE_TX);
 const TILE = 32;
 const COLS = 20;
 const ROWS = 12;
@@ -775,14 +779,14 @@ export const TowerDefenseGame: React.FC = () => {
     ctx.fillStyle = "#fbbf24";
     ctx.fillText(`\uFFE5 ${moneyRef.current}`, 80, 20);
     ctx.fillStyle = "white";
-    ctx.fillText(`Wave ${waveRef.current}`, 160, 20);
+    ctx.fillText(`${t("wave")} ${waveRef.current}`, 160, 20);
     ctx.fillStyle = statusRef.current === "idle" ? "#4ade80" : statusRef.current === "lost" ? "#ef4444" : "#fbbf24";
     ctx.fillText(statusRef.current.toUpperCase(), 240, 20);
     ctx.fillStyle = "rgba(255,255,255,0.5)";
     ctx.font = "11px system-ui, -apple-system";
-    ctx.fillText(`Killed: ${enemiesKilledRef.current}`, 10, 38);
-    ctx.fillText(`Waves: ${wavesCompletedRef.current}`, 110, 38);
-    ctx.fillText(`Gold: ${goldEarnedRef.current}`, 200, 38);
+    ctx.fillText(`${t("killed")}: ${enemiesKilledRef.current}`, 10, 38);
+    ctx.fillText(`${t("wavesLabel")}: ${wavesCompletedRef.current}`, 110, 38);
+    ctx.fillText(`${t("goldLabel")}: ${goldEarnedRef.current}`, 200, 38);
 
     if (statusRef.current === "lost") {
       ctx.fillStyle = "rgba(0,0,0,0.6)";
@@ -790,11 +794,11 @@ export const TowerDefenseGame: React.FC = () => {
       ctx.fillStyle = "#ef4444";
       ctx.font = "bold 32px system-ui, -apple-system";
       ctx.textAlign = "center";
-      ctx.fillText("GAME OVER", cnv.width / 2, cnv.height / 2 - 10);
+      ctx.fillText(t("gameOverCanvas"), cnv.width / 2, cnv.height / 2 - 10);
       ctx.fillStyle = "rgba(255,255,255,0.7)";
       ctx.font = "14px system-ui, -apple-system";
-      ctx.fillText("Press R to restart", cnv.width / 2, cnv.height / 2 + 30);
-      ctx.fillText(`Waves: ${wavesCompletedRef.current}  Kills: ${enemiesKilledRef.current}`, cnv.width / 2, cnv.height / 2 + 55);
+      ctx.fillText(t("restart"), cnv.width / 2, cnv.height / 2 + 30);
+      ctx.fillText(`${t("wavesLabel")}: ${wavesCompletedRef.current}  ${t("killed")}: ${enemiesKilledRef.current}`, cnv.width / 2, cnv.height / 2 + 55);
     }
   }, []);
 

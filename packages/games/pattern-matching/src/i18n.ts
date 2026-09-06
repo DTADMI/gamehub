@@ -1,0 +1,41 @@
+/**
+ * Pattern Matching — Bilingual string map (EN/FR)
+ */
+export const PATTERN_MATCHING_TX = {
+  en: {
+    title: "Pattern Match",
+    score: "Score",
+    highScore: "High Score",
+    level: "Level",
+    gameOver: "Game Over",
+    pressStart: "Tap to start",
+    newGame: "New Game",
+    time: "Time",
+    streak: "Streak",
+    correct: "Correct!",
+    wrong: "Wrong!",
+    colorPattern: "Color Pattern",
+    shapePattern: "Shape Pattern",
+    numberPattern: "Number Sequence",
+    next: "What comes next?",
+    select: "Select",
+  },
+  fr: {
+    title: "Suite Logique",
+    score: "Score",
+    highScore: "Meilleur Score",
+    level: "Niveau",
+    gameOver: "Partie Terminée",
+    pressStart: "Touchez pour commencer",
+    newGame: "Nouvelle Partie",
+    time: "Temps",
+    streak: "Série",
+    correct: "Correct !",
+    wrong: "Faux !",
+    colorPattern: "Suite de Couleurs",
+    shapePattern: "Suite de Formes",
+    numberPattern: "Suite Numérique",
+    next: "Quel est le prochain ?",
+    select: "Sélectionner",
+  },
+} as const;

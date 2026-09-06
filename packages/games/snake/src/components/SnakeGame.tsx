@@ -5,6 +5,8 @@ import { GameContainer, soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { submitScore } from "@/lib/score-submit";
+import { createI18n } from "@games/i18n";
+import { SNAKE_TX } from "../i18n";
 
 import {
   CELL_SIZE,
@@ -23,6 +25,8 @@ type ControlScheme = "swipe" | "joystick" | "taps";
 const JOYSTICK_DEADZONE_PX = 14; // px radius with no direction change (slightly higher for small screens)
 const SWIPE_THRESHOLD_MIN = 24; // minimum swipe distance in px
 const SWIPE_THRESHOLD_MAX = 64; // cap threshold for larger cells
+
+const { t } = createI18n(SNAKE_TX);
 
 export const SnakeGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -641,10 +645,10 @@ export const SnakeGame: React.FC = () => {
       ctx.fillStyle = "#ffffff";
       ctx.font = "24px Arial";
       ctx.textAlign = "center";
-      ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 30);
-      ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / 2 + 10);
+      ctx.fillText(t("gameOver") + "!", canvas.width / 2, canvas.height / 2 - 30);
+      ctx.fillText(`${t("score")}: ${score}`, canvas.width / 2, canvas.height / 2 + 10);
       ctx.font = "16px Arial";
-      ctx.fillText("Press Space to Restart", canvas.width / 2, canvas.height / 2 + 50);
+      ctx.fillText(t("pressStart"), canvas.width / 2, canvas.height / 2 + 50);
     } else if (!gameStarted) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -652,10 +656,9 @@ export const SnakeGame: React.FC = () => {
       ctx.fillStyle = "#ffffff";
       ctx.font = "24px Arial";
       ctx.textAlign = "center";
-      ctx.fillText("Snake Game", canvas.width / 2, canvas.height / 2 - 50);
+      ctx.fillText(t("title"), canvas.width / 2, canvas.height / 2 - 50);
       ctx.font = "16px Arial";
-      ctx.fillText("Use arrow keys to move", canvas.width / 2, canvas.height / 2 - 10);
-      ctx.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2 + 30);
+      ctx.fillText(t("pressStart"), canvas.width / 2, canvas.height / 2 + 30);
     } else if (isPaused) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -663,9 +666,9 @@ export const SnakeGame: React.FC = () => {
       ctx.fillStyle = "#ffffff";
       ctx.font = "24px Arial";
       ctx.textAlign = "center";
-      ctx.fillText("Paused", canvas.width / 2, canvas.height / 2);
+      ctx.fillText(t("pause"), canvas.width / 2, canvas.height / 2);
       ctx.font = "16px Arial";
-      ctx.fillText("Press Space to Resume", canvas.width / 2, canvas.height / 2 + 30);
+      ctx.fillText(t("resume"), canvas.width / 2, canvas.height / 2 + 30);
     }
   }, [snake, food, gameOver, isPaused, gameStarted, score, obstacles, portals, config]);
 

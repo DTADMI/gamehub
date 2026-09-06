@@ -26,6 +26,7 @@ export type FeatureFlags = {
   };
   games: {
     socialShare: boolean;
+    dungeonDelver: boolean;
   };
   experimental: {
     realtimeMultiplayer: boolean;
@@ -74,6 +75,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
   },
   games: {
     socialShare: false,
+    dungeonDelver: true,
   },
   experimental: {
     realtimeMultiplayer: false,
@@ -317,6 +319,18 @@ export const FLAG_DEFINITIONS: FeatureFlag[] = [
     description: "Enable social sharing controls in supported games.",
     type: "boolean",
     enabled: false,
+    percentage: 0,
+    userIds: [],
+    subscriptionTiers: [],
+    sensitive: false,
+  },
+  {
+    id: "games.dungeonDelver",
+    path: "games.dungeonDelver",
+    label: "Dungeon Delver",
+    description: "Enable the Dungeon Delver roguelike dungeon crawler game.",
+    type: "boolean",
+    enabled: true,
     percentage: 0,
     userIds: [],
     subscriptionTiers: [],

@@ -1,4 +1,4 @@
-﻿import { afterAll, beforeAll, beforeEach, describe, it, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, it, vi } from "vitest";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 
@@ -49,7 +49,7 @@ vi.mock("@gamehub/game-platform/lib/sound", () => ({
 
 import { ToymakerEscapeGame } from "@games/toymaker-escape";
 
-describe("ToymakerEscape â€” medals & save", () => {
+describe("ToymakerEscape — medals & save", () => {
   beforeEach(() => {
     localStorage.clear();
     globalThis.fetch = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) });
@@ -57,13 +57,16 @@ describe("ToymakerEscape â€” medals & save", () => {
 
   it("gears route shows Confirm gears button for default ratio", async () => {
     render(<ToymakerEscapeGame />);
-    fireEvent.click(screen.getByRole("button", { name: "Begin" }));
+    // Wait for typewriter effect to finish and choices to appear
+    const beginBtn = await screen.findByRole("button", { name: "Begin" }, { timeout: 5000 });
+    fireEvent.click(beginBtn);
     expect(screen.getByRole("button", { name: /confirm gears/i })).toBeInTheDocument();
   });
 
   it("persists save under tme:save:v1", async () => {
     render(<ToymakerEscapeGame />);
-    fireEvent.click(screen.getByRole("button", { name: /begin/i }));
+    const beginBtn = await screen.findByRole("button", { name: /begin/i }, { timeout: 5000 });
+    fireEvent.click(beginBtn);
     const raw = localStorage.getItem("tme:save:v1");
     expect(raw).toBeTruthy();
     const parsed = JSON.parse(raw!);

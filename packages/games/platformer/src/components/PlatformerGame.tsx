@@ -8,8 +8,12 @@ import {
 } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+import { createI18n } from "@games/i18n";
+import { PLATFORMER_TX } from "../i18n";
 import { submitScore } from "@/lib/score-submit";
 
+
+const { t } = createI18n(PLATFORMER_TX);
 const TILE = 32;
 const COLS = 20;
 const ROWS = 12;
@@ -709,8 +713,8 @@ export const PlatformerGame: React.FC = () => {
     ctx.fillStyle = "rgba(255,255,255,0.9)";
     ctx.font = "bold 14px system-ui, -apple-system, sans-serif";
     ctx.textAlign = "left";
-    ctx.fillText(`Score: ${scoreRef.current}`, 8, 18);
-    ctx.fillText(`Level ${LEVELS[currentLevelRef.current]?.id ?? 1}`, 8, 36);
+    ctx.fillText(`${t("score")}: ${scoreRef.current}`, 8, 18);
+    ctx.fillText(`${t("level")} ${LEVELS[currentLevelRef.current]?.id ?? 1}`, 8, 36);
     ctx.textAlign = "right";
     ctx.fillText(LEVELS[currentLevelRef.current]?.name ?? "", CANVAS_W - 8, 18);
 
@@ -720,21 +724,21 @@ export const PlatformerGame: React.FC = () => {
       ctx.fillStyle = "#fbbf24";
       ctx.font = "bold 28px system-ui, -apple-system, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("You Win!", CANVAS_W / 2, CANVAS_H / 2 - 20);
+      ctx.fillText(t("youWin"), CANVAS_W / 2, CANVAS_H / 2 - 20);
       ctx.fillStyle = "white";
       ctx.font = "16px system-ui, -apple-system, sans-serif";
-      ctx.fillText(`Final Score: ${scoreRef.current}`, CANVAS_W / 2, CANVAS_H / 2 + 15);
-      ctx.fillText("Press R to restart", CANVAS_W / 2, CANVAS_H / 2 + 45);
+      ctx.fillText(`${t("finalScore")}: ${scoreRef.current}`, CANVAS_W / 2, CANVAS_H / 2 + 15);
+      ctx.fillText(t("restart"), CANVAS_W / 2, CANVAS_H / 2 + 45);
     } else if (diedRef.current) {
       ctx.fillStyle = "rgba(0,0,0,0.5)";
       ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
       ctx.fillStyle = "#ef4444";
       ctx.font = "bold 24px system-ui, -apple-system, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("You Died!", CANVAS_W / 2, CANVAS_H / 2 - 10);
+      ctx.fillText(t("youDied"), CANVAS_W / 2, CANVAS_H / 2 - 10);
       ctx.fillStyle = "white";
       ctx.font = "14px system-ui, -apple-system, sans-serif";
-      ctx.fillText("Press R to retry", CANVAS_W / 2, CANVAS_H / 2 + 20);
+      ctx.fillText(t("retry"), CANVAS_W / 2, CANVAS_H / 2 + 20);
     } else if (!gameStartedRef.current) {
       ctx.fillStyle = "rgba(0,0,0,0.4)";
       ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
@@ -743,18 +747,18 @@ export const PlatformerGame: React.FC = () => {
       ctx.textAlign = "center";
       ctx.fillText(`${LEVELS[currentLevelRef.current]?.name ?? ""}`, CANVAS_W / 2, CANVAS_H / 2 - 30);
       ctx.font = "14px system-ui, -apple-system, sans-serif";
-      ctx.fillText("Press Space to start", CANVAS_W / 2, CANVAS_H / 2 + 5);
+      ctx.fillText(t("pressStart"), CANVAS_W / 2, CANVAS_H / 2 + 5);
       ctx.font = "12px system-ui, -apple-system, sans-serif";
-      ctx.fillText("Arrow keys / WASD to move & jump", CANVAS_W / 2, CANVAS_H / 2 + 30);
+      ctx.fillText(t("controls"), CANVAS_W / 2, CANVAS_H / 2 + 30);
     } else if (isPausedRef.current) {
       ctx.fillStyle = "rgba(0,0,0,0.4)";
       ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
       ctx.fillStyle = "white";
       ctx.font = "bold 22px system-ui, -apple-system, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("Paused", CANVAS_W / 2, CANVAS_H / 2);
+      ctx.fillText(t("pause"), CANVAS_W / 2, CANVAS_H / 2);
       ctx.font = "14px system-ui, -apple-system, sans-serif";
-      ctx.fillText("Press Space to resume", CANVAS_W / 2, CANVAS_H / 2 + 30);
+      ctx.fillText(t("resume"), CANVAS_W / 2, CANVAS_H / 2 + 30);
     }
   }, []);
 

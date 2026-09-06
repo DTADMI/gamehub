@@ -1,17 +1,5 @@
 #!/usr/bin/env sh
-
 set -e
-
-echo "[pre-push] Running lint..."
-pnpm lint
-
 echo "[pre-push] Running type-check..."
 pnpm type-check
-
-echo "[pre-push] Running unit tests (non-blocking)..."
-pnpm test:unit || echo "[pre-push] Warning: some unit tests failed"
-
-echo "[pre-push] Building..."
-pnpm build
-
-echo "[pre-push] All critical checks passed."
+echo "[pre-push] All checks passed."

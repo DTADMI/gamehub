@@ -2,3 +2,5 @@
 // `import("@games/tetris").then(m => m.TetrisGame)` work under TS/Turbopack.
 export { default as TetrisGame } from "./components/TetrisGame";
 export * from "./components/TetrisGame";
+
+export { TETRIS_TX } from "./i18n";

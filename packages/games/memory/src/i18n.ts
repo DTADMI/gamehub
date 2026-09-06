@@ -1,0 +1,43 @@
+/**
+ * Memory — Bilingual string map (EN/FR)
+ */
+export const MEMORY_TX = {
+  en: {
+    title: "Memory",
+    score: "Score",
+    highScore: "High Score",
+    moves: "Moves",
+    pairs: "Pairs",
+    gameOver: "Game Over",
+    victory: "All Pairs Found!",
+    pressStart: "Tap a card to start",
+    newGame: "New Game",
+    time: "Time",
+    match: "Match!",
+    noMatch: "No Match",
+    found: "Found",
+    remaining: "Remaining",
+    easy: "Easy (12)",
+    medium: "Medium (20)",
+    hard: "Hard (30)",
+  },
+  fr: {
+    title: "Mémoire",
+    score: "Score",
+    highScore: "Meilleur Score",
+    moves: "Coups",
+    pairs: "Paires",
+    gameOver: "Partie Terminée",
+    victory: "Toutes les Paires Trouvées !",
+    pressStart: "Touchez une carte",
+    newGame: "Nouvelle Partie",
+    time: "Temps",
+    match: "Paire !",
+    noMatch: "Pas de Paire",
+    found: "Trouvées",
+    remaining: "Restantes",
+    easy: "Facile (12)",
+    medium: "Moyen (20)",
+    hard: "Difficile (30)",
+  },
+} as const;

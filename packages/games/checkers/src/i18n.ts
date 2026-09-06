@@ -1,0 +1,43 @@
+/**
+ * Checkers — Bilingual string map (EN/FR)
+ */
+export const CHECKERS_TX = {
+  en: {
+    title: "Checkers",
+    turn: "Turn",
+    you: "You",
+    opponent: "Opponent",
+    red: "Red",
+    black: "Black",
+    gameOver: "Game Over",
+    victory: "You Win!",
+    defeat: "You Lose",
+    draws: "Draw",
+    newGame: "New Game",
+    undo: "Undo",
+    captured: "Captured",
+    king: "King!",
+    moves: "Moves",
+    player1: "Player 1",
+    player2: "Player 2",
+  },
+  fr: {
+    title: "Dames",
+    turn: "Tour",
+    you: "Vous",
+    opponent: "Adversaire",
+    red: "Rouge",
+    black: "Noir",
+    gameOver: "Partie Terminée",
+    victory: "Victoire !",
+    defeat: "Défaite",
+    draws: "Nulle",
+    newGame: "Nouvelle Partie",
+    undo: "Annuler",
+    captured: "Capturé",
+    king: "Dame !",
+    moves: "Coups",
+    player1: "Joueur 1",
+    player2: "Joueur 2",
+  },
+} as const;

@@ -24,7 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       }),
   );
 
-  // In CI/E2E we want to avoid initializing Firebase/Auth and hitting the backend
+  // In CI/E2E we want to avoid initializing Auth and hitting the backend
   // because those external calls can cause client-side exceptions that break Playwright.
   // We still keep AuthProvider enabled so components calling `useAuth()` always have context.
   // IMPORTANT: Do NOT couple this to CI directly, because Next.js production

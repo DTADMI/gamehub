@@ -7,8 +7,12 @@ import { submitScore } from "@/lib/score-submit";
 
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
 import { Brick, BrickLayout, buildBricks, computeBrickLayout } from "./BreakoutBoard";
+import { createI18n } from "@games/i18n";
+import { BREAKOUT_TX } from "../i18n";
 import { ActiveModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE, desiredSpeedFromModifier, pickWeightedPowerUp } from "./BreakoutPowerUps";
 
+
+const { t } = createI18n(BREAKOUT_TX);
 // Minimal, stable MVP implementation for Breakout
 // Constants (logical canvas size; we apply DPR scaling in a resize handler)
 // Increased canvas size to improve play area and match earlier screenshots
@@ -631,28 +635,28 @@ function BreakoutGame() {
         ctx.fillStyle = isDark ? "#111827" : "#fff";
         ctx.textAlign = "center";
         ctx.font = "20px Arial";
-        ctx.fillText("Press Space or Click to Start", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillText(t("pressStart"), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
       } else if (paused) {
         ctx.fillStyle = "rgba(0,0,0,0.25)";
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         ctx.fillStyle = isDark ? "#111827" : "#fff";
         ctx.textAlign = "center";
         ctx.font = "20px Arial";
-        ctx.fillText("Paused (Space)", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillText(t("pause") + " (Space)", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
       } else if (levelDone) {
         ctx.fillStyle = "rgba(0,0,0,0.4)";
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         ctx.fillStyle = isDark ? "#111827" : "#fff";
         ctx.textAlign = "center";
         ctx.font = "22px Arial";
-        ctx.fillText(`Level ${stateLevel} Complete!`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillText(`${t("level")} ${stateLevel} ${t("victory")}!`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
       } else if (over) {
         ctx.fillStyle = "rgba(0,0,0,0.6)";
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         ctx.fillStyle = isDark ? "#111827" : "#fff";
         ctx.textAlign = "center";
         ctx.font = "24px Arial";
-        ctx.fillText("Game Over — Press Space", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillText(`${t("gameOver")} — ${t("pressStart")}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
       }
 
       // game updates

@@ -1,0 +1,41 @@
+/**
+ * Block Blast — Bilingual string map (EN/FR)
+ */
+export const BLOCK_BLAST_TX = {
+  en: {
+    title: "Block Blast",
+    score: "Score",
+    highScore: "High Score",
+    gameOver: "Game Over",
+    pressStart: "Tap to start",
+    newGame: "New Game",
+    level: "Level",
+    combo: "Combo",
+    bomb: "Bomb",
+    rocket: "Rocket",
+    clear: "Clear!",
+    blocks: "Blocks",
+    moves: "Moves",
+    chain: "Chain",
+    colorBomb: "Color Bomb",
+    hammer: "Hammer",
+  },
+  fr: {
+    title: "Bloc Explosif",
+    score: "Score",
+    highScore: "Meilleur Score",
+    gameOver: "Partie Terminée",
+    pressStart: "Touchez pour commencer",
+    newGame: "Nouvelle Partie",
+    level: "Niveau",
+    combo: "Combo",
+    bomb: "Bombe",
+    rocket: "Fusée",
+    clear: "Dégagé !",
+    blocks: "Blocs",
+    moves: "Coups",
+    chain: "Chaîne",
+    colorBomb: "Bombe Couleur",
+    hammer: "Marteau",
+  },
+} as const;

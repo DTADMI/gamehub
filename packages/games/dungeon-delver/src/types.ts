@@ -4,8 +4,8 @@
 export type RaceId = "human" | "elf" | "dwarf" | "vampire" | "demon" | "golem" | "celestial";
 export type ClassId = "warrior" | "mage" | "rogue" | "paladin" | "necromancer";
 export type Rarity = "common" | "uncommon" | "rare" | "epic" | "legendary";
-export type GameScreen = "title" | "dungeon" | "death" | "inventory";
-export type ElementId = "fire" | "ice" | "poison" | "lightning";
+export type GameScreen = "title" | "dungeon" | "death" | "inventory" | "shop";
+export type ElementId = "fire" | "ice" | "poison" | "lightning" | "none";
 
 export interface Stats {
   str: number;
@@ -78,6 +78,7 @@ export interface Item {
   resistBonus: Partial<Resistances>;
   healAmount?: number;
   emoji: string;
+  setId?: string;           // For set bonuses (e.g. "iron", "arcane", "shadow", "plate")
   floorRange: [number, number];
   rarity?: Rarity;
 }
@@ -127,6 +128,7 @@ export interface PlayerState {
   equipped: EquippedItems;
   inventory: Item[];
   gold: number;
+  perks: string[];
 }
 
 export interface Toast {
@@ -141,6 +143,7 @@ export interface DungeonState {
   items: { item: Item; x: number; y: number }[];
   isBossFloor: boolean;
   rooms?: { x: number; y: number; w: number; h: number }[];
+  explored: boolean[][];
 }
 
 export interface SaveData {

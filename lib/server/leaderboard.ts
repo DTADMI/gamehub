@@ -13,6 +13,8 @@ export const SUPPORTED_GAME_TYPES = [
   "CHESS",
   "PLATFORMER",
   "TOWER_DEFENSE",
+  "DUNGEON_DELVER",
+  "DUNGEON_DELVER_DAILY",
 ] as const;
 
 export type LeaderboardGameType = (typeof SUPPORTED_GAME_TYPES)[number];
@@ -33,6 +35,8 @@ const MAX_SCORE_BY_GAME: Record<LeaderboardGameType, number> = {
   CHESS: 100_000,
   PLATFORMER: 3_000_000,
   TOWER_DEFENSE: 5_000_000,
+  DUNGEON_DELVER: 99,
+  DUNGEON_DELVER_DAILY: 99,
 };
 
 export function normalizeGameType(input: string): LeaderboardGameType {

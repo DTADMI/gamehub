@@ -1,0 +1,43 @@
+/**
+ * Tetris — Bilingual string map (EN/FR)
+ */
+export const TETRIS_TX = {
+  en: {
+    title: "Tetris",
+    score: "Score",
+    highScore: "High Score",
+    level: "Level",
+    lines: "Lines",
+    gameOver: "Game Over",
+    pressStart: "Press Space to start",
+    pause: "Paused",
+    resume: "Press Space to resume",
+    newGame: "New Game",
+    next: "Next",
+    hold: "Hold",
+    combo: "Combo",
+    single: "Single",
+    double: "Double",
+    triple: "Triple",
+    tetris: "Tetris!",
+  },
+  fr: {
+    title: "Tetris",
+    score: "Score",
+    highScore: "Meilleur Score",
+    level: "Niveau",
+    lines: "Lignes",
+    gameOver: "Partie Terminée",
+    pressStart: "Espace pour commencer",
+    pause: "Pause",
+    resume: "Espace pour reprendre",
+    newGame: "Nouvelle Partie",
+    next: "Prochain",
+    hold: "Réserve",
+    combo: "Combo",
+    single: "Simple",
+    double: "Double",
+    triple: "Triple",
+    tetris: "Tetris !",
+  },
+} as const;

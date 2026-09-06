@@ -1,8 +1,12 @@
 "use client";
 
+import { createI18n } from "@games/i18n";
+import { KNITZY_TX } from "../i18n";
 import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+
+const { t } = createI18n(KNITZY_TX);
 const GRID_CONFIGS = [
   { label: "4x4", cols: 4, rows: 4, colors: 3 },
   { label: "6x6", cols: 6, rows: 6, colors: 3 },
@@ -260,27 +264,27 @@ export const KnitzyGame: React.FC = () => {
 
     ctx.fillStyle = "white";
     ctx.font = "14px system-ui, sans-serif";
-    ctx.fillText("Target", leftX, GAP + 14);
-    ctx.fillText("Your Work", leftX + boardW + GAP, GAP + 14);
+    ctx.fillText(t("target"), leftX, GAP + 14);
+    ctx.fillText(t("yourWork"), leftX + boardW + GAP, GAP + 14);
 
     const hudY = topY + boardH + GAP + 4;
     ctx.fillStyle = "rgba(255,255,255,0.85)";
     ctx.font = "13px system-ui, sans-serif";
-    ctx.fillText(`Progress: ${pct}%`, GAP, hudY + 14);
-    ctx.fillText(`Time: ${(elapsedMs / 1000).toFixed(1)}s`, GAP + 130, hudY + 14);
+    ctx.fillText(`${t("progress")}: ${pct}%`, GAP, hudY + 14);
+    ctx.fillText(`${t("time")}: ${(elapsedMs / 1000).toFixed(1)}s`, GAP + 130, hudY + 14);
     if (bestMs !== null && bestMs > 0) {
-      ctx.fillText(`Best: ${(bestMs / 1000).toFixed(1)}s`, GAP + 260, hudY + 14);
+      ctx.fillText(`${t("best")}: ${(bestMs / 1000).toFixed(1)}s`, GAP + 260, hudY + 14);
     }
     if (comboStreak > 0) {
       ctx.fillStyle = comboStreak >= 5 ? "#fbbf24" : "rgba(255,255,255,0.85)";
-      ctx.fillText(`Combo: ${comboStreak}`, GAP, hudY + 36);
+      ctx.fillText(`${t("combo")}: ${comboStreak}`, GAP, hudY + 36);
     }
 
     const palY = GAP;
     let palX = leftX + boardW + GAP;
     ctx.fillStyle = "#9ca3af";
     ctx.font = "11px system-ui, sans-serif";
-    ctx.fillText("Palette", palX, palY + 10);
+    ctx.fillText(t("palette"), palX, palY + 10);
     for (let i = 0; i < colorsArr.length; i++) {
       const sz = 22;
       const pad = 5;

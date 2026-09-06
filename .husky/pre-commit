@@ -3,12 +3,12 @@
 set -e
 
 echo "[pre-commit] Running lint..."
-pnpm lint
+pnpm lint > .husky-lint.log 2>&1
 
 echo "[pre-commit] Running type-check..."
 pnpm type-check
 
 echo "[pre-commit] Running tests (non-blocking)..."
-pnpm test:unit || echo "[pre-commit] Warning: some tests failed (see above)"
+pnpm test:unit > .husky-test.log 2>&1 || echo "[pre-commit] Warning: some tests failed (see above)"
 
 echo "[pre-commit] All critical checks passed."

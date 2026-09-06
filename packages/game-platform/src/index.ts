@@ -37,7 +37,7 @@ export { PostGameCTA } from "./components/PostGameCTA";
 // Hooks
 export { usePostGameCTA } from "./hooks/usePostGameCTA";
 
-// Shared libraries (non-Firebase, non-legacy)
+// Shared libraries
 export * from "./lib/env";
 export * from "./lib/flags";
 export * from "./lib/input";

@@ -1,9 +1,13 @@
 // games/bubble-pop/src/components/BubblePopGame.tsx
 "use client";
 
+import { createI18n } from "@games/i18n";
+import { BUBBLE_POP_TX } from "../i18n";
 import { soundManager } from "@gamehub/game-platform";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+
+const { t } = createI18n(BUBBLE_POP_TX);
 // --- Game constants
 const COLS = 10;
 const ROWS = 14;
@@ -238,8 +242,8 @@ export const BubblePopGame: React.FC = () => {
     // HUD
     ctx.fillStyle = "rgba(255,255,255,0.9)";
     ctx.font = "14px system-ui, -apple-system, Segoe UI, Roboto";
-    ctx.fillText(`Score: ${score}`, 8, 18);
-    ctx.fillText(`Best: ${best}`, 8, 36);
+    ctx.fillText(`${t("score")}: ${score}`, 8, 18);
+    ctx.fillText(`${t("best")}: ${best}`, 8, 36);
   }, [board, selected, score, best]);
 
   useEffect(() => {
