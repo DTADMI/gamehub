@@ -263,3 +263,4 @@ build-output.txt
 reports/deps/
 i18n-audit-report.json
 dead-code-report.json
+.githooks/
