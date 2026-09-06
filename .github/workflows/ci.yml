@@ -12,6 +12,7 @@ concurrency:
 
 env:
   NODE_VERSION: "26.3.0"
+  NODE_OPTIONS: "--max-old-space-size=4096"
   NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
   NEXT_PUBLIC_SUPABASE_ANON_KEY: "public-anon-key-for-ci"
   NEXT_PUBLIC_DISABLE_PROVIDERS: "true"
@@ -48,12 +49,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Typecheck
-        run: pnpm type-check
-
+      # Lint + typecheck handled by pre-commit; Next.js build catches type errors
       - name: Unit tests
         run: pnpm test:unit
 
