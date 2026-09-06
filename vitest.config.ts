@@ -24,6 +24,7 @@ export default defineConfig({
       "playwright/**",
       "**/node_modules/**",
       "**/*.d.ts",
+      "**/tests/unit/subscription.context.test.tsx",
     ],
   },
   resolve: {
