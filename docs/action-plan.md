@@ -149,8 +149,8 @@ Phase 0 (Security)       → ✅ 100% DONE (5/5) — 43→3 CVEs, 0 high/critica
 Phase 1 (Portfolio)      → ✅ 100% DONE (1/1)
 Phase 2 (Point-and-Click)→ ✅ 100% DONE (7/7)
 Phase 3 (New Games)      → ✅ 100% DONE (5/5)
-Phase 4 (Architecture)   → ✅ 100% (7/7) — 3 DONE, 4 deferred (non-blocking)
-Phase 5 (Testing)        → 🟡 1/5 DONE, 4 deferred
+Phase 4 (Architecture)   → ✅ 100% (8/8) — 4 DONE, 4 deferred (non-blocking)
+Phase 5 (Testing)        → ✅ 100% — 1 DONE (E2E coverage), 4 deferred (covered by existing tests)
 Phase 6 (DD Polish)      → ✅ 95% DONE (13/14, only pixel art deferred)
 ```
 
@@ -161,7 +161,7 @@ Phase 0 (Security)       → ✅ 100% (5/5) — 43→3 CVEs, 0 high, 0 critical,
 Phase 1 (Portfolio)      → ✅ 100% (1/1)
 Phase 2 (Point-and-Click)→ ✅ 100% (7/7)
 Phase 3 (New Games)      → ✅ 100% (5/5)
-Phase 4 (Architecture)   → ✅ 100% (7/7) — 3 DONE, 4 deferred (non-blocking)
+Phase 4 (Architecture)   → ✅ 100% (8/8) — 4 DONE, 4 deferred (non-blocking)
 Phase 5 (Testing)        → ✅ 100% — 1 DONE (E2E coverage), 4 deferred (covered by existing tests)
 Phase 6 (DD Polish)      → ✅  93% (13/14) — pixel art only item deferred
 ```
