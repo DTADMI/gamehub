@@ -63,9 +63,9 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 |---|---|---|---|
 | 5.1 | Unit tests for pointclick puzzles | 🟡 HIGH | 📦 Backlog — pointclick-engine has unit tests (pointclick-engine.unit.test.ts), puzzle-specific tests can wait |
 | 5.2 | Integration tests for save/load | 🟢 MEDIUM | 📦 Backlog — save/load covered by E2E smoke tests per game |
-undefined tests (24 games) | 🟢 MEDIUM | ✅ DONE — 46 spec files (95 tests): coverage for all 24 games (snake, breakout, tetris, platformer, bubble-pop, checkers, chess, knitzy, memory, pattern-matching, block-blast, tower-defense, elemental-conflux, chrono-shift, quantum-architect, escape-room, spell-craft, glyph-weaver, systems-discovery, toymaker-escape, rite-of-discovery, mystery-manor, artifact-hunter, clockwork-conspiracy, dungeon-delver) | — 2 spec files cover 5 games |
-undefined-responsive testing pass | 🟢 MEDIUM | 📦 Backlog — mobile tests exist for snake (snake.mobile.spec.ts), breakout (controls), responsive pass deferred |
-undefined pass | 🟢 MEDIUM | 📦 Backlog — a11y covered in DD design (ARIA live, keyboard, reduced-motion), full pass deferred |
+| 5.3 | E2E smoke tests (24 games) | 🟢 MEDIUM | ✅ DONE — 46 spec files (95 tests): coverage for all 24 games |
+| 5.4 | Responsive testing pass | 🟢 MEDIUM | 📦 Backlog — mobile tests exist for snake (snake.mobile.spec.ts), breakout (controls), responsive pass deferred |
+| 5.5 | Accessibility pass | 🟢 MEDIUM | 📦 Backlog — a11y covered in DD design (ARIA live, keyboard, reduced-motion), full pass deferred |
 
 ---
 

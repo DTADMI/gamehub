@@ -12,6 +12,25 @@ import React from "react";
 
 type PageProps = { params: { slug: string } };
 
+/** Map kebab-case game slug to camelCase feature flag path (e.g. "bubble-pop" → "games.bubblePop") */
+function slugToFlagPath(slug: string): string {
+  const camel = slug.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+  return `games.${camel}`;
+}
+
+/** Check if a game feature flag is explicitly disabled in the flags object */
+function isGameFlagDisabled(flags: Record<string, unknown>, slug: string): boolean {
+  const path = slugToFlagPath(slug);
+  const parts = path.split(".");
+  let current: unknown = flags;
+  for (const part of parts) {
+    if (current == null || typeof current !== "object") return false;
+    current = (current as Record<string, unknown>)[part];
+  }
+  // Only block if explicitly set to false (undefined/missing = allowed)
+  return current === false;
+}
+
 export default function GameLauncherPage({ params }: PageProps) {
   const { flags } = useFlags();
   const { user } = useAuth();
@@ -49,6 +68,19 @@ export default function GameLauncherPage({ params }: PageProps) {
         <p className="text-muted-foreground mb-4">{entry.shortDescription}</p>
         <div className="rounded-md border bg-gray-50 p-4 dark:bg-gray-800">
           This game is currently <b>disabled by admin</b>.
+        </div>
+      </div>
+    );
+  }
+
+  // Feature flag gating: check games.{slug} flag
+  if (isGameFlagDisabled(flags as unknown as Record<string, unknown>, slug)) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="mb-2 text-2xl font-bold">{entry.title}</h1>
+        <p className="text-muted-foreground mb-4">{entry.shortDescription}</p>
+        <div className="rounded-md border bg-gray-50 p-4 dark:bg-gray-800">
+          This game is temporarily <b>unavailable</b>.
         </div>
       </div>
     );
