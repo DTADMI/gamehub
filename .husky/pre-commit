@@ -18,7 +18,7 @@ pnpm test:unit > .husky-ci-test.log 2>&1
 echo "[pre-commit] UnitTests: $?"
 
 echo "[pre-commit] Running encoding checks..."
-STAGED_ENCODING=$(git diff --cached --name-only --diff-filter=ACMR 2>/dev/null | grep -E '\.(sql|md|ps1)$' | tr '\n' ',' | sed 's/,$//')
+STAGED_ENCODING=$(git diff --cached --name-only --diff-filter=ACMR 2>/dev/null | grep -E '\.(sql|md|ps1)$' || true | tr '\n' ',' | sed 's/,$//')
 if [ -n "$STAGED_ENCODING" ]; then
   powershell -NoProfile -Command "& ./scripts/check-encoding.ps1 -Files '$STAGED_ENCODING' -Quiet"
   echo "[pre-commit] EncodingCheck: PASSED"
