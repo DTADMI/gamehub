@@ -51,6 +51,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "packages/games/_engine"),
       },
       {
+        find: "@games/i18n",
+        replacement: path.resolve(__dirname, "packages/games/i18n"),
+      },
+      {
         find: /^@games\/([^/]+)$/,
         replacement: path.resolve(__dirname, "packages/games") + "/$1/src",
       },
