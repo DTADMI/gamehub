@@ -13,7 +13,7 @@
 | Layer | Location | Use It For | Do Not Put Here |
 | --- | --- | --- | --- |
 | Rules | `AGENTS.md` | Stable repo policy, safety constraints, required guardrails | Long step-by-step playbooks, external integration setup |
-| Hooks | `.codex/hooks.json`, `.githooks/pre-commit` | Automated reminders and enforced validation entrypoints | Product rules that need human judgment |
+| Hooks | `.codex/hooks.json`, `.husky/pre-commit` | Automated reminders and enforced validation entrypoints | Product rules that need human judgment |
 | Skills | `.agents/skills/` | Repeatable GameHub workflows that require repo-specific procedure | Global policy, generic shell preferences |
 | MCP / Plugins | `plugins/gamehub-integrations/`, `.agents/plugins/marketplace.json` | External system access and integration metadata | Repo policy or authoring standards |
 
@@ -140,7 +140,7 @@ Use the repo skills when the task matches:
 ## Hooks And Enforced Checks
 
 - Active Codex lifecycle hooks live in `.codex/hooks.json`.
-- Repo Git hooks live in `.githooks/` and are installed by `node scripts/install-git-hooks.mjs` (or equivalent).
+- Repo Git hooks live in `.husky/` (managed by Husky, `core.hooksPath=.husky/_`).
 - The pre-commit hook runs `pnpm lint`, `pnpm type-check`, `pnpm test:unit`, `pnpm check:supabase-security`, encoding checks, and `pnpm build`.
 - Use `pnpm run-all-checks` for the full local CI pipeline. Use `pnpm ci:local` for the extended pipeline including E2E smoke tests.
 

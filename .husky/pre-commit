@@ -1,14 +1,34 @@
-#!/usr/bin/env sh
-
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
 echo "[pre-commit] Running lint..."
-pnpm lint > .husky-lint.log 2>&1
+pnpm lint > .husky-ci-lint.log 2>&1
+echo "[pre-commit] Lint: $?"
 
 echo "[pre-commit] Running type-check..."
 pnpm type-check
+echo "[pre-commit] TypeCheck: PASSED"
 
-echo "[pre-commit] Running tests (non-blocking)..."
-pnpm test:unit > .husky-test.log 2>&1 || echo "[pre-commit] Warning: some tests failed (see above)"
+echo "[pre-commit] Running Supabase security checks..."
+pnpm check:supabase-security
+echo "[pre-commit] SupabaseSecurity: PASSED"
 
-echo "[pre-commit] All critical checks passed."
+echo "[pre-commit] Running unit tests..."
+pnpm test:unit > .husky-ci-test.log 2>&1
+echo "[pre-commit] UnitTests: $?"
+
+echo "[pre-commit] Running encoding checks..."
+STAGED_ENCODING=$(git diff --cached --name-only --diff-filter=ACMR 2>/dev/null | grep -E '\.(sql|md|ps1)$' | tr '\n' ',' | sed 's/,$//')
+if [ -n "$STAGED_ENCODING" ]; then
+  powershell -NoProfile -Command "& ./scripts/check-encoding.ps1 -Files '$STAGED_ENCODING' -Quiet"
+  echo "[pre-commit] EncodingCheck: PASSED"
+else
+  echo "[pre-commit] EncodingCheck: SKIPPED (no encoding-sensitive files staged)"
+fi
+echo ""
+
+echo "[pre-commit] Running build..."
+pnpm build > .husky-ci-build.log 2>&1
+echo "[pre-commit] Build: $?"
+
+echo "[pre-commit] All checks passed."
