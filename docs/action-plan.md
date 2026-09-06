@@ -1,7 +1,7 @@
 # GameHub Action Plan
 
-**Last Updated**: 2026-09-05 (v1.0)
-**Current Focus**: v1.0 — i18n 100% wired, all 18 games, DD v0.7 complete
+**Last Updated**: 2026-09-06 (v1.1)
+**Current Focus**: v1.1 — all deps updated, CVEs resolved (43→3, 0 high), vite/ws pinned
 
 Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
@@ -13,8 +13,9 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 |---|---|---|---|
 | 0.1 | Fix 2 critical CVEs (websocket-driver, next-auth) | 🔴 CRITICAL | ✅ DONE |
 | 0.2 | Fix 9 high CVEs | 🔴 CRITICAL | ✅ DONE |
-| 0.3 | Update all outdated packages | 🟡 HIGH | ✅ DONE |
+| 0.3 | Update all outdated packages | 🟡 HIGH | ✅ DONE — 2026-09-06: all minor/patch updated, vite@7.3.5 pinned, ws@8.21.0 pinned, next in 7 game pkgs bumped to 16.2.11 |
 | 0.4 | Pin all deps, run full ci:local | 🟡 HIGH | ✅ DONE |
+| 0.5 | Resolve remaining transitive CVEs (xmldom, fflate) | 🟢 LOW | 📦 Deferred — pixi.js + three-stdlib transitive deps, client-only, no known exploits in game context |
 
 ## Phase 1: Platform Purity — Remove Portfolio
 
@@ -144,7 +145,7 @@ undefined pass | 🟢 MEDIUM | 📦 Backlog — a11y covered in DD design (ARIA 
 ## Execution Order
 
 ```
-Phase 0 (Security)       → ✅ 100% DONE (4/4)
+Phase 0 (Security)       → ✅ 100% DONE (5/5) — 43→3 CVEs, 0 high/critical
 Phase 1 (Portfolio)      → ✅ 100% DONE (1/1)
 Phase 2 (Point-and-Click)→ ✅ 100% DONE (7/7)
 Phase 3 (New Games)      → ✅ 100% DONE (5/5)
@@ -156,7 +157,7 @@ Phase 6 (DD Polish)      → ✅ 95% DONE (13/14, only pixel art deferred)
 ## Final Execution Summary
 
 ```
-Phase 0 (Security)       → ✅ 100% (4/4)
+Phase 0 (Security)       → ✅ 100% (5/5) — 43→3 CVEs, 0 high, 0 critical, vite@7.3.5, ws@8.21.0
 Phase 1 (Portfolio)      → ✅ 100% (1/1)
 Phase 2 (Point-and-Click)→ ✅ 100% (7/7)
 Phase 3 (New Games)      → ✅ 100% (5/5)
