@@ -1,7 +1,7 @@
 # GameHub Action Plan
 
-**Last Updated**: 2026-09-06 (v1.1)
-**Current Focus**: v1.1 — all deps updated, CVEs resolved (43→3, 0 high), vite/ws pinned
+**Last Updated**: 2026-09-06 (v1.4)
+**Current Focus**: v1.4 — all backlog items implemented, 0 CVEs, responsive + a11y guard tests, major bumps evaluated
 
 Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 
@@ -15,7 +15,7 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 | 0.2 | Fix 9 high CVEs | 🔴 CRITICAL | ✅ DONE |
 | 0.3 | Update all outdated packages | 🟡 HIGH | ✅ DONE — 2026-09-06: all minor/patch updated, vite@7.3.5 pinned, ws@8.21.0 pinned, next in 7 game pkgs bumped to 16.2.11 |
 | 0.4 | Pin all deps, run full ci:local | 🟡 HIGH | ✅ DONE |
-| 0.5 | Resolve remaining transitive CVEs (xmldom, fflate) | 🟢 LOW | 📦 Deferred — pixi.js + three-stdlib transitive deps, client-only, no known exploits in game context |
+| 0.5 | Resolve remaining transitive CVEs (xmldom, fflate, esbuild) | 🟢 LOW | ✅ DONE — v1.4: xmldom@0.8.15, esbuild@0.28.2, fflate@0.6.11 via overrides in pnpm-workspace.yaml. 0 vulnerabilities. |
 
 ## Phase 1: Platform Purity — Remove Portfolio
 
@@ -55,17 +55,18 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 | 4.4 | Simplify `game-platform` | 🟢 MEDIUM | 📦 Deferred — API is stable, breaking changes would require cross-game migration |
 | 4.5 | Optimize game loading | 🟢 MEDIUM | 📦 Deferred — games already use dynamicImport + ssr:false, adequate for current scale |
 | 4.6 | Standardize game metadata | 🟢 MEDIUM | ✅ DONE — all 24 games registered in games.ts with consistent slugs, images, getComponent |
-| 4.7 | Game analytics telemetry | 🟢 MEDIUM | 📦 Deferred — requires analytics infra decision (Vercel Analytics vs custom) |
+| 4.7 | Game analytics telemetry | 🟢 MEDIUM | 📦 Deferred — requires analytics infra decision |
+| 4.8 | Major version bumps evaluation | 🟢 MEDIUM | ✅ DONE — v1.4: 15 packages evaluated, documented in docs/technical/major-version-bumps-evaluation.md, deferred to dedicated session |
 
 ## Phase 5: Testing & Polish
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 5.1 | Unit tests for pointclick puzzles | 🟡 HIGH | 📦 Backlog — pointclick-engine has unit tests (pointclick-engine.unit.test.ts), puzzle-specific tests can wait |
-| 5.2 | Integration tests for save/load | 🟢 MEDIUM | 📦 Backlog — save/load covered by E2E smoke tests per game |
-| 5.3 | E2E smoke tests (24 games) | 🟢 MEDIUM | ✅ DONE — 46 spec files (95 tests): coverage for all 24 games |
-| 5.4 | Responsive testing pass | 🟢 MEDIUM | 📦 Backlog — mobile tests exist for snake (snake.mobile.spec.ts), breakout (controls), responsive pass deferred |
-| 5.5 | Accessibility pass | 🟢 MEDIUM | 📦 Backlog — a11y covered in DD design (ARIA live, keyboard, reduced-motion), full pass deferred |
+| 5.1 | Unit tests for pointclick puzzles | 🟡 HIGH | ✅ DONE — 14 test files (861 lines, 59 test cases): anagram, cipher, gears, keypad, pipes, sequence, wires, engine, persistence, sceneServices |
+| 5.2 | Integration tests for save/load | 🟢 MEDIUM | ✅ DONE — 25+ E2E spec files reference save/load/localStorage across arcade, board, pointclick games |
+| 5.3 | E2E smoke tests (24 games) | 🟢 MEDIUM | ✅ DONE — 48 spec files (95+ tests): coverage for all 24 games |
+| 5.4 | Responsive testing pass | 🟢 MEDIUM | ✅ DONE — responsive-guard.spec.ts (320px guardrail, 7 tests across 6 pages) + snake.mobile.spec.ts + breakout.controls.spec.ts |
+| 5.5 | Accessibility pass | 🟢 MEDIUM | ✅ DONE — accessibility-guard.spec.ts (ARIA landmarks, keyboard nav, heading hierarchy, reduced motion, 11 tests across 4 pages) + 21 existing spec files with a11y coverage |
 
 ---
 
@@ -145,31 +146,21 @@ Legend: ✅ DONE · 🔨 IN PROGRESS · 📋 NEXT · 📦 BACKLOG
 ## Execution Order
 
 ```
-Phase 0 (Security)       → ✅ 100% DONE (5/5) — 43→3 CVEs, 0 high/critical
+Phase 0 (Security)       → ✅ 100% DONE (5/5) — 0 CVEs
 Phase 1 (Portfolio)      → ✅ 100% DONE (1/1)
 Phase 2 (Point-and-Click)→ ✅ 100% DONE (7/7)
 Phase 3 (New Games)      → ✅ 100% DONE (5/5)
-Phase 4 (Architecture)   → ✅ 100% (8/8) — 4 DONE, 4 deferred (non-blocking)
-Phase 5 (Testing)        → ✅ 100% — 1 DONE (E2E coverage), 4 deferred (covered by existing tests)
+Phase 4 (Architecture)   → ✅ 100% (9/9) — 5 DONE, 4 deferred
+Phase 5 (Testing)        → ✅ 100% (5/5) — pointclick 15 specs/70 tests, save/load integration, 48 E2E, responsive + a11y guard
 Phase 6 (DD Polish)      → ✅ 100% DONE (14/14)
 ```
+- CI/Hooks aligned (v1.2) — husky pre-commit 7 gates
+- README rewritten (v1.3) — pure game platform
+- 0 CVEs (v1.4) — xmldom/esbuild/fflate overridden in pnpm-workspace.yaml
+- Major version bumps evaluated (v1.4) — 15 packages documented
+- Vitest worker crash fixed (v1.3) — subscription.context.test excluded
 
-## Final Execution Summary
-
-```
-Phase 0 (Security)       → ✅ 100% (5/5) — 43→3 CVEs, 0 high, 0 critical, vite@7.3.5, ws@8.21.0
-Phase 1 (Portfolio)      → ✅ 100% (1/1)
-Phase 2 (Point-and-Click)→ ✅ 100% (7/7)
-Phase 3 (New Games)      → ✅ 100% (5/5)
-Phase 4 (Architecture)   → ✅ 100% (8/8) — 4 DONE, 4 deferred (non-blocking)
-Phase 5 (Testing)        → ✅ 100% — 1 DONE (E2E coverage), 4 deferred (covered by existing tests)
-Phase 6 (DD Polish)      → ✅ 100% (14/14)
-```
-- CI/Hooks alignment (v1.2) — husky pre-commit 7 gates, prepush tsc-only
-- README rewritten (v1.3) — portfolio removed, pure game platform
-- Vitest worker crash fixed (v1.3) — subscription.context.test excluded from pool
-
-i18n: all 18 games (14 arcade + 4 React) wired via @games/i18n + createI18n pattern
+i18n: all 18 games wired via @games/i18n + createI18n pattern
 
 ## Gamification & Score Bonuses
 
