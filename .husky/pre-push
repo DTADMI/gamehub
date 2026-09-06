@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 set -e
-echo "[pre-push] Running type-check..."
+echo "[pre-push] Type-check..."
 pnpm type-check
-echo "[pre-push] All checks passed."
+echo "[pre-push] OK"
