@@ -1,7 +1,7 @@
 "use client";
 
 import { GameContainer } from "@gamehub/game-platform";
-import { DialogueBox, PostGameCTA } from "@games/pointclick-engine";
+import { DialogueBox } from "@games/pointclick-engine";
 import { SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import {
   type Lang,
@@ -73,7 +73,6 @@ export const EscapeRoomGame: React.FC = () => {
 
   const [sceneId, setSceneId] = useState("INTRO");
 
-   
   const scenes = useMemo<Record<string, Scene>>(
     () => ({
       INTRO: {

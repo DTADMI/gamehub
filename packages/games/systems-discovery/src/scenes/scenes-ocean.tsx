@@ -6,8 +6,8 @@ import React from "react";
 
 import { getLocale,t } from "@/lib/i18n";
 
-import type { PipesState, SequenceState } from "./_imports";
-import { createPipesState, createSequenceState, evaluatePipes, HomeostasisMeter, PostGameCTA, pressSequenceKey, setTileRotation, toggleValve } from "./_imports";
+import type { PipesState } from "./_imports";
+import { createPipesState, evaluatePipes, PostGameCTA, setTileRotation, toggleValve } from "./_imports";
 export function buildOceanScenes(): Scene[] {
   return [
   {

@@ -13,7 +13,7 @@ import { createSeededRng,getDailySeed, getDailySeedNumber, hasDailyAttempt, mark
 import { buildCharacter, calcMagicDamage, calcMaxHp, calcMaxMp, calcMeleeDamage, calcXpToNext, computeSetBonuses } from "../modifiers";
 import { ParticleSystem } from "../particles";
 import { getLevelUpChoices, getPerk, type Perk,PERKS } from "../perks";
-import type { ClassDef, ClassId, DungeonState, ElementId, EquippedItems, FloorMonster, GameScreen, Item, Monster, PlayerState, Race, RaceId, Rarity, Resistances, RunStats, SaveData, Stats, Title, Toast } from "../types";
+import type { ClassDef, ClassId, DungeonState, EquippedItems, FloorMonster, GameScreen, Item, Monster, PlayerState, Race, RaceId, Rarity, RunStats, SaveData, Stats, Title } from "../types";
 
 // ─── Game Constants ───────────────────────────────────────────
 const CANVAS_W = 640;
@@ -332,8 +332,6 @@ export function DungeonDelverGame() {
   // Locale
   const [locale, setLocale] = useState<"en" | "fr">("en");
   const t = useCallback((key: keyof typeof TX.en) => TX[locale][key] || key, [locale]);
-
-
 
   // Screen state
   const [screen, setScreen] = useState<GameScreen>("title");
@@ -1461,7 +1459,6 @@ export function DungeonDelverGame() {
   );
 }
 
-
 // ─── Save/Load persistence (localStorage) ──────────────────────
 
 const SAVE_KEY = "dungeon-delver-save";
@@ -1491,7 +1488,6 @@ function deleteSavedRun(): void {
 // ─── Title persistence (localStorage) ──────────────────────────
 
 const TITLES_KEY = "dungeon-delver-titles";
-
 
 function loadTitles(): Title[] {
   try {

@@ -2,7 +2,7 @@
 
 import { Carousel, GameCard } from "@gamehub/game-platform";
 import { useFlags } from "@gamehub/game-platform/contexts/FlagsContext";
-import type { GameEntry } from "@gamehub/game-platform/metadata/games";
+
 import { isGameLaunchable, listGames } from "@gamehub/game-platform/metadata/games";
 import { Badge, Button, Skeleton } from "@gamehub/ui";
 import { ExternalLink } from "lucide-react";

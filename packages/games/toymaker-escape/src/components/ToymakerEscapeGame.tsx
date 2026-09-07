@@ -55,8 +55,6 @@ import {
 } from "@games/pointclick-engine/puzzles/wires";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { t } from "@/lib/i18n";
-
 import { TOYMAKER_SCENES } from "../data/scenes";
 import { BrokenToysPuzzle } from "../puzzles/BrokenToysPuzzle";
 import { FilingLogicPuzzle } from "../puzzles/FilingLogicPuzzle";

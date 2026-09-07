@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import type { Choice, Lang, Scene } from "../engine";
+import type { Lang, Scene } from "../engine";
 
 /** Character portrait configuration per scene or global */
 export type CharacterPortrait = {

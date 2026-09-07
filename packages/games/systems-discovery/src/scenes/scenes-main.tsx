@@ -4,10 +4,9 @@
 import type { Scene } from "@games/pointclick-engine";
 import React from "react";
 
-import { getLocale,t, useI18n } from "@/lib/i18n";
+import { getLocale, t } from "@/lib/i18n";
 
-import type { PipesState, SequenceState } from "./_imports";
-import { createPipesState, createSequenceState, evaluatePipes, HomeostasisMeter, PostGameCTA, pressSequenceKey, setTileRotation, toggleValve } from "./_imports";
+import { PostGameCTA } from "./_imports";
 export function buildMainScenes(): Scene[] {
   return [
   {

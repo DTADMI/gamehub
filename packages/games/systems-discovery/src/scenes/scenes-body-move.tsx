@@ -6,8 +6,7 @@ import React from "react";
 
 import { t } from "@/lib/i18n";
 
-import type { PipesState, SequenceState } from "./_imports";
-import { createPipesState, createSequenceState, evaluatePipes, HomeostasisMeter, PostGameCTA, pressSequenceKey, setTileRotation, toggleValve } from "./_imports";
+import { HomeostasisMeter } from "./_imports";
 export function buildBodyMoveScenes(): Scene[] {
   return [
   {

@@ -1,6 +1,6 @@
 "use client";
 import { GameShell } from "@gamehub/game-platform";
-import { PresenceBadge } from "@gamehub/game-platform";
+
 import LocalLeaderboard, { submitLocalScore } from "@gamehub/game-platform/components/games/LocalLeaderboard";
 import StatsPanel from "@gamehub/game-platform/components/games/StatsPanel";
 import MiniBoard from "@gamehub/game-platform/components/leaderboards/MiniBoard";

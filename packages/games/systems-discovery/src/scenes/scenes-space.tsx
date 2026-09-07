@@ -7,8 +7,8 @@ import React from "react";
 import { getLocale,t } from "@/lib/i18n";
 
 import { OrbitsPuzzle } from "../puzzles/OrbitsPuzzle";
-import type { PipesState, SequenceState } from "./_imports";
-import { createPipesState, createSequenceState, evaluatePipes, HomeostasisMeter, PostGameCTA, pressSequenceKey, setTileRotation, toggleValve } from "./_imports";
+
+import { PostGameCTA } from "./_imports";
 export function buildSpaceScenes(): Scene[] {
   return [
   {

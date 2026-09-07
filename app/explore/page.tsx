@@ -1,7 +1,7 @@
 "use client";
 
 import { GameCard } from "@gamehub/game-platform";
-import { isGameLaunchable, listGames } from "@gamehub/game-platform/metadata/games";
+import { listGames } from "@gamehub/game-platform/metadata/games";
 import { Badge, Button } from "@gamehub/ui";
 import { Gamepad2 } from "lucide-react";
 import Link from "next/link";

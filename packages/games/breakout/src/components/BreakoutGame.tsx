@@ -8,9 +8,8 @@ import { submitScore } from "@/lib/score-submit";
 
 import { BREAKOUT_TX } from "../i18n";
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
-import { Brick, BrickLayout, buildBricks, computeBrickLayout } from "./BreakoutBoard";
+import { Brick, buildBricks, computeBrickLayout } from "./BreakoutBoard";
 import { ActiveModifier, desiredSpeedFromModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, pickWeightedPowerUp,POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE } from "./BreakoutPowerUps";
-
 
 const { t } = createI18n(BREAKOUT_TX);
 // Minimal, stable MVP implementation for Breakout
@@ -41,7 +40,6 @@ const NUDGE_EPS = 0.35; // if |dx| falls below this, consider nudging
 const NUDGE_AMOUNT = 0.6; // horizontal nudge amount when trapped
 const NUDGE_COOLDOWN_MS = 320; // minimal delay between nudges
 
-
 type Ball = {
   x: number;
   y: number;
@@ -56,7 +54,6 @@ type Paddle = {
   width: number;
   height: number;
 };
-
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
@@ -1999,4 +1996,3 @@ function BreakoutGame() {
 }
 
 export default React.memo(BreakoutGame);
-

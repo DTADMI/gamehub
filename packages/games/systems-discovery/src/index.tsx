@@ -1,10 +1,10 @@
 "use client";
 import { Scene, SceneController } from "@games/pointclick-engine";
 import { SceneBackground,type SceneBgType } from "@games/pointclick-engine";
-import { useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
+import { useSoundEffects } from "@games/pointclick-engine";
 import React from "react";
 
-import { getLocale,t, useI18n } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 
 import { buildBodyBreathScenes } from "./scenes/scenes-body-breath";
 import { buildBodyFuelScenes } from "./scenes/scenes-body-fuel";
@@ -27,7 +27,6 @@ const buildScenes = (): Scene[] => [
   ...buildBodyGrowScenes(),
   ...buildOceanScenes(),
 ];
-
 
 export function SystemsDiscoveryGame() {
   const sfx = useSoundEffects();
