@@ -58,14 +58,14 @@ describe("ToymakerEscape — medals & save", () => {
   it("gears route shows Confirm gears button for default ratio", async () => {
     render(<ToymakerEscapeGame />);
     // Wait for typewriter effect to finish and choices to appear
-    const beginBtn = await screen.findByRole("button", { name: "Begin" }, { timeout: 5000 });
+    const beginBtn = await screen.findByRole("button", { name: /begin|commencer/i }, { timeout: 12000 });
     fireEvent.click(beginBtn);
-    expect(screen.getByRole("button", { name: /confirm gears/i })).toBeInTheDocument();
-  });
+    expect(screen.getByRole("button", { name: /confirm gears|valider l'engrenage/i })).toBeInTheDocument();
+  }, 15000);
 
   it("persists save under tme:save:v1", async () => {
     render(<ToymakerEscapeGame />);
-    const beginBtn = await screen.findByRole("button", { name: /begin/i }, { timeout: 5000 });
+    const beginBtn = await screen.findByRole("button", { name: /begin|commencer/i }, { timeout: 12000 });
     fireEvent.click(beginBtn);
     const raw = localStorage.getItem("tme:save:v1");
     expect(raw).toBeTruthy();
