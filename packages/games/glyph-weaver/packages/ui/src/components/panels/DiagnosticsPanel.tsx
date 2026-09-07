@@ -1,38 +1,39 @@
-'use client'
+'use client';
 
-import { useState, useCallback } from 'react'
-import { useI18n } from '../../i18n/index'
-import { useStore } from '../../state/store'
+import { useCallback,useState } from 'react';
+
+import { useI18n } from '../../i18n/index';
+import { useStore } from '../../state/store';
 
 type DiagSection = 'parser' | 'ast' | 'ir' | 'warnings'
 
 export function DiagnosticsPanel() {
-  const { t } = useI18n()
-  const spellState = useStore((s) => s.spellState)
-  const strokes = useStore((s) => s.strokes)
+  const { t } = useI18n();
+  const spellState = useStore((s) => s.spellState);
+  const strokes = useStore((s) => s.strokes);
   const [expanded, setExpanded] = useState<Record<DiagSection, boolean>>({
     parser: true,
     ast: false,
     ir: false,
     warnings: true,
-  })
-  const [copyMsg, setCopyMsg] = useState<string | null>(null)
+  });
+  const [copyMsg, setCopyMsg] = useState<string | null>(null);
 
   const toggle = (section: DiagSection) =>
-    setExpanded((prev) => ({ ...prev, [section]: !prev[section] }))
+    setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
 
   const copyToClipboard = useCallback(
     async (text: string) => {
       try {
-        await navigator.clipboard.writeText(text)
-        setCopyMsg(t('diagnostics.copySuccess'))
-        setTimeout(() => setCopyMsg(null), 2000)
+        await navigator.clipboard.writeText(text);
+        setCopyMsg(t('diagnostics.copySuccess'));
+        setTimeout(() => setCopyMsg(null), 2000);
       } catch {
         // clipboard not available
       }
     },
     [t],
-  )
+  );
 
   const parserData = JSON.stringify(
     {
@@ -48,7 +49,7 @@ export function DiagnosticsPanel() {
     },
     null,
     2,
-  )
+  );
 
   const astData = spellState
     ? JSON.stringify(
@@ -61,7 +62,7 @@ export function DiagnosticsPanel() {
         null,
         2,
       )
-    : t('diagnostics.noData')
+    : t('diagnostics.noData');
 
   const irData = spellState
     ? JSON.stringify(
@@ -83,9 +84,9 @@ export function DiagnosticsPanel() {
         null,
         2,
       )
-    : t('diagnostics.noData')
+    : t('diagnostics.noData');
 
-  const warningsData = spellState?.warnings?.length ? spellState.warnings.join('\n') : '-'
+  const warningsData = spellState?.warnings?.length ? spellState.warnings.join('\n') : '-';
 
   const sections: {
     id: DiagSection
@@ -96,7 +97,7 @@ export function DiagnosticsPanel() {
     { id: 'ast', labelKey: 'diagnostics.structuredAST', content: astData },
     { id: 'ir', labelKey: 'diagnostics.spellBehavior', content: irData },
     { id: 'warnings', labelKey: 'diagnostics.warnings', content: warningsData },
-  ]
+  ];
 
   return (
     <div className="flex flex-col h-full">
@@ -133,8 +134,8 @@ export function DiagnosticsPanel() {
               <div className="flex items-center gap-1">
                 <button
                   onClick={(e) => {
-                    e.stopPropagation()
-                    copyToClipboard(section.content)
+                    e.stopPropagation();
+                    copyToClipboard(section.content);
                   }}
                   className="p-0.5 rounded hover:opacity-70"
                   style={{ color: 'var(--gw-text-muted)' }}
@@ -192,5 +193,5 @@ export function DiagnosticsPanel() {
         ))}
       </div>
     </div>
-  )
+  );
 }

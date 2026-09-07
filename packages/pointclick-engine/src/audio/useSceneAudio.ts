@@ -5,7 +5,8 @@
 
 "use client";
 import { useEffect } from "react";
-import { proceduralAudio, type ProceduralAudio } from "../audio/ProceduralAudio";
+
+import { type ProceduralAudio,proceduralAudio } from "../audio/ProceduralAudio";
 
 type AmbientMap = Record<string, "workshop" | "office" | "apartment" | "space" | "ocean" | "body" | "home" | "thinking">;
 
@@ -29,7 +30,7 @@ export function useSceneAudio(
   enabled = true,
 ) {
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled) {return;}
 
     // Find matching ambient type (check prefixes first, then exact match)
     let ambientType: AmbientMap[string] | null = null;

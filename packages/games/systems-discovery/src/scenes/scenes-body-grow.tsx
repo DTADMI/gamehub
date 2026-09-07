@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // Auto-generated scene group — extracted from index.tsx monolith
 // See scripts/split-systems-discovery.mjs
-import React from "react";
-import { t } from "@/lib/i18n";
 import type { Scene } from "@games/pointclick-engine";
+import React from "react";
 
-import { HomeostasisMeter, PostGameCTA, createPipesState, evaluatePipes, createSequenceState, pressSequenceKey, setTileRotation, toggleValve } from "./_imports";
+import { t } from "@/lib/i18n";
+
 import type { PipesState, SequenceState } from "./_imports";
+import { createPipesState, createSequenceState, evaluatePipes, HomeostasisMeter, PostGameCTA, pressSequenceKey, setTileRotation, toggleValve } from "./_imports";
 export function buildBodyGrowScenes(): Scene[] {
   return [
   {

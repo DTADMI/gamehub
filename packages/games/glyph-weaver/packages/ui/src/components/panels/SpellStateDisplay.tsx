@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { useI18n } from '../../i18n/index'
-import { useStore } from '../../state/store'
+import { useI18n } from '../../i18n/index';
+import { useStore } from '../../state/store';
 
 export function SpellStateDisplay() {
-  const { t } = useI18n()
-  const spellState = useStore((s) => s.spellState)
+  const { t } = useI18n();
+  const spellState = useStore((s) => s.spellState);
 
   if (!spellState) {
     return (
@@ -14,7 +14,7 @@ export function SpellStateDisplay() {
           {t('diagnostics.noData')}
         </p>
       </div>
-    )
+    );
   }
 
   const statusColor =
@@ -22,14 +22,14 @@ export function SpellStateDisplay() {
       ? 'var(--gw-success)'
       : spellState.status === 'prepared'
         ? 'var(--gw-warning)'
-        : 'var(--gw-error)'
+        : 'var(--gw-error)';
 
   const statusLabel =
     spellState.status === 'active'
       ? t('state.active')
       : spellState.status === 'prepared'
         ? t('state.prepared')
-        : t('state.invalid')
+        : t('state.invalid');
 
   const elementIcons: Record<string, string> = {
     fire: '\u{1F525}',
@@ -37,7 +37,7 @@ export function SpellStateDisplay() {
     wind: '\u{1F4A8}',
     earth: '\u{1FAA8}',
     light: '\u{2728}',
-  }
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -135,7 +135,7 @@ export function SpellStateDisplay() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 function BarMeter({
@@ -149,7 +149,7 @@ function BarMeter({
   max: number
   color: string
 }) {
-  const pct = Math.min(100, Math.max(0, (value / max) * 100))
+  const pct = Math.min(100, Math.max(0, (value / max) * 100));
   return (
     <div>
       <div className="flex justify-between text-xs mb-0.5">
@@ -166,7 +166,7 @@ function BarMeter({
         />
       </div>
     </div>
-  )
+  );
 }
 
 function StatRow({ label, value }: { label: string; value: number }) {
@@ -179,5 +179,5 @@ function StatRow({ label, value }: { label: string; value: number }) {
         {value.toFixed(2)}
       </span>
     </div>
-  )
+  );
 }

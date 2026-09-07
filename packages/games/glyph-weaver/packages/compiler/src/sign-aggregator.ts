@@ -1,9 +1,9 @@
 import type {
-  GlyphAST,
-  RecognizedSign,
-  ManifestationId,
   AnyManifestationProfile,
-} from '../../core/src'
+  GlyphAST,
+  ManifestationId,
+  RecognizedSign,
+} from '../../core/src';
 
 export interface SignAggregationResult {
   manifestations: Record<string, AnyManifestationProfile>
@@ -12,12 +12,12 @@ export interface SignAggregationResult {
   recognizedCount: number
 }
 
-const VALID_RECOGNITION_STATUSES = new Set(['valid', 'valid_messy'])
+const VALID_RECOGNITION_STATUSES = new Set(['valid', 'valid_messy']);
 
 export function aggregateSigns(ast: GlyphAST): SignAggregationResult {
   const recognized = ast.signs.filter(
     (s) => s.recognized && VALID_RECOGNITION_STATUSES.has(s.recognitionStatus),
-  )
+  );
 
   if (recognized.length === 0) {
     return {
@@ -25,37 +25,37 @@ export function aggregateSigns(ast: GlyphAST): SignAggregationResult {
       primaryManifestation: 'none',
       combinedStrength: 0,
       recognizedCount: 0,
-    }
+    };
   }
 
-  const byManifestation = new Map<ManifestationId, RecognizedSign[]>()
+  const byManifestation = new Map<ManifestationId, RecognizedSign[]>();
 
   for (const sign of recognized) {
-    const m = sign.semantic.manifestation
-    const list = byManifestation.get(m)
+    const m = sign.semantic.manifestation;
+    const list = byManifestation.get(m);
     if (list) {
-      list.push(sign)
+      list.push(sign);
     } else {
-      byManifestation.set(m, [sign])
+      byManifestation.set(m, [sign]);
     }
   }
 
-  const manifestations: Record<string, AnyManifestationProfile> = {}
-  let maxStrength = 0
-  let primaryManifestation: ManifestationId | 'none' = 'none'
+  const manifestations: Record<string, AnyManifestationProfile> = {};
+  let maxStrength = 0;
+  let primaryManifestation: ManifestationId | 'none' = 'none';
 
   for (const [manifestation, signs] of byManifestation) {
-    const totalConfidence = signs.reduce((sum, s) => sum + s.confidence, 0)
-    const avgNeatness = signs.reduce((sum, s) => sum + s.neatness, 0) / signs.length
-    const strength = clamp((totalConfidence / signs.length) * 0.7 + avgNeatness * 0.3, 0, 1)
+    const totalConfidence = signs.reduce((sum, s) => sum + s.confidence, 0);
+    const avgNeatness = signs.reduce((sum, s) => sum + s.neatness, 0) / signs.length;
+    const strength = clamp((totalConfidence / signs.length) * 0.7 + avgNeatness * 0.3, 0, 1);
 
-    const profile = buildManifestationProfile(manifestation, strength, signs)
+    const profile = buildManifestationProfile(manifestation, strength, signs);
 
-    manifestations[manifestation] = profile
+    manifestations[manifestation] = profile;
 
     if (strength > maxStrength) {
-      maxStrength = strength
-      primaryManifestation = manifestation
+      maxStrength = strength;
+      primaryManifestation = manifestation;
     }
   }
 
@@ -64,7 +64,7 @@ export function aggregateSigns(ast: GlyphAST): SignAggregationResult {
     primaryManifestation,
     combinedStrength: maxStrength,
     recognizedCount: recognized.length,
-  }
+  };
 }
 
 function buildManifestationProfile(
@@ -74,11 +74,11 @@ function buildManifestationProfile(
 ): AnyManifestationProfile {
   switch (manifestation) {
     case 'aura':
-      return { type: 'aura', strength }
+      return { type: 'aura', strength };
     case 'column':
-      return { type: 'column', strength }
+      return { type: 'column', strength };
     case 'levitation':
-      return { type: 'levitation', strength }
+      return { type: 'levitation', strength };
     case 'convergence':
       return {
         type: 'convergence',
@@ -86,18 +86,18 @@ function buildManifestationProfile(
         point: { x: 0, y: 0 },
         radius: 0.5,
         rigidity: 0.5,
-      }
+      };
     case 'barrier':
-      return { type: 'barrier', strength }
+      return { type: 'barrier', strength };
     case 'projectile':
-      return { type: 'projectile', strength }
+      return { type: 'projectile', strength };
     case 'area':
-      return { type: 'barrier', strength }
+      return { type: 'barrier', strength };
     case 'shield':
-      return { type: 'barrier', strength }
+      return { type: 'barrier', strength };
   }
 }
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value))
+  return Math.max(min, Math.min(max, value));
 }

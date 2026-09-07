@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import type { ToolType } from '../state/types'
-import { useI18n } from '../i18n/index'
+import { useI18n } from '../i18n/index';
+import type { ToolType } from '../state/types';
 
 interface ToolPaletteProps {
   currentTool: ToolType
@@ -13,7 +13,7 @@ const TOOLS: { id: ToolType; icon: string; shortcut: string }[] = [
   { id: 'eraser', icon: 'eraser', shortcut: 'E' },
   { id: 'select', icon: 'select', shortcut: '3' },
   { id: 'hand', icon: 'hand', shortcut: '4' },
-]
+];
 
 function ToolIcon({ icon }: { icon: string }) {
   switch (icon) {
@@ -28,7 +28,7 @@ function ToolIcon({ icon }: { icon: string }) {
           />
           <circle cx="15" cy="5" r="1.5" />
         </svg>
-      )
+      );
     case 'eraser':
       return (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -44,7 +44,7 @@ function ToolIcon({ icon }: { icon: string }) {
           />
           <line x1="5" y1="8" x2="15" y2="8" stroke="currentColor" strokeWidth="1" />
         </svg>
-      )
+      );
     case 'select':
       return (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -64,7 +64,7 @@ function ToolIcon({ icon }: { icon: string }) {
           <circle cx="8" cy="12" r="1.5" />
           <circle cx="12" cy="12" r="1.5" />
         </svg>
-      )
+      );
     case 'hand':
       return (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -78,14 +78,14 @@ function ToolIcon({ icon }: { icon: string }) {
           <line x1="7" y1="16" x2="7" y2="18" stroke="currentColor" strokeWidth="1" />
           <line x1="13" y1="16" x2="13" y2="18" stroke="currentColor" strokeWidth="1" />
         </svg>
-      )
+      );
     default:
-      return <circle cx="10" cy="10" r="4" fill="currentColor" />
+      return <circle cx="10" cy="10" r="4" fill="currentColor" />;
   }
 }
 
 export function ToolPalette({ currentTool, onSelectTool }: ToolPaletteProps) {
-  const { t } = useI18n()
+  const { t } = useI18n();
 
   return (
     <div className="flex flex-col gap-1 p-2">
@@ -109,5 +109,5 @@ export function ToolPalette({ currentTool, onSelectTool }: ToolPaletteProps) {
         </button>
       ))}
     </div>
-  )
+  );
 }

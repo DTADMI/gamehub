@@ -19,15 +19,15 @@ export * from "./puzzles/sequence";
 export * from "./puzzles/wires";
 
 // React components
+export type { CharacterPortrait,DialogueBoxProps } from "./react/DialogueBox";
 export { DialogueBox } from "./react/DialogueBox";
-export type { DialogueBoxProps, CharacterPortrait } from "./react/DialogueBox";
 export { InventoryBar } from "./react/InventoryBar";
-export { MatchingPuzzle } from "./react/MatchingPuzzle";
 export type { MatchingPuzzleProps, MatchPair } from "./react/MatchingPuzzle";
-export { PostGameCTA } from "./react/PostGameCTA";
+export { MatchingPuzzle } from "./react/MatchingPuzzle";
 export type { PostGameCTAProps } from "./react/PostGameCTA";
-export { SceneBackground, SceneCard } from "./react/SceneBackground";
+export { PostGameCTA } from "./react/PostGameCTA";
 export type { SceneBackgroundProps, SceneBgType } from "./react/SceneBackground";
+export { SceneBackground, SceneCard } from "./react/SceneBackground";
 export { SceneController } from "./react/SceneController";
 
 // Audio

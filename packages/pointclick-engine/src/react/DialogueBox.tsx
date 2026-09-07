@@ -94,28 +94,28 @@ export function DialogueBox({
       setDisplayedChars((prev) => {
         const next = prev + 1;
         if (next >= fullTextRef.current.length) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
+          if (intervalRef.current) {clearInterval(intervalRef.current);}
           setTypingComplete(true);
           // Show choices after a brief pause
           setTimeout(() => setChoicesVisible(true), 300);
           onTextComplete?.();
           return fullTextRef.current.length;
         }
-        if (playTickSound) onTick?.();
+        if (playTickSound) {onTick?.();}
         return next;
       });
     };
 
     intervalRef.current = window.setInterval(tick, typingSpeed);
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {clearInterval(intervalRef.current);}
     };
   }, [body, typingSpeed]);
 
   // Click-to-skip
   const handleTextClick = useCallback(() => {
     if (!typingComplete && body) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {clearInterval(intervalRef.current);}
       setDisplayedChars(fullTextRef.current.length);
       setTypingComplete(true);
       setTimeout(() => setChoicesVisible(true), 200);
@@ -181,7 +181,7 @@ export function DialogueBox({
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") handleTextClick();
+                if (e.key === "Enter" || e.key === " ") {handleTextClick();}
               }}
               aria-label={
                 typingComplete

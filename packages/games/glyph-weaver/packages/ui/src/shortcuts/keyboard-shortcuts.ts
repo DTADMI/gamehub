@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useEffect, useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react';
 
 export interface ShortcutAction {
   key: string
@@ -30,67 +30,67 @@ export const DEFAULT_SHORTCUTS: ShortcutAction[] = [
   { key: '5', action: 'tool:brush', label: 'shortcuts.toolSelect' },
   { key: '/', action: 'search', label: 'shortcuts.search' },
   { key: '?', action: 'help', shiftKey: true, label: 'shortcuts.help' },
-]
+];
 
 export function useKeyboardShortcuts(
   onAction: ActionHandler,
   shortcuts: ShortcutAction[] = DEFAULT_SHORTCUTS,
 ) {
-  const handlerRef = useRef(onAction)
-  handlerRef.current = onAction
+  const handlerRef = useRef(onAction);
+  handlerRef.current = onAction;
 
   const isEditable = useCallback((): boolean => {
-    const tag = document.activeElement?.tagName?.toLowerCase() ?? ''
-    const role = document.activeElement?.getAttribute('role')
+    const tag = document.activeElement?.tagName?.toLowerCase() ?? '';
+    const role = document.activeElement?.getAttribute('role');
     if (tag === 'input' || tag === 'textarea' || tag === 'select' || role === 'textbox') {
-      return true
+      return true;
     }
-    return false
-  }, [])
+    return false;
+  }, []);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (isEditable()) return
+      if (isEditable()) {return;}
 
       for (const shortcut of shortcuts) {
-        const keyMatch = e.key === shortcut.key || e.code === shortcut.key
-        const ctrlMatch = shortcut.ctrlKey ? e.ctrlKey || e.metaKey : !e.ctrlKey && !e.metaKey
-        const shiftMatch = shortcut.shiftKey ? e.shiftKey : !e.shiftKey
-        const altMatch = shortcut.altKey ? e.altKey : !e.altKey
+        const keyMatch = e.key === shortcut.key || e.code === shortcut.key;
+        const ctrlMatch = shortcut.ctrlKey ? e.ctrlKey || e.metaKey : !e.ctrlKey && !e.metaKey;
+        const shiftMatch = shortcut.shiftKey ? e.shiftKey : !e.shiftKey;
+        const altMatch = shortcut.altKey ? e.altKey : !e.altKey;
 
         if (keyMatch && ctrlMatch && shiftMatch && altMatch) {
           if (shortcut.preventDefault !== false) {
-            e.preventDefault()
+            e.preventDefault();
           }
-          handlerRef.current(shortcut.action)
-          return
+          handlerRef.current(shortcut.action);
+          return;
         }
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [shortcuts, isEditable])
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [shortcuts, isEditable]);
 }
 
 export function getShortcutLabel(
   action: string,
   shortcuts: ShortcutAction[] = DEFAULT_SHORTCUTS,
 ): string {
-  const found = shortcuts.find((s) => s.action === action)
-  if (!found) return ''
+  const found = shortcuts.find((s) => s.action === action);
+  if (!found) {return '';}
 
-  const parts: string[] = []
-  if (found.ctrlKey) parts.push('Ctrl')
-  if (found.shiftKey) parts.push('Shift')
-  if (found.altKey) parts.push('Alt')
+  const parts: string[] = [];
+  if (found.ctrlKey) {parts.push('Ctrl');}
+  if (found.shiftKey) {parts.push('Shift');}
+  if (found.altKey) {parts.push('Alt');}
 
-  let key = found.key
-  if (key === 'Delete') key = 'DEL'
-  else if (key === 'ArrowUp') key = '\u2191'
-  else if (key === 'ArrowDown') key = '\u2193'
-  else key = key.toUpperCase()
+  let key = found.key;
+  if (key === 'Delete') {key = 'DEL';}
+  else if (key === 'ArrowUp') {key = '\u2191';}
+  else if (key === 'ArrowDown') {key = '\u2193';}
+  else {key = key.toUpperCase();}
 
-  parts.push(key)
-  return parts.join('+')
+  parts.push(key);
+  return parts.join('+');
 }

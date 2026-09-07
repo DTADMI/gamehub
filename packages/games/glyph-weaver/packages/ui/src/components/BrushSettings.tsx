@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import type { BrushSettings } from '../state/types'
-import { useI18n } from '../i18n/index'
+import { useI18n } from '../i18n/index';
+import type { BrushSettings } from '../state/types';
 
 interface BrushSettingsProps {
   settings: BrushSettings
@@ -9,7 +9,7 @@ interface BrushSettingsProps {
 }
 
 export function BrushSettingsPanel({ settings, onChange }: BrushSettingsProps) {
-  const { t } = useI18n()
+  const { t } = useI18n();
 
   return (
     <div className="flex flex-col gap-3 p-2">
@@ -84,5 +84,5 @@ export function BrushSettingsPanel({ settings, onChange }: BrushSettingsProps) {
         </select>
       </label>
     </div>
-  )
+  );
 }

@@ -1,2 +1,2 @@
-export { useKeyboardShortcuts, getShortcutLabel, DEFAULT_SHORTCUTS } from './keyboard-shortcuts'
-export type { ShortcutAction, ActionHandler } from './keyboard-shortcuts'
+export type { ActionHandler,ShortcutAction } from './keyboard-shortcuts';
+export { DEFAULT_SHORTCUTS,getShortcutLabel, useKeyboardShortcuts } from './keyboard-shortcuts';

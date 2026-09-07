@@ -1,5 +1,6 @@
-import { type FC, useState } from 'react'
-import { useI18n } from '../i18n/index'
+import { type FC, useState } from 'react';
+
+import { useI18n } from '../i18n/index';
 
 interface ErrorFallbackProps {
   error: Error
@@ -9,8 +10,8 @@ interface ErrorFallbackProps {
 }
 
 export const ErrorFallback: FC<ErrorFallbackProps> = ({ error, message, onRetry, onReset }) => {
-  const { t } = useI18n()
-  const [showStack, setShowStack] = useState(false)
+  const { t } = useI18n();
+  const [showStack, setShowStack] = useState(false);
 
   return (
     <div
@@ -98,5 +99,5 @@ export const ErrorFallback: FC<ErrorFallbackProps> = ({ error, message, onRetry,
         )}
       </div>
     </div>
-  )
-}
+  );
+};

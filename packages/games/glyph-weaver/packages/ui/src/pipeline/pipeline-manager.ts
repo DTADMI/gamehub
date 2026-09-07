@@ -1,8 +1,8 @@
-import { parse } from '../../../parser/src'
-import { compileSpell } from '../../../compiler/src'
-import { DEFAULT_CONFIG } from '../../../core/src'
-import { DEFAULT_DICTIONARY } from '../../../dictionary/src'
-import type { Stroke, GlyphAST, SpellIR, AppConfig } from '../../../core/src'
+import { compileSpell } from '../../../compiler/src';
+import type { AppConfig,GlyphAST, SpellIR, Stroke } from '../../../core/src';
+import { DEFAULT_CONFIG } from '../../../core/src';
+import { DEFAULT_DICTIONARY } from '../../../dictionary/src';
+import { parse } from '../../../parser/src';
 
 export interface RingStatus {
   found: boolean
@@ -17,30 +17,30 @@ export interface PipelineResult {
 }
 
 export class PipelineManager {
-  private config: AppConfig
+  private config: AppConfig;
 
   constructor(config?: AppConfig) {
-    this.config = config ?? { ...DEFAULT_CONFIG }
-    void DEFAULT_DICTIONARY
+    this.config = config ?? { ...DEFAULT_CONFIG };
+    void DEFAULT_DICTIONARY;
   }
 
   processStrokes(strokes: Stroke[], _ringStatus: RingStatus): PipelineResult {
-    const start = performance.now()
+    const start = performance.now();
 
     const { ast } = parse(strokes, {
       config: this.config.recognition,
-    })
+    });
 
-    const spellIR = compileSpell(ast, this.config.compiler)
+    const spellIR = compileSpell(ast, this.config.compiler);
 
-    const duration = performance.now() - start
+    const duration = performance.now() - start;
 
-    return { ast, spellIR, duration }
+    return { ast, spellIR, duration };
   }
 
   updateConfig(config: AppConfig): void {
-    this.config = config
+    this.config = config;
   }
 }
 
-export const pipelineManager = new PipelineManager()
+export const pipelineManager = new PipelineManager();

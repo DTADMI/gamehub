@@ -1,7 +1,7 @@
 import {
   ArrowRight,
-  Gamepad2,
   ExternalLink as GithubIcon,
+  Gamepad2,
   Loader2,
   LogIn,
   Mail,

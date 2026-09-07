@@ -3,12 +3,13 @@
 import { GameContainer } from "@gamehub/game-platform";
 import { DialogueBox, SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import type { Lang, Scene } from "@games/pointclick-engine/engine";
-import { createGearsState, setGearsTeeth, type GearsState, type Gear } from "@games/pointclick-engine/puzzles/gears";
+import { type CipherState,createCipherState, submitCipher, updateCipherInput } from "@games/pointclick-engine/puzzles/cipher";
+import { createGearsState, type Gear,type GearsState, setGearsTeeth } from "@games/pointclick-engine/puzzles/gears";
+import { clearKeypad, createKeypadState, type KeypadState,pressKey, submitKeypad } from "@games/pointclick-engine/puzzles/keypad";
 import { createSequenceState, pressSeq, type SequenceState } from "@games/pointclick-engine/puzzles/sequence";
-import { createCipherState, submitCipher, updateCipherInput, type CipherState } from "@games/pointclick-engine/puzzles/cipher";
-import { createKeypadState, pressKey, submitKeypad, clearKeypad, type KeypadState } from "@games/pointclick-engine/puzzles/keypad";
-import { useI18n } from "@/lib/i18n";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { useI18n } from "@/lib/i18n";
 
 const SAVE_KEY = "clockwork-conspiracy:save:v1";
 const INITIAL_GEARS: Gear[] = [{ id: "GearA", teeth: 1 }, { id: "GearB", teeth: 1 }, { id: "GearC", teeth: 1 }, { id: "GearD", teeth: 1 }];
@@ -83,11 +84,11 @@ export const ClockworkConspiracyGame: React.FC = () => {
   useSceneAudio(sceneId, {}, true);
   useEffect(() => { if (typeof window !== "undefined") { try { localStorage.setItem(SAVE_KEY, sceneId); } catch {} } }, [sceneId]);
 
-  const handleGear = (id: string, teeth: number) => { const n = setGearsTeeth(gears, id, teeth); setGears(n); if (n.solved) sfx.playSolve(); else sfx.playClick(); };
-  const handleClock = (s: string) => { const n = pressSeq(clockSeq, s); setClockSeq(n); if (n.solved) sfx.playSolve(); else sfx.playClick(); };
-  const handleCipher = () => { const n = submitCipher(cipher); setCipher(n); if (n.solved) sfx.playSolve(); else sfx.playError(); };
+  const handleGear = (id: string, teeth: number) => { const n = setGearsTeeth(gears, id, teeth); setGears(n); if (n.solved) {sfx.playSolve();} else {sfx.playClick();} };
+  const handleClock = (s: string) => { const n = pressSeq(clockSeq, s); setClockSeq(n); if (n.solved) {sfx.playSolve();} else {sfx.playClick();} };
+  const handleCipher = () => { const n = submitCipher(cipher); setCipher(n); if (n.solved) {sfx.playSolve();} else {sfx.playError();} };
   const handleKP = (d: string) => setKeypad((s) => pressKey(s, d, { code: MASTER_CODE, maxLen: 4 }));
-  const handleKPS = () => { const n = submitKeypad(keypad, { code: MASTER_CODE, maxLen: 4 }); setKeypad(n); if (n.solved) sfx.playSolve(); else sfx.playError(); };
+  const handleKPS = () => { const n = submitKeypad(keypad, { code: MASTER_CODE, maxLen: 4 }); setKeypad(n); if (n.solved) {sfx.playSolve();} else {sfx.playError();} };
 
   return (
     <GameContainer title={(scene.title as Record<string, string>)[lang] || "Clockwork Conspiracy"}>

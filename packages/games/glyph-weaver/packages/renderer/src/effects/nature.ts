@@ -1,50 +1,50 @@
-import type { Effect, EffectConfig } from '../effect-types'
-import { ParticleSystem } from '../webgl/particle-system'
-import { VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_NATURE } from '../webgl/shaders'
-import { createShaderProgram } from '../webgl/context'
+import type { Effect, EffectConfig } from '../effect-types';
+import { createShaderProgram } from '../webgl/context';
+import { ParticleSystem } from '../webgl/particle-system';
+import { FRAGMENT_SHADER_NATURE,VERTEX_SHADER_PASSTHROUGH } from '../webgl/shaders';
 
 export class NatureEffect implements Effect {
-  private config: EffectConfig | null = null
-  private particles: ParticleSystem | null = null
-  private program: WebGLProgram | null = null
-  private elapsed: number = 0
-  private emitTimer: number = 0
-  private tendrils: Tendril[] = []
+  private config: EffectConfig | null = null;
+  private particles: ParticleSystem | null = null;
+  private program: WebGLProgram | null = null;
+  private elapsed: number = 0;
+  private emitTimer: number = 0;
+  private tendrils: Tendril[] = [];
 
   init(config: EffectConfig): void {
-    this.config = config
-    this.particles = new ParticleSystem(config.ctx.particleCap)
-    this.particles.setGravity(0)
-    this.particles.setDamping(0.98)
+    this.config = config;
+    this.particles = new ParticleSystem(config.ctx.particleCap);
+    this.particles.setGravity(0);
+    this.particles.setDamping(0.98);
     this.particles.setCenter(
       config.ctx.canvas.width * 0.5,
       config.ctx.canvas.height * 0.5,
       Math.max(config.ctx.canvas.width, config.ctx.canvas.height) * 0.65,
-    )
-    this.elapsed = 0
-    this.emitTimer = 0
+    );
+    this.elapsed = 0;
+    this.emitTimer = 0;
 
-    const gl = config.ctx.gl
-    this.program = createShaderProgram(gl, VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_NATURE)
+    const gl = config.ctx.gl;
+    this.program = createShaderProgram(gl, VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_NATURE);
   }
 
   update(dt: number): void {
-    if (!this.config || !this.particles) return
+    if (!this.config || !this.particles) {return;}
 
-    this.elapsed += dt
-    this.emitTimer += dt
+    this.elapsed += dt;
+    this.emitTimer += dt;
 
-    const canvasW = this.config.ctx.canvas.width
-    const canvasH = this.config.ctx.canvas.height
-    const originX = canvasW * 0.5
-    const originY = canvasH * 0.5
-    const force = this.config.force
-    const spread = this.config.spread
+    const canvasW = this.config.ctx.canvas.width;
+    const canvasH = this.config.ctx.canvas.height;
+    const originX = canvasW * 0.5;
+    const originY = canvasH * 0.5;
+    const force = this.config.force;
+    const spread = this.config.spread;
 
     if (this.elapsed < 0.5) {
-      const tendrilCount = 3 + Math.floor(force * 5)
+      const tendrilCount = 3 + Math.floor(force * 5);
       for (let i = 0; i < tendrilCount; i++) {
-        const angle = (i / tendrilCount) * Math.PI * 2 + Math.random() * 0.5
+        const angle = (i / tendrilCount) * Math.PI * 2 + Math.random() * 0.5;
         this.tendrils.push({
           baseX: originX,
           baseY: originY,
@@ -57,25 +57,25 @@ export class NatureEffect implements Effect {
           curlFreq: 2 + force * 4,
           curlAmp: 3 + spread * 15,
           growthSpeed: 3 + force * 15,
-        })
+        });
       }
     }
 
     for (let i = this.tendrils.length - 1; i >= 0; i--) {
-      const t = this.tendrils[i]!
+      const t = this.tendrils[i]!;
       if (t.length >= t.maxLength) {
-        this.tendrils.splice(i, 1)
-        continue
+        this.tendrils.splice(i, 1);
+        continue;
       }
 
-      t.length += t.growthSpeed * dt
-      const u = t.length / t.maxLength
-      const curlOffset = Math.sin(u * t.curlFreq + t.curlPhase) * t.curlAmp * u
+      t.length += t.growthSpeed * dt;
+      const u = t.length / t.maxLength;
+      const curlOffset = Math.sin(u * t.curlFreq + t.curlPhase) * t.curlAmp * u;
 
       t.currentX =
-        t.baseX + Math.cos(t.angle) * t.length + Math.cos(t.angle + Math.PI * 0.5) * curlOffset
+        t.baseX + Math.cos(t.angle) * t.length + Math.cos(t.angle + Math.PI * 0.5) * curlOffset;
       t.currentY =
-        t.baseY + Math.sin(t.angle) * t.length + Math.sin(t.angle + Math.PI * 0.5) * curlOffset
+        t.baseY + Math.sin(t.angle) * t.length + Math.sin(t.angle + Math.PI * 0.5) * curlOffset;
 
       if (Math.random() < 0.4) {
         this.particles.emit({
@@ -95,32 +95,32 @@ export class NatureEffect implements Effect {
           alphaMax: 0.55,
           vxBase: 0,
           vyBase: 0,
-        })
+        });
       }
     }
 
-    this.particles.update(dt)
+    this.particles.update(dt);
   }
 
   render(): void {
-    if (!this.config || !this.particles || !this.program) return
-    const gl = this.config.ctx.gl
+    if (!this.config || !this.particles || !this.program) {return;}
+    const gl = this.config.ctx.gl;
     this.particles.render(
       gl,
       this.program,
       this.config.ctx.canvas.width,
       this.config.ctx.canvas.height,
-    )
+    );
   }
 
   dispose(): void {
     if (this.program) {
-      this.config?.ctx.gl.deleteProgram(this.program)
-      this.program = null
+      this.config?.ctx.gl.deleteProgram(this.program);
+      this.program = null;
     }
-    this.particles?.dispose()
-    this.particles = null
-    this.config = null
+    this.particles?.dispose();
+    this.particles = null;
+    this.config = null;
   }
 }
 

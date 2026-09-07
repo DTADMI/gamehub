@@ -2,12 +2,12 @@
 
 // games/snake/src/components/SnakeGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
+import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { submitScore } from "@/lib/score-submit";
-import { createI18n } from "@games/i18n";
-import { SNAKE_TX } from "../i18n";
 
+import { SNAKE_TX } from "../i18n";
 import {
   CELL_SIZE,
   Direction,

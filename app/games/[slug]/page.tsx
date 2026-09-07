@@ -24,7 +24,7 @@ function isGameFlagDisabled(flags: Record<string, unknown>, slug: string): boole
   const parts = path.split(".");
   let current: unknown = flags;
   for (const part of parts) {
-    if (current == null || typeof current !== "object") return false;
+    if (current == null || typeof current !== "object") {return false;}
     current = (current as Record<string, unknown>)[part];
   }
   // Only block if explicitly set to false (undefined/missing = allowed)

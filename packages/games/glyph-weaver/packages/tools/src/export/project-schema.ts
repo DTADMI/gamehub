@@ -1,5 +1,6 @@
-import { z } from 'zod'
-import { PointSchema } from '../../../core/src/schemas'
+import { z } from 'zod';
+
+import { PointSchema } from '../../../core/src/schemas';
 
 export const StrokeSchema = z.object({
   id: z.string(),
@@ -7,7 +8,7 @@ export const StrokeSchema = z.object({
   color: z.string(),
   width: z.number(),
   timestamp: z.number(),
-})
+});
 
 export const ProjectDataSchema = z.object({
   version: z.string(),
@@ -15,6 +16,6 @@ export const ProjectDataSchema = z.object({
   strokes: z.array(StrokeSchema),
   config: z.record(z.string(), z.unknown()),
   name: z.string(),
-})
+});
 
 export type ProjectData = z.infer<typeof ProjectDataSchema>

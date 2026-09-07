@@ -1,4 +1,4 @@
-import type { TranslationMap } from '../config'
+import type { TranslationMap } from '../config';
 
 const en: TranslationMap = {
   app: {
@@ -170,6 +170,6 @@ const en: TranslationMap = {
     description:
       'Draw glyph rings and craft magic spells in this interactive tool inspired by the Witch Hat Atelier magic system.',
   },
-}
+};
 
-export default en
+export default en;

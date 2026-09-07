@@ -1,5 +1,5 @@
-import type { RecognizedSigil, RecognizedSign, CompilerConfig } from '../../core/src'
-import { DEFAULT_CONFIG } from '../../core/src'
+import type { CompilerConfig,RecognizedSigil, RecognizedSign } from '../../core/src';
+import { DEFAULT_CONFIG } from '../../core/src';
 
 export interface ComputedParameters {
   force: number
@@ -14,7 +14,7 @@ export function computeParameters(
   signs: RecognizedSign[],
   config: CompilerConfig = DEFAULT_CONFIG.compiler,
 ): ComputedParameters {
-  const { maxForce, maxSpread, maxFocus, maxRange, defaultGravity } = config
+  const { maxForce, maxSpread, maxFocus, maxRange, defaultGravity } = config;
 
   if (!sigil) {
     return {
@@ -23,29 +23,29 @@ export function computeParameters(
       focus: 0,
       range: 0,
       gravity: defaultGravity,
-    }
+    };
   }
 
-  const sigilSem = sigil.semantic
+  const sigilSem = sigil.semantic;
 
-  let force = sigilSem.force * sigil.confidence
-  let spread = sigilSem.spread * sigil.confidence
-  let focus = sigilSem.focus * sigil.confidence
-  let range = sigilSem.range * sigil.confidence
+  let force = sigilSem.force * sigil.confidence;
+  let spread = sigilSem.spread * sigil.confidence;
+  let focus = sigilSem.focus * sigil.confidence;
+  let range = sigilSem.range * sigil.confidence;
 
   for (const sign of signs) {
     if (!sign.recognized) {
-      continue
+      continue;
     }
-    const w = sign.confidence * 0.4
-    force += sign.semantic.force * w
-    spread += sign.semantic.spread * w
-    focus += sign.semantic.focus * w
-    range += sign.semantic.range * w
+    const w = sign.confidence * 0.4;
+    force += sign.semantic.force * w;
+    spread += sign.semantic.spread * w;
+    focus += sign.semantic.focus * w;
+    range += sign.semantic.range * w;
   }
 
-  const signCount = signs.filter((s) => s.recognized).length
-  const divisor = 1 + signCount * 0.4
+  const signCount = signs.filter((s) => s.recognized).length;
+  const divisor = 1 + signCount * 0.4;
 
   return {
     force: clamp(force / divisor, 0, maxForce),
@@ -53,9 +53,9 @@ export function computeParameters(
     focus: clamp(focus / divisor, 0, maxFocus),
     range: clamp(range / divisor, 0, maxRange),
     gravity: defaultGravity,
-  }
+  };
 }
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value))
+  return Math.max(min, Math.min(max, value));
 }

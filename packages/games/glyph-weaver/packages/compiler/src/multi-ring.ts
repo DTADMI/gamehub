@@ -1,6 +1,6 @@
-import type { GlyphAST, SpellIR, CompilerConfig, CompilerWarning } from '../../core/src'
-import { DEFAULT_CONFIG } from '../../core/src'
-import { compileSpell } from './compile'
+import type { CompilerConfig, CompilerWarning,GlyphAST, SpellIR } from '../../core/src';
+import { DEFAULT_CONFIG } from '../../core/src';
+import { compileSpell } from './compile';
 
 export function compileMultiRing(asts: GlyphAST[], config?: CompilerConfig): SpellIR {
   if (asts.length === 0) {
@@ -30,80 +30,80 @@ export function compileMultiRing(asts: GlyphAST[], config?: CompilerConfig): Spe
       neatness: 0,
       warnings: ['no_valid_sigil' as CompilerWarning],
       signature: 'invalid',
-    }
+    };
   }
 
   if (asts.length === 1) {
-    return compileSpell(asts[0]!, config)
+    return compileSpell(asts[0]!, config);
   }
 
-  const outer = asts[0]!
-  const inner = asts.slice(1)
+  const outer = asts[0]!;
+  const inner = asts.slice(1);
 
-  const result = compileSpell(outer, config)
+  const result = compileSpell(outer, config);
 
   if (!result.valid) {
-    return result
+    return result;
   }
 
   for (const innerAst of inner) {
-    const innerResult = compileSpell(innerAst, config)
+    const innerResult = compileSpell(innerAst, config);
 
     if (!innerResult.valid) {
-      continue
+      continue;
     }
 
-    const innerWeight = 0.35
+    const innerWeight = 0.35;
 
     result.force = clamp(
       result.force + innerResult.force * innerWeight,
       0,
       DEFAULT_CONFIG.compiler.maxForce,
-    )
+    );
     result.spread = clamp(
       result.spread + innerResult.spread * innerWeight,
       0,
       DEFAULT_CONFIG.compiler.maxSpread,
-    )
+    );
     result.focus = clamp(
       result.focus + innerResult.focus * innerWeight,
       0,
       DEFAULT_CONFIG.compiler.maxFocus,
-    )
+    );
     result.range = clamp(
       result.range + innerResult.range * innerWeight,
       0,
       DEFAULT_CONFIG.compiler.maxRange,
-    )
+    );
 
-    result.quality = clamp(result.quality + innerResult.quality * innerWeight, 0, 1)
-    result.neatness = clamp(result.neatness + innerResult.neatness * innerWeight, 0, 1)
+    result.quality = clamp(result.quality + innerResult.quality * innerWeight, 0, 1);
+    result.neatness = clamp(result.neatness + innerResult.neatness * innerWeight, 0, 1);
     result.directionCoherence = clamp(
       result.directionCoherence + innerResult.directionCoherence * innerWeight,
       0,
       1,
-    )
+    );
 
     for (const [key, profile] of Object.entries(innerResult.manifestations)) {
       if (!result.manifestations[key]) {
-        result.manifestations[key] = { ...profile, strength: profile.strength * 0.3 }
+        result.manifestations[key] = { ...profile, strength: profile.strength * 0.3 };
       } else {
-        const existing = result.manifestations[key]
+        const existing = result.manifestations[key];
         if (existing) {
           result.manifestations[key] = {
             ...existing,
             strength: clamp(existing.strength + profile.strength * 0.3, 0, 1),
-          }
+          };
         }
       }
     }
 
     if (innerResult.element && result.element !== innerResult.element) {
-      result.signature = `nested:${result.element ?? 'unknown'}:${innerResult.element}:${result.force.toFixed(3)}`
+      result.signature = `nested:${result.element ?? 'unknown'}:${innerResult.element}:${result.force.toFixed(3)}`;
     }
   }
 
-  return result
+  return result;
 }
 
 export function compileLinkedRings(asts: GlyphAST[], config?: CompilerConfig): SpellIR {
@@ -134,15 +134,15 @@ export function compileLinkedRings(asts: GlyphAST[], config?: CompilerConfig): S
       neatness: 0,
       warnings: ['no_valid_sigil' as CompilerWarning],
       signature: 'invalid',
-    }
+    };
   }
 
   if (asts.length === 1) {
-    return compileSpell(asts[0]!, config)
+    return compileSpell(asts[0]!, config);
   }
 
-  const individualResults = asts.map((ast) => compileSpell(ast, config))
-  const validResults = individualResults.filter((r) => r.valid)
+  const individualResults = asts.map((ast) => compileSpell(ast, config));
+  const validResults = individualResults.filter((r) => r.valid);
 
   if (validResults.length === 0) {
     return {
@@ -171,49 +171,49 @@ export function compileLinkedRings(asts: GlyphAST[], config?: CompilerConfig): S
       neatness: 0,
       warnings: ['no_valid_sigil' as CompilerWarning],
       signature: 'invalid',
-    }
+    };
   }
 
-  const first = validResults[0]!
-  const count = validResults.length
+  const first = validResults[0]!;
+  const count = validResults.length;
 
-  let totalForce = 0
-  let totalSpread = 0
-  let totalFocus = 0
-  let totalRange = 0
-  let totalQuality = 0
-  let totalNeatness = 0
-  let totalCoherence = 0
+  let totalForce = 0;
+  let totalSpread = 0;
+  let totalFocus = 0;
+  let totalRange = 0;
+  let totalQuality = 0;
+  let totalNeatness = 0;
+  let totalCoherence = 0;
 
-  const allManifestations: Record<string, { totalStrength: number; count: number }> = {}
+  const allManifestations: Record<string, { totalStrength: number; count: number }> = {};
 
   for (const r of validResults) {
-    totalForce += r.force
-    totalSpread += r.spread
-    totalFocus += r.focus
-    totalRange += r.range
-    totalQuality += r.quality
-    totalNeatness += r.neatness
-    totalCoherence += r.directionCoherence
+    totalForce += r.force;
+    totalSpread += r.spread;
+    totalFocus += r.focus;
+    totalRange += r.range;
+    totalQuality += r.quality;
+    totalNeatness += r.neatness;
+    totalCoherence += r.directionCoherence;
 
     for (const [key, profile] of Object.entries(r.manifestations)) {
       if (!allManifestations[key]) {
-        allManifestations[key] = { totalStrength: 0, count: 0 }
+        allManifestations[key] = { totalStrength: 0, count: 0 };
       }
-      allManifestations[key]!.totalStrength += profile.strength
-      allManifestations[key]!.count += 1
+      allManifestations[key]!.totalStrength += profile.strength;
+      allManifestations[key]!.count += 1;
     }
   }
 
-  const additiveBoost = 1 + (count - 1) * 0.15
+  const additiveBoost = 1 + (count - 1) * 0.15;
 
-  const manifestations: Record<string, import('../../core/src').AnyManifestationProfile> = {}
+  const manifestations: Record<string, import('../../core/src').AnyManifestationProfile> = {};
   for (const [key, data] of Object.entries(allManifestations)) {
-    manifestations[key] = buildLinkedProfile(key, data.totalStrength / data.count, additiveBoost)
+    manifestations[key] = buildLinkedProfile(key, data.totalStrength / data.count, additiveBoost);
   }
 
-  const longestDuration = validResults.reduce((max, r) => Math.max(max, r.duration), 0)
-  const avgQuality = totalQuality / count
+  const longestDuration = validResults.reduce((max, r) => Math.max(max, r.duration), 0);
+  const avgQuality = totalQuality / count;
 
   return {
     ...first,
@@ -227,7 +227,7 @@ export function compileLinkedRings(asts: GlyphAST[], config?: CompilerConfig): S
     duration: longestDuration,
     manifestations,
     signature: `linked:${count}:${first.force.toFixed(3)}`,
-  }
+  };
 }
 
 function buildLinkedProfile(
@@ -235,25 +235,25 @@ function buildLinkedProfile(
   avgStrength: number,
   boost: number,
 ): import('../../core/src').AnyManifestationProfile {
-  const strength = clamp(avgStrength * boost, 0, 1)
+  const strength = clamp(avgStrength * boost, 0, 1);
   switch (manifestationType) {
     case 'aura':
-      return { type: 'aura', strength }
+      return { type: 'aura', strength };
     case 'column':
-      return { type: 'column', strength }
+      return { type: 'column', strength };
     case 'levitation':
-      return { type: 'levitation', strength }
+      return { type: 'levitation', strength };
     case 'convergence':
-      return { type: 'convergence', strength, point: { x: 0, y: 0 }, radius: 0.5, rigidity: 0.5 }
+      return { type: 'convergence', strength, point: { x: 0, y: 0 }, radius: 0.5, rigidity: 0.5 };
     case 'barrier':
-      return { type: 'barrier', strength }
+      return { type: 'barrier', strength };
     case 'projectile':
-      return { type: 'projectile', strength }
+      return { type: 'projectile', strength };
     default:
-      return { type: 'barrier', strength }
+      return { type: 'barrier', strength };
   }
 }
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value))
+  return Math.max(min, Math.min(max, value));
 }

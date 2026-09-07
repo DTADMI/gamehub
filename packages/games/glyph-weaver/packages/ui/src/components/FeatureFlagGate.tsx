@@ -1,7 +1,8 @@
-'use client'
+'use client';
 
-import { getFeatureFlag, type FeatureFlag } from '../../../core/src'
-import React from 'react'
+import React from 'react';
+
+import { type FeatureFlag,getFeatureFlag } from '../../../core/src';
 
 interface FeatureFlagGateProps {
   flag: FeatureFlag
@@ -10,11 +11,11 @@ interface FeatureFlagGateProps {
 }
 
 export function FeatureFlagGate({ flag, children, fallback = null }: FeatureFlagGateProps) {
-  const enabled = getFeatureFlag(flag)
+  const enabled = getFeatureFlag(flag);
 
   if (!enabled) {
-    return <>{fallback}</>
+    return <>{fallback}</>;
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 }

@@ -1,11 +1,11 @@
 "use client";
-import React from "react";
-import { effects, ensureCtx, type EngineCtx } from "@games/pointclick-engine/engine";
+import { effects, type EngineCtx,ensureCtx } from "@games/pointclick-engine/engine";
 import {
   createSequenceState,
   pressSeq as pressSequenceKey,
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
+import React from "react";
 
 export type LocksPuzzleProps = {
   lang: "en" | "fr";

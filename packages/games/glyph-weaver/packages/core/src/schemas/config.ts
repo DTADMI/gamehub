@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const RecognitionConfigSchema = z.object({
   minConfidence: z.number(),
@@ -10,7 +10,7 @@ export const RecognitionConfigSchema = z.object({
   compositionalWeight: z.number(),
   positionWeight: z.number(),
   sizeWeight: z.number(),
-})
+});
 
 export const RendererConfigSchema = z.object({
   particleCap: z.number(),
@@ -23,7 +23,7 @@ export const RendererConfigSchema = z.object({
   minDuration: z.number(),
   maxDuration: z.number(),
   fps: z.number(),
-})
+});
 
 export const CompilerConfigSchema = z.object({
   maxForce: z.number(),
@@ -32,7 +32,7 @@ export const CompilerConfigSchema = z.object({
   maxRange: z.number(),
   defaultGravity: z.number(),
   maxTiltDeg: z.number(),
-})
+});
 
 export const AppConfigSchema = z.object({
   appVersion: z.string(),
@@ -40,4 +40,4 @@ export const AppConfigSchema = z.object({
   recognition: RecognitionConfigSchema,
   renderer: RendererConfigSchema,
   compiler: CompilerConfigSchema,
-})
+});

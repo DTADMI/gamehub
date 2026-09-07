@@ -1,18 +1,19 @@
-'use client'
+'use client';
 
-import { useState, useMemo } from 'react'
-import { loadDictionary } from '../../../../dictionary/src'
-import type { SigilEntry, SignEntry, SampleSpellEntry } from '../../../../core/src'
-import { useI18n } from '../../i18n/index'
-import { FeatureFlagGate } from '../FeatureFlagGate'
+import { useMemo,useState } from 'react';
+
+import type { SampleSpellEntry,SigilEntry, SignEntry } from '../../../../core/src';
+import { loadDictionary } from '../../../../dictionary/src';
+import { useI18n } from '../../i18n/index';
+import { FeatureFlagGate } from '../FeatureFlagGate';
 
 type DictionaryTab = 'sigils' | 'signs' | 'samples'
 
 export function DictionaryPanel() {
-  const { t } = useI18n()
-  const [activeTab, setActiveTab] = useState<DictionaryTab>('sigils')
-  const [search, setSearch] = useState('')
-  const dictionary = useMemo(() => loadDictionary(), [])
+  const { t } = useI18n();
+  const [activeTab, setActiveTab] = useState<DictionaryTab>('sigils');
+  const [search, setSearch] = useState('');
+  const dictionary = useMemo(() => loadDictionary(), []);
 
   const filter = <T extends { id: string; displayName: string }>(items: T[]) =>
     search.trim()
@@ -21,20 +22,20 @@ export function DictionaryPanel() {
             item.id.toLowerCase().includes(search.toLowerCase()) ||
             item.displayName.toLowerCase().includes(search.toLowerCase()),
         )
-      : items
+      : items;
 
-  const filteredSigils = useMemo(() => filter(dictionary.sigils), [search, dictionary.sigils])
-  const filteredSigns = useMemo(() => filter(dictionary.signs), [search, dictionary.signs])
+  const filteredSigils = useMemo(() => filter(dictionary.sigils), [search, dictionary.sigils]);
+  const filteredSigns = useMemo(() => filter(dictionary.signs), [search, dictionary.signs]);
   const filteredSamples = useMemo(
     () => filter(dictionary.sampleSpells),
     [search, dictionary.sampleSpells],
-  )
+  );
 
   const tabs: { id: DictionaryTab; label: string }[] = [
     { id: 'sigils', label: t('labels.sigils') },
     { id: 'signs', label: t('labels.signs') },
     { id: 'samples', label: t('labels.sampleSpells') },
-  ]
+  ];
 
   return (
     <div className="flex flex-col h-full">
@@ -88,7 +89,7 @@ export function DictionaryPanel() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 function SigilList({
@@ -105,7 +106,7 @@ function SigilList({
       <p className="text-xs text-center py-4" style={{ color: 'var(--gw-text-muted)' }}>
         {emptyMessage}
       </p>
-    )
+    );
   }
   return (
     <div className="flex flex-col gap-2">
@@ -143,7 +144,7 @@ function SigilList({
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function SignList({
@@ -160,7 +161,7 @@ function SignList({
       <p className="text-xs text-center py-4" style={{ color: 'var(--gw-text-muted)' }}>
         {emptyMessage}
       </p>
-    )
+    );
   }
   return (
     <div className="flex flex-col gap-2">
@@ -200,7 +201,7 @@ function SignList({
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function SampleList({
@@ -217,7 +218,7 @@ function SampleList({
       <p className="text-xs text-center py-4" style={{ color: 'var(--gw-text-muted)' }}>
         {emptyMessage}
       </p>
-    )
+    );
   }
   return (
     <div className="flex flex-col gap-2">
@@ -242,5 +243,5 @@ function SampleList({
         </div>
       ))}
     </div>
-  )
+  );
 }

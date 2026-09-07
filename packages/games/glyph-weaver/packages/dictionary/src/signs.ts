@@ -1,4 +1,4 @@
-import type { SignEntry } from '../../core/src'
+import type { SignEntry } from '../../core/src';
 
 export const signs: SignEntry[] = [
   {
@@ -83,4 +83,4 @@ export const signs: SignEntry[] = [
       ],
     },
   },
-]
+];

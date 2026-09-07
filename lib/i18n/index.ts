@@ -10,4 +10,4 @@ export type { Translations } from "./translations/types";
 // I18nServerProvider — RSC wrapper, SERVER ONLY
 
 // ── Standalone t() for non-React contexts (game packages, helpers) ──────────
-export { initI18n, getLocale, setLocale, setStandaloneLocale, t } from "./standalone";
+export { getLocale, initI18n, setLocale, setStandaloneLocale, t } from "./standalone";

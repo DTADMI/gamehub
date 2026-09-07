@@ -8,4 +8,4 @@ export const STDLIB_SPELLS: Record<string, string> = {
   'earth-wall': `ring { size: 1.2; } sigil earth-sigil { force: 0.9; focus: 0.8; spread: 0.4; range: 0.6; lifetimeBias: 0.8; } sign earth-wall at 270 deg { force: 0.9; spread: 0.5; range: 0.8; };`,
 
   'light-flash': `ring { size: 0.6; } sigil light-sigil { force: 0.7; focus: 0.6; spread: 0.9; range: 0.8; lifetimeBias: 0.1; } sign light-flash at 0 deg { force: 0.8; spread: 0.9; range: 1.0; };`,
-}
+};

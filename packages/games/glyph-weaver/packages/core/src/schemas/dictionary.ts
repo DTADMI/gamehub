@@ -1,20 +1,21 @@
-import { z } from 'zod'
+import { z } from 'zod';
+
 import {
-  ElementIdSchema,
-  ManifestationIdSchema,
   DirectionModeSchema,
+  ElementIdSchema,
   LayerLabelSchema,
-} from './primitives'
+  ManifestationIdSchema,
+} from './primitives';
 
 export const StrokeTemplatePointSchema = z.object({
   x: z.number(),
   y: z.number(),
-})
+});
 
 export const StrokeTemplateSchema = z.object({
   sourceAspectRatio: z.number(),
   strokes: z.array(z.array(StrokeTemplatePointSchema)),
-})
+});
 
 export const SigilEntrySchema = z.object({
   id: z.string(),
@@ -30,7 +31,7 @@ export const SigilEntrySchema = z.object({
     range: z.number(),
     lifetimeBias: z.number(),
   }),
-})
+});
 
 export const SignEntrySchema = z.object({
   id: z.string(),
@@ -47,7 +48,7 @@ export const SignEntrySchema = z.object({
     lifetimeBias: z.number(),
   }),
   strokeTemplate: StrokeTemplateSchema,
-})
+});
 
 export const SampleSpellEntrySchema = z.object({
   id: z.string(),
@@ -56,10 +57,10 @@ export const SampleSpellEntrySchema = z.object({
   element: ElementIdSchema,
   manifestations: z.array(ManifestationIdSchema),
   strokes: z.array(z.array(StrokeTemplatePointSchema)),
-})
+});
 
 export const DictionarySchema = z.object({
   sigils: z.array(SigilEntrySchema),
   signs: z.array(SignEntrySchema),
   sampleSpells: z.array(SampleSpellEntrySchema),
-})
+});

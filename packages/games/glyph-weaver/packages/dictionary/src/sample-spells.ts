@@ -1,4 +1,4 @@
-import type { SampleSpellEntry } from '../../core/src'
+import type { SampleSpellEntry } from '../../core/src';
 
 export const sampleSpells: SampleSpellEntry[] = [
   {
@@ -67,4 +67,4 @@ export const sampleSpells: SampleSpellEntry[] = [
     manifestations: ['levitation', 'convergence'],
     strokes: [],
   },
-]
+];

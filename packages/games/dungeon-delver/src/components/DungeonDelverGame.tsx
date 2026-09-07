@@ -2,16 +2,18 @@
 // Spiritual successor to Hack Slash Crawl (Hatched Games, 2011)
 "use client";
 
+import "../dungeon-delver.css";
+
 import { useGameLoop, useKeyboardInput } from "@games/_engine";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { type Achievement,ACHIEVEMENTS, checkAchievements, loadAchievements, saveAchievements } from "../achievements";
 import { ddAudio } from "../audio";
-import { getDailySeed, getDailySeedNumber, hasDailyAttempt, markDailyAttempt, createSeededRng } from "../daily";
+import { createSeededRng,getDailySeed, getDailySeedNumber, hasDailyAttempt, markDailyAttempt } from "../daily";
+import { buildCharacter, calcMagicDamage, calcMaxHp, calcMaxMp, calcMeleeDamage, calcXpToNext, computeSetBonuses } from "../modifiers";
 import { ParticleSystem } from "../particles";
-import { buildCharacter, calcMaxHp, calcMaxMp, calcMeleeDamage, calcMagicDamage, calcXpToNext, computeSetBonuses } from "../modifiers";
-import { getLevelUpChoices, getPerk, PERKS, type Perk } from "../perks";
-import { ACHIEVEMENTS, checkAchievements, loadAchievements, saveAchievements, type Achievement } from "../achievements";
-import type { RaceId, ClassId, Rarity, GameScreen, ElementId, Stats, Resistances, Race, ClassDef, Monster, FloorMonster, Item, Title, RunStats, EquippedItems, PlayerState, DungeonState, SaveData, Toast } from "../types";
-import "../dungeon-delver.css";
+import { getLevelUpChoices, getPerk, type Perk,PERKS } from "../perks";
+import type { ClassDef, ClassId, DungeonState, ElementId, EquippedItems, FloorMonster, GameScreen, Item, Monster, PlayerState, Race, RaceId, Rarity, Resistances, RunStats, SaveData, Stats, Title, Toast } from "../types";
 
 // ─── Game Constants ───────────────────────────────────────────
 const CANVAS_W = 640;
@@ -120,7 +122,7 @@ const weightedPick = <T extends { rarity?: Rarity }>(items: T[]): T => {
   const weights: Record<Rarity, number> = { common: 50, uncommon: 28, rare: 14, epic: 6, legendary: 2 };
   const total = items.reduce((s, i) => s + weights[i.rarity || 'common'], 0);
   let roll = Math.random() * total;
-  for (const item of items) { roll -= weights[item.rarity || 'common']; if (roll <= 0) return item; }
+  for (const item of items) { roll -= weights[item.rarity || 'common']; if (roll <= 0) {return item;} }
   return items[0]!;
 };
 
@@ -131,7 +133,7 @@ function computePlayerStats(race: Race, cls: ClassDef, equipped: EquippedItems, 
 
 const getMonstersForFloor = (floor: number, includeBoss: boolean) => {
   let ms = MONSTERS.filter((m) => m.minFloor <= floor);
-  if (!includeBoss) ms = ms.filter((m) => !m.isBoss);
+  if (!includeBoss) {ms = ms.filter((m) => !m.isBoss);}
   return ms;
 };
 const getItemsForFloor = (floor: number) => ITEMS.filter((i) => i.floorRange[0] <= floor && i.floorRange[1] >= floor);
@@ -148,15 +150,15 @@ function generateFloor(floorNb: number): DungeonState {
     const rx = rand(1, COLS - rw - 2), ry = rand(1, ROWS - rh - 2);
     let overlaps = false;
     for (const r of rooms) { if (rx < r.x + r.w + 1 && rx + rw + 1 > r.x && ry < r.y + r.h + 1 && ry + rh + 1 > r.y) { overlaps = true; break; } }
-    if (!overlaps) { rooms.push({ x: rx, y: ry, w: rw, h: rh }); for (let y = ry; y < ry + rh; y++) for (let x = rx; x < rx + rw; x++) grid[y][x] = 0; }
+    if (!overlaps) { rooms.push({ x: rx, y: ry, w: rw, h: rh }); for (let y = ry; y < ry + rh; y++) {for (let x = rx; x < rx + rw; x++) {grid[y][x] = 0;}} }
   }
 
   for (let i = 1; i < rooms.length; i++) {
     const a = rooms[i - 1], b = rooms[i];
     const ax = Math.floor(a.x + a.w / 2), ay = Math.floor(a.y + a.h / 2);
     const bx = Math.floor(b.x + b.w / 2), by = Math.floor(b.y + b.h / 2);
-    if (Math.random() > 0.5) { for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) grid[ay][x] = 0; for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) grid[y][bx] = 0; }
-    else { for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) grid[ay][y] = 0; for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) grid[by][x] = 0; }
+    if (Math.random() > 0.5) { for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) {grid[ay][x] = 0;} for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) {grid[y][bx] = 0;} }
+    else { for (let y = Math.min(ay, by); y <= Math.max(ay, by); y++) {grid[ay][y] = 0;} for (let x = Math.min(ax, bx); x <= Math.max(ax, bx); x++) {grid[by][x] = 0;} }
   }
 
   const lastRoom = rooms[rooms.length - 1];
@@ -388,7 +390,7 @@ export function DungeonDelverGame() {
             // Check if target cell is empty (not wall, not another monster)
             const blocked = prev.grid[ny]?.[nx] === 1 ||
               prev.monsters.some((om) => om !== m && om.x === nx && om.y === ny);
-            if (!blocked) return { ...m, x: nx, y: ny };
+            if (!blocked) {return { ...m, x: nx, y: ny };}
           }
           return m;
         });
@@ -401,10 +403,10 @@ export function DungeonDelverGame() {
   const { isPressed } = useKeyboardInput();
   useEffect(() => {
     if (isPressed("i") || isPressed("I")) {
-      if (screen === "dungeon") setScreen("inventory");
+      if (screen === "dungeon") {setScreen("inventory");}
     }
     if (isPressed("Escape")) {
-      if (screen === "inventory") setScreen("dungeon");
+      if (screen === "inventory") {setScreen("dungeon");}
     }
   }, [isPressed, screen, locale]);
 
@@ -417,22 +419,22 @@ export function DungeonDelverGame() {
     setPerkChoices([]);
     const pending = perkPendingRef.current;
     perkPendingRef.current = null;
-    if (!perk) return;
+    if (!perk) {return;}
     setPlayer((prev) => {
       const newPerks = [...prev.perks, perkId];
       const newStats = perk.statBonus ? { ...prev.baseStats } : prev.baseStats;
       if (perk.statBonus) {
         const s = perk.statBonus;
-        if (s.str) newStats.str += s.str;
-        if (s.sta) newStats.sta += s.sta;
-        if (s.wil) newStats.wil += s.wil;
-        if (s.int) newStats.int += s.int;
+        if (s.str) {newStats.str += s.str;}
+        if (s.sta) {newStats.sta += s.sta;}
+        if (s.wil) {newStats.wil += s.wil;}
+        if (s.int) {newStats.int += s.int;}
       }
       const nhp = calcMaxHp(newStats);
       const nmp = calcMaxMp(newStats);
       let heal = perkId === "second-wind" ? Math.floor(nhp * 0.25) : 0;
       ddAudio.play("levelUp");
-      if (typeof particlesRef === "object" && particlesRef.current) particlesRef.current.spawnLevelUp(prev.x * CELL + CELL / 2, HUD_H + prev.y * CELL + CELL / 2);
+      if (typeof particlesRef === "object" && particlesRef.current) {particlesRef.current.spawnLevelUp(prev.x * CELL + CELL / 2, HUD_H + prev.y * CELL + CELL / 2);}
       addLog((perk.nameEn || perkId) + "! Level Up!");
       return { ...prev, xp: pending!.xp, xpToNext: pending!.xpToNext, level: pending!.level, perks: newPerks, baseStats: newStats, maxHp: nhp, hp: Math.min(prev.hp + heal, nhp), maxMp: nmp, mp: Math.min(prev.mp, nmp) };
     });
@@ -444,7 +446,7 @@ export function DungeonDelverGame() {
   // Start run
   const startRun = useCallback(() => {
     newAchievementsRef.current = [];
-    if (!selectedRace || !selectedClass) return;
+    if (!selectedRace || !selectedClass) {return;}
     deleteSavedRun(); // clear any old save
     const r = RACES.find((r) => r.id === selectedRace)!;
     const c = CLASSES.find((c) => c.id === selectedClass)!;
@@ -472,7 +474,7 @@ export function DungeonDelverGame() {
 
   // Daily challenge start
   const startDailyRun = useCallback(() => {
-    if (!selectedRace || !selectedClass || hasDailyAttempt()) return;
+    if (!selectedRace || !selectedClass || hasDailyAttempt()) {return;}
     markDailyAttempt();
     isDailyRef.current = true;
     const r = RACES.find((r) => r.id === selectedRace)!;
@@ -516,7 +518,7 @@ export function DungeonDelverGame() {
       if (itms.length > 0) {
         let ix = rand(1, COLS - 2), iy = rand(1, ROWS - 2), att = 0;
         while ((newDung.grid[iy]?.[ix] !== 0 || newDung.items.some((it: { x: number; y: number }) => it.x === ix && it.y === iy)) && att < 100) { ix = rand(1, COLS - 2); iy = rand(1, ROWS - 2); att++; }
-        if (att < 100) newDung.items.push({ item: weightedPick(itms), x: ix, y: iy });
+        if (att < 100) {newDung.items.push({ item: weightedPick(itms), x: ix, y: iy });}
       }
     }
     saveRunToLocal(newPlayer, nextFloor, newDung, runStatsRef.current);
@@ -559,7 +561,7 @@ export function DungeonDelverGame() {
       if (itms.length > 0) {
         let ix = rand(1, COLS - 2), iy = rand(1, ROWS - 2), att = 0;
         while ((newDung.grid[iy]?.[ix] !== 0 || newDung.items.some((it: { x: number; y: number }) => it.x === ix && it.y === iy)) && att < 100) { ix = rand(1, COLS - 2); iy = rand(1, ROWS - 2); att++; }
-        if (att < 100) newDung.items.push({ item: weightedPick(itms), x: ix, y: iy });
+        if (att < 100) {newDung.items.push({ item: weightedPick(itms), x: ix, y: iy });}
       }
     }
     // Auto-save on descend
@@ -581,7 +583,7 @@ export function DungeonDelverGame() {
 
   // Handle death (deletes save so you can't reload)
   const handleDeath = useCallback(() => {
-    if (floor === 1) runStatsRef.current.diedOnFloor1 = true;
+    if (floor === 1) {runStatsRef.current.diedOnFloor1 = true;}
     deleteSavedRun();
     // Check for new titles
     const newTitles = TITLES.filter((title) =>
@@ -640,7 +642,7 @@ export function DungeonDelverGame() {
       newXp = Math.floor(newXp * (1 + qlCount * 0.15));
       if (newXp >= prev.xpToNext) {
         const choices = getLevelUpChoices(prev.class as ClassId, prev.perks);
-        if (choices.length === 0) choices.push(PERKS[0], PERKS[5]); // fallback
+        if (choices.length === 0) {choices.push(PERKS[0], PERKS[5]);} // fallback
         addLog('Level Up! Choose a perk...');
         setPerkChoices(choices);
         perkPendingRef.current = { xp: newXp - prev.xpToNext, xpToNext: calcXpToNext(prev.level + 1), level: prev.level + 1 };
@@ -672,7 +674,7 @@ export function DungeonDelverGame() {
       dungeon.monsters.forEach((m) => {
         if (m !== monster && Math.abs(m.x - sx) <= 1 && Math.abs(m.y - sy) <= 1) {
           m.hp -= splashDmg;
-          if (particlesRef?.current) particlesRef.current.spawnSparks(m.x * CELL + CELL / 2, HUD_H + m.y * CELL + CELL / 2, 3, '#9c27b0');
+          if (particlesRef?.current) {particlesRef.current.spawnSparks(m.x * CELL + CELL / 2, HUD_H + m.y * CELL + CELL / 2, 3, '#9c27b0');}
           addLog(`Spell echo hits ${m.monster.nameEn} for ${splashDmg}!`);
           if (m.hp <= 0) {
             killMonster(m);
@@ -771,13 +773,13 @@ export function DungeonDelverGame() {
 
   // Equip item
   const equipItem = useCallback((item: Item) => {
-    if (!item.slot) return;
+    if (!item.slot) {return;}
     setPlayer((prev: PlayerState) => {
       const newEquipped = { ...prev.equipped };
       // Unequip current item in same slot
       const old = newEquipped[item.slot!];
       const newInv = prev.inventory.filter((i: Item) => i !== item);
-      if (old) newInv.push(old);
+      if (old) {newInv.push(old);}
 
       newEquipped[item.slot!] = item;
       const r = RACES.find((r) => r.id === prev.race)!;
@@ -804,7 +806,7 @@ export function DungeonDelverGame() {
   const unequipItem = useCallback((slot: keyof EquippedItems) => {
     setPlayer((prev: PlayerState) => {
       const item = prev.equipped[slot];
-      if (!item) return prev;
+      if (!item) {return prev;}
       const newEquipped = { ...prev.equipped, [slot]: null };
       const r = RACES.find((r) => r.id === prev.race)!;
       const c = CLASSES.find((c) => c.id === prev.class)!;
@@ -839,9 +841,9 @@ export function DungeonDelverGame() {
 
   // Canvas click handler
   const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (screen !== "dungeon") return;
+    if (screen !== "dungeon") {return;}
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
     const rect = canvas.getBoundingClientRect();
     const scaleX = CANVAS_W / rect.width;
     const scaleY = CANVAS_H / rect.height;
@@ -849,7 +851,7 @@ export function DungeonDelverGame() {
     const my = Math.floor((e.clientY - rect.top) * scaleY / CELL);
 
     // Clicked HUD area
-    if (my < HUD_H / CELL) return;
+    if (my < HUD_H / CELL) {return;}
 
     const gridY = my - Math.floor(HUD_H / CELL);
 
@@ -897,7 +899,7 @@ export function DungeonDelverGame() {
         for (let dy = -scanRange; dy <= scanRange; dy++) {
           for (let dx = -scanRange; dx <= scanRange; dx++) {
             const sx = mx + dx, sy = gridY + dy;
-            if (sx < 0 || sx >= COLS || sy < 0 || sy >= ROWS) continue;
+            if (sx < 0 || sx >= COLS || sy < 0 || sy >= ROWS) {continue;}
             const itemAtPos = dungeon.items.find((i: { x: number; y: number }) => i.x === sx && i.y === sy);
             if (itemAtPos) {
               pickUpItem(itemAtPos.item);
@@ -911,9 +913,9 @@ export function DungeonDelverGame() {
   // Canvas render
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {return;}
 
     const dpr = window.devicePixelRatio || 1;
     canvas.width = CANVAS_W * dpr;
@@ -932,7 +934,7 @@ export function DungeonDelverGame() {
     for (let dy = -visionRange; dy <= visionRange; dy++) {
       for (let dx = -visionRange; dx <= visionRange; dx++) {
         const fx = player.x + dx, fy = player.y + dy;
-        if (fx >= 0 && fx < COLS && fy >= 0 && fy < ROWS) explored[fy][fx] = true;
+        if (fx >= 0 && fx < COLS && fy >= 0 && fy < ROWS) {explored[fy][fx] = true;}
       }
     }
 
@@ -973,7 +975,7 @@ export function DungeonDelverGame() {
 
       // Draw items (only in explored)
       for (const { item, x, y: iy } of dungeon.items) {
-        if (!explored[iy][x]) continue;
+        if (!explored[iy][x]) {continue;}
         const px = x * CELL + 4;
         const py = HUD_H + iy * CELL + 4;
         ctx.font = "14px serif";
@@ -983,7 +985,7 @@ export function DungeonDelverGame() {
 
       // Draw monsters (only in explored)
       for (const m of dungeon.monsters) {
-        if (!explored[m.y][m.x]) continue;
+        if (!explored[m.y][m.x]) {continue;}
         const px = m.x * CELL + 4;
         const py = HUD_H + m.y * CELL + 4;
         ctx.font = "20px serif";
@@ -1053,8 +1055,8 @@ export function DungeonDelverGame() {
         {/* Daily Challenge */}
         <button
           onClick={() => {
-            if (hasDailyAttempt()) return;
-            if (!selectedRace || !selectedClass) return;
+            if (hasDailyAttempt()) {return;}
+            if (!selectedRace || !selectedClass) {return;}
             startDailyRun();
           }}
           disabled={hasDailyAttempt()}
@@ -1284,7 +1286,7 @@ export function DungeonDelverGame() {
           <div className="mb-4">
             {(() => {
               const setBonuses = computeSetBonuses(player.equipped);
-              if (setBonuses.length === 0) return null;
+              if (setBonuses.length === 0) {return null;}
               return (
                 <div className="rounded border border-[#ffd700]/30 bg-[#ffd700]/5 p-3">
                   <h3 className="mb-2 text-sm font-semibold text-[#ffd700]">══ {t("setBonus")} ══</h3>
@@ -1473,7 +1475,7 @@ function saveRunToLocal(player: PlayerState, floor: number, dungeon: DungeonStat
 function loadSavedRun(): SaveData | null {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
-    if (!raw) return null;
+    if (!raw) {return null;}
     return JSON.parse(raw) as SaveData;
   } catch { return null; }
 }

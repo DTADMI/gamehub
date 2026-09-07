@@ -73,7 +73,7 @@ const SCENE_STYLES: Record<SceneBgType, React.CSSProperties & { "--anim-name"?: 
 // CSS keyframes injected once
 let STYLES_INJECTED = false;
 function injectStyles() {
-  if (typeof document === "undefined" || STYLES_INJECTED) return;
+  if (typeof document === "undefined" || STYLES_INJECTED) {return;}
   const style = document.createElement("style");
   style.textContent = `
     @keyframes workshopShimmer {

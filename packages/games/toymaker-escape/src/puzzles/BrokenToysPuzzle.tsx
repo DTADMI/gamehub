@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
 import { MatchingPuzzle, type MatchPair } from "@games/pointclick-engine";
-import { effects, ensureCtx, type EngineCtx } from "@games/pointclick-engine/engine";
+import { effects, type EngineCtx,ensureCtx } from "@games/pointclick-engine/engine";
+import React from "react";
 
 export type BrokenToysPuzzleProps = {
   lang: "en" | "fr";

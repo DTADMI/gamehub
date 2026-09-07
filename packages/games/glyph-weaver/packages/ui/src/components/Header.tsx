@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import { useI18n } from '../i18n/index'
-import { useTheme } from '../theme/index'
-import { useStore } from '../state/store'
+import { useI18n } from '../i18n/index';
+import { useStore } from '../state/store';
+import { useTheme } from '../theme/index';
 
 interface HeaderProps {
   onToggleSidebar: () => void
@@ -17,13 +17,13 @@ export function Header({
   sidebarOpen,
   rightPanelOpen,
 }: HeaderProps) {
-  const { t, locale, setLocale } = useI18n()
-  const { theme, toggleTheme } = useTheme()
-  const canUndo = useStore((s) => s.canUndo())
-  const canRedo = useStore((s) => s.canRedo())
-  const undo = useStore((s) => s.undo)
-  const redo = useStore((s) => s.redo)
-  const spellState = useStore((s) => s.spellState)
+  const { t, locale, setLocale } = useI18n();
+  const { theme, toggleTheme } = useTheme();
+  const canUndo = useStore((s) => s.canUndo());
+  const canRedo = useStore((s) => s.canRedo());
+  const undo = useStore((s) => s.undo);
+  const redo = useStore((s) => s.redo);
+  const spellState = useStore((s) => s.spellState);
 
   return (
     <header
@@ -191,5 +191,5 @@ export function Header({
         </button>
       </div>
     </header>
-  )
+  );
 }

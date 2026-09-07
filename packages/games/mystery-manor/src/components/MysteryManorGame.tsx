@@ -3,11 +3,12 @@
 import { GameContainer } from "@gamehub/game-platform";
 import { DialogueBox, SceneBackground, useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import type { Lang, Scene } from "@games/pointclick-engine/engine";
-import { createCipherState, submitCipher, updateCipherInput, type CipherState } from "@games/pointclick-engine/puzzles/cipher";
+import { type CipherState,createCipherState, submitCipher, updateCipherInput } from "@games/pointclick-engine/puzzles/cipher";
+import { clearKeypad, createKeypadState, type KeypadState,pressKey, submitKeypad } from "@games/pointclick-engine/puzzles/keypad";
 import { createSequenceState, pressSeq, type SequenceState } from "@games/pointclick-engine/puzzles/sequence";
-import { createKeypadState, pressKey, submitKeypad, clearKeypad, type KeypadState } from "@games/pointclick-engine/puzzles/keypad";
-import { useI18n } from "@/lib/i18n";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { useI18n } from "@/lib/i18n";
 
 const SAVE_KEY = "mystery-manor:save:v1";
 const CIPHER_ANSWER = "THE LIBRARY";
@@ -96,10 +97,10 @@ export const MysteryManorGame: React.FC = () => {
   useSceneAudio(sceneId, {}, true);
   useEffect(() => { if (typeof window !== "undefined") { try { localStorage.setItem(SAVE_KEY, sceneId); } catch {} } }, [sceneId]);
 
-  const handleTag = (s: string) => { const n = pressSeq(sequence, s as "L"); setSequence(n); if (n.solved) sfx.playSolve(); else sfx.playClick(); };
+  const handleTag = (s: string) => { const n = pressSeq(sequence, s as "L"); setSequence(n); if (n.solved) {sfx.playSolve();} else {sfx.playClick();} };
   const handleKP = (d: string) => setKeypad((s) => pressKey(s, d, { code: VAULT_CODE, maxLen: 4 }));
-  const handleKPS = () => { const n = submitKeypad(keypad, { code: VAULT_CODE, maxLen: 4 }); setKeypad(n); if (n.solved) sfx.playSolve(); else sfx.playError(); };
-  const handleCipherSubmit = () => { const n = submitCipher(cipher); setCipher(n); if (n.solved) sfx.playSolve(); else sfx.playError(); };
+  const handleKPS = () => { const n = submitKeypad(keypad, { code: VAULT_CODE, maxLen: 4 }); setKeypad(n); if (n.solved) {sfx.playSolve();} else {sfx.playError();} };
+  const handleCipherSubmit = () => { const n = submitCipher(cipher); setCipher(n); if (n.solved) {sfx.playSolve();} else {sfx.playError();} };
 
   return (
     <GameContainer title={(scene.title as Record<string, string>)[lang] || "Mystery Manor"}>

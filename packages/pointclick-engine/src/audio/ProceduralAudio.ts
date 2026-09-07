@@ -39,8 +39,8 @@ export class ProceduralAudio {
   }
 
   private getContext(): AudioContext | null {
-    if (typeof window === "undefined") return null;
-    if (this.ctx && this.ctx.state !== "closed") return this.ctx;
+    if (typeof window === "undefined") {return null;}
+    if (this.ctx && this.ctx.state !== "closed") {return this.ctx;}
     try {
       this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       this.masterGain = this.ctx.createGain();
@@ -61,14 +61,14 @@ export class ProceduralAudio {
 
   setEnabled(on: boolean) {
     this.enabled = on;
-    if (!on) this.stopAmbient();
+    if (!on) {this.stopAmbient();}
   }
 
   /** Play a one-shot sound effect */
   play(type: SoundType) {
     const ctx = this.getContext();
-    if (!ctx || !this.enabled || !this.masterGain) return;
-    if (ctx.state === "suspended") ctx.resume();
+    if (!ctx || !this.enabled || !this.masterGain) {return;}
+    if (ctx.state === "suspended") {ctx.resume();}
 
     switch (type) {
       case "click": this._click(ctx); break;
@@ -82,9 +82,9 @@ export class ProceduralAudio {
   /** Start an ambient background drone */
   startAmbient(type: AmbientType) {
     const ctx = this.getContext();
-    if (!ctx || !this.enabled || !this.masterGain) return;
-    if (ctx.state === "suspended") ctx.resume();
-    if (this.currentAmbient === type && this.ambientNode) return;
+    if (!ctx || !this.enabled || !this.masterGain) {return;}
+    if (ctx.state === "suspended") {ctx.resume();}
+    if (this.currentAmbient === type && this.ambientNode) {return;}
 
     this.stopAmbient();
 

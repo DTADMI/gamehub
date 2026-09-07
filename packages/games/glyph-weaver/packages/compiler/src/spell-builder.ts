@@ -1,9 +1,9 @@
-import type { SpellIR, ElementId, ManifestationId, ParserWarning } from '../../core/src'
-import type { CompilerWarning } from '../../core/src/types'
-import type { ComputedParameters } from './parameter-computer'
-import type { DirectionResult } from './direction-computer'
-import type { QualityResult } from './quality-scorer'
-import type { SignAggregationResult } from './sign-aggregator'
+import type { ElementId, ManifestationId, ParserWarning,SpellIR } from '../../core/src';
+import type { CompilerWarning } from '../../core/src/types';
+import type { DirectionResult } from './direction-computer';
+import type { ComputedParameters } from './parameter-computer';
+import type { QualityResult } from './quality-scorer';
+import type { SignAggregationResult } from './sign-aggregator';
 
 export interface SpellBuilderInput {
   sigilElement: ElementId | null
@@ -32,7 +32,7 @@ export function buildSpellIR(input: SpellBuilderInput): SpellIR {
     duration,
     warnings,
     effectScale,
-  } = input
+  } = input;
 
   return {
     type: 'SpellIR',
@@ -65,7 +65,7 @@ export function buildSpellIR(input: SpellBuilderInput): SpellIR {
       params,
       qualityResult,
     ),
-  }
+  };
 }
 
 export function buildInvalidSpell(warnings: Array<ParserWarning | CompilerWarning>): SpellIR {
@@ -95,7 +95,7 @@ export function buildInvalidSpell(warnings: Array<ParserWarning | CompilerWarnin
     neatness: 0,
     warnings,
     signature: 'invalid',
-  }
+  };
 }
 
 export function generateSignature(
@@ -112,6 +112,6 @@ export function generateSignature(
     params.focus.toFixed(3),
     params.range.toFixed(3),
     quality.quality.toFixed(3),
-  ]
-  return parts.join(':')
+  ];
+  return parts.join(':');
 }

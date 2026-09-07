@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC } from 'react';
 
 interface SkeletonProps {
   width?: string | number
@@ -12,24 +12,24 @@ const baseStyle: React.CSSProperties = {
   background: 'linear-gradient(90deg, #222 25%, #2a2a3e 50%, #222 75%)',
   backgroundSize: '200% 100%',
   animation: 'gw-shimmer 1.5s ease-in-out infinite',
-}
+};
 
 const textStyle: React.CSSProperties = {
   ...baseStyle,
   height: '14px',
   borderRadius: '4px',
   marginBottom: '8px',
-}
+};
 
 const rectStyle: React.CSSProperties = {
   ...baseStyle,
   borderRadius: '6px',
-}
+};
 
 const circleStyle: React.CSSProperties = {
   ...baseStyle,
   borderRadius: '50%',
-}
+};
 
 export const Skeleton: FC<SkeletonProps> = ({
   width = '100%',
@@ -39,25 +39,25 @@ export const Skeleton: FC<SkeletonProps> = ({
   count = 1,
 }) => {
   const variantStyle =
-    variant === 'text' ? textStyle : variant === 'circle' ? circleStyle : rectStyle
+    variant === 'text' ? textStyle : variant === 'circle' ? circleStyle : rectStyle;
 
   const finalStyle: React.CSSProperties = {
     ...variantStyle,
     width,
     ...(height !== undefined && { height }),
     ...(borderRadius !== undefined && { borderRadius }),
-  }
+  };
 
   if (variant === 'circle' && height === undefined) {
-    const w = typeof width === 'number' ? width : 40
-    finalStyle.width = w
-    finalStyle.height = w
+    const w = typeof width === 'number' ? width : 40;
+    finalStyle.width = w;
+    finalStyle.height = w;
   }
 
-  const items = Array.from({ length: count }, (_, i) => <div key={i} style={finalStyle} />)
+  const items = Array.from({ length: count }, (_, i) => <div key={i} style={finalStyle} />);
 
-  return <>{items}</>
-}
+  return <>{items}</>;
+};
 
 export const PanelSkeleton: FC<{ rows?: number }> = ({ rows = 5 }) => (
   <div style={{ padding: '16px' }}>
@@ -67,7 +67,7 @@ export const PanelSkeleton: FC<{ rows?: number }> = ({ rows = 5 }) => (
       <Skeleton key={i} variant="text" />
     ))}
   </div>
-)
+);
 
 export const CanvasSkeleton: FC<{ width?: number; height?: number }> = ({
   width = 500,
@@ -84,7 +84,7 @@ export const CanvasSkeleton: FC<{ width?: number; height?: number }> = ({
   >
     <div style={{ ...baseStyle, width: '100%', height: '100%' }} />
   </div>
-)
+);
 
 export const DictionarySkeleton: FC<{ entries?: number }> = ({ entries = 3 }) => (
   <div style={{ padding: '12px' }}>
@@ -96,4 +96,4 @@ export const DictionarySkeleton: FC<{ entries?: number }> = ({ entries = 3 }) =>
       </div>
     ))}
   </div>
-)
+);

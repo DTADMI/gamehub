@@ -8,34 +8,34 @@ import {
   type Scene,
 } from "@games/pointclick-engine/engine";
 import {
+  type CipherState,
+  createCipherState,
+  submitCipher,
+  updateCipherInput,
+} from "@games/pointclick-engine/puzzles/cipher";
+import {
+  clearKeypad,
+  createKeypadState,
+  type KeypadState,
+  pressKey,
+  submitKeypad,
+} from "@games/pointclick-engine/puzzles/keypad";
+import {
   createSequenceState,
   pressSeq,
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
 import {
-  createCipherState,
-  submitCipher,
-  updateCipherInput,
-  type CipherState,
-} from "@games/pointclick-engine/puzzles/cipher";
-import {
-  createKeypadState,
-  pressKey,
-  submitKeypad,
-  clearKeypad,
-  type KeypadState,
-} from "@games/pointclick-engine/puzzles/keypad";
-import {
   createWiresState,
   evaluateSolved as evalWires,
   setWiresConnection,
   type TerminalId,
-  type WiresState,
   type WireColor,
+  type WiresState,
 } from "@games/pointclick-engine/puzzles/wires";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useI18n } from "@/lib/i18n";
-import React, { useEffect, useMemo, useState } from "react";
 
 const SAVE_KEY = "escape-room:save:v1";
 const SEQUENCE_ORDER = ["LOGIC", "HISTORY", "ART", "MATHEMATICS", "POETRY"];
@@ -73,7 +73,7 @@ export const EscapeRoomGame: React.FC = () => {
 
   const [sceneId, setSceneId] = useState("INTRO");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   const scenes = useMemo<Record<string, Scene>>(
     () => ({
       INTRO: {
@@ -174,23 +174,23 @@ export const EscapeRoomGame: React.FC = () => {
   const handleTag = (sym: string) => {
     const next = pressSeq(tags, sym);
     setTags(next);
-    if (next.solved) sfx.playSolve();
-    else sfx.playClick();
+    if (next.solved) {sfx.playSolve();}
+    else {sfx.playClick();}
   };
 
   const handleCipherSubmit = () => {
     const next = submitCipher(cipher);
     setCipher(next);
-    if (next.solved) sfx.playSolve();
-    else sfx.playError();
+    if (next.solved) {sfx.playSolve();}
+    else {sfx.playError();}
   };
 
   const handleWire = (from: TerminalId, color: WireColor, to: TerminalId) => {
     const next = setWiresConnection(wires, from, to, color);
     const final = evalWires(next);
     setWires(final);
-    if (final.solved) sfx.playSolve();
-    else sfx.playClick();
+    if (final.solved) {sfx.playSolve();}
+    else {sfx.playClick();}
   };
 
   const handleKeypadPress = (digit: string) => {
@@ -200,8 +200,8 @@ export const EscapeRoomGame: React.FC = () => {
   const handleKeypadSubmit = () => {
     const next = submitKeypad(keypad, { code: SAFE_CODE, maxLen: 3 });
     setKeypad(next);
-    if (next.solved) sfx.playSolve();
-    else sfx.playError();
+    if (next.solved) {sfx.playSolve();}
+    else {sfx.playError();}
   };
 
   return (

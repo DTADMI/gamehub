@@ -1,1 +1,1 @@
-export { MysteryManorGame, default } from "./components/MysteryManorGame";
+export { default,MysteryManorGame } from "./components/MysteryManorGame";

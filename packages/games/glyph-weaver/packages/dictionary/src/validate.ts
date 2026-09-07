@@ -1,4 +1,4 @@
-import { DictionarySchema } from '../../core/src'
+import { DictionarySchema } from '../../core/src';
 
 export interface ValidationError {
   path: string
@@ -11,24 +11,24 @@ export interface ValidationResult {
 }
 
 export function validateDictionary(dictionary: unknown): ValidationResult {
-  const result = DictionarySchema.safeParse(dictionary)
+  const result = DictionarySchema.safeParse(dictionary);
 
   if (result.success) {
-    return { valid: true, errors: [] }
+    return { valid: true, errors: [] };
   }
 
   const errors: ValidationError[] = result.error.issues.map((issue) => ({
     path: issue.path.join('.'),
     message: issue.message,
-  }))
+  }));
 
-  return { valid: false, errors }
+  return { valid: false, errors };
 }
 
 export function assertValidDictionary(dictionary: unknown): void {
-  const result = validateDictionary(dictionary)
+  const result = validateDictionary(dictionary);
   if (!result.valid) {
-    const messages = result.errors.map((e) => `  ${e.path}: ${e.message}`).join('\n')
-    throw new Error(`Dictionary validation failed:\n${messages}`)
+    const messages = result.errors.map((e) => `  ${e.path}: ${e.message}`).join('\n');
+    throw new Error(`Dictionary validation failed:\n${messages}`);
   }
 }

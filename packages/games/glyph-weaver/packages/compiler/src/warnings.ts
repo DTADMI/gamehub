@@ -1,5 +1,5 @@
-import type { ParserWarning } from '../../core/src'
-import type { CompilerWarning } from '../../core/src/types'
+import type { ParserWarning } from '../../core/src';
+import type { CompilerWarning } from '../../core/src/types';
 
 export const COMPILER_WARNING_MESSAGES: Record<CompilerWarning, { en: string; fr: string }> = {
   primary_sigil_confidence_low: {
@@ -38,11 +38,11 @@ export const COMPILER_WARNING_MESSAGES: Record<CompilerWarning, { en: string; fr
     en: 'Multiple manifestation types detected; effects may be diluted',
     fr: 'FR: Multiple manifestation types detected; effects may be diluted',
   },
-}
+};
 
 export function mergeWarnings(
   parserWarnings: ParserWarning[],
   compilerWarnings: CompilerWarning[],
 ): Array<ParserWarning | CompilerWarning> {
-  return [...parserWarnings, ...compilerWarnings]
+  return [...parserWarnings, ...compilerWarnings];
 }

@@ -1,18 +1,17 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 
+import { GlyphWeaverShell } from "../packages/ui/src/components/Shell";
 /**
  * GlyphWeaverGame — Full spell-crafting studio, natively integrated into GameHub.
  *
  * Uses the local GW packages copied into packages/games/glyph-weaver/packages/.
  * This is the canonical version — the standalone glyph-weaver monorepo is a PoC.
  */
-
 // Local package imports
 import { I18nProvider } from "../packages/ui/src/i18n/provider";
-import { ThemeProvider } from "../packages/ui/src/theme/ThemeProvider";
-import { GlyphWeaverShell } from "../packages/ui/src/components/Shell";
 import { useStore } from "../packages/ui/src/state/store";
+import { ThemeProvider } from "../packages/ui/src/theme/ThemeProvider";
 
 function LoadingScreen() {
   return (
@@ -53,7 +52,7 @@ export class ErrorBoundary extends React.Component<
   }
 
   render() {
-    if (this.state.hasError) return <>{this.props.fallback}</>;
+    if (this.state.hasError) {return <>{this.props.fallback}</>;}
     return <>{this.props.children}</>;
   }
 }

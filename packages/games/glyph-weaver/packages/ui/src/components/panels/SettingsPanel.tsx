@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { useI18n } from '../../i18n/index'
-import { useTheme, type Theme } from '../../theme/index'
-import { useStore } from '../../state/store'
-import { FeatureFlagGate } from '../FeatureFlagGate'
+import { useI18n } from '../../i18n/index';
+import { useStore } from '../../state/store';
+import { type Theme,useTheme } from '../../theme/index';
+import { FeatureFlagGate } from '../FeatureFlagGate';
 
 export function SettingsPanel() {
-  const { t, locale, setLocale } = useI18n()
-  const { theme, setTheme } = useTheme()
-  const config = useStore((s) => s.config)
-  const updateConfig = useStore((s) => s.updateConfig)
+  const { t, locale, setLocale } = useI18n();
+  const { theme, setTheme } = useTheme();
+  const config = useStore((s) => s.config);
+  const updateConfig = useStore((s) => s.updateConfig);
 
   return (
     <div className="flex flex-col h-full">
@@ -192,5 +192,5 @@ export function SettingsPanel() {
         </section>
       </div>
     </div>
-  )
+  );
 }

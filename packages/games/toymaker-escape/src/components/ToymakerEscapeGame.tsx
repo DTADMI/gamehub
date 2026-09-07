@@ -10,7 +10,6 @@ import {
   nextScene,
   type Scene,
 } from "@games/pointclick-engine/engine";
-import { TME_TX, type TmeTxKey } from "../strings";
 import {
   type AnagramState,
   createAnagramState,
@@ -54,18 +53,18 @@ import {
   setWiresConnection,
   type WiresState,
 } from "@games/pointclick-engine/puzzles/wires";
-
-import { FilingLogicPuzzle } from "../puzzles/FilingLogicPuzzle";
-import { BrokenToysPuzzle } from "../puzzles/BrokenToysPuzzle";
-import { ShadowPuzzle } from "../puzzles/ShadowPuzzle";
-import { LocksPuzzle } from "../puzzles/LocksPuzzle";
-import { ToymakerReveal } from "../puzzles/ToymakerReveal";
-import { FinalEscapePuzzle } from "../puzzles/FinalEscapePuzzle";
-import { TOYMAKER_SCENES } from "../data/scenes";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { t } from "@/lib/i18n";
 
+import { TOYMAKER_SCENES } from "../data/scenes";
+import { BrokenToysPuzzle } from "../puzzles/BrokenToysPuzzle";
+import { FilingLogicPuzzle } from "../puzzles/FilingLogicPuzzle";
+import { FinalEscapePuzzle } from "../puzzles/FinalEscapePuzzle";
+import { LocksPuzzle } from "../puzzles/LocksPuzzle";
+import { ShadowPuzzle } from "../puzzles/ShadowPuzzle";
+import { ToymakerReveal } from "../puzzles/ToymakerReveal";
+import { TME_TX, type TmeTxKey } from "../strings";
 import { E1CabinetCanvas } from "./E1CabinetCanvas";
 
 const SAVE_KEY = "tme:save:v1";

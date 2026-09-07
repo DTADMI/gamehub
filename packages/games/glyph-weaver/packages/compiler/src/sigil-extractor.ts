@@ -1,4 +1,4 @@
-import type { GlyphAST, RecognizedSigil } from '../../core/src'
+import type { GlyphAST, RecognizedSigil } from '../../core/src';
 
 export interface SigilExtractionResult {
   sigil: RecognizedSigil | null
@@ -6,18 +6,18 @@ export interface SigilExtractionResult {
 }
 
 export function extractPrimarySigil(ast: GlyphAST): SigilExtractionResult {
-  const { primarySigil, unsupportedMultipleSigils } = ast
+  const { primarySigil, unsupportedMultipleSigils } = ast;
 
   if (!primarySigil) {
-    return { sigil: null, hadMultiple: false }
+    return { sigil: null, hadMultiple: false };
   }
 
   if (unsupportedMultipleSigils.length === 0) {
-    return { sigil: primarySigil, hadMultiple: false }
+    return { sigil: primarySigil, hadMultiple: false };
   }
 
-  const allSigils = [primarySigil, ...unsupportedMultipleSigils]
-  const best = allSigils.reduce((a, b) => (a.confidence >= b.confidence ? a : b))
+  const allSigils = [primarySigil, ...unsupportedMultipleSigils];
+  const best = allSigils.reduce((a, b) => (a.confidence >= b.confidence ? a : b));
 
-  return { sigil: best, hadMultiple: true }
+  return { sigil: best, hadMultiple: true };
 }

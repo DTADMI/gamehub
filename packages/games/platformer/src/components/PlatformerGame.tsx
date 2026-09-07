@@ -6,11 +6,12 @@ import {
   soundManager,
   useGameSettings,
 } from "@gamehub/game-platform";
+import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { createI18n } from "@games/i18n";
-import { PLATFORMER_TX } from "../i18n";
 import { submitScore } from "@/lib/score-submit";
+
+import { PLATFORMER_TX } from "../i18n";
 
 
 const { t } = createI18n(PLATFORMER_TX);

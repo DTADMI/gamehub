@@ -2,8 +2,9 @@
 
 // games/memory/src/components/MemoryGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createI18n } from "@games/i18n";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { MEMORY_TX } from "../i18n";
 
 interface Card {

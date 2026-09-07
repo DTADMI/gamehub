@@ -1,4 +1,4 @@
-import type { ElementId, ManifestationId, Direction3D } from '../../core/src'
+import type { Direction3D,ElementId, ManifestationId } from '../../core/src';
 
 export interface EffectContext {
   gl: WebGL2RenderingContext

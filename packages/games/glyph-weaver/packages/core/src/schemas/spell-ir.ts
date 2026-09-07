@@ -1,5 +1,6 @@
-import { z } from 'zod'
-import { ElementIdSchema, ManifestationIdSchema } from './primitives'
+import { z } from 'zod';
+
+import { ElementIdSchema, ManifestationIdSchema } from './primitives';
 
 export const Direction3DSchema = z.object({
   x: z.number(),
@@ -8,38 +9,38 @@ export const Direction3DSchema = z.object({
   xTiltDeg: z.number(),
   yTiltDeg: z.number(),
   tiltFromZDeg: z.number(),
-})
+});
 
 const ManifestationProfileBaseSchema = z.object({
   strength: z.number(),
-})
+});
 
 export const AuraProfileSchema = ManifestationProfileBaseSchema.extend({
   type: z.literal('aura'),
-})
+});
 
 export const ColumnProfileSchema = ManifestationProfileBaseSchema.extend({
   type: z.literal('column'),
-})
+});
 
 export const LevitationProfileSchema = ManifestationProfileBaseSchema.extend({
   type: z.literal('levitation'),
-})
+});
 
 export const ConvergenceProfileSchema = ManifestationProfileBaseSchema.extend({
   type: z.literal('convergence'),
   point: z.object({ x: z.number(), y: z.number() }),
   radius: z.number(),
   rigidity: z.number(),
-})
+});
 
 export const BarrierProfileSchema = ManifestationProfileBaseSchema.extend({
   type: z.literal('barrier'),
-})
+});
 
 export const ProjectileProfileSchema = ManifestationProfileBaseSchema.extend({
   type: z.literal('projectile'),
-})
+});
 
 export const AnyManifestationProfileSchema = z.discriminatedUnion('type', [
   AuraProfileSchema,
@@ -48,7 +49,7 @@ export const AnyManifestationProfileSchema = z.discriminatedUnion('type', [
   ConvergenceProfileSchema,
   BarrierProfileSchema,
   ProjectileProfileSchema,
-])
+]);
 
 export const SpellIRSchema = z.object({
   type: z.literal('SpellIR'),
@@ -76,4 +77,4 @@ export const SpellIRSchema = z.object({
   neatness: z.number(),
   warnings: z.array(z.string()),
   signature: z.string(),
-})
+});

@@ -2,7 +2,7 @@
 "use client";
 
 import { Button, cn } from "@gamehub/ui";
-import { Gamepad2, ExternalLink, Link2, Menu, X } from "lucide-react";
+import { ExternalLink, Gamepad2, Link2, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { memo, useEffect, useState } from "react";

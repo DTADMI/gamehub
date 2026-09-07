@@ -1,6 +1,6 @@
-import type { RingCandidate } from '../../../core/src'
-import type { Direction3D } from '../../../core/src'
-import { applyTilt } from '../direction'
+import type { RingCandidate } from '../../../core/src';
+import type { Direction3D } from '../../../core/src';
+import { applyTilt } from '../direction';
 
 export interface PortalProjection {
   centerX: number
@@ -17,9 +17,9 @@ export function projectPortal(
   centerX: number = 0,
   centerY: number = 0,
 ): PortalProjection {
-  const cx = ring.center ? ring.center.x : 0
-  const cy = ring.center ? ring.center.y : 0
-  const radius = ring.radius
+  const cx = ring.center ? ring.center.x : 0;
+  const cy = ring.center ? ring.center.y : 0;
+  const radius = ring.radius;
 
   if (!direction) {
     return {
@@ -29,17 +29,17 @@ export function projectPortal(
       radiusY: radius,
       rotationDeg: 0,
       tiltDeg: 0,
-    }
+    };
   }
 
-  const tiltDeg = direction.tiltFromZDeg ?? 0
-  const tiltRad = (tiltDeg * Math.PI) / 180
-  const cosTilt = Math.cos(tiltRad)
-  const radiusY = radius * cosTilt
-  const radiusX = radius
+  const tiltDeg = direction.tiltFromZDeg ?? 0;
+  const tiltRad = (tiltDeg * Math.PI) / 180;
+  const cosTilt = Math.cos(tiltRad);
+  const radiusY = radius * cosTilt;
+  const radiusX = radius;
 
-  const angleDeg = Math.atan2(direction.y, direction.x) * (180 / Math.PI)
-  const tilted = applyTilt(cx, cy, tiltDeg * 0.5)
+  const angleDeg = Math.atan2(direction.y, direction.x) * (180 / Math.PI);
+  const tilted = applyTilt(cx, cy, tiltDeg * 0.5);
 
   return {
     centerX: centerX + tilted.x,
@@ -48,16 +48,16 @@ export function projectPortal(
     radiusY: Math.max(radiusY, radius * 0.1),
     rotationDeg: angleDeg,
     tiltDeg,
-  }
+  };
 }
 
 export function portalOutDirection(direction: Direction3D): { x: number; y: number } {
-  const length = Math.sqrt(direction.x * direction.x + direction.y * direction.y)
+  const length = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
   if (length < 1e-9) {
-    return { x: 0, y: -1 }
+    return { x: 0, y: -1 };
   }
   return {
     x: direction.x / length,
     y: direction.y / length,
-  }
+  };
 }

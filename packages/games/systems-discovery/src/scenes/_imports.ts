@@ -19,13 +19,13 @@ import {
 } from "@games/pointclick-engine/puzzles/sequence";
 
 export {
+  createPipesState,
+  createSequenceState,
+  evaluatePipes,
   HomeostasisMeter,
   PostGameCTA,
-  createPipesState,
-  evaluatePipes,
+  pressSequenceKey,
   setTileRotation,
   toggleValve,
-  createSequenceState,
-  pressSequenceKey,
 };
 export type { PipesState, SequenceState };

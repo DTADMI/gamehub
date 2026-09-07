@@ -1,131 +1,132 @@
-'use client'
+'use client';
 
-import { useState, useCallback, useEffect } from 'react'
-import { Header } from './Header'
-import { Sidebar } from './Sidebar'
-import { CanvasArea } from './CanvasArea'
-import { DictionaryPanel } from './panels/DictionaryPanel'
-import { DiagnosticsPanel } from './panels/DiagnosticsPanel'
-import { SpellStateDisplay } from './panels/SpellStateDisplay'
-import { SettingsPanel } from './panels/SettingsPanel'
-import { FeatureFlagGate } from './FeatureFlagGate'
-import { ErrorBoundary } from './ErrorBoundary'
-import { LoadingSpinner } from './LoadingSpinner'
-import { useStore } from '../state/store'
-import { useKeyboardShortcuts } from '../shortcuts/keyboard-shortcuts'
-import { useI18n } from '../i18n/index'
-import { PipelineManager } from '../pipeline/pipeline-manager'
-import { exportToSVG } from '../../../tools/src/export/svg-export'
-import { LocalStorageAdapter, PersistenceManager } from '../../../tools/src/persistence/storage'
+import { useCallback, useEffect,useState } from 'react';
+
+import { exportToSVG } from '../../../tools/src/export/svg-export';
+import { LocalStorageAdapter, PersistenceManager } from '../../../tools/src/persistence/storage';
+import { useI18n } from '../i18n/index';
+import { PipelineManager } from '../pipeline/pipeline-manager';
+import { useKeyboardShortcuts } from '../shortcuts/keyboard-shortcuts';
+import { useStore } from '../state/store';
+import { CanvasArea } from './CanvasArea';
+import { ErrorBoundary } from './ErrorBoundary';
+import { FeatureFlagGate } from './FeatureFlagGate';
+import { Header } from './Header';
+import { LoadingSpinner } from './LoadingSpinner';
+import { DiagnosticsPanel } from './panels/DiagnosticsPanel';
+import { DictionaryPanel } from './panels/DictionaryPanel';
+import { SettingsPanel } from './panels/SettingsPanel';
+import { SpellStateDisplay } from './panels/SpellStateDisplay';
+import { Sidebar } from './Sidebar';
 
 function downloadBlob(content: string, filename: string, mimeType: string) {
-  const blob = new Blob([content], { type: mimeType })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 export function GlyphWeaverShell() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [rightPanelOpen, setRightPanelOpen] = useState(false)
-  const [initializing, setInitializing] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+  const [initializing, setInitializing] = useState(true);
 
-  const panels = useStore((s) => s.panels)
-  const undo = useStore((s) => s.undo)
-  const redo = useStore((s) => s.redo)
-  const clear = useStore((s) => s.clear)
-  const setTool = useStore((s) => s.setTool)
-  const togglePanel = useStore((s) => s.togglePanel)
-  const setPipelineManager = useStore((s) => s.setPipelineManager)
-  const config = useStore((s) => s.config)
-  const strokes = useStore((s) => s.strokes)
-  const spellState = useStore((s) => s.spellState)
-  const { t } = useI18n()
+  const panels = useStore((s) => s.panels);
+  const undo = useStore((s) => s.undo);
+  const redo = useStore((s) => s.redo);
+  const clear = useStore((s) => s.clear);
+  const setTool = useStore((s) => s.setTool);
+  const togglePanel = useStore((s) => s.togglePanel);
+  const setPipelineManager = useStore((s) => s.setPipelineManager);
+  const config = useStore((s) => s.config);
+  const strokes = useStore((s) => s.strokes);
+  const spellState = useStore((s) => s.spellState);
+  const { t } = useI18n();
 
   useEffect(() => {
-    const pm = new PipelineManager(config)
-    setPipelineManager(pm)
-    setInitializing(false)
-  }, [config, setPipelineManager])
+    const pm = new PipelineManager(config);
+    setPipelineManager(pm);
+    setInitializing(false);
+  }, [config, setPipelineManager]);
 
   const handleSave = useCallback(() => {
     try {
-      const adapter = new LocalStorageAdapter('gw')
-      const pm = new PersistenceManager({ adapter })
+      const adapter = new LocalStorageAdapter('gw');
+      const pm = new PersistenceManager({ adapter });
       pm.saveSlot('current', {
         strokes,
         config,
         spellName: spellState?.element ? `${spellState.element}-spell` : 'untitled',
         version: 1,
         timestamp: Date.now(),
-      })
+      });
     } catch (err) {
-      console.error('Save failed:', err)
+      console.error('Save failed:', err);
     }
-  }, [strokes, config, spellState])
+  }, [strokes, config, spellState]);
 
   const handleExport = useCallback(() => {
     try {
-      const svg = exportToSVG(strokes, 800, 800, Boolean(spellState?.status === 'active'))
+      const svg = exportToSVG(strokes, 800, 800, Boolean(spellState?.status === 'active'));
       const name = spellState?.element
         ? `${spellState.element}-glyph-${Date.now()}.svg`
-        : `glyph-${Date.now()}.svg`
-      downloadBlob(svg, name, 'image/svg+xml')
+        : `glyph-${Date.now()}.svg`;
+      downloadBlob(svg, name, 'image/svg+xml');
     } catch (err) {
-      console.error('Export failed:', err)
+      console.error('Export failed:', err);
     }
-  }, [strokes, spellState])
+  }, [strokes, spellState]);
 
   const handleAction = useCallback(
     (action: string) => {
       switch (action) {
         case 'undo':
-          undo()
-          break
+          undo();
+          break;
         case 'redo':
-          redo()
-          break
+          redo();
+          break;
         case 'save':
-          handleSave()
-          break
+          handleSave();
+          break;
         case 'export':
-          handleExport()
-          break
+          handleExport();
+          break;
         case 'clear':
-          clear()
-          break
+          clear();
+          break;
         case 'tool:pen':
-          setTool('pen')
-          break
+          setTool('pen');
+          break;
         case 'tool:eraser':
-          setTool('eraser')
-          break
+          setTool('eraser');
+          break;
         case 'tool:select':
-          setTool('select')
-          break
+          setTool('select');
+          break;
         case 'tool:hand':
-          setTool('hand')
-          break
+          setTool('hand');
+          break;
         case 'toggle:diagnostics':
-          togglePanel('diagnostics')
-          break
+          togglePanel('diagnostics');
+          break;
         case 'search':
-          togglePanel('dictionary')
-          break
+          togglePanel('dictionary');
+          break;
         case 'help':
-          togglePanel('settings')
-          break
+          togglePanel('settings');
+          break;
       }
     },
     [undo, redo, clear, setTool, togglePanel, handleSave, handleExport],
-  )
+  );
 
-  useKeyboardShortcuts(handleAction)
+  useKeyboardShortcuts(handleAction);
 
   const activeRightPanel = panels.diagnostics
     ? 'diagnostics'
@@ -135,9 +136,9 @@ export function GlyphWeaverShell() {
         ? 'settings'
         : panels.dictionary
           ? 'dictionary'
-          : null
+          : null;
 
-  const rightPanelHasContent = activeRightPanel !== null
+  const rightPanelHasContent = activeRightPanel !== null;
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden" style={{ minWidth: '320px' }}>
@@ -218,5 +219,5 @@ export function GlyphWeaverShell() {
         )}
       </ErrorBoundary>
     </div>
-  )
+  );
 }

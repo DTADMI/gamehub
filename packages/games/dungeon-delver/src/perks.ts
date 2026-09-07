@@ -8,7 +8,7 @@
  * Each perk has apply/describe functions. Modifier system handles stat bonuses.
  */
 
-import type { Stats, ClassId } from "./types";
+import type { ClassId,Stats } from "./types";
 
 // ─── Perk Definition ───────────────────────────────────────────
 
@@ -86,7 +86,7 @@ export function getPerk(id: string): Perk | undefined {
 export function getLevelUpChoices(classId: ClassId, currentPerks: string[]): Perk[] {
   // Filter out non-repeatable perks already taken
   const available = PERKS.filter((p) => {
-    if (currentPerks.includes(p.id) && !p.repeatable) return false;
+    if (currentPerks.includes(p.id) && !p.repeatable) {return false;}
     return true;
   });
 

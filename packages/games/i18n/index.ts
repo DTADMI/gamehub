@@ -21,12 +21,12 @@ function detectLocale(): SupportedLocale {
   try {
     // 1) Check stored preference
     const stored = localStorage.getItem(LOCALE_KEY) as SupportedLocale | null;
-    if (stored === "en" || stored === "fr") return stored;
+    if (stored === "en" || stored === "fr") {return stored;}
 
     // 2) Check browser language
     if (typeof navigator !== "undefined") {
       const navLang = navigator.language?.split("-")[0];
-      if (navLang === "fr") return "fr";
+      if (navLang === "fr") {return "fr";}
     }
 
     // 3) Default: English (platform default for arcade games)

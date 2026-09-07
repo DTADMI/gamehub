@@ -30,8 +30,8 @@ class DungeonDelverAudio {
   }
 
   private getCtx(): AudioContext | null {
-    if (typeof window === "undefined") return null;
-    if (this.ctx && this.ctx.state !== "closed") return this.ctx;
+    if (typeof window === "undefined") {return null;}
+    if (this.ctx && this.ctx.state !== "closed") {return this.ctx;}
     try {
       this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       this.masterGain = this.ctx.createGain();
@@ -50,14 +50,14 @@ class DungeonDelverAudio {
 
   setEnabled(on: boolean) {
     this.enabled = on;
-    if (!on) this.stopAmbient();
+    if (!on) {this.stopAmbient();}
   }
 
   /** One-shot sound effect */
   play(type: SfxType) {
     const ctx = this.getCtx();
-    if (!ctx || !this.enabled || !this.masterGain) return;
-    if (ctx.state === "suspended") ctx.resume();
+    if (!ctx || !this.enabled || !this.masterGain) {return;}
+    if (ctx.state === "suspended") {ctx.resume();}
     switch (type) {
       case "hit": this._hit(ctx); break;
       case "crit": this._crit(ctx); break;
@@ -77,7 +77,7 @@ class DungeonDelverAudio {
   /** Ambient drone - gets darker/deeper as floor increases */
   startAmbient(floor: number) {
     const ctx = this.getCtx();
-    if (!ctx || !this.enabled || !this.masterGain) return;
+    if (!ctx || !this.enabled || !this.masterGain) {return;}
     this.stopAmbient();
 
     const osc = ctx.createOscillator();

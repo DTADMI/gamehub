@@ -1,5 +1,6 @@
-import { type FC } from 'react'
-import { useI18n } from '../i18n/index'
+import { type FC } from 'react';
+
+import { useI18n } from '../i18n/index';
 
 interface LoadingSpinnerProps {
   size?: number
@@ -12,8 +13,8 @@ export const LoadingSpinner: FC<LoadingSpinnerProps> = ({
   color = '#7b68ee',
   message,
 }) => {
-  const { t } = useI18n()
-  const borderWidth = Math.max(3, Math.round(size * 0.1))
+  const { t } = useI18n();
+  const borderWidth = Math.max(3, Math.round(size * 0.1));
 
   return (
     <div
@@ -48,5 +49,5 @@ export const LoadingSpinner: FC<LoadingSpinnerProps> = ({
         </span>
       )}
     </div>
-  )
-}
+  );
+};

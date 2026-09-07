@@ -1,5 +1,5 @@
-import type { StatementNode } from './ast-nodes'
-import { STDLIB_SPELLS } from './stdlib'
+import type { StatementNode } from './ast-nodes';
+import { STDLIB_SPELLS } from './stdlib';
 
 export interface ImportResult {
   name: string
@@ -9,17 +9,17 @@ export interface ImportResult {
 
 export function resolveImport(name: string): ImportResult {
   if (STDLIB_SPELLS[name]) {
-    return { name, source: STDLIB_SPELLS[name]!, resolved: true }
+    return { name, source: STDLIB_SPELLS[name]!, resolved: true };
   }
-  return { name, source: null, resolved: false }
+  return { name, source: null, resolved: false };
 }
 
 export function resolveImports(statements: StatementNode[]): ImportResult[] {
-  const results: ImportResult[] = []
+  const results: ImportResult[] = [];
   for (const stmt of statements) {
     if (stmt.type === 'Import') {
-      results.push(resolveImport(stmt.path))
+      results.push(resolveImport(stmt.path));
     }
   }
-  return results
+  return results;
 }

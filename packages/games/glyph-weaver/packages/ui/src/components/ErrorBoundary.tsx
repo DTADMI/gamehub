@@ -1,5 +1,6 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react'
-import { useI18n } from '../i18n/index'
+import { Component, type ErrorInfo, type ReactNode } from 'react';
+
+import { useI18n } from '../i18n/index';
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -13,7 +14,7 @@ interface ErrorBoundaryState {
 }
 
 function ErrorBoundaryFallback({ error, onRetry }: { error: Error | null; onRetry: () => void }) {
-  const { t } = useI18n()
+  const { t } = useI18n();
   return (
     <div
       style={{
@@ -55,33 +56,33 @@ function ErrorBoundaryFallback({ error, onRetry }: { error: Error | null; onRetr
         {t('errors.retry')}
       </button>
     </div>
-  )
+  );
 }
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
-    super(props)
-    this.state = { hasError: false, error: null }
+    super(props);
+    this.state = { hasError: false, error: null };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error }
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('[ErrorBoundary] Caught error:', error, errorInfo)
-    this.props.onError?.(error, errorInfo)
+    console.error('[ErrorBoundary] Caught error:', error, errorInfo);
+    this.props.onError?.(error, errorInfo);
   }
 
   handleRetry = (): void => {
-    this.setState({ hasError: false, error: null })
-  }
+    this.setState({ hasError: false, error: null });
+  };
 
   render(): ReactNode {
     if (this.state.hasError) {
-      if (this.props.fallback) return this.props.fallback
-      return <ErrorBoundaryFallback error={this.state.error} onRetry={this.handleRetry} />
+      if (this.props.fallback) {return this.props.fallback;}
+      return <ErrorBoundaryFallback error={this.state.error} onRetry={this.handleRetry} />;
     }
-    return this.props.children
+    return this.props.children;
   }
 }

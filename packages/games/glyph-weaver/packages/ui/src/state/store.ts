@@ -1,43 +1,44 @@
-import { create } from 'zustand'
-import type { Stroke, SpellIR, AppConfig } from '../../../core/src'
-import { DEFAULT_CONFIG } from '../../../core/src'
-import { PipelineManager } from '../pipeline/pipeline-manager'
-import type { ToolType, BrushSettings, PanelState, AppStoreState } from './types'
+import { create } from 'zustand';
+
+import type { AppConfig,SpellIR, Stroke } from '../../../core/src';
+import { DEFAULT_CONFIG } from '../../../core/src';
+import { PipelineManager } from '../pipeline/pipeline-manager';
+import type { AppStoreState,BrushSettings, PanelState, ToolType } from './types';
 
 const DEFAULT_BRUSH: BrushSettings = {
   size: 4,
   opacity: 0.9,
   color: '#1a1423',
   inkType: 'standard',
-}
+};
 
 const DEFAULT_PANELS: PanelState = {
   dictionary: true,
   diagnostics: false,
   settings: false,
   spellState: false,
-}
+};
 
 function generateStrokeId(): string {
-  return `stroke-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+  return `stroke-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
 function runPipeline(pm: PipelineManager, strokes: Stroke[]) {
   if (strokes.length === 0) {
-    return { ast: null, spellIR: null as SpellIR | null, pipelineStatus: 'idle' as const }
+    return { ast: null, spellIR: null as SpellIR | null, pipelineStatus: 'idle' as const };
   }
 
   const result = pm.processStrokes(strokes, {
     found: false,
     complete: false,
     activationEvent: false,
-  })
+  });
 
   return {
     ast: result.ast,
     spellIR: result.spellIR,
     pipelineStatus: 'ready' as const,
-  }
+  };
 }
 
 export const useStore = create<AppStoreState>((set, get) => ({
@@ -54,15 +55,15 @@ export const useStore = create<AppStoreState>((set, get) => ({
   pipelineManager: null,
 
   addStrokes: (strokes: Stroke[]) => {
-    const state = get()
+    const state = get();
     const newStrokes = strokes.map((s) => ({
       ...s,
       id: s.id || generateStrokeId(),
-    }))
-    const updatedStrokes = [...state.strokes, ...newStrokes]
+    }));
+    const updatedStrokes = [...state.strokes, ...newStrokes];
 
-    const pm = state.pipelineManager ?? new PipelineManager(state.config)
-    const pipeline = runPipeline(pm, updatedStrokes)
+    const pm = state.pipelineManager ?? new PipelineManager(state.config);
+    const pipeline = runPipeline(pm, updatedStrokes);
 
     set({
       strokes: updatedStrokes,
@@ -71,16 +72,16 @@ export const useStore = create<AppStoreState>((set, get) => ({
       ast: pipeline.ast,
       spellState: pipeline.spellIR,
       pipelineStatus: pipeline.pipelineStatus,
-    })
+    });
   },
 
   undo: () => {
-    const state = get()
-    if (state.undoStack.length === 0) return
-    const previous = state.undoStack[state.undoStack.length - 1]!
+    const state = get();
+    if (state.undoStack.length === 0) {return;}
+    const previous = state.undoStack[state.undoStack.length - 1]!;
 
-    const pm = state.pipelineManager ?? new PipelineManager(state.config)
-    const pipeline = runPipeline(pm, previous)
+    const pm = state.pipelineManager ?? new PipelineManager(state.config);
+    const pipeline = runPipeline(pm, previous);
 
     set({
       strokes: previous,
@@ -89,16 +90,16 @@ export const useStore = create<AppStoreState>((set, get) => ({
       ast: pipeline.ast,
       spellState: pipeline.spellIR,
       pipelineStatus: pipeline.pipelineStatus,
-    })
+    });
   },
 
   redo: () => {
-    const state = get()
-    if (state.redoStack.length === 0) return
-    const next = state.redoStack[state.redoStack.length - 1]!
+    const state = get();
+    if (state.redoStack.length === 0) {return;}
+    const next = state.redoStack[state.redoStack.length - 1]!;
 
-    const pm = state.pipelineManager ?? new PipelineManager(state.config)
-    const pipeline = runPipeline(pm, next)
+    const pm = state.pipelineManager ?? new PipelineManager(state.config);
+    const pipeline = runPipeline(pm, next);
 
     set({
       strokes: next,
@@ -107,12 +108,12 @@ export const useStore = create<AppStoreState>((set, get) => ({
       ast: pipeline.ast,
       spellState: pipeline.spellIR,
       pipelineStatus: pipeline.pipelineStatus,
-    })
+    });
   },
 
   clear: () => {
-    const state = get()
-    if (state.strokes.length === 0) return
+    const state = get();
+    if (state.strokes.length === 0) {return;}
     set({
       strokes: [],
       undoStack: [...state.undoStack, [...state.strokes]],
@@ -120,7 +121,7 @@ export const useStore = create<AppStoreState>((set, get) => ({
       spellState: null,
       ast: null,
       pipelineStatus: 'idle',
-    })
+    });
   },
 
   setTool: (tool: ToolType) => set({ currentTool: tool }),
@@ -141,13 +142,13 @@ export const useStore = create<AppStoreState>((set, get) => ({
 
   updateConfig: (cfg: Partial<AppConfig>) =>
     set((s) => {
-      const updated = { ...s.config, ...cfg }
-      s.pipelineManager?.updateConfig(updated)
-      return { config: updated }
+      const updated = { ...s.config, ...cfg };
+      s.pipelineManager?.updateConfig(updated);
+      return { config: updated };
     }),
 
   setPipelineManager: (pm: PipelineManager) => set({ pipelineManager: pm }),
 
   canUndo: () => get().undoStack.length > 0,
   canRedo: () => get().redoStack.length > 0,
-}))
+}));

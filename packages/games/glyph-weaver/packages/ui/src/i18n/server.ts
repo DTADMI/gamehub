@@ -1,45 +1,45 @@
-import type { Locale, TranslationMap } from './config'
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, COOKIE_KEY } from './config'
-import { en, fr } from './translations/index'
+import type { Locale, TranslationMap } from './config';
+import { COOKIE_KEY,DEFAULT_LOCALE, SUPPORTED_LOCALES } from './config';
+import { en, fr } from './translations/index';
 
-const translations: Record<Locale, TranslationMap> = { en, fr }
+const translations: Record<Locale, TranslationMap> = { en, fr };
 
 function getNestedValue(obj: TranslationMap, path: string): string {
-  const keys = path.split('.')
-  let current: TranslationMap | string = obj
+  const keys = path.split('.');
+  let current: TranslationMap | string = obj;
   for (const key of keys) {
     if (typeof current !== 'object' || current === null) {
-      return path
+      return path;
     }
-    current = (current as TranslationMap)[key]!
+    current = (current as TranslationMap)[key]!;
     if (current === undefined) {
-      return path
+      return path;
     }
   }
-  return typeof current === 'string' ? current : path
+  return typeof current === 'string' ? current : path;
 }
 
 export function resolveLocale(cookieValue?: string, acceptLanguage?: string): Locale {
   if (cookieValue && SUPPORTED_LOCALES.includes(cookieValue as Locale)) {
-    return cookieValue as Locale
+    return cookieValue as Locale;
   }
 
   if (acceptLanguage) {
-    const langs = acceptLanguage.split(',').map((l) => l.split(';')[0]!.trim())
+    const langs = acceptLanguage.split(',').map((l) => l.split(';')[0]!.trim());
     for (const lang of langs) {
-      const base = lang.split('-')[0]!
+      const base = lang.split('-')[0]!;
       if (SUPPORTED_LOCALES.includes(base as Locale)) {
-        return base as Locale
+        return base as Locale;
       }
     }
   }
 
-  return DEFAULT_LOCALE
+  return DEFAULT_LOCALE;
 }
 
 export function parseAcceptLanguage(header: string | null): string | undefined {
-  if (!header) return undefined
-  return header
+  if (!header) {return undefined;}
+  return header;
 }
 
 export function getServerTranslations(locale: Locale): {
@@ -47,15 +47,15 @@ export function getServerTranslations(locale: Locale): {
   t: (key: string) => string
   cookieKey: string
 } {
-  const lang = SUPPORTED_LOCALES.includes(locale) ? locale : DEFAULT_LOCALE
-  const dict = translations[lang] ?? translations[DEFAULT_LOCALE]
+  const lang = SUPPORTED_LOCALES.includes(locale) ? locale : DEFAULT_LOCALE;
+  const dict = translations[lang] ?? translations[DEFAULT_LOCALE];
 
   return {
     locale: lang,
     cookieKey: COOKIE_KEY,
     t: (key: string) => getNestedValue(dict, key),
-  }
+  };
 }
 
-export { SUPPORTED_LOCALES, DEFAULT_LOCALE, COOKIE_KEY } from './config'
-export type { Locale, TranslationMap } from './config'
+export type { Locale, TranslationMap } from './config';
+export { COOKIE_KEY,DEFAULT_LOCALE, SUPPORTED_LOCALES } from './config';

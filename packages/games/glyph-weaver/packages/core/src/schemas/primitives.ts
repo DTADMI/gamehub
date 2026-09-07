@@ -1,11 +1,11 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const PointSchema = z.object({
   x: z.number(),
   y: z.number(),
   t: z.number().optional(),
   pressure: z.number().optional(),
-})
+});
 
 export const BoundsSchema = z.object({
   minX: z.number(),
@@ -16,9 +16,9 @@ export const BoundsSchema = z.object({
   height: z.number(),
   centerX: z.number(),
   centerY: z.number(),
-})
+});
 
-export const LayerLabelSchema = z.enum(['center', 'middle', 'outer', 'unknown'])
+export const LayerLabelSchema = z.enum(['center', 'middle', 'outer', 'unknown']);
 
 export const RadialFacingSchema = z.enum([
   'inward',
@@ -26,7 +26,7 @@ export const RadialFacingSchema = z.enum([
   'clockwise',
   'counterclockwise',
   'unclear',
-])
+]);
 
 export const RecognitionStatusSchema = z.enum([
   'valid',
@@ -34,9 +34,9 @@ export const RecognitionStatusSchema = z.enum([
   'contaminated',
   'valid_messy',
   'unrecognized',
-])
+]);
 
-export const DirectionModeSchema = z.enum(['position', 'orientation', 'inward'])
+export const DirectionModeSchema = z.enum(['position', 'orientation', 'inward']);
 
 export const ElementIdSchema = z.enum([
   'fire',
@@ -49,7 +49,7 @@ export const ElementIdSchema = z.enum([
   'ice',
   'nature',
   'arcane',
-])
+]);
 
 export const ManifestationIdSchema = z.enum([
   'aura',
@@ -60,7 +60,7 @@ export const ManifestationIdSchema = z.enum([
   'projectile',
   'area',
   'shield',
-])
+]);
 
 export const CompilerWarningSchema = z.enum([
   'primary_sigil_confidence_low',
@@ -72,4 +72,4 @@ export const CompilerWarningSchema = z.enum([
   'ring_too_messy',
   'sign_confidence_low',
   'mixed_manifestations',
-])
+]);

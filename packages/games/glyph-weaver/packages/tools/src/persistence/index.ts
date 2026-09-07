@@ -1,7 +1,7 @@
 export {
-  type StorageAdapter,
   LocalStorageAdapter,
   MemoryStorageAdapter,
-  type PersistenceOptions,
   PersistenceManager,
-} from './storage'
+  type PersistenceOptions,
+  type StorageAdapter,
+} from './storage';

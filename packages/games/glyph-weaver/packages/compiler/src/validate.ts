@@ -1,4 +1,4 @@
-import type { GlyphAST } from '../../core/src'
+import type { GlyphAST } from '../../core/src';
 
 export interface ValidationResult {
   valid: boolean
@@ -6,18 +6,18 @@ export interface ValidationResult {
 }
 
 export function validateSpellInput(ast: GlyphAST): ValidationResult {
-  const errors: string[] = []
+  const errors: string[] = [];
 
   if (!ast.ring || !ast.ring.found) {
-    errors.push('Missing required ring')
+    errors.push('Missing required ring');
   }
 
   if (!ast.primarySigil) {
-    errors.push('No primary sigil detected')
+    errors.push('No primary sigil detected');
   }
 
   return {
     valid: errors.length === 0,
     errors,
-  }
+  };
 }

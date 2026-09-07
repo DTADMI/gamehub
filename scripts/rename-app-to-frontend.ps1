@@ -1,4 +1,4 @@
-# PowerShell script to rename apps/app to apps/frontend
+﻿# PowerShell script to rename apps/app to apps/frontend
 # Run this from the repository root
 
 Write-Host "GameHub: Renaming apps/app to apps/frontend" -ForegroundColor Green

@@ -1,58 +1,58 @@
-import type { Effect, EffectConfig } from '../effect-types'
-import { ParticleSystem } from '../webgl/particle-system'
-import { VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_FIRE } from '../webgl/shaders'
-import { createShaderProgram } from '../webgl/context'
+import type { Effect, EffectConfig } from '../effect-types';
+import { createShaderProgram } from '../webgl/context';
+import { ParticleSystem } from '../webgl/particle-system';
+import { FRAGMENT_SHADER_FIRE,VERTEX_SHADER_PASSTHROUGH } from '../webgl/shaders';
 
 export class ProjectileEffect implements Effect {
-  private config: EffectConfig | null = null
-  private particles: ParticleSystem | null = null
-  private program: WebGLProgram | null = null
-  private elapsed: number = 0
-  private launchTimer: number = 0
+  private config: EffectConfig | null = null;
+  private particles: ParticleSystem | null = null;
+  private program: WebGLProgram | null = null;
+  private elapsed: number = 0;
+  private launchTimer: number = 0;
 
   init(config: EffectConfig): void {
-    this.config = config
-    this.particles = new ParticleSystem(config.ctx.particleCap)
-    this.particles.setGravity(config.gravity * 30)
-    this.particles.setDamping(0.99)
+    this.config = config;
+    this.particles = new ParticleSystem(config.ctx.particleCap);
+    this.particles.setGravity(config.gravity * 30);
+    this.particles.setDamping(0.99);
     this.particles.setCenter(
       config.ctx.canvas.width * 0.5,
       config.ctx.canvas.height * 0.5,
       Math.max(config.ctx.canvas.width, config.ctx.canvas.height) * 1.2,
-    )
-    this.elapsed = 0
-    this.launchTimer = 0
+    );
+    this.elapsed = 0;
+    this.launchTimer = 0;
 
-    const gl = config.ctx.gl
-    this.program = createShaderProgram(gl, VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_FIRE)
+    const gl = config.ctx.gl;
+    this.program = createShaderProgram(gl, VERTEX_SHADER_PASSTHROUGH, FRAGMENT_SHADER_FIRE);
   }
 
   update(dt: number): void {
-    if (!this.config || !this.particles) return
+    if (!this.config || !this.particles) {return;}
 
-    this.elapsed += dt
-    this.launchTimer += dt
+    this.elapsed += dt;
+    this.launchTimer += dt;
 
-    const canvasW = this.config.ctx.canvas.width
-    const canvasH = this.config.ctx.canvas.height
-    const originX = canvasW * 0.5
-    const originY = canvasH * 0.5
-    const force = this.config.force
-    const direction = this.config.direction
-    const dirLen = Math.sqrt(direction.x * direction.x + direction.y * direction.y) || 1
-    const dirX = direction.x / dirLen
-    const dirY = direction.y / dirLen
-    const speed = 150 + force * 300
+    const canvasW = this.config.ctx.canvas.width;
+    const canvasH = this.config.ctx.canvas.height;
+    const originX = canvasW * 0.5;
+    const originY = canvasH * 0.5;
+    const force = this.config.force;
+    const direction = this.config.direction;
+    const dirLen = Math.sqrt(direction.x * direction.x + direction.y * direction.y) || 1;
+    const dirX = direction.x / dirLen;
+    const dirY = direction.y / dirLen;
+    const speed = 150 + force * 300;
 
-    const launchInterval = 0.2 - force * 0.08
+    const launchInterval = 0.2 - force * 0.08;
     if (this.launchTimer >= launchInterval) {
-      this.launchTimer = 0
+      this.launchTimer = 0;
 
-      const projectileCount = 3 + Math.floor(force * 3)
+      const projectileCount = 3 + Math.floor(force * 3);
       for (let i = 0; i < projectileCount; i++) {
-        const lateralSpread = (Math.random() - 0.5) * 20
-        const perpendicularX = -dirY
-        const perpendicularY = dirX
+        const lateralSpread = (Math.random() - 0.5) * 20;
+        const perpendicularX = -dirY;
+        const perpendicularY = dirX;
 
         this.particles.emit({
           count: 1,
@@ -71,31 +71,31 @@ export class ProjectileEffect implements Effect {
           alphaMax: 0.7,
           vxBase: dirX * speed,
           vyBase: dirY * speed,
-        })
+        });
       }
     }
 
-    this.particles.update(dt)
+    this.particles.update(dt);
   }
 
   render(): void {
-    if (!this.config || !this.particles || !this.program) return
-    const gl = this.config.ctx.gl
+    if (!this.config || !this.particles || !this.program) {return;}
+    const gl = this.config.ctx.gl;
     this.particles.render(
       gl,
       this.program,
       this.config.ctx.canvas.width,
       this.config.ctx.canvas.height,
-    )
+    );
   }
 
   dispose(): void {
     if (this.program) {
-      this.config?.ctx.gl.deleteProgram(this.program)
-      this.program = null
+      this.config?.ctx.gl.deleteProgram(this.program);
+      this.program = null;
     }
-    this.particles?.dispose()
-    this.particles = null
-    this.config = null
+    this.particles?.dispose();
+    this.particles = null;
+    this.config = null;
   }
 }

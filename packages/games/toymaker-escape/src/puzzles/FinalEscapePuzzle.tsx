@@ -1,10 +1,10 @@
 "use client";
-import React from "react";
 import {
   createSequenceState,
   pressSeq as pressSequenceKey,
   type SequenceState,
 } from "@games/pointclick-engine/puzzles/sequence";
+import React from "react";
 
 export type FinalEscapePuzzleProps = {
   lang: "en" | "fr";
@@ -41,7 +41,7 @@ export function FinalEscapePuzzle({
           onClick={() => {
             const next = pressSequenceKey(finalEscape, "left");
             setFinalEscape(next);
-            if (next.solved) onSolved();
+            if (next.solved) {onSolved();}
           }}
         >
           {lang === "fr" ? "Gauche" : "Turn Left"}
@@ -51,7 +51,7 @@ export function FinalEscapePuzzle({
           onClick={() => {
             const next = pressSequenceKey(finalEscape, "right");
             setFinalEscape(next);
-            if (next.solved) onSolved();
+            if (next.solved) {onSolved();}
           }}
         >
           {lang === "fr" ? "Droite" : "Turn Right"}

@@ -1,70 +1,71 @@
-'use client'
+'use client';
 
-import { useRef, useEffect } from 'react'
-import type { SpellIR } from '../../../core/src'
-import { DEFAULT_CONFIG } from '../../../core/src'
-import { EffectEngine } from '../../../renderer/src'
+import { useEffect,useRef } from 'react';
+
+import type { SpellIR } from '../../../core/src';
+import { DEFAULT_CONFIG } from '../../../core/src';
+import { EffectEngine } from '../../../renderer/src';
 
 interface EffectsOverlayProps {
   spell: SpellIR | null
 }
 
 export function EffectsOverlay({ spell }: EffectsOverlayProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const engineRef = useRef<EffectEngine | null>(null)
-  const prevSpellRef = useRef<SpellIR | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const engineRef = useRef<EffectEngine | null>(null);
+  const prevSpellRef = useRef<SpellIR | null>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvas = canvasRef.current;
+    if (!canvas) {return;}
 
-    const parent = canvas.parentElement
-    if (!parent) return
+    const parent = canvas.parentElement;
+    if (!parent) {return;}
 
-    const dpr = window.devicePixelRatio || 1
-    const rect = parent.getBoundingClientRect()
-    canvas.width = rect.width * dpr
-    canvas.height = rect.height * dpr
-    canvas.style.width = `${rect.width}px`
-    canvas.style.height = `${rect.height}px`
+    const dpr = window.devicePixelRatio || 1;
+    const rect = parent.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
 
-    engineRef.current = new EffectEngine(canvas, { renderer: DEFAULT_CONFIG.renderer })
+    engineRef.current = new EffectEngine(canvas, { renderer: DEFAULT_CONFIG.renderer });
 
     const handleResize = () => {
-      const parent2 = canvas.parentElement
-      if (!parent2) return
-      const rect2 = parent2.getBoundingClientRect()
-      canvas.width = rect2.width * dpr
-      canvas.height = rect2.height * dpr
-      canvas.style.width = `${rect2.width}px`
-      canvas.style.height = `${rect2.height}px`
-    }
+      const parent2 = canvas.parentElement;
+      if (!parent2) {return;}
+      const rect2 = parent2.getBoundingClientRect();
+      canvas.width = rect2.width * dpr;
+      canvas.height = rect2.height * dpr;
+      canvas.style.width = `${rect2.width}px`;
+      canvas.style.height = `${rect2.height}px`;
+    };
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize)
-      engineRef.current?.dispose()
-      engineRef.current = null
-    }
-  }, [])
+      window.removeEventListener('resize', handleResize);
+      engineRef.current?.dispose();
+      engineRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
-    const engine = engineRef.current
-    if (!engine) return
+    const engine = engineRef.current;
+    if (!engine) {return;}
 
     if (!spell) {
       if (prevSpellRef.current) {
-        prevSpellRef.current = null
+        prevSpellRef.current = null;
       }
-      return
+      return;
     }
 
     if (spell !== prevSpellRef.current) {
-      prevSpellRef.current = spell
-      engine.cast(spell)
+      prevSpellRef.current = spell;
+      engine.cast(spell);
     }
-  }, [spell])
+  }, [spell]);
 
   return (
     <canvas
@@ -73,5 +74,5 @@ export function EffectsOverlay({ spell }: EffectsOverlayProps) {
       aria-hidden="true"
       style={{ background: 'transparent' }}
     />
-  )
+  );
 }

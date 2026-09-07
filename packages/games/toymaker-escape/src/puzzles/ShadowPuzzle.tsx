@@ -1,6 +1,6 @@
 "use client";
+import { effects, type EngineCtx,ensureCtx } from "@games/pointclick-engine/engine";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { effects, ensureCtx, type EngineCtx } from "@games/pointclick-engine/engine";
 
 export type ShadowPuzzleProps = {
   lang: "en" | "fr";
@@ -49,9 +49,9 @@ export function ShadowPuzzle({ lang, ctx, setCtx }: ShadowPuzzleProps) {
   // Render canvas
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {return;}
     const ctx2d = canvas.getContext("2d");
-    if (!ctx2d) return;
+    if (!ctx2d) {return;}
 
     ctx2d.clearRect(0, 0, CANVAS_W, CANVAS_H);
     ctx2d.fillStyle = "#1a1a2e";
@@ -119,7 +119,7 @@ export function ShadowPuzzle({ lang, ctx, setCtx }: ShadowPuzzleProps) {
   // Pointer handlers for drag
   const getCanvasPos = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
+    if (!canvas) {return { x: 0, y: 0 };}
     const rect = canvas.getBoundingClientRect();
     return {
       x: (e.clientX - rect.left) * (CANVAS_W / rect.width),
@@ -132,9 +132,9 @@ export function ShadowPuzzle({ lang, ctx, setCtx }: ShadowPuzzleProps) {
     const distS = Math.hypot(x - positions.square.x, y - positions.square.y);
     const distT = Math.hypot(x - positions.triangle.x, y - positions.triangle.y);
     const min = Math.min(distC, distS, distT);
-    if (min > 50) return null;
-    if (min === distC) return "circle";
-    if (min === distS) return "square";
+    if (min > 50) {return null;}
+    if (min === distC) {return "circle";}
+    if (min === distS) {return "square";}
     return "triangle";
   };
 
@@ -148,7 +148,7 @@ export function ShadowPuzzle({ lang, ctx, setCtx }: ShadowPuzzleProps) {
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!dragging) return;
+    if (!dragging) {return;}
     const { x, y } = getCanvasPos(e);
     const clamped = {
       x: Math.max(30, Math.min(CANVAS_W - 30, x)),

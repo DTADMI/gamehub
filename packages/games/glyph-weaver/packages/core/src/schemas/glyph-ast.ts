@@ -1,19 +1,20 @@
-import { z } from 'zod'
+import { z } from 'zod';
+
 import {
-  PointSchema,
-  LayerLabelSchema,
-  RecognitionStatusSchema,
-  ElementIdSchema,
-  ManifestationIdSchema,
   DirectionModeSchema,
-} from './primitives'
+  ElementIdSchema,
+  LayerLabelSchema,
+  ManifestationIdSchema,
+  PointSchema,
+  RecognitionStatusSchema,
+} from './primitives';
 
 const SymbolShapeSchema = z.object({
   elongation: z.number(),
   dominantAxisStrength: z.number(),
   strokeCount: z.number(),
   closedness: z.number(),
-})
+});
 
 const SigilSemanticSchema = z.object({
   force: z.number(),
@@ -21,7 +22,7 @@ const SigilSemanticSchema = z.object({
   spread: z.number(),
   range: z.number(),
   lifetimeBias: z.number(),
-})
+});
 
 const SignSemanticSchema = z.object({
   manifestation: ManifestationIdSchema,
@@ -31,7 +32,7 @@ const SignSemanticSchema = z.object({
   spread: z.number(),
   range: z.number(),
   lifetimeBias: z.number(),
-})
+});
 
 export const RecognizedSigilSchema = z.object({
   candidateId: z.string(),
@@ -50,7 +51,7 @@ export const RecognizedSigilSchema = z.object({
   neatness: z.number(),
   shape: SymbolShapeSchema,
   semantic: SigilSemanticSchema,
-})
+});
 
 export const RecognizedSignSchema = z.object({
   candidateId: z.string(),
@@ -68,7 +69,7 @@ export const RecognizedSignSchema = z.object({
   neatness: z.number(),
   shape: SymbolShapeSchema,
   semantic: SignSemanticSchema,
-})
+});
 
 export const UnknownSymbolSchema = z.object({
   candidateId: z.string(),
@@ -84,7 +85,7 @@ export const UnknownSymbolSchema = z.object({
       confidence: z.number(),
     })
     .nullable(),
-})
+});
 
 export const SymbolCandidateSchema = z.object({
   candidateId: z.string(),
@@ -110,7 +111,7 @@ export const SymbolCandidateSchema = z.object({
   closedness: z.number(),
   overdrawAmount: z.number(),
   neatness: z.number(),
-})
+});
 
 export const RingCandidateSchema: z.ZodType<import('../types/glyph-ast.js').RingCandidate> =
   z.object({
@@ -130,13 +131,13 @@ export const RingCandidateSchema: z.ZodType<import('../types/glyph-ast.js').Ring
     overdrawAmount: z.number(),
     unsupportedMultipleRings: z.array(z.lazy(() => RingCandidateSchema)),
     unsupportedNestedRings: z.array(z.lazy(() => RingCandidateSchema)),
-  })
+  });
 
 export const GlobalMetricsSchema = z.object({
   neatness: z.number(),
   radialSymmetry: z.number(),
   instability: z.number(),
-})
+});
 
 export const ParserWarningSchema = z.enum([
   'no_ring_detected',
@@ -150,7 +151,7 @@ export const ParserWarningSchema = z.enum([
   'symbol_contaminated',
   'symbol_ambiguous',
   'symbol_messy',
-])
+]);
 
 export const GlyphASTSchema = z.object({
   type: z.literal('GlyphAST'),
@@ -163,4 +164,4 @@ export const GlyphASTSchema = z.object({
   unknowns: z.array(UnknownSymbolSchema),
   globalMetrics: GlobalMetricsSchema,
   warnings: z.array(ParserWarningSchema),
-})
+});

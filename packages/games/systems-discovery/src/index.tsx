@@ -1,19 +1,19 @@
 "use client";
 import { Scene, SceneController } from "@games/pointclick-engine";
-import { type SceneBgType, SceneBackground } from "@games/pointclick-engine";
+import { SceneBackground,type SceneBgType } from "@games/pointclick-engine";
 import { useSceneAudio, useSoundEffects } from "@games/pointclick-engine";
 import React from "react";
 
-import { t, useI18n, getLocale } from "@/lib/i18n";
+import { getLocale,t, useI18n } from "@/lib/i18n";
 
-import { buildMainScenes } from "./scenes/scenes-main";
-import { buildSpaceScenes } from "./scenes/scenes-space";
 import { buildBodyBreathScenes } from "./scenes/scenes-body-breath";
 import { buildBodyFuelScenes } from "./scenes/scenes-body-fuel";
+import { buildBodyGrowScenes } from "./scenes/scenes-body-grow";
 import { buildBodyMoveScenes } from "./scenes/scenes-body-move";
 import { buildBodySignalScenes } from "./scenes/scenes-body-signal";
-import { buildBodyGrowScenes } from "./scenes/scenes-body-grow";
+import { buildMainScenes } from "./scenes/scenes-main";
 import { buildOceanScenes } from "./scenes/scenes-ocean";
+import { buildSpaceScenes } from "./scenes/scenes-space";
 
 // Scene definitions — extracted to per-chapter files in ./scenes/
 // See scripts/split-systems-discovery.mjs for chapter grouping rules

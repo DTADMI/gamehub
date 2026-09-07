@@ -1,19 +1,19 @@
 import type {
-  GlyphAST,
-  RingCandidate,
-  SymbolCandidate,
-  RecognizedSigil,
-  RecognizedSign,
-  UnknownSymbol,
   GlobalMetrics,
+  GlyphAST,
   ParserWarning,
-  SigilEntry,
-  SignEntry,
-  RecognitionStatus,
   RadialFacing,
   RecognitionConfig,
+  RecognitionStatus,
+  RecognizedSigil,
+  RecognizedSign,
+  RingCandidate,
+  SigilEntry,
+  SignEntry,
+  SymbolCandidate,
   SymbolShape,
-} from '../../core/src'
+  UnknownSymbol,
+} from '../../core/src';
 
 export function buildGlyphAST(params: {
   ring: RingCandidate
@@ -24,51 +24,51 @@ export function buildGlyphAST(params: {
   warnings: ParserWarning[]
   config: RecognitionConfig
 }): GlyphAST {
-  const ring = buildRingOutput(params.ring)
-  const candidates = params.candidates.map(buildCandidateOutput)
+  const ring = buildRingOutput(params.ring);
+  const candidates = params.candidates.map(buildCandidateOutput);
 
-  let primarySigil: RecognizedSigil | null = null
-  const unsupportedMultipleSigils: RecognizedSigil[] = []
-  const signs: RecognizedSign[] = []
-  const unknowns: UnknownSymbol[] = []
+  let primarySigil: RecognizedSigil | null = null;
+  const unsupportedMultipleSigils: RecognizedSigil[] = [];
+  const signs: RecognizedSign[] = [];
+  const unknowns: UnknownSymbol[] = [];
 
   if (params.sigilMatch) {
     const candidate = params.candidates.find(
       (c) => c.candidateId === params.sigilMatch!.candidateId,
-    )
+    );
     const rec = buildRecognitionOutput(
       params.sigilMatch,
       'sigil',
       candidate ?? null,
       params.config,
-    ) as RecognizedSigil
+    ) as RecognizedSigil;
     if (rec.recognized) {
-      primarySigil = rec
+      primarySigil = rec;
     }
   }
 
   for (let i = 0; i < params.signMatches.length; i++) {
-    const match = params.signMatches[i]!
-    const candidate = params.candidates.find((c) => c.candidateId === match.candidateId)
+    const match = params.signMatches[i]!;
+    const candidate = params.candidates.find((c) => c.candidateId === match.candidateId);
     const rec = buildRecognitionOutput(
       match,
       'sign',
       candidate ?? null,
       params.config,
-    ) as RecognizedSign
+    ) as RecognizedSign;
     if (rec.recognized) {
-      signs.push(rec)
+      signs.push(rec);
     }
   }
 
   for (let i = 0; i < params.unknownCandidateIds.length; i++) {
-    const candidate = params.candidates.find((c) => c.candidateId === params.unknownCandidateIds[i])
+    const candidate = params.candidates.find((c) => c.candidateId === params.unknownCandidateIds[i]);
     if (candidate) {
-      unknowns.push(buildUnknownOutput(candidate))
+      unknowns.push(buildUnknownOutput(candidate));
     }
   }
 
-  const globalMetrics = computeGlobalMetrics(candidates, ring)
+  const globalMetrics = computeGlobalMetrics(candidates, ring);
 
   return {
     type: 'GlyphAST',
@@ -81,14 +81,14 @@ export function buildGlyphAST(params: {
     unknowns,
     globalMetrics,
     warnings: params.warnings,
-  }
+  };
 }
 
 function chooseRecognitionStatus(confidence: number, minConfidence: number): RecognitionStatus {
-  if (confidence >= minConfidence) return 'valid'
-  if (confidence >= minConfidence * 0.8) return 'valid_messy'
-  if (confidence >= minConfidence * 0.5) return 'ambiguous'
-  return 'unrecognized'
+  if (confidence >= minConfidence) {return 'valid';}
+  if (confidence >= minConfidence * 0.8) {return 'valid_messy';}
+  if (confidence >= minConfidence * 0.5) {return 'ambiguous';}
+  return 'unrecognized';
 }
 
 export function buildRecognitionOutput(
@@ -97,12 +97,12 @@ export function buildRecognitionOutput(
   candidate: SymbolCandidate | null,
   config: RecognitionConfig,
 ): RecognizedSigil | RecognizedSign {
-  const status = chooseRecognitionStatus(match.confidence, config.minConfidence)
-  const recognized = status === 'valid' || status === 'valid_messy'
-  const shape = computeSymbolShape(candidate)
+  const status = chooseRecognitionStatus(match.confidence, config.minConfidence);
+  const recognized = status === 'valid' || status === 'valid_messy';
+  const shape = computeSymbolShape(candidate);
 
   if (kind === 'sigil') {
-    const sigil = match.entry as SigilEntry
+    const sigil = match.entry as SigilEntry;
     return {
       candidateId: match.candidateId,
       strokeIds: candidate?.strokeIds ?? [],
@@ -120,10 +120,10 @@ export function buildRecognitionOutput(
       neatness: candidate?.neatness ?? 0,
       shape,
       semantic: sigil.semantic,
-    }
+    };
   }
 
-  const sign = match.entry as SignEntry
+  const sign = match.entry as SignEntry;
   return {
     candidateId: match.candidateId,
     strokeIds: candidate?.strokeIds ?? [],
@@ -140,12 +140,12 @@ export function buildRecognitionOutput(
     neatness: candidate?.neatness ?? 0,
     shape,
     semantic: sign.semantic,
-  }
+  };
 }
 
 function computeSymbolShape(candidate: SymbolCandidate | null): SymbolShape {
   if (!candidate) {
-    return { elongation: 0, dominantAxisStrength: 0, strokeCount: 0, closedness: 0 }
+    return { elongation: 0, dominantAxisStrength: 0, strokeCount: 0, closedness: 0 };
   }
   return {
     elongation:
@@ -156,15 +156,15 @@ function computeSymbolShape(candidate: SymbolCandidate | null): SymbolShape {
     dominantAxisStrength: 0.5,
     strokeCount: candidate.rawStrokeCount,
     closedness: candidate.closedness,
-  }
+  };
 }
 
 export function buildRingOutput(ring: RingCandidate): RingCandidate {
-  return { ...ring }
+  return { ...ring };
 }
 
 export function buildCandidateOutput(candidate: SymbolCandidate): SymbolCandidate {
-  return { ...candidate }
+  return { ...candidate };
 }
 
 export function buildUnknownOutput(candidate: SymbolCandidate): UnknownSymbol {
@@ -177,59 +177,59 @@ export function buildUnknownOutput(candidate: SymbolCandidate): UnknownSymbol {
     sizeNorm: candidate.sizeNorm,
     neatness: candidate.neatness,
     bestGuess: null,
-  }
+  };
 }
 
 export function computeGlobalMetrics(
   candidates: SymbolCandidate[],
   ring: RingCandidate,
 ): GlobalMetrics {
-  let neatness = ring.neatness
-  let symmetry = 0
-  let instability: number
+  let neatness = ring.neatness;
+  let symmetry = 0;
+  let instability: number;
 
   if (candidates.length > 0) {
-    let totalNeatness = 0
+    let totalNeatness = 0;
     for (let i = 0; i < candidates.length; i++) {
-      totalNeatness += candidates[i]!.neatness
+      totalNeatness += candidates[i]!.neatness;
     }
-    const avgCandidateNeatness = totalNeatness / candidates.length
-    neatness = 0.4 * ring.neatness + 0.6 * avgCandidateNeatness
+    const avgCandidateNeatness = totalNeatness / candidates.length;
+    neatness = 0.4 * ring.neatness + 0.6 * avgCandidateNeatness;
   }
 
   if (candidates.length >= 2) {
-    const angles: number[] = []
+    const angles: number[] = [];
     for (let i = 0; i < candidates.length; i++) {
-      angles.push(candidates[i]!.angleDeg)
+      angles.push(candidates[i]!.angleDeg);
     }
-    angles.sort((a, b) => a - b)
+    angles.sort((a, b) => a - b);
 
-    const expectedGap = 360 / candidates.length
-    let gapDeviation = 0
+    const expectedGap = 360 / candidates.length;
+    let gapDeviation = 0;
     for (let i = 1; i < angles.length; i++) {
-      const gap = angles[i]! - angles[i - 1]!
-      gapDeviation += Math.abs(gap - expectedGap)
+      const gap = angles[i]! - angles[i - 1]!;
+      gapDeviation += Math.abs(gap - expectedGap);
     }
-    const wrapGap = 360 - angles[angles.length - 1]! + angles[0]!
-    gapDeviation += Math.abs(wrapGap - expectedGap)
+    const wrapGap = 360 - angles[angles.length - 1]! + angles[0]!;
+    gapDeviation += Math.abs(wrapGap - expectedGap);
 
-    symmetry = Math.max(0, 1 - gapDeviation / 360)
+    symmetry = Math.max(0, 1 - gapDeviation / 360);
 
-    let totalRadiusDev = 0
+    let totalRadiusDev = 0;
     for (let i = 0; i < candidates.length; i++) {
-      totalRadiusDev += Math.abs(candidates[i]!.radiusNorm - 0.5)
+      totalRadiusDev += Math.abs(candidates[i]!.radiusNorm - 0.5);
     }
-    const avgRadiusDev = totalRadiusDev / candidates.length
-    symmetry = 0.7 * symmetry + 0.3 * (1 - avgRadiusDev)
+    const avgRadiusDev = totalRadiusDev / candidates.length;
+    symmetry = 0.7 * symmetry + 0.3 * (1 - avgRadiusDev);
   }
 
-  instability = 1 - neatness
+  instability = 1 - neatness;
 
   return {
     neatness: Math.max(0, Math.min(1, neatness)),
     radialSymmetry: Math.max(0, Math.min(1, symmetry)),
     instability: Math.max(0, Math.min(1, instability)),
-  }
+  };
 }
 
 export function determineRadialFacing(
@@ -237,30 +237,30 @@ export function determineRadialFacing(
   ringCenter: { x: number; y: number },
   orientationDeg: number,
 ): RadialFacing {
-  const dx = candidateCenter.x - ringCenter.x
-  const dy = candidateCenter.y - ringCenter.y
-  if (Math.abs(dx) < 1e-9 && Math.abs(dy) < 1e-9) return 'unclear'
+  const dx = candidateCenter.x - ringCenter.x;
+  const dy = candidateCenter.y - ringCenter.y;
+  if (Math.abs(dx) < 1e-9 && Math.abs(dy) < 1e-9) {return 'unclear';}
 
-  const radialAngle = Math.atan2(dy, dx) * (180 / Math.PI)
-  const diff = (((orientationDeg - radialAngle) % 360) + 360) % 360
+  const radialAngle = Math.atan2(dy, dx) * (180 / Math.PI);
+  const diff = (((orientationDeg - radialAngle) % 360) + 360) % 360;
 
-  if (diff < 30 || diff > 330) return 'outward'
-  if (diff > 150 && diff < 210) return 'inward'
-  if (diff > 60 && diff < 120) return 'counterclockwise'
-  if (diff > 240 && diff < 300) return 'clockwise'
-  return 'unclear'
+  if (diff < 30 || diff > 330) {return 'outward';}
+  if (diff > 150 && diff < 210) {return 'inward';}
+  if (diff > 60 && diff < 120) {return 'counterclockwise';}
+  if (diff > 240 && diff < 300) {return 'clockwise';}
+  return 'unclear';
 }
 
 export function computeClosedness(strokePoints: { points: { x: number; y: number }[] }[]): number {
-  let closed = 0
+  let closed = 0;
   for (let i = 0; i < strokePoints.length; i++) {
-    const points = strokePoints[i]!.points
-    if (points.length < 2) continue
-    const first = points[0]!
-    const last = points[points.length - 1]!
-    const dx = first.x - last.x
-    const dy = first.y - last.y
-    if (Math.sqrt(dx * dx + dy * dy) < 0.05) closed++
+    const points = strokePoints[i]!.points;
+    if (points.length < 2) {continue;}
+    const first = points[0]!;
+    const last = points[points.length - 1]!;
+    const dx = first.x - last.x;
+    const dy = first.y - last.y;
+    if (Math.sqrt(dx * dx + dy * dy) < 0.05) {closed++;}
   }
-  return strokePoints.length > 0 ? closed / strokePoints.length : 0
+  return strokePoints.length > 0 ? closed / strokePoints.length : 0;
 }

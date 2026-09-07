@@ -1,15 +1,15 @@
 "use client";
 
 import { GameContainer, ParticlePool, soundManager, useGameSettings } from "@gamehub/game-platform";
+import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { submitScore } from "@/lib/score-submit";
 
+import { BREAKOUT_TX } from "../i18n";
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
 import { Brick, BrickLayout, buildBricks, computeBrickLayout } from "./BreakoutBoard";
-import { createI18n } from "@games/i18n";
-import { BREAKOUT_TX } from "../i18n";
-import { ActiveModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE, desiredSpeedFromModifier, pickWeightedPowerUp } from "./BreakoutPowerUps";
+import { ActiveModifier, desiredSpeedFromModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, pickWeightedPowerUp,POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE } from "./BreakoutPowerUps";
 
 
 const { t } = createI18n(BREAKOUT_TX);

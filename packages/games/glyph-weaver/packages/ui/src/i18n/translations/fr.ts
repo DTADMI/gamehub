@@ -1,4 +1,4 @@
-import type { TranslationMap } from '../config'
+import type { TranslationMap } from '../config';
 
 const fr: TranslationMap = {
   app: {
@@ -170,6 +170,6 @@ const fr: TranslationMap = {
     description:
       "Dessinez des anneaux de glyphe et créez des sorts magiques dans cet outil interactif inspiré du système de magie de L'Atelier des Sorciers.",
   },
-}
+};
 
-export default fr
+export default fr;

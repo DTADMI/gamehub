@@ -1,12 +1,12 @@
 import type {
-  Point,
+  DirectionMode,
+  ElementId,
   LayerLabel,
+  ManifestationId,
+  Point,
   RadialFacing,
   RecognitionStatus,
-  DirectionMode,
-  ManifestationId,
-  ElementId,
-} from './primitives'
+} from './primitives';
 
 export interface RingCandidate {
   found: boolean

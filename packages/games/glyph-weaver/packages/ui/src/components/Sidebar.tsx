@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { ToolPalette } from './ToolPalette'
-import { BrushSettingsPanel } from './BrushSettings'
-import { FeatureFlagGate } from './FeatureFlagGate'
-import { useI18n } from '../i18n/index'
-import { useStore } from '../state/store'
+import { useI18n } from '../i18n/index';
+import { useStore } from '../state/store';
+import { BrushSettingsPanel } from './BrushSettings';
+import { FeatureFlagGate } from './FeatureFlagGate';
+import { ToolPalette } from './ToolPalette';
 
 interface SidebarProps {
   open: boolean
@@ -12,13 +12,13 @@ interface SidebarProps {
 }
 
 export function Sidebar({ open, onClose }: SidebarProps) {
-  const { t } = useI18n()
-  const currentTool = useStore((s) => s.currentTool)
-  const brushSettings = useStore((s) => s.brushSettings)
-  const setTool = useStore((s) => s.setTool)
-  const setBrush = useStore((s) => s.setBrush)
-  const togglePanel = useStore((s) => s.togglePanel)
-  const panels = useStore((s) => s.panels)
+  const { t } = useI18n();
+  const currentTool = useStore((s) => s.currentTool);
+  const brushSettings = useStore((s) => s.brushSettings);
+  const setTool = useStore((s) => s.setTool);
+  const setBrush = useStore((s) => s.setBrush);
+  const togglePanel = useStore((s) => s.togglePanel);
+  const panels = useStore((s) => s.panels);
 
   return (
     <>
@@ -158,5 +158,5 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
       </aside>
     </>
-  )
+  );
 }

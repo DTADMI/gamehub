@@ -3,10 +3,10 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 import { defaultLocale, getSupportedLocale, isRTL, type LocaleCode } from "./config";
+import { setStandaloneLocale } from "./standalone";
 import enTranslations from "./translations/en";
 import translationsMap from "./translations/map";
 import type { Translations } from "./translations/types";
-import { setStandaloneLocale } from "./standalone";
 
 const isBrowser = typeof window !== "undefined";
 

@@ -130,10 +130,10 @@ function analyzeStrokes(strokes: Stroke[], w: number, h: number): SpellResult {
     ? maxDistFromCentroid / (Math.sqrt(bboxArea) / 2)
     : 1;
 
-  /* eslint-disable @typescript-eslint/no-unused-vars, no-useless-assignment */
+  /* eslint-disable no-useless-assignment */
   let element: ElementName = null;
   let spellMsg = "";
-  /* eslint-enable @typescript-eslint/no-unused-vars, no-useless-assignment */
+  /* eslint-enable no-useless-assignment */
 
   if (ringCount > 0) {
     element = "water";

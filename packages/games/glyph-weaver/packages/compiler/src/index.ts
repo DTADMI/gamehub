@@ -1,26 +1,25 @@
-export { compileSpell } from './compile'
+export { compileSpell } from './compile';
+export type { DirectionResult } from './direction-computer';
+export { computeDirection } from './direction-computer';
+export type { MultiElementInput } from './multi-element';
 export {
   compileMultiElement,
-  getCombinedElement,
   ELEMENT_COMBINATION_RULES,
-} from './multi-element'
-export { compileMultiRing, compileLinkedRings } from './multi-ring'
-export { buildSpellIR, buildInvalidSpell, generateSignature } from './spell-builder'
-export { extractPrimarySigil } from './sigil-extractor'
-export { aggregateSigns } from './sign-aggregator'
-export { computeParameters } from './parameter-computer'
-export { computeDirection } from './direction-computer'
-export { computeQuality, computeStability, computeDuration } from './quality-scorer'
-export { validateSpellInput } from './validate'
-export { mergeWarnings, COMPILER_WARNING_MESSAGES } from './warnings'
+  getCombinedElement,
+} from './multi-element';
+export { compileLinkedRings,compileMultiRing } from './multi-ring';
+export type { ComputedParameters } from './parameter-computer';
+export { computeParameters } from './parameter-computer';
+export type { QualityResult } from './quality-scorer';
+export { computeDuration,computeQuality, computeStability } from './quality-scorer';
+export type { SigilExtractionResult } from './sigil-extractor';
+export { extractPrimarySigil } from './sigil-extractor';
+export type { SignAggregationResult } from './sign-aggregator';
+export { aggregateSigns } from './sign-aggregator';
+export type { SpellBuilderInput } from './spell-builder';
+export { buildInvalidSpell, buildSpellIR, generateSignature } from './spell-builder';
+export type { ValidationResult } from './validate';
+export { validateSpellInput } from './validate';
+export { COMPILER_WARNING_MESSAGES,mergeWarnings } from './warnings';
 
-export type { SpellBuilderInput } from './spell-builder'
-export type { SigilExtractionResult } from './sigil-extractor'
-export type { SignAggregationResult } from './sign-aggregator'
-export type { ComputedParameters } from './parameter-computer'
-export type { DirectionResult } from './direction-computer'
-export type { QualityResult } from './quality-scorer'
-export type { ValidationResult } from './validate'
-export type { MultiElementInput } from './multi-element'
-
-export const COMPILER_VERSION = '0.1.0'
+export const COMPILER_VERSION = '0.1.0';

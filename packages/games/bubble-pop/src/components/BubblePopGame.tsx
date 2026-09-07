@@ -1,10 +1,11 @@
 // games/bubble-pop/src/components/BubblePopGame.tsx
 "use client";
 
-import { createI18n } from "@games/i18n";
-import { BUBBLE_POP_TX } from "../i18n";
 import { soundManager } from "@gamehub/game-platform";
+import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { BUBBLE_POP_TX } from "../i18n";
 
 
 const { t } = createI18n(BUBBLE_POP_TX);

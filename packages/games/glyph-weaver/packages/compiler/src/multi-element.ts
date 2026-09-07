@@ -1,12 +1,12 @@
 import type {
-  ElementId,
-  SpellIR,
-  GlyphAST,
   CompilerConfig,
   CompilerWarning,
-} from '../../core/src'
-import { DEFAULT_CONFIG } from '../../core/src'
-import { compileSpell } from './compile'
+  ElementId,
+  GlyphAST,
+  SpellIR,
+} from '../../core/src';
+import { DEFAULT_CONFIG } from '../../core/src';
+import { compileSpell } from './compile';
 
 export const ELEMENT_COMBINATION_RULES: Record<string, { [key: string]: ElementId }> = {
   fire: {
@@ -119,21 +119,21 @@ export const ELEMENT_COMBINATION_RULES: Record<string, { [key: string]: ElementI
     ice: 'ice',
     nature: 'nature',
   },
-}
+};
 
 export function getCombinedElement(a: ElementId, b: ElementId): ElementId {
   if (a === b) {
-    return a
+    return a;
   }
-  const row = ELEMENT_COMBINATION_RULES[a]
+  const row = ELEMENT_COMBINATION_RULES[a];
   if (row && row[b] !== undefined) {
-    return row[b]!
+    return row[b]!;
   }
-  const rowB = ELEMENT_COMBINATION_RULES[b]
+  const rowB = ELEMENT_COMBINATION_RULES[b];
   if (rowB && rowB[a] !== undefined) {
-    return rowB[a]!
+    return rowB[a]!;
   }
-  return a
+  return a;
 }
 
 export interface MultiElementInput {
@@ -144,69 +144,69 @@ export interface MultiElementInput {
 }
 
 export function compileMultiElement(input: MultiElementInput, config?: CompilerConfig): SpellIR {
-  const { primary, secondary, elementA, elementB } = input
-  const combinedElement = getCombinedElement(elementA, elementB)
+  const { primary, secondary, elementA, elementB } = input;
+  const combinedElement = getCombinedElement(elementA, elementB);
 
-  const primaryResult = compileSpell(primary, config)
+  const primaryResult = compileSpell(primary, config);
 
   if (!primaryResult.valid) {
-    return primaryResult
+    return primaryResult;
   }
 
-  const compilerWarnings: CompilerWarning[] = []
+  const compilerWarnings: CompilerWarning[] = [];
 
-  const secondaryResult = compileSpell(secondary, config)
+  const secondaryResult = compileSpell(secondary, config);
 
-  primaryResult.element = combinedElement
+  primaryResult.element = combinedElement;
   primaryResult.elementConfidence = Math.min(
     primaryResult.elementConfidence,
     secondaryResult.elementConfidence || 0.6,
-  )
+  );
 
-  const weightA = 0.6
-  const weightB = 0.4
+  const weightA = 0.6;
+  const weightB = 0.4;
 
   primaryResult.force = clamp(
     primaryResult.force * weightA + secondaryResult.force * weightB,
     0,
     DEFAULT_CONFIG.compiler.maxForce,
-  )
+  );
   primaryResult.spread = clamp(
     primaryResult.spread * weightA + secondaryResult.spread * weightB,
     0,
     DEFAULT_CONFIG.compiler.maxSpread,
-  )
+  );
   primaryResult.focus = clamp(
     primaryResult.focus * weightA + secondaryResult.focus * weightB,
     0,
     DEFAULT_CONFIG.compiler.maxFocus,
-  )
+  );
   primaryResult.range = clamp(
     primaryResult.range * weightA + secondaryResult.range * weightB,
     0,
     DEFAULT_CONFIG.compiler.maxRange,
-  )
+  );
 
-  const combinedQuality = primaryResult.quality * weightA + secondaryResult.quality * weightB
-  primaryResult.quality = clamp(combinedQuality, 0, 1)
+  const combinedQuality = primaryResult.quality * weightA + secondaryResult.quality * weightB;
+  primaryResult.quality = clamp(combinedQuality, 0, 1);
   primaryResult.neatness = clamp(
     primaryResult.neatness * weightA + secondaryResult.neatness * weightB,
     0,
     1,
-  )
+  );
 
   for (const [key, profile] of Object.entries(secondaryResult.manifestations)) {
     if (!primaryResult.manifestations[key]) {
-      primaryResult.manifestations[key] = { ...profile, strength: profile.strength * weightB }
+      primaryResult.manifestations[key] = { ...profile, strength: profile.strength * weightB };
     }
   }
 
-  primaryResult.signature = `multi:${combinedElement}:${primaryResult.force.toFixed(3)}:${primaryResult.spread.toFixed(3)}`
-  primaryResult.warnings = [...primaryResult.warnings, ...compilerWarnings]
+  primaryResult.signature = `multi:${combinedElement}:${primaryResult.force.toFixed(3)}:${primaryResult.spread.toFixed(3)}`;
+  primaryResult.warnings = [...primaryResult.warnings, ...compilerWarnings];
 
-  return primaryResult
+  return primaryResult;
 }
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value))
+  return Math.max(min, Math.min(max, value));
 }

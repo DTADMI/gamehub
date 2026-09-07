@@ -171,7 +171,7 @@ export function checkAchievements(
   const expanded = [...currentAchievements];
 
   for (const ach of ACHIEVEMENTS) {
-    if (expanded.includes(ach.id)) continue;
+    if (expanded.includes(ach.id)) {continue;}
     if (ach.condition(runStats, expanded)) {
       expanded.push(ach.id);
       unlocked.push(ach);

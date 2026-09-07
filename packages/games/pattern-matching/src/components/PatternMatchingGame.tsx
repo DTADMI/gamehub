@@ -1,8 +1,9 @@
 "use client";
 
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createI18n } from "@games/i18n";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import { PATTERN_MATCHING_TX } from "../i18n";
 
 interface Pattern {

@@ -1,6 +1,5 @@
-import { type MetadataRoute } from "next";
-
 import { games } from "@gamehub/game-platform/metadata/games";
+import { type MetadataRoute } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gamehub.vercel.app";
 

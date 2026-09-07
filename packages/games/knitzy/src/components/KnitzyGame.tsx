@@ -1,9 +1,10 @@
 "use client";
 
-import { createI18n } from "@games/i18n";
-import { KNITZY_TX } from "../i18n";
 import { soundManager } from "@gamehub/game-platform";
+import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { KNITZY_TX } from "../i18n";
 
 
 const { t } = createI18n(KNITZY_TX);

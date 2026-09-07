@@ -51,7 +51,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
   const [letterSolved, setLetterSolved] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   const scenes = useMemo<Record<string, Scene>>(
     () => ({
       INTRO: {

@@ -1,4 +1,4 @@
-import type { AppConfig } from './types/config'
+import type { AppConfig } from './types/config';
 
 export const DEFAULT_CONFIG: AppConfig = {
   appVersion: '0.1.0',
@@ -34,4 +34,4 @@ export const DEFAULT_CONFIG: AppConfig = {
     defaultGravity: 1.0,
     maxTiltDeg: 76,
   },
-}
+};

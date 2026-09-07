@@ -9,8 +9,8 @@
 
 import { defaultLocale } from "./config";
 import enTranslations from "./translations/en";
-import translationsMap from "./translations/map";
 import { gameTranslations } from "./translations/games-map";
+import translationsMap from "./translations/map";
 
 let _locale: string = defaultLocale;
 

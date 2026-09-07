@@ -3,8 +3,9 @@
 
 import { soundManager } from "@gamehub/game-platform";
 import { Board, Color, GameState, Move, Piece, PieceType, Pos, SIZE, Square } from "@games/chess";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createI18n } from "@games/i18n";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { CHESS_TX } from "../i18n";
 
 function inBounds(r: number, c: number) {

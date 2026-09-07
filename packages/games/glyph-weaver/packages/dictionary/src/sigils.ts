@@ -1,4 +1,4 @@
-import type { SigilEntry } from '../../core/src'
+import type { SigilEntry } from '../../core/src';
 
 export const sigils: SigilEntry[] = [
   {
@@ -144,4 +144,4 @@ export const sigils: SigilEntry[] = [
       ],
     },
   },
-]
+];

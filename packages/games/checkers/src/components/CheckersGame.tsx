@@ -2,8 +2,9 @@
 "use client";
 
 import { soundManager } from "@gamehub/game-platform";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createI18n } from "@games/i18n";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { CHECKERS_TX } from "../i18n";
 
 type Color = "w" | "b";

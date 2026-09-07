@@ -2,7 +2,7 @@
 
 // Scene narrative data extracted from ToymakerEscapeGame.tsx.
 // The main component imports and uses this as its scenes dictionary.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export const TOYMAKER_SCENES: Record<string, Record<string, unknown>> = {
   INTRO: {
     id: "INTRO",

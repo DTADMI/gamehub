@@ -1,10 +1,10 @@
 import type {
   Dictionary,
+  GlyphAST,
   RecognizedSigil,
   RecognizedSign,
   UnknownSymbol,
-  GlyphAST,
-} from '../../../core/src'
+} from '../../../core/src';
 
 export interface DetectionResult {
   sigil: RecognizedSigil | null
@@ -24,18 +24,18 @@ export interface DetectionResult {
 }
 
 export class DetectorLab {
-  private dictionary: Dictionary | null = null
+  private dictionary: Dictionary | null = null;
 
   setDictionary(dictionary: Dictionary): void {
-    this.dictionary = dictionary
+    this.dictionary = dictionary;
   }
 
   attachCanvas(_canvas: HTMLCanvasElement): void {
-    void _canvas
+    void _canvas;
   }
 
   runDetection(): DetectionResult {
-    const startTime = performance.now()
+    const startTime = performance.now();
     const diagnosticInfo = {
       strokeCount: 0,
       pointCount: 0,
@@ -44,14 +44,14 @@ export class DetectorLab {
       candidatesDetected: 0,
       processingTimeMs: 0,
       warnings: [] as string[],
-    }
+    };
 
     if (!this.dictionary) {
-      diagnosticInfo.warnings.push('No dictionary loaded')
+      diagnosticInfo.warnings.push('No dictionary loaded');
     }
 
-    const endTime = performance.now()
-    diagnosticInfo.processingTimeMs = Math.round(endTime - startTime)
+    const endTime = performance.now();
+    diagnosticInfo.processingTimeMs = Math.round(endTime - startTime);
 
     return {
       sigil: null,
@@ -60,27 +60,27 @@ export class DetectorLab {
       unknowns: [],
       confidence: 0,
       diagnosticInfo,
-    }
+    };
   }
 
   async recognizeFromAST(ast: GlyphAST): Promise<DetectionResult> {
-    const startTime = performance.now()
-    const sigil = ast.primarySigil
-    const signs = ast.signs
-    const unknowns = ast.unknowns
+    const startTime = performance.now();
+    const sigil = ast.primarySigil;
+    const signs = ast.signs;
+    const unknowns = ast.unknowns;
 
     const altSigils: Array<{ id: string; confidence: number }> = ast.unsupportedMultipleSigils.map(
       (s) => ({ id: s.id, confidence: s.confidence }),
-    )
+    );
 
-    const warnings = ast.warnings.map(String)
-    const confidence = sigil?.confidence ?? 0
+    const warnings = ast.warnings.map(String);
+    const confidence = sigil?.confidence ?? 0;
 
     if (!this.dictionary) {
-      warnings.push('No dictionary loaded — results are from AST only')
+      warnings.push('No dictionary loaded — results are from AST only');
     }
 
-    const endTime = performance.now()
+    const endTime = performance.now();
 
     return {
       sigil,
@@ -97,11 +97,11 @@ export class DetectorLab {
         processingTimeMs: Math.round(endTime - startTime),
         warnings,
       },
-    }
+    };
   }
 
   getAvailableDictionaries(): string[] {
-    return this.dictionary ? this.dictionary.sigils.map((s) => s.id) : []
+    return this.dictionary ? this.dictionary.sigils.map((s) => s.id) : [];
   }
 
   getElementLabel(element: string): string {
@@ -116,7 +116,7 @@ export class DetectorLab {
       ice: 'Ice',
       nature: 'Nature',
       arcane: 'Arcane',
-    }
-    return labels[element] ?? element
+    };
+    return labels[element] ?? element;
   }
 }

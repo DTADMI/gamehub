@@ -12,10 +12,10 @@
  *   const stats = final.getStats(); // { str: 12, sta: 25, ... }
  */
 
-import type { EquippedItems, Item, Race, Stats, Resistances, ClassDef, Title } from "./types";
+import type { ClassDef, EquippedItems, Item, Race, Resistances, Stats, Title } from "./types";
 
 // Re-export types for consumers
-export type { EquippedItems, Item, Race, Stats, Resistances, ClassDef, Title };
+export type { ClassDef, EquippedItems, Item, Race, Resistances, Stats, Title };
 
 /** Core stat modifier interface */
 export interface StatModifier {
@@ -212,7 +212,7 @@ class CharacterBuilderImpl implements CharacterBuilder {
 
   withEquipment(items: EquippedItems): CharacterBuilder {
     for (const item of Object.values(items)) {
-      if (item) this.current = new EquipmentDecorator(item, this.current);
+      if (item) {this.current = new EquipmentDecorator(item, this.current);}
     }
     return this;
   }

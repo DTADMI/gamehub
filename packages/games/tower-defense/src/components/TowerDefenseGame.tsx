@@ -1,10 +1,11 @@
 // games/tower-defense/src/components/TowerDefenseGame.tsx
 "use client";
 
-import { createI18n } from "@games/i18n";
-import { TOWER_DEFENSE_TX } from "../i18n";
 import { soundManager } from "@gamehub/game-platform";
+import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { TOWER_DEFENSE_TX } from "../i18n";
 
 
 const { t } = createI18n(TOWER_DEFENSE_TX);

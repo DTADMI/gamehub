@@ -1,26 +1,26 @@
 import type {
-  GlyphAST,
-  RingCandidate,
-  RecognizedSigil,
-  RecognizedSign,
-  SymbolCandidate,
-  UnknownSymbol,
-  GlobalMetrics,
-  SpellIR,
   AnyManifestationProfile,
   Direction3D,
   ElementId,
+  GlobalMetrics,
+  GlyphAST,
   ManifestationId,
+  Point,
+  RecognizedSigil,
+  RecognizedSign,
+  RingCandidate,
   SigilSemantic,
   SignSemantic,
-  Point,
-} from '../../core/src'
-import type { BlockNode, SigilNode, SignNode, SpellDefNode } from './ast-nodes'
-import { Lexer } from './lexer'
-import { Parser } from './parser'
-import { resolveImports } from './importer'
-import { DslError } from './errors'
-import { TokenType } from './grammar'
+  SpellIR,
+  SymbolCandidate,
+  UnknownSymbol,
+} from '../../core/src';
+import type { BlockNode, SigilNode, SignNode, SpellDefNode } from './ast-nodes';
+import { DslError } from './errors';
+import { TokenType } from './grammar';
+import { resolveImports } from './importer';
+import { Lexer } from './lexer';
+import { Parser } from './parser';
 
 export interface CompileResult {
   ast: GlyphAST
@@ -29,9 +29,9 @@ export interface CompileResult {
 }
 
 function getParam(block: BlockNode | null, name: string, defaultValue: number): number {
-  if (!block) return defaultValue
-  const p = block.params.find((n) => n.name === name)
-  return p ? p.value : defaultValue
+  if (!block) {return defaultValue;}
+  const p = block.params.find((n) => n.name === name);
+  return p ? p.value : defaultValue;
 }
 
 function elementFromSigilName(name: string): ElementId {
@@ -46,9 +46,9 @@ function elementFromSigilName(name: string): ElementId {
     ice: 'ice',
     nature: 'nature',
     arcane: 'arcane',
-  }
-  const prefix = name.split('-')[0] ?? 'arcane'
-  return prefixMap[prefix] ?? 'arcane'
+  };
+  const prefix = name.split('-')[0] ?? 'arcane';
+  return prefixMap[prefix] ?? 'arcane';
 }
 
 function manifestationFromSignName(name: string): ManifestationId {
@@ -63,9 +63,9 @@ function manifestationFromSignName(name: string): ManifestationId {
     cage: 'convergence',
     wave: 'column',
     zone: 'area',
-  }
-  const suffix = name.split('-').pop() ?? 'aura'
-  return map[suffix] ?? 'aura'
+  };
+  const suffix = name.split('-').pop() ?? 'aura';
+  return map[suffix] ?? 'aura';
 }
 
 function createSigilSemantic(block: BlockNode | null): SigilSemantic {
@@ -75,7 +75,7 @@ function createSigilSemantic(block: BlockNode | null): SigilSemantic {
     spread: getParam(block, 'spread', 0.5),
     range: getParam(block, 'range', 0.7),
     lifetimeBias: getParam(block, 'lifetimeBias', 0.5),
-  }
+  };
 }
 
 function createSignSemantic(block: BlockNode | null, signName: string): SignSemantic {
@@ -87,11 +87,11 @@ function createSignSemantic(block: BlockNode | null, signName: string): SignSema
     spread: getParam(block, 'spread', 0.5),
     range: getParam(block, 'range', 0.7),
     lifetimeBias: getParam(block, 'lifetimeBias', 0.5),
-  }
+  };
 }
 
 function createSyntheticRing(block: BlockNode | null): RingCandidate {
-  const center: Point = { x: 0, y: 0 }
+  const center: Point = { x: 0, y: 0 };
   return {
     found: true,
     center,
@@ -109,11 +109,11 @@ function createSyntheticRing(block: BlockNode | null): RingCandidate {
     overdrawAmount: 0,
     unsupportedMultipleRings: [],
     unsupportedNestedRings: [],
-  }
+  };
 }
 
 function createSyntheticSigil(sigil: SigilNode): RecognizedSigil {
-  const element = elementFromSigilName(sigil.name)
+  const element = elementFromSigilName(sigil.name);
   return {
     candidateId: `synth-${sigil.name}`,
     strokeIds: [],
@@ -136,7 +136,7 @@ function createSyntheticSigil(sigil: SigilNode): RecognizedSigil {
       closedness: 1.0,
     },
     semantic: createSigilSemantic(sigil.block),
-  }
+  };
 }
 
 function createSyntheticSign(sign: SignNode, index: number): RecognizedSign {
@@ -161,14 +161,14 @@ function createSyntheticSign(sign: SignNode, index: number): RecognizedSign {
       closedness: 0.8,
     },
     semantic: createSignSemantic(sign.block, sign.name),
-  }
+  };
 }
 
 function spellDefToGlyphAST(spell: SpellDefNode): GlyphAST {
-  const ring = createSyntheticRing(spell.ring.block)
-  const primarySigil = createSyntheticSigil(spell.sigil)
-  const signs = spell.signs.map((s, i) => createSyntheticSign(s, i))
-  const candidates: SymbolCandidate[] = []
+  const ring = createSyntheticRing(spell.ring.block);
+  const primarySigil = createSyntheticSigil(spell.sigil);
+  const signs = spell.signs.map((s, i) => createSyntheticSign(s, i));
+  const candidates: SymbolCandidate[] = [];
 
   if (primarySigil) {
     candidates.push({
@@ -190,7 +190,7 @@ function spellDefToGlyphAST(spell: SpellDefNode): GlyphAST {
       closedness: 1.0,
       overdrawAmount: 0,
       neatness: primarySigil.neatness,
-    })
+    });
   }
 
   for (const sign of signs) {
@@ -213,15 +213,15 @@ function spellDefToGlyphAST(spell: SpellDefNode): GlyphAST {
       closedness: 0.8,
       overdrawAmount: 0,
       neatness: sign.neatness,
-    })
+    });
   }
 
-  const unknowns: UnknownSymbol[] = []
+  const unknowns: UnknownSymbol[] = [];
   const globalMetrics: GlobalMetrics = {
     neatness: 0.9,
     radialSymmetry: 0.85,
     instability: 0.1,
-  }
+  };
 
   return {
     type: 'GlyphAST',
@@ -234,31 +234,31 @@ function spellDefToGlyphAST(spell: SpellDefNode): GlyphAST {
     unknowns,
     globalMetrics,
     warnings: [],
-  }
+  };
 }
 
 function glyphASTtoSpellIR(ast: GlyphAST): SpellIR {
-  const primarySigil = ast.primarySigil
-  const primarySign = ast.signs[0]
-  const element: ElementId | null = primarySigil?.element ?? null
-  const elementConfidence = primarySigil?.confidence ?? 0
+  const primarySigil = ast.primarySigil;
+  const primarySign = ast.signs[0];
+  const element: ElementId | null = primarySigil?.element ?? null;
+  const elementConfidence = primarySigil?.confidence ?? 0;
 
-  const manifestations: Record<string, AnyManifestationProfile> = {}
+  const manifestations: Record<string, AnyManifestationProfile> = {};
   for (const sign of ast.signs) {
     const profile: AnyManifestationProfile = (() => {
-      const mani = sign.semantic.manifestation
-      const strength = sign.semantic.force
+      const mani = sign.semantic.manifestation;
+      const strength = sign.semantic.force;
       switch (mani) {
         case 'projectile':
-          return { type: 'projectile' as const, strength }
+          return { type: 'projectile' as const, strength };
         case 'column':
-          return { type: 'column' as const, strength }
+          return { type: 'column' as const, strength };
         case 'levitation':
-          return { type: 'levitation' as const, strength }
+          return { type: 'levitation' as const, strength };
         case 'barrier':
-          return { type: 'barrier' as const, strength }
+          return { type: 'barrier' as const, strength };
         case 'aura':
-          return { type: 'aura' as const, strength }
+          return { type: 'aura' as const, strength };
         case 'convergence':
           return {
             type: 'convergence' as const,
@@ -266,20 +266,20 @@ function glyphASTtoSpellIR(ast: GlyphAST): SpellIR {
             radius: 0.5,
             rigidity: 0.5,
             strength,
-          }
+          };
         default:
-          return { type: 'aura' as const, strength }
+          return { type: 'aura' as const, strength };
       }
-    })()
-    manifestations[sign.id] = profile
+    })();
+    manifestations[sign.id] = profile;
   }
 
   const primaryManifestation: ManifestationId | 'none' = primarySign
     ? primarySign.semantic.manifestation
-    : 'none'
+    : 'none';
 
-  const signAngle = primarySign?.angleDeg ?? 0
-  const radians = (signAngle * Math.PI) / 180
+  const signAngle = primarySign?.angleDeg ?? 0;
+  const radians = (signAngle * Math.PI) / 180;
   const direction: Direction3D = {
     x: Math.cos(radians),
     y: Math.sin(radians),
@@ -287,9 +287,9 @@ function glyphASTtoSpellIR(ast: GlyphAST): SpellIR {
     xTiltDeg: 0,
     yTiltDeg: 0,
     tiltFromZDeg: 0,
-  }
+  };
 
-  const sigilSemantic = primarySigil?.semantic
+  const sigilSemantic = primarySigil?.semantic;
 
   return {
     type: 'SpellIR',
@@ -317,21 +317,21 @@ function glyphASTtoSpellIR(ast: GlyphAST): SpellIR {
     neatness: ast.globalMetrics.neatness,
     warnings: [],
     signature: `dsl:${element ?? 'unknown'}:${primaryManifestation}`,
-  }
+  };
 }
 
 export function compileDSL(source: string): CompileResult {
-  const lexer = new Lexer()
-  const tokens = lexer.tokenize(source)
-  const parser = new Parser()
-  const program = parser.parse(tokens)
-  const errors = [...parser.errors]
+  const lexer = new Lexer();
+  const tokens = lexer.tokenize(source);
+  const parser = new Parser();
+  const program = parser.parse(tokens);
+  const errors = [...parser.errors];
 
-  const imports = resolveImports(program.statements)
+  const imports = resolveImports(program.statements);
 
   for (const imp of imports) {
     if (!imp.resolved) {
-      const importStmt = program.statements.find((s) => s.type === 'Import' && s.path === imp.name)
+      const importStmt = program.statements.find((s) => s.type === 'Import' && s.path === imp.name);
       if (importStmt) {
         errors.push(
           new DslError(
@@ -340,14 +340,14 @@ export function compileDSL(source: string): CompileResult {
             importStmt.column,
             'warning',
           ),
-        )
+        );
       }
     }
   }
 
   const spellDef = program.statements.find(
     (s): s is import('./ast-nodes.js').SpellDefNode => s.type === 'SpellDef',
-  )
+  );
 
   if (!spellDef) {
     const ast: GlyphAST = {
@@ -378,7 +378,7 @@ export function compileDSL(source: string): CompileResult {
       unknowns: [],
       globalMetrics: { neatness: 0, radialSymmetry: 0, instability: 0 },
       warnings: ['no_ring_detected', 'missing_primary_sigil'],
-    }
+    };
     const ir: SpellIR = {
       type: 'SpellIR',
       valid: false,
@@ -405,13 +405,13 @@ export function compileDSL(source: string): CompileResult {
       neatness: 0,
       warnings: ['no_valid_sigil'],
       signature: 'dsl:unknown:none',
-    }
-    return { ast, ir, errors }
+    };
+    return { ast, ir, errors };
   }
 
-  const ast = spellDefToGlyphAST(spellDef)
-  const ir = glyphASTtoSpellIR(ast)
-  return { ast, ir, errors }
+  const ast = spellDefToGlyphAST(spellDef);
+  const ir = glyphASTtoSpellIR(ast);
+  return { ast, ir, errors };
 }
 
-export { Lexer, Parser, TokenType, DslError }
+export { DslError,Lexer, Parser, TokenType };

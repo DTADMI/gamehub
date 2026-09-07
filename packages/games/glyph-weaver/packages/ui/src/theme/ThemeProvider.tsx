@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useRef,useState } from 'react';
 
 export type Theme = 'dark' | 'light'
 
-const STORAGE_KEY = 'glyph-weaver-theme'
+const STORAGE_KEY = 'glyph-weaver-theme';
 
 interface ThemeContextValue {
   theme: Theme
@@ -12,13 +12,13 @@ interface ThemeContextValue {
   toggleTheme: () => void
 }
 
-const ThemeContext = createContext<ThemeContextValue | null>(null)
+const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function resolveStoredTheme(): Theme {
-  if (typeof window === 'undefined') return 'dark'
+  if (typeof window === 'undefined') {return 'dark';}
   try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'dark' || stored === 'light') return stored
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'dark' || stored === 'light') {return stored;}
   } catch {
     // localStorage unavailable
   }
@@ -26,9 +26,9 @@ function resolveStoredTheme(): Theme {
     typeof window !== 'undefined' &&
     window.matchMedia?.('(prefers-color-scheme: light)').matches
   ) {
-    return 'light'
+    return 'light';
   }
-  return 'dark'
+  return 'dark';
 }
 
 /**
@@ -36,37 +36,37 @@ function resolveStoredTheme(): Theme {
  * When GW is embedded in GameHub, it must not interfere with GH's own theme.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [theme, setThemeState] = useState<Theme>('dark')
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [theme, setThemeState] = useState<Theme>('dark');
 
   useEffect(() => {
-    const initial = resolveStoredTheme()
-    setThemeState(initial)
+    const initial = resolveStoredTheme();
+    setThemeState(initial);
     if (containerRef.current) {
-      containerRef.current.setAttribute('data-theme', initial)
+      containerRef.current.setAttribute('data-theme', initial);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.setAttribute('data-theme', theme)
+      containerRef.current.setAttribute('data-theme', theme);
     }
     try {
-      localStorage.setItem(STORAGE_KEY, theme)
+      localStorage.setItem(STORAGE_KEY, theme);
       // Sync to GH's theme storage for cross-game consistency
-      localStorage.setItem('gamehub-theme', theme)
+      localStorage.setItem('gamehub-theme', theme);
     } catch {
       // localStorage unavailable
     }
-  }, [theme])
+  }, [theme]);
 
   const setTheme = useCallback((t: Theme) => {
-    setThemeState(t)
-  }, [])
+    setThemeState(t);
+  }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'))
-  }, [])
+    setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   return React.createElement(
     ThemeContext.Provider,
@@ -76,13 +76,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       'data-theme': theme,
       style: { minHeight: '100%' },
     }, children),
-  )
+  );
 }
 
 export function useTheme(): ThemeContextValue {
-  const ctx = useContext(ThemeContext)
+  const ctx = useContext(ThemeContext);
   if (!ctx) {
-    throw new Error('useTheme must be used within ThemeProvider')
+    throw new Error('useTheme must be used within ThemeProvider');
   }
-  return ctx
+  return ctx;
 }

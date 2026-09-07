@@ -27,13 +27,13 @@ const pool: Particle[] = [];
 
 function getParticle(): Particle {
   const p = pool.pop();
-  if (p) return p;
+  if (p) {return p;}
   return { x: 0, y: 0, vx: 0, vy: 0, life: 0, maxLife: 1, size: 2, color: "#fff", alpha: 1 };
 }
 
 function releaseParticle(p: Particle) {
   p.life = 0;
-  if (pool.length < POOL_SIZE) pool.push(p);
+  if (pool.length < POOL_SIZE) {pool.push(p);}
 }
 
 export class ParticleSystem {
@@ -84,7 +84,7 @@ export class ParticleSystem {
 
     // Text particles
     for (const p of this.textParticles) {
-      if (!p.text) continue;
+      if (!p.text) {continue;}
       ctx.save();
       ctx.globalAlpha = p.alpha;
       ctx.fillStyle = p.color;
@@ -190,8 +190,8 @@ export class ParticleSystem {
   }
 
   clear() {
-    for (const p of this.particles) releaseParticle(p);
-    for (const p of this.textParticles) releaseParticle(p);
+    for (const p of this.particles) {releaseParticle(p);}
+    for (const p of this.textParticles) {releaseParticle(p);}
     this.particles = [];
     this.textParticles = [];
   }

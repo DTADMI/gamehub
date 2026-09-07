@@ -15,8 +15,8 @@
  *   const desc = describeModifiers(modifiers); // "Base → Human → Warrior ⟐ Scout + Iron Sword"
  */
 
-import type { EquippedItems, Item, Race, Stats, Resistances, ClassDef, Title } from "./types";
-export type { EquippedItems, Item, Race, Stats, Resistances, ClassDef, Title };
+import type { ClassDef, EquippedItems, Item, Race, Resistances, Stats, Title } from "./types";
+export type { ClassDef, EquippedItems, Item, Race, Resistances, Stats, Title };
 
 // ─── Core Types ────────────────────────────────────────────────
 
@@ -95,10 +95,10 @@ export function computeStats(modifiers: StatModifier[]): Stats {
   const result = { ...ZERO_STATS };
   for (const mod of modifiers) {
     const s = mod.stats;
-    if (s.str) result.str += s.str;
-    if (s.sta) result.sta += s.sta;
-    if (s.wil) result.wil += s.wil;
-    if (s.int) result.int += s.int;
+    if (s.str) {result.str += s.str;}
+    if (s.sta) {result.sta += s.sta;}
+    if (s.wil) {result.wil += s.wil;}
+    if (s.int) {result.int += s.int;}
   }
   return result;
 }
@@ -107,10 +107,10 @@ export function computeResists(modifiers: StatModifier[]): Resistances {
   const result = { ...ZERO_RESISTS };
   for (const mod of modifiers) {
     const r = mod.resists;
-    if (r.fire) result.fire = Math.min(75, result.fire + r.fire);
-    if (r.ice) result.ice = Math.min(75, result.ice + r.ice);
-    if (r.poison) result.poison = Math.min(75, result.poison + r.poison);
-    if (r.lightning) result.lightning = Math.min(75, result.lightning + r.lightning);
+    if (r.fire) {result.fire = Math.min(75, result.fire + r.fire);}
+    if (r.ice) {result.ice = Math.min(75, result.ice + r.ice);}
+    if (r.poison) {result.poison = Math.min(75, result.poison + r.poison);}
+    if (r.lightning) {result.lightning = Math.min(75, result.lightning + r.lightning);}
   }
   return result;
 }
@@ -154,7 +154,7 @@ class CharacterBuilderImpl implements CharacterBuilder {
 
   withEquipment(items: EquippedItems): CharacterBuilder {
     for (const item of Object.values(items)) {
-      if (item) this.modifiers.push(equipmentModifier(item));
+      if (item) {this.modifiers.push(equipmentModifier(item));}
     }
     return this;
   }
@@ -250,14 +250,14 @@ export function computeSetBonuses(equipped: EquippedItems): SetBonusResult[] {
   const counts: Record<string, number> = {};
   for (const slot of Object.values(equipped)) {
     const item = slot as Item | null;
-    if (item?.setId) counts[item.setId] = (counts[item.setId] || 0) + 1;
+    if (item?.setId) {counts[item.setId] = (counts[item.setId] || 0) + 1;}
   }
   const results: SetBonusResult[] = [];
   for (const [setId, count] of Object.entries(counts)) {
     const def = SET_BONUSES[setId];
-    if (!def) continue;
-    if (count >= 3) results.push({ setId, count, bonus: def.bonus3, nameEn: def.nameEn, nameFr: def.nameFr });
-    else if (count >= 2) results.push({ setId, count, bonus: def.bonus2, nameEn: def.nameEn, nameFr: def.nameFr });
+    if (!def) {continue;}
+    if (count >= 3) {results.push({ setId, count, bonus: def.bonus3, nameEn: def.nameEn, nameFr: def.nameFr });}
+    else if (count >= 2) {results.push({ setId, count, bonus: def.bonus2, nameEn: def.nameEn, nameFr: def.nameFr });}
   }
   return results;
 }
