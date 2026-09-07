@@ -170,7 +170,7 @@ function generateFloor(floorNb: number): DungeonState {
   occupied.add(stairsX + ',' + stairsY);
 
   for (let i = 0; i < monsterCount; i++) {
-    let mx = 0, my = 0, attempts = 0;
+    let mx: number, my: number, attempts = 0;
     do { mx = rand(1, COLS - 2); my = rand(1, ROWS - 2); attempts++; }
     while ((occupied.has(mx + ',' + my) || grid[my][mx] !== 0) && attempts < 100);
     if (attempts < 100) {
@@ -186,7 +186,7 @@ function generateFloor(floorNb: number): DungeonState {
   const itemCount = 2 + Math.floor(Math.random() * 4);
   const floorItems: { item: Item; x: number; y: number }[] = [];
   for (let i = 0; i < itemCount; i++) {
-    let ix = 0, iy = 0, attempts = 0;
+    let ix: number, iy: number, attempts = 0;
     do { ix = rand(1, COLS - 2); iy = rand(1, ROWS - 2); attempts++; }
     while ((occupied.has(ix + ',' + iy) || grid[iy][ix] !== 0) && attempts < 100);
     if (attempts < 100) { occupied.add(ix + ',' + iy); floorItems.push({ item: weightedPick(availableItems), x: ix, y: iy }); }

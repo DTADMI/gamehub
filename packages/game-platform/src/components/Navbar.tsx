@@ -2,7 +2,7 @@
 "use client";
 
 import { Button, cn } from "@gamehub/ui";
-import { Gamepad2, Github, Linkedin, Menu, X } from "lucide-react";
+import { Gamepad2, ExternalLink, Link2, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { memo, useEffect, useState } from "react";
@@ -73,7 +73,7 @@ export const Navbar = memo(function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Github className="h-5 w-5" />
+                  <ExternalLink className="h-5 w-5" />
                 </a>
               </Button>
             )}
@@ -90,7 +90,7 @@ export const Navbar = memo(function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Linkedin className="h-5 w-5" />
+                  <Link2 className="h-5 w-5" />
                 </a>
               </Button>
             )}
@@ -144,7 +144,7 @@ export const Navbar = memo(function Navbar() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Github className="h-5 w-5" />
+                        <ExternalLink className="h-5 w-5" />
                       </a>
                     </Button>
                   )}
@@ -161,7 +161,7 @@ export const Navbar = memo(function Navbar() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Linkedin className="h-5 w-5" />
+                        <Link2 className="h-5 w-5" />
                       </a>
                     </Button>
                   )}

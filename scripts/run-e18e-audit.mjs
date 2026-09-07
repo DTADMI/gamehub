@@ -8,7 +8,7 @@ const outPath = path.join(outDir, "e18e-audit.txt");
 
 fs.mkdirSync(outDir, { recursive: true });
 
-let output = "";
+let output;
 try {
   output = execSync("pnpm dlx @e18e/cli analyze", {
     cwd: root,

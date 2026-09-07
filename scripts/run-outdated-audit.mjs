@@ -7,7 +7,7 @@ const outDir = path.join(root, "reports", "deps");
 const outPath = path.join(outDir, "outdated.txt");
 fs.mkdirSync(outDir, { recursive: true });
 
-let output = "";
+let output;
 try {
   output = execSync("pnpm outdated -r", {
     cwd: root,

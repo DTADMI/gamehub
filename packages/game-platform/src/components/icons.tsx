@@ -1,7 +1,7 @@
 import {
   ArrowRight,
   Gamepad2,
-  Github,
+  ExternalLink as GithubIcon,
   Loader2,
   LogIn,
   Mail,
@@ -12,7 +12,7 @@ import {
 
 export const Icons = {
   spinner: Loader2,
-  github: Github,
+  github: GithubIcon,
   mail: Mail,
   gamepad: Gamepad2,
   login: LogIn,

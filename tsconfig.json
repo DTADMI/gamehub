@@ -1,30 +1,29 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
       ],
       "@gamehub/game-platform": [
-        "packages/game-platform/src"
+        "./packages/game-platform/src"
       ],
       "@gamehub/game-platform/*": [
-        "packages/game-platform/src/*"
+        "./packages/game-platform/src/*"
       ],
       "@games/pointclick-engine": [
-        "packages/pointclick-engine/src"
+        "./packages/pointclick-engine/src"
       ],
       "@games/pointclick-engine/*": [
-        "packages/pointclick-engine/src/*"
+        "./packages/pointclick-engine/src/*"
       ],
       "@games/_engine": [
-        "packages/games/_engine"
+        "./packages/games/_engine"
       ],
       "@games/i18n": [
-        "packages/games/i18n"
+        "./packages/games/i18n"
       ],
       "@games/*": [
-        "packages/games/*/src"
+        "./packages/games/*/src"
       ],
       "glyph-weaver/*": [
         "../glyph-weaver/*"
@@ -72,22 +71,22 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "packages/game-platform/**/*.ts",
-    "packages/game-platform/**/*.tsx",
-    "packages/ui/**/*.ts",
-    "packages/ui/**/*.tsx",
-    "packages/games/**/*.ts",
-    "packages/games/**/*.tsx",
-    "packages/pointclick-engine/**/*.ts",
-    "packages/pointclick-engine/**/*.tsx",
+    "./packages/game-platform/**/*.ts",
+    "./packages/game-platform/**/*.tsx",
+    "./packages/ui/**/*.ts",
+    "./packages/ui/**/*.tsx",
+    "./packages/games/**/*.ts",
+    "./packages/games/**/*.tsx",
+    "./packages/pointclick-engine/**/*.ts",
+    "./packages/pointclick-engine/**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "packages/**/node_modules",
-    "packages/**/dist",
-    "packages/games/breakout/src/app",
+    "./packages/**/node_modules",
+    "./packages/**/dist",
+    "./packages/games/breakout/src/app",
     "vitest.config.ts",
     "**/*.md",
     "**/*.mdx",

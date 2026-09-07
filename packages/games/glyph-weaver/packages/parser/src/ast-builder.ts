@@ -186,7 +186,7 @@ export function computeGlobalMetrics(
 ): GlobalMetrics {
   let neatness = ring.neatness
   let symmetry = 0
-  let instability = 0
+  let instability: number
 
   if (candidates.length > 0) {
     let totalNeatness = 0

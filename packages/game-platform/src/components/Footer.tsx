@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@gamehub/ui";
-import { Gamepad2, Github, Linkedin, Mail } from "lucide-react";
+import { Gamepad2, ExternalLink, Link2, Mail } from "lucide-react";
 import Link from "next/link";
 import { memo, useState } from "react";
 
@@ -52,8 +52,8 @@ export const Footer = memo(function Footer({ githubUrl = "", linkedinUrl = "", c
   const [email, setEmail] = useState("");
   const [expanded, setExpanded] = useState(false);
   const socialLinks = [
-    { name: "GitHub", href: githubUrl || "#", icon: Github },
-    { name: "LinkedIn", href: linkedinUrl || "#", icon: Linkedin },
+    { name: "GitHub", href: githubUrl || "#", icon: ExternalLink },
+    { name: "LinkedIn", href: linkedinUrl || "#", icon: Link2 },
     { name: "Email", href: contactEmail ? mailto(contactEmail) : "#", icon: Mail },
   ];
 

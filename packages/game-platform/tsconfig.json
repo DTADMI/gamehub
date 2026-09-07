@@ -14,8 +14,8 @@
     "moduleDetection": "force",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "baseUrl": ".",
     "paths": {
+      "*": ["./*"],
       "@/*": ["./src/*"],
       "@gamehub/ui": ["../ui/src/index.ts"],
       "@gamehub/ui/*": ["../ui/src/*"],
