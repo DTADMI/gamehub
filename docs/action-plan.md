@@ -192,3 +192,33 @@ public/images/games/
 docs/games/
 └── dungeon-delver-design.md                  # Design document (v0.2)
 ```
+
+## 2026-09-07 Implementation Status (Major Version Bumps)
+
+### Version Bumps Applied (14/15 packages)
+
+| Package | From | To | Notes |
+|---|---|---|---|
+| @types/node | 25.9.5 | 26.4.1 | Clean |
+| @types/three | 0.184.1 | 0.185.4 | Clean |
+| eslint-plugin-simple-import-sort | 12.1.1 | 14.0.0 | Clean |
+| @supabase/ssr | 0.10.3 | 0.12.6 | Clean |
+| @testing-library/jest-dom | 6.10.0 | 7.0.1 | Clean |
+| @hookform/resolvers | 3.10.0 | 5.9.1 | Clean |
+| jsdom | 29.1.1 | 30.0.1 | Clean |
+| knip | 5.88.1 | 6.34.0 | Clean |
+| typescript | 5.9.3 | 6.0.3 | TS7 blocked, baseUrl→paths |
+| zod | 3.25.76 | 4.5.4 | No fake UUIDs in tests |
+| vitest | 4.1.11 | 5.0.0 | Clean |
+| eslint | 9.39.5 | 10.10.0 | 7 no-useless-assignment fixes |
+| lucide-react | 0.562.0 | 1.41.0 | Brand icons removed (Github/Linkedin→ExternalLink/Link2) |
+
+### Key Issues Resolved
+- **Lucide v1 brand icons**: Github/Linkedin removed; replaced with ExternalLink/Link2
+- **ESLint 10 no-useless-assignment**: 7 dead initializer fixes (DungeonDelverGame, SpellCraft, ast-builder, 3 scripts)
+- **TS7 blocked**: @typescript-eslint v8 doesn't support TS 7; settled on TS 6.0.3
+- **@vitejs/plugin-react kept at 5.x**: v6 imports `vite/internal` removed in Vite 7
+
+### Deferred
+- TypeScript 7: blocked by @typescript-eslint v9
+- @vitejs/plugin-react v6: incompatible with Vite 7
