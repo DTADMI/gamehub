@@ -21,7 +21,7 @@
   "dependencies": {
     "@gamehub/ui": "workspace:*",
     "@games/pointclick-engine": "workspace:*",
-    "@supabase/supabase-js": "^2.101.1",
+    "@supabase/supabase-js": "^2.115.0",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "next-auth": "^4.24.15",
@@ -29,8 +29,8 @@
     "three": "^0.183.2"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
     "@types/three": "^0.183.1",
     "rimraf": "^6.1.3",
     "typescript": "^5.9.3"
