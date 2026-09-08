@@ -4,11 +4,11 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 
-function Breadcrumb({ ...props }: React.HTMLAttributes<HTMLElement>) {
+function Breadcrumb({ ...props }: React.HTMLAttributes<HTMLElement>): React.ReactNode {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
-function BreadcrumbList({ className, ...props }: React.OlHTMLAttributes<HTMLOListElement>) {
+function BreadcrumbList({ className, ...props }: React.OlHTMLAttributes<HTMLOListElement>): React.ReactNode {
   return (
     <ol
       data-slot="breadcrumb-list"
@@ -21,7 +21,7 @@ function BreadcrumbList({ className, ...props }: React.OlHTMLAttributes<HTMLOLis
   );
 }
 
-function BreadcrumbItem({ className, ...props }: React.LiHTMLAttributes<HTMLLIElement>) {
+function BreadcrumbItem({ className, ...props }: React.LiHTMLAttributes<HTMLLIElement>): React.ReactNode {
   return (
     <li
       data-slot="breadcrumb-item"
@@ -37,7 +37,7 @@ function BreadcrumbLink({
   ...props
 }: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   asChild?: boolean;
-}) {
+}): React.ReactNode {
   const Comp = asChild ? Slot : "a";
 
   return (
@@ -49,7 +49,7 @@ function BreadcrumbLink({
   );
 }
 
-function BreadcrumbPage({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+function BreadcrumbPage({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>): React.ReactNode {
   return (
     <span
       data-slot="breadcrumb-page"
@@ -66,7 +66,7 @@ function BreadcrumbSeparator({
   children,
   className,
   ...props
-}: React.LiHTMLAttributes<HTMLLIElement>) {
+}: React.LiHTMLAttributes<HTMLLIElement>): React.ReactNode {
   return (
     <li
       data-slot="breadcrumb-separator"
@@ -80,7 +80,7 @@ function BreadcrumbSeparator({
   );
 }
 
-function BreadcrumbEllipsis({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+function BreadcrumbEllipsis({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>): React.ReactNode {
   return (
     <span
       data-slot="breadcrumb-ellipsis"

@@ -27,7 +27,7 @@ function GameContainer({
   lockTouch = true,
   backgroundImage,
   showParticleControls = true,
-}: GameContainerProps) {
+}: GameContainerProps): React.ReactNode {
   // Prevent scroll/zoom gestures while interacting with the game area on mobile
   // Avoid calling preventDefault in React synthetic handlers (which are passive by default
   // on some browsers) to prevent the warning. Instead, we rely on per‑canvas listeners in

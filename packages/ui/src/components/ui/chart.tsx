@@ -43,7 +43,7 @@ function ChartContainer({
 }: React.ComponentProps<"div"> & {
   config: ChartConfig;
   children: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"];
-}) {
+}): React.ReactNode {
   const uniqueId = React.useId();
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
 
@@ -230,7 +230,7 @@ function ChartTooltipContent(props: any) {
 const ChartLegend = RechartsPrimitive.Legend;
 
 // Similar to tooltip, relax typings to avoid tight coupling to Recharts types
-function ChartLegendContent(props: any) {
+function ChartLegendContent(props: any): React.ReactNode {
   const { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey } = props;
   const { config } = useChart();
 

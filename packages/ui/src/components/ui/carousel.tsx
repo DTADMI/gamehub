@@ -135,7 +135,7 @@ function Carousel({
   );
 }
 
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselContent({ className, ...props }: React.ComponentProps<"div">): React.ReactNode {
   const { carouselRef, orientation } = useCarousel();
 
   return (
@@ -148,7 +148,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ className, ...props }: React.ComponentProps<"div">): React.ReactNode {
   const { orientation } = useCarousel();
 
   return (
@@ -171,7 +171,7 @@ function CarouselPrevious({
   variant = "outline",
   size = "icon",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button>): React.ReactNode {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
@@ -201,7 +201,7 @@ function CarouselNext({
   variant = "outline",
   size = "icon",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button>): React.ReactNode {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (

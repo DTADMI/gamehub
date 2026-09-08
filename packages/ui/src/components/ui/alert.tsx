@@ -23,7 +23,7 @@ function Alert({
   className,
   variant,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>) {
+}: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>): React.ReactNode {
   return (
     <div
       data-slot="alert"
@@ -34,7 +34,7 @@ function Alert({
   );
 }
 
-function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): React.ReactNode {
   return (
     <div
       data-slot="alert-title"
@@ -44,7 +44,7 @@ function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLDivElement
   );
 }
 
-function AlertDescription({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function AlertDescription({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): React.ReactNode {
   return (
     <div
       data-slot="alert-description"

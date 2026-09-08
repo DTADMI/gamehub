@@ -12,7 +12,7 @@ function InputOTP({
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string;
-}) {
+}): React.ReactNode {
   return (
     <OTPInput
       data-slot="input-otp"
@@ -23,7 +23,7 @@ function InputOTP({
   );
 }
 
-function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
+function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">): React.ReactNode {
   return (
     <div data-slot="input-otp-group" className={cn("flex items-center", className)} {...props} />
   );
@@ -35,7 +35,7 @@ function InputOTPSlot({
   ...props
 }: React.ComponentProps<"div"> & {
   index: number;
-}) {
+}): React.ReactNode {
   const inputOTPContext = React.useContext(OTPInputContext);
   const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
 
@@ -59,7 +59,7 @@ function InputOTPSlot({
   );
 }
 
-function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
+function InputOTPSeparator({ ...props }: React.ComponentProps<"div">): React.ReactNode {
   return (
     <div data-slot="input-otp-separator" role="separator" {...props}>
       <MinusIcon />

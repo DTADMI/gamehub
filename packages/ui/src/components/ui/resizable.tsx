@@ -6,7 +6,7 @@ import { Group, Panel, Separator } from "react-resizable-panels";
 
 import { cn } from "../../lib/utils";
 
-function ResizablePanelGroup({ className, ...props }: React.ComponentProps<typeof Group>) {
+function ResizablePanelGroup({ className, ...props }: React.ComponentProps<typeof Group>): React.ReactNode {
   return (
     <Group
       data-slot="resizable-panel-group"
@@ -16,7 +16,7 @@ function ResizablePanelGroup({ className, ...props }: React.ComponentProps<typeo
   );
 }
 
-function ResizablePanel({ ...props }: React.ComponentProps<typeof Panel>) {
+function ResizablePanel({ ...props }: React.ComponentProps<typeof Panel>): React.ReactNode {
   return <Panel data-slot="resizable-panel" {...props} />;
 }
 
@@ -26,7 +26,7 @@ function ResizableHandle({
   ...props
 }: React.ComponentProps<typeof Separator> & {
   withHandle?: boolean;
-}) {
+}): React.ReactNode {
   return (
     <Separator
       data-slot="resizable-handle"
