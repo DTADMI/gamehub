@@ -19,7 +19,7 @@
     "@gamehub/game-platform": "workspace:*",
     "@react-three/drei": "10.7.8",
     "@react-three/fiber": "^8.18.0",
-    "three": "^0.183.2"
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/react": "19.2.18",
