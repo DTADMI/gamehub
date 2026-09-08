@@ -222,3 +222,32 @@ docs/games/
 ### Deferred
 - TypeScript 7: blocked by @typescript-eslint v9
 - @vitejs/plugin-react v6: incompatible with Vite 7
+- @react-three/fiber 9.x: major breaking changes
+
+## 2026-09-07 Implementation Status (ESLint Debt Reduction + Dep Finalization)
+
+### ESLint Warnings Reduced: 5,224 → 630 (-87.9%)
+
+| Category | Before | After | Change |
+|---|---|---|---|
+| semi (missing ;) | 3,752 | 0 | ✅ Auto-fix |
+| curly (missing {}) | 344 | 0 | ✅ Auto-fix |
+| simple-import-sort | 157 | 5 | ✅ Auto-fix |
+| no-unused-vars | 124 | 54 | ↓70 imports removed |
+| explicit-module-boundary-types | 569 | 301 | ↓268 return types added |
+| no-explicit-any | 241 | 241 | Unchanged (game engines, 3rd-party) |
+| react-hooks/exhaustive-deps | 29 | 29 | Unchanged (intentional mount-only) |
+| **Total** | **5,224** | **630** | **-87.9%** |
+
+### Dependency Status
+- All minor/patch bumps applied (Radix ×20, three, react, react-day-picker, zod, @types/three, lucide-react, etc.)
+- Only 3 packages outdated: TS7, @react-three/fiber 9, @vitejs/plugin-react 6 (all deferred with documented reasons)
+- 0 vulnerabilities
+
+### Verification
+- tsc --noEmit: 0 errors
+- pnpm test:unit: 29/30 (134 tests)
+- pnpm test:integration: 8/8 (27 tests)
+- pnpm build: ✅ (51 routes)
+- pnpm lint: 0 errors, 630 warnings
+- CI: ✅ green
