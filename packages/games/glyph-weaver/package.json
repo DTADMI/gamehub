@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@gamehub/game-platform": "workspace:*",
-    "zod": "^3.24.4",
+    "zod": "^4.5.4",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
