@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-undef -- standalone Node CLI tooling script (console/process are Node globals) */
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * validate-workflows.mjs — GitHub Actions workflow YAML validator
