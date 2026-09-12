@@ -1,4 +1,4 @@
-// frontendfile:///components/games/GameProgress.tsx
+// frontend/components/games/GameProgress.tsx
 "use client";
 
 import { Progress } from "@gamehub/ui";

@@ -95,7 +95,7 @@ export const ToymakerEscapeGame: React.FC = () => {
     try { return (localStorage.getItem("gh-locale") as Lang) || "en"; } catch { return "en"; }
   }, []);
   const t = (key: string) => (TME_TX as Record<string,Record<string,string>>)[lang]?.[key] || key;
-  // Scene data extracted to ../datafile:///scenes.ts
+  // Scene data extracted to ../data/scenes.ts
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const scenes = TOYMAKER_SCENES as Record<string, any>;
 

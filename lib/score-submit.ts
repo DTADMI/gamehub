@@ -1,4 +1,4 @@
-// libfile:///score-submit.ts — Client-side score submission to server-backed leaderboard API
+// lib/score-submit.ts — Client-side score submission to server-backed leaderboard API
 
 export async function submitScore(gameType: string, score: number, metadata?: Record<string, unknown>) {
   const res = await fetch("/api/scores", {

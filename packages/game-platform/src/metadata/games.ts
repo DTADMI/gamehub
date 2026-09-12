@@ -319,7 +319,7 @@ export const games: GameManifest = {
     title: "Escape Room",
     shortDescription: "You're locked in Professor Aldric's study. Solve puzzles, find clues, and escape. 5 interconnected puzzles.",
     tags: ["Escape", "Puzzles", "Story", "Mystery", "narrative", "impl:narrative-engine", "target:keep"],
-    image: "/imagesfile:///games/escape-room-card.svg",
+    image: "/images/games/escape-room-card.svg",
     genre: "adventure",
     difficulty: "medium",
     playTime: "10-15 min",
@@ -327,7 +327,7 @@ export const games: GameManifest = {
     ageRating: "10+",
     enabled: true,
     visible: true,
-    backgroundImage: "/imagesfile:///bg-abstract-dark.svg",
+    backgroundImage: "/images/bg-abstract-dark.svg",
     preloadAssets: [],
     getComponent: () =>
       // @ts-ignore

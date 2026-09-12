@@ -1,4 +1,4 @@
-// frontendfile:///contexts/GameContext.tsx
+// frontend/contexts/GameContext.tsx
 "use client";
 
 import { useRouter } from "next/navigation";

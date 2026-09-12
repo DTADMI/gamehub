@@ -141,9 +141,9 @@ For full integration (eliminating the launchpad fallback):
 
 ## Related Documentation
 
-- GameHub: `docsfile:///games/point-and-click-production.md`
-- GameHub: `docsfile:///games/production-audit.md`
-- GameHub: `docsfile:///action-plan.md`
+- GameHub: `docs/games/point-and-click-production.md`
+- GameHub: `docs/games/production-audit.md`
+- GameHub: `docs/action-plan.md`
 - Glyph Weaver: `../glyph-weaver/docs/project-spec.md`
 - Glyph Weaver: `../glyph-weaver/docs/action-plan.md`
 - Glyph Weaver: `../glyph-weaver/AGENTS.md`
