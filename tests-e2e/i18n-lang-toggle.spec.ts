@@ -8,7 +8,7 @@ test.describe("[e2e:smoke] Header language toggle", () => {
 
     // Assert EN by default (title string from i18n)
     await expect(page.getByRole("heading", { level: 2 })).toContainText(
-      "Toymaker Escape — Episode 1",
+      "Toymaker Escape - Episode 1",
     );
 
     // Click FR
@@ -16,13 +16,13 @@ test.describe("[e2e:smoke] Header language toggle", () => {
 
     // Title should switch to FR
     await expect(page.getByRole("heading", { level: 2 })).toContainText(
-      "Toymaker Escape — Épisode 1",
+      "Toymaker Escape - Épisode 1",
     );
 
     // Toggle back to EN
     await page.getByTestId("lang-en").click();
     await expect(page.getByRole("heading", { level: 2 })).toContainText(
-      "Toymaker Escape — Episode 1",
+      "Toymaker Escape - Episode 1",
     );
   });
 });

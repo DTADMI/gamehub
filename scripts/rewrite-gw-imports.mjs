@@ -1,4 +1,4 @@
-// rewrite-gw-imports.mjs — Rewrite @glyph-weaver/* imports to relative paths
+// rewrite-gw-imports.mjs - Rewrite @glyph-weaver/* imports to relative paths
 import fs from "node:fs";
 import path from "node:path";
 

@@ -51,7 +51,7 @@ function getRaw(key: string): string | null {
 
 // ─── Tests ───
 
-describe("Save/load integration — all point-and-click games", () => {
+describe("Save/load integration - all point-and-click games", () => {
   beforeEach(() => {
     localStorage.clear();
   });
@@ -70,7 +70,7 @@ describe("Save/load integration — all point-and-click games", () => {
       const ok = versionedSave(KEY, 1, data);
       expect(ok).toBe(true);
 
-      // Simulate page reload — read raw localStorage
+      // Simulate page reload - read raw localStorage
       const raw = getRaw(KEY);
       expect(raw).not.toBeNull();
       const parsed = JSON.parse(raw!);

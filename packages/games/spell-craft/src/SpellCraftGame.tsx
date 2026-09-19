@@ -137,19 +137,19 @@ function analyzeStrokes(strokes: Stroke[], w: number, h: number): SpellResult {
 
   if (ringCount > 0) {
     element = "water";
-    spellMsg = `${ringCount} ring${ringCount > 1 ? "s" : ""} closed — Water magic flows`;
+    spellMsg = `${ringCount} ring${ringCount > 1 ? "s" : ""} closed - Water magic flows`;
   } else if (sharpRatio > 0.1) {
     element = "fire";
-    spellMsg = "Sharp strokes ignite — Fire magic surges";
+    spellMsg = "Sharp strokes ignite - Fire magic surges";
   } else if (smoothness > 0.8 && totalLength > 150) {
     element = "wind";
-    spellMsg = "Graceful curves — Wind magic swirls";
+    spellMsg = "Graceful curves - Wind magic swirls";
   } else if (density > 2.2 && bboxArea < w * h * 0.25) {
     element = "earth";
-    spellMsg = "Dense lines ground — Earth magic solidifies";
+    spellMsg = "Dense lines ground - Earth magic solidifies";
   } else if (outwardRatio > 1.5 && ringCount === 0) {
     element = "light";
-    spellMsg = "Radiant energy — Light magic shines";
+    spellMsg = "Radiant energy - Light magic shines";
   } else {
     const scores: [ElementName, number][] = [
       ["water", ringCount * 3],

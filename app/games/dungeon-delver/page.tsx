@@ -25,7 +25,7 @@ export default function DungeonDelverPage() {
   }
   return (
     <GameShell
-      ariaLabel="Dungeon Delver — Fouilleur de Donjon"
+      ariaLabel="Dungeon Delver - Fouilleur de Donjon"
       tips="WASD/ZQSD · Space · I · > descend · touch D-pad"
       gameSlug="dungeon-delver"
     >

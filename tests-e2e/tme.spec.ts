@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Toymaker Escape — E1 Beta", () => {
+test.describe("Toymaker Escape - E1 Beta", () => {
   test("gears route, no hints → gold medal", async ({ page }) => {
     await page.goto("/games/toymaker-escape");
     // Ensure on E1A, pick gears

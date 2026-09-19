@@ -1,9 +1,9 @@
-# Rite of Discovery — Designer/Animator Brief (EN)
+# Rite of Discovery - Designer/Animator Brief (EN)
 
 This brief is the production guide for visual assets and motion for the point‑and‑click game “Rite of Discovery.” It
 complements the design document in `docs/rite-of-discovery-design.md` and focuses on concrete deliverables, formats,
 sizes,
-naming, and workflow — so art can be produced independently and plugged into the game with minimal back‑and‑forth.
+naming, and workflow - so art can be produced independently and plugged into the game with minimal back‑and‑forth.
 
 Link back to the main design doc (systems, scenes, 12+ extension):
 
@@ -61,7 +61,7 @@ Mood boards (public‑domain/free references)
 - Delivery path (repo): `public/games/rod/assets/{epA|epB|epC|epD|shared}/`.
 - Budgets (target, post‑brotli): ≤ 800KB per episode aggregate; ≤ 30KB per prop SVG; ≤ 200KB per loop.
 
-Definition of Done (DoD) — assets
+Definition of Done (DoD) - assets
 
 - Backgrounds delivered in 2560×1440 and 1920×1080 AVIF (+ WEBP fallback) with safe area respected.
 - Props exported as individual SVGs, visually grouped by scene/case; IDs/classes removed unless needed for theming.
@@ -69,7 +69,7 @@ Definition of Done (DoD) — assets
 - Annotated PNG shows hotspot regions and z‑order hints; palette notes included if relevant.
 - Files are named and placed under `public/games/rod/assets/...` exactly per spec; size budgets met.
 
-## 3) MVP (ages 7–9) — scenes and assets
+## 3) MVP (ages 7–9) - scenes and assets
 
 Scene naming follows the design doc: S1 Night Before, S2 Tooth Tradition, S3 Proof Moment, Epilogue. Each scene lists
 required assets; extras are optional.
@@ -82,11 +82,11 @@ Intro/Outro (title cards)
 
 Episode MVP backgrounds (choose 1–2 per scene)
 
-- S1 Night Before: `epA_scene1_bg.avif` — living room at night (tree, stockings, cozy lighting).
-- S2 Tooth Tradition: `epB_scene1_bg.avif` — kid’s bedroom (pillow, nightstand, keepsake box). Optional daylight
+- S1 Night Before: `epA_scene1_bg.avif` - living room at night (tree, stockings, cozy lighting).
+- S2 Tooth Tradition: `epB_scene1_bg.avif` - kid’s bedroom (pillow, nightstand, keepsake box). Optional daylight
   variant.
-- S3 Proof Moment: `epC_scene1_bg.avif` — store aisle/receipt area OR attic/storage room.
-- Epilogue: `epX_epilogue_bg.avif` — warm family space suitable for a short conversation.
+- S3 Proof Moment: `epC_scene1_bg.avif` - store aisle/receipt area OR attic/storage room.
+- Epilogue: `epX_epilogue_bg.avif` - warm family space suitable for a short conversation.
 
 Foreground props (separate layers)
 
@@ -96,7 +96,7 @@ Foreground props (separate layers)
 - S3: `epC_receipt.svg`, `epC_phone_speaker.svg`, `epC_costume_bag.svg`.
 - Epilogue: `epX_helper_badge.svg` (award sticker).
 
-New Game+ — Mentor Mini (Sibling Helper)
+New Game+ - Mentor Mini (Sibling Helper)
 
 - Purpose: A short, replayable vignette unlocked by the Helper Badge where the player, now a “helper,” kindly guides a
   younger sibling. Echoes S1–S3 without revealing secrets.
@@ -148,9 +148,9 @@ Per‑scene task checklist (MVP)
   - Deliver: warm family space; helper badge SVG.
   - Notes: gentle, celebratory tone; consider a confetti still for reduced motion.
 
-## 4) 12+ extension — “Thinking Tools” (fun & replayable)
+## 4) 12+ extension - “Thinking Tools” (fun & replayable)
 
-Framing: “Junior Investigator Club” — short, witty cases with at least two routes plus a twist ending. Cases teach
+Framing: “Junior Investigator Club” - short, witty cases with at least two routes plus a twist ending. Cases teach
 thinking tools through play, not preaching.
 
 Per‑case asset template (each case)
@@ -161,7 +161,7 @@ Per‑case asset template (each case)
 - Badge (1): themed to the thinking tool (e.g., “Price Detective,” “Bias Buster”).
 - Optional ambient loop (subtle) + reduced‑motion stills.
 
-Case lineup (hooks, routes, twist) — all must center kindness and constructive resolution
+Case lineup (hooks, routes, twist) - all must center kindness and constructive resolution
 
 1. The Mystery Coupon (Anchoring + Framing)
 
@@ -211,7 +211,7 @@ Per‑case task checklist (12+)
   - Ensure kindness guardrails: avoid ridicule; depict constructive resolution paths.
   - Link the PR to the case entry in `docs/rite-of-discovery-stories.md` and mark asset status.
 
-## 8) 15+ extensions — MythWays (Track A) and Origins (Track B)
+## 8) 15+ extensions - MythWays (Track A) and Origins (Track B)
 
 Audience & tone (15+): respectful, curious, witty; zero edgelord energy. Kindness, cultural sensitivity, and scientific
 humility are non‑negotiable.
@@ -226,7 +226,7 @@ Shared specifications (both tracks)
 - Delivery paths: `public/games/rod/assets/{mythways|origins|shared}/`.
 - Budgets: ≤ 900KB per content pack (A1–A3 or O1–O3) aggregated after brotli.
 
-Track A — MythWays (Mythologies & Pantheons)
+Track A - MythWays (Mythologies & Pantheons)
 
 - Core systems: evidence sorter (epithets/roles/contexts), map/path assembly, parallel‑inscription mini‑puzzle.
 - Sensitivity guardrails: precise terminology; show intra‑cultural diversity; avoid caricature and inappropriate sacred
@@ -243,7 +243,7 @@ Track A — MythWays (Mythologies & Pantheons)
   - Add a short cultural sensitivity note block; cite generic references.
   - Link PR to `docs/rite-of-discovery-stories.md` entries A1–A3 and mark status.
 
-Track B — Origins (Evolution & Nature)
+Track B - Origins (Evolution & Nature)
 
 - Core systems: trait sliders + fitness landscape mini‑games, phylogeny builder, spot‑the‑adaptation overlays.
 - Scientific guardrails: separate models vs. observations; neutral tone; no medical/health claims; cite generic
@@ -307,9 +307,9 @@ PR checklist (paste into PR description)
 - [ ] File names and locations per spec; budgets verified
 - [ ] Linked to `docs/rite-of-discovery-stories.md` case/scene and marked status
 
-— — —
+- - -
 
-# Rite of Discovery — Cahier pour le/la designer/animateur·rice (FR)
+# Rite of Discovery - Cahier pour le/la designer/animateur·rice (FR)
 
 Ce cahier est le guide de production des visuels et de l’animation pour le jeu point‑and‑click “Rite of Discovery”. Il
 complète le document de conception `docs/rite-of-discovery-design.md` et détaille les livrables (formats, tailles,
@@ -372,7 +372,7 @@ Mood boards (références libres)
 - Dossier : `public/games/rod/assets/{epA|epB|epC|epD|shared}/`.
 - Budgets (cibles) : ≤ 800KB par épisode; ≤ 30KB par SVG; ≤ 200KB par boucle.
 
-Nouvelle Partie+ — Mini Mentor (Aider le/la petit·e frère/soeur)
+Nouvelle Partie+ - Mini Mentor (Aider le/la petit·e frère/soeur)
 
 - Objectif : Vignette courte et rejouable, déverrouillée par le badge d’Aide/"Helper", où l’aîné·e guide gentiment
   son/sa cadet·te. Évoque S1–S3 sans dévoiler de secrets.
@@ -397,7 +397,7 @@ Checklist (Mini Mentor)
   cartes.
 - Garde‑fous : Pas d’astuce ni de spoiler; respect de la vie privée; statiques prévues pour motion réduite.
 
-## 8) Extensions 15+ — MythWays (Panthéons) et Origins (Nature)
+## 8) Extensions 15+ - MythWays (Panthéons) et Origins (Nature)
 
 Audience & ton (15+) : respectueux, curieux, espiègle; zéro moquerie. Gentillesse, sensibilité culturelle et humilité
 scientifique sont obligatoires.
@@ -412,7 +412,7 @@ Spécifications communes (deux pistes)
 - Dossiers : `public/games/rod/assets/{mythways|origins|shared}/`.
 - Budgets : ≤ 900KB par pack (A1–A3 ou O1–O3) après brotli.
 
-Piste A — MythWays (Mythologies & panthéons)
+Piste A - MythWays (Mythologies & panthéons)
 
 - Systèmes : tri d’indices (épithètes/rôles/contexte), carte/chemins, puzzle d’inscriptions parallèles.
 - Garde‑fous culturels : terminologie précise; diversité intra‑culturelle; éviter caricatures et représentations sacrées
@@ -429,7 +429,7 @@ Piste A — MythWays (Mythologies & panthéons)
   - Ajouter un court encart de sensibilité culturelle; citer des références génériques.
   - Lier la PR aux entrées A1–A3 dans `docs/rite-of-discovery-stories.md` et mettre à jour le statut.
 
-Piste B — Origins (Évolution & nature)
+Piste B - Origins (Évolution & nature)
 
 - Systèmes : curseurs de traits + paysages de fitness, constructeur de phylogénies, « trouver l’adaptation ».
 - Garde‑fous scientifiques : distinguer modèles vs observations; ton neutre; pas de promesses médicales; exemples
@@ -453,7 +453,7 @@ Définition de Fini (ajouts 15+)
 - Encart Sensibilité/Science présent et vérifié.
 - PR référencie les entrées (A1–A3, O1–O3) et met à jour le statut.
 
-Définition de Fini (DoD) — assets
+Définition de Fini (DoD) - assets
 
 - Arrières‑plans 2560×1440 et 1920×1080 en AVIF (+ WEBP) avec zone de sécurité respectée.
 - Props en SVG individuels, regroupés visuellement par scène/cas; IDs/classes supprimés sauf besoin thématique.
@@ -461,7 +461,7 @@ Définition de Fini (DoD) — assets
 - PNG annoté avec zones cliquables et indications de profondeur; notes de palette si utile.
 - Fichiers nommés/placés sous `public/games/rod/assets/...` exactement; budgets respectés.
 
-## 3) MVP (7–9 ans) — scènes et assets
+## 3) MVP (7–9 ans) - scènes et assets
 
 Arrières‑plans (1–2 par scène) et props séparés selon le document principal (S1 Salon, S2 Chambre, S3 Preuve, Épilogue).
 
@@ -487,9 +487,9 @@ Checklist par scène (MVP)
   - Livrables : espace familial chaleureux; badge d’“assistant”.
   - Notes : ton doux et célébratoire; prévoir une statique « confetti » pour motion réduite.
 
-## 4) Extension 12+ — “Outils de Pensée” (ludique & rejouable)
+## 4) Extension 12+ - “Outils de Pensée” (ludique & rejouable)
 
-Cadre : “Club des Jeunes Enquêteurs” — mini‑enquêtes courtes et enlevées, avec deux parcours et une “fin maline”.
+Cadre : “Club des Jeunes Enquêteurs” - mini‑enquêtes courtes et enlevées, avec deux parcours et une “fin maline”.
 Enseigner par le jeu.
 
 Modèle d’assets par cas

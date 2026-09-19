@@ -1,5 +1,5 @@
 /**
- * BreakoutBoard — Brick grid construction utilities.
+ * BreakoutBoard - Brick grid construction utilities.
  * Extracted from BreakoutGame.tsx (M-3 refactor).
  */
 
@@ -62,7 +62,7 @@ export function computeBrickLayout(canvasW: number): BrickLayout {
 }
 
 /**
- * Pure brick factory — builds a level's brick grid.
+ * Pure brick factory - builds a level's brick grid.
  */
 export function buildBricks(
   lvl: number,

@@ -1,5 +1,5 @@
 /**
- * Elemental Conflux — Bilingual string map (EN/FR)
+ * Elemental Conflux - Bilingual string map (EN/FR)
  */
 export const ELEMENTAL_CONFLUX_TX = {
   en: {

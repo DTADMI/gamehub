@@ -1,4 +1,4 @@
-# Africa Prehistory — Paths of Many (Design Doc)
+# Africa Prehistory - Paths of Many (Design Doc)
 
 Overview
 
@@ -15,11 +15,11 @@ Goals (MVP)
 
 Packs (themed, modular; 3 scenes + wrap)
 
-- Sahara & Sahel Pathways (SS) — Oases networks, pastoral routes, early metallurgy.
-- Forests & Rivers — Congo/Niger (FR) — River travel, trade, forest knowledge, games.
-- Rift & Horn — Great Rift/Horn of Africa (RH) — Highland terraces, monsoon ports, scripts.
-- Great Lakes & Highlands (GL) — Cattle cultures, ironworking, banana/enset gardens, courtyards.
-- Coasts & Crossings — Atlantic/Indian (CC) — Navigation, currents, dhow/canoe hubs, cultural blends.
+- Sahara & Sahel Pathways (SS) - Oases networks, pastoral routes, early metallurgy.
+- Forests & Rivers - Congo/Niger (FR) - River travel, trade, forest knowledge, games.
+- Rift & Horn - Great Rift/Horn of Africa (RH) - Highland terraces, monsoon ports, scripts.
+- Great Lakes & Highlands (GL) - Cattle cultures, ironworking, banana/enset gardens, courtyards.
+- Coasts & Crossings - Atlantic/Indian (CC) - Navigation, currents, dhow/canoe hubs, cultural blends.
 
 Replayability
 
@@ -60,40 +60,40 @@ Scenarios (high‑level)
 
 Sahara & Sahel Pathways (SS)
 
-- SS1 Oasis Caravan Circle — Goal: water rules, rest, and news exchange keep everyone safe.
+- SS1 Oasis Caravan Circle - Goal: water rules, rest, and news exchange keep everyone safe.
   - Puzzle: bucket‑chain and water ledger; fairness flags `ss1.splitPolicy`.
-- SS2 Copper to Iron — Goal: smelting knowledge spreads via traveling smiths and apprentices.
+- SS2 Copper to Iron - Goal: smelting knowledge spreads via traveling smiths and apprentices.
   - Puzzle: furnace assembly steps; temperature balance; flag `ss2.method`.
-- SS3 Wayfinding Across Dunes — Goal: stars, winds, and dunes; teams plan dawn/dusk marches.
+- SS3 Wayfinding Across Dunes - Goal: stars, winds, and dunes; teams plan dawn/dusk marches.
   - Puzzle: route‑plan under heat constraints; flag `ss3.route`.
 - Wrap: award `collect_ss_badge.svg`; reflection on shared rules.
 
-Forests & Rivers — Congo/Niger (FR)
+Forests & Rivers - Congo/Niger (FR)
 
-- FR1 River Canoe Post — Goal: exchange station for salt, fish, beads, stories.
-- FR2 Forest Knowledge — Goal: edible/medicinal plants and safe paths.
-- FR3 Mancala & Math — Goal: games encode counting and planning.
+- FR1 River Canoe Post - Goal: exchange station for salt, fish, beads, stories.
+- FR2 Forest Knowledge - Goal: edible/medicinal plants and safe paths.
+- FR3 Mancala & Math - Goal: games encode counting and planning.
 - Wrap: `collect_fr_badge.svg`.
 
 Rift & Horn (RH)
 
-- RH1 Highland Terraces — Goal: soil/water care via terraces.
-- RH2 Port Monsoons — Goal: seasonal sailing calendars and harbor care.
-- RH3 Scripts & Scrolls — Goal: scripts as knowledge webs.
+- RH1 Highland Terraces - Goal: soil/water care via terraces.
+- RH2 Port Monsoons - Goal: seasonal sailing calendars and harbor care.
+- RH3 Scripts & Scrolls - Goal: scripts as knowledge webs.
 - Wrap: `collect_rh_badge.svg`.
 
 Great Lakes & Highlands (GL)
 
-- GL1 Cattle & Commons — Goal: pastoral rules, care, and sharing.
-- GL2 Iron & Gardens — Goal: iron tools and enset/banana gardens.
-- GL3 Courtyard Justice — Goal: mediation and social safety.
+- GL1 Cattle & Commons - Goal: pastoral rules, care, and sharing.
+- GL2 Iron & Gardens - Goal: iron tools and enset/banana gardens.
+- GL3 Courtyard Justice - Goal: mediation and social safety.
 - Wrap: `collect_gl_badge.svg`.
 
-Coasts & Crossings — Atlantic/Indian (CC)
+Coasts & Crossings - Atlantic/Indian (CC)
 
-- CC1 Currents & Canoes — Goal: navigation, outrigger craft.
-- CC2 Dhows & Markets — Goal: Indian Ocean hubs, cultural blends.
-- CC3 Tides & Safety — Goal: coastal watch and fire codes.
+- CC1 Currents & Canoes - Goal: navigation, outrigger craft.
+- CC2 Dhows & Markets - Goal: Indian Ocean hubs, cultural blends.
+- CC3 Tides & Safety - Goal: coastal watch and fire codes.
 - Wrap: `collect_cc_badge.svg`.
 
 Implementation Tasks (summary)
@@ -102,7 +102,7 @@ Implementation Tasks (summary)
 - Eng (MVP later): scene registry + save; Community Web meter; one pack playable slice (SS).
 - QA: Playwright smoke for SS wrap path; RTL for meter reducer.
 
-Suggestions — additional stories & functionality
+Suggestions - additional stories & functionality
 
 - Stories: rock art mapping; beadwork routes; lake fisheries cooperatives; island crossings; desert gardens.
 - Functionality: timeline overlay linking to Human History; per‑scene sources modal; “Deeper Context” toggles; content

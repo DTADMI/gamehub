@@ -24,7 +24,7 @@ export default function GlyphWeaverPage() {
 
   return (
     <GameShell
-      ariaLabel="Glyph Weaver — Spell Crafting Studio"
+      ariaLabel="Glyph Weaver - Spell Crafting Studio"
       tips="Draw a glyph ring, then sigils inside it. Close the ring to cast your spell!"
       gameSlug="glyph-weaver"
     >

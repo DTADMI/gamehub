@@ -8,7 +8,7 @@ import React from "react";
 const OrbitControlsComponent = OrbitControls as React.ComponentType<any>;
 
 /**
- * Minimal 3D stub for Snake — shares no logic yet, just a smoke-render scene.
+ * Minimal 3D stub for Snake - shares no logic yet, just a smoke-render scene.
  * This is feature-gated by `snake_3d_mode` on the page and intended for premium users later.
  */
 export function SnakeGame3D() {

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Systems Discovery — BOD Move", () => {
+test.describe("Systems Discovery - BOD Move", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => localStorage.clear());
   });

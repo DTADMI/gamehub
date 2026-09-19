@@ -16,7 +16,7 @@ const brokenToyPairs: MatchPair[] = [
 ];
 
 /**
- * E2 — Broken Toy Workbench: match broken toys to their missing pieces.
+ * E2 - Broken Toy Workbench: match broken toys to their missing pieces.
  * Uses the shared MatchingPuzzle component.
  */
 export function BrokenToysPuzzle({ lang, ctx, setCtx }: BrokenToysPuzzleProps) {

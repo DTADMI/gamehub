@@ -1,18 +1,18 @@
 export const tmeStrings = {
   e1a: {
-    title: "E1 — Workshop (Gear or Music)",
+    title: "E1 - Workshop (Gear or Music)",
     prompt: "Pick your path to open the plate:",
     choice_gears: "Align gears (stub)",
     choice_music: "Tune music box (stub)",
   },
   e1b: {
-    title: "E1 — Playroom Sorter",
+    title: "E1 - Playroom Sorter",
     prompt: "Sorter reveals Key Fragment 1 (stub):",
     choice_hints: "Use hints",
     choice_nohints: "No hints",
   },
   done: {
-    title: "Episode Complete — Key Fragment 1",
+    title: "Episode Complete - Key Fragment 1",
     prompt: "Episode complete! Codex seed stored.",
     path: "Path",
     helper: "Helper",

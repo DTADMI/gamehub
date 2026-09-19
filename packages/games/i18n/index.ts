@@ -56,7 +56,7 @@ export function createI18n<T extends I18nMap>(tx: T, defaultLocale?: SupportedLo
 }
 
 /**
- * Quick bilingual string helper — returns { en: "...", fr: "..." }
+ * Quick bilingual string helper - returns { en: "...", fr: "..." }
  * Use for scene titles, button labels, etc. in TX maps.
  */
 export function b(en: string, fr: string): { en: string; fr: string } {

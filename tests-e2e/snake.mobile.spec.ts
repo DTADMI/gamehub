@@ -2,7 +2,7 @@ import { devices, expect, test } from "@playwright/test";
 
 test.use(devices["Pixel 5"]);
 
-test.describe("Snake — mobile swipe controls", () => {
+test.describe("Snake - mobile swipe controls", () => {
   test("swipe changes direction and page does not scroll", async ({ page }) => {
     await page.goto("/games/snake");
 
@@ -57,7 +57,7 @@ test.describe("Snake — mobile swipe controls", () => {
 
 // Run the same smoke on iPhone 12 profile to ensure parity across engines
 test.describe.configure({ mode: "serial" });
-test.describe("Snake — mobile swipe on iPhone 12", () => {
+test.describe("Snake - mobile swipe on iPhone 12", () => {
   test.use(devices["iPhone 12"]);
   test("swipe and no-scroll", async ({ page }) => {
     await page.goto("/games/snake");

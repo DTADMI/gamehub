@@ -1,5 +1,5 @@
 /**
- * BreakoutPowerUps — Power-up types, spawn logic, and UI cards.
+ * BreakoutPowerUps - Power-up types, spawn logic, and UI cards.
  * Extracted from BreakoutGame.tsx (M-3 refactor).
  */
 

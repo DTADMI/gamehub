@@ -991,7 +991,7 @@ export const SnakeGame: React.FC = () => {
               }
             }}
           >
-            {!gameStarted ? "Tap to start" : "Paused — Tap to resume"}
+            {!gameStarted ? "Tap to start" : "Paused - Tap to resume"}
           </button>
         )}
 

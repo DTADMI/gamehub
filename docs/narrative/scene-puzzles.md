@@ -1,6 +1,6 @@
-# Narrative — Scene & Puzzle Briefs (TME E1 focus)
+# Narrative - Scene & Puzzle Briefs (TME E1 focus)
 
-This document captures the cleverness pass for Toymaker Escape — Episode 1 (TME E1). It describes scenes, environment
+This document captures the cleverness pass for Toymaker Escape - Episode 1 (TME E1). It describes scenes, environment
 storytelling, puzzle beats, diegetic clues, accessibility notes, and asset lists for designers/illustrators and audio.
 
 Status: Draft (approved plan). Languages: EN/FR copy planned; placeholders below indicate where localized strings should
@@ -116,7 +116,7 @@ Pipes/Flow
   open.
 - Logic: implement in `pointclick/puzzles/pipes.ts` (planned); provide reduced‑motion visual state.
 
-Gesture Macro — Hidden Latch
+Gesture Macro - Hidden Latch
 
 - Macro: `['pointerdown','longpress','swipe']`.
 - Trigger area: scuffed cabinet seam; on match, set blackboard `latch.revealed=true`.

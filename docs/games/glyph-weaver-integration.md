@@ -1,4 +1,4 @@
-# Glyph Weaver — GameHub Integration
+# Glyph Weaver - GameHub Integration
 
 **Owner**: Nebula Forge GameHub Team + Glyph Weaver Team
 **Last Updated**: 2026-08-22
@@ -11,12 +11,12 @@ Glyph Weaver is a full spell-crafting studio originally developed as a standalon
 
 A programmable glyph engine inspired by the magic system in *Witch Hat Atelier* (Kamome Shirahama / Kodansha). Features:
 
-- **Drawing Canvas** — HTML5 Canvas with procedural paper texture, pen/eraser tools, pressure sensitivity
-- **WebGL Particle Effects** — 5 core elements (fire, water, wind, earth, light) + 5 additional (dark, lightning, ice, nature, arcane) with GPU particle systems
-- **WHA-DSL** — Domain-specific language for text-based spell diagrams
-- **Multi-Ring Compilation** — Nested and linked spell circles with element combination logic
-- **Dictionary System** — Extensible sigil/sign/sample-spell definitions
-- **Pipeline** — Draw → Parse → GlyphAST → Compile → SpellIR → Render
+- **Drawing Canvas** - HTML5 Canvas with procedural paper texture, pen/eraser tools, pressure sensitivity
+- **WebGL Particle Effects** - 5 core elements (fire, water, wind, earth, light) + 5 additional (dark, lightning, ice, nature, arcane) with GPU particle systems
+- **WHA-DSL** - Domain-specific language for text-based spell diagrams
+- **Multi-Ring Compilation** - Nested and linked spell circles with element combination logic
+- **Dictionary System** - Extensible sigil/sign/sample-spell definitions
+- **Pipeline** - Draw → Parse → GlyphAST → Compile → SpellIR → Render
 
 ### Project Structure (Separate Monorepo)
 
@@ -106,12 +106,12 @@ For full integration (eliminating the launchpad fallback):
 
 | # | Gap | Priority | Effort |
 |---|---|---|---|
-| GW-1 | CI action-plan docs say ubuntu-22.04/Node 22 — actual CI and package.json use correct versions | LOW | Already compliant, just doc fix |
-| GW-2 | UI package root `tsc --noEmit` fails (no jsx in root tsconfig) — per-package builds work fine | LOW | Add `"jsx": "react-jsx"` to root tsconfig or use `tsc --build` only |
-| GW-3 | Accessibility audit — deferred (WCAG 2.1 AA) | MEDIUM | 🔵 Deferred |
-| GW-4 | Onboarding tutorial — deferred | MEDIUM | 🔵 Phase 2 |
-| GW-5 | PWA support — deferred | LOW | 🔵 Phase 2 |
-| GW-6 | Integration with GameHub — launchpad mode | MEDIUM | Created this session |
+| GW-1 | CI action-plan docs say ubuntu-22.04/Node 22 - actual CI and package.json use correct versions | LOW | Already compliant, just doc fix |
+| GW-2 | UI package root `tsc --noEmit` fails (no jsx in root tsconfig) - per-package builds work fine | LOW | Add `"jsx": "react-jsx"` to root tsconfig or use `tsc --build` only |
+| GW-3 | Accessibility audit - deferred (WCAG 2.1 AA) | MEDIUM | 🔵 Deferred |
+| GW-4 | Onboarding tutorial - deferred | MEDIUM | 🔵 Phase 2 |
+| GW-5 | PWA support - deferred | LOW | 🔵 Phase 2 |
+| GW-6 | Integration with GameHub - launchpad mode | MEDIUM | Created this session |
 | GW-7 | No standalone deployment URL yet | HIGH | Blocked on deployment |
 | GW-8 | README says packages are "future" but all are 🟢 complete | LOW | Update README |
 

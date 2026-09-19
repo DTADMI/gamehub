@@ -8,7 +8,7 @@ import {
 
 // jsdom provides localStorage
 
-describe("Persistence — versioned saves", () => {
+describe("Persistence - versioned saves", () => {
   beforeEach(() => {
     localStorage.clear();
   });

@@ -149,7 +149,7 @@ export function DialogueBox({
 
       {/* Body with optional speaker portrait */}
       <div className="flex gap-4 p-5">
-        {/* Speaker portrait — left side */}
+        {/* Speaker portrait - left side */}
         {activeSpeaker && (
           <div className="mt-1 flex-shrink-0">
             <div
@@ -214,7 +214,7 @@ export function DialogueBox({
           )}
         </div>
 
-        {/* Speaker portrait — right side */}
+        {/* Speaker portrait - right side */}
         {activeSpeaker && activeSpeaker.side === "right" && (
           <div className="mt-1 flex-shrink-0">
             <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-blue-500/50 bg-white/5">
@@ -255,7 +255,7 @@ export function DialogueBox({
         </div>
       )}
 
-      {/* No choices — just a continue button */}
+      {/* No choices - just a continue button */}
       {choicesVisible && evaluatedChoices.length === 0 && (
         <div className="border-t border-white/10 px-5 pb-5 pt-3">
           <button

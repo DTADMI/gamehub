@@ -1,5 +1,5 @@
 /**
- * DungeonDelverAudio — Web Audio API procedural sound synthesis
+ * DungeonDelverAudio - Web Audio API procedural sound synthesis
  *
  * Zero-dependency, no mp3 files required. Generates:
  * - Combat: hit, crit, death, block

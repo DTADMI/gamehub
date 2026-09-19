@@ -8,13 +8,13 @@
       "skip": "Skip intro"
     },
     "s1": {
-      "title": "S1 — Tag Reassembly",
+      "title": "S1 - Tag Reassembly",
       "prompt": "Reassemble the name tag by rotating the three pieces into order 1‑2‑3.",
-      "hint": "Hint (Gentle Mode): Middle piece often belongs in the center—try 1‑2‑3.",
+      "hint": "Hint (Gentle Mode): Middle piece often belongs in the center-try 1‑2‑3.",
       "continue": "Assemble Tag and Continue"
     },
     "s2": {
-      "title": "S2 — Note Letter‑Match",
+      "title": "S2 - Note Letter‑Match",
       "prompt": "Match the three letters that don’t belong. Toggle the mismatched letters.",
       "hint": "Gentle Mode is on. Try toggling exactly three letters.",
       "check": "Check",
@@ -22,27 +22,27 @@
       "reset": "Reset"
     },
     "s3": {
-      "title": "S3 — Proof Moment",
+      "title": "S3 - Proof Moment",
       "prompt": "Choose how you learn the truth.",
-      "gentle": "Gentle hint: Either choice works — try the one that feels right.",
+      "gentle": "Gentle hint: Either choice works - try the one that feels right.",
       "receipt": "Find a receipt",
       "overhear": "Overhear a talk"
     },
     "ep": {
-      "title": "Epilogue — Helper Badge",
+      "title": "Epilogue - Helper Badge",
       "done": "Well done. You completed the MVP slice.",
       "ngpTitle": "New Game+ Gate",
       "ngpNote": "Mentor Mini unlocks when Helper Badge is earned. (Placeholder)",
       "gentle": "Gentle note: You can replay later and try the other route."
     },
     "outro": {
-      "title": "Wrap — Rite of Discovery",
+      "title": "Wrap - Rite of Discovery",
       "p1": "Thanks for playing. Ready to explore a different path?",
       "recap": "Your results",
       "replay": "Play again from the start",
       "branchOther": "Try the other branch",
       "toggleGentle": "Toggle Gentle Mode for next run",
-      "ngp": "New Game+ (Mentor Mini) — coming soon",
+      "ngp": "New Game+ (Mentor Mini) - coming soon",
       "home": "Back to catalog"
     }
   },
@@ -55,14 +55,14 @@
       "skip": "Skip intro"
     },
     "intro": {
-      "title": "E1 — Workshop",
+      "title": "E1 - Workshop",
       "prompt": "Pick your path to open the plate:",
       "gears": "Gears",
       "music": "Music"
     },
     "workshop": {
       "gears": {
-        "title": "Workshop — Align Gears",
+        "title": "Workshop - Align Gears",
         "prompt": "Rotate three dials to align the gears to 1‑3‑2.",
         "hint": "Gentle hint: target is 1‑3‑2.",
         "dial": "Dial",
@@ -70,7 +70,7 @@
         "continue": "Continue"
       },
       "music": {
-        "title": "Workshop — Tune Music Box",
+        "title": "Workshop - Tune Music Box",
         "prompt": "Set the three sliders to match the pattern 2‑5‑7.",
         "hint": "Gentle hint: try a low, a mid, and a higher note.",
         "s1": "Slider 1",
@@ -104,7 +104,7 @@
       }
     },
     "ep": {
-      "title": "Episode Complete — Key Fragment 1",
+      "title": "Episode Complete - Key Fragment 1",
       "done": "Episode complete! Codex seed stored.",
       "path": "Path",
       "helper": "Helper",
@@ -112,7 +112,7 @@
       "note": "Tip: Replay with a different route to try for a higher medal."
     },
     "outro": {
-      "title": "Wrap — Toymaker Escape",
+      "title": "Wrap - Toymaker Escape",
       "p1": "Great work. Want to try for a different medal or route?",
       "recap": {
         "medal": "Your medal"
@@ -128,12 +128,12 @@
     "intro": {
       "title": "Systems Discovery",
       "p1": "Today you’ll complete a simple loop, plan a route, and sort waste correctly.",
-      "p2": "Notice how each step connects to the next—small choices add up.",
+      "p2": "Notice how each step connects to the next-small choices add up.",
       "cta": "Begin",
       "skip": "Skip intro"
     },
     "b1": {
-      "title": "B1 — Loop Puzzle (Kitchen→Compost→Soil→Herbs)",
+      "title": "B1 - Loop Puzzle (Kitchen→Compost→Soil→Herbs)",
       "prompt": "Complete today’s loop in order. Select each step in sequence.",
       "hint": "Gentle hint: Kitchen → Compost → Soil → Herbs.",
       "steps": {
@@ -145,13 +145,13 @@
       "continue": "Continue"
     },
     "b2": {
-      "title": "B2 — Route Planner (Bus/Bike)",
+      "title": "B2 - Route Planner (Bus/Bike)",
       "prompt": "Plan an efficient route:",
       "busFirst": "Bus then Bike",
       "bikeFirst": "Bike then Bus"
     },
     "b3": {
-      "title": "B3 — Waste Sorting",
+      "title": "B3 - Waste Sorting",
       "prompt": "Sort items correctly. Toggle ‘Hints’ for guidance.",
       "hintsOn": "Hints: On",
       "hintsOff": "Hints: Off",
@@ -164,32 +164,32 @@
       "reveal": "Finish sorting"
     },
     "wrap": {
-      "title": "Wrap — Systems Scout Badge",
-      "done": "Core pack complete — Systems Scout badge awarded.",
+      "title": "Wrap - Systems Scout Badge",
+      "done": "Core pack complete - Systems Scout badge awarded.",
       "b1": "B1 route",
       "b2": "B2 plan",
       "b3": "B3 result"
     },
     "outro": {
-      "title": "Wrap — Systems Discovery",
+      "title": "Wrap - Systems Discovery",
       "p1": "Nice work. Want to try a different plan or explore more?",
       "recap": "Your results",
       "replay": "Replay Core pack",
       "altPlan": "Try the alternate B2 plan",
       "toggleHints": "Toggle hints for next run",
-      "bodTeaser": "Body Systems Pack — coming soon",
+      "bodTeaser": "Body Systems Pack - coming soon",
       "home": "Back to catalog"
     },
     "space": {
       "intro": {
-        "title": "Systems Discovery — Space",
+        "title": "Systems Discovery - Space",
         "p1": "Explore simple patterns in our solar system.",
         "p2": "Arrange, compare, and notice how orbits and light connect.",
         "cta": "Begin",
         "skip": "Skip intro"
       },
       "outro": {
-        "title": "Wrap — Space Pack",
+        "title": "Wrap - Space Pack",
         "p1": "Well done. Ready to replay or visit another pack?",
         "recap": "Your Space results",
         "replay": "Replay Space pack",
@@ -199,14 +199,14 @@
     },
     "ocean": {
       "intro": {
-        "title": "Systems Discovery — Ocean",
+        "title": "Systems Discovery - Ocean",
         "p1": "Dive into layers of light, currents, and deep signals.",
         "p2": "Order, connect, and match clues with care.",
         "cta": "Begin",
         "skip": "Skip intro"
       },
       "outro": {
-        "title": "Wrap — Ocean Pack",
+        "title": "Wrap - Ocean Pack",
         "p1": "Great work beneath the waves.",
         "recap": "Your Ocean results",
         "replay": "Replay Ocean pack",
@@ -223,26 +223,26 @@
       },
       "breath": {
         "intro": {
-          "title": "Body Systems — Breath",
+          "title": "Body Systems - Breath",
           "p1": "Air in, energy on. Air out, balance stays.",
           "p2": "You’ll order steps and match flows, meter stays calm.",
           "cta": "Begin",
           "skip": "Skip intro"
         },
         "bb1": {
-          "title": "BB1 — Respiratory Basics",
+          "title": "BB1 - Respiratory Basics",
           "prompt": "Order the pathway cards; match O2/CO2 flow."
         },
         "bb2": {
-          "title": "BB2 — Cardiovascular Flow",
+          "title": "BB2 - Cardiovascular Flow",
           "prompt": "Place chambers and indicate flow direction."
         },
         "bb3": {
-          "title": "BB3 — Coupling at the Exchange",
+          "title": "BB3 - Coupling at the Exchange",
           "prompt": "Keep balance steady while adjusting simple choices."
         },
         "outro": {
-          "title": "Wrap — Breath",
+          "title": "Wrap - Breath",
           "p1": "Nice balance. Want to replay or continue?",
           "recap": "Your Breath results",
           "replay": "Replay Breath",
@@ -252,26 +252,26 @@
       },
       "fuel": {
         "intro": {
-          "title": "Body Systems — Fuel",
+          "title": "Body Systems - Fuel",
           "p1": "Turn foods into building blocks.",
           "p2": "Match and order without hurry; keep the meter steady.",
           "cta": "Begin",
           "skip": "Skip intro"
         },
         "bf1": {
-          "title": "BF1 — Digestive Journey",
+          "title": "BF1 - Digestive Journey",
           "prompt": "Match foods to enzyme cards; simple, gentle pairs."
         },
         "bf2": {
-          "title": "BF2 — Absorption & Transport",
-          "prompt": "Place nutrients into villi, then to blood—keep balance calm."
+          "title": "BF2 - Absorption & Transport",
+          "prompt": "Place nutrients into villi, then to blood-keep balance calm."
         },
         "bf3": {
-          "title": "BF3 — Waste & Balance",
+          "title": "BF3 - Waste & Balance",
           "prompt": "Choose hydration balance; meter should stay steady."
         },
         "outro": {
-          "title": "Wrap — Fuel",
+          "title": "Wrap - Fuel",
           "p1": "Good work keeping balance.",
           "recap": "Your Fuel results",
           "replay": "Replay Fuel",
@@ -281,26 +281,26 @@
       },
       "move": {
         "intro": {
-          "title": "Body Systems — Move",
+          "title": "Body Systems - Move",
           "p1": "Bones as levers, muscles as pairs.",
           "p2": "Place and adjust with care; watch balance gently.",
           "cta": "Begin",
           "skip": "Skip intro"
         },
         "bm1": {
-          "title": "BM1 — Skeletal Support",
+          "title": "BM1 - Skeletal Support",
           "prompt": "Choose safe leverage; nudge toward steady balance."
         },
         "bm2": {
-          "title": "BM2 — Muscular Action",
+          "title": "BM2 - Muscular Action",
           "prompt": "Pick a calm action; watch the meter."
         },
         "bm3": {
-          "title": "BM3 — Coordination",
+          "title": "BM3 - Coordination",
           "prompt": "Small adjustments keep signals smooth."
         },
         "outro": {
-          "title": "Wrap — Move",
+          "title": "Wrap - Move",
           "p1": "Steady and kind.",
           "recap": "Your Move results",
           "replay": "Replay Move",
@@ -310,26 +310,26 @@
       },
       "signal": {
         "intro": {
-          "title": "Body Systems — Signal & Defend",
+          "title": "Body Systems - Signal & Defend",
           "p1": "Messages and protection working together.",
           "p2": "Match signals and responses; keep feedback calm.",
           "cta": "Begin",
           "skip": "Skip intro"
         },
         "bsd1": {
-          "title": "BSD1 — Nervous & Senses",
+          "title": "BSD1 - Nervous & Senses",
           "prompt": "Pick two senses; gentle path keeps balance."
         },
         "bsd2": {
-          "title": "BSD2 — Endocrine Messages",
+          "title": "BSD2 - Endocrine Messages",
           "prompt": "Place messages to goals; meter nudges softly."
         },
         "bsd3": {
-          "title": "BSD3 — Immune & Barriers",
+          "title": "BSD3 - Immune & Barriers",
           "prompt": "Match threats to responses without rush."
         },
         "outro": {
-          "title": "Wrap — Signal & Defend",
+          "title": "Wrap - Signal & Defend",
           "p1": "Good signals, steady care.",
           "recap": "Your Signal & Defend results",
           "replay": "Replay Signal & Defend",
@@ -339,26 +339,26 @@
       },
       "grow": {
         "intro": {
-          "title": "Body Systems — Grow",
+          "title": "Body Systems - Grow",
           "p1": "Changes over time with care and consent.",
           "p2": "Order and match ideas gently.",
           "cta": "Begin",
           "skip": "Skip intro"
         },
         "bg1": {
-          "title": "BG1 — Reproductive Basics",
+          "title": "BG1 - Reproductive Basics",
           "prompt": "Order the growth story cards with care."
         },
         "bg2": {
-          "title": "BG2 — Changes Over Time",
+          "title": "BG2 - Changes Over Time",
           "prompt": "Choose kind supports; steady is good."
         },
         "bg3": {
-          "title": "BG3 — Care Networks",
+          "title": "BG3 - Care Networks",
           "prompt": "Connect helpers to needs; balance stays calm."
         },
         "outro": {
-          "title": "Wrap — Grow",
+          "title": "Wrap - Grow",
           "p1": "Kind learning grows over time.",
           "recap": "Your Grow results",
           "replay": "Replay Grow",

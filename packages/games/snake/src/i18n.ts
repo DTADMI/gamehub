@@ -1,5 +1,5 @@
 /**
- * Snake — Bilingual string map (EN/FR)
+ * Snake - Bilingual string map (EN/FR)
  *
  * Usage: import { createI18n } from "@games/i18n";
  *        import { SNAKE_TX } from "@games/snake/i18n";

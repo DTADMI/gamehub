@@ -171,7 +171,7 @@
       },
     "space": {
       "intro": {
-        "title": "Space Pack — Solar System",
+        "title": "Space Pack - Solar System",
         "p1": "Explore the orbits and connections between celestial bodies.",
         "p2": "How do planets, moons, and stars connect across vast distances?",
         "cta": "Launch",
@@ -272,8 +272,8 @@
     },
     "ocean": {
       "intro": {
-        "title": "Ocean Pack — Deep Blue",
-        "p1": "Dive into the ocean's layered world — from sunlit shallows to the dark depths.",
+        "title": "Ocean Pack - Deep Blue",
+        "p1": "Dive into the ocean's layered world - from sunlit shallows to the dark depths.",
         "p2": "How do currents, light, and life interconnect beneath the waves?",
         "cta": "Dive In",
         "skip": "Skip intro"

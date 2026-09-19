@@ -22,7 +22,7 @@ const filingPairs: MatchPair[] = [
 ];
 
 /**
- * E2 — Filing Logic: sort toys into the correct filing cabinets (A/B/C).
+ * E2 - Filing Logic: sort toys into the correct filing cabinets (A/B/C).
  * Uses the shared MatchingPuzzle component.
  */
 export function FilingLogicPuzzle({ lang, ctx, setCtx }: FilingLogicPuzzleProps) {

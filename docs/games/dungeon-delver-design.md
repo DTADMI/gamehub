@@ -1,4 +1,4 @@
-# Dungeon Delver — Game Design Document
+# Dungeon Delver - Game Design Document
 
 **Owner**: GameHub Team  
 **Last Updated**: 2026-08-24  
@@ -57,7 +57,7 @@
 
 | ID | Name | Stats | Resistances | Icon |
 |----|------|-------|-------------|------|
-| human | Human / Humain | STR+1 STA+1 WIL+1 INT+1 | — | 🧑 |
+| human | Human / Humain | STR+1 STA+1 WIL+1 INT+1 | - | 🧑 |
 | elf | Elf / Elfe | INT+3 WIL+2 STA-1 | Ice+15% | 🧝 |
 | dwarf | Dwarf / Nain | STA+3 STR+1 INT-1 | Fire+25% | 🪓 |
 | vampire | Vampire / Vampire | STR+1 INT+2 WIL+1 | Poison+30% | 🧛 |

@@ -1,4 +1,4 @@
-# Major Version Bumps — Evaluation
+# Major Version Bumps - Evaluation
 
 **Last Updated**: 2026-09-07
 **Author**: Agent audit
@@ -9,7 +9,7 @@ Minor/patch bumps are applied within 30 days of release.
 
 ---
 
-## Bump Results (v1.5 — 2026-09-07)
+## Bump Results (v1.5 - 2026-09-07)
 
 All evaluated bumps were applied in a single ~1.5h session. Summary:
 
@@ -68,6 +68,6 @@ pnpm build: ✅
 
 ## Related
 
-- `pnpm-workspace.yaml` — overrides for CVE patches
-- `docs/action-plan.md` — Phase 0 security tasks
+- `pnpm-workspace.yaml` - overrides for CVE patches
+- `docs/action-plan.md` - Phase 0 security tasks
 - NF policy: major version bumps require documented evaluation

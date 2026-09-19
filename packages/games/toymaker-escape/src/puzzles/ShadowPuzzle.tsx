@@ -18,7 +18,7 @@ const CANVAS_W = 480;
 const CANVAS_H = 200;
 
 /**
- * E2 — Shadow Puzzle: align 3 shapes (circle, square, triangle) to match
+ * E2 - Shadow Puzzle: align 3 shapes (circle, square, triangle) to match
  * a target outline on a canvas. Draggable via pointer events.
  */
 export function ShadowPuzzle({ lang, ctx, setCtx }: ShadowPuzzleProps) {

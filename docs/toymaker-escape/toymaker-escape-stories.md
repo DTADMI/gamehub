@@ -1,4 +1,4 @@
-# Toymaker Escape — Stories & Scenarios Tracker
+# Toymaker Escape - Stories & Scenarios Tracker
 
 Purpose
 
@@ -17,13 +17,13 @@ Status key
 Index
 
 - Episodes
-  - [TME_INTRO Title Card](#tme_intro-title-card) — Status: Integrated — Owner: Narrative
-    - [E1 House, Part 1 — Workshop & Playroom](#e1-house-part-1--workshop--playroom) — Status: Draft — Owner: Narrative
-    - [E2 House, Part 2 — Office & Secret Stair](#e2-house-part-2--office--secret-stair) — Status: Draft — Owner:
+  - [TME_INTRO Title Card](#tme_intro-title-card) - Status: Integrated - Owner: Narrative
+    - [E1 House, Part 1 - Workshop & Playroom](#e1-house-part-1--workshop--playroom) - Status: Draft - Owner: Narrative
+    - [E2 House, Part 2 - Office & Secret Stair](#e2-house-part-2--office--secret-stair) - Status: Draft - Owner:
       Narrative
-    - [E3 Apartment Mystery — The Commissioner Is… You](#e3-apartment-mystery--the-commissioner-is-you) — Status:
-      Draft — Owner: Narrative
-  - [TME_OUTRO Medal Wrap](#tme_outro-medal-wrap) — Status: Integrated — Owner: Narrative
+    - [E3 Apartment Mystery - The Commissioner Is… You](#e3-apartment-mystery--the-commissioner-is-you) - Status:
+      Draft - Owner: Narrative
+  - [TME_OUTRO Medal Wrap](#tme_outro-medal-wrap) - Status: Integrated - Owner: Narrative
 
 Overview: Flow & Narrative
 
@@ -31,7 +31,7 @@ First run flow: TME_INTRO (first visit only) → E1A Workshop (choose Gears or M
 TME_OUTRO (first completion only).
 
 A short intro frames the playful escape. In E1A, the player picks a Workshop path: aligning gears with rotatable dials
-or tuning a music box with sliders—both keyboardable and readable via captions. E1B reveals Key Fragment 1 through a
+or tuning a music box with sliders-both keyboardable and readable via captions. E1B reveals Key Fragment 1 through a
 simple sorter, optionally with hints. The DONE screen recaps the run with a medal and items. The first time, the Outro
 invites replay: switch Workshop route, toggle hints, or begin again. Future episodes (E2 Office & Secret Stair, E3
 Apartment Mystery) follow the same rhythm with accessible puzzles and gentle copy.
@@ -63,7 +63,7 @@ Story Template
 - Guardrails: Reduced motion; accessible heading and buttons.
 - Status: Integrated.
 
-## E1 House, Part 1 — Workshop & Playroom
+## E1 House, Part 1 - Workshop & Playroom
 
 - Goal: Learn core interactions; collect first Key Fragment.
 - Rooms: Workshop, Playroom hub, Locked Hall.
@@ -93,7 +93,7 @@ Story Template
 - Guardrails: ≥44px controls, visible focus, reduced motion.
 - Status: Integrated.
 
-## E2 House, Part 2 — Office & Secret Stair
+## E2 House, Part 2 - Office & Secret Stair
 
 - Goal: Access office; discover who commissioned the house setup.
 - Rooms: Office, Files Nook, Stairwell.
@@ -108,7 +108,7 @@ Story Template
 - Assets: see brief E2.
 - Copy notes: “Evidence first, stories second.”
 
-## E3 Apartment Mystery — The Commissioner Is… You
+## E3 Apartment Mystery - The Commissioner Is… You
 
 - Goal: Piece together your own arrangement with your partner; understand the playful consent and memory condition.
 - Rooms: Entry, Living Room, Study, Kitchen.
@@ -126,6 +126,6 @@ Story Template
 
 Suggestions (Additional Scenarios)
 
-- E4 Rooftop Observatory — star pattern lock; tie‑in with Systems: Space.
-- E5 Harbor Workshop — tide clock and buoy sound matcher (captioned); tie‑in with Systems: Ocean.
+- E4 Rooftop Observatory - star pattern lock; tie‑in with Systems: Space.
+- E5 Harbor Workshop - tide clock and buoy sound matcher (captioned); tie‑in with Systems: Ocean.
 - Short mysteries: Toy Fair Heist; Clockmaker’s Apprentice.

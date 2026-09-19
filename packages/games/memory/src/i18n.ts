@@ -1,5 +1,5 @@
 /**
- * Memory — Bilingual string map (EN/FR)
+ * Memory - Bilingual string map (EN/FR)
  */
 export const MEMORY_TX = {
   en: {

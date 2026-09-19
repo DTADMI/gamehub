@@ -1,5 +1,5 @@
 /**
- * Tetris — Bilingual string map (EN/FR)
+ * Tetris - Bilingual string map (EN/FR)
  */
 export const TETRIS_TX = {
   en: {

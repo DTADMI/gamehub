@@ -1,5 +1,5 @@
 /**
- * Breakout — Bilingual string map (EN/FR)
+ * Breakout - Bilingual string map (EN/FR)
  */
 export const BREAKOUT_TX = {
   en: {

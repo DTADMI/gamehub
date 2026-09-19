@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Rite of Discovery — flow", () => {
+test.describe("Rite of Discovery - flow", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => localStorage.clear());
   });

@@ -171,7 +171,7 @@
       },
     "space": {
       "intro": {
-        "title": "Pack Espace — Système solaire",
+        "title": "Pack Espace - Système solaire",
         "p1": "Explorez les orbites et les connexions entre les corps célestes.",
         "p2": "Comment les planètes, les lunes et les étoiles se connectent-elles à travers de vastes distances ?",
         "cta": "Lancer",
@@ -272,8 +272,8 @@
     },
     "ocean": {
       "intro": {
-        "title": "Pack Océan — Bleu profond",
-        "p1": "Plongez dans le monde stratifié de l'océan — des hauts-fonds ensoleillés aux profondeurs obscures.",
+        "title": "Pack Océan - Bleu profond",
+        "p1": "Plongez dans le monde stratifié de l'océan - des hauts-fonds ensoleillés aux profondeurs obscures.",
         "p2": "Comment les courants, la lumière et la vie s'interconnectent-ils sous les vagues ?",
         "cta": "Plonger",
         "skip": "Passer l'intro"

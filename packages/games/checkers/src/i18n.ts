@@ -1,5 +1,5 @@
 /**
- * Checkers — Bilingual string map (EN/FR)
+ * Checkers - Bilingual string map (EN/FR)
  */
 export const CHECKERS_TX = {
   en: {

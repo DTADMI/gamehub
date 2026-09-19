@@ -14,7 +14,7 @@
       "skip": "Passer l'intro"
     },
     "e1": {
-      "title": "Toymaker Escape — Épisode 1",
+      "title": "Toymaker Escape - Épisode 1",
       "body": "Un atelier silencieux. Les indices se cachent à vue d'œil.",
       "keypad": {
         "hint": "Un indice dans la pièce semble suggérer l'ordre... observez les jouets sur l'étagère.",
@@ -110,7 +110,7 @@
     "e3": {
       "intro": {
         "title": "Le Mystère de l'Appartement",
-        "body": "Vous arrivez à votre propre appartement. Quelque chose semble étrange. Le commissaire a laissé des indices ici — mais pourquoi VOTRE appartement?"
+        "body": "Vous arrivez à votre propre appartement. Quelque chose semble étrange. Le commissaire a laissé des indices ici - mais pourquoi VOTRE appartement?"
       },
       "locks": {
         "title": "Verrous environnementaux",
@@ -158,7 +158,7 @@
       },
       "wrap": {
         "title": "Épisode 3 terminé",
-        "body": "Le mystère de l'appartement est résolu. Le commissaire ÉTAIT le fabricant de jouets — vous avez créé ce casse-tête pour vous-même.",
+        "body": "Le mystère de l'appartement est résolu. Le commissaire ÉTAIT le fabricant de jouets - vous avez créé ce casse-tête pour vous-même.",
         "medalEarned": "Médaille gagnée : Apprenti fabricant"
       }
     },

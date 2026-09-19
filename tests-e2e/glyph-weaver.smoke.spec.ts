@@ -1,5 +1,5 @@
 /**
- * T-3: Smoke test — Glyph Weaver launchpad.
+ * T-3: Smoke test - Glyph Weaver launchpad.
  *
  * Verifies:
  *  - Game route renders without errors
@@ -8,7 +8,7 @@
  */
 import { expect, test } from "@playwright/test";
 
-test.describe("Glyph Weaver — smoke", () => {
+test.describe("Glyph Weaver - smoke", () => {
   test("launchpad renders with heading and feature list", async ({ page }) => {
     await page.goto("/games/glyph-weaver");
 
@@ -18,7 +18,7 @@ test.describe("Glyph Weaver — smoke", () => {
     ).toBeVisible({ timeout: 20000 });
 
     // GameShell container should be present
-    await expect(page.getByLabel("Glyph Weaver — Spell Crafting Studio")).toBeVisible();
+    await expect(page.getByLabel("Glyph Weaver - Spell Crafting Studio")).toBeVisible();
 
     // Tips text should be visible
     await expect(

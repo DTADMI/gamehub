@@ -138,7 +138,7 @@ export const games: GameManifest = {
   "pattern-matching": {
     slug: "pattern-matching",
     title: "Pattern Matching",
-    shortDescription: "Relaxing stitch puzzler — match the pattern and score combos.",
+    shortDescription: "Relaxing stitch puzzler - match the pattern and score combos.",
     tags: ["Puzzle", "Casual", "Mobile", "dom-ui", "impl:react-dom", "target:keep"],
     image: "/images/games/pattern-matching-card.svg",
     genre: "puzzle",
@@ -159,7 +159,7 @@ export const games: GameManifest = {
   knitzy: {
     slug: "knitzy",
     title: "Knitzy",
-    shortDescription: "Cozy puzzler — match colorful patterns with rolling balls of wool.",
+    shortDescription: "Cozy puzzler - match colorful patterns with rolling balls of wool.",
     tags: ["Puzzle", "Casual", "dom-ui", "impl:react-canvas-custom", "target:react-canvas"],
     image: "/images/games/knitzy-card.svg",
     genre: "puzzle",
@@ -202,7 +202,7 @@ export const games: GameManifest = {
   checkers: {
     slug: "checkers",
     title: "Checkers",
-    shortDescription: "Classic draughts on an 8×8 board — local two player.",
+    shortDescription: "Classic draughts on an 8×8 board - local two player.",
     tags: ["Board", "Local 2P", "Strategy", "dom-ui", "impl:react-dom", "target:keep"],
     image: "/images/games/checkers-card.svg",
     genre: "board",
@@ -220,7 +220,7 @@ export const games: GameManifest = {
   chess: {
     slug: "chess",
     title: "Chess",
-    shortDescription: "Open‑source chessboard — local two player (MVP).",
+    shortDescription: "Open‑source chessboard - local two player (MVP).",
     tags: ["Board", "Local 2P", "Strategy", "dom-ui", "impl:react-dom", "target:keep"],
     image: "/images/games/chess-card.svg",
     genre: "board",
@@ -267,7 +267,7 @@ export const games: GameManifest = {
   "systems-discovery": {
     slug: "systems-discovery",
     title: "Systems Discovery",
-    shortDescription: "Explore how systems work — from the human body to the cosmos — through interactive puzzle packs.",
+    shortDescription: "Explore how systems work - from the human body to the cosmos - through interactive puzzle packs.",
     tags: [
       "Adventure",
       "Point & Click",
@@ -477,7 +477,7 @@ export const games: GameManifest = {
   "glyph-weaver": {
     slug: "glyph-weaver",
     title: "Glyph Weaver",
-    shortDescription: "Full spell-crafting studio — draw glyphs, weave sigils, compile spells with WebGL particle effects.",
+    shortDescription: "Full spell-crafting studio - draw glyphs, weave sigils, compile spells with WebGL particle effects.",
     tags: ["Creative", "Drawing", "Magic", "WebGL", "sim-2d", "impl:react-canvas-custom", "target:webgl"],
     image: "/images/games/glyph-weaver-card.svg",
     genre: "creative",

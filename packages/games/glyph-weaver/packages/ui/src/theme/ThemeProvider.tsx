@@ -32,7 +32,7 @@ function resolveStoredTheme(): Theme {
 }
 
 /**
- * ThemeProvider scoped to a container div — does NOT touch documentElement.
+ * ThemeProvider scoped to a container div - does NOT touch documentElement.
  * When GW is embedded in GameHub, it must not interfere with GH's own theme.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

@@ -1,5 +1,5 @@
 /**
- * Chrono Shift — Bilingual string map (EN/FR)
+ * Chrono Shift - Bilingual string map (EN/FR)
  */
 export const CHRONO_SHIFT_TX = {
   en: {

@@ -1,4 +1,4 @@
-# 🎮 GameHub — Arcade & Game Platform
+# 🎮 GameHub - Arcade & Game Platform
 
 A Next.js monorepo hosting a curated library of 24 arcade, puzzle, strategy, and point-and-click games. Built with Next.js 16 (App Router), React 19, TypeScript, Supabase, and Tailwind CSS v4.
 
@@ -72,18 +72,18 @@ docs/                 # Technical documentation
 
 ## 🧪 Useful Scripts
 
-- `pnpm dev` — Start dev server
-- `pnpm build` — Production build (NF-GATE-001 gate)
-- `pnpm lint` — ESLint
-- `pnpm type-check` — TypeScript compiler check
-- `pnpm test:unit` — Unit + component tests (vitest)
-- `pnpm test:integration` — Integration tests (vitest)
-- `pnpm test:e2e:smoke` — E2E smoke tests (Playwright)
-- `pnpm test:all` — All tests
-- `pnpm check:supabase-security` — RLS policy audit
-- `pnpm check:deps` — Dependency audit
-- `pnpm smoke` — Quick smoke test
-- `pnpm run-all-checks` — Full pipeline (lint → tsc → unit → integration → security → build)
+- `pnpm dev` - Start dev server
+- `pnpm build` - Production build (NF-GATE-001 gate)
+- `pnpm lint` - ESLint
+- `pnpm type-check` - TypeScript compiler check
+- `pnpm test:unit` - Unit + component tests (vitest)
+- `pnpm test:integration` - Integration tests (vitest)
+- `pnpm test:e2e:smoke` - E2E smoke tests (Playwright)
+- `pnpm test:all` - All tests
+- `pnpm check:supabase-security` - RLS policy audit
+- `pnpm check:deps` - Dependency audit
+- `pnpm smoke` - Quick smoke test
+- `pnpm run-all-checks` - Full pipeline (lint → tsc → unit → integration → security → build)
 
 ## 🔒 Pre-Commit & Pre-Push Gates
 
@@ -94,11 +94,11 @@ Husky enforces these gates (`.husky/`):
 
 ## 📚 Documentation
 
-- `docs/action-plan.md` — Master task tracker with phase status
-- `docs/technical/encoding-reference.md` — Encoding handling guide
-- `docs/technical/performance-optimization.md` — SSR strategy, caching, revalidation
-- `docs/technical/feature-flags-testing.md` — Feature flag testing guide
-- `docs/games/dungeon-delver-design.md` — Dungeon Delver design document
+- `docs/action-plan.md` - Master task tracker with phase status
+- `docs/technical/encoding-reference.md` - Encoding handling guide
+- `docs/technical/performance-optimization.md` - SSR strategy, caching, revalidation
+- `docs/technical/feature-flags-testing.md` - Feature flag testing guide
+- `docs/games/dungeon-delver-design.md` - Dungeon Delver design document
 
 ## ☁️ CI/CD
 

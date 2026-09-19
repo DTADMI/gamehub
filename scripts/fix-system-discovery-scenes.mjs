@@ -33,7 +33,7 @@ for (const file of sceneFiles) {
   }
 }
 
-// ── Clean up index.tsx — remove imports now in scene files ──
+// ── Clean up index.tsx - remove imports now in scene files ──
 let indexContent = fs.readFileSync(INDEX_FILE, "utf8");
 
 // Remove imports that are only used in the scene files (now handled by _imports.ts)

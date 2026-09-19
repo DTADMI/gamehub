@@ -1,5 +1,5 @@
 /**
- * Stat Decorator Pattern — Composable character stat modifiers.
+ * Stat Decorator Pattern - Composable character stat modifiers.
  *
  * Each layer wraps the previous one, adding its own stat bonuses.
  * Layers are order-independent (all additive), but conceptually:

@@ -4,7 +4,7 @@
  */
 import { expect, test } from "@playwright/test";
 
-test.describe("Dungeon Delver — smoke", () => {
+test.describe("Dungeon Delver - smoke", () => {
   test("title screen renders with race selection", async ({ page }) => {
     await page.goto("/games/dungeon-delver");
 

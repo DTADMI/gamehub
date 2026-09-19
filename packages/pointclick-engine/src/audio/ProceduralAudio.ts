@@ -1,5 +1,5 @@
 /**
- * ProceduralAudio — Web Audio API sound synthesis for point-and-click games.
+ * ProceduralAudio - Web Audio API sound synthesis for point-and-click games.
  *
  * Generates sounds on-the-fly (no mp3 files needed):
  * - click: short UI feedback tick
@@ -213,7 +213,7 @@ export class ProceduralAudio {
   private _ambientWorkshop(ctx: AudioContext) {
     this.ambientNode = ctx.createOscillator();
     this.ambientNode.type = "triangle";
-    this.ambientNode.frequency.value = 110; // A2 — warm workshop hum
+    this.ambientNode.frequency.value = 110; // A2 - warm workshop hum
     const lfo = ctx.createOscillator();
     const lfoGain = ctx.createGain();
     lfo.frequency.value = 0.3;
@@ -229,7 +229,7 @@ export class ProceduralAudio {
   private _ambientOffice(ctx: AudioContext) {
     this.ambientNode = ctx.createOscillator();
     this.ambientNode.type = "sine";
-    this.ambientNode.frequency.value = 146.83; // D3 — quiet office
+    this.ambientNode.frequency.value = 146.83; // D3 - quiet office
     const lfo = ctx.createOscillator();
     const lfoGain = ctx.createGain();
     lfo.frequency.value = 0.15;
@@ -245,7 +245,7 @@ export class ProceduralAudio {
   private _ambientApartment(ctx: AudioContext) {
     this.ambientNode = ctx.createOscillator();
     this.ambientNode.type = "sine";
-    this.ambientNode.frequency.value = 196; // G3 — neutral space
+    this.ambientNode.frequency.value = 196; // G3 - neutral space
     const lfo = ctx.createOscillator();
     const lfoGain = ctx.createGain();
     lfo.frequency.value = 0.2;
@@ -262,7 +262,7 @@ export class ProceduralAudio {
     // Deep space drone with filter sweep
     this.ambientNode = ctx.createOscillator();
     this.ambientNode.type = "sawtooth";
-    this.ambientNode.frequency.value = 55; // A1 — deep space
+    this.ambientNode.frequency.value = 55; // A1 - deep space
 
     const filter = ctx.createBiquadFilter();
     filter.type = "lowpass";
@@ -284,7 +284,7 @@ export class ProceduralAudio {
   }
 
   private _ambientOcean(ctx: AudioContext) {
-    // Ocean — low rumble with noise-like modulation
+    // Ocean - low rumble with noise-like modulation
     this.ambientNode = ctx.createOscillator();
     this.ambientNode.type = "triangle";
     this.ambientNode.frequency.value = 82.41; // E2
@@ -325,7 +325,7 @@ export class ProceduralAudio {
   private _ambientHome(ctx: AudioContext) {
     this.ambientNode = ctx.createOscillator();
     this.ambientNode.type = "sine";
-    this.ambientNode.frequency.value = 261.63; // C4 — warm home
+    this.ambientNode.frequency.value = 261.63; // C4 - warm home
 
     const lfo = ctx.createOscillator();
     const lfoGain = ctx.createGain();

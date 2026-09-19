@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Breakout — particles controls & emissions toggle", () => {
+test.describe("Breakout - particles controls & emissions toggle", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/games/breakout");
   });

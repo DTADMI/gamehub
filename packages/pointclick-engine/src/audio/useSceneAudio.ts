@@ -1,5 +1,5 @@
 /**
- * useSceneAudio — React hook that plays procedural ambient audio based on the current scene.
+ * useSceneAudio - React hook that plays procedural ambient audio based on the current scene.
  * Maps scene IDs to ambient types automatically.
  */
 

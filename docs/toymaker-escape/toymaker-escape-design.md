@@ -1,4 +1,4 @@
-# Toymaker Escape — Episodic Point-and-Click (Design Doc)
+# Toymaker Escape - Episodic Point-and-Click (Design Doc)
 
 Overview
 
@@ -8,17 +8,17 @@ Overview
 
 Scenarios (first three fully drafted)
 
-- E1 House, Part 1 — Workshop & Playroom
+- E1 House, Part 1 - Workshop & Playroom
   - Goal: learn core interactions; collect first “Key Fragments.”
   - Rooms: Workshop, Playroom hub, Locked Hall.
   - Mini-puzzles: gear alignment, color-coded toy sorter, music box combo.
   - Choice flags: `e1.path = gears|music`; `e1.helper = hints|noHints` (affects medals).
-- E2 House, Part 2 — Office & Secret Stair
+- E2 House, Part 2 - Office & Secret Stair
   - Goal: gain office access; find who hired the toymaker.
   - Rooms: Office, Files Nook, Stairwell.
   - Puzzles: correspondence cipher; filing order logic; light-and-shadow safe.
   - Choice flags: `e2.trustNote = true|false` (believe unsigned note); `e2.route = cipher|shadow`.
-- E3 Apartment Mystery — The Commissioner Is… You (Twist)
+- E3 Apartment Mystery - The Commissioner Is… You (Twist)
   - Goal: explore your own apartment; learn you arranged the “kidnap” with your partner because of a memory condition;
     fun replay loop becomes diegetic.
   - Rooms: Entry, Living Room, Study, Kitchen.
@@ -53,8 +53,8 @@ Stack & Architecture
 
 - Episode 1 (E1): TME_INTRO (first visit only) → E1A Workshop (choose Gears or Music) → E1B Playroom Sorter → DONE →
   TME_OUTRO (first completion only)
-- Episode 2 (E2): Office & Secret Stair — cipher/filing/shadow routes → DONE → E2 wrap (medal/codex)
-- Episode 3 (E3): Apartment Mystery — environmental locks and choices → DONE → E3 wrap (truth framing)
+- Episode 2 (E2): Office & Secret Stair - cipher/filing/shadow routes → DONE → E2 wrap (medal/codex)
+- Episode 3 (E3): Apartment Mystery - environmental locks and choices → DONE → E3 wrap (truth framing)
 - Medals & replay: medals computed per episode; from TME_OUTRO and DONE screens, offer Replay E1, Switch Workshop route,
   and Toggle hints. Future episodes follow the same pattern.
 
@@ -101,9 +101,9 @@ Implementation Tasks (summary)
 - Content: E1 gear/sorter/music box; E2 cipher/filing/shadow safe; E3 environment puzzles.
 - Testing: Playwright smokes per episode; RTL for reducer, inventory, medal calc.
 
-Suggestions — Additional Scenarios
+Suggestions - Additional Scenarios
 
-- E4 Rooftop Observatory (tie-in with Systems: Space) — star pattern box + gentle constellation stories.
-- E5 Harbor Workshop (tie-in with Systems: Ocean) — tide clock puzzle + buoy sound matcher (captioned).
+- E4 Rooftop Observatory (tie-in with Systems: Space) - star pattern box + gentle constellation stories.
+- E5 Harbor Workshop (tie-in with Systems: Ocean) - tide clock puzzle + buoy sound matcher (captioned).
 - Alternate shorts: “Toy Fair Heist” (find missing prototype via logic grid), “Clockmaker’s Apprentice” (timezone
   riddles with empathy).

@@ -1,5 +1,5 @@
 /**
- * Toymaker Escape — Bilingual string map
+ * Toymaker Escape - Bilingual string map
  *
  * Replaces inline `lang === "fr" ? X : Y` patterns.
  * Pattern modeled after Dungeon Delver's TX system.

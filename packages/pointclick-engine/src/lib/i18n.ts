@@ -1,5 +1,5 @@
 // Minimal i18n utility for client components (EN/FR, per-title namespaces)
-// NOTE: Keep lightweight — no heavy runtime libs.
+// NOTE: Keep lightweight - no heavy runtime libs.
 import breakout_en from "../i18n/breakout/en.json";
 import breakout_fr from "../i18n/breakout/fr.json";
 import bubble_pop_en from "../i18n/bubble-pop/en.json";

@@ -26,7 +26,7 @@ export type PostGameCTAProps = {
 };
 
 /**
- * PostGameCTA — End-of-game call-to-action panel shown after completing
+ * PostGameCTA - End-of-game call-to-action panel shown after completing
  * or exiting a point-and-click game.
  *
  * Inspired by adventure game completion screens: shows score/achievements,

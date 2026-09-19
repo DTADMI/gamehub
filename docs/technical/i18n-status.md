@@ -1,4 +1,4 @@
-# GameHub — i18n Status Audit
+# GameHub - i18n Status Audit
 
 **Audit Date**: 2026-05-28
 
@@ -64,7 +64,7 @@
 ## Missing Keys / Issues
 
 - Core i18n key count is very low (32); most text is in per-game JSONs
-- Quebec French conventions are weak — game i18n appears to use direct translations without Quebec-specific vocabulary
+- Quebec French conventions are weak - game i18n appears to use direct translations without Quebec-specific vocabulary
 - No "courriel" or "mot de passe" in any FR translations
 
 ## Assessment
@@ -73,6 +73,6 @@
 - Default locale `fr` is correct
 - Game i18n uses parallel JSON system alongside core Context TS modules
 - FR key parity is complete across all 13 games + core
-- Quebec French conventions need significant improvement — essentially zero use of Quebec-specific terms
+- Quebec French conventions need significant improvement - essentially zero use of Quebec-specific terms
 - Core app shell (32 keys) is adequately translated but vocabulary is generic
 - Recommended: audit game FR translations for Quebec French terminology

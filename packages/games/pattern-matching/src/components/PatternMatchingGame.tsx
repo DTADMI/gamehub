@@ -574,7 +574,7 @@ export const PatternMatchingGame: React.FC = () => {
               onClick={() => setPhase("playing")}
               className="rounded-md bg-white dark:bg-gray-800 px-6 py-3 text-lg font-semibold text-gray-900 dark:text-gray-100 shadow-xl"
             >
-              Paused — Tap to resume
+              Paused - Tap to resume
             </button>
           </div>
         )}

@@ -1,5 +1,5 @@
 // Script: Safely remove unused imports flagged by ESLint
-// Only handles named import removals — won't touch variables, destructuring, or args
+// Only handles named import removals - won't touch variables, destructuring, or args
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -11,7 +11,7 @@ const fixes = {};
 for (const fileResult of results) {
   for (const msg of fileResult.messages) {
     if (msg.ruleId !== '@typescript-eslint/no-unused-vars') continue;
-    // Only handle imports — these are safe to remove
+    // Only handle imports - these are safe to remove
     if (!msg.message.includes('is defined but never used')) continue;
     const file = fileResult.filePath;
     if (!fixes[file]) fixes[file] = [];
@@ -43,8 +43,8 @@ for (const [file, warnings] of Object.entries(fixes)) {
     
     if (line.includes('{') && line.includes('}')) {
       // Named import: import { A, B, C } from '...'
-      // Try: import { X } from '...' — single binding → remove entire line
-      // Try: import { A, X, B } — remove X and adjust commas
+      // Try: import { X } from '...' - single binding → remove entire line
+      // Try: import { A, X, B } - remove X and adjust commas
       
       // Check if it's a single import
       const bindings = line.match(/\{([^}]+)\}/)?.[1] || '';

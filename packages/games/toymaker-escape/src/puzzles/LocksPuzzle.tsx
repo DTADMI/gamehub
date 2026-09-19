@@ -14,7 +14,7 @@ export type LocksPuzzleProps = {
 };
 
 /**
- * E3 — Nature Locks: press symbols in the correct sequence
+ * E3 - Nature Locks: press symbols in the correct sequence
  * (water, sunlight, soil) to unlock a nature-themed door.
  */
 export function LocksPuzzle({ lang, ctx, setCtx }: LocksPuzzleProps) {

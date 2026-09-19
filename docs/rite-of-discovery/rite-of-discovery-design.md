@@ -1,4 +1,4 @@
-# Rite of Discovery — Point-and-Click MVP (Design Doc)
+# Rite of Discovery - Point-and-Click MVP (Design Doc)
 
 This document was moved from `guidelines.md` to keep guidelines focused. It contains the story, gameplay, stack, and
 implementation plan for the new point-and-click game.
@@ -37,7 +37,7 @@ magic. The ending frames it as a rite of passage.
 A friendly title card sets the tone and invites the player to begin. In S1, a cozy living room scene turns into a small
 discovery: reassembling a torn gift tag hints at a familiar handwriting. In S2, comparing letters on two notes becomes a
 gentle pattern‑spotting moment, with soft hints when Gentle Mode is on. In S3, the player chooses how to learn the
-truth—by overhearing a plan or finding a receipt—framing family traditions as kindness made visible. The Epilogue
+truth-by overhearing a plan or finding a receipt-framing family traditions as kindness made visible. The Epilogue
 celebrates this rite of discovery, offering warm words and a Helper Badge. The first time through, the Outro appears
 with simple options: replay from the start, try the other branch, or adjust Gentle Mode, keeping the experience calm,
 respectful, and replay‑friendly.
@@ -46,30 +46,30 @@ respectful, and replay‑friendly.
 
 ## Narrative Outline (MVP)
 
-- Scene 1 — Night Before (Living Room)
+- Scene 1 - Night Before (Living Room)
   - Goal: introduce curiosity; teach interaction
   - Hotspots: wrapping paper roll, tape dispenser, gift tag, cookie plate, fireplace
   - Micro-puzzle: reassemble torn tag (drag 3 pieces); success reveals handwriting matching a parent’s note
   - Choice: keep suspicion private vs. ask leading question; sets flag s1.askParent
   - Gentle copy: “maybe helpers?” vs. explicit “parents write tags”
-- Scene 2 — Tooth Tradition (Kid’s Bedroom)
+- Scene 2 - Tooth Tradition (Kid’s Bedroom)
   - Goal: pattern recognition via keepsake box/note
   - Hotspots: pillow, nightstand drawer, keepsake box, squeaky floorboard (SFX), window
   - Micro-puzzle: compare letters on two notes (spot-the-difference, click 3 matches)
   - Choice: take the note vs. leave it; sets s2.keepNote
-- Scene 3 — Store or Attic (Proof Moment)
+- Scene 3 - Store or Attic (Proof Moment)
   - Goal: gently confirm family tradition; overheard planning or find a receipt
   - Hotspots: storage bin, receipt, phone on speaker (muffled), closet/attic door
   - Dialogue: overhear “pick up the costume”/“hide the gift”; gentle mode avoids direct terms
   - Choice: confront now vs. save it for later; sets s3.confrontNow
-- Epilogue — Rite of Discovery
+- Epilogue - Rite of Discovery
   - Parents invite conversation; frame it as a rite of passage where kids eventually outsmart the grown-ups
   - Player choices reflect in tone: proud/celebratory vs. cozy/affirming
   - Unlock a small ‘Helper Badge’ and optional credits page
   - Link: “View outro” opens `ROD_OUTRO` (wrap hooks: replay from start, try other branch, toggle Gentle Mode). NG+ gate
     placeholder surfaced here.
 
-### New Game+ — Mentor Mini (Sibling Helper)
+### New Game+ - Mentor Mini (Sibling Helper)
 
 - Unlock: Appears after finishing the Epilogue and earning `ep.badgeHelper = true`. Accessible from the episode card as
   “Mentor Mini (Help your sibling).” Replayable; routes unlock based on prior choices.
@@ -162,7 +162,7 @@ New Game+ (Mentor Mini):
 - Scaffolding: create package, add manifest entry (enable at ship), route /games/rite-of-discovery
 - Systems: scene controller, Hotspot component, Dialogue, Save/Load service
 - Content: S1 tag reassembly; S2 letter-match; S3 proof moment; Epilogue framing
-- New Game+: Mentor Mini (Sibling Helper) — 1 dynamic echo (Tag/Note/Talk) driven by S1–S3 flags; add Mentor Tips UI
+- New Game+: Mentor Mini (Sibling Helper) - 1 dynamic echo (Tag/Note/Talk) driven by S1–S3 flags; add Mentor Tips UI
   overlay
 - Art & Audio: 3–4 illustrated 16:9 scenes (WEBP/AVIF) + light parallax; ambient loop per scene; click/creak SFX
 - Accessibility: focus, keyboard traversal, aria-live; captions for any voiced SFX
@@ -193,7 +193,7 @@ Two new, optional tracks extend Rite of Discovery for ages 15+ with fun, replaya
 tracks keep the project’s moral guardrails (no endorsement of unkind behavior) and emphasize engaging stories with
 branching paths, collectibles, and a Codex.
 
-### Track A — Mythologies & Pantheons (MythWays)
+### Track A - Mythologies & Pantheons (MythWays)
 
 - Framing: Cultural Field Journal club. You and a small group of friends catalog artifacts, inscriptions, and oral
   histories with empathy and curiosity. Tone is respectful, witty, and humble.
@@ -202,7 +202,7 @@ branching paths, collectibles, and a Codex.
 
 First content pack (2 shorts + 1 long):
 
-- A1 River of Two Lands (Egypt — Nile cycles)
+- A1 River of Two Lands (Egypt - Nile cycles)
   - Hooks: Flood markers (nilometer), grain barges, festival calendar.
   - Routes: (A) Seasonal cycles and fertility rituals vs. (B) Civic/administrative memory (temple records).
   - Twist: Discover an older pre‑dynastic marker; unlock “Cycles Remembered” Codex entry.
@@ -230,7 +230,7 @@ Sensitivity & cultural guardrails:
 - Use precise terminology; show intra‑cultural diversity; avoid caricatures and inappropriate sacred depictions.
 - Center kindness and curiosity; invite comparisons, not hierarchies. Include notes on contested scholarship.
 
-### Track B — Evolution & Nature (Origins)
+### Track B - Evolution & Nature (Origins)
 
 - Framing: Origins Lab & Field Notes. You run playful lab simulations and field observations; humor is gentle and
   curious. Medals reward careful inference.
@@ -295,11 +295,11 @@ Migration: v1/v2 → v3 preserves prior progress and adds defaults for new field
 
 - Each track ships: 2 short cases + 1 long case with ≥ 2 routes + 1 twist; medals + Codex unlock; E2E/RTL green.
 
-## 12+ Extension update — fun, replayable, and kindness‑centered
+## 12+ Extension update - fun, replayable, and kindness‑centered
 
 Framing: a lighthearted “Junior Investigator Club” mini‑arc with short, witty cases that teach thinking tools through
 play, not lectures. Each case has at least two distinct routes plus a twist ending; medals track replay (
-Bronze/Silver/Gold). All scenarios center niceness and morality — players resolve confusion kindly and constructively.
+Bronze/Silver/Gold). All scenarios center niceness and morality - players resolve confusion kindly and constructively.
 
 Example cases (hooks → routes → twist):
 
@@ -318,18 +318,18 @@ Kindness guardrails:
 
 - Respectful humor; no ridicule. Emphasize listening, empathy, and strengthening ideas rather than attacking people.
 
-## 15+ Extensions — Mythologies & Evolution (design, branching, stack, data)
+## 15+ Extensions - Mythologies & Evolution (design, branching, stack, data)
 
 Two extensive, replayable tracks for ages 15+ that remain kind, moral, and engaging. Both reuse core systems (hotspots,
 dialogue, Codex, collectibles, medals) and expand the data model to v3 saves.
 
-### Track A — Mythologies & Pantheons (MythWays)
+### Track A - Mythologies & Pantheons (MythWays)
 
 - Framing: Cultural Field Journal club. We document artifacts, inscriptions, and oral traditions. Goal: show how
   environmental, historical, and cultural constraints shape deity roles; compare similarities/differences and syncretism
   without ranking cultures.
 - First content pack (2 shorts + 1 long):
-  1. A1 River of Two Lands (Egypt — Nile cycles)
+  1. A1 River of Two Lands (Egypt - Nile cycles)
      - Hooks: Nilometer notches, flood calendars, grain barges.
      - Routes: (A) Seasonal cycles → fertility archetypes; (B) Civic memory → temple records/calendrics.
      - Twist: Pre‑dynastic marker → Codex “Cycles Remembered”.
@@ -348,7 +348,7 @@ dialogue, Codex, collectibles, medals) and expand the data model to v3 saves.
 - Mini‑games: evidence sorter (role/epithet/context), inscription match‑up, route/path assembly on trade maps.
 - Sensitivity: avoid caricatures; represent intra‑cultural diversity; annotate contested scholarship; emphasize empathy.
 
-### Track B — Evolution & Nature (Origins)
+### Track B - Evolution & Nature (Origins)
 
 - Framing: Origins Lab & Field Notes. Run light simulations and field observations to explore evolution’s nuance and
   beauty.
@@ -413,17 +413,17 @@ Structure: ship 5–8 minute episodes with replayable branches and optional side
 
 Episodes (first wave):
 
-- Episode A — Winter Traditions
+- Episode A - Winter Traditions
   - A1 Gift Closet Diversion (stealthy hotspot route)
   - A2 Neighborhood Lights Errand (neighbor NPC; optional hint path)
   - A3 Fireplace Prep Redux (advanced tag puzzle)
-- Episode B — Tooth Tradition Variants
+- Episode B - Tooth Tradition Variants
   - B1 Dentist Visit (light humor interlude)
   - B2 Lost Tooth Mystery (4–5 piece note assembly)
-- Episode C — Proof Alternatives
+- Episode C - Proof Alternatives
   - C1 Receipt Trail vs. Calendar App (paper vs. digital proof)
   - C2 Overheard Phone Call vs. Costume Storage (mutually exclusive)
-- Episode D — Side Stories
+- Episode D - Side Stories
   - D1 Sibling Ally/Prankster path (badge unlock)
   - D2 Family Traditions Gallery (Codex; collectibles)
 
@@ -488,7 +488,7 @@ Hand‑off per episode:
 
 ---
 
-## 12+ Extension — “Thinking Tools” (Rationality & Biases)
+## 12+ Extension - “Thinking Tools” (Rationality & Biases)
 
 Goal: a replayable, extensive extension for ages 12+ that gently teaches rational thinking, common cognitive
 biases/fallacies, and practical debiasing strategies through interactive vignettes.

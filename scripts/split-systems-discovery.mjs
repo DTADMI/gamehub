@@ -3,14 +3,14 @@
  * into per-chapter files under src/scenes/.
  *
  * Chapters are identified by scene ID prefixes:
- *   main  — SD_INTRO, B1-B3, WRAP, SD_OUTRO
- *   space — SD_SPACE_INTRO, S1-S3, SPACE_WRAP, SD_SPACE_OUTRO
- *   body-breath — SD_BOD_BREATH_INTRO, BB1-BB3, BOD_BREATH_WRAP
- *   body-fuel   — SD_BOD_FUEL_INTRO, BF1-BF3, BOD_FUEL_WRAP
- *   body-move   — SD_BOD_MOVE_INTRO, BM1-BM3, BOD_MOVE_WRAP
- *   body-signal — SD_BOD_SIGNAL_INTRO, BSD1-BSD3, BOD_SIGNAL_WRAP
- *   body-grow   — SD_BOD_GROW_INTRO, BG1-BG3, BOD_GROW_WRAP
- *   ocean       — SD_OCEAN_INTRO, O1-O3, OCEAN_WRAP, SD_OCEAN_OUTRO
+ *   main  - SD_INTRO, B1-B3, WRAP, SD_OUTRO
+ *   space - SD_SPACE_INTRO, S1-S3, SPACE_WRAP, SD_SPACE_OUTRO
+ *   body-breath - SD_BOD_BREATH_INTRO, BB1-BB3, BOD_BREATH_WRAP
+ *   body-fuel   - SD_BOD_FUEL_INTRO, BF1-BF3, BOD_FUEL_WRAP
+ *   body-move   - SD_BOD_MOVE_INTRO, BM1-BM3, BOD_MOVE_WRAP
+ *   body-signal - SD_BOD_SIGNAL_INTRO, BSD1-BSD3, BOD_SIGNAL_WRAP
+ *   body-grow   - SD_BOD_GROW_INTRO, BG1-BG3, BOD_GROW_WRAP
+ *   ocean       - SD_OCEAN_INTRO, O1-O3, OCEAN_WRAP, SD_OCEAN_OUTRO
  *
  * Usage: node scripts/split-systems-discovery.mjs
  */
@@ -107,7 +107,7 @@ fs.mkdirSync(SCENES_DIR, { recursive: true });
 
 const chapterFilenames = {};
 const sharedHeaderLines = [
-  `// Auto-generated scene group — extracted from index.tsx monolith`,
+  `// Auto-generated scene group - extracted from index.tsx monolith`,
   `// See scripts/split-systems-discovery.mjs`,
 ];
 
@@ -169,7 +169,7 @@ const newIndexContent =
   "\n" +
   chapterImports +
   "\n\n" +
-  "// Scene definitions — extracted to per-chapter files in ./scenes/\n" +
+  "// Scene definitions - extracted to per-chapter files in ./scenes/\n" +
   "// See scripts/split-systems-discovery.mjs for chapter grouping rules\n" +
   newBuildScenes +
   "\n" +

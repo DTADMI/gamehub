@@ -4,7 +4,7 @@
  */
 import { expect, test } from "@playwright/test";
 
-test.describe("Mystery Manor — smoke", () => {
+test.describe("Mystery Manor - smoke", () => {
   test("page loads and navigates", async ({ page }) => {
     await page.goto("/games/mystery-manor");
     await expect(page.getByText(/Blackwood Manor|Manoir Blackwood/i)).toBeVisible({ timeout: 5000 });
@@ -17,7 +17,7 @@ test.describe("Mystery Manor — smoke", () => {
   });
 });
 
-test.describe("Artifact Hunter — smoke", () => {
+test.describe("Artifact Hunter - smoke", () => {
   test("page loads and navigates", async ({ page }) => {
     await page.goto("/games/artifact-hunter");
     await expect(page.getByText(/Temple of Amun-Ra|Temple d'Amon-Rê/i)).toBeVisible({ timeout: 5000 });
@@ -30,7 +30,7 @@ test.describe("Artifact Hunter — smoke", () => {
   });
 });
 
-test.describe("Clockwork Conspiracy — smoke", () => {
+test.describe("Clockwork Conspiracy - smoke", () => {
   test("page loads and navigates", async ({ page }) => {
     await page.goto("/games/clockwork-conspiracy");
     await expect(page.getByText(/Clockwork Tower|La Tour Mécanique/i)).toBeVisible({ timeout: 5000 });

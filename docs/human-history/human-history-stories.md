@@ -1,4 +1,4 @@
-# Human History — Many Hands Make History (Stories & Scenarios Tracker)
+# Human History - Many Hands Make History (Stories & Scenarios Tracker)
 
 Purpose
 
@@ -16,11 +16,11 @@ Status key
 
 Packs overview (each 3 scenes + wrap)
 
-- Origins of Cooperation (origins) — O1–O3 + Wrap
-- River Civilizations Across Continents (rivers) — R1–R3 + Wrap
-- Trade & Ideas on the Move (trade) — T1–T3 + Wrap
-- Everyday Safety & Care (safety) — S1–S3 + Wrap
-- Modern Social Nets (modern) — M1–M3 + Wrap
+- Origins of Cooperation (origins) - O1–O3 + Wrap
+- River Civilizations Across Continents (rivers) - R1–R3 + Wrap
+- Trade & Ideas on the Move (trade) - T1–T3 + Wrap
+- Everyday Safety & Care (safety) - S1–S3 + Wrap
+- Modern Social Nets (modern) - M1–M3 + Wrap
 
 Index
 | ID | Title | Pack | Status | Owner |
@@ -99,7 +99,7 @@ O3 Painted Memory (origins)
 - Guardrails: respectful, schematic art.
 - Assets: `bg_origins_o3.avif`, `prop_origins_o3_ochre_pigment.svg`.
 
-OR-W Wrap — Origins
+OR-W Wrap - Origins
 
 - Goal: Reflect on cooperation web; award badge.
 - Puzzle: place strands in Community Web.

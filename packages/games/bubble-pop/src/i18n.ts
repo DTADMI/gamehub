@@ -1,5 +1,5 @@
 /**
- * Bubble Pop — Bilingual string map (EN/FR)
+ * Bubble Pop - Bilingual string map (EN/FR)
  */
 export const BUBBLE_POP_TX = {
   en: {

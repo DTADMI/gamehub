@@ -675,7 +675,7 @@ export async function POST(req: Request) {
 **Testimonial**:
 
 > "LibraKeeper transformed our bookstore. We went from chaos to organized in weeks. The online store alone paid for the software 10x over."
-> — Sarah M., Owner, The Book Nook
+> - Sarah M., Owner, The Book Nook
 
 #### 10.7 Expected Revenue (Bookstore B2B)
 

@@ -1,4 +1,4 @@
-# Systems Discovery — Stories & Scenarios Tracker
+# Systems Discovery - Stories & Scenarios Tracker
 
 Purpose
 
@@ -37,41 +37,41 @@ Story Template
 Index
 
 - Core
-  - [SD_INTRO Title Card](#sd_intro-title-card) — Status: Integrated — Owner: Narrative
-  - [B1 Food Web at Home](#b1-food-web-at-home) — Status: Draft — Owner: Narrative
-  - [B2 Transit Rhythm](#b2-transit-rhythm) — Status: Draft — Owner: Narrative
-  - [B3 Waste Sorting](#b3-waste-sorting) — Status: Draft — Owner: Narrative
-  - [WRAP — Systems Scout](#wrap--systems-scout) — Status: Draft — Owner: Narrative
+  - [SD_INTRO Title Card](#sd_intro-title-card) - Status: Integrated - Owner: Narrative
+  - [B1 Food Web at Home](#b1-food-web-at-home) - Status: Draft - Owner: Narrative
+  - [B2 Transit Rhythm](#b2-transit-rhythm) - Status: Draft - Owner: Narrative
+  - [B3 Waste Sorting](#b3-waste-sorting) - Status: Draft - Owner: Narrative
+  - [WRAP - Systems Scout](#wrap--systems-scout) - Status: Draft - Owner: Narrative
 - Space
-  - [SD_SPACE_INTRO Title Card](#sd_space_intro-title-card) — Status: Integrated — Owner: Narrative
-  - [S1 Orbits & Periods](#s1-orbits--periods) — Status: Draft — Owner: Narrative
-  - [S2 Light & Shadows](#s2-light--shadows) — Status: Draft — Owner: Narrative
-  - [S3 Habitable Clues](#s3-habitable-clues) — Status: Draft — Owner: Narrative
-  - [SD_SPACE_OUTRO Wrap Hooks](#sd_space_outro-wrap-hooks) — Status: Integrated — Owner: Narrative
+  - [SD_SPACE_INTRO Title Card](#sd_space_intro-title-card) - Status: Integrated - Owner: Narrative
+  - [S1 Orbits & Periods](#s1-orbits--periods) - Status: Draft - Owner: Narrative
+  - [S2 Light & Shadows](#s2-light--shadows) - Status: Draft - Owner: Narrative
+  - [S3 Habitable Clues](#s3-habitable-clues) - Status: Draft - Owner: Narrative
+  - [SD_SPACE_OUTRO Wrap Hooks](#sd_space_outro-wrap-hooks) - Status: Integrated - Owner: Narrative
 - Ocean
-  - [SD_OCEAN_INTRO Title Card](#sd_ocean_intro-title-card) — Status: Integrated — Owner: Narrative
-  - [O1 Layers of Light](#o1-layers-of-light) — Status: Draft — Owner: Narrative
-  - [O2 Currents & Climate](#o2-currents--climate) — Status: Draft — Owner: Narrative
-  - [O3 Deep Signals](#o3-deep-signals) — Status: Draft — Owner: Narrative
-  - [SD_OCEAN_OUTRO Wrap Hooks](#sd_ocean_outro-wrap-hooks) — Status: Integrated — Owner: Narrative
+  - [SD_OCEAN_INTRO Title Card](#sd_ocean_intro-title-card) - Status: Integrated - Owner: Narrative
+  - [O1 Layers of Light](#o1-layers-of-light) - Status: Draft - Owner: Narrative
+  - [O2 Currents & Climate](#o2-currents--climate) - Status: Draft - Owner: Narrative
+  - [O3 Deep Signals](#o3-deep-signals) - Status: Draft - Owner: Narrative
+  - [SD_OCEAN_OUTRO Wrap Hooks](#sd_ocean_outro-wrap-hooks) - Status: Integrated - Owner: Narrative
 - Body Systems (BOD)
-  - [BB1 Respiratory Basics](#bb1-respiratory-basics) — Status: Draft — Owner: Narrative
-  - [BB2 Cardiovascular Flow](#bb2-cardiovascular-flow) — Status: Draft — Owner: Narrative
-  - [BB3 Coupling at the Exchange](#bb3-coupling-at-the-exchange) — Status: Draft — Owner: Narrative
-  - [BF1 Digestive Journey](#bf1-digestive-journey) — Status: Draft — Owner: Narrative
-  - [BF2 Absorption & Transport](#bf2-absorption--transport) — Status: Draft — Owner: Narrative
-  - [BF3 Waste & Balance (Urinary)](#bf3-waste--balance-urinary) — Status: Draft — Owner: Narrative
-  - [BM1 Skeletal Support](#bm1-skeletal-support) — Status: Draft — Owner: Narrative
-  - [BM2 Muscular Action](#bm2-muscular-action) — Status: Draft — Owner: Narrative
-  - [BM3 Coordination (Motor Signals)](#bm3-coordination-motor-signals) — Status: Draft — Owner: Narrative
-  - [BSD1 Nervous & Senses](#bsd1-nervous--senses) — Status: Draft — Owner: Narrative
-  - [BSD2 Endocrine Messages](#bsd2-endocrine-messages) — Status: Draft — Owner: Narrative
-  - [BSD3 Immune, Lymphatic & Integumentary](#bsd3-immune-lymphatic--integumentary) — Status: Draft — Owner: Narrative
-  - [BG1 Reproductive Basics](#bg1-reproductive-basics) — Status: Draft — Owner: Narrative
-  - [BG2 Changes Over Time](#bg2-changes-over-time) — Status: Draft — Owner: Narrative
-  - [BG3 Care Networks](#bg3-care-networks) — Status: Draft — Owner: Narrative
+  - [BB1 Respiratory Basics](#bb1-respiratory-basics) - Status: Draft - Owner: Narrative
+  - [BB2 Cardiovascular Flow](#bb2-cardiovascular-flow) - Status: Draft - Owner: Narrative
+  - [BB3 Coupling at the Exchange](#bb3-coupling-at-the-exchange) - Status: Draft - Owner: Narrative
+  - [BF1 Digestive Journey](#bf1-digestive-journey) - Status: Draft - Owner: Narrative
+  - [BF2 Absorption & Transport](#bf2-absorption--transport) - Status: Draft - Owner: Narrative
+  - [BF3 Waste & Balance (Urinary)](#bf3-waste--balance-urinary) - Status: Draft - Owner: Narrative
+  - [BM1 Skeletal Support](#bm1-skeletal-support) - Status: Draft - Owner: Narrative
+  - [BM2 Muscular Action](#bm2-muscular-action) - Status: Draft - Owner: Narrative
+  - [BM3 Coordination (Motor Signals)](#bm3-coordination-motor-signals) - Status: Draft - Owner: Narrative
+  - [BSD1 Nervous & Senses](#bsd1-nervous--senses) - Status: Draft - Owner: Narrative
+  - [BSD2 Endocrine Messages](#bsd2-endocrine-messages) - Status: Draft - Owner: Narrative
+  - [BSD3 Immune, Lymphatic & Integumentary](#bsd3-immune-lymphatic--integumentary) - Status: Draft - Owner: Narrative
+  - [BG1 Reproductive Basics](#bg1-reproductive-basics) - Status: Draft - Owner: Narrative
+  - [BG2 Changes Over Time](#bg2-changes-over-time) - Status: Draft - Owner: Narrative
+  - [BG3 Care Networks](#bg3-care-networks) - Status: Draft - Owner: Narrative
 
-  - [SD_OUTRO Wrap Hooks](#sd_outro-wrap-hooks) — Status: Integrated — Owner: Narrative
+  - [SD_OUTRO Wrap Hooks](#sd_outro-wrap-hooks) - Status: Integrated - Owner: Narrative
 
 Overview: Flow & Narrative
 
@@ -135,7 +135,7 @@ humility.
 - Assets: BG `core_b3_bg.avif`; bin and item SVGs; UI `ui_sort_help.svg`.
 - Status: Draft.
 
-## WRAP — Systems Scout
+## WRAP - Systems Scout
 
 - Pack: CORE
 - Goal: Celebrate completion and award the Systems Scout badge.

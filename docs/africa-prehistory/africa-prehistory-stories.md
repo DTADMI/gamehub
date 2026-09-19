@@ -1,4 +1,4 @@
-# Africa Prehistory — Paths of Many (Stories & Scenarios Tracker)
+# Africa Prehistory - Paths of Many (Stories & Scenarios Tracker)
 
 Purpose
 
@@ -16,10 +16,10 @@ Status key
 Packs overview (3 scenes + wrap)
 
 - Sahara & Sahel Pathways (SS)
-- Forests & Rivers — Congo/Niger (FR)
+- Forests & Rivers - Congo/Niger (FR)
 - Rift & Horn (RH)
 - Great Lakes & Highlands (GL)
-- Coasts & Crossings — Atlantic/Indian (CC)
+- Coasts & Crossings - Atlantic/Indian (CC)
 
 Index
 | ID | Title | Pack | Status | Owner |
@@ -27,23 +27,23 @@ Index
 | SS1 | Oasis Caravan Circle | SS | Draft | Narrative |
 | SS2 | Copper to Iron | SS | Draft | Narrative |
 | SS3 | Wayfinding Across Dunes | SS | Draft | Narrative |
-| SS-W | Wrap — Sahara & Sahel | SS | Draft | Narrative |
+| SS-W | Wrap - Sahara & Sahel | SS | Draft | Narrative |
 | FR1 | River Canoe Post | FR | Draft | Narrative |
 | FR2 | Forest Knowledge | FR | Draft | Narrative |
 | FR3 | Mancala & Math | FR | Draft | Narrative |
-| FR-W | Wrap — Forests & Rivers | FR | Draft | Narrative |
+| FR-W | Wrap - Forests & Rivers | FR | Draft | Narrative |
 | RH1 | Highland Terraces | RH | Draft | Narrative |
 | RH2 | Port Monsoons | RH | Draft | Narrative |
 | RH3 | Scripts & Scrolls | RH | Draft | Narrative |
-| RH-W | Wrap — Rift & Horn | RH | Draft | Narrative |
+| RH-W | Wrap - Rift & Horn | RH | Draft | Narrative |
 | GL1 | Cattle & Commons | GL | Draft | Narrative |
 | GL2 | Iron & Gardens | GL | Draft | Narrative |
 | GL3 | Courtyard Justice | GL | Draft | Narrative |
-| GL-W | Wrap — Great Lakes & Highlands | GL | Draft | Narrative |
+| GL-W | Wrap - Great Lakes & Highlands | GL | Draft | Narrative |
 | CC1 | Currents & Canoes | CC | Draft | Narrative |
 | CC2 | Dhows & Markets | CC | Draft | Narrative |
 | CC3 | Tides & Safety | CC | Draft | Narrative |
-| CC-W | Wrap — Coasts & Crossings | CC | Draft | Narrative |
+| CC-W | Wrap - Coasts & Crossings | CC | Draft | Narrative |
 
 Story template
 
@@ -68,7 +68,7 @@ SS1 Oasis Caravan Circle (Sahara & Sahel)
 - Age: 9–12 base; 15+ toggles add climate and trade context.
 - Hook: Caravan bells and date palms; all circles gather to plan water turns.
 - Beats: check cistern; assign turns; hear news; prepare night watch.
-- Puzzles: bucket‑chain logic; ledger fairness — balance cups across groups.
+- Puzzles: bucket‑chain logic; ledger fairness - balance cups across groups.
 - Choices/Flags: `ss1.splitPolicy = equal|need|alternate`; `ss1.nightWatch = rota|volunteer`.
 - Guardrails: no graphic hardship; respectful languages; context captions.
 - Assets: `bg_ss_1.avif`, `prop_ss_1_oasis_ledger.svg`, `ui_ss_meter.svg`.
@@ -92,7 +92,7 @@ SS3 Wayfinding Across Dunes
 - Puzzles: star chart alignment; dawn/dusk march planner with heat constraints.
 - Flags: `ss3.route = north|ridge|wadi`.
 
-SS-W Wrap — Sahara & Sahel
+SS-W Wrap - Sahara & Sahel
 
 - Goal: Reflection on rules and shared labor; award `collect_ss_badge.svg`.
 
@@ -113,7 +113,7 @@ FR3 Mancala & Math
 - Goal: Strategy game encodes counting and planning.
 - Puzzle: mancala capture logic; planning rounds.
 
-FR-W Wrap — Forests & Rivers
+FR-W Wrap - Forests & Rivers
 
 - Badge: `collect_fr_badge.svg`.
 
@@ -132,7 +132,7 @@ RH3 Scripts & Scrolls
 - Goal: Scripts as community knowledge webs.
 - Puzzle: script tile matching; scribe rota.
 
-RH-W Wrap — Rift & Horn
+RH-W Wrap - Rift & Horn
 
 - Badge: `collect_rh_badge.svg`.
 
@@ -151,7 +151,7 @@ GL3 Courtyard Justice
 - Goal: Mediation and social safety.
 - Puzzle: hearing order; restitution plan.
 
-GL-W Wrap — Great Lakes
+GL-W Wrap - Great Lakes
 
 - Badge: `collect_gl_badge.svg`.
 
@@ -170,7 +170,7 @@ CC3 Tides & Safety
 - Goal: Coastal watch and fire codes.
 - Puzzle: tide clock; watch rota.
 
-CC-W Wrap — Coasts & Crossings
+CC-W Wrap - Coasts & Crossings
 
 - Badge: `collect_cc_badge.svg`.
 

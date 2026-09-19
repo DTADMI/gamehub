@@ -1,5 +1,5 @@
 /**
- * Platformer — Bilingual string map (EN/FR)
+ * Platformer - Bilingual string map (EN/FR)
  */
 export const PLATFORMER_TX = {
   en: {

@@ -3,7 +3,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { SystemsDiscoveryGame } from "@games/systems-discovery";
 
-describe("Systems Discovery — BOD defaults persistence", () => {
+describe("Systems Discovery - BOD defaults persistence", () => {
   beforeEach(() => {
     localStorage.clear();
   });

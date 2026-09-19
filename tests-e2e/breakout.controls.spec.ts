@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Breakout — pause immobility and boosters", () => {
+test.describe("Breakout - pause immobility and boosters", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/games/breakout");
   });

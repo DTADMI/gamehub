@@ -596,7 +596,7 @@ export const ChessGame: React.FC = () => {
         {status}
       </div>
       <div className="text-lg font-semibold">
-        Chess — Turn: {state.turn === "w" ? t("white") : t("black")}
+        Chess - Turn: {state.turn === "w" ? t("white") : t("black")}
       </div>
       {inCheck && !mate && <div className="text-sm text-yellow-300">{t("check")}!</div>}
       {mate && (

@@ -36,7 +36,7 @@ export const ArtifactHunterGame: React.FC = () => {
 
   const scenes = useMemo<Record<string, Scene>>(() => ({
     ENTRANCE: {
-      id: "ENTRANCE", title: { en: "Temple of Amun-Ra — Entrance", fr: "Temple d'Amon-Rê — Entrée" },
+      id: "ENTRANCE", title: { en: "Temple of Amun-Ra - Entrance", fr: "Temple d'Amon-Rê - Entrée" },
       body: {
         en: "The ancient Temple of Amun-Ra looms before you. The Amulet of Eternity lies within, guarded by four chambers. Solve each to claim the prize.",
         fr: "Le Temple d'Amon-Rê se dresse devant vous. L'Amulette d'Éternité repose à l'intérieur, gardée par quatre chambres. Résolvez-les.",
@@ -70,7 +70,7 @@ export const ArtifactHunterGame: React.FC = () => {
     },
     REWARD: {
       id: "REWARD", title: { en: "The Amulet of Eternity", fr: "L'Amulette d'Éternité" },
-      body: { en: "The sarcophagus opens. The Amulet of Eternity glows with ancient power. The temple seals itself — time to leave!", fr: "Le sarcophage s'ouvre. L'Amulette d'Éternité brille. Le temple se scelle — partez!" },
+      body: { en: "The sarcophagus opens. The Amulet of Eternity glows with ancient power. The temple seals itself - time to leave!", fr: "Le sarcophage s'ouvre. L'Amulette d'Éternité brille. Le temple se scelle - partez!" },
       choices: [],
     },
   }), [lang, patternSolved, tilesSolved, cipherSolved, codeSolved]);
@@ -93,7 +93,7 @@ export const ArtifactHunterGame: React.FC = () => {
 
           {sceneId === "HIEROGLYPH" && !patternSolved && (
             <div className="bg-amber-50 dark:bg-gray-800 rounded-lg p-4 border">
-              <h3 className="text-sm font-bold mb-3 text-center">{lang === "fr" ? "🔣 Glyphes — Cliquez: Ankh, Œil, Scarabée" : "🔣 Glyphs — Click: Ankh, Eye, Scarab"}</h3>
+              <h3 className="text-sm font-bold mb-3 text-center">{lang === "fr" ? "🔣 Glyphes - Cliquez: Ankh, Œil, Scarabée" : "🔣 Glyphs - Click: Ankh, Eye, Scarab"}</h3>
               <div className="flex flex-wrap gap-2 justify-center">
                 {["ANKH", "EYE", "SCARAB", "FEATHER", "CROWN", "CROOK"].map(g => {
                   const sel = glyphSel.includes(g);

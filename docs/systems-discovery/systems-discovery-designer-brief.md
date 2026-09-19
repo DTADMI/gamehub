@@ -1,4 +1,4 @@
-# Systems Discovery — Designer/Animator Brief (EN)
+# Systems Discovery - Designer/Animator Brief (EN)
 
 This brief specifies visual/motion deliverables for the point‑and‑click game “Systems Discovery.” It mirrors the Rite of
 Discovery brief: clear formats, sizes, naming, budgets, and a hand‑off checklist so art can be integrated smoothly.
@@ -33,17 +33,17 @@ Definition of Done (DoD)
 - Annotated PNG per scene with hotspot rectangles (percent-based) and short notes.
 - Names/paths per spec; budgets verified.
 
-Core Pack — per‑scene asset templates
+Core Pack - per‑scene asset templates
 
 - Intro/Outro (title cards)
 - - No new illustration assets required for `SD_INTRO`/`SD_OUTRO` (implemented as text-first title cards). Reuse
     existing UI styles; ensure readable heading and buttons with visible focus. Provide only palette guidance if needed.
 
-Extensions — Space/Ocean/BOD Intro/Outro (title cards)
+Extensions - Space/Ocean/BOD Intro/Outro (title cards)
 
-- Space pack: `SD_SPACE_INTRO`/`SD_SPACE_OUTRO` — text‑first title cards (no new illustration assets required). Copy
+- Space pack: `SD_SPACE_INTRO`/`SD_SPACE_OUTRO` - text‑first title cards (no new illustration assets required). Copy
   keys under `sysdisc.space.intro.*` and `sysdisc.space.outro.*`.
-- Ocean pack: `SD_OCEAN_INTRO`/`SD_OCEAN_OUTRO` — text‑first title cards. Keys: `sysdisc.ocean.intro.*` /
+- Ocean pack: `SD_OCEAN_INTRO`/`SD_OCEAN_OUTRO` - text‑first title cards. Keys: `sysdisc.ocean.intro.*` /
   `sysdisc.ocean.outro.*`.
 - Body Systems sub‑packs (Breath, Fuel, Move, Signal & Defend, Grow): per‑sub‑pack intro/outro are text‑first. Keys:
   `sysdisc.bod.<sub>.intro.*` / `sysdisc.bod.<sub>.outro.*`. Follow the same accessibility guidance (H1 heading, ≥44px
@@ -64,7 +64,7 @@ Extensions — Space/Ocean/BOD Intro/Outro (title cards)
   - Props: `core_b3_bin_[recycle|compost|landfill].svg`, `core_b3_item_[1..6].svg`
   - UI: `ui_sort_help.svg`
 
-Space Pack — per‑scene asset templates
+Space Pack - per‑scene asset templates
 
 - S1 Orbits & Periods
   - BG: `space_s1_bg.avif` (abstract solar model board)
@@ -79,7 +79,7 @@ Space Pack — per‑scene asset templates
   - Props: `space_s3_atmo_card_[1..6].svg`, `space_s3_icon_[pressure|temp|gas].svg`
   - UI: `ui_clue_compare.svg`
 
-Ocean Pack — per‑scene asset templates
+Ocean Pack - per‑scene asset templates
 
 - O1 Layers of Light
   - BG: `ocean_o1_bg.avif` (depth gradient board)
@@ -94,7 +94,7 @@ Ocean Pack — per‑scene asset templates
   - Props: `ocean_o3_signal_[ping|song|light].svg`, `ocean_o3_creature_[1..4].svg`
   - UI: `ui_signal_match.svg`
 
-Body Systems — per‑sub‑pack asset templates (BOD)
+Body Systems - per‑sub‑pack asset templates (BOD)
 
 - BOD‑Breath (Respiration & Circulation)
   - BGs: `bod_breath_bb1_bg.avif`, `bod_breath_bb2_bg.avif`, `bod_breath_bb3_bg.avif`
@@ -158,9 +158,9 @@ Hand‑off workflow
 - [ ] Names/paths per spec; budgets verified
 - [ ] Linked to stories entry; status updated
 
-— — —
+- - -
 
-# Systems Discovery — Cahier Designer/Animateur·rice (FR)
+# Systems Discovery - Cahier Designer/Animateur·rice (FR)
 
 Ce cahier décrit les livrables visuels/motion pour « Systems Discovery ». Il reprend la structure de Rite of Discovery :
 formats, tailles, nommage, budgets et checklist de remise pour une intégration fluide.
@@ -194,11 +194,11 @@ Définition de Fini (DoD)
 - PNG annoté (rectangles % + notes).
 - Noms/chemins conformes; budgets OK.
 
-Gabarits d’assets par scène — Core, Space, Ocean
+Gabarits d’assets par scène - Core, Space, Ocean
 
 - Identiques à la section EN ci‑dessus (BG, props, overlays, badge/collector).
 
-Corps humain — Sous‑packs (BOD)
+Corps humain - Sous‑packs (BOD)
 
 - BOD‑Breath (Respirer & Circuler)
   - BGs: `bod_breath_bb1_bg.avif`, `bod_breath_bb2_bg.avif`, `bod_breath_bb3_bg.avif`

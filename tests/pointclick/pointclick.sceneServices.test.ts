@@ -6,7 +6,7 @@ import {
 } from "@games/pointclick-engine/core/SceneServices";
 import { EventSystem } from "@games/pointclick-engine/utils/EventSystem";
 
-describe("Scene Services — Blackboard", () => {
+describe("Scene Services - Blackboard", () => {
   it("sets and gets typed values", () => {
     type BB = { seen?: { poster?: boolean }; count?: number };
     const bb = new Blackboard<BB>();
@@ -20,7 +20,7 @@ describe("Scene Services — Blackboard", () => {
   });
 });
 
-describe("Scene Services — TimerService", () => {
+describe("Scene Services - TimerService", () => {
   it("fires a timeout", async () => {
     const timers = new TimerService();
     let fired = false;
@@ -75,7 +75,7 @@ describe("Scene Services — TimerService", () => {
   });
 });
 
-describe("Scene Services — CutsceneRunner", () => {
+describe("Scene Services - CutsceneRunner", () => {
   it("runs a sequence of steps", async () => {
     const events = new EventSystem();
     const timers = new TimerService();

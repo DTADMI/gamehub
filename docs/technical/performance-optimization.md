@@ -1,4 +1,4 @@
-# GameHub — Performance Optimization
+# GameHub - Performance Optimization
 
 > **Owner**: Nebula Forge Digital Studio  
 > **Last Updated**: 2026-08-20  
@@ -37,8 +37,8 @@ experimental: {
 
 | Package | Strategy |
 |---|---|
-| `@gamehub/game-platform` | Shared core — tree-shaken at build |
-| `@gamehub/ui` | Design system — optimized via `optimizePackageImports` |
+| `@gamehub/game-platform` | Shared core - tree-shaken at build |
+| `@gamehub/ui` | Design system - optimized via `optimizePackageImports` |
 | `@gamehub/pixi-engine` | Lazy-loaded only for Pixi games |
 | `@gamehub/pointclick-engine` | Lazy-loaded only for narrative games |
 | `@gamehub/glyph-engine` | Lazy-loaded only for pattern-matching games |
@@ -60,4 +60,4 @@ experimental: {
 
 ---
 
-*Document maintained by Nebula Forge Digital Studio — August 2026*
+*Document maintained by Nebula Forge Digital Studio - August 2026*

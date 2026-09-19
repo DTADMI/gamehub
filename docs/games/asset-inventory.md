@@ -1,4 +1,4 @@
-# GameHub — Asset & SEO Inventory
+# GameHub - Asset & SEO Inventory
 
 **Generated**: 2026-08-23
 **Purpose**: Complete manifest of all visual assets, SEO meta, and structured data
@@ -112,17 +112,17 @@ All games have SVG cards in `public/images/games/`:
 | chrono-shift | ✅ | ✅ (handleGameOver) |
 | elemental-conflux | ✅ | ✅ (handleGameOver) |
 | glyph-weaver | ✅ | ✅ (useGameCompleteEvent) |
-| knitzy | ✅ | ⚠️ (page listener — game must dispatch) |
+| knitzy | ✅ | ⚠️ (page listener - game must dispatch) |
 | memory | ✅ | ✅ (built-in) |
 | platformer | ✅ | ✅ (built-in) |
-| quantum-architect | ✅ | ⚠️ (page listener — game must dispatch) |
-| rite-of-discovery | — (own engine) | ✅ (internal PostGameCTA) |
+| quantum-architect | ✅ | ⚠️ (page listener - game must dispatch) |
+| rite-of-discovery | - (own engine) | ✅ (internal PostGameCTA) |
 | snake | ✅ | ✅ (built-in) |
 | spell-craft | ✅ | ✅ (runAnalysis) |
-| systems-discovery | — (own engine) | ✅ (internal PostGameCTA) |
+| systems-discovery | - (own engine) | ✅ (internal PostGameCTA) |
 | tetris | ✅ | ✅ (built-in) |
 | tower-defense | ✅ | ✅ (built-in) |
-| toymaker-escape | — (own engine) | ✅ (internal PostGameCTA) |
+| toymaker-escape | - (own engine) | ✅ (internal PostGameCTA) |
 
 ---
 

@@ -1,5 +1,5 @@
 /**
- * Pattern Matching — Bilingual string map (EN/FR)
+ * Pattern Matching - Bilingual string map (EN/FR)
  */
 export const PATTERN_MATCHING_TX = {
   en: {

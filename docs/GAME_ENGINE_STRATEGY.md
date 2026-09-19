@@ -34,15 +34,15 @@
 
 ### Key Principles
 
-1. **No forced unification** — different game types need different tools
-2. **Maximize existing assets** — narrative engine is already excellent
-3. **Minimize maintenance** — use mature libraries for complex features
-4. **Progressive adoption** — pilot before committing
-5. **Separate logic from rendering** — enables hybrid 2D/3D implementations
+1. **No forced unification** - different game types need different tools
+2. **Maximize existing assets** - narrative engine is already excellent
+3. **Minimize maintenance** - use mature libraries for complex features
+4. **Progressive adoption** - pilot before committing
+5. **Separate logic from rendering** - enables hybrid 2D/3D implementations
 
 ### Centralization Strategy
 
-**PixiJS FIRST** (recommended) — PixiJS provides centralization inherently. Avoid double work of extracting custom canvas patterns then replacing with PixiJS. Pilot with Bubble Pop, extract shared utilities, then migrate others.
+**PixiJS FIRST** (recommended) - PixiJS provides centralization inherently. Avoid double work of extracting custom canvas patterns then replacing with PixiJS. Pilot with Bubble Pop, extract shared utilities, then migrate others.
 
 ---
 
@@ -84,7 +84,7 @@
 
 - ❌ No real-time simulation (physics, particles) - but can embed mini-games
 
-**Verdict**: **Keep and maintain** — already optimal for its purpose. Can be enhanced with Three.js for 3D scene backgrounds/environments without changing core narrative mechanics.
+**Verdict**: **Keep and maintain** - already optimal for its purpose. Can be enhanced with Three.js for 3D scene backgrounds/environments without changing core narrative mechanics.
 
 ---
 
@@ -169,7 +169,7 @@
 **Pros**:
 
 - ✅ Excellent WebGL-based 2D performance
-- ✅ Flexible — works with custom architecture
+- ✅ Flexible - works with custom architecture
 - ✅ Great for effects, particles, shaders
 - ✅ Good React integration options
 - ✅ Smaller than full engines
@@ -223,7 +223,7 @@
 
 **Cons**:
 
-- ❌ Not a game engine — must build game systems
+- ❌ Not a game engine - must build game systems
 - ❌ No built-in physics (requires add-ons)
 - ❌ Steeper learning curve
 - ❌ You provide scene/game loop architecture
@@ -273,7 +273,7 @@
 
 **Games**: Chess, Checkers, Memory
 **Engine**: React/DOM
-**Rationale**: Accessibility, responsive layout, simple animations — canvas is overkill
+**Rationale**: Accessibility, responsive layout, simple animations - canvas is overkill
 
 #### Category 2: Simple Arcade/Grid Games
 
@@ -292,7 +292,7 @@
 **Engine**: Keep existing narrative engine
 **Enhancement**: Add optional embedded mini-games using Canvas or PixiJS
 
-**Rationale**: Narrative engine already excellent — don't fix what isn't broken
+**Rationale**: Narrative engine already excellent - don't fix what isn't broken
 
 #### Category 4: Complex 2D Real-Time Games
 
@@ -827,11 +827,11 @@ export function GameHost({ gameSlug, engine }: GameHostProps) {
 
 ### Key Benefits
 
-- ✅ **Right tool for each job** — no forced unification
-- ✅ **Preserve existing work** — narrative and canvas engines stay
-- ✅ **Reduce maintenance** — leverage mature libraries for complex features
-- ✅ **Progressive adoption** — pilot before committing
-- ✅ **Performance optimized** — WebGL where it matters, DOM where it's simpler
+- ✅ **Right tool for each job** - no forced unification
+- ✅ **Preserve existing work** - narrative and canvas engines stay
+- ✅ **Reduce maintenance** - leverage mature libraries for complex features
+- ✅ **Progressive adoption** - pilot before committing
+- ✅ **Performance optimized** - WebGL where it matters, DOM where it's simpler
 
 ### Next Steps
 

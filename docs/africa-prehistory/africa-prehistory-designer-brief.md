@@ -1,4 +1,4 @@
-# Africa Prehistory — Paths of Many (Designer/Animator Brief)
+# Africa Prehistory - Paths of Many (Designer/Animator Brief)
 
 Related docs
 
@@ -16,10 +16,10 @@ Delivery paths
 
 - assets/afp/{ss|fr|rh|gl|cc|shared}/...
   - ss = Sahara & Sahel Pathways
-  - fr = Forests & Rivers — Congo/Niger
+  - fr = Forests & Rivers - Congo/Niger
   - rh = Rift & Horn
   - gl = Great Lakes & Highlands
-  - cc = Coasts & Crossings — Atlantic/Indian
+  - cc = Coasts & Crossings - Atlantic/Indian
 
 Formats & naming
 
@@ -46,7 +46,7 @@ Sahara & Sahel Pathways (ss)
 - UI: `ui_ss_meter.svg` (Community Web segment), `ui_ss_hint.svg`
 - Badge: `collect_ss_badge.svg`
 
-Forests & Rivers — Congo/Niger (fr)
+Forests & Rivers - Congo/Niger (fr)
 
 - BG: `bg_fr_1.avif`, `bg_fr_2.avif`, `bg_fr_3.avif`, `bg_fr_wrap.avif`
 - Props: `prop_fr_1_trade_bundles.svg`, `prop_fr_2_forest_icons.svg`, `prop_fr_3_mancala_board.svg`
@@ -67,7 +67,7 @@ Great Lakes & Highlands (gl)
 - UI: `ui_gl_trust.svg`
 - Badge: `collect_gl_badge.svg`
 
-Coasts & Crossings — Atlantic/Indian (cc)
+Coasts & Crossings - Atlantic/Indian (cc)
 
 - BG: `bg_cc_1.avif`, `bg_cc_2.avif`, `bg_cc_3.avif`, `bg_cc_wrap.avif`
 - Props: `prop_cc_1_currents_map.svg`, `prop_cc_2_market_tiles.svg`, `prop_cc_3_tide_clock.svg`
@@ -84,9 +84,9 @@ Hand‑off workflow & PR checklist
 - Attach PNG previews; list assets; include alt text and captions; report contrast results.
 - Link Stories entry; tick Accessibility (captions, reduced‑motion) completed.
 
-— — —
+- - -
 
-# FR — Afrique Préhistoire — Les chemins pluriels (Brief Créa)
+# FR - Afrique Préhistoire - Les chemins pluriels (Brief Créa)
 
 Principes
 

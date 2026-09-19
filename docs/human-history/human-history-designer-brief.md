@@ -1,4 +1,4 @@
-# Human History — Many Hands Make History (Designer/Animator Brief)
+# Human History - Many Hands Make History (Designer/Animator Brief)
 
 This brief defines deliverables, formats, naming, accessibility, budgets, and hand‑off workflow for the Human History
 point‑and‑click game. It mirrors the structure used in our other games and must be used for all art/audio/UI submitted
@@ -116,9 +116,9 @@ Hand‑off workflow & PR checklist
 - Link the corresponding story entry in Stories Tracker and tick reviewed fields.
 - Include `Reduced‑motion: provided` and `Captions: provided` statements.
 
-— — —
+- - -
 
-# FR — Human History — Les petites mains font l’Histoire (Brief Créa)
+# FR - Human History - Les petites mains font l’Histoire (Brief Créa)
 
 Principes
 

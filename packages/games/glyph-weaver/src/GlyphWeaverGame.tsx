@@ -3,10 +3,10 @@ import React, { useEffect, useRef } from "react";
 
 import { GlyphWeaverShell } from "../packages/ui/src/components/Shell";
 /**
- * GlyphWeaverGame — Full spell-crafting studio, natively integrated into GameHub.
+ * GlyphWeaverGame - Full spell-crafting studio, natively integrated into GameHub.
  *
  * Uses the local GW packages copied into packages/games/glyph-weaver/packages/.
- * This is the canonical version — the standalone glyph-weaver monorepo is a PoC.
+ * This is the canonical version - the standalone glyph-weaver monorepo is a PoC.
  */
 // Local package imports
 import { I18nProvider } from "../packages/ui/src/i18n/provider";
@@ -85,7 +85,7 @@ export function GlyphWeaverGame() {
 
   return (
     <div className="min-h-screen bg-[#0a0a1a]">
-      {/* GW CSS custom properties — normally from apps/web/app/globals.css in standalone */}
+      {/* GW CSS custom properties - normally from apps/web/app/globals.css in standalone */}
       <style>{`
         .gw-root {
           --gw-bg-primary: #1a1423;

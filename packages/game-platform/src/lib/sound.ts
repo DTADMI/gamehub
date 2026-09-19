@@ -14,7 +14,7 @@ export class SoundManager {
     "data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA"; // tiny silent mp3
   // Track richer status per sound
   private sounds: Map<string, SoundEntry> = new Map<string, SoundEntry>();
-  // Known default paths for game sounds — used for lazy preload and to avoid 404 spam
+  // Known default paths for game sounds - used for lazy preload and to avoid 404 spam
   private defaultPaths: Record<string, string> = {
     background: "/sounds/background.mp3",
     "breakout-bg": "/sounds/breakout-bg.mp3",

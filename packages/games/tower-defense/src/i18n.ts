@@ -1,5 +1,5 @@
 /**
- * Tower Defense — Bilingual string map (EN/FR)
+ * Tower Defense - Bilingual string map (EN/FR)
  */
 export const TOWER_DEFENSE_TX = {
   en: {

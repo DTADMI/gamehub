@@ -1,4 +1,4 @@
-# Systems Discovery — Point-and-Click (Design Doc)
+# Systems Discovery - Point-and-Click (Design Doc)
 
 Purpose
 
@@ -26,7 +26,7 @@ Flow & Narrative Sequencing
   sub‑pack wrap that awards badges.
 - Replay hooks: SD_OUTRO offers friendly ways to replay a scene, try the alternate B2 plan, or toggle B3 hints.
 
-Narrative Outline — Core Pack
+Narrative Outline - Core Pack
 
 - B1 Food Web at Home (Kitchen Garden)
   - Goal: show flows (water, nutrients, compost) and feedback loops.
@@ -43,7 +43,7 @@ Narrative Outline — Core Pack
   - Hotspots: bins, info board, two ambiguous items.
   - Mini-puzzle: drag items to correct bins; show “why” tips.
   - Choice: accept helper tips vs. go no-hints; sets `b3.noHints`.
-- Wrap — Little Systems, Big Picture
+- Wrap - Little Systems, Big Picture
   - Frame systems as connected stories; award a “Systems Scout” badge. Unlocks extensions in the Cards view.
 
 Extensions (Replayable Content Packs)
@@ -58,7 +58,7 @@ Extensions (Replayable Content Packs)
   - O2 Currents & Climate: connect wind, currents, upwelling; empathy toward coastal communities.
   - O3 Deep Signals: match “pings/songs/lights” to creatures; captions and no-jumpscare rule.
 
-  - Body Systems (Human Biology) — multi‑sub‑pack with Homeostasis Meter
+  - Body Systems (Human Biology) - multi‑sub‑pack with Homeostasis Meter
     - Overview
       - Age framing: 9–12 primary with optional 15+ “Deeper Science” toggles in captions/tooltips.
       - Structure: multiple themed sub‑packs, each with 3 scenes + a wrap screen and a shared Homeostasis Meter that
@@ -120,11 +120,11 @@ Extensions (Replayable Content Packs)
       - Stories tracker includes entries for BB1–3, BF1–3, BM1–3, BSD1–3, BG1–3 with goals, hooks, beats, flags, and
         guardrails.
     - Tasks (scaffolds & docs)
-      - Implement Homeostasis Meter (ARIA, pattern band, reduced‑motion friendly) — component shipped.
-      - Register five BOD sub‑packs (intro → 3 scenes → wrap) in the scene registry — stubs shipped.
-      - Extend save model with `bod.meter` and `bod.toggles.deeper` defaults — wired.
-      - Award Care Ally + sub‑pack badge on wrap — wired.
-      - E2E: Playwright smoke completing one BOD sub‑pack with the meter remaining in the steady band — present.
+      - Implement Homeostasis Meter (ARIA, pattern band, reduced‑motion friendly) - component shipped.
+      - Register five BOD sub‑packs (intro → 3 scenes → wrap) in the scene registry - stubs shipped.
+      - Extend save model with `bod.meter` and `bod.toggles.deeper` defaults - wired.
+      - Award Care Ally + sub‑pack badge on wrap - wired.
+      - E2E: Playwright smoke completing one BOD sub‑pack with the meter remaining in the steady band - present.
     - Acceptance (Body Systems)
       - All five sub‑packs playable end‑to‑end with save/restore; meter persists within each sub‑pack; wrap awards
         badges.
@@ -159,7 +159,7 @@ Intro/Outro Beats (implemented)
   WRAP via a link.
 - Replay hooks (low-scope): quick restart of Core pack, alternate B2 plan quick-start, toggle hints for next run.
 
-Flow & Narrative Sequencing — Core and Extensions
+Flow & Narrative Sequencing - Core and Extensions
 
 - Core pack (first run)
   - SD_INTRO (first visit only) → B1 (Loop) → B2 (Planner) → B3 (Sorter) → WRAP (badge) → SD_OUTRO (first completion
@@ -181,14 +181,14 @@ Flow & Narrative Sequencing — Core and Extensions
 Narrated journey (Core)
 
 On a first visit, a friendly SD_INTRO title card invites the player to begin. In B1, the kitchen scraps become compost,
-which enriches soil that feeds herbs back in the kitchen—a small loop the player completes step by step. In B2, they
+which enriches soil that feeds herbs back in the kitchen-a small loop the player completes step by step. In B2, they
 choose between taking the bus first or biking first to plan a safe trip; either plan works and records their choice. In
 B3, the player sorts everyday items, optionally turning hints on for supportive guidance. The WRAP screen celebrates the
 Systems Scout badge and recaps choices. The first time, SD_OUTRO appears with calm congratulations and simple replay
-options—try the alternate route, toggle hints, or replay the Core pack—keeping the tone curious and kind while setting
+options-try the alternate route, toggle hints, or replay the Core pack-keeping the tone curious and kind while setting
 up future Space, Ocean, and Body Systems explorations.
 
-Extensions — Intro/Outro Beats (now documented)
+Extensions - Intro/Outro Beats (now documented)
 
 - Space pack
   - Intro scene `SD_SPACE_INTRO` (title card): first visit only; sets `flags.space.intro.seen=true`; proceeds to Space
@@ -262,7 +262,7 @@ Moral & Sensitivity Guardrails
 
 - Celebrate stewardship and curiosity; avoid fear mongering; depict communities respectfully; science humility notes.
 
-Suggestions — Additional Scenarios
+Suggestions - Additional Scenarios
 
 - Core pack add-ons: “Power at Home” (grid vs. battery), “Water In/Out” (home plumbing loop).
 - Space: “Small Worlds” (asteroids/comets families), “Signals from Space” (light spectra cards, no speculation claims).

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-// Auto-generated scene group — extracted from index.tsx monolith
+// Auto-generated scene group - extracted from index.tsx monolith
 // See scripts/split-systems-discovery.mjs
 import type { Scene } from "@games/pointclick-engine";
 import React from "react";
@@ -45,7 +45,7 @@ export function buildOceanScenes(): Scene[] {
           <p className="mb-2 text-xs opacity-60">{t("sysdisc.ocean.o1.hint")}</p>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.ocean.o1.title")} — Creatures</p>
+              <p className="mb-2 text-xs font-medium opacity-70">{t("sysdisc.ocean.o1.title")} - Creatures</p>
               <div className="flex flex-col gap-2">
                 {creatures.map((c) => (
                   <button key={c} className={`min-h-[44px] rounded border-2 px-3 py-2 text-left ${m[c] ? "border-green-400 bg-green-100" : sel === c ? "border-blue-400 bg-blue-100" : "border-gray-300 bg-white"}`}

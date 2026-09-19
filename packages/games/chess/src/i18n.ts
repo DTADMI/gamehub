@@ -1,5 +1,5 @@
 /**
- * Chess — Bilingual string map (EN/FR)
+ * Chess - Bilingual string map (EN/FR)
  */
 export const CHESS_TX = {
   en: {

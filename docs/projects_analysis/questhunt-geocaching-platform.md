@@ -2271,7 +2271,7 @@ void startBackgroundTracking() {
 - **Mobile**: 60% of dev budget ($120K of $200K total)
 - **Web**: 40% of dev budget ($80K of $200K total)
 
-**Key Insight**: **Mobile drives engagement (quest participation), web drives acquisition (SEO, quest creation)**. Both are essential—mobile-first for UX, web-first for SEO/marketing.
+**Key Insight**: **Mobile drives engagement (quest participation), web drives acquisition (SEO, quest creation)**. Both are essential-mobile-first for UX, web-first for SEO/marketing.
 
 ---
 
@@ -2693,11 +2693,11 @@ supabase/
 
 ## Critical Recommendations & Realignment
 
-> **⚠️ ANALYSIS SUMMARY**: The original document drifted significantly from QuestHunt's core value proposition—the sophisticated three-tier quest type system. Below are critical recommendations to realign the project with its initial objectives.
+> **⚠️ ANALYSIS SUMMARY**: The original document drifted significantly from QuestHunt's core value proposition-the sophisticated three-tier quest type system. Below are critical recommendations to realign the project with its initial objectives.
 
 ### ✅ What to Keep from Original Document
 
-1. **Technology Stack**: React/Next.js, Supabase, PostGIS—all correct choices for geospatial app
+1. **Technology Stack**: React/Next.js, Supabase, PostGIS-all correct choices for geospatial app
 2. **Freemium Model**: Correct approach, but needs refinement for quest type differentiation
 3. **Tourism & Education Partnerships**: Valid B2B revenue streams, but must leverage unique quest types
 4. **Lifetime Tier Strategy**: Excellent for geocaching culture fit
@@ -2794,7 +2794,7 @@ If QuestHunt only offers generic geocaching, it cannot justify premium pricing.
 
 ### 🎬 Conclusion
 
-QuestHunt's **three-tier quest type system** (virtual/physical/hybrid) with **role-based creation permissions** is not a nice-to-have feature—it IS the product. The original monetization analysis is valuable but MUST be realigned to ensure:
+QuestHunt's **three-tier quest type system** (virtual/physical/hybrid) with **role-based creation permissions** is not a nice-to-have feature-it IS the product. The original monetization analysis is valuable but MUST be realigned to ensure:
 
 1. **Product differentiation comes first** (build unique quest types before aggressive monetization)
 2. **Subscription tiers align with quest creation permissions** (Creator tier = "puzzle_creator" role)
@@ -2960,7 +2960,7 @@ export function LifetimeTierModal() {
   return (
     <div className="lifetime-tier-modal">
       <span className="badge urgent">LIMITED TIME</span>
-      <h2>Founder's Pass — $199 (Early Bird)</h2>
+      <h2>Founder's Pass - $199 (Early Bird)</h2>
 
       <div className="scarcity-timer">
         <p className="remaining">{remaining} / 500 spots left</p>
@@ -3275,7 +3275,7 @@ export function LifetimeTierModal() {
 #### Outreach Email Template (to Geocaching Influencers/Bloggers)
 
 ```
-Subject: New geocaching platform for reviewers — free lifetime premium
+Subject: New geocaching platform for reviewers - free lifetime premium
 
 Hi [Name],
 
@@ -3637,7 +3637,7 @@ Hi [First Name],
 
 Following up on my previous email. I realize Q2 is busy for tourism boards (planning summer campaigns).
 
-**Quick win**: I'd love to send you a custom quest mock-up for [City] — no commitment, just a 5-minute interactive demo showing how we'd showcase [specific landmark, e.g., "the riverfront district"].
+**Quick win**: I'd love to send you a custom quest mock-up for [City] - no commitment, just a 5-minute interactive demo showing how we'd showcase [specific landmark, e.g., "the riverfront district"].
 
 Can I send that over?
 
@@ -3760,8 +3760,8 @@ Amazing news! Our 3-month pilot exceeded expectations:
 - $156K estimated economic impact (based on $85 avg spend per participant)
 
 **Visitor Feedback** (direct quotes):
-- "This was the highlight of our Seattle trip!" — Sarah M., Portland
-- "Discovered restaurants we'd never have found otherwise" — John D., California
+- "This was the highlight of our Seattle trip!" - Sarah M., Portland
+- "Discovered restaurants we'd never have found otherwise" - John D., California
 
 **Paid Partnership Proposal** ($2,500/month):
 ✅ 10 quests (seasonal themes, special events)
@@ -4140,7 +4140,7 @@ I'm reaching out to [Grade] teachers who are looking for engaging, standards-ali
 
 **QuestHunt** turns real-world locations into interactive learning quests. Students complete scavenger hunts that teach [history/science/geography] through exploration.
 
-**Example Quest**: "Revolutionary War Boston" — Students visit 8 historical sites via Google Street View (or in-person field trip), answer questions, unlock primary source documents. Aligned to Common Core RH.6-8.7.
+**Example Quest**: "Revolutionary War Boston" - Students visit 8 historical sites via Google Street View (or in-person field trip), answer questions, unlock primary source documents. Aligned to Common Core RH.6-8.7.
 
 **Free for teachers**: 3-month pilot, unlimited students, ready-made quest library
 
@@ -4186,8 +4186,8 @@ Quick update on QuestHunt pilot at [School Name]:
 - 4.6/5 student satisfaction score
 
 🗣️ **Teacher Feedback**:
-- "My students are actually ASKING to do the history quest!" — Mrs. Smith, 7th Grade History
-- "Best engagement I've seen all year" — Mr. Jones, 8th Grade Science
+- "My students are actually ASKING to do the history quest!" - Mrs. Smith, 7th Grade History
+- "Best engagement I've seen all year" - Mr. Jones, 8th Grade Science
 
 Want to schedule a 15-minute call to discuss expanding to more teachers next semester?
 
@@ -5095,7 +5095,7 @@ async function sendLocationBatch(locations) {
 
 - **2x higher LTV**: $240 per creator (higher engagement, lifetime purchases)
 - **Supply-side growth**: Creators build quests → attract more players (flywheel)
-- **Lower churn**: 3% (vs 6% avg) — creators invested in platform
+- **Lower churn**: 3% (vs 6% avg) - creators invested in platform
 
 **Go-to-Market**:
 
@@ -5266,7 +5266,7 @@ Timeline: Months 1-24 (Year 1-2)
 
 **Why**: Tourists have 15% monthly churn, $12 LTV (below CAC of $30-60)
 
-**Instead**: Offer single-purchase quests ($5-15) — no subscription required
+**Instead**: Offer single-purchase quests ($5-15) - no subscription required
 
 **Impact**: Avoid wasting marketing budget on low-LTV segment
 

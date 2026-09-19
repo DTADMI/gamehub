@@ -51,7 +51,7 @@ export default function BubblePopPage() {
     <GameShell
       gameSlug="bubble-pop"
       ariaLabel="Bubble Pop game"
-      tips="Click or tap to pop bubbles — chain pops for higher scores"
+      tips="Click or tap to pop bubbles - chain pops for higher scores"
     >
       <BubblePopGame />
       <div className="px-4">

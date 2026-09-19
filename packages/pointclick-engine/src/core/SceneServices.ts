@@ -1,6 +1,6 @@
 import { EventSystem } from "../utils/EventSystem";
 
-// Timers — pausable timeouts/intervals tied to a scene lifecycle
+// Timers - pausable timeouts/intervals tied to a scene lifecycle
 export type TimerHandle = {
   pause: () => void;
   resume: () => void;
@@ -147,7 +147,7 @@ export class TimerService {
   }
 }
 
-// Cutscene runner — sequential steps that can wait on time or events
+// Cutscene runner - sequential steps that can wait on time or events
 export type CutsceneStep =
   | { type: "say"; payload: { text: string } }
   | { type: "wait"; payload: { ms?: number; event?: string } }
@@ -228,7 +228,7 @@ export class CutsceneRunner {
   }
 }
 
-// Blackboard — tiny per‑scene typed KV store
+// Blackboard - tiny per‑scene typed KV store
 export class Blackboard<T extends Record<string, any> = Record<string, any>> {
   private data = new Map<keyof T, T[keyof T]>();
 

@@ -1,7 +1,7 @@
-# GameHub — Production Audit & Remaining Tasks
+# GameHub - Production Audit & Remaining Tasks
 
 **Audit Date**: 2026-08-22
-**Last Updated**: 2026-08-23 (refreshed — all code-level gaps addressed)
+**Last Updated**: 2026-08-23 (refreshed - all code-level gaps addressed)
 **Scope**: All 20 games, engine layers, assets, infrastructure
 **Method**: File-by-file audit against production-ready criteria
 
@@ -15,7 +15,7 @@ GameHub is **~99% production-ready**. All 20 games are functionally complete. Al
 
 ## Detailed Gap Analysis
 
-### 1. DIALOGUE SYSTEM — ENHANCED ✅
+### 1. DIALOGUE SYSTEM - ENHANCED ✅
 
 | Gap | Status | Detail |
 |-----|--------|--------|
@@ -57,19 +57,19 @@ GameHub is **~99% production-ready**. All 20 games are functionally complete. Al
 
 | Type | Status |
 |------|--------|
-| `ProceduralAudio` class | ✅ DONE — 5 SFX + 8 ambient types |
-| Real mp3/ogg files | ⬜ NONE — all sounds are synthesized, no files needed |
-| `useSceneAudio` hook | ✅ DONE — deployed in all 3 games |
-| `useSoundEffects` hook | ✅ DONE — typed play functions |
+| `ProceduralAudio` class | ✅ DONE - 5 SFX + 8 ambient types |
+| Real mp3/ogg files | ⬜ NONE - all sounds are synthesized, no files needed |
+| `useSceneAudio` hook | ✅ DONE - deployed in all 3 games |
+| `useSoundEffects` hook | ✅ DONE - typed play functions |
 
 #### 2.4 Character/Item Sprites
 
 | Asset | Status |
 |-------|--------|
-| Character portraits | ✅ Present — toymaker.svg, child.svg |
-| Inventory item icons | ✅ Present — gear.svg, key.svg, letter.svg, puzzle-piece.svg |
-| Badge icons | ✅ Present — badge-bronze.svg, badge-silver.svg, badge-gold.svg |
-| Achievement icons | — |
+| Character portraits | ✅ Present - toymaker.svg, child.svg |
+| Inventory item icons | ✅ Present - gear.svg, key.svg, letter.svg, puzzle-piece.svg |
+| Badge icons | ✅ Present - badge-bronze.svg, badge-silver.svg, badge-gold.svg |
+| Achievement icons | - |
 
 ---
 
@@ -105,32 +105,32 @@ GameHub is **~99% production-ready**. All 20 games are functionally complete. Al
 
 ### 4. REMAINING PHASE TASKS
 
-#### Phase 2 — Point-and-Click (1 remaining)
+#### Phase 2 - Point-and-Click (1 remaining)
 
 | # | Task | Priority | Status |
 |---|---|---|---|
 | 2.2 | Extract toymaker puzzle blocks → components | 🔴 CRITICAL | 📋 6 blocks: FilingPuzzle (103L), ShadowPuzzle (98L), LocksPuzzle (52L), BrokenToysPuzzle (103L), ToymakerReveal (24L), FinalEscapePuzzle (59L) |
 | 2.5 | Wire `PostGameCTA` to all 3 game endings | 🟢 MEDIUM | 📋 Component created, needs integration |
 
-#### Phase 3 — New Games (deferred)
+#### Phase 3 - New Games (deferred)
 
 | # | Task | Priority | Status |
 |---|---|---|---|
 | 3.1-3.4 | 4 new point-and-click games | 🟡 HIGH | 📋 Design only. Too large for this sprint. Deferred. |
 
-#### Phase 4 — Architecture (7 tasks)
+#### Phase 4 - Architecture (7 tasks)
 
 | # | Task | Priority | Status |
 |---|---|---|---|
-| 4.1 | Consolidate i18n — unify Context + pointclick + game JSONs | 🟡 HIGH | 📋 Two systems: `lib/i18n/` (Context-based, 87 keys) + `pointclick-engine/src/lib/i18n.ts` (JSON merge, 15 game namespaces) |
+| 4.1 | Consolidate i18n - unify Context + pointclick + game JSONs | 🟡 HIGH | 📋 Two systems: `lib/i18n/` (Context-based, 87 keys) + `pointclick-engine/src/lib/i18n.ts` (JSON merge, 15 game namespaces) |
 | 4.2 | Refactor `breakout` monolith (2306 lines) → modules | 🟢 MEDIUM | 📋 |
 | 4.3 | Clean up unused Firebase/GraphQL/STOMP artifacts | 🟢 MEDIUM | 📋 Mostly done in Phase 1. Check for stragglers. |
-| 4.4 | Simplify `packages/game-platform` — remove unused code | 🟢 MEDIUM | 📋 |
+| 4.4 | Simplify `packages/game-platform` - remove unused code | 🟢 MEDIUM | 📋 |
 | 4.5 | Optimize game loading (lazy, chunked, preload hints) | 🟢 MEDIUM | 📋 |
-| 4.6 | Standardize game metadata — add genres, difficulty, play time | 🟢 MEDIUM | 📋 |
+| 4.6 | Standardize game metadata - add genres, difficulty, play time | 🟢 MEDIUM | 📋 |
 | 4.7 | Add game analytics telemetry | 🟢 MEDIUM | 📋 |
 
-#### Phase 5 — Testing (5 tasks)
+#### Phase 5 - Testing (5 tasks)
 
 | # | Task | Priority | Status |
 |---|---|---|---|
@@ -142,27 +142,27 @@ GameHub is **~99% production-ready**. All 20 games are functionally complete. Al
 
 ---
 
-### 5. PRODUCTION GAPS — ALL ADDRESSED ✅
+### 5. PRODUCTION GAPS - ALL ADDRESSED ✅
 
 All gaps identified in the original 2026-08-22 audit have been resolved:
 
 | Original Gap | Resolution |
 |-------------|------------|
-| Systems Discovery `t()` at module scope | ✅ QW-1 — converted to `buildScenes()` + `useMemo()` |
+| Systems Discovery `t()` at module scope | ✅ QW-1 - converted to `buildScenes()` + `useMemo()` |
 | Systems Discovery no scene backgrounds | ✅ All 8 scene SVGs created |
-| Systems Discovery no PostGameCTA | ✅ QW-2 — added to all ending scenes |
-| Toymaker Escape puzzle blocks inline | ✅ M-1 — all 6 extracted to components |
-| Toymaker Escape ShadowPuzzle touch | ✅ QW-4 — pointer events + touch-none |
-| Toymaker Escape no PostGameCTA | ✅ QW-2 — added to E3_WRAP |
-| Rite of Discovery `t()` at module scope | ✅ QW-1 — same fix as Sysdisc |
-| Rite of Discovery no PostGameCTA | ✅ QW-2 — added to OUTRO |
-| Breakout monolith (2208 lines) | ✅ M-3 — extracted Board + PowerUps |
-| Snake `publish()` references | ✅ Already clean — no references remain |
+| Systems Discovery no PostGameCTA | ✅ QW-2 - added to all ending scenes |
+| Toymaker Escape puzzle blocks inline | ✅ M-1 - all 6 extracted to components |
+| Toymaker Escape ShadowPuzzle touch | ✅ QW-4 - pointer events + touch-none |
+| Toymaker Escape no PostGameCTA | ✅ QW-2 - added to E3_WRAP |
+| Rite of Discovery `t()` at module scope | ✅ QW-1 - same fix as Sysdisc |
+| Rite of Discovery no PostGameCTA | ✅ QW-2 - added to OUTRO |
+| Breakout monolith (2208 lines) | ✅ M-3 - extracted Board + PowerUps |
+| Snake `publish()` references | ✅ Already clean - no references remain |
 | Glyph Weaver integration gaps (9) | ✅ M-7 + GW-001 through GW-009 |
-| i18n two systems | ✅ M-2 — consolidated |
-| Dead code | ✅ M-4 — Firebase/GraphQL/STOMP cleaned |
-| Game metadata | ✅ M-5 — 5 fields added to all 20 games |
-| Loading optimization | ✅ M-6 — progress bar + next/dynamic |
+| i18n two systems | ✅ M-2 - consolidated |
+| Dead code | ✅ M-4 - Firebase/GraphQL/STOMP cleaned |
+| Game metadata | ✅ M-5 - 5 fields added to all 20 games |
+| Loading optimization | ✅ M-6 - progress bar + next/dynamic |
 | Scene backgrounds (5 pending) | ✅ All 8 created |
 | Character/item sprites | ✅ All created |
 | gameSlug on pages | ✅ All 20 game pages now consistent |
@@ -177,25 +177,25 @@ All gaps identified in the original 2026-08-22 audit have been resolved:
 |------|-----------|----------|---------------|
 | block-blast | ✅ | ✅ | ✅ |
 | breakout | ✅ | ✅ | ✅ |
-| bubble-pop | ✅ | ✅ | — |
+| bubble-pop | ✅ | ✅ | - |
 | checkers | ✅ | ✅ | ✅ |
 | chess | ✅ | ✅ | ✅ |
-| chrono-shift | ✅ | ✅ | — |
-| elemental-conflux | ✅ | ✅ | — |
+| chrono-shift | ✅ | ✅ | - |
+| elemental-conflux | ✅ | ✅ | - |
 | glyph-weaver | ✅ | ✅ | ✅ |
-| knitzy | ✅ | ✅ | — |
+| knitzy | ✅ | ✅ | - |
 | memory | ✅ | ✅ | ✅ |
 | platformer | ✅ | ✅ | ✅ |
-| quantum-architect | ✅ | ✅ | — |
-| rite-of-discovery | — (LoadingShell) | — | Internal |
+| quantum-architect | ✅ | ✅ | - |
+| rite-of-discovery | - (LoadingShell) | - | Internal |
 | snake | ✅ | ✅ | ✅ |
-| spell-craft | ✅ | ✅ | — |
-| systems-discovery | — (LoadingShell) | — | Internal |
+| spell-craft | ✅ | ✅ | - |
+| systems-discovery | - (LoadingShell) | - | Internal |
 | tetris | ✅ | ✅ | ✅ |
 | tower-defense | ✅ | ✅ | ✅ |
-| toymaker-escape | — (LoadingShell) | — | Internal |
+| toymaker-escape | - (LoadingShell) | - | Internal |
 
-**Point-and-click games** (rite-of-discovery, systems-discovery, toymaker-escape) use their own engine with internal PostGameCTA dispatch — they don't need GameShell.
+**Point-and-click games** (rite-of-discovery, systems-discovery, toymaker-escape) use their own engine with internal PostGameCTA dispatch - they don't need GameShell.
 
 **Missing `game:complete`** (6 games): bubble-pop, chrono-shift, elemental-conflux, knitzy, quantum-architect, spell-craft. These need per-game win-condition analysis to add the dispatch.
 

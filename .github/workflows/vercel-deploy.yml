@@ -94,7 +94,7 @@ jobs:
               echo "skip=true" >> "$GITHUB_OUTPUT"
               exit 1
             fi
-            echo "::warning::Vercel secrets not configured — skipping deploy (set VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID to enable)"
+            echo "::warning::Vercel secrets not configured - skipping deploy (set VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID to enable)"
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
@@ -155,4 +155,4 @@ jobs:
 
       - name: Skipped (no Vercel secrets)
         if: steps.secrets.outputs.skip == 'true'
-        run: echo "::notice::Vercel deploy skipped — configure VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID in GitHub Actions secrets to enable"
+        run: echo "::notice::Vercel deploy skipped - configure VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID in GitHub Actions secrets to enable"

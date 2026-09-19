@@ -73,7 +73,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
       S1_NIGHT_BEFORE: {
         id: "S1_NIGHT_BEFORE",
         title: { en: t("rod.s1.title"), fr: "La veille au soir" },
-        body: { en: t("rod.s1.body"), fr: "Le salon est calme. Du papier d'emballage et des étiquettes sont éparpillés sur la table. Une étiquette s'est déchirée — reassemblez-la." },
+        body: { en: t("rod.s1.body"), fr: "Le salon est calme. Du papier d'emballage et des étiquettes sont éparpillés sur la table. Une étiquette s'est déchirée - reassemblez-la." },
         choices: [
           {
             id: "keepQuiet",
@@ -94,7 +94,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
       S2_TOOTH_TRADITION: {
         id: "S2_TOOTH_TRADITION",
         title: { en: t("rod.s2.title"), fr: "La tradition de la dent" },
-        body: { en: t("rod.s2.body"), fr: "Dans ta chambre, tu trouves deux notes — une de la « Fée des dents » et une d'un parent. Compare les lettres." },
+        body: { en: t("rod.s2.body"), fr: "Dans ta chambre, tu trouves deux notes - une de la « Fée des dents » et une d'un parent. Compare les lettres." },
         choices: [
           {
             id: "keepNote",
@@ -122,13 +122,13 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         choices: [
           {
             id: "confrontNow",
-            text: { en: t("rod.s3.confrontNow"), fr: "Confronter tes parents maintenant — tu veux la vérité" },
+            text: { en: t("rod.s3.confrontNow"), fr: "Confronter tes parents maintenant - tu veux la vérité" },
             target: "EPILOGUE",
             effect: (ctx) => effects.setFlag("s3.confrontNow", true)(ensureCtx(ctx)),
           },
           {
             id: "saveLater",
-            text: { en: t("rod.s3.saveLater"), fr: "Garder la découverte pour plus tard — tu n'es pas pressé" },
+            text: { en: t("rod.s3.saveLater"), fr: "Garder la découverte pour plus tard - tu n'es pas pressé" },
             target: "EPILOGUE",
             effect: (ctx) => effects.setFlag("s3.confrontNow", false)(ensureCtx(ctx)),
           },
@@ -137,7 +137,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
       EPILOGUE: {
         id: "EPILOGUE",
         title: { en: t("rod.epilogue.title"), fr: "Le rite de découverte" },
-        body: { en: t("rod.epilogue.body"), fr: "Tes parents s'assoient avec toi. Ils sourient chaleureusement. « Nous savions que ce jour viendrait, » disent-ils. « Maintenant tu fais partie de la tradition — les aides qui gardent la magie vivante pour les plus jeunes. »" },
+        body: { en: t("rod.epilogue.body"), fr: "Tes parents s'assoient avec toi. Ils sourient chaleureusement. « Nous savions que ce jour viendrait, » disent-ils. « Maintenant tu fais partie de la tradition - les aides qui gardent la magie vivante pour les plus jeunes. »" },
         choices: [
           {
             id: "restart",
@@ -192,7 +192,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
       },
       TT_INTRO: {
         id: "TT_INTRO",
-        title: { en: "Thinking Tools — Intro", fr: "Outils de Réflexion — Intro" },
+        title: { en: "Thinking Tools - Intro", fr: "Outils de Réflexion - Intro" },
         body: {
           en: "Welcome to Thinking Tools. These are short exercises to sharpen your reasoning. Each one explores a different way our minds work.",
           fr: "Bienvenue aux Outils de Réflexion. Ce sont de courts exercices pour affiner ton raisonnement. Chacun explore une façon différente dont notre esprit fonctionne.",
@@ -223,8 +223,8 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         id: "TT1_RESULT",
         title: { en: "Thinking Tool: Anchoring Revealed", fr: "Outil de Réflexion : L'Ancrage Révélé" },
         body: {
-          en: "If a $100 item is marked up 40% to $140, then '30% off' brings it to $98. You saved $2 from the original price — not 30%! The higher 'anchor' price makes the discount seem bigger than it is. This is the anchoring bias: our brains cling to the first number we see.",
-          fr: "Si un article de 100$ est majoré de 40% à 140$, puis « 30% de rabais » le ramène à 98$. Tu as économisé 2$ par rapport au prix original — pas 30%! Le prix « ancré » plus élevé fait paraître le rabais plus grand qu'il ne l'est. C'est le biais d'ancrage : notre cerveau s'accroche au premier chiffre qu'il voit.",
+          en: "If a $100 item is marked up 40% to $140, then '30% off' brings it to $98. You saved $2 from the original price - not 30%! The higher 'anchor' price makes the discount seem bigger than it is. This is the anchoring bias: our brains cling to the first number we see.",
+          fr: "Si un article de 100$ est majoré de 40% à 140$, puis « 30% de rabais » le ramène à 98$. Tu as économisé 2$ par rapport au prix original - pas 30%! Le prix « ancré » plus élevé fait paraître le rabais plus grand qu'il ne l'est. C'est le biais d'ancrage : notre cerveau s'accroche au premier chiffre qu'il voit.",
         },
         choices: [
           { id: "next", text: { en: "Try another tool", fr: "Essayer un autre outil" }, target: "TT_INTRO" },
@@ -238,7 +238,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
           fr: "Tu lis trois articles qui disent tous la même chose. Est-ce que ça veut dire que c'est vrai? Ou est-ce qu'ils citent tous la même source peu fiable?",
         },
         choices: [
-          { id: "true", text: { en: "Three sources agree — must be true", fr: "Trois sources sont d'accord — ça doit être vrai" }, target: "TT2_RESULT", effect: (ctx) => effects.setVar("tt2.choice", "true")(ensureCtx(ctx)) },
+          { id: "true", text: { en: "Three sources agree - must be true", fr: "Trois sources sont d'accord - ça doit être vrai" }, target: "TT2_RESULT", effect: (ctx) => effects.setVar("tt2.choice", "true")(ensureCtx(ctx)) },
           { id: "check", text: { en: "I should check if they're independent", fr: "Je devrais vérifier si elles sont indépendantes" }, target: "TT2_RESULT", effect: (ctx) => effects.setVar("tt2.choice", "check")(ensureCtx(ctx)) },
         ],
       },
@@ -246,8 +246,8 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         id: "TT2_RESULT",
         title: { en: "Thinking Tool: Confirmation Bias", fr: "Outil de Réflexion : Biais de Confirmation" },
         body: {
-          en: "Multiple sources agreeing doesn't guarantee truth — they might all be echoing the same mistake. This is confirmation bias: we tend to seek and trust information that confirms what we already believe. Good thinking means checking if sources are truly independent.",
-          fr: "Plusieurs sources qui s'accordent ne garantissent pas la vérité — elles pourraient toutes répéter la même erreur. C'est le biais de confirmation : on a tendance à chercher et à faire confiance aux informations qui confirment ce qu'on croit déjà. Bien réfléchir signifie vérifier si les sources sont vraiment indépendantes.",
+          en: "Multiple sources agreeing doesn't guarantee truth - they might all be echoing the same mistake. This is confirmation bias: we tend to seek and trust information that confirms what we already believe. Good thinking means checking if sources are truly independent.",
+          fr: "Plusieurs sources qui s'accordent ne garantissent pas la vérité - elles pourraient toutes répéter la même erreur. C'est le biais de confirmation : on a tendance à chercher et à faire confiance aux informations qui confirment ce qu'on croit déjà. Bien réfléchir signifie vérifier si les sources sont vraiment indépendantes.",
         },
         choices: [
           { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
@@ -261,16 +261,16 @@ export const RiteOfDiscoveryGame: React.FC = () => {
           fr: "Tu lances une pièce équitable 5 fois et obtiens face chaque fois. Quelles sont les chances d'avoir face au 6e lancer?",
         },
         choices: [
-          { id: "lessThanHalf", text: { en: "Less than 50% — tails is 'due'", fr: "Moins de 50% — pile est 'dû'" }, target: "TT3_RESULT", effect: (ctx) => effects.setVar("tt3.choice", "gambler")(ensureCtx(ctx)) },
-          { id: "half", text: { en: "Still 50% — each flip is independent", fr: "Toujours 50% — chaque lancer est indépendant" }, target: "TT3_RESULT", effect: (ctx) => effects.setVar("tt3.choice", "correct")(ensureCtx(ctx)) },
+          { id: "lessThanHalf", text: { en: "Less than 50% - tails is 'due'", fr: "Moins de 50% - pile est 'dû'" }, target: "TT3_RESULT", effect: (ctx) => effects.setVar("tt3.choice", "gambler")(ensureCtx(ctx)) },
+          { id: "half", text: { en: "Still 50% - each flip is independent", fr: "Toujours 50% - chaque lancer est indépendant" }, target: "TT3_RESULT", effect: (ctx) => effects.setVar("tt3.choice", "correct")(ensureCtx(ctx)) },
         ],
       },
       TT3_RESULT: {
         id: "TT3_RESULT",
         title: { en: "Thinking Tool: Gambler's Fallacy", fr: "Outil de Réflexion : Le Sophisme du Joueur" },
         body: {
-          en: "Each coin flip is independent — the coin has no memory. The odds stay 50% no matter what happened before. Believing that 'tails is due' is the gambler's fallacy: our brains look for patterns even in random events.",
-          fr: "Chaque lancer de pièce est indépendant — la pièce n'a pas de mémoire. Les chances restent 50% peu importe ce qui s'est passé avant. Croire que « pile est dû » est le sophisme du joueur : notre cerveau cherche des motifs même dans les événements aléatoires.",
+          en: "Each coin flip is independent - the coin has no memory. The odds stay 50% no matter what happened before. Believing that 'tails is due' is the gambler's fallacy: our brains look for patterns even in random events.",
+          fr: "Chaque lancer de pièce est indépendant - la pièce n'a pas de mémoire. Les chances restent 50% peu importe ce qui s'est passé avant. Croire que « pile est dû » est le sophisme du joueur : notre cerveau cherche des motifs même dans les événements aléatoires.",
         },
         choices: [
           { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
@@ -292,8 +292,8 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         id: "TT4_RESULT",
         title: { en: "Thinking Tool: Post Hoc Fallacy", fr: "Outil de Réflexion : Sophisme Post Hoc" },
         body: {
-          en: "Just because B happened after A doesn't mean A caused B. Headaches naturally resolve. This is post hoc ergo propter hoc ('after this, therefore because of this'). Correlation is not causation — look for other explanations and control groups.",
-          fr: "Ce n'est pas parce que B s'est produit après A que A a causé B. Les maux de tête se résolvent naturellement. C'est post hoc ergo propter hoc (« après cela, donc à cause de cela »). La corrélation n'est pas la causalité — cherche d'autres explications et des groupes témoins.",
+          en: "Just because B happened after A doesn't mean A caused B. Headaches naturally resolve. This is post hoc ergo propter hoc ('after this, therefore because of this'). Correlation is not causation - look for other explanations and control groups.",
+          fr: "Ce n'est pas parce que B s'est produit après A que A a causé B. Les maux de tête se résolvent naturellement. C'est post hoc ergo propter hoc (« après cela, donc à cause de cela »). La corrélation n'est pas la causalité - cherche d'autres explications et des groupes témoins.",
         },
         choices: [
           { id: "next", text: { en: "Next tool", fr: "Outil suivant" }, target: "TT_INTRO" },
@@ -307,7 +307,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
           fr: "Une affiche prétend qu'un nouveau régime est « approuvé par un médecin ». Devrais-tu lui faire confiance sur la base de cette autorité?",
         },
         choices: [
-          { id: "trust", text: { en: "Doctors know best — trust it", fr: "Les médecins savent — fais-lui confiance" }, target: "TT5_RESULT", effect: (ctx) => effects.setVar("tt5.choice", "authority")(ensureCtx(ctx)) },
+          { id: "trust", text: { en: "Doctors know best - trust it", fr: "Les médecins savent - fais-lui confiance" }, target: "TT5_RESULT", effect: (ctx) => effects.setVar("tt5.choice", "authority")(ensureCtx(ctx)) },
           { id: "question", text: { en: "Which doctor? What evidence?", fr: "Quel médecin? Quelles preuves?" }, target: "TT5_RESULT", effect: (ctx) => effects.setVar("tt5.choice", "correct")(ensureCtx(ctx)) },
         ],
       },
@@ -330,8 +330,8 @@ export const RiteOfDiscoveryGame: React.FC = () => {
           fr: "Tu essaies un nouveau restaurant une fois et c'est terrible. Ton ami dit « J'y ai mangé 20 fois et c'était excellent 18 fois. » Quelle expérience prédit le mieux la qualité du restaurant?",
         },
         choices: [
-          { id: "mine", text: { en: "My experience — it was terrible!", fr: "Mon expérience — c'était terrible!" }, target: "TT6_RESULT", effect: (ctx) => effects.setVar("tt6.choice", "baseRate")(ensureCtx(ctx)) },
-          { id: "friend", text: { en: "My friend's — 20 visits is more data", fr: "Celle de mon ami — 20 visites c'est plus de données" }, target: "TT6_RESULT", effect: (ctx) => effects.setVar("tt6.choice", "correct")(ensureCtx(ctx)) },
+          { id: "mine", text: { en: "My experience - it was terrible!", fr: "Mon expérience - c'était terrible!" }, target: "TT6_RESULT", effect: (ctx) => effects.setVar("tt6.choice", "baseRate")(ensureCtx(ctx)) },
+          { id: "friend", text: { en: "My friend's - 20 visits is more data", fr: "Celle de mon ami - 20 visites c'est plus de données" }, target: "TT6_RESULT", effect: (ctx) => effects.setVar("tt6.choice", "correct")(ensureCtx(ctx)) },
         ],
       },
       TT6_RESULT: {
@@ -391,7 +391,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
         <h2 className="mb-4 text-2xl font-bold">{title}</h2>
         <p className="mb-6">{bodyText}</p>
 
-        {/* S1: Tag Reassembly — Sequence Puzzle */}
+        {/* S1: Tag Reassembly - Sequence Puzzle */}
         {sceneId === "S1_NIGHT_BEFORE" && (
           <div className="bg-muted mb-6 rounded-lg p-6">
             <p className="mb-3 text-sm font-medium">
@@ -541,7 +541,7 @@ export const RiteOfDiscoveryGame: React.FC = () => {
           </div>
         )}
 
-        {/* S3: Proof Moment — Choice-based */}
+        {/* S3: Proof Moment - Choice-based */}
         {sceneId === "S3_PROOF_MOMENT" && (
           <div className="bg-muted mb-6 rounded-lg p-6">
             <p className="mb-3 text-sm font-medium">
@@ -578,11 +578,11 @@ export const RiteOfDiscoveryGame: React.FC = () => {
           <div className="bg-muted mb-6 rounded-lg p-6">
             {ctx.flags["s3.confrontNow"] ? (
               <p className="mb-3 text-sm font-medium">
-                {lang === "fr" ? "Tu te sens fier. Tu es dans le secret maintenant — un rite de passage." : "You feel proud. You're in on the secret now — a rite of passage."}
+                {lang === "fr" ? "Tu te sens fier. Tu es dans le secret maintenant - un rite de passage." : "You feel proud. You're in on the secret now - a rite of passage."}
               </p>
             ) : (
               <p className="mb-3 text-sm font-medium">
-                {lang === "fr" ? "Tu te sens bien. La magie n'a pas disparu — elle a juste changé de forme." : "You feel cozy. The magic didn't disappear — it just changed shape."}
+                {lang === "fr" ? "Tu te sens bien. La magie n'a pas disparu - elle a juste changé de forme." : "You feel cozy. The magic didn't disappear - it just changed shape."}
               </p>
             )}
             <p className="mb-3 text-xs font-bold uppercase text-green-600">
@@ -590,12 +590,12 @@ export const RiteOfDiscoveryGame: React.FC = () => {
             </p>
             {ctx.flags["s1.askParent"] && (
               <p className="mb-1 text-xs opacity-60">
-                {lang === "fr" ? "Tu as posé une question à tes parents — ils savaient que tu étais prêt." : "You asked your parents a question — they knew you were ready."}
+                {lang === "fr" ? "Tu as posé une question à tes parents - ils savaient que tu étais prêt." : "You asked your parents a question - they knew you were ready."}
               </p>
             )}
             {ctx.flags["s2.keepNote"] && (
               <p className="mb-1 text-xs opacity-60">
-                {lang === "fr" ? "Tu as gardé la note — un souvenir de ta découverte." : "You kept the note — a memento of your discovery."}
+                {lang === "fr" ? "Tu as gardé la note - un souvenir de ta découverte." : "You kept the note - a memento of your discovery."}
               </p>
             )}
           </div>

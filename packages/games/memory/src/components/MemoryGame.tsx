@@ -405,7 +405,7 @@ export const MemoryGame: React.FC = () => {
                 }
               }}
             >
-              {!gameStarted ? t("pressStart") : `${t("pause")} — ${t("resume")}`}
+              {!gameStarted ? t("pressStart") : `${t("pause")} - ${t("resume")}`}
             </button>
           )}
           {cards.map((card, index) =>

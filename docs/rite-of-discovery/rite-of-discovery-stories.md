@@ -1,4 +1,4 @@
-# Rite of Discovery — Stories & Scenarios Tracker
+# Rite of Discovery - Stories & Scenarios Tracker
 
 Purpose
 
@@ -26,27 +26,27 @@ Status key
 Index
 
 - MVP (ages 7–9)
-  - [ROD_INTRO Title Card](#rod_intro-title-card) — Status: Integrated — Owner: Narrative
-    - [S1 Night Before](#s1-night-before) — Status: Ready for Art — Owner: Narrative
-    - [S2 Tooth Tradition](#s2-tooth-tradition) — Status: Ready for Art — Owner: Narrative
-    - [S3 Proof Moment](#s3-proof-moment) — Status: Ready for Art — Owner: Narrative
-    - [Epilogue — Rite of Passage](#epilogue-rite-of-passage) — Status: Draft — Owner: Narrative
-    - [MM1 Mentor Mini — Sibling Helper](#mm1-mentor-mini-sibling-helper) — Status: Draft — Owner: Narrative
-  - [ROD_OUTRO Wrap & Replay Hooks](#rod_outro-wrap--replay-hooks) — Status: Integrated — Owner: Narrative
+  - [ROD_INTRO Title Card](#rod_intro-title-card) - Status: Integrated - Owner: Narrative
+    - [S1 Night Before](#s1-night-before) - Status: Ready for Art - Owner: Narrative
+    - [S2 Tooth Tradition](#s2-tooth-tradition) - Status: Ready for Art - Owner: Narrative
+    - [S3 Proof Moment](#s3-proof-moment) - Status: Ready for Art - Owner: Narrative
+    - [Epilogue - Rite of Passage](#epilogue-rite-of-passage) - Status: Draft - Owner: Narrative
+    - [MM1 Mentor Mini - Sibling Helper](#mm1-mentor-mini-sibling-helper) - Status: Draft - Owner: Narrative
+  - [ROD_OUTRO Wrap & Replay Hooks](#rod_outro-wrap--replay-hooks) - Status: Integrated - Owner: Narrative
 - 12+ “Thinking Tools” (replayable cases)
-  - [C1 The Mystery Coupon](#c1-the-mystery-coupon) — Status: Draft — Owner: Narrative
-  - [C2 The Echo Thread](#c2-the-echo-thread) — Status: Draft — Owner: Narrative
-  - [C3 The Coin‑Flip Streak](#c3-the-coin-flip-streak) — Status: Draft — Owner: Narrative
-  - [C4 The Miracle Patch](#c4-the-miracle-patch) — Status: Draft — Owner: Narrative
-  - [C5 The Amazing Poster](#c5-the-amazing-poster) — Status: Draft — Owner: Narrative
-- 15+ Extensions — MythWays (Track A) and Origins (Track B)
-- [A1 River of Two Lands](#a1-river-of-two-lands) — Status: Draft — Owner: Narrative
-- [A2 Meeting of Winds](#a2-meeting-of-winds) — Status: Draft — Owner: Narrative
-- [A3 Paths of Exchange](#a3-paths-of-exchange) — Status: Draft — Owner: Narrative
-- [O1 Island Shuffle](#o1-island-shuffle) — Status: Draft — Owner: Narrative
-- [O2 Patterns in Pollen](#o2-patterns-in-pollen) — Status: Draft — Owner: Narrative
-- [O3 Tails, Songs, and Signals](#o3-tails-songs-and-signals) — Status: Draft — Owner: Narrative
-- [MM1‑R Mentor Mini — Reflection Variant (12+)](#mm1-r-mentor-mini-reflection-variant-12) — Status: Draft — Owner:
+  - [C1 The Mystery Coupon](#c1-the-mystery-coupon) - Status: Draft - Owner: Narrative
+  - [C2 The Echo Thread](#c2-the-echo-thread) - Status: Draft - Owner: Narrative
+  - [C3 The Coin‑Flip Streak](#c3-the-coin-flip-streak) - Status: Draft - Owner: Narrative
+  - [C4 The Miracle Patch](#c4-the-miracle-patch) - Status: Draft - Owner: Narrative
+  - [C5 The Amazing Poster](#c5-the-amazing-poster) - Status: Draft - Owner: Narrative
+- 15+ Extensions - MythWays (Track A) and Origins (Track B)
+- [A1 River of Two Lands](#a1-river-of-two-lands) - Status: Draft - Owner: Narrative
+- [A2 Meeting of Winds](#a2-meeting-of-winds) - Status: Draft - Owner: Narrative
+- [A3 Paths of Exchange](#a3-paths-of-exchange) - Status: Draft - Owner: Narrative
+- [O1 Island Shuffle](#o1-island-shuffle) - Status: Draft - Owner: Narrative
+- [O2 Patterns in Pollen](#o2-patterns-in-pollen) - Status: Draft - Owner: Narrative
+- [O3 Tails, Songs, and Signals](#o3-tails-songs-and-signals) - Status: Draft - Owner: Narrative
+- [MM1‑R Mentor Mini - Reflection Variant (12+)](#mm1-r-mentor-mini-reflection-variant-12) - Status: Draft - Owner:
   Narrative
 
 Overview: Flow & Narrative
@@ -56,7 +56,7 @@ ROD_OUTRO (first completion only).
 
 A gentle title card invites the player in. The first scene teaches interaction by reassembling a gift tag and noticing a
 familiar hand. The second celebrates close looking as the player toggles matching letters between two notes. The third
-offers a choice of how to confirm the truth—overhearing a plan or finding a receipt—always with kind framing. The
+offers a choice of how to confirm the truth-overhearing a plan or finding a receipt-always with kind framing. The
 Epilogue reframes the discovery as a rite of passage and awards a Helper Badge. The first time, the Outro presents calm
 replay options: try the other branch, toggle Gentle Mode, or replay from the start. Subsequent runs skip the intro/outro
 by default but keep them discoverable via links. Choices are saved as small flags to support NG+ (Mentor Mini) later.
@@ -90,7 +90,7 @@ Story Template
 
 S1 Night Before
 
-- ID/Name: S1 — Night Before (Living Room)
+- ID/Name: S1 - Night Before (Living Room)
 - Audience/Tone: MVP 7–9 (Gentle/Standard)
 - Goal: Introduce curiosity and teach basic interaction.
 - Hooks:
@@ -112,7 +112,7 @@ S1 Night Before
   - Do we show a faint light ray or candle flicker? Ensure a still alternate for reduced motion.
 - Fact‑check notes:
   - Avoid brand names on wrapping; generic ornament patterns only.
-- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready ✓ Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready ✓ Integrated -
 
 ## ROD_OUTRO Wrap & Replay Hooks
 
@@ -129,7 +129,7 @@ S1 Night Before
 
 S2 Tooth Tradition
 
-- ID/Name: S2 — Tooth Tradition (Bedroom)
+- ID/Name: S2 - Tooth Tradition (Bedroom)
 - Audience/Tone: MVP 7–9 (Gentle/Standard)
 - Goal: Pattern recognition using keepsake notes.
 - Hooks:
@@ -150,11 +150,11 @@ S2 Tooth Tradition
   - Note variants A/B final lettering style; ensure readability.
 - Fact‑check notes:
   - Letterform differences should be clear for early readers (rounded tails, distinct capitals).
-- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready ✓ Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready ✓ Integrated -
 
 S3 Proof Moment
 
-- ID/Name: S3 — Proof Moment (Store or Attic)
+- ID/Name: S3 - Proof Moment (Store or Attic)
 - Audience/Tone: MVP 7–9 (Gentle/Standard)
 - Goal: Gently confirm that traditions are family‑made.
 - Hooks:
@@ -174,11 +174,11 @@ S3 Proof Moment
   - Which variant (store vs. attic) ships first? Both share the same props.
 - Fact‑check notes:
   - Receipt text should be generic; avoid real store names.
-- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready ✓ Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready ✓ Integrated -
 
-Epilogue — Rite of Passage
+Epilogue - Rite of Passage
 
-- ID/Name: EP — Epilogue (Family Conversation)
+- ID/Name: EP - Epilogue (Family Conversation)
 - Audience/Tone: MVP 7–9 (Gentle/Standard)
 - Goal: Frame discovery as a rite of passage; celebrate becoming a “helper.”
 - Hooks:
@@ -198,12 +198,12 @@ Epilogue — Rite of Passage
   - Optional small credits panel? Keep it minimal and readable.
 - Fact‑check notes:
   - None required; ensure cultural neutrality in decorations.
-- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready - Integrated -
 
-MM1 Mentor Mini — Sibling Helper
+MM1 Mentor Mini - Sibling Helper
 
-- ID/Name: MM1 — Mentor Mini (Sibling Helper)
-- Audience/Tone: MVP 7–9 (Gentle/Standard) — post‑Epilogue, unlocked via Helper Badge
+- ID/Name: MM1 - Mentor Mini (Sibling Helper)
+- Audience/Tone: MVP 7–9 (Gentle/Standard) - post‑Epilogue, unlocked via Helper Badge
 - Goal: Help a younger sibling begin their own rite of discovery with kindness and privacy.
 - Unlock/state requirements:
   - Requires `ep.badgeHelper = true`.
@@ -221,7 +221,7 @@ MM1 Mentor Mini — Sibling Helper
 - Kindness & accessibility guardrails:
   - Never spoil or trick. Emphasize empathy, timing, and noticing together. Large targets, readable text, captions.
 - Assets needed (link to brief):
-  - Background: `epMM_bg.avif` (cozy shared space — living room/bedroom variant allowed)
+  - Background: `epMM_bg.avif` (cozy shared space - living room/bedroom variant allowed)
   - Props (reused or light variants): `epA_scene1_gift_tag_pieces_[1..3].svg`, `epB_note.svg` (simple pair),
     `ui_moment_cards_[1..3].svg`
   - UI overlay: `ui_mentor_tips.svg`; Collectible: `collect_mentor_sticker.svg`
@@ -231,11 +231,11 @@ MM1 Mentor Mini — Sibling Helper
   - Use reduced motion only; confirm whether we need day/night variants for background.
 - Fact‑check notes:
   - Keep brand‑agnostic assets; privacy‑respecting guidance phrasing.
-- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready - Integrated -
 
 C1 The Mystery Coupon
 
-- ID/Name: C1 — The Mystery Coupon (Anchoring + Framing)
+- ID/Name: C1 - The Mystery Coupon (Anchoring + Framing)
 - Audience/Tone: 12+ (Thinking Tools)
 - Goal: Learn to reframe total cost and avoid anchoring to a flashy discount.
 - Hooks:
@@ -255,11 +255,11 @@ C1 The Mystery Coupon
   - Final look of the shards puzzle; ensure readable totals.
 - Fact‑check notes:
   - Anchoring and price framing; keep math simple and visual.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 C2 The Echo Thread
 
-- ID/Name: C2 — The Echo Thread (Confirmation Bias + Filter Bubbles)
+- ID/Name: C2 - The Echo Thread (Confirmation Bias + Filter Bubbles)
 - Audience/Tone: 12+ (Thinking Tools)
 - Goal: Practice cross‑checking sources and avoiding fallacies in friendly debate.
 - Hooks:
@@ -279,11 +279,11 @@ C2 The Echo Thread
   - Which lenses to include? Keep them generic: local, national, expert, community.
 - Fact‑check notes:
   - Fallacy examples are generic; avoid real personalities/brands.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 C3 The Coin‑Flip Streak
 
-- ID/Name: C3 — The Coin‑Flip Streak (Gambler’s Fallacy + Probability)
+- ID/Name: C3 - The Coin‑Flip Streak (Gambler’s Fallacy + Probability)
 - Audience/Tone: 12+ (Thinking Tools)
 - Goal: Show that streaks happen naturally; teach independence of flips.
 - Hooks:
@@ -303,11 +303,11 @@ C3 The Coin‑Flip Streak
   - How many trials for a meaningful histogram without lag? Keep it snappy.
 - Fact‑check notes:
   - Independence of events; streak frequency basics.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 C4 The Miracle Patch
 
-- ID/Name: C4 — The Miracle Patch (Post Hoc + Placebo)
+- ID/Name: C4 - The Miracle Patch (Post Hoc + Placebo)
 - Audience/Tone: 12+ (Thinking Tools)
 - Goal: Separate correlation from causation in a friendly, team‑oriented setting.
 - Hooks:
@@ -327,11 +327,11 @@ C4 The Miracle Patch
   - Final timeline pieces; ensure touch‑friendly controls.
 - Fact‑check notes:
   - Placebo and post hoc pitfalls; avoid medical claims.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 C5 The Amazing Poster
 
-- ID/Name: C5 — The Amazing Poster (Appeal to Authority + Ad Hominem)
+- ID/Name: C5 - The Amazing Poster (Appeal to Authority + Ad Hominem)
 - Audience/Tone: 12+ (Thinking Tools)
 - Goal: Learn to check claims and keep arguments about ideas, not people.
 - Hooks:
@@ -351,12 +351,12 @@ C5 The Amazing Poster
   - Which credentials to show generically? Use icons (book, lab flask, community badge).
 - Fact‑check notes:
   - Define ad hominem vs. healthy critique in tooltip copy.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 A1 River of Two Lands
 
-- ID/Name: A1 — River of Two Lands (Egypt — Nile cycles)
-- Audience/Tone: 15+ (MythWays — respectful, curious, witty)
+- ID/Name: A1 - River of Two Lands (Egypt - Nile cycles)
+- Audience/Tone: 15+ (MythWays - respectful, curious, witty)
 - Goal: Explore how seasonal river cycles shape deity roles and community memory.
 - Hooks:
   - Flood markers (nilometer), grain barges, festival calendar fragments.
@@ -378,12 +378,12 @@ A1 River of Two Lands
   - Final glyph set; ensure cultural sensitivity review; choose color accents that avoid stereotypical palettes.
 - Fact‑check notes:
   - Seasonal flood basics; nilometer concept; avoid specific temple claims; reference generic “festival records.”
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 A2 Meeting of Winds
 
-- ID/Name: A2 — Meeting of Winds (Norse/Inuit coastal communities)
-- Audience/Tone: 15+ (MythWays — respectful, pragmatic, humble)
+- ID/Name: A2 - Meeting of Winds (Norse/Inuit coastal communities)
+- Audience/Tone: 15+ (MythWays - respectful, pragmatic, humble)
 - Goal: Show maritime pragmatism and oral tradition mapping spirits to hazards.
 - Hooks:
   - Weather bones, sail fragments, elder’s story about a storm crossing.
@@ -405,12 +405,12 @@ A2 Meeting of Winds
   - Choose which hazards to depict generically (shoals, ice edge, sudden squalls) without real geography.
 - Fact‑check notes:
   - Keep culture‑specific elements abstract; consult sensitivity notes; avoid mixing unrelated traditions.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 A3 Paths of Exchange
 
-- ID/Name: A3 — Paths of Exchange (Syncretism under empire)
-- Audience/Tone: 15+ (MythWays — comparative, empathetic)
+- ID/Name: A3 - Paths of Exchange (Syncretism under empire)
+- Audience/Tone: 15+ (MythWays - comparative, empathetic)
 - Goal: Explore syncretic bridges across adjacent cultures and imperial contexts.
 - Hooks:
   - Bilingual inscription rubbing, coinage with shared epithets, merchant ledger excerpts.
@@ -432,12 +432,12 @@ A3 Paths of Exchange
   - Which archetypes to include to stay generic; icon set for roles (river, hearth, messenger, sky).
 - Fact‑check notes:
   - Syncretism examples presented as analogies; no claims about worship practices; cite neutral museum‑style labels.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 O1 Island Shuffle
 
-- ID/Name: O1 — Island Shuffle (Island biogeography)
-- Audience/Tone: 15+ (Origins — curious, humble, playful)
+- ID/Name: O1 - Island Shuffle (Island biogeography)
+- Audience/Tone: 15+ (Origins - curious, humble, playful)
 - Goal: Explore dispersal, drift, and niche colonization vs. convergence across islands.
 - Hooks:
   - Island chain map, driftwood seeds, lizard/bird photos.
@@ -454,17 +454,17 @@ O1 Island Shuffle
   - Props: `collect_fossil_feather.svg`, seed pods, species tokens.
   - UI overlays: slider panel, island map; Badge: `badge_island_biogeography.svg`.
 - Copy notes:
-  - “Different islands can shape similar solutions — nature rhymes.”
+  - “Different islands can shape similar solutions - nature rhymes.”
 - Open questions:
   - Slider ranges for meaningful yet snappy feedback; choose 2–3 traits.
 - Fact‑check notes:
   - Keep examples generic; no species names; emphasize inference, not certainty.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 O2 Patterns in Pollen
 
-- ID/Name: O2 — Patterns in Pollen (Coevolution)
-- Audience/Tone: 15+ (Origins — observational, gentle)
+- ID/Name: O2 - Patterns in Pollen (Coevolution)
+- Audience/Tone: 15+ (Origins - observational, gentle)
 - Goal: Show trait matching (pollinator vs. flower) and landscape/phenology constraints.
 - Hooks:
   - UV flower images, pollinator morphologies, seasonal calendar.
@@ -486,12 +486,12 @@ O2 Patterns in Pollen
   - Which 3–4 traits feel intuitive to match for newcomers?
 - Fact‑check notes:
   - Keep coevolution examples illustrative; no specific taxa; avoid lab claims.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
 O3 Tails, Songs, and Signals
 
-- ID/Name: O3 — Tails, Songs, and Signals (Sexual vs. natural selection)
-- Audience/Tone: 15+ (Origins — balanced, model‑first)
+- ID/Name: O3 - Tails, Songs, and Signals (Sexual vs. natural selection)
+- Audience/Tone: 15+ (Origins - balanced, model‑first)
 - Goal: Explore tension between predation risk and mate choice dynamics via simple sliders and feedback.
 - Hooks:
   - Spectrograms, tail length charts, predator density map.
@@ -509,17 +509,17 @@ O3 Tails, Songs, and Signals
   - Props: `collect_signal_card.svg`, charts, map tokens.
   - UI overlays: sliders, spectrogram panel; Badge: `badge_selection_balance.svg`.
 - Copy notes:
-  - “Signals can help mates find each other, but they can also attract predators — balance matters.”
+  - “Signals can help mates find each other, but they can also attract predators - balance matters.”
 - Open questions:
   - Determine slider coupling for clear feedback without overwhelming users.
 - Fact‑check notes:
   - Separate model sliders from real data examples; keep claims generic.
-- Review checklist: Content ✓ Kindness ✓ Accessibility — Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility - Art Ready - Integrated -
 
-MM1‑R Mentor Mini — Reflection Variant (12+)
+MM1‑R Mentor Mini - Reflection Variant (12+)
 
-- ID/Name: MM1‑R — Mentor Mini Reflection (12+)
-- Audience/Tone: 12+ (Thinking Tools — reflective, witty, kind)
+- ID/Name: MM1‑R - Mentor Mini Reflection (12+)
+- Audience/Tone: 12+ (Thinking Tools - reflective, witty, kind)
 - Goal: Offer short reflection prompts connecting helping behavior to thinking tools (framing, evidence, timing).
 - Hooks:
   - A small journal card unlocks after completing MM1; shows 2–3 reflective choices.
@@ -539,7 +539,7 @@ MM1‑R Mentor Mini — Reflection Variant (12+)
   - Do we gate MM1‑R behind seeing ≥2 routes in MM1? (Default: unlocked when MM1 is completed once.)
 - Fact‑check notes:
   - Keep concepts generic; no jargon required.
-- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready — Integrated —
+- Review checklist: Content ✓ Kindness ✓ Accessibility ✓ Art Ready - Integrated -
 
 Review Checklist (for any story)
 
@@ -553,4 +553,4 @@ Review Checklist (for any story)
 Changelog
 
 - v1 (2025‑12‑21): Initial tracker with MVP S1–S3 + Epilogue and 12+ C1–C5 entries.
-- v2 (2025‑12‑21): Added 15+ Tracks — MythWays A1–A3 and Origins O1–O3 with full draft entries; updated Index.
+- v2 (2025‑12‑21): Added 15+ Tracks - MythWays A1–A3 and Origins O1–O3 with full draft entries; updated Index.

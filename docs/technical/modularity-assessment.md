@@ -1,4 +1,4 @@
-# GameHub — Modularity Assessment
+# GameHub - Modularity Assessment
 
 **Date**: 2026-05-29
 **Status**: Game platform with monorepo game packages. Good lib/, game packages need work.
@@ -7,7 +7,7 @@
 
 ### Strengths
 - **Small components/ directory** (3 files): Minimal shared UI
-- **Games in monorepo packages** (`packages/games/`) — proper isolation
+- **Games in monorepo packages** (`packages/games/`) - proper isolation
 - Admin components separated: `components/admin/RichTextEditor.tsx`, `AdminTopBar.tsx`
 
 ### Critical Monoliths (in packages/games/)
@@ -31,17 +31,17 @@
 
 ### Strengths
 - **Well-organized lib/** (30 files, 4 dirs):
-  - `lib/i18n/` — Complete i18n with config, server, provider, translations
-  - `lib/supabase/` — Client, server, admin, public-server, service-role, types
-  - `lib/server/` — Leaderboard, feature-flags-store
-  - `lib/admin/` — Roles
+  - `lib/i18n/` - Complete i18n with config, server, provider, translations
+  - `lib/supabase/` - Client, server, admin, public-server, service-role, types
+  - `lib/server/` - Leaderboard, feature-flags-store
+  - `lib/admin/` - Roles
 - **Feature flags**: Client + server separation
-- **Rate limiting**, CSRF, Redis, content cache, query client — all in dedicated files
+- **Rate limiting**, CSRF, Redis, content cache, query client - all in dedicated files
 - **Server locale**: `lib/server-locale.ts` for RSC locale detection
 
 ### Concerns
-- **`lib/i18n.ts`** and **`lib/i18n/`** — Dual pattern like velvet-galaxy
-- **`packages/game-platform/`** contains Firebase + physics (Rapier) — mixed concerns
+- **`lib/i18n.ts`** and **`lib/i18n/`** - Dual pattern like velvet-galaxy
+- **`packages/game-platform/`** contains Firebase + physics (Rapier) - mixed concerns
 
 ## 3. Cross-Project Reuse Potential
 
@@ -67,7 +67,7 @@
 ## 5. Performance Impact
 
 - **Game monoliths**: Each game loads as one chunk. No lazy loading within games.
-- Firebase + Rapier3D physics (Rapier is 2MB+) in game-platform package — heavy
+- Firebase + Rapier3D physics (Rapier is 2MB+) in game-platform package - heavy
 - Dynamic imports for individual games would help
 - WebGPU access pattern in `packages/game-platform/` is forward-looking
 

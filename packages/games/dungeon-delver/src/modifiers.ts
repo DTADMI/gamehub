@@ -1,5 +1,5 @@
 /**
- * Stat Modifier System — Flat composable pipeline for character stats.
+ * Stat Modifier System - Flat composable pipeline for character stats.
  *
  * Replaces the Decorator Pattern with a flat modifier list. Rationale:
  * - All bonuses are additive (no non-commutative transforms) → decorator is overkill
@@ -234,7 +234,7 @@ export function calcMagicDamage(stats: Stats): number { return 4 + stats.int * 3
 
 // ─── Set Bonuses ──────────────────────────────────────────────
 
-/** Set definitions — 2-piece and 3-piece bonuses */
+/** Set definitions - 2-piece and 3-piece bonuses */
 export const SET_BONUSES: Record<string, { nameEn: string; nameFr: string; bonus2: Partial<Stats>; bonus3: Partial<Stats> }> = {
   iron:     { nameEn: "Iron Armaments",    nameFr: "Armements de Fer",    bonus2: { str: 2 },                 bonus3: { str: 3, sta: 3 } },
   shadow:   { nameEn: "Shadow's Embrace",  nameFr: "Étreinte d'Ombre",   bonus2: { str: 1, int: 1 },         bonus3: { str: 2, int: 2, wil: 2 } },

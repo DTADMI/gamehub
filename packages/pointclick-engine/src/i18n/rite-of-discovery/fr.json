@@ -1,9 +1,9 @@
 {
   "rod": {
     "intro": {
-      "title": "Rite of Discovery — Intro",
+      "title": "Rite of Discovery - Intro",
       "p1": "Une tradition familiale. Un choix discret. Ce soir, cela commence.",
-      "p2": "Soyez attentif aux détails — ils peuvent guider vos choix.",
+      "p2": "Soyez attentif aux détails - ils peuvent guider vos choix.",
       "cta": "Commencer",
       "skip": "Passer l'intro"
     },
@@ -35,7 +35,7 @@
     },
     "s1": {
       "title": "La veille au soir",
-      "body": "Le salon est calme. Du papier d'emballage et des étiquettes sont éparpillés sur la table. Une étiquette s'est déchirée — reassemblez-la.",
+      "body": "Le salon est calme. Du papier d'emballage et des étiquettes sont éparpillés sur la table. Une étiquette s'est déchirée - reassemblez-la.",
       "prompt": "Assemblez les étiquettes magiques dans le bon ordre :",
       "tags": {
         "star": "Étiquette étoile",
@@ -50,7 +50,7 @@
     },
     "s2": {
       "title": "La tradition de la dent",
-      "body": "Dans ta chambre, tu trouves deux notes — une de la « Fée des dents » et une d'un parent. Compare les lettres.",
+      "body": "Dans ta chambre, tu trouves deux notes - une de la « Fée des dents » et une d'un parent. Compare les lettres.",
       "prompt": "Associe les lettres qui se ressemblent sur les deux notes :",
       "lettersFound": "Lettres associées",
       "keepNote": "Garder la note comme preuve",
@@ -61,16 +61,16 @@
       "title": "Le moment de vérité",
       "body": "Tu entends des voix étouffées depuis la cuisine. Il y a un reçu sur le comptoir et un sac-cadeau dans le placard. Que crois-tu ?",
       "prompt": "Les preuves s'accumulent. Comment te sens-tu face à cette découverte ?",
-      "confrontNow": "Confronter tes parents maintenant — tu veux la vérité",
-      "saveLater": "Garder la découverte pour plus tard — tu n'es pas pressé",
+      "confrontNow": "Confronter tes parents maintenant - tu veux la vérité",
+      "saveLater": "Garder la découverte pour plus tard - tu n'es pas pressé",
       "gentleNote": "Les traditions sont une façon pour les familles de montrer leur amour. La magie vit dans la bienveillance.",
       "continue": "Continuer vers le Rite"
     },
     "epilogue": {
       "title": "Le rite de découverte",
-      "body": "Tes parents s'assoient avec toi. Ils sourient chaleureusement. « Nous savions que ce jour viendrait, » disent-ils. « Maintenant tu fais partie de la tradition — les aides qui gardent la magie vivante pour les plus jeunes. »",
-      "proud": "Tu te sens fier. Tu es dans le secret maintenant — un rite de passage.",
-      "cozy": "Tu te sens bien. La magie n'a pas disparu — elle a juste changé de forme.",
+      "body": "Tes parents s'assoient avec toi. Ils sourient chaleureusement. « Nous savions que ce jour viendrait, » disent-ils. « Maintenant tu fais partie de la tradition - les aides qui gardent la magie vivante pour les plus jeunes. »",
+      "proud": "Tu te sens fier. Tu es dans le secret maintenant - un rite de passage.",
+      "cozy": "Tu te sens bien. La magie n'a pas disparu - elle a juste changé de forme.",
       "badge": "Badge d'Aide gagné ! Tu fais maintenant partie du cercle de la bienveillance.",
       "restart": "Recommencer l'aventure",
       "viewOutro": "Voir la conclusion"

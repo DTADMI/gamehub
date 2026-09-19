@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Responsive layout guard — validates no horizontal overflow at 320px
+ * Responsive layout guard - validates no horizontal overflow at 320px
  * across key pages. NF-GATE requirement: all UI must remain usable
  * at 320px width minimum (AGENTS.md UI rule).
  */
@@ -15,7 +15,7 @@ const KEY_PAGES = [
   { path: "/games/systems-discovery", name: "Systems Discovery (pointclick)" },
 ];
 
-test.describe("Responsive — 320px guardrail", () => {
+test.describe("Responsive - 320px guardrail", () => {
   for (const { path, name } of KEY_PAGES) {
     test(`${name} page has no horizontal overflow at 320px`, async ({ page }) => {
       await page.setViewportSize({ width: 320, height: 800 });
@@ -52,7 +52,7 @@ test.describe("Responsive — 320px guardrail", () => {
   }
 });
 
-test.describe("Responsive — game canvas containment", () => {
+test.describe("Responsive - game canvas containment", () => {
   test("canvas games do not overflow viewport at 320px", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 600 });
     await page.goto("/games/snake");

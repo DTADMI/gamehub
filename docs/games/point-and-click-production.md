@@ -1,11 +1,11 @@
-# Point-and-Click Games — Production Reference
+# Point-and-Click Games - Production Reference
 
 **Owner**: Nebula Forge GameHub Team
 **Last Updated**: 2026-08-22
 
 ## Overview
 
-GameHub ships three point-and-click narrative games powered by `@gamehub/pointclick-engine`. Each game uses procedural Web Audio API sound synthesis — no external audio files needed. Scene atmospheres are rendered with CSS gradients and subtle animations.
+GameHub ships three point-and-click narrative games powered by `@gamehub/pointclick-engine`. Each game uses procedural Web Audio API sound synthesis - no external audio files needed. Scene atmospheres are rendered with CSS gradients and subtle animations.
 
 ---
 
@@ -66,7 +66,7 @@ gamehub/
 - **Puzzle components** (extracted): `BreathPuzzle`, `FuelMatchingPuzzle`, `OrbitsPuzzle`
 - **URL packs**: `?pack=breath|fuel|move|signal|grow|space|ocean`
 - **Audio**: `body` ambient (heartbeat pulse), `space` (deep drone + filter sweep), `ocean` (wave-like modulation), `thinking` (neutral pad)
-- **Backgrounds**: CSS gradients per domain — warm red for body, deep space radial, ocean blue linear
+- **Backgrounds**: CSS gradients per domain - warm red for body, deep space radial, ocean blue linear
 
 ### Bilingual Support
 
@@ -82,10 +82,10 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 
 | Episode | Scenes | Puzzles | Setting |
 |---------|--------|---------|---------|
-| Intro | INTRO | — | Workshop — dim ambient |
-| E1 — Gears | E1_GEAR, E1_WRAP | Gears alignment, ScuffLatch (long-press discovery), basic pipes | Workshop |
-| E2 — The Office | E2_INTRO, E2_GEARWALL, E2_CIPHER, E2_FILING, E2_BROKEN_TOYS, E2_SHADOW, E2_WRAP | Gear wall, cipher, filing logic, broken toy matching, shadow shape alignment | Office — quiet, clock-ticking atmosphere |
-| E3 — The Apartment | E3_INTRO, E3_PHOTO_MATCH, E3_LOCKS, E3_FINAL_ESCAPE, E3_TOYMAKER_REVEAL, E3_WRAP | Photo matching, sequence locks, final escape dials, toymaker reveal | Apartment — mysterious, rosy-warm tones |
+| Intro | INTRO | - | Workshop - dim ambient |
+| E1 - Gears | E1_GEAR, E1_WRAP | Gears alignment, ScuffLatch (long-press discovery), basic pipes | Workshop |
+| E2 - The Office | E2_INTRO, E2_GEARWALL, E2_CIPHER, E2_FILING, E2_BROKEN_TOYS, E2_SHADOW, E2_WRAP | Gear wall, cipher, filing logic, broken toy matching, shadow shape alignment | Office - quiet, clock-ticking atmosphere |
+| E3 - The Apartment | E3_INTRO, E3_PHOTO_MATCH, E3_LOCKS, E3_FINAL_ESCAPE, E3_TOYMAKER_REVEAL, E3_WRAP | Photo matching, sequence locks, final escape dials, toymaker reveal | Apartment - mysterious, rosy-warm tones |
 
 ### Puzzle Types
 
@@ -107,7 +107,7 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 ### Save System
 
 - `TmeSaveV1` schema with versioned persistence
-- Auto-saves on `sceneId` or `ctx` change (debounced — only writes on actual change)
+- Auto-saves on `sceneId` or `ctx` change (debounced - only writes on actual change)
 - Medal system: bronze/silver/gold per episode based on hints used
 
 ### Technical Details
@@ -115,7 +115,7 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 - **Component**: `ToymakerEscapeGame` → manual scene routing (not SceneController)
 - **Save key**: `tme:save:v1`
 - **Audio**: `workshop` (warm A2 hum), `office` (quiet D3 pad), `apartment` (neutral G3)
-- **Backgrounds**: CSS gradients — warm brown workshop, deep indigo office, rosy-mauve apartment
+- **Backgrounds**: CSS gradients - warm brown workshop, deep indigo office, rosy-mauve apartment
 - **Canvas puzzle**: E2_SHADOW uses a canvas-based drag-and-drop shape alignment system
 - **State**: 20+ useState hooks managing all puzzle states independently
 
@@ -129,22 +129,22 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 
 | Scene | Content | Puzzle |
 |-------|---------|--------|
-| INTRO | Introduction — "Something doesn't add up" | — |
+| INTRO | Introduction - "Something doesn't add up" | - |
 | S1_NIGHT_BEFORE | Gift tags don't match handwriting | Sequence: assemble star→heart→bell tags |
 | S2_TOOTH_TRADITION | Compare "Tooth Fairy" note vs parent's note | Letter matching: match lowercase→uppercase (a→A, b→B...) |
-| S3_PROOF_MOMENT | Receipt + gift bag evidence — confront or wait? | Choice-based branching |
+| S3_PROOF_MOMENT | Receipt + gift bag evidence - confront or wait? | Choice-based branching |
 | EPILOGUE | Parents reveal the tradition | Branch-dependent outcome |
 | OUTRO | Conclusion, replays, NG+, Thinking Tools | Navigation hub |
 | TT_INTRO → TT6_SAMPLE | 6 Thinking Tools (cognitive biases) | Multiple-choice reasoning |
 
 ### Thinking Tools
 
-1. **TT1_COUPON** — Anchoring bias (misleading discount)
-2. **TT2_ECHO** — Confirmation bias (echo chamber)
-3. **TT3_COIN** — Gambler's fallacy (independent events)
-4. **TT4_MIRACLE** — Post hoc fallacy
-5. **TT5_POSTER** — Authority bias
-6. **TT6_SAMPLE** — Base rate neglect
+1. **TT1_COUPON** - Anchoring bias (misleading discount)
+2. **TT2_ECHO** - Confirmation bias (echo chamber)
+3. **TT3_COIN** - Gambler's fallacy (independent events)
+4. **TT4_MIRACLE** - Post hoc fallacy
+5. **TT5_POSTER** - Authority bias
+6. **TT6_SAMPLE** - Base rate neglect
 
 ### Technical Details
 
@@ -152,8 +152,8 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 - **Save key**: `rod:save:v1` (from `SAVE_KEYS.rod`)
 - **Audio**: `home` (warm C4 pad) for narrative, `thinking` (A3 triangle) for Thinking Tools
 - **Backgrounds**: warm home gradient, deep thinking blue
-- **Gentle mode**: Available via flags — shows extra hints and reassurance text
-- **NG+ mode**: `ngplus.mentor` flag — adds mentor guidance text
+- **Gentle mode**: Available via flags - shows extra hints and reassurance text
+- **NG+ mode**: `ngplus.mentor` flag - adds mentor guidance text
 
 ---
 
@@ -169,14 +169,14 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 - `MatchingPuzzle` (shared match-left→right component)
 
 ### Available but Not Yet Used
-- `AnimationManager` — sprite-based animation system
-- `AssetManager` — image/audio/json/spritesheet/font loading
-- `Character`, `GameObject`, `Hotspot`, `Item` — entity models
-- `AchievementPlugin` — unlock tracking
-- `DialogSystem` — advanced branching dialogue (beyond simple choices)
-- `MenuSystem` — in-game menus
-- `EventSystem` — pub/sub event bus
-- `InputSequenceDetector` — combo/key-sequence detection
+- `AnimationManager` - sprite-based animation system
+- `AssetManager` - image/audio/json/spritesheet/font loading
+- `Character`, `GameObject`, `Hotspot`, `Item` - entity models
+- `AchievementPlugin` - unlock tracking
+- `DialogSystem` - advanced branching dialogue (beyond simple choices)
+- `MenuSystem` - in-game menus
+- `EventSystem` - pub/sub event bus
+- `InputSequenceDetector` - combo/key-sequence detection
 
 ---
 
@@ -184,16 +184,16 @@ All strings use `t("sysdisc.xxx.yyy")` from `lib/i18n/translations/`. Complete E
 
 All three games use **zero external audio files**. Sound is generated procedurally via Web Audio API:
 
-- **SFX**: click, solve, reveal, error, collect — synthesized oscillator envelopes
+- **SFX**: click, solve, reveal, error, collect - synthesized oscillator envelopes
 - **Ambient**: Domain-specific drones with LFO modulation matching scene atmosphere
 - **Volume**: Controllable via Gentle Mode toggle in SceneController
 
 Scene backgrounds use CSS gradients with subtle GPU-composited animations:
-- `@keyframes workshopShimmer` — warm brown background-position shift
-- `@keyframes spaceDrift` — deep-space radial gradient pan
-- `@keyframes oceanWaves` — vertical background-position undulation
-- `@keyframes bodyPulse` — subtle scale heartbeat
-- `@keyframes homeWarm` — brightness/saturation gentle oscillation
+- `@keyframes workshopShimmer` - warm brown background-position shift
+- `@keyframes spaceDrift` - deep-space radial gradient pan
+- `@keyframes oceanWaves` - vertical background-position undulation
+- `@keyframes bodyPulse` - subtle scale heartbeat
+- `@keyframes homeWarm` - brightness/saturation gentle oscillation
 
 Card images are SVGs in `public/images/games/`.
 
@@ -203,19 +203,19 @@ Card images are SVGs in `public/images/games/`.
 
 ### Manual Smoke Test Checklist
 
-1. **Load each game page** — no errors in console
-2. **Navigate through intro scenes** — choices work, scene transitions smooth
-3. **Solve each puzzle type** — onSolved fires correctly, flags set
-4. **Test gentle mode toggle** — hints appear, volume changes
-5. **Switch language (EN↔FR)** — all text updates
-6. **Reload mid-game** — save state persists, resumes at correct scene
-7. **Test save/load** — localStorage contains valid JSON
-8. **Complete each game** — epilogue/outro scenes accessible
+1. **Load each game page** - no errors in console
+2. **Navigate through intro scenes** - choices work, scene transitions smooth
+3. **Solve each puzzle type** - onSolved fires correctly, flags set
+4. **Test gentle mode toggle** - hints appear, volume changes
+5. **Switch language (EN↔FR)** - all text updates
+6. **Reload mid-game** - save state persists, resumes at correct scene
+7. **Test save/load** - localStorage contains valid JSON
+8. **Complete each game** - epilogue/outro scenes accessible
 
 ### Known Limitations
 
 - ToymakerEscape puzzle blocks are still inline (not extracted to separate components)
-- ShadowPuzzle canvas is basic — no touch support, no drag handles
+- ShadowPuzzle canvas is basic - no touch support, no drag handles
 - No accessibility mode beyond Gentle Mode (no screen reader optimizations)
 - Achievements tracked in state but not persisted to backend
 - No analytics telemetry for puzzle completion rates

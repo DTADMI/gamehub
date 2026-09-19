@@ -4,7 +4,7 @@
 > that are mostly status/evaluation snapshots. This index classifies them as **live** vs
 > **superseded/archive** so navigators don't read stale state as current.
 >
-> Nothing was deleted — superseded docs remain on disk under their original names. This index
+> Nothing was deleted - superseded docs remain on disk under their original names. This index
 > just tells you which to trust. When a doc is superseded, prefer the live replacement.
 
 ## Live (current source of truth)
@@ -31,7 +31,7 @@
 | --- | --- |
 | `docs/ARCHITECTURE_OPTIONS_ANALYSIS.md` | Options analysis feeding ARCHITECTURE_STRATEGY |
 | `docs/ARCHITECTURE_TABLES_ADDED.md` | DB tables added (verify against current schema) |
-| `docs/CONVEX_MIGRATION_PLAN.md` | Convex migration plan (superseded by Postgres-first strategy — see NF-root `docs/technical/postgres-substitution-strategy.md`) |
+| `docs/CONVEX_MIGRATION_PLAN.md` | Convex migration plan (superseded by Postgres-first strategy - see NF-root `docs/technical/postgres-substitution-strategy.md`) |
 | `docs/SPACETIMEDB_EVALUATION.md` | SpacetimeDB evaluation (see NF-root `docs/spacetimedb-2.0-comparative-analysis.md`) |
 | `docs/IMPORT_STRATEGY_DECISION.md` | Import strategy decision |
 | `docs/STANDALONE_PROJECTS_MIGRATION.md` | Standalone projects migration |

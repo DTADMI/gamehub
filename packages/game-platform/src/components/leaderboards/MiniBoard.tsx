@@ -94,13 +94,13 @@ export default function MiniBoard({ gameType, limit = 10, className }: MiniBoard
     >
       <div className="mb-2 flex items-center justify-between">
         <h3 className="text-sm font-semibold">
-          Top {limit} — {gameType.replace(/_/g, " ")}
+          Top {limit} - {gameType.replace(/_/g, " ")}
         </h3>
         {loading && <span className="text-muted-foreground text-xs">Loading…</span>}
       </div>
       {error && <div className="text-sm text-red-500">{error}</div>}
       {!loading && !error && (!entries || entries.length === 0) && (
-        <div className="text-muted-foreground text-sm">No scores yet — be the first to play!</div>
+        <div className="text-muted-foreground text-sm">No scores yet - be the first to play!</div>
       )}
       {!loading && !error && entries && entries.length > 0 && (
         <div className="divide-y divide-gray-100 dark:divide-gray-800">

@@ -242,7 +242,7 @@ export const CheckersGame: React.FC = () => {
           : `${t("turn")}: ${turn === "w" ? t("white") : t("black")}`}
       </div>
       <div className="text-lg font-semibold">
-        {t("title")} — {t("turn")}: {turn === "w" ? t("white") : t("black")}
+        {t("title")} - {t("turn")}: {turn === "w" ? t("white") : t("black")}
       </div>
       <div
         ref={boardRef}
@@ -287,7 +287,7 @@ export const CheckersGame: React.FC = () => {
       </div>
       {winner ? (
         <div className="text-accent text-sm">
-          {t("gameOver")} — {winner === "w" ? t("white") : t("black")} {t("victory")}
+          {t("gameOver")} - {winner === "w" ? t("white") : t("black")} {t("victory")}
         </div>
       ) : (
         <div className="text-xs opacity-70">

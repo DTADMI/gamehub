@@ -1182,11 +1182,11 @@ api/
 
 ## Monetization Strategy
 
-> **🎯 DUAL-SIDED MARKETPLACE**: StoryForge is **not just a writing tool**—it's a **creator-reader platform** like Wattpad, Royal Road, and Patreon combined. Revenue comes from BOTH authors (subscriptions for tools) AND readers (subscriptions for content access + author support).
+> **🎯 DUAL-SIDED MARKETPLACE**: StoryForge is **not just a writing tool**-it's a **creator-reader platform** like Wattpad, Royal Road, and Patreon combined. Revenue comes from BOTH authors (subscriptions for tools) AND readers (subscriptions for content access + author support).
 >
 > **💰 REVENUE SPLIT PHILOSOPHY**: Authors keep **80% of reader subscription revenue** (vs Wattpad's 50%, Patreon's 92%). StoryForge takes 20% to cover payment processing, hosting, and platform development.
 >
-> **🧠 MENTAL HEALTH FIRST**: All monetization features include safeguards—compassionate streaks, burnout detection, rest days, healthy limits for both authors and readers.
+> **🧠 MENTAL HEALTH FIRST**: All monetization features include safeguards-compassionate streaks, burnout detection, rest days, healthy limits for both authors and readers.
 
 ### Target Market Prioritization
 
@@ -3121,7 +3121,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 
 #### 4. **RPG/D&D Worldbuilding Features Are Core, Not Optional** ✅ CLARIFICATION
 
-**CORRECTION:** The initial vision does NOT include "campaign management" (dice rollers, initiative trackers, VTT features). Instead, it describes **comprehensive worldbuilding tools** that serve ALL storytellers—novelists, screenwriters, comic creators, AND D&D game masters who are ALSO storytellers.
+**CORRECTION:** The initial vision does NOT include "campaign management" (dice rollers, initiative trackers, VTT features). Instead, it describes **comprehensive worldbuilding tools** that serve ALL storytellers-novelists, screenwriters, comic creators, AND D&D game masters who are ALSO storytellers.
 
 **What the vision ACTUALLY says:**
 
@@ -3135,7 +3135,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 - **Location reference boards** with architecture, layouts, seasonal variations → Works for ALL worldbuilders
 - **Storyboard view** for visual flow planning → Works for screenwriters, comic creators, D&D session planning
 
-**Key Insight:** These are NOT "D&D features"—they're **comprehensive worldbuilding and visual storytelling tools** that happen to ALSO serve D&D game masters as a natural byproduct. D&D GMs are WRITERS creating stories, just in interactive format.
+**Key Insight:** These are NOT "D&D features"-they're **comprehensive worldbuilding and visual storytelling tools** that happen to ALSO serve D&D game masters as a natural byproduct. D&D GMs are WRITERS creating stories, just in interactive format.
 
 **Market Overlap (Supporting Data):**
 
@@ -3146,7 +3146,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 
 **REVISED Recommendation:**
 
-✅ **Phase 1 (MVP)**: **BUILD these worldbuilding tools**—they're CORE to the vision, not optional
+✅ **Phase 1 (MVP)**: **BUILD these worldbuilding tools**-they're CORE to the vision, not optional
 
 - ✅ Character profiles with visual references, traits, quirks, backstories
 - ✅ Location boards with maps, reference images, descriptions
@@ -3196,7 +3196,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 
 #### 5. **Visual Storytelling Tools Are For Planning, Not Production** ✅ CLARIFICATION
 
-**CORRECTION:** The initial vision describes **visual storytelling SUPPORT**—character design galleries, location reference boards, storyboard planning—NOT pixel-perfect panel design or art production tools.
+**CORRECTION:** The initial vision describes **visual storytelling SUPPORT**-character design galleries, location reference boards, storyboard planning-NOT pixel-perfect panel design or art production tools.
 
 **What the vision ACTUALLY says:**
 
@@ -3237,7 +3237,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 
 ✅ **Phase 3 (Year 2)**: **EXPAND visual planning tools** (IF >500 users request)
 
-- ✅ Panel layout templates (3-panel, 6-panel, splash page—structural hints, NOT drawing tools)
+- ✅ Panel layout templates (3-panel, 6-panel, splash page-structural hints, NOT drawing tools)
 - ✅ Speech bubble placement notes (text annotations for artist, NOT actual bubbles)
 - ✅ Storyboard templates (16:9 film, 2.35:1 widescreen, vertical webtoon)
 - ✅ Export to PDF (script + storyboard + reference sheets in one document)
@@ -3268,7 +3268,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 
 **Competitive Advantage:**
 
-- **Integrated workflow**: Write script, organize character references, build locations, storyboard—all in ONE tool
+- **Integrated workflow**: Write script, organize character references, build locations, storyboard-all in ONE tool
 - **Celtx/Final Draft lack worldbuilding**: Separate tools for character tracking, location management
 - **World Anvil lacks scriptwriting**: Great for worldbuilding, terrible for writing actual scripts
 - **StoryForge**: Write script + worldbuild + organize visuals + publish/share (unique position)
@@ -3382,7 +3382,7 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 **Add IF revenue is stable + user demand proven:**
 
 - ✅ **Advanced visual planning tools** (IF >500 users request):
-  - ✅ Panel layout templates (3-panel, 6-panel, splash page—structural hints only)
+  - ✅ Panel layout templates (3-panel, 6-panel, splash page-structural hints only)
   - ✅ Speech bubble placement notes (text annotations for artist)
   - ✅ Storyboard templates (16:9 film, 2.35:1 widescreen, vertical webtoon)
   - ✅ Export to PDF (script + storyboard + reference sheets in one document)
@@ -3647,13 +3647,13 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 1. **✅ KEEP & PRIORITIZE:**
    - Mental health-first philosophy with concrete implementation (burnout detection, compassionate streaks, wellness dashboard)
    - Dual-sided marketplace (authors + readers launch together from day one)
-   - Fair revenue share: 85% to authors, 15% to platform (77% after Stripe fees—be transparent)
+   - Fair revenue share: 85% to authors, 15% to platform (77% after Stripe fees-be transparent)
    - **Core worldbuilding tools in MVP** (characters, locations, timelines, relationships, visual assets)
    - **Visual reference management** (character galleries, location boards, storyboard planning)
 
 2. **✅ CORRECTIONS APPLIED:**
-   - **RPG/D&D features are NOT campaign management**—they're worldbuilding tools that serve ALL creators (novels, screenplays, comics, D&D). **INCLUDE in Phase 1 MVP.**
-   - **Visual storytelling is NOT pixel-perfect panel design**—it's scriptwriting, reference organization, and storyboard planning. **INCLUDE basic features in Phase 1, expand in Phase 2.**
+   - **RPG/D&D features are NOT campaign management**-they're worldbuilding tools that serve ALL creators (novels, screenplays, comics, D&D). **INCLUDE in Phase 1 MVP.**
+   - **Visual storytelling is NOT pixel-perfect panel design**-it's scriptwriting, reference organization, and storyboard planning. **INCLUDE basic features in Phase 1, expand in Phase 2.**
    - **Reader platform is EQUAL priority** to author tools (not an afterthought). Both sides must launch together.
    - **Mental health features need concrete implementation**: Algorithms, thresholds, partnerships with mental health orgs ($10-20K consultant budget).
    - **Revenue model simplified for MVP**: Author tools subscriptions + per-author reader subscriptions only. Premium Reader pool deferred to Phase 2.
@@ -3706,4 +3706,4 @@ Exit: Acquisition at $200M-1B (Year 5-7) or IPO (Year 8+)
 - **Dual-sided marketplace from day one** (seed readers first via content partnerships)
 - **Download options + TTS audiobooks** add 25% revenue uplift potential with minimal risk
 
-This is a **$5-10M ARR indie business** opportunity (not unicorn, but profitable and sustainable). With proper execution, StoryForge can become the **"Notion for storytellers"**—the platform where every writer organizes their worlds, writes their stories, and publishes to readers.
+This is a **$5-10M ARR indie business** opportunity (not unicorn, but profitable and sustainable). With proper execution, StoryForge can become the **"Notion for storytellers"**-the platform where every writer organizes their worlds, writes their stories, and publishes to readers.

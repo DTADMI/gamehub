@@ -1,5 +1,5 @@
 /**
- * Knitzy — Bilingual string map (EN/FR)
+ * Knitzy - Bilingual string map (EN/FR)
  */
 export const KNITZY_TX = {
   en: {

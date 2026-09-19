@@ -626,7 +626,7 @@ export default function TimeClonePuzzleGame({
         }}
       >
         <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>
-          {t("timeclone.title")} — {level.name}
+          {t("timeclone.title")} - {level.name}
         </div>
         <div>
           {t("timeclone.score")}: <span style={{ color: "#00ff88" }}>{score}</span>

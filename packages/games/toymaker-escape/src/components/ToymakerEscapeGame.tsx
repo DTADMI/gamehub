@@ -479,7 +479,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* Cabinet panel — Wires and Pipes stubs for E1 */}
+        {/* Cabinet panel - Wires and Pipes stubs for E1 */}
         {sceneId === "E1_GEAR" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">{t("tme.e1.panel.title")}</h3>
@@ -702,7 +702,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* E2 — Cipher puzzle */}
+        {/* E2 - Cipher puzzle */}
         {sceneId === "E2_CIPHER" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">{t("cipherTitle")}</h3>
@@ -749,13 +749,13 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* E2 — Filing Logic sorting puzzle */}
+        {/* E2 - Filing Logic sorting puzzle */}
         {sceneId === "E2_FILING" && <FilingLogicPuzzle lang={lang} ctx={ctx} setCtx={setCtx} />}
 
-        {/* E2 — Shadow Safe canvas puzzle */}
+        {/* E2 - Shadow Safe canvas puzzle */}
         {sceneId === "E2_SHADOW" && <ShadowPuzzle lang={lang} ctx={ctx} setCtx={setCtx} />}
 
-        {/* E2 — Wrap */}
+        {/* E2 - Wrap */}
         {sceneId === "E2_WRAP" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">
@@ -794,8 +794,8 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
             </h3>
             <p className="mb-2 text-sm">
               {lang === "fr"
-                ? "Vous arrivez à votre propre appartement. Des objets familiers ont été réarrangés. Le commissaire a laissé des indices ici — mais pourquoi VOTRE appartement?"
-                : "You arrive at your own apartment. Familiar objects are rearranged. The commissioner left clues here — but why YOUR apartment?"}
+                ? "Vous arrivez à votre propre appartement. Des objets familiers ont été réarrangés. Le commissaire a laissé des indices ici - mais pourquoi VOTRE appartement?"
+                : "You arrive at your own apartment. Familiar objects are rearranged. The commissioner left clues here - but why YOUR apartment?"}
             </p>
             <div className="flex gap-2">
               <button
@@ -808,10 +808,10 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* E3_LOCKS — Environmental Locks Sequence Puzzle */}
+        {/* E3_LOCKS - Environmental Locks Sequence Puzzle */}
         {sceneId === "E3_LOCKS" && <LocksPuzzle lang={lang} ctx={ctx} setCtx={setCtx} />}
 
-        {/* E3_PHOTOS — Photo Memory Wall */}
+        {/* E3_PHOTOS - Photo Memory Wall */}
         {sceneId === "E3_PHOTOS" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">
@@ -883,7 +883,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* E3 — Anagram puzzle */}
+        {/* E3 - Anagram puzzle */}
         {sceneId === "E3_ANAGRAM" && (
           <div className="mb-4 rounded-md border p-3">
             <h3 className="mb-2 font-semibold">{t("fridgeAnagram")}</h3>
@@ -937,7 +937,7 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* E2 — Gear Wall puzzle */}
+        {/* E2 - Gear Wall puzzle */}
         {sceneId === "E2_GEARWALL" && (
           <div className="mb-4 rounded-md border p-3" style={{
             background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
@@ -1011,13 +1011,13 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           </div>
         )}
 
-        {/* E2 — Broken Toys Workbench puzzle */}
+        {/* E2 - Broken Toys Workbench puzzle */}
         {sceneId === "E2_BROKEN_TOYS" && <BrokenToysPuzzle lang={lang} ctx={ctx} setCtx={setCtx} />}
 
-        {/* E3 — Toymaker Reveal */}
+        {/* E3 - Toymaker Reveal */}
         {sceneId === "E3_TOYMAKER_REVEAL" && <ToymakerReveal lang={lang} />}
 
-        {/* E3 — Final Escape Sequence puzzle */}
+        {/* E3 - Final Escape Sequence puzzle */}
         {sceneId === "E3_FINAL_ESCAPE" && <FinalEscapePuzzle lang={lang} finalEscape={finalEscape} setFinalEscape={setFinalEscape} onSolved={() => setCtx((c) => effects.setFlag("finalEscape.solved", true)(ensureCtx(c)))} />}
 
         {/* Ambient background descriptions for scenes */}
@@ -1049,8 +1049,8 @@ const scenes = TOYMAKER_SCENES as Record<string, any>;
           }}>
             <span className="opacity-70">
               {lang === "fr"
-                ? "Ambiance: Votre appartement est silencieux mais familier. Quelque chose a changé — les meubles sont légèrement déplacés, comme si quelqu'un avait orchestré un jeu rien que pour vous."
-                : "Ambience: Your apartment is quiet but familiar. Something has shifted — furniture slightly rearranged, as if someone orchestrated a game just for you."}
+                ? "Ambiance: Votre appartement est silencieux mais familier. Quelque chose a changé - les meubles sont légèrement déplacés, comme si quelqu'un avait orchestré un jeu rien que pour vous."
+                : "Ambience: Your apartment is quiet but familiar. Something has shifted - furniture slightly rearranged, as if someone orchestrated a game just for you."}
             </span>
           </div>
         )}

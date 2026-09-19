@@ -1,4 +1,4 @@
-// Game Engine — Reusable game loop hook
+// Game Engine - Reusable game loop hook
 // Extracted from BreakoutGame.tsx / SystemsDiscovery / ToymakerEscape patterns.
 // All current and future gamehub games should use this instead of inline game loops.
 
@@ -175,7 +175,7 @@ export function useCanvasSize(containerRef: React.RefObject<HTMLElement | null>)
 }
 
 /**
- * Keyboard input hook — tracks currently pressed keys.
+ * Keyboard input hook - tracks currently pressed keys.
  * Use for gamepad-less keyboard control in gamehub games.
  */
 export function useKeyboardInput() {

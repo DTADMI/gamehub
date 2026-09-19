@@ -1,5 +1,5 @@
 /**
- * T-3: Smoke test — Spell Craft drawing game.
+ * T-3: Smoke test - Spell Craft drawing game.
  *
  * Verifies:
  *  - Game route renders without errors
@@ -9,7 +9,7 @@
  */
 import { expect, test } from "@playwright/test";
 
-test.describe("Spell Craft — smoke", () => {
+test.describe("Spell Craft - smoke", () => {
   test("page renders with canvas and interactive drawing", async ({ page }) => {
     await page.goto("/games/spell-craft");
 

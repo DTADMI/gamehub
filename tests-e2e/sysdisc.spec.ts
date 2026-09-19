@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Systems Discovery — Core Beta", () => {
+test.describe("Systems Discovery - Core Beta", () => {
   test("complete B1→B3 and reach WRAP (bus-first plan)", async ({ page }) => {
     await page.goto("/games/systems-discovery");
     // B1 ordered steps

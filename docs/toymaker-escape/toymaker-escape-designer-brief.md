@@ -1,4 +1,4 @@
-# Toymaker Escape — Designer/Animator Brief (EN)
+# Toymaker Escape - Designer/Animator Brief (EN)
 
 This brief specifies the visual and motion deliverables for the episodic point‑and‑click “Toymaker Escape.” It mirrors
 our standard: formats, sizes, naming, budgets, and PR hand‑off checklist to enable smooth integration.
@@ -34,7 +34,7 @@ Definition of Done (DoD)
 - Annotated PNG per room: hotspot rectangles (percent), tab order hints, and puzzle affordances.
 - Names/paths per spec; budgets verified; PR links corresponding stories entry and marks status.
 
-Episode E1 — Workshop & Playroom (asset templates)
+Episode E1 - Workshop & Playroom (asset templates)
 
 - Intro/Outro (title cards)
 - - No new illustration assets required for `TME_INTRO`/`TME_OUTRO` (text‑first title cards). Reuse existing UI styles;
@@ -48,7 +48,7 @@ Episode E1 — Workshop & Playroom (asset templates)
 - UI overlays: `ui_gear_grid.svg`, `ui_sorter_bins.svg`.
 - Collectibles/Badges: `collect_key_fragment_1.svg`, `badge_escape_novice.svg`.
 
-Episode E2 — Office & Secret Stair (asset templates)
+Episode E2 - Office & Secret Stair (asset templates)
 
 - BG: `e2_office_bg.avif`, `e2_files_bg.avif`, `e2_stair_bg.avif`.
 - Props: `e2_office_cipher_wheel.svg`, `e2_office_letter_[1..4].svg`, `e2_files_folder_[a..d].svg`,
@@ -56,7 +56,7 @@ Episode E2 — Office & Secret Stair (asset templates)
 - UI: `ui_cipher_overlay.svg`, `ui_file_order.svg`, `ui_shadow_safe.svg`.
 - Collectibles: `collect_key_fragment_2.svg`.
 
-Episode E3 — Apartment Mystery (asset templates)
+Episode E3 - Apartment Mystery (asset templates)
 
 - BG: `e3_entry_bg.avif`, `e3_living_bg.avif`, `e3_study_bg.avif`, `e3_kitchen_bg.avif`.
 - Props: `e3_plants_schedule.svg`, `e3_photo_tile_[1..9].svg`, `e3_fridge_letter_[a..z].svg`.
@@ -81,9 +81,9 @@ Hand‑off workflow & PR checklist
 - [ ] Names/paths per spec; budgets verified
 - [ ] Linked to `docs/toymaker-escape/toymaker-escape-stories.md` entry; status updated
 
-— — —
+- - -
 
-# Toymaker Escape — Cahier Designer/Animateur·rice (FR)
+# Toymaker Escape - Cahier Designer/Animateur·rice (FR)
 
 Ce cahier définit les livrables visuels/motion pour « Toymaker Escape » : formats, tailles, nommage, budgets et
 checklist PR pour une intégration fluide.

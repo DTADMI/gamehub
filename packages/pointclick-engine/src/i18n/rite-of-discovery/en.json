@@ -1,9 +1,9 @@
 {
   "rod": {
     "intro": {
-      "title": "Rite of Discovery — Intro",
+      "title": "Rite of Discovery - Intro",
       "p1": "A family tradition. A quiet choice. Tonight it begins.",
-      "p2": "Pay attention to details — they might guide your choices.",
+      "p2": "Pay attention to details - they might guide your choices.",
       "cta": "Begin",
       "skip": "Skip intro"
     },
@@ -35,7 +35,7 @@
     },
     "s1": {
       "title": "Night Before",
-      "body": "The living room is quiet. Wrapping paper and tags are scattered on the table. One tag has torn apart — reassemble it.",
+      "body": "The living room is quiet. Wrapping paper and tags are scattered on the table. One tag has torn apart - reassemble it.",
       "prompt": "Assemble the magic tags in the correct order:",
       "tags": {
         "star": "Star Tag",
@@ -50,7 +50,7 @@
     },
     "s2": {
       "title": "Tooth Tradition",
-      "body": "In your bedroom, you find two notes — one from the 'Tooth Fairy' and one from a parent. Compare the letters.",
+      "body": "In your bedroom, you find two notes - one from the 'Tooth Fairy' and one from a parent. Compare the letters.",
       "prompt": "Match the letters that look the same across both notes:",
       "lettersFound": "Letters matched",
       "keepNote": "Keep the note as evidence",
@@ -61,16 +61,16 @@
       "title": "Proof Moment",
       "body": "You overhear muffled voices from the kitchen. There's a receipt on the counter and a gift bag in the closet. What do you believe?",
       "prompt": "The evidence is piling up. How do you feel about what you're discovering?",
-      "confrontNow": "Confront your parents now — you want the truth",
-      "saveLater": "Save the discovery for later — you're not in a hurry",
+      "confrontNow": "Confront your parents now - you want the truth",
+      "saveLater": "Save the discovery for later - you're not in a hurry",
       "gentleNote": "Traditions are a way families show love. The magic lives in kindness.",
       "continue": "Continue to the Rite"
     },
     "epilogue": {
       "title": "The Rite of Discovery",
-      "body": "Your parents sit down with you. They smile warmly. \"We knew this day would come,\" they say. \"Now you're part of the tradition — the helpers who keep the magic alive for younger ones.\"",
-      "proud": "You feel proud. You're in on the secret now — a rite of passage.",
-      "cozy": "You feel cozy. The magic didn't disappear — it just changed shape.",
+      "body": "Your parents sit down with you. They smile warmly. \"We knew this day would come,\" they say. \"Now you're part of the tradition - the helpers who keep the magic alive for younger ones.\"",
+      "proud": "You feel proud. You're in on the secret now - a rite of passage.",
+      "cozy": "You feel cozy. The magic didn't disappear - it just changed shape.",
       "badge": "Helper Badge earned! You're now part of the circle of kindness.",
       "restart": "Restart Adventure",
       "viewOutro": "View Outro"

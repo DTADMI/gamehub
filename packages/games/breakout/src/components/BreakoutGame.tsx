@@ -653,7 +653,7 @@ function BreakoutGame() {
         ctx.fillStyle = isDark ? "#111827" : "#fff";
         ctx.textAlign = "center";
         ctx.font = "24px Arial";
-        ctx.fillText(`${t("gameOver")} — ${t("pressStart")}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        ctx.fillText(`${t("gameOver")} - ${t("pressStart")}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
       }
 
       // game updates
@@ -730,7 +730,7 @@ function BreakoutGame() {
 
         // (nx, ny, ndx, ndy already initialized above with frame scaling)
 
-        // walls — reflect AND clamp position inside bounds so the ball never leaves the canvas
+        // walls - reflect AND clamp position inside bounds so the ball never leaves the canvas
         if (nx + stateBall.radius > CANVAS_WIDTH) {
           nx = CANVAS_WIDTH - stateBall.radius;
           ndx = -Math.abs(ndx);
@@ -1125,7 +1125,7 @@ function BreakoutGame() {
           el.dataset.lives = String(livesRef.current || 0);
         }
 
-        // Update extra balls physics (simplified) — no life loss when missed
+        // Update extra balls physics (simplified) - no life loss when missed
         if (extraBallsRef.current.length) {
           const nextExtras: Ball[] = [];
           let extrasBrickChanged = false;
@@ -1729,7 +1729,7 @@ function BreakoutGame() {
                 }
               }}
             >
-              {!gameStarted ? "Tap to start" : "Paused — Tap to resume"}
+              {!gameStarted ? "Tap to start" : "Paused - Tap to resume"}
             </button>
           )}
 

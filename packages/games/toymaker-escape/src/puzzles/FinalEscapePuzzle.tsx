@@ -14,7 +14,7 @@ export type FinalEscapePuzzleProps = {
 };
 
 /**
- * E3 — Final Escape Sequence: turn dials in correct order (left, left, right).
+ * E3 - Final Escape Sequence: turn dials in correct order (left, left, right).
  * After solving, the final lock opens and the game is won.
  */
 export function FinalEscapePuzzle({

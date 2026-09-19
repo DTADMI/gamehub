@@ -41,9 +41,9 @@ export const ClockworkConspiracyGame: React.FC = () => {
 
   const scenes = useMemo<Record<string, Scene>>(() => ({
     FOYER: {
-      id: "FOYER", title: { en: "The Clockwork Tower — Foyer", fr: "La Tour Mécanique — Foyer" },
+      id: "FOYER", title: { en: "The Clockwork Tower - Foyer", fr: "La Tour Mécanique - Foyer" },
       body: {
-        en: "Gears hum, pistons hiss. The Great Clock has been sabotaged — it will strike at midnight and trigger a catastrophe. Four systems need your expertise: Gear Room, Clock Face, Cipher Room, and Guild Vault.",
+        en: "Gears hum, pistons hiss. The Great Clock has been sabotaged - it will strike at midnight and trigger a catastrophe. Four systems need your expertise: Gear Room, Clock Face, Cipher Room, and Guild Vault.",
         fr: "Les engrenages ronronnent. La Grande Horloge a été sabotée. Quatre systèmes vous attendent : Engrenages, Cadran, Chiffre, et Coffre.",
       },
       choices: [

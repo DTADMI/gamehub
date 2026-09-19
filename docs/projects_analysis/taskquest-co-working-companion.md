@@ -2243,4 +2243,4 @@ TaskQuest represents an ambitious attempt to merge productivity and gaming, but 
 
 **Key takeaway**: Without strong early traction signals (40%+ retention, organic growth, clear product-market fit), this project should be considered for pivot to B2B-focused collaboration tools or abandoned in favor of opportunities with better risk/reward profiles.
 
-The detailed implementation plans, technical architecture, and monetization strategies outlined in this document provide a comprehensive roadmap—but the fundamental market viability concerns suggest exploring alternative approaches or significantly derisking the concept through lightweight MVPs and rigorous validation before committing significant resources.
+The detailed implementation plans, technical architecture, and monetization strategies outlined in this document provide a comprehensive roadmap-but the fundamental market viability concerns suggest exploring alternative approaches or significantly derisking the concept through lightweight MVPs and rigorous validation before committing significant resources.

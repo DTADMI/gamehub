@@ -1,4 +1,4 @@
-# GameHub — Comprehensive Remaining Tasks & Recommendations
+# GameHub - Comprehensive Remaining Tasks & Recommendations
 
 **Audit Date**: 2026-08-22
 **Last Updated**: 2026-08-23 (all code-level gaps resolved)
@@ -14,7 +14,7 @@ GameHub is **100% production-ready at code level**. All 20 games functional. All
 
 ## Quick Wins (< 1 Day Total)
 
-### QW-1: Fix t() at module scope — i18n staleness ✅ DONE
+### QW-1: Fix t() at module scope - i18n staleness ✅ DONE
 
 **Systems Discovery**: `t()` called at module level. Fixed.
 
@@ -41,9 +41,9 @@ PostGameCTA component exists. Needs to be added to:
 
 ### QW-3: Fix spell-craft background image extension 🟢 ✅ DONE
 
-Metadata references `/images/bg-abstract-dark.jpg` — should be `.svg`
+Metadata references `/images/bg-abstract-dark.jpg` - should be `.svg`
 
-**Fixed** (2026-08-23): Already resolved — both spell-craft and glyph-weaver entries use `.svg` in games.ts.
+**Fixed** (2026-08-23): Already resolved - both spell-craft and glyph-weaver entries use `.svg` in games.ts.
 
 **Effort**: 5min
 
@@ -53,7 +53,7 @@ Toymaker `E2_SHADOW` canvas uses pointer events. Now extracted as `ShadowPuzzle.
 
 **Effort**: 1h
 
-### QW-5: t() at module scope — sysdisc scene data as const ✅ DONE
+### QW-5: t() at module scope - sysdisc scene data as const ✅ DONE
 
 Covered by QW-1 fix (same root cause).
 
@@ -83,8 +83,8 @@ Covered by QW-1 fix (same root cause).
 ### M-2: i18n consolidation ✅ DONE
 
 Two i18n systems exist:
-1. `lib/i18n/` (Context-based, 87 keys) — used by gamehub shell
-2. `pointclick-engine/src/lib/i18n.ts` (JSON merge, 15 game namespaces) — used by engine
+1. `lib/i18n/` (Context-based, 87 keys) - used by gamehub shell
+2. `pointclick-engine/src/lib/i18n.ts` (JSON merge, 15 game namespaces) - used by engine
 
 **Fixed** (2026-08-22):
 - Copied 28 game translation JSON files into `lib/i18n/translations/games/`
@@ -99,14 +99,14 @@ Two i18n systems exist:
 
 `BreakoutGame.tsx` was 2208 lines. Extract into:
 - `BreakoutBoard.tsx` (brick grid rendering) ✅
-- `BreakoutPaddle.tsx` (paddle + input) — deferred (tightly coupled to game loop)
-- `BreakoutBall.tsx` (ball physics) — deferred (tightly coupled to game loop)
+- `BreakoutPaddle.tsx` (paddle + input) - deferred (tightly coupled to game loop)
+- `BreakoutBall.tsx` (ball physics) - deferred (tightly coupled to game loop)
 - `BreakoutPowerUps.tsx` (power-up system) ✅
-- `BreakoutHUD.tsx` (score/lives display) — deferred (tightly coupled to JSX)
+- `BreakoutHUD.tsx` (score/lives display) - deferred (tightly coupled to JSX)
 
 **Fixed** (2026-08-22):
-- Extracted `BreakoutBoard.tsx` (94 lines) — brick types, computeBrickLayout, buildBricks
-- Extracted `BreakoutPowerUps.tsx` (149 lines) — PowerUpType, FallingPowerUp, pickWeightedPowerUp, desiredSpeedFromModifier, PowerUpCard, PowerUpCardMobile
+- Extracted `BreakoutBoard.tsx` (94 lines) - brick types, computeBrickLayout, buildBricks
+- Extracted `BreakoutPowerUps.tsx` (149 lines) - PowerUpType, FallingPowerUp, pickWeightedPowerUp, desiredSpeedFromModifier, PowerUpCard, PowerUpCardMobile
 - Main component: 2208 → 2002 lines (-206, -9%)
 - Paddle/Ball/HUD extraction deferred due to deep coupling with canvas game loop
 
@@ -142,9 +142,9 @@ Add to `GameEntry` or as a separate manifest:
 
 ### M-6: Loading optimization ✅ DONE
 
-- Add `<link rel="preload">` for heavy game bundles — Next.js `Link` handles prefetch automatically
-- Implement chunked loading for WebGL games — `next/dynamic` with `ssr: false` handles code splitting
-- Add loading progress indicators for games >500KB — enhanced `LoadingShell` with indeterminate progress bar animation
+- Add `<link rel="preload">` for heavy game bundles - Next.js `Link` handles prefetch automatically
+- Implement chunked loading for WebGL games - `next/dynamic` with `ssr: false` handles code splitting
+- Add loading progress indicators for games >500KB - enhanced `LoadingShell` with indeterminate progress bar animation
 
 **Fixed** (2026-08-22):
 - `LoadingShell` default variant changed from spinner to progress bar
@@ -156,18 +156,18 @@ Add to `GameEntry` or as a separate manifest:
 
 ### M-7: Glyph Weaver full integration 🟢
 
-GW is a native GameHub roster game — not an iframe embed. The standalone glyph-weaver monorepo is a PoC.
+GW is a native GameHub roster game - not an iframe embed. The standalone glyph-weaver monorepo is a PoC.
 All engines and content live inside `packages/games/glyph-weaver/packages/`.
 
 **Done** (2026-08-23):
-- ✅ iframe code removed — bundled mode only (GW-003)
+- ✅ iframe code removed - bundled mode only (GW-003)
 - ✅ i18n synced with GH (`gamehub-locale` cookie, `gamehub:localeChange` event) (GW-001)
 - ✅ GH's i18n provider dispatches `gamehub:localeChange` for embedded games
 - ✅ `--gw-*` CSS vars injected via style block (GW-007)
 - ✅ `gameSlug` added to GW page (GW-005)
 - ✅ `game:complete` event dispatched on active spell (GW-006)
 - ✅ ThemeProvider scoped to container div, not documentElement (GW-002)
-- ✅ Auth integration — sign-in prompt for guest users (GW-004)
+- ✅ Auth integration - sign-in prompt for guest users (GW-004)
 - ✅ Save/export wired to persistence + SVG download (GW-009)
 - ✅ TypeScript compiles clean
 
@@ -185,8 +185,8 @@ All 7 puzzle types tested (57 tests total, 57 passing):
 - keypad ✅ (existing)
 - sequence ✅ (existing)
 - wires ✅ (existing)
-- anagram ✅ (new: 10 tests — create/scramble/solve/wrong/idempotent/special chars)
-- cipher ✅ (new: 12 tests — encode/decode/solve/wrong/idempotent/hints/digits)
+- anagram ✅ (new: 10 tests - create/scramble/solve/wrong/idempotent/special chars)
+- cipher ✅ (new: 12 tests - encode/decode/solve/wrong/idempotent/hints/digits)
 
 **Effort**: 2h
 
@@ -207,8 +207,8 @@ All 7 puzzle types tested (57 tests total, 57 passing):
 ### T-3: Smoke tests for new games ✅ DONE
 
 Added Playwright smoke tests:
-- `tests-e2e/glyph-weaver.smoke.spec.ts` — launchpad renders, heading + tips visible
-- `tests-e2e/spell-craft.smoke.spec.ts` — canvas renders, drawing triggers spell analysis, Clear Canvas resets
+- `tests-e2e/glyph-weaver.smoke.spec.ts` - launchpad renders, heading + tips visible
+- `tests-e2e/spell-craft.smoke.spec.ts` - canvas renders, drawing triggers spell analysis, Clear Canvas resets
 
 **Effort**: 1h
 
@@ -231,11 +231,11 @@ Test at 320px width:
 
 ---
 
-## Glyph Weaver — Project-Level Tasks
+## Glyph Weaver - Project-Level Tasks
 
 ### GW-1: Update README ✅ DONE
 
-README does not contain "(future)" annotations — already clean. No changes needed.
+README does not contain "(future)" annotations - already clean. No changes needed.
 
 **Effort**: 10min
 
@@ -249,7 +249,7 @@ Also fixed: pre-commit hook path resolution, added .prettierignore, applied repo
 
 ### GW-3: Dictionary panel import ✅ DONE
 
-Verified — `./components/panels/DictionaryPanel.tsx` exists and matches the import. No issue.
+Verified - `./components/panels/DictionaryPanel.tsx` exists and matches the import. No issue.
 
 **Effort**: 30min
 
@@ -259,7 +259,7 @@ Glyph Weaver `apps/web/` was a standalone PoC. Since GW is now natively integrat
 (see M-7), the standalone deployment is no longer required for GameHub integration.
 
 - ✅ `vercel.json` was created in the standalone repo
-- 🔵 Standalone deployment deferred — only needed for independent GW access
+- 🔵 Standalone deployment deferred - only needed for independent GW access
 
 **Effort**: 0h (no longer required for GH)
 
@@ -291,7 +291,7 @@ First-run tutorial for new users:
 
 ---
 
-## NF Compliance — Cross-Project
+## NF Compliance - Cross-Project
 
 ### Compliance Checklist
 
@@ -314,7 +314,7 @@ First-run tutorial for new users:
 
 | Gap | Project | Priority |
 |-----|---------|----------|
-| GameHub missing encoding scripts | GameHub | ✅ Already present — byte-identical to Ascent Legacy reference |
+| GameHub missing encoding scripts | GameHub | ✅ Already present - byte-identical to Ascent Legacy reference |
 | GameHub i18n: two systems | GameHub | 🟡 Consolidated in M-2 |
 | Glyph Weaver root tsconfig jsx | Glyph Weaver | 🟢 GW-2 |
 
@@ -324,22 +324,22 @@ First-run tutorial for new users:
 
 | Category | Done | Remaining |
 |----------|------|-----------|
-| Point-and-Click | ✅ All | — |
-| Audio/Assets | ✅ All | — |
-| Dialogue/UI | ✅ All | — |
-| Glyph Weaver integration | ✅ All 9 gaps | — |
-| Arcade/Board Games | ✅ All | — |
+| Point-and-Click | ✅ All | - |
+| Audio/Assets | ✅ All | - |
+| Dialogue/UI | ✅ All | - |
+| Glyph Weaver integration | ✅ All 9 gaps | - |
+| Arcade/Board Games | ✅ All | - |
 | gameSlug consistency | ✅ All GameShell pages | checkers/chess/knitzy converted to GameShell |
-| game:complete dispatch | 20/20 games | — |
+| game:complete dispatch | 20/20 games | - |
 | Testing | 3/5 (T1-T3 done) | T-4 (mobile responsive), T-5 (accessibility) |
-| NF Compliance | ✅ All | — |
+| NF Compliance | ✅ All | - |
 
 ## Truly Remaining (interactive only)
 
 | ID | Task | Effort | Notes |
 |----|------|--------|-------|
-| T-4 | Mobile-responsive testing (320px) | 2h | Interactive — requires dev server |
-| T-5 | Accessibility pass (keyboard, ARIA, focus) | 2h | Interactive — requires dev server |
+| T-4 | Mobile-responsive testing (320px) | 2h | Interactive - requires dev server |
+| T-5 | Accessibility pass (keyboard, ARIA, focus) | 2h | Interactive - requires dev server |
 
 **All code-level tasks complete. No remaining code changes needed.**
 

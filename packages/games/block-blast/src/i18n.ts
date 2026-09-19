@@ -1,5 +1,5 @@
 /**
- * Block Blast — Bilingual string map (EN/FR)
+ * Block Blast - Bilingual string map (EN/FR)
  */
 export const BLOCK_BLAST_TX = {
   en: {

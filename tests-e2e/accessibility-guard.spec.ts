@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Accessibility smoke test — validates basic a11y requirements
+ * Accessibility smoke test - validates basic a11y requirements
  * across key pages: ARIA landmarks, keyboard navigation, heading
  * hierarchy. NF requirement: all UI must support keyboard navigation
  * and screen-reader-accessible landmarks.
@@ -14,7 +14,7 @@ const A11Y_PAGES = [
   { path: "/games/checkers", name: "Checkers" },
 ];
 
-test.describe("Accessibility — ARIA landmarks", () => {
+test.describe("Accessibility - ARIA landmarks", () => {
   for (const { path, name } of A11Y_PAGES) {
     test(`${name} page has at least one navigation landmark`, async ({
       page,
@@ -36,7 +36,7 @@ test.describe("Accessibility — ARIA landmarks", () => {
   }
 });
 
-test.describe("Accessibility — keyboard navigation", () => {
+test.describe("Accessibility - keyboard navigation", () => {
   test("Home page: Tab moves focus through interactive elements", async ({
     page,
   }) => {
@@ -71,7 +71,7 @@ test.describe("Accessibility — keyboard navigation", () => {
   });
 });
 
-test.describe("Accessibility — heading hierarchy", () => {
+test.describe("Accessibility - heading hierarchy", () => {
   test("Home page has exactly one h1", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
@@ -104,7 +104,7 @@ test.describe("Accessibility — heading hierarchy", () => {
   });
 });
 
-test.describe("Accessibility — reduced motion support", () => {
+test.describe("Accessibility - reduced motion support", () => {
   test("Snake game handles prefers-reduced-motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/games/snake");

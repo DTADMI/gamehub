@@ -6,7 +6,7 @@ export type ToymakerRevealProps = {
 };
 
 /**
- * E3 — Toymaker Reveal: the climactic story reveal scene.
+ * E3 - Toymaker Reveal: the climactic story reveal scene.
  * Shows the toymaker's studio with dialogue and childhood-toy narrative.
  */
 export function ToymakerReveal({ lang }: ToymakerRevealProps) {

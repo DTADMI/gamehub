@@ -15,7 +15,7 @@ import { buildMainScenes } from "./scenes/scenes-main";
 import { buildOceanScenes } from "./scenes/scenes-ocean";
 import { buildSpaceScenes } from "./scenes/scenes-space";
 
-// Scene definitions — extracted to per-chapter files in ./scenes/
+// Scene definitions - extracted to per-chapter files in ./scenes/
 // See scripts/split-systems-discovery.mjs for chapter grouping rules
 const buildScenes = (): Scene[] => [
   ...buildMainScenes(),

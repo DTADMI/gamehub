@@ -1,5 +1,5 @@
 /**
- * SceneBackground — CSS gradient/pattern backgrounds for point-and-click scenes.
+ * SceneBackground - CSS gradient/pattern backgrounds for point-and-click scenes.
  *
  * Each scene type gets a unique atmospheric background generated purely with CSS.
  * No external image assets required. Animations are subtle and GPU-composited.
@@ -171,7 +171,7 @@ export function SceneBackground({ type, animate = true, children, className = ""
 }
 
 /**
- * Smaller inline scene card — used inside GameContainer for per-scene atmosphere
+ * Smaller inline scene card - used inside GameContainer for per-scene atmosphere
  * when the full viewport background is already set.
  */
 export function SceneCard({

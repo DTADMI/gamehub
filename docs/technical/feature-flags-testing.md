@@ -1,4 +1,4 @@
-# GameHub — Feature Flags Reference
+# GameHub - Feature Flags Reference
 
 > **Owner**: Nebula Forge Digital Studio  
 > **Last Updated**: 2026-08-20  
@@ -30,13 +30,13 @@ pnpm dev
 
 ### E2E Tests
 ```typescript
-// tests-e2e/admin-flags-toggle.spec.ts — verifies admin UI toggle flow
-// tests-e2e/leaderboard-auth-gating.spec.ts — verifies leaderboard respects auth + flags
-// tests-e2e/games.badges.spec.ts — verifies game gating via flags
+// tests-e2e/admin-flags-toggle.spec.ts - verifies admin UI toggle flow
+// tests-e2e/leaderboard-auth-gating.spec.ts - verifies leaderboard respects auth + flags
+// tests-e2e/games.badges.spec.ts - verifies game gating via flags
 ```
 
 ### CI Pipeline
-- `pnpm ci:local` runs before push — typecheck + lint + test + build
+- `pnpm ci:local` runs before push - typecheck + lint + test + build
 - GitHub Actions runs full suite including E2E on PR
 
 ## Adding a New Flag
@@ -49,4 +49,4 @@ pnpm dev
 
 ---
 
-*Document maintained by Nebula Forge Digital Studio — August 2026*
+*Document maintained by Nebula Forge Digital Studio - August 2026*

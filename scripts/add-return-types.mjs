@@ -61,7 +61,7 @@ ESLINT.on('close', (code) => {
       const searchEnd = Math.min(txt.length, pos + 2000);
       const searchText = txt.substring(searchStart, searchEnd);
       
-      // Find the function beginning — look for the first function at or after pos
+      // Find the function beginning - look for the first function at or after pos
       const funcRegex = /\b(?:export\s+)?(?:default\s+)?(?:async\s+)?function\s+(\w+)/g;
       let match, bestMatch = null, bestDist = Infinity;
       while ((match = funcRegex.exec(searchText)) !== null) {

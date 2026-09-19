@@ -37,7 +37,7 @@ export const MysteryManorGame: React.FC = () => {
 
   const scenes = useMemo<Record<string, Scene>>(() => ({
     HALL: {
-      id: "HALL", title: { en: "Blackwood Manor — Grand Hall", fr: "Manoir Blackwood — Grand Hall" },
+      id: "HALL", title: { en: "Blackwood Manor - Grand Hall", fr: "Manoir Blackwood - Grand Hall" },
       body: {
         en: "Lord Blackwood has been found dead. Four suspects: the Butler, Cook, Gardener, and a mysterious Guest. Search the manor for clues to identify the killer.",
         fr: "Lord Blackwood a été retrouvé mort. Quatre suspects : le Majordome, la Cuisinière, le Jardinier et un mystérieux Invité. Fouillez le manoir.",
@@ -86,8 +86,8 @@ export const MysteryManorGame: React.FC = () => {
     SOLVED: {
       id: "SOLVED", title: { en: "Case Closed!", fr: "Affaire Classée!" },
       body: {
-        en: "The safe opens. Inside: Lord Blackwood's final will, disinheriting the Guest — his estranged nephew. Furious, the Guest poisoned Lord Blackwood's tea. Case closed, Detective.",
-        fr: "Le coffre s'ouvre. Le testament déshérite l'Invité — son neveu. Furieux, il a empoisonné le thé. Affaire classée, Détective.",
+        en: "The safe opens. Inside: Lord Blackwood's final will, disinheriting the Guest - his estranged nephew. Furious, the Guest poisoned Lord Blackwood's tea. Case closed, Detective.",
+        fr: "Le coffre s'ouvre. Le testament déshérite l'Invité - son neveu. Furieux, il a empoisonné le thé. Affaire classée, Détective.",
       },
       choices: [],
     },
@@ -108,7 +108,7 @@ export const MysteryManorGame: React.FC = () => {
         <div className="flex flex-col gap-4 p-4 max-w-lg mx-auto">
           <DialogueBox scene={scene} lang={lang} onChoose={(id) => { sfx.playClick(); setSceneId(id); }} ctx={{ cluesFound, cipherSolved, seqSolved, vaultSolved, allSolved }} />
 
-          {/* Kitchen — clue reading buttons */}
+          {/* Kitchen - clue reading buttons */}
           {sceneId === "KITCHEN" && !cluesFound && (
             <div className="bg-amber-50 dark:bg-gray-800 rounded-lg p-4 border">
               <h3 className="text-sm font-bold mb-3 text-center">{lang === "fr" ? "🔍 Indices de la Cuisine" : "🔍 Kitchen Clues"}</h3>
@@ -126,7 +126,7 @@ export const MysteryManorGame: React.FC = () => {
             </div>
           )}
 
-          {/* Study — cipher */}
+          {/* Study - cipher */}
           {sceneId === "STUDY" && !cipherSolved && (
             <div className="bg-amber-50 dark:bg-gray-800 rounded-lg p-4 border">
               <h3 className="text-sm font-bold mb-3 text-center">{lang === "fr" ? "🔐 Décodez (César -7)" : "🔐 Decode (Caesar -7)"}</h3>
@@ -139,7 +139,7 @@ export const MysteryManorGame: React.FC = () => {
             </div>
           )}
 
-          {/* Library — sequence */}
+          {/* Library - sequence */}
           {sceneId === "LIBRARY" && !seqSolved && (
             <div className="bg-amber-50 dark:bg-gray-800 rounded-lg p-4 border">
               <h3 className="text-sm font-bold mb-3 text-center">{lang === "fr" ? "🔤 Épeler LIBRARY" : "🔤 Spell LIBRARY"}</h3>
@@ -158,7 +158,7 @@ export const MysteryManorGame: React.FC = () => {
             </div>
           )}
 
-          {/* Accuse — keypad */}
+          {/* Accuse - keypad */}
           {sceneId === "ACCUSE" && !vaultSolved && (
             <div className="bg-amber-50 dark:bg-gray-800 rounded-lg p-4 border">
               <h3 className="text-sm font-bold mb-3 text-center">{lang === "fr" ? "🔑 Code (1899)" : "🔑 Code (1899)"}</h3>

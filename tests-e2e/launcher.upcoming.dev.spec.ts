@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Launcher — Upcoming playable in dev/local", () => {
+test.describe("Launcher - Upcoming playable in dev/local", () => {
   test("Knitzy card is clickable in E2E/dev and opens the route", async ({ page }) => {
     await page.goto("/games");
     const card = page.getByRole("heading", { name: /Knitzy/i });

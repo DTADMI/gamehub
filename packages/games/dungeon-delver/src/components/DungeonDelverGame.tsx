@@ -1,4 +1,4 @@
-// Dungeon Delver — Roguelike dungeon crawler for GameHub
+// Dungeon Delver - Roguelike dungeon crawler for GameHub
 // Spiritual successor to Hack Slash Crawl (Hatched Games, 2011)
 "use client";
 
@@ -126,7 +126,7 @@ const weightedPick = <T extends { rarity?: Rarity }>(items: T[]): T => {
   return items[0]!;
 };
 
-/** Build stats using flat modifier pipeline — 1 allocation, O(n) single pass */
+/** Build stats using flat modifier pipeline - 1 allocation, O(n) single pass */
 function computePlayerStats(race: Race, cls: ClassDef, equipped: EquippedItems, titles: Title[]): Stats {
   return buildCharacter(race, cls, equipped, titles).stats;
 }
@@ -552,7 +552,7 @@ export function DungeonDelverGame() {
     if (nextFloor > runStatsRef.current.deepestFloor) {
       runStatsRef.current.deepestFloor = nextFloor;
     }
-    // G5: Treasure Hunter — +1 extra item per stack
+    // G5: Treasure Hunter - +1 extra item per stack
     const thCount = player.perks.filter((p) => p === 'treasure-hunter').length;
     for (let i = 0; i < thCount; i++) {
       const itms = getItemsForFloor(nextFloor);
@@ -615,7 +615,7 @@ export function DungeonDelverGame() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ gameType: isDailyRef.current ? "DUNGEON_DELVER_DAILY" : "DUNGEON_DELVER", score: runStatsRef.current.deepestFloor }),
-      }).catch(() => { /* guest user or network issue — skip */ });
+      }).catch(() => { /* guest user or network issue - skip */ });
     }
     ddAudio.stopAmbient();
     ddAudio.play("death");
@@ -661,12 +661,12 @@ export function DungeonDelverGame() {
     const crit = Math.random() < 0.1;
     let dmg = crit ? baseDmg * 2 : baseDmg;
 
-    // G7: Poison Blade — 30% poison on melee hit (non-magic)
+    // G7: Poison Blade - 30% poison on melee hit (non-magic)
     let poisonTarget: FloorMonster | null = null;
     if (!isMagic && player.perks.includes('poison-blade') && Math.random() < 0.3) {
       poisonTarget = monster;
     }
-    // G8: Spell Echo — 25% chance: 50% splash damage to adjacent monsters
+    // G8: Spell Echo - 25% chance: 50% splash damage to adjacent monsters
     if (isMagic && player.perks.includes('spell-echo') && Math.random() < 0.25) {
       const sx = monster.x, sy = monster.y, splashDmg = Math.floor(dmg * 0.5);
       dungeon.monsters.forEach((m) => {
@@ -686,7 +686,7 @@ export function DungeonDelverGame() {
     addLog(`You hit ${monster.monster.nameEn} for ${dmg} damage${crit ? " (CRIT!)" : ""}!`);
 
     if (newHp <= 0) {
-      // G9: Corpse Explosion — 20% chance: AoE to adjacent monsters
+      // G9: Corpse Explosion - 20% chance: AoE to adjacent monsters
       if (player.perks.includes('corpse-explosion') && Math.random() < 0.2) {
         const cx = monster.x, cy = monster.y;
         dungeon.monsters.forEach((m) => {
@@ -710,7 +710,7 @@ export function DungeonDelverGame() {
 
     // Counter-attack
     let counterDmg = monster.monster.damage + Math.floor(Math.random() * 3);
-    // G6: Evasion perk — dodge chance
+    // G6: Evasion perk - dodge chance
     const evaCount = player.perks.filter((p) => p === 'evasion').length;
     if (evaCount > 0) {
       const dodgeChance = Math.min(evaCount * 0.1, 0.5); // 10% per stack, max 50%
@@ -926,7 +926,7 @@ export function DungeonDelverGame() {
     ctx.fillStyle = "#1a1a2e";
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
-    // Fog of war — update explored tiles around player
+    // Fog of war - update explored tiles around player
     const visionRange = floor % BOSS_EVERY === 0 ? 99 : 4; // boss floor: full vision
     const explored = dungeon.explored.map((row) => [...row]);
     for (let dy = -visionRange; dy <= visionRange; dy++) {
@@ -944,7 +944,7 @@ export function DungeonDelverGame() {
           const py = HUD_H + y * CELL;
 
           if (!explored[y][x]) {
-            // Unexplored — dark fog
+            // Unexplored - dark fog
             ctx.fillStyle = "#0a0a15";
             ctx.fillRect(px, py, CELL, CELL);
           } else if (dungeon.grid[y][x] === 1) {
@@ -1241,7 +1241,7 @@ export function DungeonDelverGame() {
               {earnedTitles.map((title) => (
                 <div key={title.id} className="rounded bg-[#2a2a4a] p-2 mb-1 text-sm">
                   <span className="font-bold">{locale === "fr" ? title.nameFr : title.nameEn}</span>
-                  <span className="mx-2 opacity-50">—</span>
+                  <span className="mx-2 opacity-50">-</span>
                   <span className="opacity-70">{locale === "fr" ? title.descFr : title.descEn}</span>
                 </div>
               ))}
@@ -1466,7 +1466,7 @@ function saveRunToLocal(player: PlayerState, floor: number, dungeon: DungeonStat
   try {
     const data: SaveData = { player, floor, dungeon, runStats };
     localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-  } catch { /* quota exceeded or similar — ignore */ }
+  } catch { /* quota exceeded or similar - ignore */ }
 }
 
 function loadSavedRun(): SaveData | null {

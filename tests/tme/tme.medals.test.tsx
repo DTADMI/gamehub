@@ -49,7 +49,7 @@ vi.mock("@gamehub/game-platform/lib/sound", () => ({
 
 import { ToymakerEscapeGame } from "@games/toymaker-escape";
 
-describe("ToymakerEscape — medals & save", () => {
+describe("ToymakerEscape - medals & save", () => {
   beforeEach(() => {
     localStorage.clear();
     globalThis.fetch = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) });

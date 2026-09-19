@@ -14,7 +14,7 @@
       "skip": "Skip intro"
     },
     "e1": {
-      "title": "Toymaker Escape — Episode 1",
+      "title": "Toymaker Escape - Episode 1",
       "body": "A quiet workshop. Clues hide in plain sight.",
       "keypad": {
         "hint": "A clue in the room seems to suggest the order... study the toys on the shelf.",
@@ -110,7 +110,7 @@
     "e3": {
       "intro": {
         "title": "Apartment Mystery",
-        "body": "You arrive at your own apartment. Something feels off. The commissioner left clues here — but why YOUR apartment?"
+        "body": "You arrive at your own apartment. Something feels off. The commissioner left clues here - but why YOUR apartment?"
       },
       "locks": {
         "title": "Environmental Locks",
@@ -158,7 +158,7 @@
       },
       "wrap": {
         "title": "Episode 3 Complete",
-        "body": "The apartment mystery is solved. The commissioner WAS the toymaker — you created this puzzle for yourself.",
+        "body": "The apartment mystery is solved. The commissioner WAS the toymaker - you created this puzzle for yourself.",
         "medalEarned": "Medal earned: Toymaker's Apprentice"
       }
     },

@@ -1,4 +1,4 @@
-# GameHub — Gaps & Roadmap
+# GameHub - Gaps & Roadmap
 
 > **Owner**: Nebula Forge Digital Studio  
 > **Last Updated**: 2026-08-22
@@ -38,7 +38,7 @@
 
 ---
 
-## i18n Consolidation (Item 15 — Completed Aug 2026)
+## i18n Consolidation (Item 15 - Completed Aug 2026)
 
 GameHub had **4 separate i18n systems** fighting each other:
 
@@ -56,12 +56,12 @@ GameHub had **4 separate i18n systems** fighting each other:
 | `lib/i18n/index.ts` | Added standalone `t()`, `setLocale()`, `getLocale()`, `initI18n()` |
 | `lib/i18n.ts` | Removed dual-export of `@gamehub/game-platform/lib/i18n` |
 | `lib/server-locale.ts` | Deleted |
-| `lib/site-copy.ts` | Deleted — content moved to translations |
+| `lib/site-copy.ts` | Deleted - content moved to translations |
 | `pointclick-engine/src/lib/i18n.ts` | Key `lang`→`gamehub-locale`, default `en`→`fr` |
 | `game-platform/src/lib/site-locale.ts` | Key `lang`→`gamehub-locale`, default `en`→`fr` |
 | 6 game packages | `@gamehub/game-platform/lib/i18n`→`@/lib/i18n` |
 | 4 app pages | `siteCopy[locale].*`→`t("site.*")` |
-| `components/LocaleInitializer.tsx` | New — inits standalone module-level `t()` |
+| `components/LocaleInitializer.tsx` | New - inits standalone module-level `t()` |
 | `lib/i18n/translations/en.ts`, `fr.ts` | Added `site.*` namespace |
 
 **Result**: One system, one localStorage key (`gamehub-locale`), default `fr`, 0 tsc errors.
@@ -87,4 +87,4 @@ GameHub had **4 separate i18n systems** fighting each other:
 
 ---
 
-*Document maintained by Nebula Forge Digital Studio — August 2026*
+*Document maintained by Nebula Forge Digital Studio - August 2026*

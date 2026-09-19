@@ -1040,13 +1040,13 @@ export default function QuantumArchitectGame() {
           <div className="text-sm font-bold text-blue-300">{t("quantumarchitect.score")}: {score}</div>
           <div className="text-xs text-gray-400">
             {t("quantumarchitect.level")} {level + 1}/{LEVELS.length}{" "}
-            {gamePhase === "playing" ? `— ${LEVELS[level].name}` : ""}
+            {gamePhase === "playing" ? `- ${LEVELS[level].name}` : ""}
           </div>
         </div>
         <div className="rounded-lg bg-black/60 px-4 py-2 text-white backdrop-blur-sm">
           <div className="text-sm font-bold text-purple-300">{t("quantumarchitect.observations")}: {observations}</div>
           <div className="text-xs text-gray-400">
-            {t("quantumarchitect.quantumProb")} {nearPlatformBias !== "-" ? nearPlatformBias : "—"}
+            {t("quantumarchitect.quantumProb")} {nearPlatformBias !== "-" ? nearPlatformBias : "-"}
           </div>
         </div>
         {gamePhase === "playing" && (
@@ -1064,9 +1064,9 @@ export default function QuantumArchitectGame() {
             {t("quantumarchitect.subtitle")}
           </p>
           <div className="mb-4 text-sm text-gray-400">
-            <div>WASD / Arrows — Move</div>
-            <div>Space — Observe (E/Q or arrows to choose outcome)</div>
-            <div>✦ Certainty Crystals — Guarantee one observation</div>
+            <div>WASD / Arrows - Move</div>
+            <div>Space - Observe (E/Q or arrows to choose outcome)</div>
+            <div>✦ Certainty Crystals - Guarantee one observation</div>
             <div>Collect colored keys to unlock matching gates</div>
             <div>Entangled platforms (pink): observing one affects both</div>
             <div>Entanglement chains (purple): linked in groups of 3+</div>

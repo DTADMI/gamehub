@@ -1,4 +1,4 @@
-# Human History — Point-and-Click (Design Doc)
+# Human History - Point-and-Click (Design Doc)
 
 Purpose
 
@@ -79,7 +79,7 @@ Moral & Sensitivity Guardrails
 - Cultural respect, avoid stereotypes, attribute knowledge broadly, include women and marginalized groups.
 - Do not present oppression/violence as puzzles; speak calmly about harm and emphasize care responses.
 
-Suggestions — Additional Era Packs
+Suggestions - Additional Era Packs
 
 - Oceans & Exchanges (Indian Ocean, Pacific)
 - Cities & Commons (pre-colonial Americas, Africa, Asia)

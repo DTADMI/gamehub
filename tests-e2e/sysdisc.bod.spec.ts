@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Systems Discovery — BOD Breath scaffold", () => {
+test.describe("Systems Discovery - BOD Breath scaffold", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => localStorage.clear());
   });
@@ -25,7 +25,7 @@ test.describe("Systems Discovery — BOD Breath scaffold", () => {
     await page.getByRole("button", { name: /Reveal|sysdisc\.bod\.common\.reveal/ }).click();
 
     // Wrap shows badges lines
-    await expect(page.getByRole("heading", { name: /Wrap — Breath/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Wrap - Breath/i })).toBeVisible();
     await expect(page.getByText(/Care Ally badge/)).toBeVisible();
   });
 });

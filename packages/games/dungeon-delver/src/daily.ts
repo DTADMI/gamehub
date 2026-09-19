@@ -18,7 +18,7 @@ function hashString(str: string): number {
   return hash >>> 0; // unsigned
 }
 
-/** Mulberry32 PRNG — fast, good distribution for game use */
+/** Mulberry32 PRNG - fast, good distribution for game use */
 export function createSeededRng(seed: number) {
   let state = seed;
   return function random(): number {

@@ -1,4 +1,4 @@
-// fix-gw-inline-imports.mjs — Fix remaining inline import('@glyph-weaver/core') references
+// fix-gw-inline-imports.mjs - Fix remaining inline import('@glyph-weaver/core') references
 import fs from "node:fs";
 import path from "node:path";
 

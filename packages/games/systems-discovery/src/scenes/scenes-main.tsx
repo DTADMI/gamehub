@@ -1,5 +1,5 @@
  
-// Auto-generated scene group — extracted from index.tsx monolith
+// Auto-generated scene group - extracted from index.tsx monolith
 // See scripts/split-systems-discovery.mjs
 import type { Scene } from "@games/pointclick-engine";
 import React from "react";

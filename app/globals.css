@@ -61,7 +61,7 @@
     --sidebar-border: var(--c-grey-200);
     --sidebar-ring: color-mix(in oklch, var(--c-auburn) 50%, transparent);
 
-    /* Light theme background — FALLBACK (broad browser support: no oklch/color-mix)
+    /* Light theme background - FALLBACK (broad browser support: no oklch/color-mix)
        Goal: clearer "star-glow" feel while keeping a true light theme. We add a brighter off-screen warm glow,
        a subtle complementary cool rim to avoid yellow cast, and a gentle vignette to frame content. */
     --app-bg: /* primary warm glow */ radial-gradient(1200px 800px at 85% 6%, rgba(255, 219, 153, 0.45) 0%, rgba(255, 219, 153, 0) 60%),
@@ -71,7 +71,7 @@
 }
 
 .dark {
-    /* Dark theme mappings — galaxy space */
+    /* Dark theme mappings - galaxy space */
     --background: oklch(0.10 0 0);
     --foreground: oklch(0.96 0 0);
     --card: oklch(0.14 0 0);
@@ -106,7 +106,7 @@
     --sidebar-border: oklch(0.22 0 0);
     --sidebar-ring: color-mix(in oklch, var(--c-indigo) 45%, transparent);
 
-    /* Dark theme background — FALLBACK nebula (reduced noise, smoother gas clouds) */
+    /* Dark theme background - FALLBACK nebula (reduced noise, smoother gas clouds) */
     --app-bg: /* nebulae (bigger, smoother, varied hues) */ radial-gradient(1400px 900px at 12% 20%, rgba(76, 81, 191, 0.26) 0%, rgba(76, 81, 191, 0) 70%),
     radial-gradient(1200px 820px at 86% 16%, rgba(37, 99, 235, 0.22) 0%, rgba(37, 99, 235, 0) 66%),
     radial-gradient(1000px 760px at 74% 70%, rgba(109, 40, 217, 0.22) 0%, rgba(109, 40, 217, 0) 70%),
@@ -118,7 +118,7 @@
 /* Prefer advanced color spaces when supported */
 @supports (color: oklch(0.7 0.1 200)) {
     :root {
-        /* Light theme background — star glow (warm) with oklch/color-mix
+        /* Light theme background - star glow (warm) with oklch/color-mix
            Stronger but safe intensity + cool rim + vignette */
         --app-bg: radial-gradient(1300px 900px at 86% 8%, color-mix(in oklch, var(--c-royal-orange) 35%, white 65%) 0%, transparent 60%),
         radial-gradient(900px 650px at 8% 18%, color-mix(in oklch, var(--c-royal-blue) 18%, transparent) 0%, transparent 68%),
@@ -127,7 +127,7 @@
     }
 
     .dark {
-        /* Dark theme background — CSS‑only nebula (less noise, more cloud structure) */
+        /* Dark theme background - CSS‑only nebula (less noise, more cloud structure) */
         --app-bg: radial-gradient(1400px 900px at 12% 22%, color-mix(in oklch, var(--c-indigo) 30%, transparent) 0%, transparent 72%),
         radial-gradient(1200px 820px at 84% 14%, color-mix(in oklch, var(--c-royal-blue) 24%, transparent) 0%, transparent 66%),
         radial-gradient(1000px 760px at 74% 72%, color-mix(in oklch, var(--c-purple) 24%, transparent) 0%, transparent 70%),
@@ -223,7 +223,7 @@ header, footer {
     backdrop-filter: saturate(1.05) blur(8px);
 }
 
-/* Light theme alternatives (commented) — switch by overriding --app-bg in :root if desired */
+/* Light theme alternatives (commented) - switch by overriding --app-bg in :root if desired */
 /*
 :root { --app-bg: radial-gradient(1000px 700px at 80% 0%, oklch(0.99 0 0) 0%, transparent 60%), linear-gradient(180deg, oklch(0.995 0 0) 0%, oklch(0.985 0 0) 100%); }
   Pros: maximum readability, neutral. Cons: less character.

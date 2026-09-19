@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Rite of Discovery — smoke", () => {
+test.describe("Rite of Discovery - smoke", () => {
   test("intro → C1 → wrap", async ({ page }) => {
     await page.goto("/games/rite-of-discovery");
     await expect(page.getByRole("heading", { name: /Rite of Discovery/i })).toBeVisible();

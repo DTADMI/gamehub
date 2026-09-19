@@ -5,7 +5,7 @@
 // Keeping this in a separate module (not index.ts) avoids a circular import
 // between provider.tsx and index.ts.
 //
-// v2 — game translations merged locally (no pointclick-engine dependency).
+// v2 - game translations merged locally (no pointclick-engine dependency).
 
 import { defaultLocale } from "./config";
 import enTranslations from "./translations/en";
@@ -24,7 +24,7 @@ export function detectLang(): "en" | "fr" {
   return "en";
 }
 
-/** Initialize standalone i18n — call once at app startup */
+/** Initialize standalone i18n - call once at app startup */
 export function initI18n(initial?: "en" | "fr") {
   _locale = initial ?? detectLang();
 }
@@ -66,7 +66,7 @@ function dictLookup(dict: Record<string, any>, path: string): string | undefined
 }
 
 /**
- * Standalone translator — works outside React components.
+ * Standalone translator - works outside React components.
  *
  * Lookup priority:
  * 1. NF-standard translations (lib/i18n/translations/{locale}.ts)

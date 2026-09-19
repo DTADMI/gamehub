@@ -96,5 +96,5 @@
   <circle cx="160" cy="540" r="200" fill="rgba(234,179,8,0.15)"/>
 
   <text x="70" y="560" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="68" font-weight="700">BLOCK BLAST</text>
-  <text x="72" y="610" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="26">Place pieces — clear rows &amp; columns</text>
+  <text x="72" y="610" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="26">Place pieces - clear rows &amp; columns</text>
 </svg>
