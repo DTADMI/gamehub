@@ -98,7 +98,7 @@ Priorite : P1 (fort impact), P2 (utile), P3 (confort). Effort : S/M/L.
 | # | Feature | Pourquoi | Prio | Effort | Statut |
 |---|---------|----------|------|--------|--------|
 | B1 | Refactor des 3 jeux monolithes | Breakout/Systems Discovery/Toymaker Escape en un seul fichier (>75 KB) : fragile et lent a faire evoluer (gap #1) | P2 | L | ⏳ a faire |
-| B2 | Tests unitaires par package | 43 specs E2E mais peu de tests unitaires sur `packages/` ; filet de securite pour le refactor (gap #3) | P2 | M | ⏳ a faire |
+| B2 | Tests unitaires par package | 43 specs E2E mais peu de tests unitaires sur `packages/` ; filet de securite pour le refactor (gap #3) | P2 | M | 🔵 partiel 2026-09-30 : `puzzle-core` couvert (14 tests) ; reste les autres packages |
 | B3 | Systeme de succes (achievements) | Recompense pro-sociale, non compulsive ; attendu par les joueurs et deja prevu cote design | P2 | M | ⏳ a faire |
 | B4 | Classements manquants | Plusieurs jeux n'ont pas de leaderboard integre (ex. Dungeon Delver : profondeur, vitesse) | P2 | S | ⏳ a faire |
 | B5 | i18n EN/FR de tous les jeux | NF-BLOG-001/i18n : le launcher est traduit, pas tous les jeux | P2 | M | ⏳ a faire |
