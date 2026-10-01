@@ -88,3 +88,22 @@ GameHub had **4 separate i18n systems** fighting each other:
 ---
 
 *Document maintained by Nebula Forge Digital Studio - August 2026*
+
+---
+
+## Backlog - features manquantes / pertinentes (recherche 2026-09-30)
+
+Priorite : P1 (fort impact), P2 (utile), P3 (confort). Effort : S/M/L.
+
+| # | Feature | Pourquoi | Prio | Effort | Statut |
+|---|---------|----------|------|--------|--------|
+| B1 | Refactor des 3 jeux monolithes | Breakout/Systems Discovery/Toymaker Escape en un seul fichier (>75 KB) : fragile et lent a faire evoluer (gap #1) | P2 | L | ⏳ a faire |
+| B2 | Tests unitaires par package | 43 specs E2E mais peu de tests unitaires sur `packages/` ; filet de securite pour le refactor (gap #3) | P2 | M | ⏳ a faire |
+| B3 | Systeme de succes (achievements) | Recompense pro-sociale, non compulsive ; attendu par les joueurs et deja prevu cote design | P2 | M | ⏳ a faire |
+| B4 | Classements manquants | Plusieurs jeux n'ont pas de leaderboard integre (ex. Dungeon Delver : profondeur, vitesse) | P2 | S | ⏳ a faire |
+| B5 | i18n EN/FR de tous les jeux | NF-BLOG-001/i18n : le launcher est traduit, pas tous les jeux | P2 | M | ⏳ a faire |
+| B6 | Audit accessibilite par jeu | Reduire les animations, navigation clavier, lecteurs d'ecran ; NF exige 320px + accessibilite | P1 | M | ⏳ a faire |
+| B7 | Commandes tactiles mobiles | Le web est responsive mais les jeux WebGPU supposent clavier/souris | P2 | M | ⏳ a faire |
+| B8 | Sauvegarde cloud de progression | Reprendre une partie sur un autre appareil | P3 | M | ⏳ a faire |
+| B9 | Replays / mode spectateur | Partager une performance sans capture video | P3 | L | ⏳ a faire |
+| B10 | Extension anti-triche | Complement des regles de score (schema de detection d'anomalies) | P2 | M | ⏳ a faire |
