@@ -13,7 +13,30 @@ import I18nServerProvider from "@/lib/i18n/server-provider";
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://gamehub.vercel.app").replace(/\/+$/, "");
+
+/** Donnees structurees Schema.org : identifient l'editeur et le site pour les moteurs. */
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Nebula Forge Digital Studio",
+      url: SITE_URL,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "GameHub",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "GameHub",
     template: "%s | GameHub",
@@ -62,6 +85,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`flex min-h-[100svh] flex-col font-sans antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+        />
         <Suspense fallback={<LoadingShell variant="shimmer" />}>
           <I18nServerProvider>
             <Providers>
