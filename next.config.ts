@@ -15,6 +15,7 @@ const supabaseHost = (() => {
 
 // Central Next.js config (single source of truth)
 const nextConfig: NextConfig = {
+  agentRules: false,
   // Prefer standalone when building in Docker runtime
   output: process.env.NEXT_STANDALONE === "true" ? "standalone" : undefined,
   // Force absolute asset URLs so chunks load correctly on nested routes (Cloud Run)
