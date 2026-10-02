@@ -159,7 +159,13 @@ const enGames = {
     "gateLocked": "Locked",
     "gateOpen": "Open",
     "entangled": "Entangled",
-    "bias": "Bias"
+    "bias": "Bias",
+    "helpMove": "WASD / Arrows - Move",
+    "helpObserve": "Space - Observe (E/Q or arrows to choose outcome)",
+    "helpCrystals": "✦ Certainty Crystals - Guarantee one observation",
+    "helpKeys": "Collect colored keys to unlock matching gates",
+    "helpEntangled": "Entangled platforms (pink): observing one affects both",
+    "helpChains": "Entanglement chains (purple): linked in groups of 3+"
   },
   "rod": {
     "intro": {
@@ -859,7 +865,13 @@ const frGames = {
     "gateLocked": "Verrouillé",
     "gateOpen": "Ouvert",
     "entangled": "Intriqué",
-    "bias": "Biais"
+    "bias": "Biais",
+    "helpMove": "WASD / Flèches - Déplacer",
+    "helpObserve": "Espace - Observer (E/Q ou flèches pour choisir le résultat)",
+    "helpCrystals": "✦ Cristaux de certitude - Garantissent une observation",
+    "helpKeys": "Ramassez les clés colorées pour ouvrir les portes correspondantes",
+    "helpEntangled": "Plateformes intriquées (rose) : observer l'une affecte l'autre",
+    "helpChains": "Chaînes d'intrication (violet) : liées par groupes de 3+"
   },
   "rod": {
     "intro": {

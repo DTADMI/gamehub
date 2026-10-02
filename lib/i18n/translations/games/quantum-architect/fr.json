@@ -16,6 +16,12 @@
     "gateLocked": "Verrouill\u00e9",
     "gateOpen": "Ouvert",
     "entangled": "Intriqu\u00e9",
-    "bias": "Biais"
+    "bias": "Biais",
+    "helpMove": "WASD / Fl\u00e8ches - D\u00e9placer",
+    "helpObserve": "Espace - Observer (E/Q ou fl\u00e8ches pour choisir le r\u00e9sultat)",
+    "helpCrystals": "\u2726 Cristaux de certitude - Garantissent une observation",
+    "helpKeys": "Ramassez les cl\u00e9s color\u00e9es pour ouvrir les portes correspondantes",
+    "helpEntangled": "Plateformes intriqu\u00e9es (rose)\u00a0: observer l'une affecte l'autre",
+    "helpChains": "Cha\u00eenes d'intrication (violet)\u00a0: li\u00e9es par groupes de 3+"
   }
 }

@@ -1064,12 +1064,12 @@ export default function QuantumArchitectGame() {
             {t("quantumarchitect.subtitle")}
           </p>
           <div className="mb-4 text-sm text-gray-400">
-            <div>WASD / Arrows - Move</div>
-            <div>Space - Observe (E/Q or arrows to choose outcome)</div>
-            <div>✦ Certainty Crystals - Guarantee one observation</div>
-            <div>Collect colored keys to unlock matching gates</div>
-            <div>Entangled platforms (pink): observing one affects both</div>
-            <div>Entanglement chains (purple): linked in groups of 3+</div>
+            <div>{t("quantumarchitect.helpMove")}</div>
+            <div>{t("quantumarchitect.helpObserve")}</div>
+            <div>{t("quantumarchitect.helpCrystals")}</div>
+            <div>{t("quantumarchitect.helpKeys")}</div>
+            <div>{t("quantumarchitect.helpEntangled")}</div>
+            <div>{t("quantumarchitect.helpChains")}</div>
           </div>
           <button
             onClick={handleStart}

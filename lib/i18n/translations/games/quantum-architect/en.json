@@ -16,6 +16,12 @@
     "gateLocked": "Locked",
     "gateOpen": "Open",
     "entangled": "Entangled",
-    "bias": "Bias"
+    "bias": "Bias",
+    "helpMove": "WASD / Arrows - Move",
+    "helpObserve": "Space - Observe (E/Q or arrows to choose outcome)",
+    "helpCrystals": "\u2726 Certainty Crystals - Guarantee one observation",
+    "helpKeys": "Collect colored keys to unlock matching gates",
+    "helpEntangled": "Entangled platforms (pink): observing one affects both",
+    "helpChains": "Entanglement chains (purple): linked in groups of 3+"
   }
 }
