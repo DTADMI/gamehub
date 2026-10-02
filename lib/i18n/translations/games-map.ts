@@ -13,16 +13,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "bubble-pop": {
     "title": "Bubble Pop",
@@ -35,16 +27,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "checkers": {
     "title": "Checkers",
@@ -57,16 +41,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "chess": {
     "title": "Chess",
@@ -79,16 +55,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "chronoshift": {
     "title": "ChronoShift Labyrinth",
@@ -157,16 +125,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "platformer": {
     "title": "Puzzle Platformer",
@@ -179,16 +139,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "quantumarchitect": {
     "title": "Quantum Architect",
@@ -247,11 +199,7 @@ const enGames = {
       "title": "Night Before",
       "body": "The living room is quiet. Wrapping paper and tags are scattered on the table. One tag has torn apart - reassemble it.",
       "prompt": "Assemble the magic tags in the correct order:",
-      "tags": {
-        "star": "Star Tag",
-        "heart": "Heart Tag",
-        "bell": "Bell Tag"
-      },
+      "tags": { "star": "Star Tag", "heart": "Heart Tag", "bell": "Bell Tag" },
       "hint": "Think about the order they were placed on gifts: star first, then heart, then bell.",
       "solved": "The handwriting matches mom's note on the fridge. Interesting...",
       "keepQuiet": "Keep this to yourself for now",
@@ -305,16 +253,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "sysdisc": {
     "intro": {
@@ -348,11 +288,7 @@ const enGames = {
       "hintsOn": "Hints: ON",
       "hintsOff": "Hints: OFF",
       "hintDetail": "Organic goes to green, plastic to blue, paper to yellow.",
-      "items": {
-        "banana": "Banana Peel",
-        "bottle": "Plastic Bottle",
-        "paper": "Newspaper"
-      },
+      "items": { "banana": "Banana Peel", "bottle": "Plastic Bottle", "paper": "Newspaper" },
       "reveal": "Finish Episode"
     },
     "wrap": {
@@ -388,14 +324,8 @@ const enGames = {
           "title": "Oxygen Flow",
           "prompt": "Connect the airway to restore oxygen flow to the tissues."
         },
-        "bb2": {
-          "title": "Gas Exchange",
-          "prompt": "Monitor homeostasis as gases move across membranes."
-        },
-        "bb3": {
-          "title": "Regulation",
-          "prompt": "Maintain balance under changing conditions."
-        },
+        "bb2": { "title": "Gas Exchange", "prompt": "Monitor homeostasis as gases move across membranes." },
+        "bb3": { "title": "Regulation", "prompt": "Maintain balance under changing conditions." },
         "outro": {
           "title": "Respiration Restored",
           "p1": "The system is stable and oxygenating efficiently."
@@ -411,32 +341,15 @@ const enGames = {
         "bf1": {
           "title": "Nutrient Matching",
           "prompt": "Match each food to the primary nutrient it provides.",
-          "foods": {
-            "pasta": "Pasta",
-            "chicken": "Chicken",
-            "avocado": "Avocado"
-          },
-          "nutrients": {
-            "glucose": "Glucose (Carbs)",
-            "protein": "Protein",
-            "fats": "Healthy Fats"
-          },
+          "foods": { "pasta": "Pasta", "chicken": "Chicken", "avocado": "Avocado" },
+          "nutrients": { "glucose": "Glucose (Carbs)", "protein": "Protein", "fats": "Healthy Fats" },
           "match": "Match",
           "matched": "Matched!",
           "solved": "All nutrients matched!"
         },
-        "bf2": {
-          "title": "Absorption",
-          "prompt": "Transport nutrients into the bloodstream."
-        },
-        "bf3": {
-          "title": "Storage",
-          "prompt": "Manage energy reserves for future use."
-        },
-        "outro": {
-          "title": "Fueling Complete",
-          "p1": "The body has the energy it needs to function."
-        }
+        "bf2": { "title": "Absorption", "prompt": "Transport nutrients into the bloodstream." },
+        "bf3": { "title": "Storage", "prompt": "Manage energy reserves for future use." },
+        "outro": { "title": "Fueling Complete", "p1": "The body has the energy it needs to function." }
       },
       "move": {
         "intro": {
@@ -445,22 +358,10 @@ const enGames = {
           "cta": "Start simulation",
           "skip": "Skip intro"
         },
-        "bm1": {
-          "title": "Contraction",
-          "prompt": "Coordinate muscle fibers for precise movement."
-        },
-        "bm2": {
-          "title": "Support",
-          "prompt": "Leverage the skeletal structure for strength."
-        },
-        "bm3": {
-          "title": "Locomotion",
-          "prompt": "Achieve complex movement patterns."
-        },
-        "outro": {
-          "title": "Movement Mastered",
-          "p1": "The system is agile and responsive."
-        }
+        "bm1": { "title": "Contraction", "prompt": "Coordinate muscle fibers for precise movement." },
+        "bm2": { "title": "Support", "prompt": "Leverage the skeletal structure for strength." },
+        "bm3": { "title": "Locomotion", "prompt": "Achieve complex movement patterns." },
+        "outro": { "title": "Movement Mastered", "p1": "The system is agile and responsive." }
       },
       "signal": {
         "intro": {
@@ -469,22 +370,10 @@ const enGames = {
           "cta": "Start simulation",
           "skip": "Skip intro"
         },
-        "bsd1": {
-          "title": "Transmission",
-          "prompt": "Send electrical signals across neural pathways."
-        },
-        "bsd2": {
-          "title": "Immunity",
-          "prompt": "Identify and neutralize external threats."
-        },
-        "bsd3": {
-          "title": "Reaction",
-          "prompt": "Coordinate systemic responses to stimuli."
-        },
-        "outro": {
-          "title": "Signals Clear",
-          "p1": "Communication is fast and the body is protected."
-        }
+        "bsd1": { "title": "Transmission", "prompt": "Send electrical signals across neural pathways." },
+        "bsd2": { "title": "Immunity", "prompt": "Identify and neutralize external threats." },
+        "bsd3": { "title": "Reaction", "prompt": "Coordinate systemic responses to stimuli." },
+        "outro": { "title": "Signals Clear", "p1": "Communication is fast and the body is protected." }
       },
       "space": {
         "intro": {
@@ -498,13 +387,7 @@ const enGames = {
           "title": "Orbits & Periods",
           "prompt": "Connect the celestial bodies in their orbital paths. Rotate tiles and open valves to complete the connections.",
           "hint": "The Sun connects to Mercury, then Venus, then Earth, then Mars.",
-          "bodies": {
-            "sun": "Sun",
-            "mercury": "Mercury",
-            "venus": "Venus",
-            "earth": "Earth",
-            "mars": "Mars"
-          },
+          "bodies": { "sun": "Sun", "mercury": "Mercury", "venus": "Venus", "earth": "Earth", "mars": "Mars" },
           "rotate": "Rotate",
           "openValve": "Open orbit path",
           "solved": "Orbital paths connected! The solar system flows.",
@@ -516,16 +399,8 @@ const enGames = {
           "hint": "Mercury is the smallest, Earth is medium, Jupiter is the largest.",
           "planets": "Planets",
           "shadows": "Shadows",
-          "planetLabels": {
-            "mercury": "Mercury",
-            "earth": "Earth",
-            "jupiter": "Jupiter"
-          },
-          "shadowLabels": {
-            "small": "Small",
-            "medium": "Medium",
-            "large": "Large"
-          },
+          "planetLabels": { "mercury": "Mercury", "earth": "Earth", "jupiter": "Jupiter" },
+          "shadowLabels": { "small": "Small", "medium": "Medium", "large": "Large" },
           "matched": "Matched",
           "solved": "All planets matched correctly! The shadow puzzle reveals a hidden mechanism."
         },
@@ -534,12 +409,7 @@ const enGames = {
           "prompt": "Sort each planet into habitable or non-habitable based on its characteristics.",
           "hint": "Earth and Mars are in the habitable zone. Jupiter and Venus are not.",
           "planets": "Planets",
-          "planetLabels": {
-            "earth": "Earth",
-            "mars": "Mars",
-            "jupiter": "Jupiter",
-            "venus": "Venus"
-          },
+          "planetLabels": { "earth": "Earth", "mars": "Mars", "jupiter": "Jupiter", "venus": "Venus" },
           "habitable": "Habitable",
           "notHabitable": "Not Habitable",
           "habitableShort": "HAB",
@@ -569,18 +439,9 @@ const enGames = {
           "cta": "Start simulation",
           "skip": "Skip intro"
         },
-        "bg1": {
-          "title": "Mitosis",
-          "prompt": "Guide cellular replication for growth and repair."
-        },
-        "bg2": {
-          "title": "Differentiation",
-          "prompt": "Specialized cells form tissues and organs."
-        },
-        "bg3": {
-          "title": "Maturity",
-          "prompt": "Reach optimal systemic complexity."
-        },
+        "bg1": { "title": "Mitosis", "prompt": "Guide cellular replication for growth and repair." },
+        "bg2": { "title": "Differentiation", "prompt": "Specialized cells form tissues and organs." },
+        "bg3": { "title": "Maturity", "prompt": "Reach optimal systemic complexity." },
         "outro": {
           "title": "Growth Sustained",
           "p1": "The system has developed according to its blueprint."
@@ -676,16 +537,8 @@ const enGames = {
       "wave": "Wave",
       "money": "Money"
     },
-    "gameOver": {
-      "title": "Game Over",
-      "restart": "Play Again",
-      "finalScore": "Final Score"
-    },
-    "win": {
-      "title": "Congratulations",
-      "message": "You did it!",
-      "playAgain": "Play Again"
-    }
+    "gameOver": { "title": "Game Over", "restart": "Play Again", "finalScore": "Final Score" },
+    "win": { "title": "Congratulations", "message": "You did it!", "playAgain": "Play Again" }
   },
   "tme": {
     "intro": {
@@ -711,9 +564,7 @@ const enGames = {
         "input": "Input:",
         "unlocked": "Unlocked"
       },
-      "gears": {
-        "instruction": "Adjust the gears to achieve a 1:3 ratio (output = 1/3 of input speed)."
-      },
+      "gears": { "instruction": "Adjust the gears to achieve a 1:3 ratio (output = 1/3 of input speed)." },
       "panel": {
         "title": "Panel (wires & pipes)",
         "wiresHint": "Connect without crossings.",
@@ -730,28 +581,15 @@ const enGames = {
         "hint": "Hint: long‑press then drag on the scuff to reveal a latch.",
         "revealed": "Latch revealed."
       },
-      "medal": {
-        "label": "Medal:",
-        "gold": "gold",
-        "silver": "silver",
-        "bronze": "bronze"
-      }
+      "medal": { "label": "Medal:", "gold": "gold", "silver": "silver", "bronze": "bronze" }
     },
     "e2": {
       "filing": {
         "title": "Filing Logic",
         "prompt": "Sort each toy into the correct cabinet based on the clues.",
         "hint": "Dolls go to Cabinet A, cars to Cabinet B, puzzles to Cabinet C.",
-        "items": {
-          "doll": "Porcelain Doll",
-          "car": "Wind-up Car",
-          "puzzle": "Jigsaw Puzzle"
-        },
-        "cabinets": {
-          "a": "Cabinet A (Dolls)",
-          "b": "Cabinet B (Vehicles)",
-          "c": "Cabinet C (Puzzles)"
-        },
+        "items": { "doll": "Porcelain Doll", "car": "Wind-up Car", "puzzle": "Jigsaw Puzzle" },
+        "cabinets": { "a": "Cabinet A (Dolls)", "b": "Cabinet B (Vehicles)", "c": "Cabinet C (Puzzles)" },
         "sorted": "All toys sorted correctly! The filing-cabinet key turns.",
         "reset": "Reset"
       },
@@ -779,11 +617,7 @@ const enGames = {
         "gears": "Broken Gear Bear",
         "musicbox": "Silent Music Box",
         "puppet": "Tangled Marionette",
-        "pieces": {
-          "cog": "Brass Cog",
-          "cylinder": "Music Cylinder",
-          "strings": "Replacement Strings"
-        },
+        "pieces": { "cog": "Brass Cog", "cylinder": "Music Cylinder", "strings": "Replacement Strings" },
         "solved": "All toys repaired! A hidden drawer slides open revealing a brass key.",
         "reset": "Reset"
       },
@@ -857,8 +691,16 @@ const enGames = {
         "apartment": "/sounds/tme-apartment-ambient.mp3"
       }
     }
+  },
+  "tetris": {
+    "title": "Tetris",
+    "hud": { "score": "Score", "level": "Level", "lines": "Lines" },
+    "gameOver": { "title": "Game Over!", "restart": "Play Again", "finalScore": "Final Score" },
+    "paused": "Paused",
+    "levelUp": "Level Up!"
   }
 };
+
 const frGames = {
   "breakout": {
     "title": "Casse-briques",
@@ -871,16 +713,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "bubble-pop": {
     "title": "Bulles",
@@ -893,16 +727,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "checkers": {
     "title": "Dames",
@@ -915,16 +741,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "chess": {
     "title": "Échecs",
@@ -937,16 +755,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "chronoshift": {
     "title": "Labyrinthe ChronoShift",
@@ -1015,16 +825,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "platformer": {
     "title": "Plateforme",
@@ -1037,16 +839,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "quantumarchitect": {
     "title": "Architecte quantique",
@@ -1105,11 +899,7 @@ const frGames = {
       "title": "La veille au soir",
       "body": "Le salon est calme. Du papier d'emballage et des étiquettes sont éparpillés sur la table. Une étiquette s'est déchirée - reassemblez-la.",
       "prompt": "Assemblez les étiquettes magiques dans le bon ordre :",
-      "tags": {
-        "star": "Étiquette étoile",
-        "heart": "Étiquette cœur",
-        "bell": "Étiquette cloche"
-      },
+      "tags": { "star": "Étiquette étoile", "heart": "Étiquette cœur", "bell": "Étiquette cloche" },
       "hint": "Pensez à l'ordre dans lequel elles ont été placées sur les cadeaux : étoile d'abord, puis cœur, puis cloche.",
       "solved": "L'écriture correspond à celle de la note de maman sur le frigo. Intéressant...",
       "keepQuiet": "Garder ça pour toi pour l'instant",
@@ -1163,16 +953,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "sysdisc": {
     "intro": {
@@ -1206,11 +988,7 @@ const frGames = {
       "hintsOn": "Indices : OUI",
       "hintsOff": "Indices : NON",
       "hintDetail": "L'organique va dans le vert, le plastique dans le bleu, le papier dans le jaune.",
-      "items": {
-        "banana": "Peau de banane",
-        "bottle": "Bouteille en plastique",
-        "paper": "Journal"
-      },
+      "items": { "banana": "Peau de banane", "bottle": "Bouteille en plastique", "paper": "Journal" },
       "reveal": "Terminer l'épisode"
     },
     "wrap": {
@@ -1269,24 +1047,13 @@ const frGames = {
         "bf1": {
           "title": "Association de nutriments",
           "prompt": "Associez chaque aliment au nutriment principal qu'il fournit.",
-          "foods": {
-            "pasta": "Pâtes",
-            "chicken": "Poulet",
-            "avocado": "Avocat"
-          },
-          "nutrients": {
-            "glucose": "Glucose (Glucides)",
-            "protein": "Protéines",
-            "fats": "Gras sains"
-          },
+          "foods": { "pasta": "Pâtes", "chicken": "Poulet", "avocado": "Avocat" },
+          "nutrients": { "glucose": "Glucose (Glucides)", "protein": "Protéines", "fats": "Gras sains" },
           "match": "Associer",
           "matched": "Associé !",
           "solved": "Tous les nutriments associés !"
         },
-        "bf2": {
-          "title": "Absorption",
-          "prompt": "Transportez les nutriments dans le sang."
-        },
+        "bf2": { "title": "Absorption", "prompt": "Transportez les nutriments dans le sang." },
         "bf3": {
           "title": "Stockage",
           "prompt": "Gérez les réserves d'énergie pour une utilisation future."
@@ -1307,18 +1074,9 @@ const frGames = {
           "title": "Contraction",
           "prompt": "Coordonnez les fibres musculaires pour un mouvement précis."
         },
-        "bm2": {
-          "title": "Soutien",
-          "prompt": "Exploitez la structure squelettique pour la force."
-        },
-        "bm3": {
-          "title": "Locomotion",
-          "prompt": "Réalisez des schémas de mouvement complexes."
-        },
-        "outro": {
-          "title": "Mouvement maîtrisé",
-          "p1": "Le système est agile et réactif."
-        }
+        "bm2": { "title": "Soutien", "prompt": "Exploitez la structure squelettique pour la force." },
+        "bm3": { "title": "Locomotion", "prompt": "Réalisez des schémas de mouvement complexes." },
+        "outro": { "title": "Mouvement maîtrisé", "p1": "Le système est agile et réactif." }
       },
       "signal": {
         "intro": {
@@ -1331,18 +1089,9 @@ const frGames = {
           "title": "Transmission",
           "prompt": "Envoyez des signals électriques via les voies neuronales."
         },
-        "bsd2": {
-          "title": "Immunité",
-          "prompt": "Identifiez et neutralisez les menaces extérieures."
-        },
-        "bsd3": {
-          "title": "Réaction",
-          "prompt": "Coordonnez les réponses systémiques aux stimuli."
-        },
-        "outro": {
-          "title": "Signaux clairs",
-          "p1": "La communication est rapide et le corps est protégé."
-        }
+        "bsd2": { "title": "Immunité", "prompt": "Identifiez et neutralisez les menaces extérieures." },
+        "bsd3": { "title": "Réaction", "prompt": "Coordonnez les réponses systémiques aux stimuli." },
+        "outro": { "title": "Signaux clairs", "p1": "La communication est rapide et le corps est protégé." }
       },
       "space": {
         "intro": {
@@ -1374,16 +1123,8 @@ const frGames = {
           "hint": "Mercure est la plus petite, la Terre est moyenne, Jupiter est la plus grande.",
           "planets": "Planètes",
           "shadows": "Ombres",
-          "planetLabels": {
-            "mercury": "Mercure",
-            "earth": "Terre",
-            "jupiter": "Jupiter"
-          },
-          "shadowLabels": {
-            "small": "Petite",
-            "medium": "Moyenne",
-            "large": "Grande"
-          },
+          "planetLabels": { "mercury": "Mercure", "earth": "Terre", "jupiter": "Jupiter" },
+          "shadowLabels": { "small": "Petite", "medium": "Moyenne", "large": "Grande" },
           "matched": "Associées",
           "solved": "Toutes les planètes associées correctement! Le puzzle d'ombres révèle un mécanisme caché."
         },
@@ -1392,12 +1133,7 @@ const frGames = {
           "prompt": "Classez chaque planète comme habitable ou non habitable selon ses caractéristiques.",
           "hint": "La Terre et Mars sont dans la zone habitable. Jupiter et Vénus ne le sont pas.",
           "planets": "Planètes",
-          "planetLabels": {
-            "earth": "Terre",
-            "mars": "Mars",
-            "jupiter": "Jupiter",
-            "venus": "Vénus"
-          },
+          "planetLabels": { "earth": "Terre", "mars": "Mars", "jupiter": "Jupiter", "venus": "Vénus" },
           "habitable": "Habitable",
           "notHabitable": "Non habitable",
           "habitableShort": "HAB",
@@ -1435,14 +1171,8 @@ const frGames = {
           "title": "Différenciation",
           "prompt": "Les cellules spécialisées forment des tissus et des organes."
         },
-        "bg3": {
-          "title": "Maturité",
-          "prompt": "Atteignez une complexité systémique optimale."
-        },
-        "outro": {
-          "title": "Croissance soutenue",
-          "p1": "Le système s'est développé selon son plan."
-        }
+        "bg3": { "title": "Maturité", "prompt": "Atteignez une complexité systémique optimale." },
+        "outro": { "title": "Croissance soutenue", "p1": "Le système s'est développé selon son plan." }
       }
     },
     "ocean": {
@@ -1534,16 +1264,8 @@ const frGames = {
       "wave": "Vague",
       "money": "Argent"
     },
-    "gameOver": {
-      "title": "Partie terminée",
-      "restart": "Rejouer",
-      "finalScore": "Score final"
-    },
-    "win": {
-      "title": "Félicitations",
-      "message": "Vous avez réussi!",
-      "playAgain": "Rejouer"
-    }
+    "gameOver": { "title": "Partie terminée", "restart": "Rejouer", "finalScore": "Score final" },
+    "win": { "title": "Félicitations", "message": "Vous avez réussi!", "playAgain": "Rejouer" }
   },
   "tme": {
     "intro": {
@@ -1588,28 +1310,15 @@ const frGames = {
         "hint": "Astuce : appui long puis glisser sur la rayure pour révéler un loquet.",
         "revealed": "Loquet révélé."
       },
-      "medal": {
-        "label": "Médaille :",
-        "gold": "or",
-        "silver": "argent",
-        "bronze": "bronze"
-      }
+      "medal": { "label": "Médaille :", "gold": "or", "silver": "argent", "bronze": "bronze" }
     },
     "e2": {
       "filing": {
         "title": "Logique de classement",
         "prompt": "Classez chaque jouet dans le bon classeur selon les indices.",
         "hint": "Les poupées vont dans le classeur A, les voitures dans B, les puzzles dans C.",
-        "items": {
-          "doll": "Poupée de porcelaine",
-          "car": "Voiture à remontoir",
-          "puzzle": "Casse-tête"
-        },
-        "cabinets": {
-          "a": "Classeur A (Poupées)",
-          "b": "Classeur B (Véhicules)",
-          "c": "Classeur C (Puzzles)"
-        },
+        "items": { "doll": "Poupée de porcelaine", "car": "Voiture à remontoir", "puzzle": "Casse-tête" },
+        "cabinets": { "a": "Classeur A (Poupées)", "b": "Classeur B (Véhicules)", "c": "Classeur C (Puzzles)" },
         "sorted": "Tous les jouets sont bien classés ! La clé du classeur tourne.",
         "reset": "Réinitialiser"
       },
@@ -1715,6 +1424,13 @@ const frGames = {
         "apartment": "/sounds/tme-apartment-ambient.mp3"
       }
     }
+  },
+  "tetris": {
+    "title": "Tetris",
+    "hud": { "score": "Score", "level": "Niveau", "lines": "Lignes" },
+    "gameOver": { "title": "Partie terminee !", "restart": "Rejouer", "finalScore": "Score final" },
+    "paused": "En pause",
+    "levelUp": "Niveau superieur !"
   }
 };
 

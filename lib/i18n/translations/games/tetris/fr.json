@@ -1,0 +1,9 @@
+{
+  "tetris": {
+    "title": "Tetris",
+    "hud": { "score": "Score", "level": "Niveau", "lines": "Lignes" },
+    "gameOver": { "title": "Partie terminee !", "restart": "Rejouer", "finalScore": "Score final" },
+    "paused": "En pause",
+    "levelUp": "Niveau superieur !"
+  }
+}
