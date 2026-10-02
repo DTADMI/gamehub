@@ -135,7 +135,7 @@ export const ArtifactHunterGame: React.FC = () => {
                 {["1","2","3","4","5","6","7","8","9"].map(d => <button key={d} onClick={() => handleKP(d)} className="px-4 py-2 bg-white dark:bg-gray-700 rounded border text-sm">{d}</button>)}
                 <button onClick={() => setKeypad((s) => clearKeypad(s))} className="px-4 py-2 bg-red-100 dark:bg-red-900 rounded border text-sm">{lang === "fr" ? "Eff." : "Clr"}</button>
                 <button onClick={() => handleKP("0")} className="px-4 py-2 bg-white dark:bg-gray-700 rounded border text-sm">0</button>
-                <button onClick={handleKPS} className="px-4 py-2 bg-green-100 dark:bg-green-900 rounded border text-sm">✔</button>
+                <button onClick={handleKPS} aria-label={lang === "fr" ? "Valider la saisie" : "Submit entry"} className="px-4 py-2 bg-green-100 dark:bg-green-900 rounded border text-sm">✔</button>
               </div>
             </div>
           )}
