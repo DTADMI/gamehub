@@ -1,5 +1,9 @@
 /**
  * Elemental Conflux - Bilingual string map (EN/FR)
+ *
+ * Usage : import { createI18n } from "@games/i18n";
+ *         import { ELEMENTAL_CONFLUX_TX } from "../i18n";
+ *         const { t } = createI18n(ELEMENTAL_CONFLUX_TX);
  */
 export const ELEMENTAL_CONFLUX_TX = {
   en: {
@@ -24,6 +28,26 @@ export const ELEMENTAL_CONFLUX_TX = {
     hint: "Hint",
     reset: "Reset",
     undo: "Undo",
+    guardian: "Elemental Guardian",
+    menuSubtitle: "Guide the four elements to their goal rings",
+    menuPuzzle: "Puzzle",
+    editorTitle: "Puzzle Editor",
+    editorHintClick: "Click: cycle tile | Right-click: remove",
+    editorHintWheel: "Wheel: adjust height",
+    editorSave: "Save to localStorage",
+    editorLoad: "Load from localStorage",
+    editorExport: "Export (base64)",
+    editorImport: "Import (paste)",
+    editorClear: "Clear",
+    editorBack: "Back",
+    levelComplete: "Level Complete!",
+    restart: "Restart",
+    nextLevel: "Next Level",
+    bossBattle: "Boss Battle",
+    menu: "Menu",
+    bossWon: "The Elemental Guardian has been defeated!",
+    bossLost: "The Guardian was too powerful... Try again!",
+    bossRetry: "Retry Boss",
   },
   fr: {
     title: "Confluent Élémentaire",
@@ -47,5 +71,25 @@ export const ELEMENTAL_CONFLUX_TX = {
     hint: "Indice",
     reset: "Réinit.",
     undo: "Annuler",
+    guardian: "Gardien Élémentaire",
+    menuSubtitle: "Guide les quatre éléments vers leurs anneaux",
+    menuPuzzle: "Puzzle",
+    editorTitle: "Éditeur de puzzle",
+    editorHintClick: "Clic : changer la tuile | Clic droit : retirer",
+    editorHintWheel: "Molette : ajuster la hauteur",
+    editorSave: "Enregistrer dans le navigateur",
+    editorLoad: "Charger depuis le navigateur",
+    editorExport: "Exporter (base64)",
+    editorImport: "Importer (coller)",
+    editorClear: "Effacer",
+    editorBack: "Retour",
+    levelComplete: "Niveau terminé !",
+    restart: "Recommencer",
+    nextLevel: "Niveau suivant",
+    bossBattle: "Combat de boss",
+    menu: "Menu",
+    bossWon: "Le Gardien Élémentaire est vaincu !",
+    bossLost: "Le Gardien était trop puissant... Réessayez !",
+    bossRetry: "Réessayer le boss",
   },
 } as const;

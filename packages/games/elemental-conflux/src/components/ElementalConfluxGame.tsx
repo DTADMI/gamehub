@@ -5,6 +5,12 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
+import { createI18n } from "@games/i18n";
+
+import { ELEMENTAL_CONFLUX_TX } from "../i18n";
+
+const { t } = createI18n(ELEMENTAL_CONFLUX_TX);
+
 const PUZZLE_GRID_SIZE = 6;
 const BOSS_GRID_SIZE = 8;
 const TILE_SIZE = 1;
@@ -496,7 +502,7 @@ function BossHUD({ bossState }: { bossState: BossState }) {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         padding: "0 4px", color: "white", fontSize: 12,
       }}>
-        <span style={{ color: "#ff8844", fontWeight: "bold" }}>Elemental Guardian</span>
+        <span style={{ color: "#ff8844", fontWeight: "bold" }}>{t("guardian")}</span>
         <span>{phaseLabel}{shieldLabel}</span>
         <span style={{ color: timeLeft < 30 ? "#ff4444" : "#ffffff" }}>{mins}:{secs.toString().padStart(2, "0")}</span>
       </div>
@@ -565,7 +571,7 @@ function LevelSelectMenu({ onStartLevel, onOpenEditor, onToggleMode, isCoop, edi
       <h1 style={{ color: "#88ccff", fontSize: 28, margin: "0 0 6px", textShadow: "0 0 20px rgba(100,150,255,0.4)" }}>
         Elemental Conflux
       </h1>
-      <p style={{ color: "#7788aa", fontSize: 12, margin: "0 0 24px" }}>Guide the four elements to their goal rings</p>
+      <p style={{ color: "#7788aa", fontSize: 12, margin: "0 0 24px" }}>{t("menuSubtitle")}</p>
       <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
         {PUZZLE_LEVELS.map((_, i) => (
           <button key={i} onClick={() => onStartLevel(i)} style={{
@@ -580,7 +586,7 @@ function LevelSelectMenu({ onStartLevel, onOpenEditor, onToggleMode, isCoop, edi
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#445577"; e.currentTarget.style.background = "linear-gradient(135deg, #2a2a4a, #1a1a3a)"; }}
           >
             <span>{i + 1}</span>
-            <span style={{ fontSize: 9, color: "#7799bb" }}>Puzzle</span>
+            <span style={{ fontSize: 9, color: "#7799bb" }}>{t("menuPuzzle")}</span>
           </button>
         ))}
       </div>
@@ -617,17 +623,17 @@ function EditorPanel({ onSave, onLoad, onExport, onImport, onBack, onClear }: {
       color: "white", zIndex: 20, fontSize: 12, display: "flex",
       flexDirection: "column", gap: 6, minWidth: 150,
     }}>
-      <div style={{ fontWeight: "bold", color: "#aa88ff", marginBottom: 4, fontSize: 14 }}>Puzzle Editor</div>
-      <div style={{ color: "#8899bb", fontSize: 10 }}>Click: cycle tile | Right-click: remove</div>
-      <div style={{ color: "#8899bb", fontSize: 10 }}>Wheel: adjust height</div>
+      <div style={{ fontWeight: "bold", color: "#aa88ff", marginBottom: 4, fontSize: 14 }}>{t("editorTitle")}</div>
+      <div style={{ color: "#8899bb", fontSize: 10 }}>{t("editorHintClick")}</div>
+      <div style={{ color: "#8899bb", fontSize: 10 }}>{t("editorHintWheel")}</div>
       <hr style={{ border: "none", borderTop: "1px solid #334", margin: "4px 0" }} />
-      <button onClick={onSave} style={ebtn("#4488ff")}>Save to localStorage</button>
-      <button onClick={onLoad} style={ebtn("#44aa44")}>Load from localStorage</button>
-      <button onClick={onExport} style={ebtn("#ff8844")}>Export (base64)</button>
-      <button onClick={onImport} style={ebtn("#8844aa")}>Import (paste)</button>
+      <button onClick={onSave} style={ebtn("#4488ff")}>{t("editorSave")}</button>
+      <button onClick={onLoad} style={ebtn("#44aa44")}>{t("editorLoad")}</button>
+      <button onClick={onExport} style={ebtn("#ff8844")}>{t("editorExport")}</button>
+      <button onClick={onImport} style={ebtn("#8844aa")}>{t("editorImport")}</button>
       <div style={{ display: "flex", gap: 4 }}>
-        <button onClick={onClear} style={ebtn("#cc4444")}>Clear</button>
-        <button onClick={onBack} style={ebtn("#555577")}>Back</button>
+        <button onClick={onClear} style={ebtn("#cc4444")}>{t("editorClear")}</button>
+        <button onClick={onBack} style={ebtn("#555577")}>{t("editorBack")}</button>
       </div>
     </div>
   );
@@ -1466,18 +1472,18 @@ export function ElementalConfluxGame({
             background: "rgba(30,30,50,0.95)", padding: "30px 40px", borderRadius: 16,
             textAlign: "center", color: "white", border: "2px solid #66cc66",
           }}>
-            <h2 style={{ margin: "0 0 10px", fontSize: 24, color: "#66cc66" }}>Level Complete!</h2>
+            <h2 style={{ margin: "0 0 10px", fontSize: 24, color: "#66cc66" }}>{t("levelComplete")}</h2>
             <p style={{ margin: "6px 0", fontSize: 13 }}>Time: {elapsedSec}s | Moves: {moves}</p>
             <p style={{ margin: "8px 0", fontSize: 18, fontWeight: "bold", color: "#ffcc00" }}>Score: {score}</p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 16 }}>
-              <button onClick={restartLevel} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#555", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>Restart</button>
+              <button onClick={restartLevel} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#555", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>{t("restart")}</button>
               {level + 1 < PUZZLE_LEVELS.length && (
-                <button onClick={nextLevel} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#3388ff", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>Next Level</button>
+                <button onClick={nextLevel} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#3388ff", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>{t("nextLevel")}</button>
               )}
               {level + 1 >= PUZZLE_LEVELS.length && (
-                <button onClick={nextLevel} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#ff8844", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>Boss Battle</button>
+                <button onClick={nextLevel} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#ff8844", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>{t("bossBattle")}</button>
               )}
-              <button onClick={goToMenu} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#555577", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>Menu</button>
+              <button onClick={goToMenu} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#555577", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>{t("menu")}</button>
             </div>
           </div>
         </div>
@@ -1499,15 +1505,15 @@ export function ElementalConfluxGame({
             </h2>
             {isBossDefeated ? (
               <>
-                <p style={{ margin: "6px 0", fontSize: 13 }}>The Elemental Guardian has been defeated!</p>
+                <p style={{ margin: "6px 0", fontSize: 13 }}>{t("bossWon")}</p>
                 <p style={{ margin: "8px 0", fontSize: 18, fontWeight: "bold", color: "#ffcc00" }}>Bonus Score: {bossScore}</p>
               </>
             ) : (
-              <p style={{ margin: "6px 0", fontSize: 13 }}>The Guardian was too powerful... Try again!</p>
+              <p style={{ margin: "6px 0", fontSize: 13 }}>{t("bossLost")}</p>
             )}
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 16 }}>
-              <button onClick={startBoss} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#ff8844", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>Retry Boss</button>
-              <button onClick={goToMenu} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#555577", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>Menu</button>
+              <button onClick={startBoss} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#ff8844", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>{t("bossRetry")}</button>
+              <button onClick={goToMenu} style={{ padding: "8px 20px", fontSize: 13, fontFamily: "system-ui, sans-serif", background: "#555577", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }}>{t("menu")}</button>
             </div>
           </div>
         </div>
