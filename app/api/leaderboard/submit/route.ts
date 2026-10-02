@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 
 import { clientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
+import { assessAnomaly } from "@/lib/leaderboard-anomaly";
 import {
   dedupeHash,
   getActiveSeason,
+  maxScoreFor,
   normalizeGameType,
   sanitizeMetadata,
   validateScore,
@@ -48,6 +50,32 @@ export async function POST(request: Request) {
   const metadata = sanitizeMetadata(payload.metadata);
   const clientHash = dedupeHash(user.id, gameType, score);
 
+  // Detection d'anomalies (B10) : marque pour revue humaine, ne supprime jamais.
+  const anomalyWindowStart = new Date(Date.now() - 600_000).toISOString();
+  const [{ data: bestRow }, { count: recentCount }] = await Promise.all([
+    supabase
+      .from("leaderboard_scores")
+      .select("score")
+      .eq("user_id", user.id)
+      .eq("game_type", gameType)
+      .order("score", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from("leaderboard_scores")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("game_type", gameType)
+      .gte("created_at", anomalyWindowStart),
+  ]);
+  const anomaly = assessAnomaly({
+    score,
+    maxScore: maxScoreFor(gameType),
+    previousBest: typeof bestRow?.score === "number" ? bestRow.score : null,
+    recentSubmissions: recentCount ?? 0,
+    recentWindowSeconds: 600,
+  });
+
   const tenSecondsAgo = new Date(Date.now() - 10_000).toISOString();
   const { data: recentDuplicate } = await supabase
     .from("leaderboard_scores")
@@ -84,8 +112,9 @@ export async function POST(request: Request) {
       score,
       player_name: playerName,
       season_id: seasonId,
-      metadata: metadata as Json,
+      metadata: { ...metadata, anomaly: anomaly.reasons } as Json,
       client_hash: clientHash,
+      status: anomaly.flagged ? "flagged" : "valid",
     })
     .select("id, score, created_at")
     .single();

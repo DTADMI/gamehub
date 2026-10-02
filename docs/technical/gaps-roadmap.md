@@ -103,7 +103,7 @@ Priorite : P1 (fort impact), P2 (utile), P3 (confort). Effort : S/M/L.
 | B4 | Classements manquants | Plusieurs jeux n'ont pas de leaderboard integre (ex. Dungeon Delver : profondeur, vitesse) | P2 | S | ⏳ a faire |
 | B5 | i18n EN/FR de tous les jeux | NF-BLOG-001/i18n : le launcher est traduit, pas tous les jeux | P2 | M | ⏳ a faire |
 | B6 | Audit accessibilite par jeu | Reduire les animations, navigation clavier, lecteurs d'ecran ; NF exige 320px + accessibilite | P1 | M | 🔵 partiel 2026-10-02 : reduced-motion globalise a snake/memory/tetris/breakout + test-gardien ; reste navigation clavier et lecteurs d'ecran par jeu |
-| B7 | Commandes tactiles mobiles | Le web est responsive mais les jeux WebGPU supposent clavier/souris | P2 | M | ⏳ a faire |
+| B7 | Commandes tactiles mobiles | Le web est responsive mais les jeux WebGPU supposent clavier/souris | P2 | M | 🔵 partiel 2026-10-02 : createTouchControls (swipe/tap/pan/pinch) existe dans game-platform mais n'est cable dans aucun jeu |
 | B8 | Sauvegarde cloud de progression | Reprendre une partie sur un autre appareil | P3 | M | ⏳ a faire |
 | B9 | Replays / mode spectateur | Partager une performance sans capture video | P3 | L | ⏳ a faire |
-| B10 | Extension anti-triche | Complement des regles de score (schema de detection d'anomalies) | P2 | M | ⏳ a faire |
+| B10 | Extension anti-triche | Complement des regles de score (schema de detection d'anomalies) | P2 | M | ✅ fait 2026-10-02 : validation et dedupe existaient ; detection d'anomalies ajoutee (perfect_score, implausible_jump, high_frequency) qui marque flagged pour revue humaine, helper pur + 7 tests |

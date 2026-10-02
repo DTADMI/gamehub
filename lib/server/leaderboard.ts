@@ -57,6 +57,11 @@ export function validateScore(gameType: LeaderboardGameType, score: number) {
   }
 }
 
+/** Plafond de score declare pour un jeu (utilise par la detection d'anomalies). */
+export function maxScoreFor(gameType: LeaderboardGameType): number {
+  return MAX_SCORE_BY_GAME[gameType];
+}
+
 export function sanitizeMetadata(input: unknown) {
   if (input == null || typeof input !== "object") {
     return {};
