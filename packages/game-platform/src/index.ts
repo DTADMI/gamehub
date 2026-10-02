@@ -46,3 +46,4 @@ export * from "./lib/sound";
 export * from "./lib/touch";
 export * from "./lib/webgpu";
 export * from "./metadata/games";
+export * from "./lib/achievements";
