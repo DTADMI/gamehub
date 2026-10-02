@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 import { GameEntry, getGame as getGameById } from "../metadata/games";
+import { achievementStatsFromGameStats, mergeUnlocked } from "../lib/achievements";
 import { useAuth } from "./AuthContext";
 import { useSound } from "./SoundContext";
 
@@ -101,6 +102,11 @@ export function GameProvider({ children, gameId }: { children: React.ReactNode; 
     setStats((prev) => {
       if (!prev) {return null;}
       const newStats = { ...prev, ...updates, lastPlayed: new Date().toISOString() };
+      // Succes (B3) : recalcules depuis les statistiques, sans jamais en retirer.
+      newStats.achievements = mergeUnlocked(
+        prev.achievements,
+        achievementStatsFromGameStats(newStats),
+      );
       if (updates.highScore !== undefined && updates.highScore > (prev.highScore || 0)) {
         playSound("achievement");
       }

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   ACHIEVEMENTS,
+  achievementStatsFromGameStats,
   evaluateAchievements,
   mergeUnlocked,
   type AchievementStats,
@@ -53,5 +54,27 @@ describe("mergeUnlocked", () => {
     const merged = mergeUnlocked([], { ...base, gamesPlayed: 25, distinctGames: 5 });
     const order = ACHIEVEMENTS.map((a) => a.id).filter((id) => merged.includes(id));
     expect(merged).toEqual(order);
+  });
+});
+
+describe("achievementStatsFromGameStats", () => {
+  it("projette les statistiques d'une partie", () => {
+    expect(achievementStatsFromGameStats({ totalPlays: 0, highScore: 0 })).toEqual({
+      gamesPlayed: 0,
+      distinctGames: 0,
+      coopSessions: 0,
+      sharedCreations: 0,
+      helpedOthers: 0,
+    });
+    const stats = achievementStatsFromGameStats({ totalPlays: 3, highScore: 500 });
+    expect(stats.gamesPlayed).toBe(3);
+    expect(stats.distinctGames).toBe(1);
+  });
+
+  it("debloque les succes de progression lies aux parties", () => {
+    const first = mergeUnlocked([], achievementStatsFromGameStats({ totalPlays: 1, highScore: 0 }));
+    expect(first).toContain("first_game");
+    const veteran = mergeUnlocked([], achievementStatsFromGameStats({ totalPlays: 25, highScore: 0 }));
+    expect(veteran).toContain("veteran");
   });
 });

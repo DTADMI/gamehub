@@ -82,10 +82,28 @@ export function evaluateAchievements(stats: AchievementStats): AchievementId[] {
  * ne se perd jamais, meme si les statistiques locales repartent de zero.
  */
 export function mergeUnlocked(
-  known: readonly AchievementId[],
+  known: readonly string[],
   stats: AchievementStats,
 ): AchievementId[] {
-  const merged = new Set<AchievementId>(known)
+  const merged = new Set<string>(known)
   for (const id of evaluateAchievements(stats)) merged.add(id)
   return ACHIEVEMENTS.map((a) => a.id).filter((id) => merged.has(id))
+}
+
+/**
+ * Projette les statistiques d'une partie (`GameStats`) sur le moteur. Les
+ * succes globaux (exploration, cooperation, entraide) restent hors de portee
+ * d'une seule partie : ils se debloquent via les statistiques du profil.
+ */
+export function achievementStatsFromGameStats(game: {
+  totalPlays: number
+  highScore: number
+}): AchievementStats {
+  return {
+    gamesPlayed: Math.max(0, game.totalPlays),
+    distinctGames: game.totalPlays > 0 ? 1 : 0,
+    coopSessions: 0,
+    sharedCreations: 0,
+    helpedOthers: 0,
+  }
 }
