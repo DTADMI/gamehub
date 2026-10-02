@@ -1,5 +1,6 @@
 "use client";
 
+import { createTouchControls } from "@gamehub/game-platform";
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
@@ -374,6 +375,7 @@ export default function ChronoShiftGame({
   const moveHistoryRef = useRef<MoveRecord[]>([]);
   const isMovingRef = useRef(false);
   const collectedCrystalIdsRef = useRef<Set<number>>(new Set());
+  const containerRef = useRef<HTMLDivElement>(null);
   const rewindAnimRef = useRef<RewindAnim>({
     active: false,
     steps: [],
@@ -550,7 +552,25 @@ export default function ChronoShiftGame({
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    // Touch controls (B7): swipe moves the character, double tap rewinds.
+    const container = containerRef.current;
+    let controls: ReturnType<typeof createTouchControls> | null = null;
+    if (container) {
+      controls = createTouchControls(container, { swipeThreshold: 28 });
+      controls.onSwipe((direction) => {
+        if (direction === "up") {tryMove(-1, 0, "north");}
+        else if (direction === "down") {tryMove(1, 0, "south");}
+        else if (direction === "left") {tryMove(0, -1, "west");}
+        else {tryMove(0, 1, "east");}
+      });
+      controls.onDoubleTap(() => handleRewind());
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      controls?.destroy();
+    };
   }, [tryMove, handleRewind, handleWallShift]);
 
   useEffect(() => {
@@ -634,6 +654,7 @@ export default function ChronoShiftGame({
 
   return (
     <div
+      ref={containerRef}
       style={{
         position: "relative",
         width: "100%",
