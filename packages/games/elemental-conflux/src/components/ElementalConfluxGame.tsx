@@ -1,5 +1,6 @@
 "use client";
 
+import { createTouchControls } from "@gamehub/game-platform";
 import { OrbitControls, Text } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -1192,6 +1193,38 @@ export function ElementalConfluxGame({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  // Touch controls (B7): swipe moves the active character, double tap triggers its ability.
+  const containerRef = useRef<HTMLDivElement>(null);
+  const swipeMoveRef = useRef<(dir: "up" | "down" | "left" | "right") => void>(() => {});
+  const abilityRef = useRef<() => void>(() => {});
+  swipeMoveRef.current = (dir) => {
+    const delta =
+      dir === "up" ? [0, -1] : dir === "down" ? [0, 1] : dir === "left" ? [-1, 0] : [1, 0];
+    if (gameMode === "single") {
+      moveCharacter(delta[0]!, delta[1]!);
+    } else {
+      fullMoveCharByType(activeChar, delta[0]!, delta[1]!);
+    }
+  };
+  abilityRef.current = () => {
+    if (gameMode === "single") {
+      activateAbility();
+    } else {
+      activateAbilityForType(activeChar);
+    }
+  };
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) {
+      return;
+    }
+    const controls = createTouchControls(el, { swipeThreshold: 26 });
+    controls.onSwipe((dir) => swipeMoveRef.current(dir));
+    controls.onDoubleTap(() => abilityRef.current());
+    return () => controls.destroy();
+  }, []);
+
   useEffect(() => {
     if (screen !== "boss" || isBossDefeated || isBossTimedOut) {return;}
     const iv = setInterval(() => {
@@ -1411,7 +1444,7 @@ export function ElementalConfluxGame({
   const isBossScreen = screen === "boss";
 
   return (
-    <div style={{ width: "100%", height: "100%", position: "relative", background: "#1a1a2e" }}>
+    <div ref={containerRef} style={{ width: "100%", height: "100%", position: "relative", background: "#1a1a2e" }}>
       <Canvas
         shadows
         camera={{ position: isBossScreen ? [10, 11, 10] : [7, 8, 7], fov: 45, near: 0.1, far: 50 }}
