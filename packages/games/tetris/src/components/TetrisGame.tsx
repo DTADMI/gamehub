@@ -12,11 +12,15 @@ import {
   TETROMINO_TYPES,
   TETROMINOS,
 } from "../types/game";
+import { createI18n } from "@games/i18n";
+import { TETRIS_TX } from "../i18n";
 
 interface TetrisGameProps {
   onScoreUpdate?: (score: number) => void;
   onGameOver?: (score: number, lines: number, level: number) => void;
 }
+
+const { t } = createI18n(TETRIS_TX);
 
 function detectTSpin(tetromino: any, board: string[][]): boolean {
   if (!tetromino || tetromino.color !== "purple") {return false;}
@@ -599,30 +603,30 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
           {showLevelUp && (
             <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
               <div className="animate-pulse text-4xl font-bold text-yellow-400 drop-shadow-lg">
-                Level Up!
+                {t("levelUp")}
               </div>
             </div>
           )}
 
           {!gameState.gameStarted && !gameState.gameOver && (
             <div className="bg-opacity-70 absolute inset-0 flex flex-col items-center justify-center bg-black">
-              <div className="mb-4 text-2xl font-bold text-white">Tetris</div>
-              <div className="mb-6 text-white">Press Space to Start</div>
+              <div className="mb-4 text-2xl font-bold text-white">{t("title")}</div>
+              <div className="mb-6 text-white">{t("pressStart")}</div>
               <div className="max-w-xs text-center text-sm text-white">
-                Use arrow keys to move and rotate. Space to drop.
+                {t("controlsDesktop")}
               </div>
               <div className="mt-2 text-center text-xs text-gray-300">
-                Mobile: swipe to move, tap to rotate, flick down to drop
+                {t("controlsMobile")}
               </div>
             </div>
           )}
 
           {gameState.gameOver && (
             <div className="bg-opacity-70 absolute inset-0 flex flex-col items-center justify-center bg-black">
-              <div className="mb-4 text-2xl font-bold text-white">Game Over!</div>
-              <div className="mb-2 text-white">Score: {gameState.score}</div>
+              <div className="mb-4 text-2xl font-bold text-white">{t("gameOver")}</div>
+              <div className="mb-2 text-white">{t("score")}: {gameState.score}</div>
               <div className="mb-6 text-sm text-gray-300">
-                Level {gameState.level} | {gameState.lines} lines
+                {t("level")} {gameState.level} | {gameState.lines} {t("lines")}
               </div>
               <button
                 onClick={() => {
@@ -643,21 +647,21 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
                 }}
                 className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
               >
-                Play Again
+                {t("playAgain")}
               </button>
             </div>
           )}
 
           {gameState.isPaused && (
             <div className="bg-opacity-50 absolute inset-0 flex items-center justify-center bg-black">
-              <div className="text-2xl font-bold text-white">Paused</div>
+              <div className="text-2xl font-bold text-white">{t("pause")}</div>
             </div>
           )}
         </div>
 
         <div className="flex flex-col gap-4">
           <div className="rounded-lg bg-white p-4 shadow">
-            <h2 className="mb-2 text-lg font-semibold">Next</h2>
+            <h2 className="mb-2 text-lg font-semibold">{t("next")}</h2>
             <div className="mx-auto grid w-[120px] grid-cols-4 gap-1" style={{ width: "120px" }}>
               {gameState.nextTetromino.shape.map((row: number[], rowIndex: number) =>
                 row.map((cell: number, colIndex: number) => (
@@ -680,13 +684,13 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
           )}
 
           <div className="hidden rounded-lg bg-white p-4 shadow md:block">
-            <h2 className="mb-2 text-lg font-semibold">Controls</h2>
+            <h2 className="mb-2 text-lg font-semibold">{t("controls")}</h2>
             <ul className="space-y-1 text-sm">
-              <li>← → : Move</li>
-              <li>↑ : Rotate</li>
-              <li>↓ : Soft Drop</li>
-              <li>Space : Hard Drop</li>
-              <li>Esc : Pause</li>
+              <li>{t("move")}</li>
+              <li>{t("rotate")}</li>
+              <li>{t("softDrop")}</li>
+              <li>{t("hardDrop")}</li>
+              <li>{t("pauseKey")}</li>
             </ul>
           </div>
         </div>
@@ -696,35 +700,35 @@ const TetrisGame = ({ onScoreUpdate, onGameOver }: TetrisGameProps = {}) => {
         <button
           onPointerDown={(e) => { e.preventDefault(); moveTetromino("left"); }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-700 text-2xl text-white hover:bg-gray-600 active:scale-95"
-          aria-label="Move left"
+          aria-label={t("moveLeft")}
         >
           ←
         </button>
         <button
           onPointerDown={(e) => { e.preventDefault(); moveTetromino("right"); }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-700 text-2xl text-white hover:bg-gray-600 active:scale-95"
-          aria-label="Move right"
+          aria-label={t("moveRight")}
         >
           →
         </button>
         <button
           onPointerDown={(e) => { e.preventDefault(); moveTetromino("rotate"); }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-700 text-2xl text-white hover:bg-gray-600 active:scale-95"
-          aria-label="Rotate"
+          aria-label={t("rotateButton")}
         >
           ↻
         </button>
         <button
           onPointerDown={(e) => { e.preventDefault(); moveTetromino("down"); }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-700 text-2xl text-white hover:bg-gray-600 active:scale-95"
-          aria-label="Soft drop"
+          aria-label={t("softDropButton")}
         >
           ↓
         </button>
         <button
           onPointerDown={(e) => { e.preventDefault(); hardDrop(); }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-red-600 text-2xl text-white hover:bg-red-500 active:scale-95"
-          aria-label="Hard drop"
+          aria-label={t("hardDropButton")}
         >
           ⬇
         </button>

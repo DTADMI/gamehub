@@ -1,5 +1,9 @@
 /**
  * Tetris - Bilingual string map (EN/FR)
+ *
+ * Usage: import { createI18n } from "@games/i18n";
+ *        import { TETRIS_TX } from "../i18n";
+ *        const { t } = createI18n(TETRIS_TX);
  */
 export const TETRIS_TX = {
   en: {
@@ -20,6 +24,21 @@ export const TETRIS_TX = {
     double: "Double",
     triple: "Triple",
     tetris: "Tetris!",
+    controlsDesktop: "Use arrow keys to move and rotate. Space to drop.",
+    controlsMobile: "Mobile: swipe to move, tap to rotate, flick down to drop",
+    playAgain: "Play Again",
+    controls: "Controls",
+    move: "\u2190 \u2192 : Move",
+    rotate: "\u2191 : Rotate",
+    softDrop: "\u2193 : Soft Drop",
+    hardDrop: "Space : Hard Drop",
+    pauseKey: "Esc : Pause",
+    levelUp: "Level Up!",
+    moveLeft: "Move left",
+    moveRight: "Move right",
+    rotateButton: "Rotate",
+    softDropButton: "Soft drop",
+    hardDropButton: "Hard drop",
   },
   fr: {
     title: "Tetris",
@@ -27,17 +46,32 @@ export const TETRIS_TX = {
     highScore: "Meilleur Score",
     level: "Niveau",
     lines: "Lignes",
-    gameOver: "Partie Terminée",
+    gameOver: "Partie Termin\u00e9e",
     pressStart: "Espace pour commencer",
     pause: "Pause",
     resume: "Espace pour reprendre",
     newGame: "Nouvelle Partie",
     next: "Prochain",
-    hold: "Réserve",
+    hold: "R\u00e9serve",
     combo: "Combo",
     single: "Simple",
     double: "Double",
     triple: "Triple",
     tetris: "Tetris !",
+    controlsDesktop: "Fleches pour deplacer et tourner. Espace pour lacher.",
+    controlsMobile: "Mobile : glisser pour deplacer, toucher pour tourner, glisser vers le bas pour lacher",
+    playAgain: "Rejouer",
+    controls: "Commandes",
+    move: "\u2190 \u2192 : Deplacer",
+    rotate: "\u2191 : Tourner",
+    softDrop: "\u2193 : Descente douce",
+    hardDrop: "Espace : Descente rapide",
+    pauseKey: "Echap : Pause",
+    levelUp: "Niveau superieur !",
+    moveLeft: "Deplacer a gauche",
+    moveRight: "Deplacer a droite",
+    rotateButton: "Tourner",
+    softDropButton: "Descente douce",
+    hardDropButton: "Descente rapide",
   },
 } as const;
