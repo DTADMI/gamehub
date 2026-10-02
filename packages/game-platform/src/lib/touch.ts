@@ -76,15 +76,18 @@ export function createTouchControls(
     e.preventDefault();
     const touches = e.touches;
 
-    if (touches.length === 1 && panCb) {
-      const dx = (touches[0].clientX - startX) * opts.sensitivity;
-      const dy = (touches[0].clientY - startY) * opts.sensitivity;
-      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+    if (touches.length === 1) {
+      const rawDx = touches[0].clientX - startX;
+      const rawDy = touches[0].clientY - startY;
+      // `moved` doit se mettre a jour meme sans callback pan : sinon un swipe
+      // n'est jamais detecte tant qu'aucun jeu n'enregistre onPan (defaut trouve
+      // par les tests de tests/unit/touch.test.ts).
+      if (Math.abs(rawDx) > 1 || Math.abs(rawDy) > 1) {
         moved = true;
       }
       startX = touches[0].clientX;
       startY = touches[0].clientY;
-      panCb(dx, dy);
+      if (panCb) {panCb(rawDx * opts.sensitivity, rawDy * opts.sensitivity);}
     }
 
     if (touches.length === 2 && pinchCb) {

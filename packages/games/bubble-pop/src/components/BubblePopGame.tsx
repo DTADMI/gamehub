@@ -1,7 +1,7 @@
 // games/bubble-pop/src/components/BubblePopGame.tsx
 "use client";
 
-import { soundManager } from "@gamehub/game-platform";
+import { createTouchControls, soundManager } from "@gamehub/game-platform";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
@@ -264,9 +264,9 @@ export const BubblePopGame: React.FC = () => {
     return { x, y };
   }
 
-  // Handle click: select group (>=3) then pop on second click
-  const onClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const { x, y } = toCell(e);
+  // Selection/pop logic shared by the mouse click and the touch tap.
+  const popAtRef = useRef<(x: number, y: number) => void>(() => {});
+  popAtRef.current = (x: number, y: number) => {
     const group = findGroup(board, x, y);
     if (group.length < 3) {
       setSelected(null);
@@ -304,6 +304,43 @@ export const BubblePopGame: React.FC = () => {
       setSelected(group);
     }
   };
+
+  const onClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const { x, y } = toCell(e);
+    popAtRef.current(x, y);
+  };
+
+  // Touch controls (B7): tap selects/pops a group, swipe moves the keyboard cursor.
+  // createTouchControls reports tap coordinates relative to the canvas, so the cell
+  // is derived from the measured canvas rect.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    const controls = createTouchControls(canvas, { swipeThreshold: 24 });
+    controls.onTap((cx, cy) => {
+      const rect = rectRef.current;
+      if (!rect.width || !rect.height) {
+        return;
+      }
+      const x = Math.floor((cx / rect.width) * COLS);
+      const y = Math.floor((cy / rect.height) * ROWS);
+      if (x < 0 || y < 0 || x >= COLS || y >= ROWS) {
+        return;
+      }
+      popAtRef.current(x, y);
+    });
+    controls.onSwipe((direction) => {
+      setCursor((c) => {
+        if (direction === "left") {return { x: Math.max(0, c.x - 1), y: c.y };}
+        if (direction === "right") {return { x: Math.min(COLS - 1, c.x + 1), y: c.y };}
+        if (direction === "up") {return { x: c.x, y: Math.max(0, c.y - 1) };}
+        return { x: c.x, y: Math.min(ROWS - 1, c.y + 1) };
+      });
+    });
+    return () => controls.destroy();
+  }, []);
 
   const onRestartAction = () => {
     setBoard(createBoard());
