@@ -15,29 +15,26 @@ vi.mock("@/lib/supabase/server", () => ({
     },
     from: (table: string) => {
       if (table === "leaderboard_scores") {
-        return {
-          select: () => ({
-            eq: () => ({
-              eq: () => ({
-                eq: () => ({
-                  gte: () => ({
-                    limit: () => ({
-                      maybeSingle: async () => ({ data: null }),
-                    }),
-                  }),
-                }),
-              }),
-            }),
+        // Chaine supabase souple : la route enchaîne select/eq/gte/order/limit
+        // dans des ordres varies (soumission, dedupe, detection d'anomalies B10)
+        // et attend tantot `maybeSingle()`, tantot un objet portant `count`.
+        const chain: Record<string, unknown> = {
+          count: 0,
+          data: null,
+          error: null,
+          select: () => chain,
+          eq: () => chain,
+          gte: () => chain,
+          order: () => chain,
+          limit: () => chain,
+          insert: () => chain,
+          single: async () => ({
+            data: { id: "s1", score: 123, created_at: new Date().toISOString() },
+            error: null,
           }),
-          insert: () => ({
-            select: () => ({
-              single: async () => ({
-                data: { id: "s1", score: 123, created_at: new Date().toISOString() },
-                error: null,
-              }),
-            }),
-          }),
+          maybeSingle: async () => ({ data: null, error: null }),
         };
+        return chain;
       }
       if (table === "leaderboard_seasons") {
         return {
