@@ -115,13 +115,37 @@ describe("accessibilite des jeux (B6)", () => {
         // Un enfant expression JSX ({t(...)}, {price}, {icon}) peut rendre du texte :
         // on ne le declare pas fautif sur la base du texte litteral seul.
         const hasExpression = /\{/.test(inner);
-        const isIconOnly = !hasExpression && text.length > 0 && !/[A-Za-z0-9]/.test(text);
+        // Icône seule : aucun texte visible (y compris le cas « texte vide », qui est
+        // le plus courant : <button><Pause /></button>) et aucune expression JSX.
+        const isIconOnly = !hasExpression && !/[A-Za-z0-9]/.test(text);
         if (isIconOnly && !hasAccessibleName) {
           violations.push(`${relative(ROOT, file)}: bouton icone (${JSON.stringify(text)}) sans aria-label`);
         }
       }
     }
     expect(violations).toEqual([]);
+  });
+
+  it("le detecteur attrape bien un bouton icone sans nom (auto-verification)", () => {
+    // NF-REPEAT-001 : prouver que le garde-fou echoue sur le cas qu'il surveille,
+    // sinon un detecteur casse passerait pour vert.
+    const isFlaggedWithoutName = (attrs: string, inner: string) =>
+      !/\{/.test(inner) && !/[A-Za-z0-9]/.test(visibleText(inner)) && !/aria-label=/.test(attrs);
+
+    const unnamed = scanTags(`<button><Pause className="h-4 w-4" /></button>`, "button").filter(
+      ({ attrs, inner }) => isFlaggedWithoutName(attrs, inner),
+    );
+    expect(unnamed.length).toBe(1);
+
+    const named = scanTags(`<button aria-label="Pause"><Pause /></button>`, "button").filter(
+      ({ attrs, inner }) => isFlaggedWithoutName(attrs, inner),
+    );
+    expect(named.length).toBe(0);
+
+    const labelled = scanTags(`<button><span>Pause</span></button>`, "button").filter(
+      ({ attrs, inner }) => isFlaggedWithoutName(attrs, inner),
+    );
+    expect(labelled.length).toBe(0);
   });
 
   it("tout gestionnaire de clic sur un element non interactif est joignable au clavier", () => {
