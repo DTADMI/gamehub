@@ -18,4 +18,13 @@ describe("games manifest", () => {
     }
     expect(enabled.length).toBeGreaterThanOrEqual(6);
   });
+
+  it("declare le sens du score pour les jeux mesures « au plus bas » (B4)", () => {
+    // Sans cette declaration, le percentile inverserait le classement : un temps
+    // long paraitrait meilleur qu'un temps court.
+    expect(getGame("memory")?.scoreDirection).toBe("asc");
+    expect(getGame("knitzy")?.scoreDirection).toBe("asc");
+    // Un jeu de score cumulatif garde le defaut (plus haut = mieux).
+    expect(getGame("snake")?.scoreDirection ?? "desc").toBe("desc");
+  });
 });

@@ -55,6 +55,12 @@ export type GameEntry = {
   playerCount?: "single" | "multi";
   /** Age rating (e.g., "All Ages", "10+", "13+") */
   ageRating?: string;
+  /**
+   * Sens du score pour le classement : `desc` (plus haut = mieux, defaut) ou
+   * `asc` (plus bas = mieux, ex. temps en ms ou nombre de coups). Sert au calcul
+   * du percentile : un temps court doit donner un BON percentile.
+   */
+  scoreDirection?: "asc" | "desc";
   upcoming?: boolean;
   visible?: boolean;
   enabled?: boolean;
@@ -114,6 +120,7 @@ export const games: GameManifest = {
       { key: "win", url: "/sounds/win.mp3" },
       { key: "background", url: "/sounds/memory-bg.mp3", loop: true },
     ],
+    scoreDirection: "asc",
     // @ts-ignore
     getComponent: () => import("@games/memory").then((m) => m.MemoryGame),
   },
@@ -174,6 +181,7 @@ export const games: GameManifest = {
       { key: "click", url: "/sounds/click.mp3" },
       { key: "background", url: "/sounds/memory-bg.mp3", loop: true },
     ],
+    scoreDirection: "asc",
     // @ts-ignore
     getComponent: () => import("@games/knitzy").then((m) => m.KnitzyGame),
   },
