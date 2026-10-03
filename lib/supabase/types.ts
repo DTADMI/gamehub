@@ -264,6 +264,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      user_game_progress: {
+        Row: {
+          user_id: string;
+          game_id: string;
+          progress: Json;
+          updated_at: string;
+          created_at: string;
+        };
+        Insert: {
+          user_id: string;
+          game_id: string;
+          progress?: Json;
+          updated_at?: string;
+          created_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          game_id?: string;
+          progress?: Json;
+          updated_at?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       leaderboard_score_moderation_audit: {
         Row: {
           id: string;
