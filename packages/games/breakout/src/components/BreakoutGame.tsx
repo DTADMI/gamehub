@@ -9,53 +9,32 @@ import { submitScore } from "@/lib/score-submit";
 import { BREAKOUT_TX } from "../i18n";
 import { getBreakoutSettings, saveBreakoutSettings } from "../settings";
 import { Brick, buildBricks, computeBrickLayout } from "./BreakoutBoard";
+import {
+  BALL_RADIUS,
+  BASE_BALL_SPEED,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  MAX_BALL_SPEED,
+  MAX_BOUNCE_ANGLE,
+  MAX_INFLUENCE_ANGLE,
+  MIN_BALL_SPEED,
+  MIN_BOUNCE_ANGLE,
+  MIN_HORIZ_COMPONENT,
+  NUDGE_AMOUNT,
+  NUDGE_COOLDOWN_MS,
+  NUDGE_EPS,
+  PADDLE_HEIGHT,
+  PADDLE_INFLUENCE_BASE,
+  PADDLE_INFLUENCE_MOBILE,
+  PADDLE_SPEED,
+  PADDLE_WIDTH,
+  clamp,
+  type Ball,
+  type Paddle,
+} from "../config";
 import { ActiveModifier, desiredSpeedFromModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, pickWeightedPowerUp,POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE } from "./BreakoutPowerUps";
 
 const { t } = createI18n(BREAKOUT_TX);
-// Minimal, stable MVP implementation for Breakout
-// Constants (logical canvas size; we apply DPR scaling in a resize handler)
-// Increased canvas size to improve play area and match earlier screenshots
-const CANVAS_WIDTH = 640;
-const CANVAS_HEIGHT = 420;
-
-const PADDLE_WIDTH = 75;
-const PADDLE_HEIGHT = 10;
-const PADDLE_SPEED = 6;
-
-const BALL_RADIUS = 8;
-// Slightly higher baseline and ceiling to keep snappy feel on wider canvas
-// Tuned down by ~10% for better control on desktop; still scales with level/mode
-const BASE_BALL_SPEED = 4.32;
-const MIN_BALL_SPEED = 3.6;
-const MAX_BALL_SPEED = 7.2;
-
-// Anti-stall and control feel
-const MIN_BOUNCE_ANGLE = (10 * Math.PI) / 180; // minimum 10° away from vertical
-const MAX_BOUNCE_ANGLE = (75 * Math.PI) / 180; // cap at 75° from vertical
-const PADDLE_INFLUENCE_BASE = 0.04; // radians of angle influence per px of paddle movement this frame (desktop)
-const PADDLE_INFLUENCE_MOBILE = 0.05; // a touch more influence on coarse pointers
-const MAX_INFLUENCE_ANGLE = (20 * Math.PI) / 180; // clamp added influence to ±20°
-const MIN_HORIZ_COMPONENT = 1.1; // ensure some horizontal speed exists after collisions
-const NUDGE_EPS = 0.35; // if |dx| falls below this, consider nudging
-const NUDGE_AMOUNT = 0.6; // horizontal nudge amount when trapped
-const NUDGE_COOLDOWN_MS = 320; // minimal delay between nudges
-
-type Ball = {
-  x: number;
-  y: number;
-  dx: number;
-  dy: number;
-  radius: number;
-};
-
-type Paddle = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
 function BreakoutGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
