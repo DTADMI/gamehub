@@ -57,6 +57,8 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           type="button"
           size="sm"
           variant={editor.isActive("bold") ? "default" : "outline"}
+          aria-label="Bold"
+          title="Bold"
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
           <Bold className="h-4 w-4" />
@@ -65,6 +67,8 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           type="button"
           size="sm"
           variant={editor.isActive("italic") ? "default" : "outline"}
+          aria-label="Italic"
+          title="Italic"
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
           <Italic className="h-4 w-4" />
@@ -73,6 +77,8 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           type="button"
           size="sm"
           variant={editor.isActive("bulletList") ? "default" : "outline"}
+          aria-label="Bullet list"
+          title="Bullet list"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
           <List className="h-4 w-4" />
@@ -81,6 +87,8 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           type="button"
           size="sm"
           variant={editor.isActive("orderedList") ? "default" : "outline"}
+          aria-label="Numbered list"
+          title="Numbered list"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
         >
           <ListOrdered className="h-4 w-4" />
@@ -89,6 +97,8 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           type="button"
           size="sm"
           variant="outline"
+          aria-label="Insert link"
+          title="Insert link"
           onClick={() => {
             const url = window.prompt("Enter URL");
             if (url) {
