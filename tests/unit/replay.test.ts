@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   createSeededRng,
   decodeReplay,
+  seededShuffle,
   encodeReplay,
   isReplay,
   REPLAY_FORMAT_VERSION,
@@ -76,5 +77,33 @@ describe("isReplay", () => {
     expect(isReplay(replay)).toBe(true);
     expect(isReplay(null)).toBe(false);
     expect(isReplay({ header: {}, frames: [{}] })).toBe(false);
+  });
+});
+
+describe("seededShuffle", () => {
+  const items = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  it("la meme graine donne le meme ordre", () => {
+    expect(seededShuffle(items, 42)).toEqual(seededShuffle(items, 42));
+  });
+
+  it("des graines differentes donnent des ordres differents", () => {
+    expect(seededShuffle(items, 1)).not.toEqual(seededShuffle(items, 2));
+  });
+
+  it("renvoie une permutation de la source", () => {
+    const shuffled = seededShuffle(items, 7);
+    expect([...shuffled].sort((a, b) => a - b)).toEqual(items);
+  });
+
+  it("ne mute pas la source", () => {
+    const source = [...items];
+    seededShuffle(items, 3);
+    expect(items).toEqual(source);
+  });
+
+  it("gere un tableau vide ou d'un seul element", () => {
+    expect(seededShuffle([], 1)).toEqual([]);
+    expect(seededShuffle(["a"], 1)).toEqual(["a"]);
   });
 });

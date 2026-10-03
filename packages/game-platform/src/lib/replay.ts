@@ -52,6 +52,26 @@ export function createSeededRng(seed: number): () => number {
   }
 }
 
+/**
+ * Melange deterministe (Fisher-Yates) pilote par un RNG seme.
+ *
+ * Remplace les `items.sort(() => Math.random() - 0.5)` : ces derniers ne sont ni
+ * reproductibles ni un melange uniforme. Avec une graine, la meme partie peut
+ * etre rejouee a l'identique - c'est la premiere brique d'un replay (B9).
+ * Ne mute pas la source.
+ */
+export function seededShuffle<T>(items: T[], seed: number): T[] {
+  const rng = createSeededRng(seed)
+  const out = [...items]
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1))
+    const swap = out[i]!
+    out[i] = out[j]!
+    out[j] = swap
+  }
+  return out
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }

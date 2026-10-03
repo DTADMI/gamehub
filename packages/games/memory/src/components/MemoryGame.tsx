@@ -2,6 +2,7 @@
 
 // games/memory/src/components/MemoryGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
+import { seededShuffle } from "@gamehub/game-platform/lib/replay";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -118,6 +119,8 @@ export const MemoryGame: React.FC = () => {
     }
   }, []);
   const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">("medium");
+  // Graine de la partie courante : exposee pour rejouer/verifier (B9).
+  const [seed, setSeed] = useState(0);
   const [autoCompleteLastPair, setAutoCompleteLastPair] = useState<boolean>(true);
 
   // Initialize game
@@ -133,14 +136,16 @@ export const MemoryGame: React.FC = () => {
     const values = CARD_VALUES.slice(0, pairs);
     const cardValues = [...values, ...values]; // Duplicate for pairs
 
-    const shuffled = cardValues
-      .sort(() => Math.random() - 0.5)
-      .map((value, index) => ({
-        id: index,
-        value,
-        isFlipped: false,
-        isMatched: false,
-      }));
+    // Melange SEME (B9) : un `sort(() => Math.random() - 0.5)` n'est ni
+    // reproductible ni uniforme. Avec la graine, la meme partie peut etre rejouee.
+    const seed = Math.floor(Math.random() * 0xffffffff) >>> 0;
+    setSeed(seed);
+    const shuffled = seededShuffle(cardValues, seed).map((value, index) => ({
+      id: index,
+      value,
+      isFlipped: false,
+      isMatched: false,
+    }));
 
     setCards(shuffled);
     setFlippedIndices([]);
@@ -309,7 +314,7 @@ export const MemoryGame: React.FC = () => {
       backgroundImage="/images/bg-pastel-pattern.jpg"
       showParticleControls={false}
     >
-      <div className="overflow-hidden p-4">
+      <div className="overflow-hidden p-4" data-seed={seed}>
         {/* Controls */}
         <div className="mb-6 flex flex-col items-center justify-center gap-4 text-center sm:flex-row">
           <div>
