@@ -17,7 +17,6 @@ import {
   MAX_BALL_SPEED,
   MAX_BOUNCE_ANGLE,
   MAX_INFLUENCE_ANGLE,
-  MIN_BALL_SPEED,
   MIN_BOUNCE_ANGLE,
   MIN_HORIZ_COMPONENT,
   NUDGE_AMOUNT,
@@ -32,6 +31,7 @@ import {
   type Ball,
   type Paddle,
 } from "../config";
+import { computePaddleBounce } from "../physics";
 import { ActiveModifier, desiredSpeedFromModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, pickWeightedPowerUp,POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE } from "./BreakoutPowerUps";
 
 const { t } = createI18n(BREAKOUT_TX);
@@ -757,41 +757,17 @@ function BreakoutGame() {
             soundManager.playSound("paddle");
           } else {
             // Compute bounce angle relative to paddle center (0 is straight up)
-            const rel = (nx - (newPx + statePaddle.width / 2)) / (statePaddle.width / 2); // -1 .. 1
-            const baseAngle = clamp(rel, -1, 1) * MAX_BOUNCE_ANGLE; // -MAX..+MAX
-            // Add a small influence based on paddle movement direction/speed this frame
-            const influence = clamp(
-              paddleV * paddleInfluenceRef.current,
-              -MAX_INFLUENCE_ANGLE,
-              MAX_INFLUENCE_ANGLE,
-            );
-            let angle = baseAngle + influence;
-            // Clamp final angle to avoid near-horizontal skims that look like lingering on the paddle
-            if (angle > MAX_BOUNCE_ANGLE) {
-              angle = MAX_BOUNCE_ANGLE;
-            }
-            if (angle < -MAX_BOUNCE_ANGLE) {
-              angle = -MAX_BOUNCE_ANGLE;
-            }
-            // Enforce a minimum horizontal angle away from vertical
-            if (Math.abs(angle) < MIN_BOUNCE_ANGLE) {
-              angle = angle >= 0 ? MIN_BOUNCE_ANGLE : -MIN_BOUNCE_ANGLE;
-            }
-            // Compute components from angle, preserving current speed magnitude
-            const speed = Math.sqrt(ndx * ndx + ndy * ndy) || BASE_BALL_SPEED;
-            let tx = speed * Math.sin(angle);
-            let ty = -speed * Math.cos(angle);
-            // Ensure horizontal component doesn't vanish
-            if (Math.abs(tx) < MIN_HORIZ_COMPONENT) {
-              const sign = tx >= 0 ? 1 : -1;
-              const hx = MIN_HORIZ_COMPONENT * sign;
-              const hy = -Math.sign(ty || -1) * Math.sqrt(Math.max(0, speed * speed - hx * hx));
-              ndx = hx;
-              ndy = hy;
-            } else {
-              ndx = tx;
-              ndy = ty;
-            }
+            const bounce = computePaddleBounce({
+              ballX: nx,
+              paddleX: newPx,
+              paddleWidth: statePaddle.width,
+              paddleVelocity: paddleV,
+              paddleInfluence: paddleInfluenceRef.current,
+              currentDx: ndx,
+              currentDy: ndy,
+            });
+            ndx = bounce.dx;
+            ndy = bounce.dy;
             // Set new ball color for the next launch and mark first-hit eligible for color bonus
             try {
               const colors = Array.from(
