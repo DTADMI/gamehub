@@ -17,3 +17,4 @@ export * from "./SettingsPanel";
 export * from "./SoundControls";
 export * from "./SoundRootProvider";
 export * from "./ThemeProvider";
+export * from "./TouchControlsOverlay";

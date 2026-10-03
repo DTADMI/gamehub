@@ -26,6 +26,12 @@ export { default as SettingsPanel } from "./components/SettingsPanel";
 export { default as SoundControls } from "./components/SoundControls";
 export { default as SoundRootProvider } from "./components/SoundRootProvider";
 export { ThemeProvider } from "./components/ThemeProvider";
+export {
+  TouchControlsOverlay,
+  useCoarsePointer,
+  type TouchControlButton,
+  type TouchControlsOverlayProps,
+} from "./components/TouchControlsOverlay";
 
 // Game infrastructure components
 export type { GameContainerProps } from "./components/GameContainer";
