@@ -214,6 +214,12 @@ export default function LeaderboardPage() {
         <p className="text-muted-foreground">
           Seasonal ranking backed by server scores and anti-spam validation.
         </p>
+        <Button asChild variant="outline" size="sm">
+          <Link href="/leaderboard/rating">
+            <Trophy className="mr-1 h-4 w-4" aria-hidden="true" />
+            Cross-game rating
+          </Link>
+        </Button>
         <div className="flex flex-wrap items-center gap-3">
           <Select
             value={gameType}

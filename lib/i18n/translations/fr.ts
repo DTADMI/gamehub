@@ -1,6 +1,22 @@
 import type { Translations } from "./types";
 
 const fr: Translations = {
+  rating: {
+    title: "Note inter-jeux",
+    subtitle:
+      "Les scores ne se comparent pas d'un jeu a l'autre : chaque jeu est donc converti en percentile (votre position parmi tous les joueurs de ce jeu). La note est la moyenne de vos meilleurs jeux.",
+    aggregate: "Note",
+    aggregateHint: "Moyenne de vos 3 meilleurs percentiles. Jouer davantage ne la gonfle pas ; un seul bon jeu ne suffit pas non plus.",
+    percentile: "Percentile",
+    game: "Jeu",
+    score: "Score",
+    noScores: "Aucun jeu note pour l'instant. Jouez a un jeu avec classement pour obtenir un percentile.",
+    signIn: "Connectez-vous pour voir votre note inter-jeux.",
+    error: "Impossible de charger votre note.",
+    loading: "Chargement de votre note...",
+    viewPerGame: "Classement par jeu",
+    backToLeaderboard: "Retour au classement",
+  },
   common: {
     save: "Sauvegarder",
     cancel: "Annuler",

@@ -1,6 +1,22 @@
 import type { Translations } from "./types";
 
 const en: Translations = {
+  rating: {
+    title: "Cross-game rating",
+    subtitle:
+      "Scores are not comparable across games, so each game is turned into a percentile (your position among all players of that game). The rating is the average of your best games.",
+    aggregate: "Rating",
+    aggregateHint: "Average of your 3 best game percentiles. Playing more games does not inflate it; one strong game is not enough either.",
+    percentile: "Percentile",
+    game: "Game",
+    score: "Score",
+    noScores: "No rated game yet. Play a game with a leaderboard to get a percentile.",
+    signIn: "Sign in to see your cross-game rating.",
+    error: "Could not load your rating.",
+    loading: "Loading your rating...",
+    viewPerGame: "Per-game leaderboard",
+    backToLeaderboard: "Back to the leaderboard",
+  },
   common: {
     save: "Save",
     cancel: "Cancel",
