@@ -347,6 +347,14 @@ export type Database = {
           submitted_at: string;
         }[];
       };
+      get_game_percentile: {
+        Args: {
+          p_game_type: string;
+          p_score: number;
+          p_direction?: string;
+        };
+        Returns: number | null;
+      };
     };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
