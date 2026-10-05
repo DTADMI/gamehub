@@ -19,9 +19,6 @@ import {
   MAX_INFLUENCE_ANGLE,
   MIN_BOUNCE_ANGLE,
   MIN_HORIZ_COMPONENT,
-  NUDGE_AMOUNT,
-  NUDGE_COOLDOWN_MS,
-  NUDGE_EPS,
   PADDLE_HEIGHT,
   PADDLE_INFLUENCE_BASE,
   PADDLE_INFLUENCE_MOBILE,
@@ -31,7 +28,7 @@ import {
   type Ball,
   type Paddle,
 } from "../config";
-import { computePaddleBounce } from "../physics";
+import { computeAntiStallNudge, computePaddleBounce } from "../physics";
 import { ActiveModifier, desiredSpeedFromModifier, FallingPowerUp, PADDLE_EXPAND_FACTOR, PADDLE_SHRINK_FACTOR, pickWeightedPowerUp,POWERUP_DROP_CHANCE, POWERUP_DURATION_LONG_MS, POWERUP_DURATION_MS, POWERUP_MAX_FALLING, PowerUpCard, PowerUpCardMobile, PowerUpType, SLOW_FACTOR_DESKTOP, SLOW_FACTOR_MOBILE } from "./BreakoutPowerUps";
 
 const { t } = createI18n(BREAKOUT_TX);
@@ -999,13 +996,16 @@ function BreakoutGame() {
 
         // Anti-stall: if horizontal component is too small after a bounce, gently nudge it
         const nowTs = Date.now();
-        if (
-          Math.abs(ndx) < NUDGE_EPS &&
-          nowTs - (lastNudgeAtRef.current || 0) > NUDGE_COOLDOWN_MS
-        ) {
-          const dir = nx < CANVAS_WIDTH / 2 ? 1 : -1; // push toward center-ish
-          ndx = dir * NUDGE_AMOUNT;
-          lastNudgeAtRef.current = nowTs;
+        const nudge = computeAntiStallNudge({
+          dx: ndx,
+          ballX: nx,
+          canvasWidth: CANVAS_WIDTH,
+          now: nowTs,
+          lastNudgeAt: lastNudgeAtRef.current || 0,
+        });
+        if (nudge.nudged) {
+          ndx = nudge.dx;
+          lastNudgeAtRef.current = nudge.lastNudgeAt;
           needNormalize = true; // nudge changes speed components; normalize back to target
         }
 

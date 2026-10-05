@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { BASE_BALL_SPEED, MAX_BOUNCE_ANGLE, MIN_HORIZ_COMPONENT } from "../config";
-import { computePaddleBounce, type PaddleBounceInput } from "../physics";
+import { computeAntiStallNudge, computePaddleBounce, type PaddleBounceInput } from "../physics";
 
 const base: PaddleBounceInput = {
   ballX: 320,
@@ -55,5 +55,33 @@ describe("computePaddleBounce (caracterisation)", () => {
       paddleVelocity: 1000,
     });
     expect(Math.abs(extreme.angle)).toBeLessThanOrEqual(MAX_BOUNCE_ANGLE + 1e-9);
+  });
+});
+
+describe("computeAntiStallNudge (caracterisation)", () => {
+  const base = { ballX: 100, canvasWidth: 640, now: 10_000, lastNudgeAt: 0 };
+
+  it("ne pousse pas quand la composante horizontale est suffisante", () => {
+    const result = computeAntiStallNudge({ ...base, dx: 3 });
+    expect(result.nudged).toBe(false);
+    expect(result.dx).toBe(3);
+  });
+
+  it("ne pousse pas deux fois dans la fenetre de cooldown", () => {
+    const result = computeAntiStallNudge({ ...base, dx: 0.1, lastNudgeAt: 9_900 });
+    expect(result.nudged).toBe(false);
+  });
+
+  it("pousse vers la droite quand la balle est a gauche du centre", () => {
+    const result = computeAntiStallNudge({ ...base, dx: 0.1 });
+    expect(result.nudged).toBe(true);
+    expect(result.dx).toBeGreaterThan(0);
+    expect(result.lastNudgeAt).toBe(base.now);
+  });
+
+  it("pousse vers la gauche quand la balle est a droite du centre", () => {
+    const result = computeAntiStallNudge({ ...base, ballX: 600, dx: -0.1 });
+    expect(result.nudged).toBe(true);
+    expect(result.dx).toBeLessThan(0);
   });
 });

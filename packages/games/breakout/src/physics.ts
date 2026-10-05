@@ -13,6 +13,9 @@ import {
   MAX_INFLUENCE_ANGLE,
   MIN_BOUNCE_ANGLE,
   MIN_HORIZ_COMPONENT,
+  NUDGE_AMOUNT,
+  NUDGE_COOLDOWN_MS,
+  NUDGE_EPS,
   clamp,
 } from "./config";
 
@@ -85,4 +88,40 @@ export function computePaddleBounce({
   }
 
   return { dx: tx, dy: ty, angle };
+}
+
+export interface AntiStallNudgeInput {
+  /** Composante horizontale courante. */
+  dx: number;
+  /** Position de la balle, pour choisir le sens de la poussee. */
+  ballX: number;
+  canvasWidth: number;
+  /** Horodatage courant (ms). */
+  now: number;
+  /** Horodatage du dernier deblocage (0 si aucun). */
+  lastNudgeAt: number;
+}
+
+export interface AntiStallNudgeResult {
+  nudged: boolean;
+  dx: number;
+  lastNudgeAt: number;
+}
+
+/**
+ * Anti-blocage : quand la balle n'a presque plus de composante horizontale (elle
+ * rebondit verticalement a l'infini), on la pousse vers le centre, au plus une
+ * fois par cooldown. Fonction pure : l'horodatage est fourni par l'appelant.
+ */
+export function computeAntiStallNudge({
+  dx,
+  ballX,
+  canvasWidth,
+  now,
+  lastNudgeAt,
+}: AntiStallNudgeInput): AntiStallNudgeResult {
+  if (Math.abs(dx) >= NUDGE_EPS) return { nudged: false, dx, lastNudgeAt };
+  if (now - (lastNudgeAt || 0) <= NUDGE_COOLDOWN_MS) return { nudged: false, dx, lastNudgeAt };
+  const direction = ballX < canvasWidth / 2 ? 1 : -1;
+  return { nudged: true, dx: direction * NUDGE_AMOUNT, lastNudgeAt: now };
 }
