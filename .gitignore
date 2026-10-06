@@ -229,7 +229,6 @@ out/**
 typings/
 !/.idea/
 /package.json.1858806514
-!/test-results/
 /test-results/**
 /.output.txt
 /test-results/breakout-Breakout-MVP-paddle-moves-and-start-pause-works-mobile-safari/error-context.md
@@ -265,3 +264,9 @@ i18n-audit-report.json
 dead-code-report.json
 .githooks/
 nul
+
+# Artefacts Playwright (rapports et traces de test)
+test-results/
+playwright-report/
+blob-report/
+.playwright/
