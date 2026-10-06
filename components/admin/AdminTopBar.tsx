@@ -2,6 +2,7 @@
 
 import { Button } from "@gamehub/ui";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { createBrowserClient } from "@/lib/supabase/client";
 
@@ -11,6 +12,8 @@ type AdminTopBarProps = {
 };
 
 export function AdminTopBar({ email, role }: AdminTopBarProps) {
+  // NF-UX-FEEDBACK : une deconnexion est un appel reseau, elle doit se voir.
+  const [signingOut, setSigningOut] = useState(false);
   const router = useRouter();
 
   return (
@@ -24,14 +27,21 @@ export function AdminTopBar({ email, role }: AdminTopBarProps) {
       </div>
       <Button
         variant="outline"
+        disabled={signingOut}
+        aria-busy={signingOut}
         onClick={async () => {
-          const supabase = createBrowserClient();
-          await supabase.auth.signOut();
-          router.push("/admin/sign-in");
-          router.refresh();
+          setSigningOut(true);
+          try {
+            const supabase = createBrowserClient();
+            await supabase.auth.signOut();
+            router.push("/admin/sign-in");
+            router.refresh();
+          } finally {
+            setSigningOut(false);
+          }
         }}
       >
-        Sign out
+        {signingOut ? "Signing out…" : "Sign out"}
       </Button>
     </div>
   );
