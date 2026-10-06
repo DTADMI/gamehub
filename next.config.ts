@@ -167,7 +167,9 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/images/:path*",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+        headers: [
+            { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+            { key: "Cross-Origin-Opener-Policy", value: "same-origin" },{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
       {
         source: "/:path*",
