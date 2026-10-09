@@ -107,3 +107,155 @@ export function decodeReplay(text: string, expectedVersion = REPLAY_FORMAT_VERSI
   if (parsed.header.version !== expectedVersion) return { ok: false, reason: 'version_mismatch' }
   return { ok: true, replay: parsed }
 }
+
+// ---------------------------------------------------------------------------
+// Enregistrement des entrees (B9, phase 2)
+//
+// Un format de replay sans enregistreur ne sert a rien : il faut un objet qui
+// collecte les entrees pendant la partie, en refusant ce qui rendrait le rejeu
+// impossible. Trois refus, chacun compte et explique :
+//   - une entree VIDE n'est pas une entree (elle ne change rien au rejeu) ;
+//   - un horodatage qui RECULE rend le rejeu non monotone, donc non rejouable ;
+//   - un DOUBLON proche de la meme entree n'ajoute rien : un maintien de touche
+//     produirait des milliers de trames identiques.
+// ---------------------------------------------------------------------------
+
+export interface RecorderOptions {
+  gameId: string
+  /** Graine du generateur de hasard du jeu. */
+  seed: number
+  /** Date ISO de debut ; par defaut, l'instant de construction. */
+  startedAt?: string
+  /**
+   * Fenetre de coalescence en millisecondes. Deux enregistrements IDENTIQUES
+   * separes de moins que ce delai ne produisent qu'une trame. 0 (defaut) desactive.
+   */
+  coalesceWithinMs?: number
+}
+
+export interface RecorderStats {
+  /** Trames retenues. */
+  recorded: number
+  /** Refusees : entree vide. */
+  droppedEmpty: number
+  /** Refusees : horodatage en arriere ou non fini. */
+  droppedOutOfOrder: number
+  /** Ignorees : doublon dans la fenetre de coalescence. */
+  coalesced: number
+}
+
+/** Compare deux entrees par valeur (cles et valeurs, objets imbriques compris). */
+function sameInput(a: Record<string, unknown>, b: Record<string, unknown>): boolean {
+  const keysA = Object.keys(a)
+  if (keysA.length !== Object.keys(b).length) return false
+  for (const key of keysA) {
+    if (!Object.prototype.hasOwnProperty.call(b, key)) return false
+    const va = a[key]
+    const vb = b[key]
+    if (va === vb) continue
+    if (typeof va === 'object' || typeof vb === 'object') {
+      // Comparaison par valeur serialisee : suffisant pour des entrees simples et
+      // deterministe pour un meme objet construit dans le meme ordre.
+      if (JSON.stringify(va) !== JSON.stringify(vb)) return false
+    } else {
+      return false
+    }
+  }
+  return true
+}
+
+/**
+ * Collecte les entrees d'une partie pour produire un `Replay` valide.
+ *
+ * Le temps est fourni par l'appelant (pas de `Date.now()` interne) : un
+ * enregistreur qui lit l'horloge lui-meme produit des replays non reproductibles.
+ */
+export class ReplayRecorder {
+  private readonly header: ReplayHeader
+  private readonly recordedFrames: ReplayFrame[] = []
+  private readonly coalesceWithinMs: number
+  private readonly counter: RecorderStats = {
+    recorded: 0,
+    droppedEmpty: 0,
+    droppedOutOfOrder: 0,
+    coalesced: 0,
+  }
+  private lastT = Number.NEGATIVE_INFINITY
+
+  constructor(options: RecorderOptions) {
+    this.header = {
+      version: REPLAY_FORMAT_VERSION,
+      gameId: options.gameId,
+      seed: options.seed,
+      startedAt: options.startedAt ?? new Date().toISOString(),
+    }
+    this.coalesceWithinMs = options.coalesceWithinMs ?? 0
+  }
+
+  /** Enregistre une entree. Retourne true si une trame a ete retenue. */
+  record(t: number, input: Record<string, unknown>): boolean {
+    if (Object.keys(input).length === 0) {
+      this.counter.droppedEmpty += 1
+      return false
+    }
+    if (!Number.isFinite(t) || t < this.lastT) {
+      this.counter.droppedOutOfOrder += 1
+      return false
+    }
+    const previous = this.recordedFrames[this.recordedFrames.length - 1]
+    if (
+      previous &&
+      this.coalesceWithinMs > 0 &&
+      t - previous.t < this.coalesceWithinMs &&
+      sameInput(previous.input, input)
+    ) {
+      // L'entree est deja active : la trame precedente la represente toujours.
+      // On ne touche PAS a son horodatage, qui marque le DEBUT de l'entree.
+      this.counter.coalesced += 1
+      return false
+    }
+    this.recordedFrames.push({ t, input: { ...input } })
+    this.lastT = t
+    this.counter.recorded += 1
+    return true
+  }
+
+  get frameCount(): number {
+    return this.recordedFrames.length
+  }
+
+  get stats(): RecorderStats {
+    return { ...this.counter }
+  }
+
+  /**
+   * Fige le replay. Copie profonde des trames : une trame enregistree APRES
+   * `build()` ne doit pas modifier le replay deja produit (un replay qui bouge
+   * apres coup n'est plus un enregistrement).
+   */
+  build(): Replay {
+    return {
+      header: { ...this.header },
+      frames: this.recordedFrames.map((frame) => ({ t: frame.t, input: { ...frame.input } })),
+    }
+  }
+
+  /** Raccourci : le replay encode, pret a etre transmis. */
+  encode(): string {
+    return encodeReplay(this.build())
+  }
+}
+
+/**
+ * Entree active a un instant donne : la derniere trame commencee a `t` ou avant.
+ * Renvoie `null` avant la premiere trame. C'est ce dont une vue spectateur a
+ * besoin pour rejouer sans stocker un etat par image.
+ */
+export function inputAt(frames: readonly ReplayFrame[], t: number): Record<string, unknown> | null {
+  let active: Record<string, unknown> | null = null
+  for (const frame of frames) {
+    if (frame.t > t) break
+    active = frame.input
+  }
+  return active
+}
