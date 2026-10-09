@@ -21,6 +21,8 @@ export const BREAKOUT_TX = {
     expand: "Expand Paddle",
     shrink: "Shrink Paddle",
     multiBall: "Multi Ball",
+    moveLeft: "Move left",
+    moveRight: "Move right",
   },
   fr: {
     title: "Casse-Briques",
@@ -41,5 +43,7 @@ export const BREAKOUT_TX = {
     expand: "Raquette Large",
     shrink: "Raquette Étroite",
     multiBall: "Multi Balles",
+    moveLeft: "Aller à gauche",
+    moveRight: "Aller à droite",
   },
 } as const;

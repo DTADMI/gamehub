@@ -1,6 +1,12 @@
 "use client";
 
-import { GameContainer, ParticlePool, soundManager, useGameSettings } from "@gamehub/game-platform";
+import {
+  GameContainer,
+  ParticlePool,
+  soundManager,
+  TouchControlsOverlay,
+  useGameSettings,
+} from "@gamehub/game-platform";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
@@ -1946,6 +1952,42 @@ function BreakoutGame() {
           </div>
         </div>
       </div>
+
+      {/*
+        Contrôles tactiles partagés (B7).
+
+        Breakout n'écoutait que le clavier (fleches ou A/D) : la raquette était donc
+        immobile sur téléphone, sans aucune commande au doigt. Le composant partagé
+        s'affiche sur pointeur grossier et se masque sur pointeur fin, sans classe
+        responsive à inverser (l'erreur qui avait rendu les commandes du platformer
+        invisibles sur mobile).
+
+        Disposition « bar » : deux commandes côte à côte, la seule chose que la
+        raquette sait faire. Les appuis alimentent le MÊME ensemble de touches que le
+        clavier (`keysDownRef`), donc il n'existe qu'une seule source de vérité pour
+        le mouvement.
+      */}
+      <TouchControlsOverlay
+        layout="bar"
+        buttons={[
+          {
+            id: "left",
+            label: "◀",
+            ariaLabel: t("moveLeft"),
+            repeat: true,
+            onPress: () => { keysDownRef.current.add("left"); },
+            onRelease: () => { keysDownRef.current.delete("left"); },
+          },
+          {
+            id: "right",
+            label: "▶",
+            ariaLabel: t("moveRight"),
+            repeat: true,
+            onPress: () => { keysDownRef.current.add("right"); },
+            onRelease: () => { keysDownRef.current.delete("right"); },
+          },
+        ]}
+      />
     </GameContainer>
   );
 }
