@@ -3,7 +3,7 @@
 //
 // Complement des regles de soumission (validation + dedupe). Detection pure et
 // testable : un score peut etre marque « flagged » pour revue humaine, jamais
-// supprime automatiquement — c'est la moderation qui tranche.
+// supprime automatiquement - c'est la moderation qui tranche.
 // ─────────────────────────────────────────────────────────
 
 export interface AnomalyInput {

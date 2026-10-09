@@ -29,8 +29,8 @@ export function ToymakerReveal({ lang }: ToymakerRevealProps) {
       </div>
       <p className="mb-2 text-sm text-gray-300">
         {lang === "fr"
-          ? "Le fabricant vous regarde avec une chaleur patiente. Les jouets sur l'\u00E9tabli \u2014 un ours \u00E0 engrenage, une bo\u00EEte \u00E0 musique, une marionnette \u2014 ce sont les v\u00F4tres, de votre enfance."
-          : "The toymaker looks at you with patient warmth. The toys on the bench \u2014 a gear bear, a music box, a marionette \u2014 they're yours, from your childhood."}
+          ? "Le fabricant vous regarde avec une chaleur patiente. Les jouets sur l'\u00E9tabli - un ours \u00E0 engrenage, une bo\u00EEte \u00E0 musique, une marionnette - ce sont les v\u00F4tres, de votre enfance."
+          : "The toymaker looks at you with patient warmth. The toys on the bench - a gear bear, a music box, a marionette - they're yours, from your childhood."}
       </p>
     </div>
   );

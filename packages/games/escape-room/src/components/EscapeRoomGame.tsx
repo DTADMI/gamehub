@@ -150,8 +150,8 @@ export const EscapeRoomGame: React.FC = () => {
         id: "ESCAPE",
         title: { en: "Freedom!", fr: "Libert\u00e9!" },
         body: {
-          en: "The safe clicks open. Inside: an old iron key and a worn leather journal. The key fits the study door perfectly. On the journal's first page: 'To whoever solves my puzzles \u2014 you have the mind of a scholar. The key was never the prize. The journey was.' \u2014 Professor Aldric, 1892.",
-          fr: "Le coffre s'ouvre. \u00c0 l'int\u00e9rieur : une vieille cl\u00e9 en fer et un journal en cuir us\u00e9. La cl\u00e9 s'adapte parfaitement \u00e0 la porte. Sur la premi\u00e8re page du journal : \u00ab \u00c0 celui qui r\u00e9sout mes \u00e9nigmes \u2014 vous avez l'esprit d'un \u00e9rudit. La cl\u00e9 n'a jamais \u00e9t\u00e9 le prix. Le voyage l'\u00e9tait. \u00bb \u2014 Professeur Aldric, 1892.",
+          en: "The safe clicks open. Inside: an old iron key and a worn leather journal. The key fits the study door perfectly. On the journal's first page: 'To whoever solves my puzzles - you have the mind of a scholar. The key was never the prize. The journey was.' - Professor Aldric, 1892.",
+          fr: "Le coffre s'ouvre. \u00c0 l'int\u00e9rieur : une vieille cl\u00e9 en fer et un journal en cuir us\u00e9. La cl\u00e9 s'adapte parfaitement \u00e0 la porte. Sur la premi\u00e8re page du journal : \u00ab \u00c0 celui qui r\u00e9sout mes \u00e9nigmes - vous avez l'esprit d'un \u00e9rudit. La cl\u00e9 n'a jamais \u00e9t\u00e9 le prix. Le voyage l'\u00e9tait. \u00bb - Professeur Aldric, 1892.",
         },
         choices: [],
       },

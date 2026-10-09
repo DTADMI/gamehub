@@ -154,7 +154,7 @@ export default function CrossGameRatingPage() {
         <CardContent>
           <p className="text-4xl font-bold tabular-nums">
             {data?.aggregate === null || data?.aggregate === undefined
-              ? "—"
+              ? "-"
               : Math.round(data.aggregate)}
             <span className="text-muted-foreground ml-1 text-base font-normal">/ 100</span>
           </p>
@@ -184,7 +184,7 @@ export default function CrossGameRatingPage() {
                     </div>
                     <Badge variant={percentileVariant(game.percentile ?? 0)}>
                       {game.percentile === null
-                        ? "—"
+                        ? "-"
                         : `${t("rating.percentile")} ${Math.round(game.percentile)}`}
                     </Badge>
                   </div>
