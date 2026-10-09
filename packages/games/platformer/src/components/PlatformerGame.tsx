@@ -4,6 +4,7 @@ import {
   GameContainer,
   ParticlePool,
   soundManager,
+  TouchControlsOverlay,
   useGameSettings,
 } from "@gamehub/game-platform";
 import { createI18n } from "@games/i18n";
@@ -946,35 +947,47 @@ export const PlatformerGame: React.FC = () => {
           )}
         </div>
 
-        <div className="mt-3 hidden md:flex gap-2">
-          <button
-            onPointerDown={() => { touchKeys.current["ArrowLeft"] = true; }}
-            onPointerUp={() => { touchKeys.current["ArrowLeft"] = false; }}
-            onPointerLeave={() => { touchKeys.current["ArrowLeft"] = false; }}
-            className="bg-white/10 hover:bg-white/20 text-white rounded-lg px-5 py-3 text-xl select-none active:scale-95"
-            aria-label="Move left"
-          >
-            ◀
-          </button>
-          <button
-            onPointerDown={() => { touchKeys.current["ArrowUp"] = true; }}
-            onPointerUp={() => { touchKeys.current["ArrowUp"] = false; }}
-            onPointerLeave={() => { touchKeys.current["ArrowUp"] = false; }}
-            className="bg-white/10 hover:bg-white/20 text-white rounded-lg px-5 py-3 text-xl select-none active:scale-95"
-            aria-label="Jump"
-          >
-            ▲
-          </button>
-          <button
-            onPointerDown={() => { touchKeys.current["ArrowRight"] = true; }}
-            onPointerUp={() => { touchKeys.current["ArrowRight"] = false; }}
-            onPointerLeave={() => { touchKeys.current["ArrowRight"] = false; }}
-            className="bg-white/10 hover:bg-white/20 text-white rounded-lg px-5 py-3 text-xl select-none active:scale-95"
-            aria-label="Move right"
-          >
-            ▶
-          </button>
-        </div>
+        {/*
+          Contrôles tactiles partagés.
+
+          AVANT : trois boutons faits main dans un conteneur `hidden md:flex`. La
+          classe était INVERSEE : `hidden` s'applique sous le point de rupture md,
+          donc les boutons étaient masqués sur téléphone et affichés sur desktop.
+          Un jeu de déplacement était ainsi injouable au doigt sur mobile, sans que
+          rien ne le signale, puisque la voie tactile existait bien dans le code
+          (les gestionnaires `onPointerDown` étaient écrits) : elle était seulement
+          invisible.
+
+          MAINTENANT : le composant partagé, qui s'affiche sur pointeur grossier
+          (`useCoarsePointer`) et se masque sur pointeur fin. Le test de la classe
+          inversee est desormais couvert par le garde-fou de voie tactile.
+        */}
+        <TouchControlsOverlay
+          layout="dpad"
+          buttons={[
+            {
+              id: "left",
+              label: "◀",
+              ariaLabel: t("moveLeft"),
+              onPress: () => { touchKeys.current["ArrowLeft"] = true; },
+              onRelease: () => { touchKeys.current["ArrowLeft"] = false; },
+            },
+            {
+              id: "jump",
+              label: "▲",
+              ariaLabel: t("jump"),
+              onPress: () => { touchKeys.current["ArrowUp"] = true; },
+              onRelease: () => { touchKeys.current["ArrowUp"] = false; },
+            },
+            {
+              id: "right",
+              label: "▶",
+              ariaLabel: t("moveRight"),
+              onPress: () => { touchKeys.current["ArrowRight"] = true; },
+              onRelease: () => { touchKeys.current["ArrowRight"] = false; },
+            },
+          ]}
+        />
 
         <div className="mt-2 text-xs text-gray-400 text-center">
           Arrows/WASD to move &amp; jump &middot; Space to pause &middot; R to restart
