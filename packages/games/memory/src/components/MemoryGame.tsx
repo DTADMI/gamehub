@@ -2,7 +2,7 @@
 
 // games/memory/src/components/MemoryGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import { seededShuffle } from "@gamehub/game-platform/lib/replay";
+import { ReplayRecorder, seededShuffle } from "@gamehub/game-platform/lib/replay";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -121,6 +121,11 @@ export const MemoryGame: React.FC = () => {
   const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">("medium");
   // Graine de la partie courante : exposee pour rejouer/verifier (B9).
   const [seed, setSeed] = useState(0);
+  // B9 : enregistreur d'entrees, recree a chaque partie AVEC la graine, pour
+  // produire un replay partageable (entrees + graine = partie reproductible).
+  const recorderRef = useRef<ReplayRecorder | null>(null);
+  const startedAtRef = useRef(0);
+  const [replayCode, setReplayCode] = useState("");
   const [autoCompleteLastPair, setAutoCompleteLastPair] = useState<boolean>(true);
 
   // Initialize game
@@ -140,6 +145,9 @@ export const MemoryGame: React.FC = () => {
     // reproductible ni uniforme. Avec la graine, la meme partie peut etre rejouee.
     const seed = Math.floor(Math.random() * 0xffffffff) >>> 0;
     setSeed(seed);
+    recorderRef.current = new ReplayRecorder({ gameId: "memory", seed });
+    startedAtRef.current = Date.now();
+    setReplayCode("");
     const shuffled = seededShuffle(cardValues, seed).map((value, index) => ({
       id: index,
       value,
@@ -215,6 +223,7 @@ export const MemoryGame: React.FC = () => {
   useEffect(() => {
     if (cards.length > 0 && cards.every((card) => card.isMatched)) {
       setGameOver(true);
+      setReplayCode(recorderRef.current?.encode() ?? "");
       playSound("win", 200);
       soundManager.stopMusic();
       // Dispatch gameover event for the page to handle (stats/leaderboard)
@@ -273,6 +282,10 @@ export const MemoryGame: React.FC = () => {
     }
 
     playSound("cardFlip", 60);
+
+    // B9 : le temps est fourni par l'appelant (jamais lu par l'enregistreur),
+    // donc le replay reste reproductible.
+    recorderRef.current?.record(Date.now() - startedAtRef.current, { flip: index });
 
     setCards((prev) =>
       prev.map((card, idx) => (idx === index ? { ...card, isFlipped: true } : card)),
@@ -473,6 +486,17 @@ export const MemoryGame: React.FC = () => {
               >
                 Play Again
               </button>
+              {replayCode && (
+                <button
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(replayCode);
+                  }}
+                  className="mt-3 ml-2 rounded-lg bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
+                  title={t("copyReplayTitle")}
+                >
+                  {t("copyReplay")}
+                </button>
+              )}
             </div>
           )}
         </div>

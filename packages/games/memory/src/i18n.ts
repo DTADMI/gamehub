@@ -23,6 +23,8 @@ export const MEMORY_TX = {
     resume: "Resume",
     pause: "Pause",
     hiddenCard: "Hidden card",
+    copyReplay: "Copy replay",
+    copyReplayTitle: "Copy the replay code (seed + inputs) to share this game",
   },
   fr: {
     title: "Mémoire",
@@ -45,5 +47,7 @@ export const MEMORY_TX = {
     resume: "Reprendre",
     pause: "Pause",
     hiddenCard: "Carte cachée",
+    copyReplay: "Copier le replay",
+    copyReplayTitle: "Copier le code du replay (graine + entrees) pour partager cette partie",
   },
 } as const;
