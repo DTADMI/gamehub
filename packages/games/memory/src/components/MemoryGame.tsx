@@ -2,7 +2,7 @@
 
 // games/memory/src/components/MemoryGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import { ReplayRecorder, seededShuffle } from "@gamehub/game-platform/lib/replay";
+import { ReplayRecorder, decodeReplay, seededShuffle } from "@gamehub/game-platform/lib/replay";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -129,7 +129,7 @@ export const MemoryGame: React.FC = () => {
   const [autoCompleteLastPair, setAutoCompleteLastPair] = useState<boolean>(true);
 
   // Initialize game
-  const initializeGame = useCallback(() => {
+  const initializeGame = useCallback((seedOverride?: number) => {
     // Load sounds
     soundManager.preloadSound("cardFlip", "/sounds/card-flip.mp3");
     soundManager.preloadSound("match", "/sounds/match.mp3");
@@ -143,7 +143,7 @@ export const MemoryGame: React.FC = () => {
 
     // Melange SEME (B9) : un `sort(() => Math.random() - 0.5)` n'est ni
     // reproductible ni uniforme. Avec la graine, la meme partie peut etre rejouee.
-    const seed = Math.floor(Math.random() * 0xffffffff) >>> 0;
+    const seed = seedOverride ?? Math.floor(Math.random() * 0xffffffff) >>> 0;
     setSeed(seed);
     recorderRef.current = new ReplayRecorder({ gameId: "memory", seed });
     startedAtRef.current = Date.now();
@@ -162,12 +162,24 @@ export const MemoryGame: React.FC = () => {
     setHiddenIds(new Set());
   }, [difficulty]);
 
+  // ── Vue spectateur (B9 phase 3) ─────────────────────────
+  // Un replay = une graine + des entrees horodatees. Le spectateur ne devine
+  // rien : il reapplique les memes retours de cartes, aux memes instants.
+  const spectatingRef = useRef(false);
+  const replayTimersRef = useRef<number[]>([]);
+  const stopReplay = useCallback(() => {
+    for (const timer of replayTimersRef.current) window.clearTimeout(timer);
+    replayTimersRef.current = [];
+    spectatingRef.current = false;
+  }, []);
+
   const startGame = useCallback(() => {
+    stopReplay();
     setIsPaused(false);
     setGameStarted(true);
     initializeGame();
     soundManager.playMusic("background");
-  }, [initializeGame]);
+  }, [initializeGame, stopReplay]);
 
   // Check for matches
   useEffect(() => {
@@ -284,8 +296,11 @@ export const MemoryGame: React.FC = () => {
     playSound("cardFlip", 60);
 
     // B9 : le temps est fourni par l'appelant (jamais lu par l'enregistreur),
-    // donc le replay reste reproductible.
-    recorderRef.current?.record(Date.now() - startedAtRef.current, { flip: index });
+    // donc le replay reste reproductible. En mode spectateur, on REJOUE : les
+    // entrees du replay ne doivent pas etre re-enregistrees.
+    if (!spectatingRef.current) {
+      recorderRef.current?.record(Date.now() - startedAtRef.current, { flip: index });
+    }
 
     setCards((prev) =>
       prev.map((card, idx) => (idx === index ? { ...card, isFlipped: true } : card)),
@@ -293,6 +308,38 @@ export const MemoryGame: React.FC = () => {
 
     setFlippedIndices((prev) => [...prev, index]);
   };
+
+  // La vue spectateur appelle handleCardClick depuis des minuteurs : passer par
+  // un ref evite une fermeture perimee sur l'etat React.
+  const handleCardClickRef = useRef(handleCardClick);
+  useEffect(() => {
+    handleCardClickRef.current = handleCardClick;
+  });
+
+  /**
+   * Rejoue un replay recu (code copie par « Copier le replay »). Renvoie un code
+   * d'erreur (bad_format / version_mismatch) ou null si le rejeu a demarre.
+   */
+  const watchReplay = useCallback(
+    (code: string): string | null => {
+      const decoded = decodeReplay(code.trim());
+      if (!decoded.ok) return decoded.reason;
+      stopReplay();
+      spectatingRef.current = true;
+      setIsPaused(false);
+      setGameStarted(true);
+      initializeGame(decoded.replay.header.seed);
+      for (const frame of decoded.replay.frames) {
+        const index = frame.input.flip;
+        if (typeof index !== "number") continue;
+        replayTimersRef.current.push(
+          window.setTimeout(() => handleCardClickRef.current(index), frame.t + 300),
+        );
+      }
+      return null;
+    },
+    [initializeGame, stopReplay],
+  );
 
   // Initialize game on mount and when difficulty changes
   useEffect(() => {
@@ -497,6 +544,17 @@ export const MemoryGame: React.FC = () => {
                   {t("copyReplay")}
                 </button>
               )}
+              <button
+                onClick={() => {
+                  const code = window.prompt(t("replayPrompt"));
+                  if (!code) return;
+                  const error = watchReplay(code);
+                  if (error) window.alert(t("replayInvalid"));
+                }}
+                className="mt-3 ml-2 rounded-lg bg-gray-600 px-6 py-2 text-white transition-colors hover:bg-gray-700"
+              >
+                {t("watchReplay")}
+              </button>
             </div>
           )}
         </div>

@@ -25,6 +25,9 @@ export const MEMORY_TX = {
     hiddenCard: "Hidden card",
     copyReplay: "Copy replay",
     copyReplayTitle: "Copy the replay code (seed + inputs) to share this game",
+    watchReplay: "Watch a replay",
+    replayPrompt: "Paste a replay code",
+    replayInvalid: "This replay code is not valid (bad format or wrong version).",
   },
   fr: {
     title: "Mémoire",
@@ -49,5 +52,8 @@ export const MEMORY_TX = {
     hiddenCard: "Carte cachée",
     copyReplay: "Copier le replay",
     copyReplayTitle: "Copier le code du replay (graine + entrees) pour partager cette partie",
+    watchReplay: "Regarder un replay",
+    replayPrompt: "Collez un code de replay",
+    replayInvalid: "Ce code de replay n'est pas valide (format ou version).",
   },
 } as const;
