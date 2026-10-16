@@ -2,6 +2,12 @@
 "use client";
 
 import { soundManager } from "@gamehub/game-platform";
+import {
+  ReplayRecorder,
+  decodeReplay,
+  readReplayParam,
+  replayShareUrl,
+} from "@gamehub/game-platform/lib/replay";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -82,6 +88,15 @@ export const CheckersGame: React.FC = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const liveRef = useRef<HTMLDivElement>(null);
 
+  // B9 - replay : les dames sont deterministes (aucun hasard), donc la liste des
+  // cases cliquees suffit a rejouer une partie. La graine reste un champ du
+  // format, mais n'influence rien ici.
+  const recorderRef = useRef<ReplayRecorder | null>(null);
+  const startedAtRef = useRef(0);
+  const spectatingRef = useRef(false);
+  const replayTimersRef = useRef<number[]>([]);
+  const [replayCode, setReplayCode] = useState("");
+
   useEffect(() => {
     void soundManager.preloadSound("move", "/sounds/click.mp3");
     void soundManager.preloadSound("capture", "/sounds/brick-break.mp3");
@@ -91,6 +106,12 @@ export const CheckersGame: React.FC = () => {
 
   const onSquareClick = useCallback(
     (r: number, c: number) => {
+      // Enregistre chaque clic (y compris illégal : le rejeu reproduit le meme
+      // etat) sauf en mode spectateur, ou les clics sont deja ceux du replay.
+      if (!spectatingRef.current) {
+        recorderRef.current?.record(Date.now() - startedAtRef.current, { r, c });
+      }
+
       const p = board[r][c];
 
       // try completing a move
@@ -225,6 +246,7 @@ export const CheckersGame: React.FC = () => {
     if (!any) {
       const winningColor = color === "w" ? "b" : "w";
       setWinner(winningColor);
+      setReplayCode(recorderRef.current?.encode() ?? "");
       soundManager.playSound("gameOver", 0.9);
       try {
         window.dispatchEvent(new CustomEvent("game:complete", { detail: { winner: winningColor } }));
@@ -233,6 +255,64 @@ export const CheckersGame: React.FC = () => {
       setWinner(null);
     }
   }, [board, turn]);
+
+  // Le rejeu appelle onSquareClick depuis des minuteurs : un ref evite une
+  // fermeture perimee sur l'etat React.
+  const handleClickRef = useRef(onSquareClick);
+  useEffect(() => {
+    handleClickRef.current = onSquareClick;
+  });
+
+  /** Nouvelle partie : etat initial + nouvel enregistreur. */
+  const resetGame = useCallback(() => {
+    for (const timer of replayTimersRef.current) window.clearTimeout(timer);
+    replayTimersRef.current = [];
+    spectatingRef.current = false;
+    setBoard(initialBoard());
+    setTurn("w");
+    setSelected(null);
+    setMoves([]);
+    setMustContinue(null);
+    setWinner(null);
+    setReplayCode("");
+    recorderRef.current = new ReplayRecorder({ gameId: "checkers", seed: 0 });
+    startedAtRef.current = Date.now();
+  }, []);
+
+  /** Rejoue un replay recu. Renvoie un code d'erreur, ou null si le rejeu part. */
+  const watchReplay = useCallback(
+    (code: string): string | null => {
+      const decoded = decodeReplay(code.trim());
+      if (!decoded.ok) return decoded.reason;
+      resetGame();
+      spectatingRef.current = true;
+      for (const frame of decoded.replay.frames) {
+        const r = frame.input.r;
+        const c = frame.input.c;
+        if (typeof r !== "number" || typeof c !== "number") continue;
+        replayTimersRef.current.push(
+          window.setTimeout(() => handleClickRef.current(r, c), frame.t + 300),
+        );
+      }
+      return null;
+    },
+    [resetGame],
+  );
+
+  // Au montage : nouvel enregistreur, puis lecture automatique d'un replay
+  // partage par lien (?replay=...). Un seul essai par montage.
+  const urlReplayHandledRef = useRef(false);
+  useEffect(() => {
+    resetGame();
+    if (urlReplayHandledRef.current) return;
+    urlReplayHandledRef.current = true;
+    const code = readReplayParam(window.location.search);
+    if (code) watchReplay(code);
+    return () => {
+      for (const timer of replayTimersRef.current) window.clearTimeout(timer);
+      replayTimersRef.current = [];
+    };
+  }, [resetGame, watchReplay]);
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -294,6 +374,46 @@ export const CheckersGame: React.FC = () => {
           {t("rules")}
         </div>
       )}
+
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <button className="ghost" onClick={resetGame} title={t("newGame")}>
+          {t("newGame")}
+        </button>
+        {replayCode && (
+          <button
+            className="ghost"
+            onClick={() => {
+              void navigator.clipboard?.writeText(replayCode);
+            }}
+            title={t("copyReplayTitle")}
+          >
+            {t("copyReplay")}
+          </button>
+        )}
+        {replayCode && (
+          <button
+            className="ghost"
+            onClick={() => {
+              void navigator.clipboard?.writeText(replayShareUrl(window.location.href, replayCode));
+            }}
+            title={t("copyReplayLinkTitle")}
+          >
+            {t("copyReplayLink")}
+          </button>
+        )}
+        <button
+          className="ghost"
+          onClick={() => {
+            const code = window.prompt(t("replayPrompt"));
+            if (!code) return;
+            const error = watchReplay(code);
+            if (error) window.alert(t("replayInvalid"));
+          }}
+          title={t("watchReplay")}
+        >
+          {t("watchReplay")}
+        </button>
+      </div>
     </div>
   );
 };
