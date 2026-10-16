@@ -2,7 +2,13 @@
 
 // games/memory/src/components/MemoryGame.tsx
 import { GameContainer, soundManager } from "@gamehub/game-platform";
-import { ReplayRecorder, decodeReplay, seededShuffle } from "@gamehub/game-platform/lib/replay";
+import {
+  ReplayRecorder,
+  decodeReplay,
+  readReplayParam,
+  replayShareUrl,
+  seededShuffle,
+} from "@gamehub/game-platform/lib/replay";
 import { createI18n } from "@games/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -349,6 +355,18 @@ export const MemoryGame: React.FC = () => {
     };
   }, [initializeGame]);
 
+  // B9 : un replay partage par lien (?replay=...) s'ouvre directement en
+  // spectateur. Un seul essai par montage : la query ne doit pas relancer une
+  // lecture a chaque rendu. Cet effet est declare APRES l'initialisation pour
+  // que la graine du replay ne soit pas ecrasee par une partie neuve.
+  const urlReplayHandledRef = useRef(false);
+  useEffect(() => {
+    if (urlReplayHandledRef.current) return;
+    urlReplayHandledRef.current = true;
+    const code = readReplayParam(window.location.search);
+    if (code) watchReplay(code);
+  }, [watchReplay]);
+
   // Calculate score and pairs in play
   const score = cards.filter((card) => card.isMatched).length / 2;
   const pairsInPlay = useMemo(
@@ -542,6 +560,19 @@ export const MemoryGame: React.FC = () => {
                   title={t("copyReplayTitle")}
                 >
                   {t("copyReplay")}
+                </button>
+              )}
+              {replayCode && (
+                <button
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(
+                      replayShareUrl(window.location.href, replayCode),
+                    );
+                  }}
+                  className="mt-3 ml-2 rounded-lg bg-indigo-600 px-6 py-2 text-white transition-colors hover:bg-indigo-700"
+                  title={t("copyReplayLinkTitle")}
+                >
+                  {t("copyReplayLink")}
                 </button>
               )}
               <button

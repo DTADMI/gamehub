@@ -6,6 +6,8 @@ import {
   seededShuffle,
   encodeReplay,
   isReplay,
+  readReplayParam,
+  replayShareUrl,
   REPLAY_FORMAT_VERSION,
   type Replay,
 } from "../../packages/game-platform/src/lib/replay";
@@ -105,5 +107,47 @@ describe("seededShuffle", () => {
   it("gere un tableau vide ou d'un seul element", () => {
     expect(seededShuffle([], 1)).toEqual([]);
     expect(seededShuffle(["a"], 1)).toEqual(["a"]);
+  });
+});
+
+// B9 : partage d'un replay par URL. Les deux fonctions sont pures, donc testables
+// sans navigateur ; c'est ce qui evite un aller-retour manuel pour les verifier.
+describe("replayShareUrl / readReplayParam", () => {
+  it("encode le code dans le parametre replay", () => {
+    const url = replayShareUrl("https://example.com/games/memory", '{"a":1}');
+    expect(url.startsWith("https://example.com/games/memory?")).toBe(true);
+    expect(readReplayParam(new URL(url).search)).toBe('{"a":1}');
+  });
+
+  it("conserve les autres parametres de la query", () => {
+    const url = replayShareUrl("https://example.com/g?level=2", "CODE");
+    const params = new URLSearchParams(new URL(url).search);
+    expect(params.get("level")).toBe("2");
+    expect(params.get("replay")).toBe("CODE");
+  });
+
+  it("remplace un replay deja present plutot que de l'empiler", () => {
+    const url = replayShareUrl("https://example.com/g?replay=OLD", "NEW");
+    expect(new URLSearchParams(new URL(url).search).getAll("replay")).toEqual(["NEW"]);
+  });
+
+  it("lit le parametre avec ou sans point d'interrogation", () => {
+    expect(readReplayParam("?replay=X")).toBe("X");
+    expect(readReplayParam("replay=X")).toBe("X");
+  });
+
+  it("renvoie null quand le parametre est absent ou vide", () => {
+    expect(readReplayParam("")).toBeNull();
+    expect(readReplayParam("?level=2")).toBeNull();
+    expect(readReplayParam("?replay=")).toBeNull();
+    expect(readReplayParam("?replay=%20")).toBeNull();
+  });
+
+  it("fait l'aller-retour sur un vrai code de replay", () => {
+    const code = encodeReplay(replay);
+    const url = replayShareUrl("https://example.com/g", code);
+    const codeFromUrl = readReplayParam(new URL(url).search);
+    expect(codeFromUrl).not.toBeNull();
+    expect(decodeReplay(codeFromUrl as string).ok).toBe(true);
   });
 });

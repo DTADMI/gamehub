@@ -108,6 +108,30 @@ export function decodeReplay(text: string, expectedVersion = REPLAY_FORMAT_VERSI
   return { ok: true, replay: parsed }
 }
 
+/**
+ * URL partageable d'un replay : le code voyage dans le parametre `replay`.
+ * `URLSearchParams` encode le JSON (accolades, espaces, accents), et une base
+ * deja pourvue d'une query garde ses autres parametres. Purement calculatoire,
+ * donc testable sans navigateur.
+ */
+export function replayShareUrl(baseUrl: string, code: string): string {
+  const [path, query = ""] = baseUrl.split("?")
+  const params = new URLSearchParams(query)
+  params.set("replay", code)
+  return `${path}?${params.toString()}`
+}
+
+/**
+ * Lit le parametre `replay` d'une chaine de requete (avec ou sans `?`).
+ * Renvoie `null` si absent ou vide : l'appelant ne doit pas tenter de decoder
+ * une chaine vide, qui serait un faux replay invalide.
+ */
+export function readReplayParam(search: string): string | null {
+  const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search)
+  const value = params.get("replay")
+  return value && value.trim() ? value : null
+}
+
 // ---------------------------------------------------------------------------
 // Enregistrement des entrees (B9, phase 2)
 //
