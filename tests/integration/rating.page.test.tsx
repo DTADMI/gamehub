@@ -73,8 +73,9 @@ describe("cross-game rating page (B4)", () => {
     render(<CrossGameRatingPage />);
 
     await waitFor(() => expect(screen.getByText("rating.noScores")).toBeTruthy());
-    // La note affiche un tiret, pas un chiffre invente.
-    expect(screen.getByText("—")).toBeTruthy();
+    // La note affiche un tiret ASCII, pas un chiffre invente (la normalisation
+    // des tirets cadratins, d9b18fc, a remplace le U+2014 par un "-").
+    expect(screen.getByText("-")).toBeTruthy();
   });
 
   it("affiche une erreur quand l'API echoue", async () => {
